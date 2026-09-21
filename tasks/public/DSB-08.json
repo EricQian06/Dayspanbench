@@ -1,0 +1,103 @@
+{
+  "id": "DSB-08",
+  "title": "无障碍住宿：两家机构比较与延后的现场测量",
+  "brief": "在A旅舍和B酒店中选择11月14—16日两晚住宿，预算2600元。轮椅宽78cm，房门和浴室净宽均须至少80cm。获取实测尺寸，并确认合适酒店的房态和总价，不预订。",
+  "user_fields": {
+    "wheelchair_width": "78cm，要求净宽至少80cm",
+    "stay_dates": "2026-11-14/2026-11-16"
+  },
+  "initial_contacts": [
+    "a_desk"
+  ],
+  "pages": [
+    {
+      "id": "hotels",
+      "title": "候选住宿目录",
+      "text": "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段。",
+      "contacts": [
+        "a_desk",
+        "b_desk"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "a_door_cm",
+    "a_bathroom_cm",
+    "b_door_cm",
+    "b_bathroom_cm",
+    "b_available",
+    "b_total_price"
+  ],
+  "value_normalization": {
+    "a_door_cm": {
+      "type": "number",
+      "units": {
+        "cm": 1,
+        "厘米": 1,
+        "m": 100,
+        "米": 100,
+        "mm": 0.1,
+        "毫米": 0.1
+      }
+    },
+    "a_bathroom_cm": {
+      "type": "number",
+      "units": {
+        "cm": 1,
+        "厘米": 1,
+        "m": 100,
+        "米": 100,
+        "mm": 0.1,
+        "毫米": 0.1
+      }
+    },
+    "b_door_cm": {
+      "type": "number",
+      "units": {
+        "cm": 1,
+        "厘米": 1,
+        "m": 100,
+        "米": 100,
+        "mm": 0.1,
+        "毫米": 0.1
+      }
+    },
+    "b_bathroom_cm": {
+      "type": "number",
+      "units": {
+        "cm": 1,
+        "厘米": 1,
+        "m": 100,
+        "米": 100,
+        "mm": 0.1,
+        "毫米": 0.1
+      }
+    },
+    "b_available": {
+      "type": "boolean"
+    },
+    "b_total_price": {
+      "type": "number",
+      "units": {
+        "元": 1,
+        "CNY": 1,
+        "人民币": 1
+      }
+    }
+  },
+  "conclusion_options": {
+    "choose_a": "A符合要求",
+    "choose_b": "B符合要求",
+    "both_suitable": "两家均符合",
+    "neither_suitable": "两家均不符合",
+    "unconfirmed": "信息不足"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-06T13:30:00+08:00",
+  "deadline_at": "2026-11-12T18:00:00+08:00"
+}

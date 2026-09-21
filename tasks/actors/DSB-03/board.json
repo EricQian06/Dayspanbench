@@ -1,0 +1,179 @@
+{
+  "private": true,
+  "task_id": "DSB-03",
+  "actor": {
+    "id": "board",
+    "name": "澄川学院学分委员会秘书·程昕",
+    "role": "春季跨校学分审议",
+    "description": "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "credits",
+      "effective",
+      "scope"
+    ],
+    "tools": {
+      "board.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "credits",
+          "scope",
+          "effective"
+        ]
+      },
+      "board.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "credits",
+          "scope",
+          "effective"
+        ]
+      },
+      "board.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "春季跨校审议",
+        "aliases": [
+          "学分",
+          "审议"
+        ],
+        "required_fields": [
+          "course_code",
+          "syllabus_version"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "board.main.1.lookup",
+            "delay": {
+              "mode": "weekly",
+              "weekday": 1,
+              "time": "10:00",
+              "minutes": 120,
+              "not_before": "2027-02-02T10:00:00+08:00"
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "board.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "board.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是澄川学院学分委员会秘书·程昕，负责春季跨校学分审议。跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "澄川学院学分委员会秘书·程昕：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:credit_scope",
+      "attest:credits",
+      "attest:effective_term"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "credits": {
+      "value": 3,
+      "text": "学分委员会确认CS204可转换3学分。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-03",
+          "case": {
+            "course_code": "CS204"
+          }
+        },
+        "predicate": "credits"
+      }
+    },
+    "effective": {
+      "value": "2027春季",
+      "text": "该转换结论从2027春季学期开始适用。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-03",
+          "case": {
+            "course_code": "CS204"
+          }
+        },
+        "predicate": "effective_term"
+      }
+    },
+    "scope": {
+      "value": "专业选修",
+      "text": "这3学分仅计入专业选修，不能替代必修课。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-03",
+          "case": {
+            "course_code": "CS204"
+          }
+        },
+        "predicate": "credit_scope"
+      }
+    }
+  },
+  "start_at": "2026-11-05T14:00:00+08:00",
+  "deadline_at": "2027-02-03T17:00:00+08:00"
+}

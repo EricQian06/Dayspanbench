@@ -1,0 +1,143 @@
+{
+  "private": true,
+  "task_id": "DSB-03",
+  "actor": {
+    "id": "records",
+    "name": "澄川学院教务·唐宁",
+    "role": "学分转换预审",
+    "description": "必须取得当前签章大纲；不能把旧大纲送交委员会。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [],
+    "tools": {
+      "records.main.1.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "records.main.2.delegate": {
+        "kind": "delegate",
+        "target": "board",
+        "workflow": "main",
+        "forward_fields": [
+          "course_code",
+          "syllabus_version"
+        ]
+      },
+      "records.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "学分转换咨询",
+        "aliases": [
+          "学分",
+          "转换",
+          "大纲"
+        ],
+        "required_fields": [
+          "course_code",
+          "syllabus_version"
+        ],
+        "evidence_fields": {
+          "syllabus_version": {
+            "subject": {
+              "task": "DSB-03",
+              "case": {
+                "course_code": "CS204"
+              }
+            },
+            "predicate": "syllabus_version",
+            "authorities": [
+              "attest:syllabus_version"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          }
+        },
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "核验签章与材料版本",
+            "tool": "records.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 180
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "内部转交",
+            "tool": "records.main.2.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "records.main.3.reply",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          }
+        ]
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是澄川学院教务·唐宁，负责学分转换预审。必须取得当前签章大纲；不能把旧大纲送交委员会。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "澄川学院教务·唐宁：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": []
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {},
+  "start_at": "2026-11-05T14:00:00+08:00",
+  "deadline_at": "2027-02-03T17:00:00+08:00"
+}

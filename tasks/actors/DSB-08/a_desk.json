@@ -1,0 +1,114 @@
+{
+  "private": true,
+  "task_id": "DSB-08",
+  "actor": {
+    "id": "a_desk",
+    "name": "A旅舍前台·蓝心",
+    "role": "无障碍房咨询",
+    "description": "每天营业，但不能用旧网页尺寸替代现场复测。",
+    "calendar": "daily",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [],
+    "tools": {
+      "a_desk.main.1.delegate": {
+        "kind": "delegate",
+        "target": "a_tech",
+        "workflow": "main",
+        "forward_fields": [
+          "wheelchair_width"
+        ]
+      },
+      "a_desk.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "通行尺寸确认",
+        "aliases": [
+          "无障碍",
+          "轮椅",
+          "尺寸"
+        ],
+        "required_fields": [
+          "wheelchair_width",
+          "stay_dates"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "内部转交",
+            "tool": "a_desk.main.1.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "a_desk.main.2.reply",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是A旅舍前台·蓝心，负责无障碍房咨询。每天营业，但不能用旧网页尺寸替代现场复测。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "A旅舍前台·蓝心：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": []
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "18:00"
+      ]
+    ]
+  },
+  "local_facts": {},
+  "start_at": "2026-11-06T13:30:00+08:00",
+  "deadline_at": "2026-11-12T18:00:00+08:00"
+}

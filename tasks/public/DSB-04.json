@@ -1,0 +1,61 @@
+{
+  "id": "DSB-04",
+  "title": "共享仪器：培训、进口耗材与七天稳定性校准",
+  "brief": "为样品S-482确认最早测量时间和费用。我已报名11月6日14点安全培训并会按时完成，但目前没有合格记录。请在培训完成后取得凭证，并核实耗材和校准后的可用窗口，暂不预约仪器。",
+  "user_fields": {
+    "sample_id": "S-482",
+    "person_name": "顾晓"
+  },
+  "initial_contacts": [
+    "labdesk"
+  ],
+  "pages": [
+    {
+      "id": "lab",
+      "title": "南屿共享实验室",
+      "text": "仪器使用需安全培训记录，培训每周五14点。本批进口耗材预计11月17日到库，之后需要连续7天稳定性校准和人工复核。",
+      "contacts": [
+        "labdesk"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "safety_certificate",
+    "filter_batch",
+    "earliest_measurement",
+    "price"
+  ],
+  "value_normalization": {
+    "safety_certificate": {
+      "type": "text"
+    },
+    "filter_batch": {
+      "type": "text"
+    },
+    "earliest_measurement": {
+      "type": "datetime"
+    },
+    "price": {
+      "type": "number",
+      "units": {
+        "元": 1,
+        "CNY": 1,
+        "人民币": 1
+      }
+    }
+  },
+  "conclusion_options": {
+    "available_now": "已可使用",
+    "unconfirmed": "尚未核实",
+    "available_after_calibration": "校准完成后可用",
+    "not_available": "不能使用"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-04T09:30:00+08:00",
+  "deadline_at": "2026-11-25T17:00:00+08:00"
+}

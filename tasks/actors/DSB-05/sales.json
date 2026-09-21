@@ -1,0 +1,252 @@
+{
+  "private": true,
+  "task_id": "DSB-05",
+  "actor": {
+    "id": "sales",
+    "name": "棱川制造销售·罗岑",
+    "role": "批次报价",
+    "description": "初次报价有有效期；质检完成后若已过期，需重新确认。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "quote_new",
+      "quote_old"
+    ],
+    "tools": {
+      "sales.main.1.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "sales.main.2.delegate": {
+        "kind": "delegate",
+        "target": "factory",
+        "workflow": "main",
+        "forward_fields": [
+          "quantity",
+          "spec"
+        ]
+      },
+      "sales.main.3.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "quote_old"
+        ]
+      },
+      "sales.main.4.document": {
+        "kind": "document",
+        "facts": [
+          "quote_old"
+        ]
+      },
+      "sales.main.5.reply": {
+        "kind": "reply"
+      },
+      "sales.refresh.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "quote_new"
+        ]
+      },
+      "sales.refresh.2.document": {
+        "kind": "document",
+        "facts": [
+          "quote_new"
+        ]
+      },
+      "sales.refresh.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "初次报价",
+        "aliases": [
+          "初次报价",
+          "询价",
+          "报价"
+        ],
+        "required_fields": [
+          "quantity",
+          "spec"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "整理批次需求",
+            "tool": "sales.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "内部转交",
+            "tool": "sales.main.2.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "查询业务记录",
+            "tool": "sales.main.3.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "签发书面确认",
+            "tool": "sales.main.4.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_5",
+            "label": "向请求者回复已取得的结果",
+            "tool": "sales.main.5.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "refresh",
+        "label": "刷新过期报价",
+        "aliases": [
+          "重新确认报价",
+          "刷新报价",
+          "更新报价"
+        ],
+        "required_fields": [
+          "quantity",
+          "spec"
+        ],
+        "steps": [
+          {
+            "id": "refresh_1",
+            "label": "查询业务记录",
+            "tool": "sales.refresh.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60,
+              "not_before": "2026-12-07T10:00:00+08:00"
+            }
+          },
+          {
+            "id": "refresh_2",
+            "label": "签发书面确认",
+            "tool": "sales.refresh.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "refresh_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "sales.refresh.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是棱川制造销售·罗岑，负责批次报价。初次报价有有效期；质检完成后若已过期，需重新确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "棱川制造销售·罗岑：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:current_total"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "quote_new": {
+      "value": 18600,
+      "text": "500件批次重新确认的总报价18600元，有效至12月8日16点。",
+      "available_at": "2026-12-07T10:00:00+08:00",
+      "valid_until": "2026-12-08T16:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "current_total"
+      }
+    },
+    "quote_old": {
+      "value": 18000,
+      "text": "500件批次旧报价18000元，有效至11月10日16点。",
+      "valid_until": "2026-11-10T16:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "current_total"
+      }
+    }
+  },
+  "start_at": "2026-11-03T14:00:00+08:00",
+  "deadline_at": "2026-12-08T15:00:00+08:00"
+}

@@ -1,0 +1,64 @@
+{
+  "id": "DSB-07",
+  "title": "档案使用：权利继受核验后重新启动数字化",
+  "brief": "为2027年7月的非商业展览核实ARC-71图像的实体及网站用途权限，问清总费用与扫描分辨率。权利继受正在核验；取得权利方确认后请再次联系档案馆核实数字化交付。不付费、不发布。",
+  "user_fields": {
+    "archive_id": "ARC-71",
+    "usage": "非商业实体展览及展览网站"
+  },
+  "initial_contacts": [
+    "archive"
+  ],
+  "pages": [
+    {
+      "id": "archive",
+      "title": "北汀档案馆使用说明",
+      "text": "该图像处于权利继受核验期，境外联络方预计2027年5月28日集中核对文件。用途获确认后需申请人再次联系档案馆核实数字化交付，实体许可不自动包括网络用途。",
+      "contacts": [
+        "archive"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "physical_exhibit_allowed",
+    "online_allowed",
+    "total_fee",
+    "scan_dpi"
+  ],
+  "value_normalization": {
+    "physical_exhibit_allowed": {
+      "type": "boolean"
+    },
+    "online_allowed": {
+      "type": "boolean"
+    },
+    "total_fee": {
+      "type": "number",
+      "units": {
+        "元": 1,
+        "CNY": 1,
+        "人民币": 1
+      }
+    },
+    "scan_dpi": {
+      "type": "number",
+      "units": {
+        "dpi": 1
+      }
+    }
+  },
+  "conclusion_options": {
+    "physical_and_online": "实体与网络均获准",
+    "physical_only": "仅实体用途获准",
+    "not_permitted": "两种用途均不获准",
+    "unconfirmed": "信息不足"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-05T15:00:00+08:00",
+  "deadline_at": "2027-06-04T17:00:00+08:00"
+}

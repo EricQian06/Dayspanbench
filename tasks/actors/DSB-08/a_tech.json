@@ -1,0 +1,160 @@
+{
+  "private": true,
+  "task_id": "DSB-08",
+  "actor": {
+    "id": "a_tech",
+    "name": "A旅舍设施员·蒋延",
+    "role": "现场测量",
+    "description": "周末不在岗；测量记录区分净宽与含框宽度。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "a_bath",
+      "a_door"
+    ],
+    "tools": {
+      "a_tech.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "a_door",
+          "a_bath"
+        ]
+      },
+      "a_tech.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "a_door",
+          "a_bath"
+        ]
+      },
+      "a_tech.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "现场通行测量",
+        "aliases": [
+          "尺寸",
+          "测量"
+        ],
+        "required_fields": [
+          "wheelchair_width"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "a_tech.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "a_tech.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "a_tech.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是A旅舍设施员·蒋延，负责现场测量。周末不在岗；测量记录区分净宽与含框宽度。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "A旅舍设施员·蒋延：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:a_bathroom_cm",
+      "attest:a_door_cm"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "a_bath": {
+      "value": 68,
+      "text": "A旅舍浴室通行净宽68cm。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "a_bathroom_cm"
+      }
+    },
+    "a_door": {
+      "value": 72,
+      "text": "A旅舍现场复测净门宽72cm，旧网页88cm包含门框。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "a_door_cm"
+      }
+    }
+  },
+  "start_at": "2026-11-06T13:30:00+08:00",
+  "deadline_at": "2026-11-12T18:00:00+08:00"
+}

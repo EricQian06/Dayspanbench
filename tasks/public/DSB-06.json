@@ -1,0 +1,61 @@
+{
+  "id": "DSB-06",
+  "title": "家电保修：等待原厂补货与工程师轮值",
+  "brief": "设备SN-A731漏水。确认是否在保修范围、需要什么配件、配件费用、最早可上门时间。购机凭证R-731已在我手中，只咨询，不预约。",
+  "user_fields": {
+    "serial": "SN-A731",
+    "receipt": "R-731",
+    "symptom": "机身接缝漏水"
+  },
+  "initial_contacts": [
+    "support"
+  ],
+  "pages": [
+    {
+      "id": "service",
+      "title": "霁光电器售后",
+      "text": "保修咨询需序列号和购机凭证；工程师仅周二、周四处理远程诊断。",
+      "contacts": [
+        "support"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "covered",
+    "replacement_part",
+    "part_cost",
+    "earliest_visit"
+  ],
+  "value_normalization": {
+    "covered": {
+      "type": "boolean"
+    },
+    "replacement_part": {
+      "type": "text"
+    },
+    "part_cost": {
+      "type": "number",
+      "units": {
+        "元": 1,
+        "CNY": 1,
+        "人民币": 1
+      }
+    },
+    "earliest_visit": {
+      "type": "datetime"
+    }
+  },
+  "conclusion_options": {
+    "not_covered": "不在覆盖范围",
+    "covered_pending_booking": "在覆盖范围但尚未预约",
+    "unconfirmed": "信息不足"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-04T16:00:00+08:00",
+  "deadline_at": "2026-11-18T09:00:00+08:00"
+}

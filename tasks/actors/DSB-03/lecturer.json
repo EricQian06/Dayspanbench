@@ -1,0 +1,143 @@
+{
+  "private": true,
+  "task_id": "DSB-03",
+  "actor": {
+    "id": "lecturer",
+    "name": "CS204课程负责人·梅芮",
+    "role": "签章课程大纲",
+    "description": "11月6日至9日出差，11月10日恢复处理；只核准本课程材料。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "syllabus"
+    ],
+    "tools": {
+      "lecturer.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "syllabus"
+        ]
+      },
+      "lecturer.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "syllabus"
+        ]
+      },
+      "lecturer.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "补发正式大纲",
+        "aliases": [
+          "大纲",
+          "签章",
+          "课程"
+        ],
+        "required_fields": [
+          "course_code"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "lecturer.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120,
+              "not_before": "2026-11-10T09:00:00+08:00"
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "lecturer.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "lecturer.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是CS204课程负责人·梅芮，负责签章课程大纲。11月6日至9日出差，11月10日恢复处理；只核准本课程材料。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "CS204课程负责人·梅芮：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:syllabus_version"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "syllabus": {
+      "value": "CS204-2026-v2-signed",
+      "text": "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-03",
+          "case": {
+            "course_code": "CS204"
+          }
+        },
+        "predicate": "syllabus_version"
+      }
+    }
+  },
+  "start_at": "2026-11-05T14:00:00+08:00",
+  "deadline_at": "2027-02-03T17:00:00+08:00"
+}

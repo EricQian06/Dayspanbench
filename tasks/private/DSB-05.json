@@ -1,0 +1,930 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.3.0",
+  "id": "DSB-05",
+  "title": "制造采购：28天耐久测试后重新询价",
+  "domain": "制造供应链",
+  "start_at": "2026-11-03T14:00:00+08:00",
+  "deadline_at": "2026-12-08T15:00:00+08:00",
+  "display_timezone": "Asia/Shanghai",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    }
+  },
+  "public": {
+    "id": "DSB-05",
+    "title": "制造采购：28天耐久测试后重新询价",
+    "brief": "询问棱川制造500件M26规格产品的有效总报价、最小订单量、最早出库时间，并取得Q7质检结果。报告完成时仍需有效报价，预算19000元；不要下单。",
+    "user_fields": {
+      "quantity": 500,
+      "spec": "M26-Q7"
+    },
+    "initial_contacts": [
+      "sales"
+    ],
+    "pages": [
+      {
+        "id": "supplier",
+        "title": "棱川制造联系人",
+        "text": "报价有效期短于28天耐久性测试；测试结束后的周一10点复核报告。销售与质检可并行咨询，报告完成后应重新确认报价。",
+        "contacts": [
+          "sales",
+          "qa"
+        ]
+      }
+    ],
+    "message_budget": 16,
+    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "answer_keys": [
+      "current_total",
+      "minimum_quantity",
+      "earliest_dispatch",
+      "qa_pass"
+    ],
+    "value_normalization": {
+      "current_total": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "minimum_quantity": {
+        "type": "number",
+        "units": {
+          "件": 1
+        }
+      },
+      "earliest_dispatch": {
+        "type": "date"
+      },
+      "qa_pass": {
+        "type": "boolean"
+      }
+    },
+    "conclusion_options": {
+      "exceeds_budget": "超预算",
+      "within_budget_with_current_quote": "有有效报价且预算内",
+      "unconfirmed": "信息不足或报价已过期"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "quote_old": {
+      "value": 18000,
+      "text": "500件批次旧报价18000元，有效至11月10日16点。",
+      "valid_until": "2026-11-10T16:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "current_total"
+      }
+    },
+    "quote_new": {
+      "value": 18600,
+      "text": "500件批次重新确认的总报价18600元，有效至12月8日16点。",
+      "available_at": "2026-12-07T10:00:00+08:00",
+      "valid_until": "2026-12-08T16:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "current_total"
+      }
+    },
+    "moq": {
+      "value": 500,
+      "text": "该规格最小订单量为500件。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "minimum_quantity"
+      }
+    },
+    "dispatch": {
+      "value": "2026-12-09",
+      "text": "如按有效报价下单，最早可于12月9日出库；本次尚未下单。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "earliest_dispatch"
+      }
+    },
+    "qa": {
+      "value": true,
+      "text": "材料M26批次符合用户要求的Q7检测规范，报告已复核。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "qa_pass"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "sales",
+      "name": "棱川制造销售·罗岑",
+      "role": "批次报价",
+      "description": "初次报价有有效期；质检完成后若已过期，需重新确认。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "quote_new",
+        "quote_old"
+      ],
+      "tools": {
+        "sales.main.1.lookup": {
+          "kind": "lookup",
+          "facts": []
+        },
+        "sales.main.2.delegate": {
+          "kind": "delegate",
+          "target": "factory",
+          "workflow": "main",
+          "forward_fields": [
+            "quantity",
+            "spec"
+          ]
+        },
+        "sales.main.3.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "quote_old"
+          ]
+        },
+        "sales.main.4.document": {
+          "kind": "document",
+          "facts": [
+            "quote_old"
+          ]
+        },
+        "sales.main.5.reply": {
+          "kind": "reply"
+        },
+        "sales.refresh.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "quote_new"
+          ]
+        },
+        "sales.refresh.2.document": {
+          "kind": "document",
+          "facts": [
+            "quote_new"
+          ]
+        },
+        "sales.refresh.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "初次报价",
+          "aliases": [
+            "初次报价",
+            "询价",
+            "报价"
+          ],
+          "required_fields": [
+            "quantity",
+            "spec"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "整理批次需求",
+              "tool": "sales.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "内部转交",
+              "tool": "sales.main.2.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "查询业务记录",
+              "tool": "sales.main.3.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "签发书面确认",
+              "tool": "sales.main.4.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_5",
+              "label": "向请求者回复已取得的结果",
+              "tool": "sales.main.5.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "refresh",
+          "label": "刷新过期报价",
+          "aliases": [
+            "重新确认报价",
+            "刷新报价",
+            "更新报价"
+          ],
+          "required_fields": [
+            "quantity",
+            "spec"
+          ],
+          "steps": [
+            {
+              "id": "refresh_1",
+              "label": "查询业务记录",
+              "tool": "sales.refresh.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60,
+                "not_before": "2026-12-07T10:00:00+08:00"
+              }
+            },
+            {
+              "id": "refresh_2",
+              "label": "签发书面确认",
+              "tool": "sales.refresh.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "refresh_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "sales.refresh.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是棱川制造销售·罗岑，负责批次报价。初次报价有有效期；质检完成后若已过期，需重新确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "棱川制造销售·罗岑：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:current_total"
+      ]
+    },
+    {
+      "id": "factory",
+      "name": "棱川制造排产员·苏渝",
+      "role": "原料与排产核对",
+      "description": "工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时。",
+      "calendar": "factory",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "dispatch",
+        "moq"
+      ],
+      "tools": {
+        "factory.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "moq",
+            "dispatch"
+          ]
+        },
+        "factory.main.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "排产可行性",
+          "aliases": [
+            "排产",
+            "出库"
+          ],
+          "required_fields": [
+            "quantity",
+            "spec"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "factory.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 1440
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "factory.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是棱川制造排产员·苏渝，负责原料与排产核对。工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "棱川制造排产员·苏渝：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:earliest_dispatch",
+        "attest:minimum_quantity"
+      ]
+    },
+    {
+      "id": "qa",
+      "name": "棱川制造质检·傅黎",
+      "role": "材料检测报告",
+      "description": "样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "qa"
+      ],
+      "tools": {
+        "qa.main.1.lookup": {
+          "kind": "lookup",
+          "facts": []
+        },
+        "qa.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "qa"
+          ]
+        },
+        "qa.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "qa"
+          ]
+        },
+        "qa.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "材料Q7报告",
+          "aliases": [
+            "质检",
+            "报告",
+            "Q7"
+          ],
+          "required_fields": [
+            "spec"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "28天耐久性测试",
+              "tool": "qa.main.1.lookup",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 40320
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "查询业务记录",
+              "tool": "qa.main.2.lookup",
+              "delay": {
+                "mode": "weekly",
+                "weekday": 0,
+                "time": "10:00",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "qa.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "qa.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是棱川制造质检·傅黎，负责材料检测报告。样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "棱川制造质检·傅黎：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:qa_pass"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "current_total",
+      "expected": 18600,
+      "accepted_facts": [
+        "quote_new"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "current_total",
+        "authorities": [
+          "attest:current_total"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "元": 1,
+            "CNY": 1,
+            "人民币": 1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "minimum_quantity",
+      "expected": 500,
+      "accepted_facts": [
+        "moq"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "minimum_quantity",
+        "authorities": [
+          "attest:minimum_quantity"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "件": 1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "件": 1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "earliest_dispatch",
+      "expected": "2026-12-09",
+      "accepted_facts": [
+        "dispatch"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "earliest_dispatch",
+        "authorities": [
+          "attest:earliest_dispatch"
+        ],
+        "normalization": {
+          "type": "date"
+        }
+      },
+      "normalization": {
+        "type": "date"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "qa_pass",
+      "expected": true,
+      "accepted_facts": [
+        "qa"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "qa_pass",
+        "authorities": [
+          "attest:qa_pass"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "within_budget_with_current_quote",
+  "temporal_mechanisms": [
+    "六天工厂日历与五天销售日历",
+    "28天耐久测试与周一批次",
+    "报价过期",
+    "并行查询后再次联系"
+  ],
+  "failure_modes": [
+    "用18000元旧报价给结论",
+    "等待质检期间不追踪有效期",
+    "误以为查询等于下单"
+  ],
+  "reference_actions": [
+    {
+      "op": "read_page",
+      "page": "supplier"
+    },
+    {
+      "op": "send",
+      "to": "sales",
+      "text": "请给初次报价",
+      "label": "old",
+      "fields": "$user"
+    },
+    {
+      "op": "send",
+      "to": "qa",
+      "text": "请确认Q7质检报告",
+      "label": "qa",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "old"
+    },
+    {
+      "op": "wait_for",
+      "label": "qa"
+    },
+    {
+      "op": "send",
+      "to": "sales",
+      "text": "请重新确认报价，旧报价已过期",
+      "label": "new",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "new"
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "horizon_design": {
+    "reference_days": 34,
+    "stratum": "中长期",
+    "mechanism": "28天耐久性测试、周审和过期报价更新",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

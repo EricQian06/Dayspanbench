@@ -1,0 +1,686 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-07",
+  "answer": {
+    "conclusion": "physical_only",
+    "claims": [
+      {
+        "key": "physical_exhibit_allowed",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "online_allowed",
+        "status": "confirmed",
+        "value": false,
+        "evidence_ids": [
+          "EV-0003",
+          "EV-0005"
+        ]
+      },
+      {
+        "key": "total_fee",
+        "status": "confirmed",
+        "value": 800,
+        "evidence_ids": [
+          "EV-0001"
+        ]
+      },
+      {
+        "key": "scan_dpi",
+        "status": "confirmed",
+        "value": 600,
+        "evidence_ids": [
+          "EV-0006"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-07",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "physical_exhibit_allowed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "online_allowed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_fee",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "scan_dpi",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 5040.0,
+    "calendar_days": 210.0,
+    "agent_messages": 3,
+    "contacted_actors": 2,
+    "as_of": "2027-06-03T07:00:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2026-11-06T01:30:00+00:00",
+      "from": "archive",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "text": "北汀档案馆接待·关雨：以下是本次查询或内部转交后已取得的信息。\n本次数字化和授权服务合计800元。\n可继续联系：权利方联络员·Alex Chen",
+      "evidence": [
+        {
+          "id": "EV-0001",
+          "issuer": "archive",
+          "issued_at": "2026-11-05T09:00:00+00:00",
+          "text": "本次数字化和授权服务合计800元。",
+          "value": 800,
+          "valid_until": null,
+          "kind": "fact"
+        }
+      ],
+      "contacts": [
+        {
+          "id": "rights",
+          "name": "权利方联络员·Alex Chen",
+          "role": "图像权利继受与用途确认",
+          "channels": [
+            "email"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-05-28T21:00:00+00:00",
+      "from": "rights",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "text": "权利方联络员·Alex Chen：以下是本次查询或内部转交后已取得的信息。\n图像ARC-71获准用于本次非商业实体展览。\n授权不包含网站或社交媒体公开发布。\n图像ARC-71获准用于本次非商业实体展览。\n授权不包含网站或社交媒体公开发布。",
+      "evidence": [
+        {
+          "id": "EV-0002",
+          "issuer": "rights",
+          "issued_at": "2027-05-28T21:00:00+00:00",
+          "text": "图像ARC-71获准用于本次非商业实体展览。",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0003",
+          "issuer": "rights",
+          "issued_at": "2027-05-28T21:00:00+00:00",
+          "text": "授权不包含网站或社交媒体公开发布。",
+          "value": false,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0004",
+          "issuer": "rights",
+          "issued_at": "2027-05-28T21:00:00+00:00",
+          "text": "图像ARC-71获准用于本次非商业实体展览。",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0005",
+          "issuer": "rights",
+          "issued_at": "2027-05-28T21:00:00+00:00",
+          "text": "授权不包含网站或社交媒体公开发布。",
+          "value": false,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ],
+      "contacts": []
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2027-06-03T07:00:00+00:00",
+      "from": "archive",
+      "case_id": "CASE-0003",
+      "status": "reply",
+      "text": "北汀档案馆接待·关雨：以下是本次查询或内部转交后已取得的信息。\n可提供600dpi扫描件；文件用途仍受授权范围限制。",
+      "evidence": [
+        {
+          "id": "EV-0006",
+          "issuer": "digitizer",
+          "issued_at": "2027-06-03T04:00:00+00:00",
+          "text": "可提供600dpi扫描件；文件用途仍受授权范围限制。",
+          "value": 600,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ],
+      "contacts": []
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2026-11-05T07:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "archive",
+      "text": "咨询档案费用与权利联系人",
+      "fields": {
+        "archive_id": "ARC-71",
+        "usage": "非商业实体展览及展览网站"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2026-11-05T07:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "parent": null
+    },
+    {
+      "at": "2026-11-05T07:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-05T07:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "step": "main_1",
+      "start_at": "2026-11-05T07:00:00+00:00",
+      "due_at": "2026-11-05T09:00:00+00:00",
+      "tool": "archive.main.1.lookup"
+    },
+    {
+      "at": "2026-11-05T07:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-05T09:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "archive",
+      "case_id": "CASE-0001",
+      "tool": "archive.main.1.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2026-11-05T09:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-05T09:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "step": "main_2",
+      "start_at": "2026-11-06T01:00:00+00:00",
+      "due_at": "2026-11-06T01:30:00+00:00",
+      "tool": "archive.main.2.refer"
+    },
+    {
+      "at": "2026-11-06T01:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "tool_call",
+      "actor": "archive",
+      "case_id": "CASE-0001",
+      "tool": "archive.main.2.refer",
+      "tool_kind": "refer"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "step": "main_3",
+      "start_at": "2026-11-06T01:30:00+00:00",
+      "due_at": "2026-11-06T01:30:00+00:00",
+      "tool": "archive.main.3.reply"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "tool_call",
+      "actor": "archive",
+      "case_id": "CASE-0001",
+      "tool": "archive.main.3.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "archive",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "agent_send",
+      "recipient": "rights",
+      "text": "请确认两种用途的权利授权",
+      "fields": {
+        "archive_id": "ARC-71",
+        "usage": "非商业实体展览及展览网站"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "parent": null
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-06T01:30:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "step": "main_1",
+      "start_at": "2027-05-28T13:00:00+00:00",
+      "due_at": "2027-05-28T21:00:00+00:00",
+      "tool": "rights.main.1.lookup"
+    },
+    {
+      "at": "2027-05-28T13:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "rights",
+      "case_id": "CASE-0002",
+      "tool": "rights.main.1.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "step": "main_2",
+      "start_at": "2027-05-28T21:00:00+00:00",
+      "due_at": "2027-05-28T21:00:00+00:00",
+      "tool": "rights.main.2.document"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "rights",
+      "case_id": "CASE-0002",
+      "tool": "rights.main.2.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "step": "main_3",
+      "start_at": "2027-05-28T21:00:00+00:00",
+      "due_at": "2027-05-28T21:00:00+00:00",
+      "tool": "rights.main.3.reply"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "rights",
+      "case_id": "CASE-0002",
+      "tool": "rights.main.3.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "rights",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "archive",
+      "text": "许可收到后请确认数字化交付和扫描规格",
+      "fields": {
+        "archive_id": "ARC-71",
+        "exhibition_permission": true
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0003",
+      "actor": "archive",
+      "parent": null
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "archive",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-05-28T21:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0003",
+      "actor": "archive",
+      "step": "digitize_1",
+      "start_at": "2027-05-31T01:00:00+00:00",
+      "due_at": "2027-05-31T03:00:00+00:00",
+      "tool": "archive.digitize.1.delegate"
+    },
+    {
+      "at": "2027-05-31T01:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "archive",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-05-31T03:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "archive",
+      "case_id": "CASE-0003",
+      "tool": "archive.digitize.1.delegate",
+      "tool_kind": "delegate"
+    },
+    {
+      "at": "2027-05-31T03:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "archive",
+      "old": "working",
+      "new": "waiting_internal"
+    },
+    {
+      "at": "2027-05-31T03:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "parent": "CASE-0003"
+    },
+    {
+      "at": "2027-05-31T03:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-05-31T03:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "step": "main_1",
+      "start_at": "2027-05-31T03:00:00+00:00",
+      "due_at": "2027-06-03T03:00:00+00:00",
+      "tool": "digitizer.main.1.lookup"
+    },
+    {
+      "at": "2027-05-31T03:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-06-03T03:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "digitizer",
+      "case_id": "CASE-0004",
+      "tool": "digitizer.main.1.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-06-03T03:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-06-03T03:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "step": "main_2",
+      "start_at": "2027-06-03T03:00:00+00:00",
+      "due_at": "2027-06-03T04:00:00+00:00",
+      "tool": "digitizer.main.2.document"
+    },
+    {
+      "at": "2027-06-03T03:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-06-03T04:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "digitizer",
+      "case_id": "CASE-0004",
+      "tool": "digitizer.main.2.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-06-03T04:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-06-03T04:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "step": "main_3",
+      "start_at": "2027-06-03T04:00:00+00:00",
+      "due_at": "2027-06-03T04:00:00+00:00",
+      "tool": "digitizer.main.3.reply"
+    },
+    {
+      "at": "2027-06-03T04:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-06-03T04:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "digitizer",
+      "case_id": "CASE-0004",
+      "tool": "digitizer.main.3.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-06-03T04:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "digitizer",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-06-03T04:00:00+00:00",
+      "kind": "handoff_return",
+      "case_id": "CASE-0004",
+      "parent": "CASE-0003"
+    },
+    {
+      "at": "2027-06-03T04:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "archive",
+      "old": "waiting_internal",
+      "new": "queued"
+    },
+    {
+      "at": "2027-06-03T04:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0003",
+      "actor": "archive",
+      "step": "digitize_2",
+      "start_at": "2027-06-03T05:00:00+00:00",
+      "due_at": "2027-06-03T07:00:00+00:00",
+      "tool": "archive.digitize.2.reply"
+    },
+    {
+      "at": "2027-06-03T05:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "archive",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-06-03T07:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "archive",
+      "case_id": "CASE-0003",
+      "tool": "archive.digitize.2.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-06-03T07:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "archive",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-06-03T07:00:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0003",
+      "status": "reply"
+    }
+  ],
+  "pending_cases": []
+}

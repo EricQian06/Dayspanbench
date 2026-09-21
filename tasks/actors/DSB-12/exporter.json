@@ -1,0 +1,255 @@
+{
+  "private": true,
+  "task_id": "DSB-12",
+  "actor": {
+    "id": "exporter",
+    "name": "出口方单证员·贺悠",
+    "role": "更正单证与制造批次溯源",
+    "description": "首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "batch_trace",
+      "declaration",
+      "declaration_latest"
+    ],
+    "tools": {
+      "exporter.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "declaration"
+        ]
+      },
+      "exporter.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "declaration"
+        ]
+      },
+      "exporter.main.3.reply": {
+        "kind": "reply"
+      },
+      "exporter.refresh.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "declaration_latest",
+          "batch_trace"
+        ]
+      },
+      "exporter.refresh.2.document": {
+        "kind": "document",
+        "facts": [
+          "declaration_latest",
+          "batch_trace"
+        ]
+      },
+      "exporter.refresh.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "首轮更正单证",
+        "aliases": [
+          "首轮",
+          "申报",
+          "更正"
+        ],
+        "required_fields": [
+          "tracking"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "exporter.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120,
+              "not_before": "2026-12-07T10:00:00+08:00"
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "exporter.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "exporter.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "refresh",
+        "label": "第二轮单证和批次溯源",
+        "aliases": [
+          "第二轮",
+          "新版单证",
+          "批次溯源"
+        ],
+        "required_fields": [
+          "tracking",
+          "review_reference"
+        ],
+        "evidence_fields": {
+          "review_reference": {
+            "subject": {
+              "task": "DSB-12",
+              "case": {
+                "tracking": "PK-608"
+              }
+            },
+            "predicate": "review_reference",
+            "authorities": [
+              "attest:review_reference"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          }
+        },
+        "steps": [
+          {
+            "id": "refresh_1",
+            "label": "查询业务记录",
+            "tool": "exporter.refresh.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120,
+              "not_before": "2027-04-06T10:00:00+08:00"
+            }
+          },
+          {
+            "id": "refresh_2",
+            "label": "签发书面确认",
+            "tool": "exporter.refresh.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "refresh_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "exporter.refresh.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ]
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是出口方单证员·贺悠，负责更正单证与制造批次溯源。首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "出口方单证员·贺悠：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:batch_trace",
+      "attest:declaration",
+      "attest:declaration_version"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "batch_trace": {
+      "value": "TRACE-M608-2027",
+      "text": "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
+      "available_at": "2027-04-06T10:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "batch_trace"
+      }
+    },
+    "declaration": {
+      "value": "DEC-608-v2",
+      "text": "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。",
+      "valid_until": "2027-03-31T17:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "declaration"
+      }
+    },
+    "declaration_latest": {
+      "value": "DEC-608-v3",
+      "text": "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
+      "available_at": "2027-04-06T10:00:00+08:00",
+      "valid_until": "2027-09-30T17:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "declaration_version"
+      }
+    }
+  },
+  "start_at": "2026-11-06T15:00:00+08:00",
+  "deadline_at": "2027-09-02T15:00:00+08:00"
+}

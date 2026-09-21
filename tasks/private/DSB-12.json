@@ -1,0 +1,1505 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.3.0",
+  "id": "DSB-12",
+  "title": "跨境原型设备：300天内的初审、二次补件与未决放行",
+  "domain": "跨境设备争议核查",
+  "start_at": "2026-11-06T15:00:00+08:00",
+  "deadline_at": "2027-09-02T15:00:00+08:00",
+  "display_timezone": "Asia/Shanghai",
+  "synthetic": true,
+  "completion_class": "bounded_unresolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    }
+  },
+  "public": {
+    "id": "DSB-12",
+    "title": "跨境原型设备：300天内的初审、二次补件与未决放行",
+    "brief": "跟进因归类争议留置的科研原型设备PK-608，到2027年9月2日15点汇报。核实历史入库交接、取得初审登记号，按要求向出口方取得有效新版单证和制造批次溯源资料，再发起长期复核。若放行未确认，明确已完成步骤与仍待确认事项。不要把历史入库、初审登记或补件受理当成当前放行；不支付费用或作法律承诺。",
+    "user_fields": {
+      "tracking": "PK-608"
+    },
+    "initial_contacts": [
+      "forwarder"
+    ],
+    "pages": [
+      {
+        "id": "logistics",
+        "title": "远澄原型设备留置核查",
+        "text": "本合成场景有多阶段归类争议核查：首轮更正单证预计2026年12月7日可取；初审窗口2027年2月4日；制造档案预计4月6日可核验，届时需更新单证并再次申请长期复核。境外技术意见窗口为9月10日，无放行承诺。 材料齐备后，也可向单证联络人申请转介境外代理，直接发起长期复核；材料门槛和处理窗口相同。",
+        "contacts": [
+          "forwarder"
+        ]
+      }
+    ],
+    "message_budget": 16,
+    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "answer_keys": [
+      "initial_warehouse_record",
+      "review_reference",
+      "declaration_version",
+      "batch_trace",
+      "release_status"
+    ],
+    "value_normalization": {
+      "initial_warehouse_record": {
+        "type": "text"
+      },
+      "review_reference": {
+        "type": "text"
+      },
+      "declaration_version": {
+        "type": "text"
+      },
+      "batch_trace": {
+        "type": "text"
+      }
+    },
+    "conclusion_options": {
+      "released": "已确认放行",
+      "release_unconfirmed_at_deadline": "截止时放行尚未确认",
+      "not_in_warehouse": "尚未入库"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "warehouse": {
+      "value": "2026年11月已完成始发仓入库扫描",
+      "text": "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "initial_warehouse_record"
+      }
+    },
+    "declaration": {
+      "value": "DEC-608-v2",
+      "text": "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。",
+      "valid_until": "2027-03-31T17:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "declaration"
+      }
+    },
+    "review_case": {
+      "value": "HOLD-608-9",
+      "text": "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "review_reference"
+      }
+    },
+    "declaration_latest": {
+      "value": "DEC-608-v3",
+      "text": "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
+      "available_at": "2027-04-06T10:00:00+08:00",
+      "valid_until": "2027-09-30T17:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "declaration_version"
+      }
+    },
+    "batch_trace": {
+      "value": "TRACE-M608-2027",
+      "text": "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
+      "available_at": "2027-04-06T10:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "batch_trace"
+      }
+    },
+    "release": {
+      "value": "技术复核结果已返回，实际放行仍需另行确认",
+      "text": "2027年9月中旬技术复核窗口处理完成后，仅返回技术意见；该未来结果在本题截止前不可见。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "release"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "forwarder",
+      "name": "远澄货运客服·白榆",
+      "role": "货件入库信息",
+      "description": "只能确认入库并提供申报联络入口，不把入库状态说成放行。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [],
+      "tools": {
+        "forwarder.main.1.delegate": {
+          "kind": "delegate",
+          "target": "warehouse",
+          "workflow": "main",
+          "forward_fields": [
+            "tracking"
+          ]
+        },
+        "forwarder.main.2.refer": {
+          "kind": "refer",
+          "contacts": [
+            "exporter",
+            "customsdesk"
+          ]
+        },
+        "forwarder.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "货件状态与联系入口",
+          "aliases": [
+            "物流",
+            "货件",
+            "入库",
+            "状态"
+          ],
+          "required_fields": [
+            "tracking"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "内部转交",
+              "tool": "forwarder.main.1.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "查询联系人目录并转介",
+              "tool": "forwarder.main.2.refer",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "forwarder.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是远澄货运客服·白榆，负责货件入库信息。只能确认入库并提供申报联络入口，不把入库状态说成放行。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "远澄货运客服·白榆：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": []
+    },
+    {
+      "id": "warehouse",
+      "name": "始发仓查件员·施瑾",
+      "role": "仓内扫描核对",
+      "description": "周末无人工查件；核对后出具扫描记录。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "warehouse"
+      ],
+      "tools": {
+        "warehouse.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "warehouse"
+          ]
+        },
+        "warehouse.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "warehouse"
+          ]
+        },
+        "warehouse.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "入库扫描查证",
+          "aliases": [
+            "扫描",
+            "入库"
+          ],
+          "required_fields": [
+            "tracking"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "warehouse.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "warehouse.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "warehouse.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是始发仓查件员·施瑾，负责仓内扫描核对。周末无人工查件；核对后出具扫描记录。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "始发仓查件员·施瑾：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:initial_warehouse_record"
+      ]
+    },
+    {
+      "id": "exporter",
+      "name": "出口方单证员·贺悠",
+      "role": "更正单证与制造批次溯源",
+      "description": "首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "batch_trace",
+        "declaration",
+        "declaration_latest"
+      ],
+      "tools": {
+        "exporter.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "declaration"
+          ]
+        },
+        "exporter.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "declaration"
+          ]
+        },
+        "exporter.main.3.reply": {
+          "kind": "reply"
+        },
+        "exporter.refresh.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "declaration_latest",
+            "batch_trace"
+          ]
+        },
+        "exporter.refresh.2.document": {
+          "kind": "document",
+          "facts": [
+            "declaration_latest",
+            "batch_trace"
+          ]
+        },
+        "exporter.refresh.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "首轮更正单证",
+          "aliases": [
+            "首轮",
+            "申报",
+            "更正"
+          ],
+          "required_fields": [
+            "tracking"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "exporter.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120,
+                "not_before": "2026-12-07T10:00:00+08:00"
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "exporter.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "exporter.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "refresh",
+          "label": "第二轮单证和批次溯源",
+          "aliases": [
+            "第二轮",
+            "新版单证",
+            "批次溯源"
+          ],
+          "required_fields": [
+            "tracking",
+            "review_reference"
+          ],
+          "evidence_fields": {
+            "review_reference": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "review_reference",
+              "authorities": [
+                "attest:review_reference"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            }
+          },
+          "steps": [
+            {
+              "id": "refresh_1",
+              "label": "查询业务记录",
+              "tool": "exporter.refresh.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120,
+                "not_before": "2027-04-06T10:00:00+08:00"
+              }
+            },
+            {
+              "id": "refresh_2",
+              "label": "签发书面确认",
+              "tool": "exporter.refresh.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "refresh_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "exporter.refresh.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ]
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是出口方单证员·贺悠，负责更正单证与制造批次溯源。首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "出口方单证员·贺悠：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:batch_trace",
+        "attest:declaration",
+        "attest:declaration_version"
+      ]
+    },
+    {
+      "id": "customsdesk",
+      "name": "远澄单证联络·戴筠",
+      "role": "设备留置核查联络",
+      "description": "原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [],
+      "tools": {
+        "customsdesk.main.1.delegate": {
+          "kind": "delegate",
+          "target": "broker",
+          "workflow": "preliminary",
+          "forward_fields": [
+            "tracking",
+            "declaration_version"
+          ]
+        },
+        "customsdesk.main.2.reply": {
+          "kind": "reply"
+        },
+        "customsdesk.final.1.delegate": {
+          "kind": "delegate",
+          "target": "broker",
+          "workflow": "main",
+          "forward_fields": [
+            "tracking",
+            "declaration_version",
+            "review_reference",
+            "batch_trace"
+          ]
+        },
+        "customsdesk.final.2.reply": {
+          "kind": "reply"
+        },
+        "customsdesk.direct_entry.1.refer": {
+          "kind": "refer",
+          "contacts": [
+            "broker"
+          ]
+        },
+        "customsdesk.direct_entry.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "归类初审登记",
+          "aliases": [
+            "初审",
+            "登记"
+          ],
+          "required_fields": [
+            "tracking",
+            "declaration_version"
+          ],
+          "evidence_fields": {
+            "declaration_version": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "declaration",
+              "authorities": [
+                "attest:declaration"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            }
+          },
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "内部转交",
+              "tool": "customsdesk.main.1.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "customsdesk.main.2.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ]
+        },
+        {
+          "id": "final",
+          "label": "第二轮长期复核",
+          "aliases": [
+            "长期复核",
+            "放行状态"
+          ],
+          "required_fields": [
+            "tracking",
+            "declaration_version",
+            "review_reference",
+            "batch_trace"
+          ],
+          "evidence_fields": {
+            "declaration_version": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "declaration_version",
+              "authorities": [
+                "attest:declaration_version"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            },
+            "review_reference": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "review_reference",
+              "authorities": [
+                "attest:review_reference"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            },
+            "batch_trace": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "batch_trace",
+              "authorities": [
+                "attest:batch_trace"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            }
+          },
+          "steps": [
+            {
+              "id": "final_1",
+              "label": "内部转交",
+              "tool": "customsdesk.final.1.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "final_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "customsdesk.final.2.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ]
+        },
+        {
+          "id": "direct_entry",
+          "label": "材料齐备后转介境外代理直联",
+          "aliases": [
+            "直联",
+            "转介境外代理",
+            "直接联系境外"
+          ],
+          "required_fields": [
+            "tracking",
+            "declaration_version",
+            "review_reference",
+            "batch_trace"
+          ],
+          "evidence_fields": {
+            "declaration_version": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "declaration_version",
+              "authorities": [
+                "attest:declaration_version"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            },
+            "review_reference": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "review_reference",
+              "authorities": [
+                "attest:review_reference"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            },
+            "batch_trace": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "batch_trace",
+              "authorities": [
+                "attest:batch_trace"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            }
+          },
+          "steps": [
+            {
+              "id": "direct_entry_1",
+              "label": "查询联系人目录并转介",
+              "tool": "customsdesk.direct_entry.1.refer",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "direct_entry_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "customsdesk.direct_entry.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ]
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是远澄单证联络·戴筠，负责设备留置核查联络。原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "远澄单证联络·戴筠：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": []
+    },
+    {
+      "id": "broker",
+      "name": "境外代理·Morgan Lee",
+      "role": "原型设备归类与技术意见复核",
+      "description": "纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。",
+      "calendar": "new_york",
+      "channels": [
+        "email"
+      ],
+      "knowledge": [
+        "release",
+        "review_case"
+      ],
+      "tools": {
+        "broker.preliminary.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "review_case"
+          ]
+        },
+        "broker.preliminary.2.document": {
+          "kind": "document",
+          "facts": [
+            "review_case"
+          ]
+        },
+        "broker.preliminary.3.reply": {
+          "kind": "reply"
+        },
+        "broker.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "release"
+          ]
+        },
+        "broker.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "release"
+          ]
+        },
+        "broker.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "preliminary",
+          "label": "归类初审",
+          "aliases": [
+            "初审",
+            "归类"
+          ],
+          "required_fields": [
+            "tracking",
+            "declaration_version"
+          ],
+          "steps": [
+            {
+              "id": "preliminary_1",
+              "label": "查询业务记录",
+              "tool": "broker.preliminary.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120,
+                "not_before": "2027-02-04T09:00:00-05:00"
+              }
+            },
+            {
+              "id": "preliminary_2",
+              "label": "签发书面确认",
+              "tool": "broker.preliminary.2.document",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "preliminary_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "broker.preliminary.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "main",
+          "label": "长期技术复核",
+          "aliases": [
+            "长期复核",
+            "放行"
+          ],
+          "required_fields": [
+            "tracking",
+            "declaration_version",
+            "review_reference",
+            "batch_trace"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "broker.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 1440,
+                "not_before": "2027-09-10T09:00:00-04:00"
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "broker.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "broker.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "capabilities": [
+            "technical_review"
+          ],
+          "evidence_fields": {
+            "declaration_version": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "declaration_version",
+              "authorities": [
+                "attest:declaration_version"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            },
+            "review_reference": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "review_reference",
+              "authorities": [
+                "attest:review_reference"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            },
+            "batch_trace": {
+              "subject": {
+                "task": "DSB-12",
+                "case": {
+                  "tracking": "PK-608"
+                }
+              },
+              "predicate": "batch_trace",
+              "authorities": [
+                "attest:batch_trace"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            }
+          }
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是境外代理·Morgan Lee，负责原型设备归类与技术意见复核。纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "境外代理·Morgan Lee：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:release",
+        "attest:review_reference"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "initial_warehouse_record",
+      "expected": "2026年11月已完成始发仓入库扫描",
+      "accepted_facts": [
+        "warehouse"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "initial_warehouse_record",
+        "authorities": [
+          "attest:initial_warehouse_record"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {}
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "review_reference",
+      "expected": "HOLD-608-9",
+      "accepted_facts": [
+        "review_case"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "review_reference",
+        "authorities": [
+          "attest:review_reference"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {}
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {}
+      },
+      "match": "evidence"
+    },
+    {
+      "key": "declaration_version",
+      "expected": "DEC-608-v3",
+      "accepted_facts": [
+        "declaration_latest"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "declaration_version",
+        "authorities": [
+          "attest:declaration_version"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {}
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {}
+      },
+      "match": "evidence"
+    },
+    {
+      "key": "batch_trace",
+      "expected": "TRACE-M608-2027",
+      "accepted_facts": [
+        "batch_trace"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "batch_trace",
+        "authorities": [
+          "attest:batch_trace"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {}
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {}
+      },
+      "match": "evidence"
+    },
+    {
+      "key": "release_status",
+      "status": "unconfirmed",
+      "pending_condition": {
+        "capability": "technical_review",
+        "fields_equal": {
+          "tracking": "PK-608"
+        },
+        "required_evidence": [
+          {
+            "subject": {
+              "task": "DSB-12",
+              "case": {
+                "tracking": "PK-608"
+              }
+            },
+            "predicate": "declaration_version",
+            "authorities": [
+              "attest:declaration_version"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          },
+          {
+            "subject": {
+              "task": "DSB-12",
+              "case": {
+                "tracking": "PK-608"
+              }
+            },
+            "predicate": "review_reference",
+            "authorities": [
+              "attest:review_reference"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          },
+          {
+            "subject": {
+              "task": "DSB-12",
+              "case": {
+                "tracking": "PK-608"
+              }
+            },
+            "predicate": "batch_trace",
+            "authorities": [
+              "attest:batch_trace"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "expected_conclusion": "release_unconfirmed_at_deadline",
+  "temporal_mechanisms": [
+    "跨年度多轮事项",
+    "定期归类初审窗口",
+    "旧单证过期与跨人物证据更新",
+    "制造档案恢复后的第二轮补件",
+    "纽约夏令时切换",
+    "300天截止仍早于技术复核窗口"
+  ],
+  "failure_modes": [
+    "只发一条查询后等待300天",
+    "拿旧单证或初审登记跳过第二轮补件",
+    "把历史仓库记录当当前货位",
+    "受理回执或未来技术意见当放行证明"
+  ],
+  "reference_actions": [
+    {
+      "op": "send",
+      "to": "forwarder",
+      "text": "查询货件状态和联系入口",
+      "label": "front",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "front"
+    },
+    {
+      "op": "send",
+      "to": "exporter",
+      "text": "请补发首轮更正申报资料",
+      "label": "doc_v2",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "doc_v2"
+    },
+    {
+      "op": "send",
+      "to": "customsdesk",
+      "text": "请办理归类初审登记",
+      "label": "preliminary",
+      "fields": {
+        "tracking": "PK-608",
+        "declaration_version": "$fact:declaration"
+      }
+    },
+    {
+      "op": "wait_for",
+      "label": "preliminary"
+    },
+    {
+      "op": "send",
+      "to": "exporter",
+      "text": "请取得第二轮新版单证及批次溯源",
+      "label": "doc_v3",
+      "fields": {
+        "tracking": "PK-608",
+        "review_reference": "$fact:review_case"
+      }
+    },
+    {
+      "op": "wait_for",
+      "label": "doc_v3"
+    },
+    {
+      "op": "send",
+      "to": "customsdesk",
+      "text": "请按新版材料发起长期复核并查询放行状态",
+      "label": "release",
+      "fields": {
+        "tracking": "PK-608",
+        "declaration_version": "$fact:declaration_latest",
+        "review_reference": "$fact:review_case",
+        "batch_trace": "$fact:batch_trace"
+      }
+    },
+    {
+      "op": "wait_for",
+      "label": "release"
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "两条合法路径：由单证联络人内部转交，或材料核验后取得转介并直接联系境外代理。按同一复核能力、受理凭证和截止状态评分，不绑定人物ID或中间转交层数。",
+  "horizon_design": {
+    "reference_days": 300,
+    "stratum": "长期",
+    "mechanism": "原型设备归类争议、第二轮补件和未决技术复核",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

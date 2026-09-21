@@ -1,0 +1,59 @@
+{
+  "id": "DSB-09",
+  "title": "公共活动咨询：意见征集与年末联合复核",
+  "brief": "为2027年1月晴港北广场的小型扩声活动询问主管机构、事项分类、应备材料和最早办理窗口。跟进意见征集并携回执再次申请联合复核。只做预咨询，不能写成已获许可；场景规则均为合成。",
+  "user_fields": {
+    "location": "晴港北广场",
+    "amplified": "使用两只扩声音箱"
+  },
+  "initial_contacts": [
+    "service"
+  ],
+  "pages": [
+    {
+      "id": "service",
+      "title": "晴港公共活动咨询",
+      "text": "先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。",
+      "contacts": [
+        "service"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "responsible_office",
+    "consultation_receipt",
+    "case_category",
+    "required_documents",
+    "earliest_processing_date"
+  ],
+  "value_normalization": {
+    "responsible_office": {
+      "type": "text"
+    },
+    "consultation_receipt": {
+      "type": "text"
+    },
+    "case_category": {
+      "type": "text"
+    },
+    "required_documents": {
+      "type": "set"
+    },
+    "earliest_processing_date": {
+      "type": "date"
+    }
+  },
+  "conclusion_options": {
+    "consultation_only_not_approval": "已获咨询结论，未获许可",
+    "formal_approval_received": "已获正式许可",
+    "unconfirmed": "信息不足"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-03T15:00:00+08:00",
+  "deadline_at": "2026-12-29T17:00:00+08:00"
+}

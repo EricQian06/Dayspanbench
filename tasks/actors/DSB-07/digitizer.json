@@ -1,0 +1,140 @@
+{
+  "private": true,
+  "task_id": "DSB-07",
+  "actor": {
+    "id": "digitizer",
+    "name": "档案数字化员·林澈",
+    "role": "扫描规格",
+    "description": "扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "scan"
+    ],
+    "tools": {
+      "digitizer.main.1.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "digitizer.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "scan"
+        ]
+      },
+      "digitizer.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "扫描质量核对",
+        "aliases": [
+          "扫描",
+          "规格"
+        ],
+        "required_fields": [
+          "archive_id"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "保护性数字化与图像恢复连续处理72小时",
+            "tool": "digitizer.main.1.lookup",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 4320
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "digitizer.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "digitizer.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是档案数字化员·林澈，负责扫描规格。扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "档案数字化员·林澈：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:scan_dpi"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "scan": {
+      "value": 600,
+      "text": "可提供600dpi扫描件；文件用途仍受授权范围限制。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "scan_dpi"
+      }
+    }
+  },
+  "start_at": "2026-11-05T15:00:00+08:00",
+  "deadline_at": "2027-06-04T17:00:00+08:00"
+}

@@ -1,0 +1,161 @@
+{
+  "private": true,
+  "task_id": "DSB-08",
+  "actor": {
+    "id": "b_tech",
+    "name": "B酒店设施主管·郑砚",
+    "role": "指定房型现场尺寸",
+    "description": "指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "b_bath",
+      "b_door"
+    ],
+    "tools": {
+      "b_tech.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "b_door",
+          "b_bath"
+        ]
+      },
+      "b_tech.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "b_door",
+          "b_bath"
+        ]
+      },
+      "b_tech.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "指定房间量测",
+        "aliases": [
+          "尺寸",
+          "测量"
+        ],
+        "required_fields": [
+          "wheelchair_width"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "b_tech.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120,
+              "not_before": "2026-11-11T10:00:00+08:00"
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "b_tech.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "b_tech.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是B酒店设施主管·郑砚，负责指定房型现场尺寸。指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "B酒店设施主管·郑砚：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:b_bathroom_cm",
+      "attest:b_door_cm"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "b_bath": {
+      "value": 85,
+      "text": "B酒店浴室通行净宽85cm。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_bathroom_cm"
+      }
+    },
+    "b_door": {
+      "value": 92,
+      "text": "B酒店指定无障碍房净门宽92cm。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_door_cm"
+      }
+    }
+  },
+  "start_at": "2026-11-06T13:30:00+08:00",
+  "deadline_at": "2026-11-12T18:00:00+08:00"
+}

@@ -1,0 +1,58 @@
+{
+  "id": "DSB-03",
+  "title": "学分转换：秋季补件与春季集中审议",
+  "brief": "确认CS204能转换多少学分、计入哪类课程、何时生效。我目前只有旧大纲，需要向课程负责人获取正式版本。请获得教务的书面结论，不提交正式选课变更。",
+  "user_fields": {
+    "course_code": "CS204"
+  },
+  "initial_contacts": [
+    "records"
+  ],
+  "pages": [
+    {
+      "id": "faculty",
+      "title": "CS204课程负责人",
+      "text": "课程签章材料请联系梅芮。她11月6—9日出差。跨校转换在2027年2月2日10点春季委员会集中审议；秋季预审不等于最终批准。",
+      "contacts": [
+        "lecturer"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "syllabus_version",
+    "credits",
+    "credit_scope",
+    "effective_term"
+  ],
+  "value_normalization": {
+    "syllabus_version": {
+      "type": "text"
+    },
+    "credits": {
+      "type": "number",
+      "units": {
+        "学分": 1
+      }
+    },
+    "credit_scope": {
+      "type": "text"
+    },
+    "effective_term": {
+      "type": "text"
+    }
+  },
+  "conclusion_options": {
+    "not_eligible": "不能转换",
+    "eligible_with_scope_limit": "可转换但有课程范围限制",
+    "eligible_without_scope_limit": "可转换且无范围限制",
+    "unconfirmed": "信息不足"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-05T14:00:00+08:00",
+  "deadline_at": "2027-02-03T17:00:00+08:00"
+}

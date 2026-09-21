@@ -1,0 +1,264 @@
+{
+  "private": true,
+  "task_id": "DSB-12",
+  "actor": {
+    "id": "broker",
+    "name": "境外代理·Morgan Lee",
+    "role": "原型设备归类与技术意见复核",
+    "description": "纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。",
+    "calendar": "new_york",
+    "channels": [
+      "email"
+    ],
+    "knowledge": [
+      "release",
+      "review_case"
+    ],
+    "tools": {
+      "broker.preliminary.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "review_case"
+        ]
+      },
+      "broker.preliminary.2.document": {
+        "kind": "document",
+        "facts": [
+          "review_case"
+        ]
+      },
+      "broker.preliminary.3.reply": {
+        "kind": "reply"
+      },
+      "broker.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "release"
+        ]
+      },
+      "broker.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "release"
+        ]
+      },
+      "broker.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "preliminary",
+        "label": "归类初审",
+        "aliases": [
+          "初审",
+          "归类"
+        ],
+        "required_fields": [
+          "tracking",
+          "declaration_version"
+        ],
+        "steps": [
+          {
+            "id": "preliminary_1",
+            "label": "查询业务记录",
+            "tool": "broker.preliminary.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120,
+              "not_before": "2027-02-04T09:00:00-05:00"
+            }
+          },
+          {
+            "id": "preliminary_2",
+            "label": "签发书面确认",
+            "tool": "broker.preliminary.2.document",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "preliminary_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "broker.preliminary.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "main",
+        "label": "长期技术复核",
+        "aliases": [
+          "长期复核",
+          "放行"
+        ],
+        "required_fields": [
+          "tracking",
+          "declaration_version",
+          "review_reference",
+          "batch_trace"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "broker.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 1440,
+              "not_before": "2027-09-10T09:00:00-04:00"
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "broker.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "broker.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "capabilities": [
+          "technical_review"
+        ],
+        "evidence_fields": {
+          "declaration_version": {
+            "subject": {
+              "task": "DSB-12",
+              "case": {
+                "tracking": "PK-608"
+              }
+            },
+            "predicate": "declaration_version",
+            "authorities": [
+              "attest:declaration_version"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          },
+          "review_reference": {
+            "subject": {
+              "task": "DSB-12",
+              "case": {
+                "tracking": "PK-608"
+              }
+            },
+            "predicate": "review_reference",
+            "authorities": [
+              "attest:review_reference"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          },
+          "batch_trace": {
+            "subject": {
+              "task": "DSB-12",
+              "case": {
+                "tracking": "PK-608"
+              }
+            },
+            "predicate": "batch_trace",
+            "authorities": [
+              "attest:batch_trace"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          }
+        }
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是境外代理·Morgan Lee，负责原型设备归类与技术意见复核。纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "境外代理·Morgan Lee：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:release",
+      "attest:review_reference"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "release": {
+      "value": "技术复核结果已返回，实际放行仍需另行确认",
+      "text": "2027年9月中旬技术复核窗口处理完成后，仅返回技术意见；该未来结果在本题截止前不可见。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "release"
+      }
+    },
+    "review_case": {
+      "value": "HOLD-608-9",
+      "text": "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "review_reference"
+      }
+    }
+  },
+  "start_at": "2026-11-06T15:00:00+08:00",
+  "deadline_at": "2027-09-02T15:00:00+08:00"
+}

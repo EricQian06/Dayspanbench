@@ -1,0 +1,64 @@
+{
+  "id": "DSB-05",
+  "title": "制造采购：28天耐久测试后重新询价",
+  "brief": "询问棱川制造500件M26规格产品的有效总报价、最小订单量、最早出库时间，并取得Q7质检结果。报告完成时仍需有效报价，预算19000元；不要下单。",
+  "user_fields": {
+    "quantity": 500,
+    "spec": "M26-Q7"
+  },
+  "initial_contacts": [
+    "sales"
+  ],
+  "pages": [
+    {
+      "id": "supplier",
+      "title": "棱川制造联系人",
+      "text": "报价有效期短于28天耐久性测试；测试结束后的周一10点复核报告。销售与质检可并行咨询，报告完成后应重新确认报价。",
+      "contacts": [
+        "sales",
+        "qa"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "current_total",
+    "minimum_quantity",
+    "earliest_dispatch",
+    "qa_pass"
+  ],
+  "value_normalization": {
+    "current_total": {
+      "type": "number",
+      "units": {
+        "元": 1,
+        "CNY": 1,
+        "人民币": 1
+      }
+    },
+    "minimum_quantity": {
+      "type": "number",
+      "units": {
+        "件": 1
+      }
+    },
+    "earliest_dispatch": {
+      "type": "date"
+    },
+    "qa_pass": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "exceeds_budget": "超预算",
+    "within_budget_with_current_quote": "有有效报价且预算内",
+    "unconfirmed": "信息不足或报价已过期"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-03T14:00:00+08:00",
+  "deadline_at": "2026-12-08T15:00:00+08:00"
+}

@@ -1,0 +1,210 @@
+{
+  "private": true,
+  "task_id": "DSB-04",
+  "actor": {
+    "id": "instrument",
+    "name": "仪器管理员·杜和",
+    "role": "耗材、校准和使用窗口",
+    "description": "须核实培训凭证；耗材到库后才启动连续7天稳定性校准。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "ticket"
+    ],
+    "knowledge": [
+      "price",
+      "window"
+    ],
+    "tools": {
+      "instrument.main.1.delegate": {
+        "kind": "delegate",
+        "target": "stores",
+        "workflow": "main",
+        "forward_fields": [
+          "sample_id"
+        ]
+      },
+      "instrument.main.2.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "instrument.main.3.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "window",
+          "price"
+        ]
+      },
+      "instrument.main.4.document": {
+        "kind": "document",
+        "facts": [
+          "window",
+          "price"
+        ]
+      },
+      "instrument.main.5.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "测量可用时间与费用",
+        "aliases": [
+          "测量",
+          "仪器",
+          "校准",
+          "费用"
+        ],
+        "required_fields": [
+          "sample_id",
+          "safety_certificate"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "内部转交",
+            "tool": "instrument.main.1.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "连续7天稳定性校准，可跨夜运行",
+            "tool": "instrument.main.2.lookup",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 10080
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "核对校准结果和使用窗口",
+            "tool": "instrument.main.3.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 240
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "签发书面确认",
+            "tool": "instrument.main.4.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_5",
+            "label": "向请求者回复已取得的结果",
+            "tool": "instrument.main.5.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {
+          "safety_certificate": {
+            "subject": {
+              "task": "DSB-04",
+              "case": {
+                "sample_id": "S-482",
+                "person_name": "顾晓"
+              }
+            },
+            "predicate": "safety_certificate",
+            "authorities": [
+              "attest:safety_certificate"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          }
+        }
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是仪器管理员·杜和，负责耗材、校准和使用窗口。须核实培训凭证；耗材到库后才启动连续7天稳定性校准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "仪器管理员·杜和：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:earliest_measurement",
+      "attest:price"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "price": {
+      "value": 1800,
+      "text": "该样品批次测量报价1800元，尚未预约或扣费。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "price"
+      }
+    },
+    "window": {
+      "value": "2026-11-25T13:00:00+08:00",
+      "text": "完成7天稳定性校准后，最早可用测量时段为11月25日13点。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "earliest_measurement"
+      }
+    }
+  },
+  "start_at": "2026-11-04T09:30:00+08:00",
+  "deadline_at": "2026-11-25T17:00:00+08:00"
+}

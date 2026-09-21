@@ -1,0 +1,65 @@
+{
+  "id": "DSB-10",
+  "title": "二手相机：夜间联系、周末实测与取件咨询",
+  "brief": "考虑购买CAM-402，要求快门少于30000次、热靴正常。请取得实测快门数和热靴结果，问清价格、退货条件和最早取件时段。不能付款或让卖方保留商品。",
+  "user_fields": {
+    "serial": "CAM-402",
+    "pickup_area": "桥溪东区"
+  },
+  "initial_contacts": [
+    "seller"
+  ],
+  "pages": [
+    {
+      "id": "camera",
+      "title": "CAM-402二手信息",
+      "text": "卖家写快门约一万次，实测情况待核。卖家晚间回复。",
+      "contacts": [
+        "seller"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "asking_price",
+    "measured_shutter",
+    "hotshoe_works",
+    "return_policy",
+    "earliest_pickup"
+  ],
+  "value_normalization": {
+    "asking_price": {
+      "type": "number",
+      "units": {
+        "元": 1,
+        "CNY": 1,
+        "人民币": 1
+      }
+    },
+    "measured_shutter": {
+      "type": "number",
+      "units": {}
+    },
+    "hotshoe_works": {
+      "type": "boolean"
+    },
+    "return_policy": {
+      "type": "text"
+    },
+    "earliest_pickup": {
+      "type": "datetime"
+    }
+  },
+  "conclusion_options": {
+    "meets_requirements": "满足购买条件",
+    "does_not_meet_requirements": "不满足购买条件",
+    "unconfirmed": "信息不足"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-06T10:00:00+08:00",
+  "deadline_at": "2026-11-09T22:00:00+08:00"
+}

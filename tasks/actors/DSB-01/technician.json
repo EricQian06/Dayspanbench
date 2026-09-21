@@ -1,0 +1,143 @@
+{
+  "private": true,
+  "task_id": "DSB-01",
+  "actor": {
+    "id": "technician",
+    "name": "禾岸会馆设备主管·周敏",
+    "role": "设备维修计划",
+    "description": "只有本岗位知道维修窗口；内部收到转交后进入自己的队列。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "projector"
+    ],
+    "tools": {
+      "technician.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "projector"
+        ]
+      },
+      "technician.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "projector"
+        ]
+      },
+      "technician.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "核对维修窗口",
+        "aliases": [
+          "投影",
+          "维修"
+        ],
+        "required_fields": [
+          "event_date"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "technician.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 240
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "technician.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "technician.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是禾岸会馆设备主管·周敏，负责设备维修计划。只有本岗位知道维修窗口；内部收到转交后进入自己的队列。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "禾岸会馆设备主管·周敏：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:projector_available"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "projector": {
+      "value": false,
+      "text": "投影设备11月13日全天维修，场地方也不能提供替代投影设备。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-01",
+          "case": {
+            "event_date": "2026-11-13",
+            "event_time": "18:00-21:00",
+            "headcount": 80
+          }
+        },
+        "predicate": "projector_available"
+      }
+    }
+  },
+  "start_at": "2026-11-06T10:00:00+08:00",
+  "deadline_at": "2026-11-10T18:00:00+08:00"
+}

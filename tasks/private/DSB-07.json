@@ -1,0 +1,880 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.3.0",
+  "id": "DSB-07",
+  "title": "档案使用：权利继受核验后重新启动数字化",
+  "domain": "文化档案",
+  "start_at": "2026-11-05T15:00:00+08:00",
+  "deadline_at": "2027-06-04T17:00:00+08:00",
+  "display_timezone": "Asia/Shanghai",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    }
+  },
+  "public": {
+    "id": "DSB-07",
+    "title": "档案使用：权利继受核验后重新启动数字化",
+    "brief": "为2027年7月的非商业展览核实ARC-71图像的实体及网站用途权限，问清总费用与扫描分辨率。权利继受正在核验；取得权利方确认后请再次联系档案馆核实数字化交付。不付费、不发布。",
+    "user_fields": {
+      "archive_id": "ARC-71",
+      "usage": "非商业实体展览及展览网站"
+    },
+    "initial_contacts": [
+      "archive"
+    ],
+    "pages": [
+      {
+        "id": "archive",
+        "title": "北汀档案馆使用说明",
+        "text": "该图像处于权利继受核验期，境外联络方预计2027年5月28日集中核对文件。用途获确认后需申请人再次联系档案馆核实数字化交付，实体许可不自动包括网络用途。",
+        "contacts": [
+          "archive"
+        ]
+      }
+    ],
+    "message_budget": 16,
+    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "answer_keys": [
+      "physical_exhibit_allowed",
+      "online_allowed",
+      "total_fee",
+      "scan_dpi"
+    ],
+    "value_normalization": {
+      "physical_exhibit_allowed": {
+        "type": "boolean"
+      },
+      "online_allowed": {
+        "type": "boolean"
+      },
+      "total_fee": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "scan_dpi": {
+        "type": "number",
+        "units": {
+          "dpi": 1
+        }
+      }
+    },
+    "conclusion_options": {
+      "physical_and_online": "实体与网络均获准",
+      "physical_only": "仅实体用途获准",
+      "not_permitted": "两种用途均不获准",
+      "unconfirmed": "信息不足"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "exhibit": {
+      "value": true,
+      "text": "图像ARC-71获准用于本次非商业实体展览。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "physical_exhibit_allowed"
+      }
+    },
+    "online": {
+      "value": false,
+      "text": "授权不包含网站或社交媒体公开发布。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "online_allowed"
+      }
+    },
+    "fee": {
+      "value": 800,
+      "text": "本次数字化和授权服务合计800元。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "total_fee"
+      }
+    },
+    "scan": {
+      "value": 600,
+      "text": "可提供600dpi扫描件；文件用途仍受授权范围限制。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "scan_dpi"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "archive",
+      "name": "北汀档案馆接待·关雨",
+      "role": "档案使用咨询",
+      "description": "先提供费用和权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "fee"
+      ],
+      "tools": {
+        "archive.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "fee"
+          ]
+        },
+        "archive.main.2.refer": {
+          "kind": "refer",
+          "contacts": [
+            "rights"
+          ]
+        },
+        "archive.main.3.reply": {
+          "kind": "reply"
+        },
+        "archive.digitize.1.delegate": {
+          "kind": "delegate",
+          "target": "digitizer",
+          "workflow": "main",
+          "forward_fields": [
+            "archive_id"
+          ]
+        },
+        "archive.digitize.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "费用与权利联系人",
+          "aliases": [
+            "档案",
+            "费用",
+            "联系人"
+          ],
+          "required_fields": [
+            "archive_id",
+            "usage"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "archive.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "查询联系人目录并转介",
+              "tool": "archive.main.2.refer",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "archive.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "digitize",
+          "label": "取得许可后的数字化规格确认",
+          "aliases": [
+            "数字化交付",
+            "扫描规格"
+          ],
+          "required_fields": [
+            "archive_id",
+            "exhibition_permission"
+          ],
+          "evidence_fields": {
+            "exhibition_permission": {
+              "subject": {
+                "task": "DSB-07",
+                "case": {
+                  "archive_id": "ARC-71",
+                  "usage": "非商业实体展览及展览网站"
+                }
+              },
+              "predicate": "physical_exhibit_allowed",
+              "authorities": [
+                "attest:physical_exhibit_allowed"
+              ],
+              "normalization": {
+                "type": "boolean"
+              }
+            }
+          },
+          "steps": [
+            {
+              "id": "digitize_1",
+              "label": "内部转交",
+              "tool": "archive.digitize.1.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "digitize_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "archive.digitize.2.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            }
+          ]
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是北汀档案馆接待·关雨，负责档案使用咨询。先提供费用和权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "北汀档案馆接待·关雨：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:total_fee"
+      ]
+    },
+    {
+      "id": "rights",
+      "name": "权利方联络员·Alex Chen",
+      "role": "图像权利继受与用途确认",
+      "description": "权利继受文件在2027年5月28日集中核验；随后按纽约当地工作时间审查指定用途，结束时自动签发确认，此前不能批准。",
+      "calendar": "new_york",
+      "channels": [
+        "email"
+      ],
+      "knowledge": [
+        "exhibit",
+        "online"
+      ],
+      "tools": {
+        "rights.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "exhibit",
+            "online"
+          ]
+        },
+        "rights.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "exhibit",
+            "online"
+          ]
+        },
+        "rights.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "权利范围核实",
+          "aliases": [
+            "授权",
+            "使用",
+            "权利"
+          ],
+          "required_fields": [
+            "archive_id",
+            "usage"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "rights.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 480,
+                "not_before": "2027-05-28T09:00:00-04:00"
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "rights.main.2.document",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "rights.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是权利方联络员·Alex Chen，负责图像权利继受与用途确认。权利继受文件在2027年5月28日集中核验；随后按纽约当地工作时间审查指定用途，结束时自动签发确认，此前不能批准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "权利方联络员·Alex Chen：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:online_allowed",
+        "attest:physical_exhibit_allowed"
+      ]
+    },
+    {
+      "id": "digitizer",
+      "name": "档案数字化员·林澈",
+      "role": "扫描规格",
+      "description": "扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "scan"
+      ],
+      "tools": {
+        "digitizer.main.1.lookup": {
+          "kind": "lookup",
+          "facts": []
+        },
+        "digitizer.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "scan"
+          ]
+        },
+        "digitizer.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "扫描质量核对",
+          "aliases": [
+            "扫描",
+            "规格"
+          ],
+          "required_fields": [
+            "archive_id"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "保护性数字化与图像恢复连续处理72小时",
+              "tool": "digitizer.main.1.lookup",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 4320
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "digitizer.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "digitizer.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是档案数字化员·林澈，负责扫描规格。扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "档案数字化员·林澈：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:scan_dpi"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "physical_exhibit_allowed",
+      "expected": true,
+      "accepted_facts": [
+        "exhibit"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "physical_exhibit_allowed",
+        "authorities": [
+          "attest:physical_exhibit_allowed"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "online_allowed",
+      "expected": false,
+      "accepted_facts": [
+        "online"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "online_allowed",
+        "authorities": [
+          "attest:online_allowed"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "total_fee",
+      "expected": 800,
+      "accepted_facts": [
+        "fee"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "total_fee",
+        "authorities": [
+          "attest:total_fee"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "元": 1,
+            "CNY": 1,
+            "人民币": 1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "scan_dpi",
+      "expected": 600,
+      "accepted_facts": [
+        "scan"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "scan_dpi",
+        "authorities": [
+          "attest:scan_dpi"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "dpi": 1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "dpi": 1
+        }
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "physical_only",
+  "temporal_mechanisms": [
+    "跨年度权利继受核验",
+    "纽约冬令时和夏令时",
+    "取得许可后必须再次发起请求",
+    "72小时图像恢复与人工验收"
+  ],
+  "failure_modes": [
+    "等待期间擅自假定许可",
+    "实体授权误推为网络授权",
+    "收到许可后忘记重启数字化查询"
+  ],
+  "reference_actions": [
+    {
+      "op": "send",
+      "to": "archive",
+      "text": "咨询档案费用与权利联系人",
+      "label": "front",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "front"
+    },
+    {
+      "op": "send",
+      "to": "rights",
+      "text": "请确认两种用途的权利授权",
+      "label": "rights",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "rights"
+    },
+    {
+      "op": "send",
+      "to": "archive",
+      "text": "许可收到后请确认数字化交付和扫描规格",
+      "label": "scan",
+      "fields": {
+        "archive_id": "ARC-71",
+        "exhibition_permission": "$fact:exhibit"
+      }
+    },
+    {
+      "op": "wait_for",
+      "label": "scan"
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "horizon_design": {
+    "reference_days": 210,
+    "stratum": "长期",
+    "mechanism": "权利继受核验后再次申请数字化",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

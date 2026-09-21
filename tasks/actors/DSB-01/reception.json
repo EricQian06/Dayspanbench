@@ -1,0 +1,108 @@
+{
+  "private": true,
+  "task_id": "DSB-01",
+  "actor": {
+    "id": "reception",
+    "name": "禾岸会馆前台·陈芷",
+    "role": "对外咨询与转介",
+    "description": "只掌握联系人目录；不能承诺报价、档期或设备。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [],
+    "tools": {
+      "reception.main.1.refer": {
+        "kind": "refer",
+        "contacts": [
+          "sales",
+          "operations"
+        ]
+      },
+      "reception.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "活动联系入口",
+        "aliases": [
+          "活动",
+          "场地",
+          "联系"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询联系人目录并转介",
+            "tool": "reception.main.1.refer",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "reception.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是禾岸会馆前台·陈芷，负责对外咨询与转介。只掌握联系人目录；不能承诺报价、档期或设备。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "禾岸会馆前台·陈芷：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": []
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {},
+  "start_at": "2026-11-06T10:00:00+08:00",
+  "deadline_at": "2026-11-10T18:00:00+08:00"
+}

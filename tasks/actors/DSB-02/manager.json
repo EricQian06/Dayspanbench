@@ -1,0 +1,146 @@
+{
+  "private": true,
+  "task_id": "DSB-02",
+  "actor": {
+    "id": "manager",
+    "name": "青栎公寓物业·许乔",
+    "role": "楼宇规则与货梯时段",
+    "description": "收到房东转交后提交周五审核；11月11日才开放新一期货梯表，之后核实搬入时间。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "moving"
+    ],
+    "tools": {
+      "manager.main.1.delegate": {
+        "kind": "delegate",
+        "target": "reviewer",
+        "workflow": "main",
+        "forward_fields": [
+          "pet_weight"
+        ]
+      },
+      "manager.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "moving"
+        ]
+      },
+      "manager.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "宠物与搬入复核",
+        "aliases": [
+          "宠物",
+          "搬入"
+        ],
+        "required_fields": [
+          "pet_weight",
+          "move_date"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "内部转交",
+            "tool": "manager.main.1.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "查询业务记录",
+            "tool": "manager.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60,
+              "not_before": "2026-11-11T09:00:00+08:00"
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "manager.main.3.reply",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是青栎公寓物业·许乔，负责楼宇规则与货梯时段。收到房东转交后提交周五审核；11月11日才开放新一期货梯表，之后核实搬入时间。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "青栎公寓物业·许乔：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:earliest_move"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "moving": {
+      "value": "2026-11-13T10:00:00+08:00",
+      "text": "11月11日公布的新一期货梯表显示12日无可用时段，最早可安排11月13日10点搬入。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "earliest_move"
+      }
+    }
+  },
+  "start_at": "2026-11-03T19:30:00+08:00",
+  "deadline_at": "2026-11-12T17:00:00+08:00"
+}

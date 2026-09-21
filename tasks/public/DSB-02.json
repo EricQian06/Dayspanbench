@@ -1,0 +1,66 @@
+{
+  "id": "DSB-02",
+  "title": "租房咨询：物业周审与新一期货梯表",
+  "brief": "我想11月12日搬入林霁的房子，带一只8公斤成年犬。问清租金、押金、宠物规则，以及最早可搬入时间；若12日不行请说明替代时间，暂不签约。",
+  "user_fields": {
+    "pet_weight": "8kg",
+    "move_date": "2026-11-12"
+  },
+  "initial_contacts": [
+    "landlord"
+  ],
+  "pages": [
+    {
+      "id": "listing",
+      "title": "青栎房源",
+      "text": "房东通常19—21点回复。宠物需物业周五复核；11月11日开放新一期货梯表，才能确认下半月搬入时段。",
+      "contacts": [
+        "landlord"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "monthly_rent",
+    "deposit",
+    "pet_allowed",
+    "earliest_move"
+  ],
+  "value_normalization": {
+    "monthly_rent": {
+      "type": "number",
+      "units": {
+        "元": 1,
+        "CNY": 1,
+        "人民币": 1
+      }
+    },
+    "deposit": {
+      "type": "number",
+      "units": {
+        "元": 1,
+        "CNY": 1,
+        "人民币": 1
+      }
+    },
+    "pet_allowed": {
+      "type": "boolean"
+    },
+    "earliest_move": {
+      "type": "datetime"
+    }
+  },
+  "conclusion_options": {
+    "move_on_requested_date": "可在原定日期搬入",
+    "requires_date_change": "须改变搬入日期",
+    "not_eligible": "不满足租住条件",
+    "unconfirmed": "信息不足"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-03T19:30:00+08:00",
+  "deadline_at": "2026-11-12T17:00:00+08:00"
+}

@@ -1,0 +1,61 @@
+{
+  "id": "DSB-01",
+  "title": "活动场地：跨周末确认设备与报价",
+  "brief": "请核实禾岸会馆能否在11月13日18—21点接待80人，预算12000元，必须有投影。问清总费用、取消条款、档期和投影是否可用，附可核实的书面依据。",
+  "user_fields": {
+    "event_date": "2026-11-13",
+    "event_time": "18:00-21:00",
+    "headcount": 80
+  },
+  "initial_contacts": [
+    "reception"
+  ],
+  "pages": [
+    {
+      "id": "venue",
+      "title": "禾岸会馆活动页",
+      "text": "旧版简介：8000元起，可容纳100人，有投影。具体档期和设施请联系前台。办公时间周一至周五9—12、13—17点。",
+      "contacts": [
+        "reception"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "total_cost",
+    "cancellation",
+    "slot_available",
+    "projector_available"
+  ],
+  "value_normalization": {
+    "total_cost": {
+      "type": "number",
+      "units": {
+        "元": 1,
+        "CNY": 1,
+        "人民币": 1
+      }
+    },
+    "cancellation": {
+      "type": "text"
+    },
+    "slot_available": {
+      "type": "boolean"
+    },
+    "projector_available": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "suitable": "满足所有活动要求",
+    "unsuitable": "存在不满足的必要条件",
+    "unconfirmed": "信息不足"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-06T10:00:00+08:00",
+  "deadline_at": "2026-11-10T18:00:00+08:00"
+}

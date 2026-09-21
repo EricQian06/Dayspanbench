@@ -1,0 +1,8 @@
+{
+  "id": "DSB11-alias-20260921",
+  "task_id": "DSB-11",
+  "goal_key": "stable_release_date",
+  "canonical": "尚无承诺日期",
+  "additional_aliases": ["暂无承诺日期"],
+  "reason": "暂无承诺日期与尚无承诺日期均表示尚未承诺发布日期。仅补充此明确等价表达；不接受具体发布日期或发布保证。发现于实测后，须同时保留原始成绩与事后修正规则的复评分。"
+}

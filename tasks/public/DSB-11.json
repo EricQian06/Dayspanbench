@@ -1,0 +1,57 @@
+{
+  "id": "DSB-11",
+  "title": "开源兼容性：补丁验证后跟进跨季度发布",
+  "brief": "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期。中间补丁可用不代表本委托完成。不要合并或发布。",
+  "user_fields": {
+    "version": "1.4.1",
+    "compiler": "C19",
+    "logs": "LOG-771"
+  },
+  "initial_contacts": [
+    "maintainer"
+  ],
+  "pages": [
+    {
+      "id": "repo",
+      "title": "星舟项目贡献说明",
+      "text": "维护者周一三五20—22点处理，CI连续运行48小时。补丁验证后，须在2027年3月30日20点的上游兼容窗口另行核实季度发布，切勿把补丁或候选版当稳定版。",
+      "contacts": [
+        "maintainer"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "reproduced",
+    "verified_patch",
+    "candidate_version",
+    "stable_release_date"
+  ],
+  "value_normalization": {
+    "reproduced": {
+      "type": "boolean"
+    },
+    "verified_patch": {
+      "type": "text"
+    },
+    "candidate_version": {
+      "type": "text"
+    },
+    "stable_release_date": {
+      "type": "text"
+    }
+  },
+  "conclusion_options": {
+    "stable_release_available": "稳定版已可用",
+    "workaround_available_stable_uncommitted": "有验证过的补丁，稳定版无承诺日期",
+    "no_verified_fix": "没有验证过的修复",
+    "unconfirmed": "信息不足"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-07T20:30:00+08:00",
+  "deadline_at": "2027-04-01T23:00:00+08:00"
+}

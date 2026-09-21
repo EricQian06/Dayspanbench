@@ -1,0 +1,934 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.3.0",
+  "id": "DSB-04",
+  "title": "共享仪器：培训、进口耗材与七天稳定性校准",
+  "domain": "科研设施",
+  "start_at": "2026-11-04T09:30:00+08:00",
+  "deadline_at": "2026-11-25T17:00:00+08:00",
+  "display_timezone": "Asia/Shanghai",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    }
+  },
+  "public": {
+    "id": "DSB-04",
+    "title": "共享仪器：培训、进口耗材与七天稳定性校准",
+    "brief": "为样品S-482确认最早测量时间和费用。我已报名11月6日14点安全培训并会按时完成，但目前没有合格记录。请在培训完成后取得凭证，并核实耗材和校准后的可用窗口，暂不预约仪器。",
+    "user_fields": {
+      "sample_id": "S-482",
+      "person_name": "顾晓"
+    },
+    "initial_contacts": [
+      "labdesk"
+    ],
+    "pages": [
+      {
+        "id": "lab",
+        "title": "南屿共享实验室",
+        "text": "仪器使用需安全培训记录，培训每周五14点。本批进口耗材预计11月17日到库，之后需要连续7天稳定性校准和人工复核。",
+        "contacts": [
+          "labdesk"
+        ]
+      }
+    ],
+    "message_budget": 16,
+    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "answer_keys": [
+      "safety_certificate",
+      "filter_batch",
+      "earliest_measurement",
+      "price"
+    ],
+    "value_normalization": {
+      "safety_certificate": {
+        "type": "text"
+      },
+      "filter_batch": {
+        "type": "text"
+      },
+      "earliest_measurement": {
+        "type": "datetime"
+      },
+      "price": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      }
+    },
+    "conclusion_options": {
+      "available_now": "已可使用",
+      "unconfirmed": "尚未核实",
+      "available_after_calibration": "校准完成后可用",
+      "not_available": "不能使用"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "certificate": {
+      "value": "SAFE-NOV06-482",
+      "text": "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "safety_certificate"
+      }
+    },
+    "filter": {
+      "value": "F-26B",
+      "text": "本次测量所需F-26B滤芯已到库。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "filter_batch"
+      }
+    },
+    "window": {
+      "value": "2026-11-25T13:00:00+08:00",
+      "text": "完成7天稳定性校准后，最早可用测量时段为11月25日13点。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "earliest_measurement"
+      }
+    },
+    "price": {
+      "value": 1800,
+      "text": "该样品批次测量报价1800元，尚未预约或扣费。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "price"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "labdesk",
+      "name": "南屿共享实验室前台·叶青",
+      "role": "使用条件与联系人",
+      "description": "先说明安全培训要求，再提供仪器管理员入口。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [],
+      "tools": {
+        "labdesk.main.1.refer": {
+          "kind": "refer",
+          "contacts": [
+            "safety",
+            "instrument"
+          ]
+        },
+        "labdesk.main.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "测量咨询入口",
+          "aliases": [
+            "测量",
+            "仪器",
+            "联系"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询联系人目录并转介",
+              "tool": "labdesk.main.1.refer",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "labdesk.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是南屿共享实验室前台·叶青，负责使用条件与联系人。先说明安全培训要求，再提供仪器管理员入口。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "南屿共享实验室前台·叶青：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": []
+    },
+    {
+      "id": "safety",
+      "name": "南屿实验室安全员·温遥",
+      "role": "安全培训与合格记录",
+      "description": "每周五14点培训，结束后签发记录。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "certificate"
+      ],
+      "tools": {
+        "safety.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "certificate"
+          ]
+        },
+        "safety.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "certificate"
+          ]
+        },
+        "safety.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "培训记录确认",
+          "aliases": [
+            "培训",
+            "安全",
+            "记录"
+          ],
+          "required_fields": [
+            "person_name"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "safety.main.1.lookup",
+              "delay": {
+                "mode": "weekly",
+                "weekday": 4,
+                "time": "14:00",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "safety.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "safety.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是南屿实验室安全员·温遥，负责安全培训与合格记录。每周五14点培训，结束后签发记录。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "南屿实验室安全员·温遥：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:safety_certificate"
+      ]
+    },
+    {
+      "id": "instrument",
+      "name": "仪器管理员·杜和",
+      "role": "耗材、校准和使用窗口",
+      "description": "须核实培训凭证；耗材到库后才启动连续7天稳定性校准。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "ticket"
+      ],
+      "knowledge": [
+        "price",
+        "window"
+      ],
+      "tools": {
+        "instrument.main.1.delegate": {
+          "kind": "delegate",
+          "target": "stores",
+          "workflow": "main",
+          "forward_fields": [
+            "sample_id"
+          ]
+        },
+        "instrument.main.2.lookup": {
+          "kind": "lookup",
+          "facts": []
+        },
+        "instrument.main.3.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "window",
+            "price"
+          ]
+        },
+        "instrument.main.4.document": {
+          "kind": "document",
+          "facts": [
+            "window",
+            "price"
+          ]
+        },
+        "instrument.main.5.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "测量可用时间与费用",
+          "aliases": [
+            "测量",
+            "仪器",
+            "校准",
+            "费用"
+          ],
+          "required_fields": [
+            "sample_id",
+            "safety_certificate"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "内部转交",
+              "tool": "instrument.main.1.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "连续7天稳定性校准，可跨夜运行",
+              "tool": "instrument.main.2.lookup",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 10080
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "核对校准结果和使用窗口",
+              "tool": "instrument.main.3.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 240
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "签发书面确认",
+              "tool": "instrument.main.4.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_5",
+              "label": "向请求者回复已取得的结果",
+              "tool": "instrument.main.5.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {
+            "safety_certificate": {
+              "subject": {
+                "task": "DSB-04",
+                "case": {
+                  "sample_id": "S-482",
+                  "person_name": "顾晓"
+                }
+              },
+              "predicate": "safety_certificate",
+              "authorities": [
+                "attest:safety_certificate"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            }
+          }
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是仪器管理员·杜和，负责耗材、校准和使用窗口。须核实培训凭证；耗材到库后才启动连续7天稳定性校准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "仪器管理员·杜和：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:earliest_measurement",
+        "attest:price"
+      ]
+    },
+    {
+      "id": "stores",
+      "name": "耗材库管理员·宋野",
+      "role": "滤芯收货检查",
+      "description": "本批供应商11月17日10点后送达，入库检查还需要2个工作小时。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "filter"
+      ],
+      "tools": {
+        "stores.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "filter"
+          ]
+        },
+        "stores.main.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "核实滤芯到库",
+          "aliases": [
+            "滤芯",
+            "耗材"
+          ],
+          "required_fields": [
+            "sample_id"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "stores.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120,
+                "not_before": "2026-11-17T10:00:00+08:00"
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "stores.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是耗材库管理员·宋野，负责滤芯收货检查。本批供应商11月17日10点后送达，入库检查还需要2个工作小时。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "耗材库管理员·宋野：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:filter_batch"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "safety_certificate",
+      "expected": "SAFE-NOV06-482",
+      "accepted_facts": [
+        "certificate"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "safety_certificate",
+        "authorities": [
+          "attest:safety_certificate"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {}
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "filter_batch",
+      "expected": "F-26B",
+      "accepted_facts": [
+        "filter"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "filter_batch",
+        "authorities": [
+          "attest:filter_batch"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {}
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "earliest_measurement",
+      "expected": "2026-11-25T13:00:00+08:00",
+      "accepted_facts": [
+        "window"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "earliest_measurement",
+        "authorities": [
+          "attest:earliest_measurement"
+        ],
+        "normalization": {
+          "type": "datetime"
+        }
+      },
+      "normalization": {
+        "type": "datetime"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "price",
+      "expected": 1800,
+      "accepted_facts": [
+        "price"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "price",
+        "authorities": [
+          "attest:price"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "元": 1,
+            "CNY": 1,
+            "人民币": 1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "available_after_calibration",
+  "temporal_mechanisms": [
+    "周五培训批次",
+    "进口耗材批次到货",
+    "连续7天设备过程",
+    "校准结束后仍等待人员复核"
+  ],
+  "failure_modes": [
+    "7天连续运行误算为7个工作日",
+    "有耗材就认为可测量",
+    "伪造安全培训记录"
+  ],
+  "reference_actions": [
+    {
+      "op": "send",
+      "to": "labdesk",
+      "text": "咨询测量仪器联系入口",
+      "label": "front",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "front"
+    },
+    {
+      "op": "send",
+      "to": "safety",
+      "text": "请求完成培训并取得安全记录",
+      "label": "safe",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "safe"
+    },
+    {
+      "op": "send",
+      "to": "instrument",
+      "text": "核实测量时间、校准和费用",
+      "label": "measure",
+      "fields": {
+        "sample_id": "S-482",
+        "safety_certificate": "$fact:certificate"
+      },
+      "channel": "ticket"
+    },
+    {
+      "op": "wait_for",
+      "label": "measure"
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "horizon_design": {
+    "reference_days": 21,
+    "stratum": "中短期",
+    "mechanism": "进口耗材批次与7天连续稳定性校准",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

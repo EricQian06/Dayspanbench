@@ -1,0 +1,199 @@
+{
+  "private": true,
+  "task_id": "DSB-11",
+  "actor": {
+    "id": "maintainer",
+    "name": "星舟项目维护者·简川",
+    "role": "问题复现与补丁协调",
+    "description": "只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。",
+    "calendar": "maintainer",
+    "channels": [
+      "ticket",
+      "email"
+    ],
+    "knowledge": [],
+    "tools": {
+      "maintainer.main.1.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "maintainer.main.2.delegate": {
+        "kind": "delegate",
+        "target": "ci",
+        "workflow": "main",
+        "forward_fields": [
+          "version",
+          "compiler",
+          "logs"
+        ]
+      },
+      "maintainer.main.3.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "maintainer.main.4.reply": {
+        "kind": "reply"
+      },
+      "maintainer.release_check.1.delegate": {
+        "kind": "delegate",
+        "target": "release",
+        "workflow": "main",
+        "forward_fields": [
+          "version"
+        ]
+      },
+      "maintainer.release_check.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "兼容问题确认",
+        "aliases": [
+          "兼容",
+          "复现",
+          "日志",
+          "补丁"
+        ],
+        "required_fields": [
+          "version",
+          "compiler",
+          "logs"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "核实最小复现上下文",
+            "tool": "maintainer.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "内部转交",
+            "tool": "maintainer.main.2.delegate",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "维护者复核CI结果",
+            "tool": "maintainer.main.3.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "maintainer.main.4.reply",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "release_check",
+        "label": "季度发布状态复核",
+        "aliases": [
+          "季度发布",
+          "候选发布",
+          "稳定版状态"
+        ],
+        "required_fields": [
+          "version",
+          "verified_commit"
+        ],
+        "evidence_fields": {
+          "verified_commit": {
+            "subject": {
+              "task": "DSB-11",
+              "case": {
+                "version": "1.4.1",
+                "compiler": "C19",
+                "logs": "LOG-771"
+              }
+            },
+            "predicate": "verified_patch",
+            "authorities": [
+              "attest:verified_patch"
+            ],
+            "normalization": {
+              "type": "text",
+              "aliases": {}
+            }
+          }
+        },
+        "steps": [
+          {
+            "id": "release_check_1",
+            "label": "内部转交",
+            "tool": "maintainer.release_check.1.delegate",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "release_check_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "maintainer.release_check.2.reply",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          }
+        ]
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是星舟项目维护者·简川，负责问题复现与补丁协调。只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "星舟项目维护者·简川：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": []
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      2,
+      4
+    ],
+    "hours": [
+      [
+        "20:00",
+        "22:00"
+      ]
+    ]
+  },
+  "local_facts": {},
+  "start_at": "2026-11-07T20:30:00+08:00",
+  "deadline_at": "2027-04-01T23:00:00+08:00"
+}

@@ -1,0 +1,1084 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.3.0",
+  "id": "DSB-08",
+  "title": "无障碍住宿：两家机构比较与延后的现场测量",
+  "domain": "出行住宿",
+  "start_at": "2026-11-06T13:30:00+08:00",
+  "deadline_at": "2026-11-12T18:00:00+08:00",
+  "display_timezone": "Asia/Shanghai",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    }
+  },
+  "public": {
+    "id": "DSB-08",
+    "title": "无障碍住宿：两家机构比较与延后的现场测量",
+    "brief": "在A旅舍和B酒店中选择11月14—16日两晚住宿，预算2600元。轮椅宽78cm，房门和浴室净宽均须至少80cm。获取实测尺寸，并确认合适酒店的房态和总价，不预订。",
+    "user_fields": {
+      "wheelchair_width": "78cm，要求净宽至少80cm",
+      "stay_dates": "2026-11-14/2026-11-16"
+    },
+    "initial_contacts": [
+      "a_desk"
+    ],
+    "pages": [
+      {
+        "id": "hotels",
+        "title": "候选住宿目录",
+        "text": "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段。",
+        "contacts": [
+          "a_desk",
+          "b_desk"
+        ]
+      }
+    ],
+    "message_budget": 16,
+    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "answer_keys": [
+      "a_door_cm",
+      "a_bathroom_cm",
+      "b_door_cm",
+      "b_bathroom_cm",
+      "b_available",
+      "b_total_price"
+    ],
+    "value_normalization": {
+      "a_door_cm": {
+        "type": "number",
+        "units": {
+          "cm": 1,
+          "厘米": 1,
+          "m": 100,
+          "米": 100,
+          "mm": 0.1,
+          "毫米": 0.1
+        }
+      },
+      "a_bathroom_cm": {
+        "type": "number",
+        "units": {
+          "cm": 1,
+          "厘米": 1,
+          "m": 100,
+          "米": 100,
+          "mm": 0.1,
+          "毫米": 0.1
+        }
+      },
+      "b_door_cm": {
+        "type": "number",
+        "units": {
+          "cm": 1,
+          "厘米": 1,
+          "m": 100,
+          "米": 100,
+          "mm": 0.1,
+          "毫米": 0.1
+        }
+      },
+      "b_bathroom_cm": {
+        "type": "number",
+        "units": {
+          "cm": 1,
+          "厘米": 1,
+          "m": 100,
+          "米": 100,
+          "mm": 0.1,
+          "毫米": 0.1
+        }
+      },
+      "b_available": {
+        "type": "boolean"
+      },
+      "b_total_price": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      }
+    },
+    "conclusion_options": {
+      "choose_a": "A符合要求",
+      "choose_b": "B符合要求",
+      "both_suitable": "两家均符合",
+      "neither_suitable": "两家均不符合",
+      "unconfirmed": "信息不足"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "a_door": {
+      "value": 72,
+      "text": "A旅舍现场复测净门宽72cm，旧网页88cm包含门框。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "a_door_cm"
+      }
+    },
+    "a_bath": {
+      "value": 68,
+      "text": "A旅舍浴室通行净宽68cm。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "a_bathroom_cm"
+      }
+    },
+    "b_door": {
+      "value": 92,
+      "text": "B酒店指定无障碍房净门宽92cm。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_door_cm"
+      }
+    },
+    "b_bath": {
+      "value": 85,
+      "text": "B酒店浴室通行净宽85cm。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_bathroom_cm"
+      }
+    },
+    "b_available": {
+      "value": true,
+      "text": "11月14—16日指定无障碍房有可售房，尚未预订。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_available"
+      }
+    },
+    "b_price": {
+      "value": 2360,
+      "text": "11月14—16日两晚总房费2360元。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_total_price"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "a_desk",
+      "name": "A旅舍前台·蓝心",
+      "role": "无障碍房咨询",
+      "description": "每天营业，但不能用旧网页尺寸替代现场复测。",
+      "calendar": "daily",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [],
+      "tools": {
+        "a_desk.main.1.delegate": {
+          "kind": "delegate",
+          "target": "a_tech",
+          "workflow": "main",
+          "forward_fields": [
+            "wheelchair_width"
+          ]
+        },
+        "a_desk.main.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "通行尺寸确认",
+          "aliases": [
+            "无障碍",
+            "轮椅",
+            "尺寸"
+          ],
+          "required_fields": [
+            "wheelchair_width",
+            "stay_dates"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "内部转交",
+              "tool": "a_desk.main.1.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "a_desk.main.2.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是A旅舍前台·蓝心，负责无障碍房咨询。每天营业，但不能用旧网页尺寸替代现场复测。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "A旅舍前台·蓝心：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": []
+    },
+    {
+      "id": "a_tech",
+      "name": "A旅舍设施员·蒋延",
+      "role": "现场测量",
+      "description": "周末不在岗；测量记录区分净宽与含框宽度。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "a_bath",
+        "a_door"
+      ],
+      "tools": {
+        "a_tech.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "a_door",
+            "a_bath"
+          ]
+        },
+        "a_tech.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "a_door",
+            "a_bath"
+          ]
+        },
+        "a_tech.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "现场通行测量",
+          "aliases": [
+            "尺寸",
+            "测量"
+          ],
+          "required_fields": [
+            "wheelchair_width"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "a_tech.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "a_tech.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "a_tech.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是A旅舍设施员·蒋延，负责现场测量。周末不在岗；测量记录区分净宽与含框宽度。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "A旅舍设施员·蒋延：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:a_bathroom_cm",
+        "attest:a_door_cm"
+      ]
+    },
+    {
+      "id": "b_desk",
+      "name": "B酒店预订咨询·米禾",
+      "role": "房态与费用",
+      "description": "房态与价格可以先查询，是否可通行须现场量测。",
+      "calendar": "daily",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "b_available",
+        "b_price"
+      ],
+      "tools": {
+        "b_desk.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "b_available",
+            "b_price"
+          ]
+        },
+        "b_desk.main.2.delegate": {
+          "kind": "delegate",
+          "target": "b_tech",
+          "workflow": "main",
+          "forward_fields": [
+            "wheelchair_width"
+          ]
+        },
+        "b_desk.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "无障碍房确认",
+          "aliases": [
+            "无障碍",
+            "尺寸",
+            "房态"
+          ],
+          "required_fields": [
+            "wheelchair_width",
+            "stay_dates"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "b_desk.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "内部转交",
+              "tool": "b_desk.main.2.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "b_desk.main.3.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是B酒店预订咨询·米禾，负责房态与费用。房态与价格可以先查询，是否可通行须现场量测。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "B酒店预订咨询·米禾：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:b_available",
+        "attest:b_total_price"
+      ]
+    },
+    {
+      "id": "b_tech",
+      "name": "B酒店设施主管·郑砚",
+      "role": "指定房型现场尺寸",
+      "description": "指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "b_bath",
+        "b_door"
+      ],
+      "tools": {
+        "b_tech.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "b_door",
+            "b_bath"
+          ]
+        },
+        "b_tech.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "b_door",
+            "b_bath"
+          ]
+        },
+        "b_tech.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "指定房间量测",
+          "aliases": [
+            "尺寸",
+            "测量"
+          ],
+          "required_fields": [
+            "wheelchair_width"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "b_tech.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120,
+                "not_before": "2026-11-11T10:00:00+08:00"
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "b_tech.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "b_tech.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是B酒店设施主管·郑砚，负责指定房型现场尺寸。指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "B酒店设施主管·郑砚：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:b_bathroom_cm",
+        "attest:b_door_cm"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "a_door_cm",
+      "expected": 72,
+      "accepted_facts": [
+        "a_door"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "a_door_cm",
+        "authorities": [
+          "attest:a_door_cm"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "cm": 1,
+            "厘米": 1,
+            "m": 100,
+            "米": 100,
+            "mm": 0.1,
+            "毫米": 0.1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "cm": 1,
+          "厘米": 1,
+          "m": 100,
+          "米": 100,
+          "mm": 0.1,
+          "毫米": 0.1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "a_bathroom_cm",
+      "expected": 68,
+      "accepted_facts": [
+        "a_bath"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "a_bathroom_cm",
+        "authorities": [
+          "attest:a_bathroom_cm"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "cm": 1,
+            "厘米": 1,
+            "m": 100,
+            "米": 100,
+            "mm": 0.1,
+            "毫米": 0.1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "cm": 1,
+          "厘米": 1,
+          "m": 100,
+          "米": 100,
+          "mm": 0.1,
+          "毫米": 0.1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "b_door_cm",
+      "expected": 92,
+      "accepted_facts": [
+        "b_door"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_door_cm",
+        "authorities": [
+          "attest:b_door_cm"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "cm": 1,
+            "厘米": 1,
+            "m": 100,
+            "米": 100,
+            "mm": 0.1,
+            "毫米": 0.1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "cm": 1,
+          "厘米": 1,
+          "m": 100,
+          "米": 100,
+          "mm": 0.1,
+          "毫米": 0.1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "b_bathroom_cm",
+      "expected": 85,
+      "accepted_facts": [
+        "b_bath"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_bathroom_cm",
+        "authorities": [
+          "attest:b_bathroom_cm"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "cm": 1,
+            "厘米": 1,
+            "m": 100,
+            "米": 100,
+            "mm": 0.1,
+            "毫米": 0.1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "cm": 1,
+          "厘米": 1,
+          "m": 100,
+          "米": 100,
+          "mm": 0.1,
+          "毫米": 0.1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "b_available",
+      "expected": true,
+      "accepted_facts": [
+        "b_available"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_available",
+        "authorities": [
+          "attest:b_available"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "b_total_price",
+      "expected": 2360,
+      "accepted_facts": [
+        "b_price"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-08",
+          "case": {
+            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "stay_dates": "2026-11-14/2026-11-16"
+          }
+        },
+        "predicate": "b_total_price",
+        "authorities": [
+          "attest:b_total_price"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "元": 1,
+            "CNY": 1,
+            "人民币": 1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "choose_b",
+  "temporal_mechanisms": [
+    "周末接待与工作日技术岗",
+    "并行联系两家机构",
+    "房间特定可进入时间",
+    "过期网页尺寸"
+  ],
+  "failure_modes": [
+    "门框宽当净宽",
+    "第一家回复后过早停止",
+    "拿一个房型数据替代另一个"
+  ],
+  "reference_actions": [
+    {
+      "op": "read_page",
+      "page": "hotels"
+    },
+    {
+      "op": "send",
+      "to": "a_desk",
+      "text": "请现场核实无障碍尺寸",
+      "label": "a",
+      "fields": "$user"
+    },
+    {
+      "op": "send",
+      "to": "b_desk",
+      "text": "咨询无障碍房态、费用和尺寸",
+      "label": "b",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "a"
+    },
+    {
+      "op": "wait_for",
+      "label": "b"
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "horizon_design": {
+    "reference_days": 5,
+    "stratum": "短期",
+    "mechanism": "指定房间可进入时间与两机构交叉核实",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

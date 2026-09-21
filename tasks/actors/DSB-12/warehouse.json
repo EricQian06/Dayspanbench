@@ -1,0 +1,141 @@
+{
+  "private": true,
+  "task_id": "DSB-12",
+  "actor": {
+    "id": "warehouse",
+    "name": "始发仓查件员·施瑾",
+    "role": "仓内扫描核对",
+    "description": "周末无人工查件；核对后出具扫描记录。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "warehouse"
+    ],
+    "tools": {
+      "warehouse.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "warehouse"
+        ]
+      },
+      "warehouse.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "warehouse"
+        ]
+      },
+      "warehouse.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "入库扫描查证",
+        "aliases": [
+          "扫描",
+          "入库"
+        ],
+        "required_fields": [
+          "tracking"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "warehouse.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "warehouse.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "warehouse.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是始发仓查件员·施瑾，负责仓内扫描核对。周末无人工查件；核对后出具扫描记录。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "始发仓查件员·施瑾：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:initial_warehouse_record"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "warehouse": {
+      "value": "2026年11月已完成始发仓入库扫描",
+      "text": "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-12",
+          "case": {
+            "tracking": "PK-608"
+          }
+        },
+        "predicate": "initial_warehouse_record"
+      }
+    }
+  },
+  "start_at": "2026-11-06T15:00:00+08:00",
+  "deadline_at": "2027-09-02T15:00:00+08:00"
+}

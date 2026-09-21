@@ -1,0 +1,145 @@
+{
+  "private": true,
+  "task_id": "DSB-04",
+  "actor": {
+    "id": "safety",
+    "name": "南屿实验室安全员·温遥",
+    "role": "安全培训与合格记录",
+    "description": "每周五14点培训，结束后签发记录。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "certificate"
+    ],
+    "tools": {
+      "safety.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "certificate"
+        ]
+      },
+      "safety.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "certificate"
+        ]
+      },
+      "safety.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "培训记录确认",
+        "aliases": [
+          "培训",
+          "安全",
+          "记录"
+        ],
+        "required_fields": [
+          "person_name"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "safety.main.1.lookup",
+            "delay": {
+              "mode": "weekly",
+              "weekday": 4,
+              "time": "14:00",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "safety.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "safety.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是南屿实验室安全员·温遥，负责安全培训与合格记录。每周五14点培训，结束后签发记录。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "南屿实验室安全员·温遥：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:safety_certificate"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "certificate": {
+      "value": "SAFE-NOV06-482",
+      "text": "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "safety_certificate"
+      }
+    }
+  },
+  "start_at": "2026-11-04T09:30:00+08:00",
+  "deadline_at": "2026-11-25T17:00:00+08:00"
+}

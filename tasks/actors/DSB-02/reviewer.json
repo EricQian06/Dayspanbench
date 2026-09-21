@@ -1,0 +1,129 @@
+{
+  "private": true,
+  "task_id": "DSB-02",
+  "actor": {
+    "id": "reviewer",
+    "name": "青栎公寓规则审核员·丁悦",
+    "role": "宠物规则复核",
+    "description": "每周五14点集中复核材料；错过批次进入下一周。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "pet"
+    ],
+    "tools": {
+      "reviewer.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "pet"
+        ]
+      },
+      "reviewer.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "周五规则审核",
+        "aliases": [
+          "宠物",
+          "规则"
+        ],
+        "required_fields": [
+          "pet_weight"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "reviewer.main.1.lookup",
+            "delay": {
+              "mode": "weekly",
+              "weekday": 4,
+              "time": "14:00",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "reviewer.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是青栎公寓规则审核员·丁悦，负责宠物规则复核。每周五14点集中复核材料；错过批次进入下一周。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "青栎公寓规则审核员·丁悦：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:pet_allowed"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "pet": {
+      "value": true,
+      "text": "已核准一只8公斤成年犬符合楼宇宠物规则。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "pet_allowed"
+      }
+    }
+  },
+  "start_at": "2026-11-03T19:30:00+08:00",
+  "deadline_at": "2026-11-12T17:00:00+08:00"
+}

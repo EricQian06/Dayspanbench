@@ -1,0 +1,192 @@
+{
+  "private": true,
+  "task_id": "DSB-10",
+  "actor": {
+    "id": "seller",
+    "name": "相机卖家·沈栖",
+    "role": "二手相机信息",
+    "description": "只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测。",
+    "calendar": "evening",
+    "channels": [
+      "chat",
+      "email"
+    ],
+    "knowledge": [
+      "asking",
+      "estimate",
+      "returns"
+    ],
+    "tools": {
+      "seller.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "asking",
+          "estimate",
+          "returns"
+        ]
+      },
+      "seller.main.2.delegate": {
+        "kind": "delegate",
+        "target": "friend",
+        "workflow": "main",
+        "forward_fields": [
+          "serial"
+        ]
+      },
+      "seller.main.3.refer": {
+        "kind": "refer",
+        "contacts": [
+          "courier"
+        ]
+      },
+      "seller.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "相机实测与条款",
+        "aliases": [
+          "相机",
+          "快门",
+          "热靴",
+          "实测"
+        ],
+        "required_fields": [
+          "serial"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "seller.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "内部转交",
+            "tool": "seller.main.2.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "查询联系人目录并转介",
+            "tool": "seller.main.3.refer",
+            "delay": {
+              "mode": "business",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "seller.main.4.reply",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是相机卖家·沈栖，负责二手相机信息。只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "相机卖家·沈栖：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:asking_price",
+      "attest:estimate",
+      "attest:return_policy"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "20:00",
+        "22:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "asking": {
+      "value": 3200,
+      "text": "卖方询价3200元，未承诺保留商品。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-10",
+          "case": {
+            "serial": "CAM-402",
+            "pickup_area": "桥溪东区"
+          }
+        },
+        "predicate": "asking_price"
+      }
+    },
+    "estimate": {
+      "value": 10000,
+      "text": "卖方回忆快门约一万次，未经读取，不应视为实测。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-10",
+          "case": {
+            "serial": "CAM-402",
+            "pickup_area": "桥溪东区"
+          }
+        },
+        "predicate": "estimate"
+      }
+    },
+    "returns": {
+      "value": "不支持退货",
+      "text": "卖方说明按现状转让，不支持退货。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-10",
+          "case": {
+            "serial": "CAM-402",
+            "pickup_area": "桥溪东区"
+          }
+        },
+        "predicate": "return_policy"
+      }
+    }
+  },
+  "start_at": "2026-11-06T10:00:00+08:00",
+  "deadline_at": "2026-11-09T22:00:00+08:00"
+}

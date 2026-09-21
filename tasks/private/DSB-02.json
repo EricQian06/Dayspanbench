@@ -1,0 +1,794 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.3.0",
+  "id": "DSB-02",
+  "title": "租房咨询：物业周审与新一期货梯表",
+  "domain": "个人与物业",
+  "start_at": "2026-11-03T19:30:00+08:00",
+  "deadline_at": "2026-11-12T17:00:00+08:00",
+  "display_timezone": "Asia/Shanghai",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    }
+  },
+  "public": {
+    "id": "DSB-02",
+    "title": "租房咨询：物业周审与新一期货梯表",
+    "brief": "我想11月12日搬入林霁的房子，带一只8公斤成年犬。问清租金、押金、宠物规则，以及最早可搬入时间；若12日不行请说明替代时间，暂不签约。",
+    "user_fields": {
+      "pet_weight": "8kg",
+      "move_date": "2026-11-12"
+    },
+    "initial_contacts": [
+      "landlord"
+    ],
+    "pages": [
+      {
+        "id": "listing",
+        "title": "青栎房源",
+        "text": "房东通常19—21点回复。宠物需物业周五复核；11月11日开放新一期货梯表，才能确认下半月搬入时段。",
+        "contacts": [
+          "landlord"
+        ]
+      }
+    ],
+    "message_budget": 16,
+    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "answer_keys": [
+      "monthly_rent",
+      "deposit",
+      "pet_allowed",
+      "earliest_move"
+    ],
+    "value_normalization": {
+      "monthly_rent": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "deposit": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "pet_allowed": {
+        "type": "boolean"
+      },
+      "earliest_move": {
+        "type": "datetime"
+      }
+    },
+    "conclusion_options": {
+      "move_on_requested_date": "可在原定日期搬入",
+      "requires_date_change": "须改变搬入日期",
+      "not_eligible": "不满足租住条件",
+      "unconfirmed": "信息不足"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "rent": {
+      "value": 5600,
+      "text": "月租5600元；这是信息咨询，不构成租约。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "monthly_rent"
+      }
+    },
+    "pet": {
+      "value": true,
+      "text": "已核准一只8公斤成年犬符合楼宇宠物规则。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "pet_allowed"
+      }
+    },
+    "deposit": {
+      "value": 4000,
+      "text": "该房源押金4000元，不另收宠物押金。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "deposit"
+      }
+    },
+    "moving": {
+      "value": "2026-11-13T10:00:00+08:00",
+      "text": "11月11日公布的新一期货梯表显示12日无可用时段，最早可安排11月13日10点搬入。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "earliest_move"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "landlord",
+      "name": "房东·林霁",
+      "role": "出租房源咨询",
+      "description": "白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。",
+      "calendar": "landlord",
+      "channels": [
+        "email",
+        "chat"
+      ],
+      "knowledge": [
+        "deposit",
+        "rent"
+      ],
+      "tools": {
+        "landlord.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "rent",
+            "deposit"
+          ]
+        },
+        "landlord.main.2.delegate": {
+          "kind": "delegate",
+          "target": "manager",
+          "workflow": "main",
+          "forward_fields": [
+            "pet_weight",
+            "move_date"
+          ]
+        },
+        "landlord.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "租金、宠物和搬入条件",
+          "aliases": [
+            "租房",
+            "宠物",
+            "入住",
+            "搬入"
+          ],
+          "required_fields": [
+            "pet_weight",
+            "move_date"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "landlord.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "内部转交",
+              "tool": "landlord.main.2.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "landlord.main.3.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是房东·林霁，负责出租房源咨询。白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "房东·林霁：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:deposit",
+        "attest:monthly_rent"
+      ]
+    },
+    {
+      "id": "manager",
+      "name": "青栎公寓物业·许乔",
+      "role": "楼宇规则与货梯时段",
+      "description": "收到房东转交后提交周五审核；11月11日才开放新一期货梯表，之后核实搬入时间。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "moving"
+      ],
+      "tools": {
+        "manager.main.1.delegate": {
+          "kind": "delegate",
+          "target": "reviewer",
+          "workflow": "main",
+          "forward_fields": [
+            "pet_weight"
+          ]
+        },
+        "manager.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "moving"
+          ]
+        },
+        "manager.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "宠物与搬入复核",
+          "aliases": [
+            "宠物",
+            "搬入"
+          ],
+          "required_fields": [
+            "pet_weight",
+            "move_date"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "内部转交",
+              "tool": "manager.main.1.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "查询业务记录",
+              "tool": "manager.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60,
+                "not_before": "2026-11-11T09:00:00+08:00"
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "manager.main.3.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是青栎公寓物业·许乔，负责楼宇规则与货梯时段。收到房东转交后提交周五审核；11月11日才开放新一期货梯表，之后核实搬入时间。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "青栎公寓物业·许乔：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:earliest_move"
+      ]
+    },
+    {
+      "id": "reviewer",
+      "name": "青栎公寓规则审核员·丁悦",
+      "role": "宠物规则复核",
+      "description": "每周五14点集中复核材料；错过批次进入下一周。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "pet"
+      ],
+      "tools": {
+        "reviewer.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "pet"
+          ]
+        },
+        "reviewer.main.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "周五规则审核",
+          "aliases": [
+            "宠物",
+            "规则"
+          ],
+          "required_fields": [
+            "pet_weight"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "reviewer.main.1.lookup",
+              "delay": {
+                "mode": "weekly",
+                "weekday": 4,
+                "time": "14:00",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "reviewer.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是青栎公寓规则审核员·丁悦，负责宠物规则复核。每周五14点集中复核材料；错过批次进入下一周。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "青栎公寓规则审核员·丁悦：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:pet_allowed"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "monthly_rent",
+      "expected": 5600,
+      "accepted_facts": [
+        "rent"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "monthly_rent",
+        "authorities": [
+          "attest:monthly_rent"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "元": 1,
+            "CNY": 1,
+            "人民币": 1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "deposit",
+      "expected": 4000,
+      "accepted_facts": [
+        "deposit"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "deposit",
+        "authorities": [
+          "attest:deposit"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "元": 1,
+            "CNY": 1,
+            "人民币": 1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "pet_allowed",
+      "expected": true,
+      "accepted_facts": [
+        "pet"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "pet_allowed",
+        "authorities": [
+          "attest:pet_allowed"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "earliest_move",
+      "expected": "2026-11-13T10:00:00+08:00",
+      "accepted_facts": [
+        "moving"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "earliest_move",
+        "authorities": [
+          "attest:earliest_move"
+        ],
+        "normalization": {
+          "type": "datetime"
+        }
+      },
+      "normalization": {
+        "type": "datetime"
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "requires_date_change",
+  "temporal_mechanisms": [
+    "个人只在晚间回复",
+    "机构白天办公",
+    "固定周五审核",
+    "新一期货梯表尚未开放"
+  ],
+  "failure_modes": [
+    "把广告可养宠视为批准",
+    "忽略房东与物业时间错位",
+    "把11月12日误报为可搬入"
+  ],
+  "reference_actions": [
+    {
+      "op": "send",
+      "to": "landlord",
+      "text": "咨询租房、宠物及搬入条件",
+      "label": "housing",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "housing"
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "horizon_design": {
+    "reference_days": 8,
+    "stratum": "中短期",
+    "mechanism": "宠物周审与下一期货梯安排",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

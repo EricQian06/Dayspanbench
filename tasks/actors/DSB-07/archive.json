@@ -1,0 +1,205 @@
+{
+  "private": true,
+  "task_id": "DSB-07",
+  "actor": {
+    "id": "archive",
+    "name": "北汀档案馆接待·关雨",
+    "role": "档案使用咨询",
+    "description": "先提供费用和权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "fee"
+    ],
+    "tools": {
+      "archive.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "fee"
+        ]
+      },
+      "archive.main.2.refer": {
+        "kind": "refer",
+        "contacts": [
+          "rights"
+        ]
+      },
+      "archive.main.3.reply": {
+        "kind": "reply"
+      },
+      "archive.digitize.1.delegate": {
+        "kind": "delegate",
+        "target": "digitizer",
+        "workflow": "main",
+        "forward_fields": [
+          "archive_id"
+        ]
+      },
+      "archive.digitize.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "费用与权利联系人",
+        "aliases": [
+          "档案",
+          "费用",
+          "联系人"
+        ],
+        "required_fields": [
+          "archive_id",
+          "usage"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "archive.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "查询联系人目录并转介",
+            "tool": "archive.main.2.refer",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "archive.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "digitize",
+        "label": "取得许可后的数字化规格确认",
+        "aliases": [
+          "数字化交付",
+          "扫描规格"
+        ],
+        "required_fields": [
+          "archive_id",
+          "exhibition_permission"
+        ],
+        "evidence_fields": {
+          "exhibition_permission": {
+            "subject": {
+              "task": "DSB-07",
+              "case": {
+                "archive_id": "ARC-71",
+                "usage": "非商业实体展览及展览网站"
+              }
+            },
+            "predicate": "physical_exhibit_allowed",
+            "authorities": [
+              "attest:physical_exhibit_allowed"
+            ],
+            "normalization": {
+              "type": "boolean"
+            }
+          }
+        },
+        "steps": [
+          {
+            "id": "digitize_1",
+            "label": "内部转交",
+            "tool": "archive.digitize.1.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "digitize_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "archive.digitize.2.reply",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          }
+        ]
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是北汀档案馆接待·关雨，负责档案使用咨询。先提供费用和权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "北汀档案馆接待·关雨：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:total_fee"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "fee": {
+      "value": 800,
+      "text": "本次数字化和授权服务合计800元。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "total_fee"
+      }
+    }
+  },
+  "start_at": "2026-11-05T15:00:00+08:00",
+  "deadline_at": "2027-06-04T17:00:00+08:00"
+}

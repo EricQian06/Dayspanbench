@@ -1,0 +1,916 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.3.0",
+  "id": "DSB-01",
+  "title": "活动场地：跨周末确认设备与报价",
+  "domain": "活动服务",
+  "start_at": "2026-11-06T10:00:00+08:00",
+  "deadline_at": "2026-11-10T18:00:00+08:00",
+  "display_timezone": "Asia/Shanghai",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    }
+  },
+  "public": {
+    "id": "DSB-01",
+    "title": "活动场地：跨周末确认设备与报价",
+    "brief": "请核实禾岸会馆能否在11月13日18—21点接待80人，预算12000元，必须有投影。问清总费用、取消条款、档期和投影是否可用，附可核实的书面依据。",
+    "user_fields": {
+      "event_date": "2026-11-13",
+      "event_time": "18:00-21:00",
+      "headcount": 80
+    },
+    "initial_contacts": [
+      "reception"
+    ],
+    "pages": [
+      {
+        "id": "venue",
+        "title": "禾岸会馆活动页",
+        "text": "旧版简介：8000元起，可容纳100人，有投影。具体档期和设施请联系前台。办公时间周一至周五9—12、13—17点。",
+        "contacts": [
+          "reception"
+        ]
+      }
+    ],
+    "message_budget": 16,
+    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "answer_keys": [
+      "total_cost",
+      "cancellation",
+      "slot_available",
+      "projector_available"
+    ],
+    "value_normalization": {
+      "total_cost": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "cancellation": {
+        "type": "text"
+      },
+      "slot_available": {
+        "type": "boolean"
+      },
+      "projector_available": {
+        "type": "boolean"
+      }
+    },
+    "conclusion_options": {
+      "suitable": "满足所有活动要求",
+      "unsuitable": "存在不满足的必要条件",
+      "unconfirmed": "信息不足"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "price": {
+      "value": 10500,
+      "text": "11月13日18—21点，80人活动：场租9000元、服务费1500元，总价10500元。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-01",
+          "case": {
+            "event_date": "2026-11-13",
+            "event_time": "18:00-21:00",
+            "headcount": 80
+          }
+        },
+        "predicate": "total_cost"
+      }
+    },
+    "cancel": {
+      "value": "72小时内取消收取50%",
+      "text": "活动前72小时内取消收取总价的50%。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-01",
+          "case": {
+            "event_date": "2026-11-13",
+            "event_time": "18:00-21:00",
+            "headcount": 80
+          }
+        },
+        "predicate": "cancellation"
+      }
+    },
+    "slot": {
+      "value": true,
+      "text": "11月13日18—21点场地有空档，80人容量可满足。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-01",
+          "case": {
+            "event_date": "2026-11-13",
+            "event_time": "18:00-21:00",
+            "headcount": 80
+          }
+        },
+        "predicate": "slot_available"
+      }
+    },
+    "projector": {
+      "value": false,
+      "text": "投影设备11月13日全天维修，场地方也不能提供替代投影设备。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-01",
+          "case": {
+            "event_date": "2026-11-13",
+            "event_time": "18:00-21:00",
+            "headcount": 80
+          }
+        },
+        "predicate": "projector_available"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "reception",
+      "name": "禾岸会馆前台·陈芷",
+      "role": "对外咨询与转介",
+      "description": "只掌握联系人目录；不能承诺报价、档期或设备。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [],
+      "tools": {
+        "reception.main.1.refer": {
+          "kind": "refer",
+          "contacts": [
+            "sales",
+            "operations"
+          ]
+        },
+        "reception.main.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "活动联系入口",
+          "aliases": [
+            "活动",
+            "场地",
+            "联系"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询联系人目录并转介",
+              "tool": "reception.main.1.refer",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "reception.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是禾岸会馆前台·陈芷，负责对外咨询与转介。只掌握联系人目录；不能承诺报价、档期或设备。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "禾岸会馆前台·陈芷：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": []
+    },
+    {
+      "id": "sales",
+      "name": "禾岸会馆销售·姚岚",
+      "role": "费用与取消条款",
+      "description": "报价必须带日期和人数；设备可用性需要运营确认。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "cancel",
+        "price"
+      ],
+      "tools": {
+        "sales.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "price",
+            "cancel"
+          ]
+        },
+        "sales.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "price",
+            "cancel"
+          ]
+        },
+        "sales.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "报价及取消条件",
+          "aliases": [
+            "报价",
+            "价格",
+            "费用",
+            "取消"
+          ],
+          "required_fields": [
+            "event_date",
+            "headcount"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "sales.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 180
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "sales.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "sales.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是禾岸会馆销售·姚岚，负责费用与取消条款。报价必须带日期和人数；设备可用性需要运营确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "禾岸会馆销售·姚岚：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:cancellation",
+        "attest:total_cost"
+      ]
+    },
+    {
+      "id": "operations",
+      "name": "禾岸会馆运营·赵航",
+      "role": "档期核对和设备协调",
+      "description": "能够查档期；投影问题必须转给设备负责人。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "slot"
+      ],
+      "tools": {
+        "operations.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "slot"
+          ]
+        },
+        "operations.main.2.delegate": {
+          "kind": "delegate",
+          "target": "technician",
+          "workflow": "main",
+          "forward_fields": [
+            "event_date",
+            "event_time"
+          ]
+        },
+        "operations.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "档期与投影确认",
+          "aliases": [
+            "档期",
+            "投影",
+            "设备",
+            "可用"
+          ],
+          "required_fields": [
+            "event_date",
+            "event_time"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "operations.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "内部转交",
+              "tool": "operations.main.2.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "operations.main.3.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是禾岸会馆运营·赵航，负责档期核对和设备协调。能够查档期；投影问题必须转给设备负责人。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "禾岸会馆运营·赵航：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:slot_available"
+      ]
+    },
+    {
+      "id": "technician",
+      "name": "禾岸会馆设备主管·周敏",
+      "role": "设备维修计划",
+      "description": "只有本岗位知道维修窗口；内部收到转交后进入自己的队列。",
+      "calendar": "office",
+      "channels": [
+        "email",
+        "chat",
+        "ticket"
+      ],
+      "knowledge": [
+        "projector"
+      ],
+      "tools": {
+        "technician.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "projector"
+          ]
+        },
+        "technician.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "projector"
+          ]
+        },
+        "technician.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "核对维修窗口",
+          "aliases": [
+            "投影",
+            "维修"
+          ],
+          "required_fields": [
+            "event_date"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "technician.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 240
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "technician.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "technician.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是禾岸会馆设备主管·周敏，负责设备维修计划。只有本岗位知道维修窗口；内部收到转交后进入自己的队列。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "禾岸会馆设备主管·周敏：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:projector_available"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "total_cost",
+      "expected": 10500,
+      "accepted_facts": [
+        "price"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-01",
+          "case": {
+            "event_date": "2026-11-13",
+            "event_time": "18:00-21:00",
+            "headcount": 80
+          }
+        },
+        "predicate": "total_cost",
+        "authorities": [
+          "attest:total_cost"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {
+            "元": 1,
+            "CNY": 1,
+            "人民币": 1
+          }
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {
+          "元": 1,
+          "CNY": 1,
+          "人民币": 1
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "cancellation",
+      "expected": "72小时内取消收取50%",
+      "accepted_facts": [
+        "cancel"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-01",
+          "case": {
+            "event_date": "2026-11-13",
+            "event_time": "18:00-21:00",
+            "headcount": 80
+          }
+        },
+        "predicate": "cancellation",
+        "authorities": [
+          "attest:cancellation"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "72小时内取消收取50%": [
+              "三天内取消收取一半费用",
+              "72小时内取消需支付50%的费用"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "72小时内取消收取50%": [
+            "三天内取消收取一半费用",
+            "72小时内取消需支付50%的费用"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "slot_available",
+      "expected": true,
+      "accepted_facts": [
+        "slot"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-01",
+          "case": {
+            "event_date": "2026-11-13",
+            "event_time": "18:00-21:00",
+            "headcount": 80
+          }
+        },
+        "predicate": "slot_available",
+        "authorities": [
+          "attest:slot_available"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "projector_available",
+      "expected": false,
+      "accepted_facts": [
+        "projector"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-01",
+          "case": {
+            "event_date": "2026-11-13",
+            "event_time": "18:00-21:00",
+            "headcount": 80
+          }
+        },
+        "predicate": "projector_available",
+        "authorities": [
+          "attest:projector_available"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "unsuitable",
+  "temporal_mechanisms": [
+    "周末停办",
+    "并行询价与设备确认",
+    "跨岗位内部转交",
+    "过时网页与当前事实冲突"
+  ],
+  "failure_modes": [
+    "将8000元起当作总价",
+    "未核实投影即判断适用",
+    "把内部转交受理当作完成"
+  ],
+  "reference_actions": [
+    {
+      "op": "send",
+      "to": "reception",
+      "text": "请提供活动场地的联系入口",
+      "label": "front",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "front"
+    },
+    {
+      "op": "send",
+      "to": "sales",
+      "text": "请发报价和取消条款",
+      "label": "quote",
+      "fields": "$user"
+    },
+    {
+      "op": "send",
+      "to": "operations",
+      "text": "请核实档期和投影",
+      "label": "ops",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "quote"
+    },
+    {
+      "op": "wait_for",
+      "label": "ops"
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "horizon_design": {
+    "reference_days": 3,
+    "stratum": "短期",
+    "mechanism": "周末关门与设备内部转交",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

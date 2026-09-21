@@ -1,0 +1,140 @@
+{
+  "private": true,
+  "task_id": "DSB-09",
+  "actor": {
+    "id": "service",
+    "name": "晴港政务咨询台·谢茵",
+    "role": "事项识别与管辖分流",
+    "description": "只能进行预咨询，不生成许可；先核实管辖再转专门岗位。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [],
+    "tools": {
+      "service.main.1.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "service.main.2.delegate": {
+        "kind": "delegate",
+        "target": "land",
+        "workflow": "main",
+        "forward_fields": [
+          "location"
+        ]
+      },
+      "service.main.3.refer": {
+        "kind": "refer",
+        "contacts": [
+          "sound"
+        ]
+      },
+      "service.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "活动事项咨询",
+        "aliases": [
+          "活动",
+          "办理",
+          "管辖"
+        ],
+        "required_fields": [
+          "location",
+          "amplified"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "登记咨询上下文",
+            "tool": "service.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "内部转交",
+            "tool": "service.main.2.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "查询联系人目录并转介",
+            "tool": "service.main.3.refer",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "service.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是晴港政务咨询台·谢茵，负责事项识别与管辖分流。只能进行预咨询，不生成许可；先核实管辖再转专门岗位。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "晴港政务咨询台·谢茵：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": []
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {},
+  "start_at": "2026-11-03T15:00:00+08:00",
+  "deadline_at": "2026-12-29T17:00:00+08:00"
+}

@@ -1,0 +1,888 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.3.0",
+  "id": "DSB-11",
+  "title": "开源兼容性：补丁验证后跟进跨季度发布",
+  "domain": "开源协作",
+  "start_at": "2026-11-07T20:30:00+08:00",
+  "deadline_at": "2027-04-01T23:00:00+08:00",
+  "display_timezone": "Asia/Shanghai",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    }
+  },
+  "public": {
+    "id": "DSB-11",
+    "title": "开源兼容性：补丁验证后跟进跨季度发布",
+    "brief": "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期。中间补丁可用不代表本委托完成。不要合并或发布。",
+    "user_fields": {
+      "version": "1.4.1",
+      "compiler": "C19",
+      "logs": "LOG-771"
+    },
+    "initial_contacts": [
+      "maintainer"
+    ],
+    "pages": [
+      {
+        "id": "repo",
+        "title": "星舟项目贡献说明",
+        "text": "维护者周一三五20—22点处理，CI连续运行48小时。补丁验证后，须在2027年3月30日20点的上游兼容窗口另行核实季度发布，切勿把补丁或候选版当稳定版。",
+        "contacts": [
+          "maintainer"
+        ]
+      }
+    ],
+    "message_budget": 16,
+    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "answer_keys": [
+      "reproduced",
+      "verified_patch",
+      "candidate_version",
+      "stable_release_date"
+    ],
+    "value_normalization": {
+      "reproduced": {
+        "type": "boolean"
+      },
+      "verified_patch": {
+        "type": "text"
+      },
+      "candidate_version": {
+        "type": "text"
+      },
+      "stable_release_date": {
+        "type": "text"
+      }
+    },
+    "conclusion_options": {
+      "stable_release_available": "稳定版已可用",
+      "workaround_available_stable_uncommitted": "有验证过的补丁，稳定版无承诺日期",
+      "no_verified_fix": "没有验证过的修复",
+      "unconfirmed": "信息不足"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "repro": {
+      "value": true,
+      "text": "提交的日志可重现在编译器C19下的兼容问题。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "reproduced"
+      }
+    },
+    "workaround": {
+      "value": "commit-7bc2",
+      "text": "CI在commit-7bc2上验证该兼容问题已修复。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "verified_patch"
+      }
+    },
+    "candidate": {
+      "value": "1.4.2-rc1",
+      "text": "发布负责人确认当前仅有候选版1.4.2-rc1。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "candidate_version"
+      }
+    },
+    "stable": {
+      "value": "尚无承诺日期",
+      "text": "正式稳定版没有承诺发布日期；候选版不能标为稳定版。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "stable_release_date"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "maintainer",
+      "name": "星舟项目维护者·简川",
+      "role": "问题复现与补丁协调",
+      "description": "只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。",
+      "calendar": "maintainer",
+      "channels": [
+        "ticket",
+        "email"
+      ],
+      "knowledge": [],
+      "tools": {
+        "maintainer.main.1.lookup": {
+          "kind": "lookup",
+          "facts": []
+        },
+        "maintainer.main.2.delegate": {
+          "kind": "delegate",
+          "target": "ci",
+          "workflow": "main",
+          "forward_fields": [
+            "version",
+            "compiler",
+            "logs"
+          ]
+        },
+        "maintainer.main.3.lookup": {
+          "kind": "lookup",
+          "facts": []
+        },
+        "maintainer.main.4.reply": {
+          "kind": "reply"
+        },
+        "maintainer.release_check.1.delegate": {
+          "kind": "delegate",
+          "target": "release",
+          "workflow": "main",
+          "forward_fields": [
+            "version"
+          ]
+        },
+        "maintainer.release_check.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "兼容问题确认",
+          "aliases": [
+            "兼容",
+            "复现",
+            "日志",
+            "补丁"
+          ],
+          "required_fields": [
+            "version",
+            "compiler",
+            "logs"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "核实最小复现上下文",
+              "tool": "maintainer.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "内部转交",
+              "tool": "maintainer.main.2.delegate",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "维护者复核CI结果",
+              "tool": "maintainer.main.3.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "maintainer.main.4.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "release_check",
+          "label": "季度发布状态复核",
+          "aliases": [
+            "季度发布",
+            "候选发布",
+            "稳定版状态"
+          ],
+          "required_fields": [
+            "version",
+            "verified_commit"
+          ],
+          "evidence_fields": {
+            "verified_commit": {
+              "subject": {
+                "task": "DSB-11",
+                "case": {
+                  "version": "1.4.1",
+                  "compiler": "C19",
+                  "logs": "LOG-771"
+                }
+              },
+              "predicate": "verified_patch",
+              "authorities": [
+                "attest:verified_patch"
+              ],
+              "normalization": {
+                "type": "text",
+                "aliases": {}
+              }
+            }
+          },
+          "steps": [
+            {
+              "id": "release_check_1",
+              "label": "内部转交",
+              "tool": "maintainer.release_check.1.delegate",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "release_check_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "maintainer.release_check.2.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ]
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是星舟项目维护者·简川，负责问题复现与补丁协调。只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "星舟项目维护者·简川：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": []
+    },
+    {
+      "id": "ci",
+      "name": "星舟CI值守·自动检查器",
+      "role": "兼容性构建测试",
+      "description": "仅返回真实配置内的构建结果；不会承诺发布。",
+      "calendar": "always",
+      "channels": [
+        "ticket"
+      ],
+      "knowledge": [
+        "repro",
+        "workaround"
+      ],
+      "tools": {
+        "ci.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "repro",
+            "workaround"
+          ]
+        },
+        "ci.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "workaround"
+          ]
+        },
+        "ci.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "48小时构建验证",
+          "aliases": [
+            "构建",
+            "验证"
+          ],
+          "required_fields": [
+            "version",
+            "compiler",
+            "logs"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "ci.main.1.lookup",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 2880
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "ci.main.2.document",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "ci.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是星舟CI值守·自动检查器，负责兼容性构建测试。仅返回真实配置内的构建结果；不会承诺发布。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "星舟CI值守·自动检查器：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:reproduced",
+        "attest:verified_patch"
+      ]
+    },
+    {
+      "id": "release",
+      "name": "星舟发布协调员·唐泊",
+      "role": "候选版与稳定版状态",
+      "description": "上游兼容窗口在2027年3月30日20点开放；候选版与稳定版需在该季度窗口分别核对。",
+      "calendar": "release",
+      "channels": [
+        "ticket",
+        "email"
+      ],
+      "knowledge": [
+        "candidate",
+        "stable"
+      ],
+      "tools": {
+        "release.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "candidate",
+            "stable"
+          ]
+        },
+        "release.main.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "季度候选发布核对",
+          "aliases": [
+            "发布",
+            "候选版"
+          ],
+          "required_fields": [
+            "version"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "release.main.1.lookup",
+              "delay": {
+                "mode": "weekly",
+                "weekday": 1,
+                "time": "20:00",
+                "minutes": 120,
+                "not_before": "2027-03-30T20:00:00+08:00"
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "release.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是星舟发布协调员·唐泊，负责候选版与稳定版状态。上游兼容窗口在2027年3月30日20点开放；候选版与稳定版需在该季度窗口分别核对。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+        "reply_prefix": "星舟发布协调员·唐泊：以下是本次查询或内部转交后已取得的信息。"
+      },
+      "evidence_authorities": [
+        "attest:candidate_version",
+        "attest:stable_release_date"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "reproduced",
+      "expected": true,
+      "accepted_facts": [
+        "repro"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "reproduced",
+        "authorities": [
+          "attest:reproduced"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "verified_patch",
+      "expected": "commit-7bc2",
+      "accepted_facts": [
+        "workaround"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "verified_patch",
+        "authorities": [
+          "attest:verified_patch"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {}
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "candidate_version",
+      "expected": "1.4.2-rc1",
+      "accepted_facts": [
+        "candidate"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "candidate_version",
+        "authorities": [
+          "attest:candidate_version"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {}
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "stable_release_date",
+      "expected": "尚无承诺日期",
+      "accepted_facts": [
+        "stable"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "stable_release_date",
+        "authorities": [
+          "attest:stable_release_date"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "尚无承诺日期": [
+              "尚未承诺正式稳定版发布日期",
+              "未承诺发布日期",
+              "暂无确定的发布日期",
+              "not_committed",
+              "暂无承诺日期"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "尚无承诺日期": [
+            "尚未承诺正式稳定版发布日期",
+            "未承诺发布日期",
+            "暂无确定的发布日期",
+            "not_committed",
+            "暂无承诺日期"
+          ]
+        }
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "workaround_available_stable_uncommitted",
+  "temporal_mechanisms": [
+    "志愿者离散晚间窗口",
+    "48小时自动构建",
+    "跨季度后带原补丁证据继续沟通",
+    "上游兼容窗口",
+    "候选版与稳定版区别"
+  ],
+  "failure_modes": [
+    "初步补丁可用就提前结束",
+    "跨季度后丢失原补丁证据",
+    "杜撰稳定版承诺日期"
+  ],
+  "reference_actions": [
+    {
+      "op": "send",
+      "to": "maintainer",
+      "text": "请核实兼容问题与补丁",
+      "label": "fix",
+      "fields": "$user",
+      "channel": "ticket"
+    },
+    {
+      "op": "wait_for",
+      "label": "fix"
+    },
+    {
+      "op": "advance",
+      "at": "2027-03-29T20:00:00+08:00"
+    },
+    {
+      "op": "send",
+      "to": "maintainer",
+      "text": "请跟进季度发布和稳定版状态",
+      "label": "release",
+      "fields": {
+        "version": "1.4.1",
+        "verified_commit": "$fact:workaround"
+      },
+      "channel": "ticket"
+    },
+    {
+      "op": "wait_for",
+      "label": "release"
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "horizon_design": {
+    "reference_days": 144,
+    "stratum": "长期",
+    "mechanism": "短期修复后跨季度跟进候选发布",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

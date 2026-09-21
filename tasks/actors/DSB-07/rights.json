@@ -1,0 +1,157 @@
+{
+  "private": true,
+  "task_id": "DSB-07",
+  "actor": {
+    "id": "rights",
+    "name": "权利方联络员·Alex Chen",
+    "role": "图像权利继受与用途确认",
+    "description": "权利继受文件在2027年5月28日集中核验；随后按纽约当地工作时间审查指定用途，结束时自动签发确认，此前不能批准。",
+    "calendar": "new_york",
+    "channels": [
+      "email"
+    ],
+    "knowledge": [
+      "exhibit",
+      "online"
+    ],
+    "tools": {
+      "rights.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "exhibit",
+          "online"
+        ]
+      },
+      "rights.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "exhibit",
+          "online"
+        ]
+      },
+      "rights.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "权利范围核实",
+        "aliases": [
+          "授权",
+          "使用",
+          "权利"
+        ],
+        "required_fields": [
+          "archive_id",
+          "usage"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "rights.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 480,
+              "not_before": "2027-05-28T09:00:00-04:00"
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "rights.main.2.document",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "rights.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是权利方联络员·Alex Chen，负责图像权利继受与用途确认。权利继受文件在2027年5月28日集中核验；随后按纽约当地工作时间审查指定用途，结束时自动签发确认，此前不能批准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "权利方联络员·Alex Chen：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:online_allowed",
+      "attest:physical_exhibit_allowed"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "exhibit": {
+      "value": true,
+      "text": "图像ARC-71获准用于本次非商业实体展览。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "physical_exhibit_allowed"
+      }
+    },
+    "online": {
+      "value": false,
+      "text": "授权不包含网站或社交媒体公开发布。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-07",
+          "case": {
+            "archive_id": "ARC-71",
+            "usage": "非商业实体展览及展览网站"
+          }
+        },
+        "predicate": "online_allowed"
+      }
+    }
+  },
+  "start_at": "2026-11-05T15:00:00+08:00",
+  "deadline_at": "2027-06-04T17:00:00+08:00"
+}

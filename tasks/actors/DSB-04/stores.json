@@ -1,0 +1,128 @@
+{
+  "private": true,
+  "task_id": "DSB-04",
+  "actor": {
+    "id": "stores",
+    "name": "耗材库管理员·宋野",
+    "role": "滤芯收货检查",
+    "description": "本批供应商11月17日10点后送达，入库检查还需要2个工作小时。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "filter"
+    ],
+    "tools": {
+      "stores.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "filter"
+        ]
+      },
+      "stores.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "核实滤芯到库",
+        "aliases": [
+          "滤芯",
+          "耗材"
+        ],
+        "required_fields": [
+          "sample_id"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "stores.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120,
+              "not_before": "2026-11-17T10:00:00+08:00"
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "stores.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是耗材库管理员·宋野，负责滤芯收货检查。本批供应商11月17日10点后送达，入库检查还需要2个工作小时。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "耗材库管理员·宋野：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:filter_batch"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "filter": {
+      "value": "F-26B",
+      "text": "本次测量所需F-26B滤芯已到库。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "filter_batch"
+      }
+    }
+  },
+  "start_at": "2026-11-04T09:30:00+08:00",
+  "deadline_at": "2026-11-25T17:00:00+08:00"
+}

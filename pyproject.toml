@@ -1,0 +1,9 @@
+[project]
+name = "dayspanbench"
+version = "0.3.0"
+description = "DaySpanBench: Benchmarking LLM Agents Across Long Calendar-Time Horizons"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.unittest]
+start-directory = "tests"

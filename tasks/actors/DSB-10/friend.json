@@ -1,0 +1,157 @@
+{
+  "private": true,
+  "task_id": "DSB-10",
+  "actor": {
+    "id": "friend",
+    "name": "卖家朋友·柯闻",
+    "role": "相机读取与热靴测试",
+    "description": "周末才能接触读取器；测试只对CAM-402有效。",
+    "calendar": "weekend",
+    "channels": [
+      "chat",
+      "email"
+    ],
+    "knowledge": [
+      "actual",
+      "hotshoe"
+    ],
+    "tools": {
+      "friend.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "actual",
+          "hotshoe"
+        ]
+      },
+      "friend.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "actual",
+          "hotshoe"
+        ]
+      },
+      "friend.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "读取相机与测试",
+        "aliases": [
+          "相机",
+          "实测"
+        ],
+        "required_fields": [
+          "serial"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "friend.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120,
+              "not_before": "2026-11-07T10:00:00+08:00"
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "friend.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "friend.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是卖家朋友·柯闻，负责相机读取与热靴测试。周末才能接触读取器；测试只对CAM-402有效。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "卖家朋友·柯闻：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:hotshoe_works",
+      "attest:measured_shutter"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "10:00",
+        "12:00"
+      ],
+      [
+        "14:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "actual": {
+      "value": 42731,
+      "text": "对序列号CAM-402读取的实际快门次数为42731。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-10",
+          "case": {
+            "serial": "CAM-402",
+            "pickup_area": "桥溪东区"
+          }
+        },
+        "predicate": "measured_shutter"
+      }
+    },
+    "hotshoe": {
+      "value": false,
+      "text": "CAM-402热靴触发测试失败，当前不能正常使用外置闪光灯。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-10",
+          "case": {
+            "serial": "CAM-402",
+            "pickup_area": "桥溪东区"
+          }
+        },
+        "predicate": "hotshoe_works"
+      }
+    }
+  },
+  "start_at": "2026-11-06T10:00:00+08:00",
+  "deadline_at": "2026-11-09T22:00:00+08:00"
+}

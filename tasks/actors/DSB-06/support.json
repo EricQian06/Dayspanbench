@@ -1,0 +1,148 @@
+{
+  "private": true,
+  "task_id": "DSB-06",
+  "actor": {
+    "id": "support",
+    "name": "霁光电器客服·孟竹",
+    "role": "保修材料受理",
+    "description": "没有凭证不能判定覆盖；拿到诊断和库存后才报告可用时段。",
+    "calendar": "office",
+    "channels": [
+      "email",
+      "chat",
+      "ticket"
+    ],
+    "knowledge": [
+      "covered"
+    ],
+    "tools": {
+      "support.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "covered"
+        ]
+      },
+      "support.main.2.delegate": {
+        "kind": "delegate",
+        "target": "engineer",
+        "workflow": "main",
+        "forward_fields": [
+          "serial",
+          "symptom"
+        ]
+      },
+      "support.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "保修及维修时间咨询",
+        "aliases": [
+          "保修",
+          "维修",
+          "配件"
+        ],
+        "required_fields": [
+          "serial",
+          "receipt"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "support.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "内部转交",
+            "tool": "support.main.2.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "support.main.3.reply",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是霁光电器客服·孟竹，负责保修材料受理。没有凭证不能判定覆盖；拿到诊断和库存后才报告可用时段。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
+      "reply_prefix": "霁光电器客服·孟竹：以下是本次查询或内部转交后已取得的信息。"
+    },
+    "evidence_authorities": [
+      "attest:covered"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "covered": {
+      "value": true,
+      "text": "设备SN-A731仍在本次合成保修条款覆盖范围内。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-06",
+          "case": {
+            "serial": "SN-A731",
+            "receipt": "R-731",
+            "symptom": "机身接缝漏水"
+          }
+        },
+        "predicate": "covered"
+      }
+    }
+  },
+  "start_at": "2026-11-04T16:00:00+08:00",
+  "deadline_at": "2026-11-18T09:00:00+08:00"
+}

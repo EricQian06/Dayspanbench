@@ -1,0 +1,55 @@
+{
+  "id": "DSB-12",
+  "title": "跨境原型设备：300天内的初审、二次补件与未决放行",
+  "brief": "跟进因归类争议留置的科研原型设备PK-608，到2027年9月2日15点汇报。核实历史入库交接、取得初审登记号，按要求向出口方取得有效新版单证和制造批次溯源资料，再发起长期复核。若放行未确认，明确已完成步骤与仍待确认事项。不要把历史入库、初审登记或补件受理当成当前放行；不支付费用或作法律承诺。",
+  "user_fields": {
+    "tracking": "PK-608"
+  },
+  "initial_contacts": [
+    "forwarder"
+  ],
+  "pages": [
+    {
+      "id": "logistics",
+      "title": "远澄原型设备留置核查",
+      "text": "本合成场景有多阶段归类争议核查：首轮更正单证预计2026年12月7日可取；初审窗口2027年2月4日；制造档案预计4月6日可核验，届时需更新单证并再次申请长期复核。境外技术意见窗口为9月10日，无放行承诺。 材料齐备后，也可向单证联络人申请转介境外代理，直接发起长期复核；材料门槛和处理窗口相同。",
+      "contacts": [
+        "forwarder"
+      ]
+    }
+  ],
+  "message_budget": 16,
+  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "answer_keys": [
+    "initial_warehouse_record",
+    "review_reference",
+    "declaration_version",
+    "batch_trace",
+    "release_status"
+  ],
+  "value_normalization": {
+    "initial_warehouse_record": {
+      "type": "text"
+    },
+    "review_reference": {
+      "type": "text"
+    },
+    "declaration_version": {
+      "type": "text"
+    },
+    "batch_trace": {
+      "type": "text"
+    }
+  },
+  "conclusion_options": {
+    "released": "已确认放行",
+    "release_unconfirmed_at_deadline": "截止时放行尚未确认",
+    "not_in_warehouse": "尚未入库"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2026-11-06T15:00:00+08:00",
+  "deadline_at": "2027-09-02T15:00:00+08:00"
+}
