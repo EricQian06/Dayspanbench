@@ -96,7 +96,7 @@ def evidence_matches(ev, requirement, now, *, visible=True):
 
 def pending_satisfied(env, condition):
     for case in env.cases.values():
-        if case["state"] not in {"queued", "working", "waiting_internal"} or not case.get("admitted_at"):
+        if case["state"] not in {"queued", "working", "waiting_internal"} or not case.get("admitted_at") or not case.get("workflow"):
             continue
         if condition["capability"] not in case["workflow"].get("capabilities", []):
             continue

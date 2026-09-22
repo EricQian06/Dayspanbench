@@ -182,8 +182,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是活动环境咨询员·陆笙，负责扩声事项分类和材料。本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
-      "reply_prefix": "活动环境咨询员·陆笙：以下是本次查询或内部转交后已取得的信息。"
+      "instructions": "你是活动环境咨询员·陆笙，负责扩声事项分类和材料。本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:case_category",

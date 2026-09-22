@@ -39,7 +39,7 @@ client = StructuredClient(LLMConfig(
 people = {a["id"]: LLMSimulator(client, a["id"]) for a in task["actors"]}
 env = Environment(task, recipient=people)
 tools = env.tools()  # 仅可信主进程持有对象；被测Agent只经RPC使用公开方法。
-tools.send_message("forwarder", "查询货件PK-608的入库记录", {"tracking": "PK-608"})
+tools.send_email("luosen@bench.example", "查询货件PK-608的入库记录", {"tracking": "PK-608"})
 ```
 
 每个人物的路由输入只有自己的角色与指令、当前请求、显式字段、自身历史和事项状态，以及自身工作流标签、别名和必需字段。没有全局事实、评分目标、其他人物历史或未来事件队列。抽取字段必须有Agent消息原文支持，且不能覆盖显式字段或代替实际取得凭证。

@@ -81,10 +81,10 @@ python3 scripts/serve.py --task DSB-01
 {"id": 1, "tool": "observe", "arguments": {}}
 ```
 
-发送消息示例：
+发送邮件示例（收件人为邮箱地址，从联系人卡片取得）：
 
 ```json
-{"id": 2, "tool": "send_message", "arguments": {"recipient": "reception", "text": "请提供活动场地的联系入口", "channel": "email"}}
+{"id": 2, "tool": "send_email", "arguments": {"recipient": "chenzhi@bench.example", "text": "请提供活动场地的联系入口"}}
 ```
 
 等待下一条对Agent可见的回复，或等到截止：

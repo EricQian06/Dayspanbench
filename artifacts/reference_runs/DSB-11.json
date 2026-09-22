@@ -87,7 +87,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "星舟项目维护者·简川：以下是本次查询或内部转交后已取得的信息。\n提交的日志可重现在编译器C19下的兼容问题。\nCI在commit-7bc2上验证该兼容问题已修复。\nCI在commit-7bc2上验证该兼容问题已修复。",
+      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：提交的日志可重现在编译器C19下的兼容问题。CI在commit-7bc2上验证该兼容问题已修复。CI在commit-7bc2上验证该兼容问题已修复。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0001",
@@ -126,7 +126,7 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "星舟项目维护者·简川：以下是本次查询或内部转交后已取得的信息。\n发布负责人确认当前仅有候选版1.4.2-rc1。\n正式稳定版没有承诺发布日期；候选版不能标为稳定版。",
+      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：发布负责人确认当前仅有候选版1.4.2-rc1。正式稳定版没有承诺发布日期；候选版不能标为稳定版。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0004",
@@ -154,7 +154,7 @@
     {
       "at": "2026-11-07T12:30:00+00:00",
       "kind": "agent_send",
-      "recipient": "maintainer",
+      "recipient": "jianchuan@bench.example",
       "text": "请核实兼容问题与补丁",
       "fields": {
         "version": "1.4.1",
@@ -457,7 +457,7 @@
     {
       "at": "2027-03-29T12:00:00+00:00",
       "kind": "agent_send",
-      "recipient": "maintainer",
+      "recipient": "jianchuan@bench.example",
       "text": "请跟进季度发布和稳定版状态",
       "fields": {
         "version": "1.4.1",

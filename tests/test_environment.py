@@ -19,6 +19,11 @@ def load(n):
     return json.loads((ROOT / "tasks/private" / f"DSB-{n:02d}.json").read_text(encoding="utf-8"))
 
 
+def mailbox(task, actor_id):
+    """The agent addresses people by their published mailbox."""
+    return next(a["contact_details"]["email"] for a in task["actors"] if a["id"] == actor_id)
+
+
 class CalendarTests(unittest.TestCase):
     def setUp(self):
         self.cal = Calendar(load(1)["calendars"]["office"])
@@ -86,28 +91,31 @@ class EnvironmentTests(unittest.TestCase):
                 self.assertEqual(env.now, parse(time))
 
     def test_missing_material_and_forged_material_are_not_accepted(self):
-        env = Environment(load(3))
+        task = load(3)
+        env = Environment(task)
         api = env.tools()
-        result = api.send_message("records", "咨询学分转换", {"course_code": "CS204"})
+        result = api.send_email(mailbox(task, "records"), "咨询学分转换", {"course_code": "CS204"})
         # Admission is deferred to the recipient's work hours.
         api.wait_until("2026-11-05T18:00:00+08:00", wake_on_message=False)
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
-        api.send_message("records", "补充大纲", {"syllabus_version": "CS204-2026-v2-signed"}, case_id=result["case_id"])
+        api.send_email(mailbox(task, "records"), "补充大纲", {"syllabus_version": "CS204-2026-v2-signed"}, case_id=result["case_id"])
         api.wait_until("2026-11-06T10:00:00+08:00", wake_on_message=False)
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
         self.assertEqual(env.events, [])
 
     def test_wrong_case_identifiers_are_rejected(self):
-        env = Environment(load(6))
+        task = load(6)
+        env = Environment(task)
         api = env.tools()
-        result = api.send_message("support", "保修咨询", {"serial": "OTHER", "receipt": "R-731"})
+        result = api.send_email(mailbox(task, "support"), "保修咨询", {"serial": "OTHER", "receipt": "R-731"})
         api.wait_until("2026-11-05T09:00:00+08:00", wake_on_message=False)
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
 
     def test_internal_contacts_and_fact_tools_are_not_agent_tools(self):
-        api = Environment(load(1)).tools()
+        task = load(1)
+        api = Environment(task).tools()
         with self.assertRaises(PermissionError):
-            api.send_message("technician", "维修", {"event_date": "2026-11-13"})
+            api.send_email(mailbox(task, "technician"), "维修", {"event_date": "2026-11-13"})
         self.assertFalse(hasattr(api, "execute_tool"))
         visible = json.dumps(api.observe(), ensure_ascii=False)
         self.assertNotIn('"expected_conclusion"', visible)
@@ -115,32 +123,35 @@ class EnvironmentTests(unittest.TestCase):
         self.assertNotIn("全天维修", visible)
 
     def test_followup_does_not_change_completion(self):
-        env = Environment(load(2))
+        task = load(2)
+        env = Environment(task)
         api = env.tools()
-        case = api.send_message("landlord", "咨询宠物入住", load(2)["public"]["user_fields"])
-        api.send_message("landlord", "跟进一下", case_id=case["case_id"])
+        case = api.send_email(mailbox(task, "landlord"), "咨询宠物入住", task["public"]["user_fields"])
+        api.send_email(mailbox(task, "landlord"), "跟进一下", case_id=case["case_id"])
         env.advance(env.deadline)
         replies = [m for m in env.messages if m["status"] == "reply"]
         reference, _, _ = run_reference(load(2))
         self.assertEqual(replies[-1]["at"], reference.messages[-1]["at"])
 
     def test_resource_queue_prevents_parallel_work_by_one_person(self):
-        env = Environment(load(1))
+        task = load(1)
+        env = Environment(task)
         api = env.tools()
-        api.send_message("reception", "联系活动场地")
-        api.send_message("reception", "联系活动场地")
+        api.send_email(mailbox(task, "reception"), "联系活动场地")
+        api.send_email(mailbox(task, "reception"), "联系活动场地")
         api.wait_until("2026-11-06T17:00:00+08:00", wake_on_message=False)
         scheduled = [e for e in env.audit if e["kind"] == "scheduled"]
         # The second case can never start before the single worker finishes the first.
         self.assertGreaterEqual(parse(scheduled[1]["start_at"]), parse(scheduled[0]["due_at"]))
 
     def test_simultaneous_events_and_independent_people(self):
-        env = Environment(load(8))
+        task = load(8)
+        env = Environment(task)
         api = env.tools()
         api.visit_page("hotels")
-        fields = load(8)["public"]["user_fields"]
-        a = api.send_message("a_desk", "无障碍尺寸", fields)
-        b = api.send_message("b_desk", "无障碍尺寸", fields)
+        fields = task["public"]["user_fields"]
+        a = api.send_email(mailbox(task, "a_desk"), "无障碍尺寸", fields)
+        b = api.send_email(mailbox(task, "b_desk"), "无障碍尺寸", fields)
         self.assertNotEqual(a["case_id"], b["case_id"])
         api.wait_until("2026-11-06T17:00:00+08:00", wake_on_message=False)
         scheduled = [e for e in env.audit if e["kind"] == "scheduled"]
@@ -150,9 +161,10 @@ class EnvironmentTests(unittest.TestCase):
         self.assertTrue(all(parse(load(8)["start_at"]) <= s <= parse(load(8)["start_at"]) + timedelta(days=1) for s in started))
 
     def test_wait_wakes_for_agent_delivery_not_private_transition(self):
-        env = Environment(load(2))
+        task = load(2)
+        env = Environment(task)
         api = env.tools()
-        api.send_message("landlord", "咨询宠物入住", load(2)["public"]["user_fields"])
+        api.send_email(mailbox(task, "landlord"), "咨询宠物入住", task["public"]["user_fields"])
         reply = api.wait_until(load(2)["deadline_at"])
         self.assertTrue(reply["messages"])
         self.assertEqual(env.now, parse("2026-11-11T11:50:00+00:00"))
@@ -186,17 +198,18 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual([sum(lo <= day <= hi for day in days) for lo, hi in bins], [3, 3, 3, 3])
 
     def test_expired_material_cannot_open_new_processing_case(self):
-        env = Environment(load(12))
+        task = load(12)
+        env = Environment(task)
         api = env.tools()
-        front = api.send_message("forwarder", "查询货件状态", load(12)["public"]["user_fields"])
+        front = api.send_email(mailbox(task, "forwarder"), "查询货件状态", task["public"]["user_fields"])
         while env.cases[front["case_id"]]["state"] != "replied":
-            api.wait_until(load(12)["deadline_at"])
-        doc = api.send_message("exporter", "取得首轮更正申报资料", {"tracking": "PK-608"})
+            api.wait_until(task["deadline_at"])
+        doc = api.send_email(mailbox(task, "exporter"), "取得首轮更正申报资料", {"tracking": "PK-608"})
         while env.cases[doc["case_id"]]["state"] != "replied":
-            api.wait_until(load(12)["deadline_at"])
+            api.wait_until(task["deadline_at"])
         self.assertTrue(any(e["agent_visible"] and e["fact_id"] == "declaration" for e in env.evidence.values()))
         api.wait_until("2027-04-01T09:00:00+08:00", wake_on_message=False)
-        case = api.send_message("customsdesk", "申请初审登记", {"tracking": "PK-608", "declaration_version": "DEC-608-v2"})
+        case = api.send_email(mailbox(task, "customsdesk"), "申请初审登记", {"tracking": "PK-608", "declaration_version": "DEC-608-v2"})
         api.wait_until("2027-04-01T12:00:00+08:00", wake_on_message=False)
         self.assertEqual(env.cases[case["case_id"]]["state"], "needs_information")
         self.assertFalse(any(c["actor"] == "broker" for c in env.cases.values()))
@@ -219,19 +232,21 @@ class EnvironmentTests(unittest.TestCase):
         self.assertFalse(env.evaluate(answer)["bounded_handling_success"])
 
     def test_archive_cannot_skip_permission_before_digitization(self):
-        env = Environment(load(7))
+        task = load(7)
+        env = Environment(task)
         api = env.tools()
-        reply = api.send_message("archive", "申请数字化交付", {"archive_id": "ARC-71", "exhibition_permission": True})
+        reply = api.send_email(mailbox(task, "archive"), "申请数字化交付", {"archive_id": "ARC-71", "exhibition_permission": True})
         api.wait_until("2026-11-05T18:00:00+08:00", wake_on_message=False)
         self.assertEqual(env.cases[reply["case_id"]]["state"], "needs_information")
         self.assertFalse(env.events)
 
     def test_intermediate_patch_does_not_finish_quarterly_release_task(self):
-        env = Environment(load(11))
+        task = load(11)
+        env = Environment(task)
         api = env.tools()
-        case = api.send_message("maintainer", "确认兼容问题与补丁", load(11)["public"]["user_fields"])
+        case = api.send_email(mailbox(task, "maintainer"), "确认兼容问题与补丁", task["public"]["user_fields"])
         while env.cases[case["case_id"]]["state"] != "replied":
-            api.wait_until(load(11)["deadline_at"])
+            api.wait_until(task["deadline_at"])
         self.assertTrue(any(ev["agent_visible"] and ev["fact_id"] == "workaround" for ev in env.evidence.values()))
         self.assertFalse(any(ev["agent_visible"] and ev["fact_id"] == "candidate" for ev in env.evidence.values()))
         self.assertFalse(env.evaluate({"conclusion": "workaround_available_stable_uncommitted", "claims": []})["information_sufficient"])
@@ -242,12 +257,12 @@ class EnvironmentTests(unittest.TestCase):
             views.append(view)
             return {"workflow_id": "main"}
         env = Environment(load(1), LLMRecipient(callback))
-        env.tools().send_message("reception", "请帮我找到合适的人")
+        env.tools().send_email(mailbox(load(1), "reception"), "请帮我找到合适的人")
         self.assertNotIn("facts", views[0])
         self.assertNotIn("actors", views[0])
         bad = Environment(load(1), LLMRecipient(lambda _: {"workflow_id": "secret"}))
         with self.assertRaises(ValueError):
-            bad.tools().send_message("reception", "查询")
+            bad.tools().send_email(mailbox(load(1), "reception"), "查询")
 
     def test_each_actor_has_an_independent_default_recipient(self):
         env = Environment(load(1))
@@ -269,7 +284,7 @@ class EnvironmentTests(unittest.TestCase):
     def test_jsonl_server_rpc_boundary(self):
         requests = [
             {"id": 1, "tool": "observe", "arguments": {}},
-            {"id": 2, "tool": "send_message", "arguments": {"recipient": "reception", "text": "活动联系入口"}},
+            {"id": 2, "tool": "send_email", "arguments": {"recipient": mailbox(load(1), "reception"), "text": "活动联系入口"}},
             {"id": 3, "tool": "wait_until", "arguments": {"until": "2026-11-10T18:00:00+08:00"}},
             {"id": 4, "tool": "execute_tool", "arguments": {}},
         ]
@@ -291,13 +306,14 @@ class EnvironmentTests(unittest.TestCase):
             env.tools().submit_answer(answer)
 
     def test_clock_backwards_and_after_deadline_send_rejected(self):
-        env = Environment(load(1))
+        task = load(1)
+        env = Environment(task)
         api = env.tools()
         with self.assertRaises(ValueError):
             api.wait_until("2026-11-01T00:00:00+08:00")
-        api.wait_until(load(1)["deadline_at"], wake_on_message=False)
+        api.wait_until(task["deadline_at"], wake_on_message=False)
         with self.assertRaises(ValueError):
-            api.send_message("reception", "活动")
+            api.send_email(mailbox(task, "reception"), "活动")
 
     def test_browser_search_and_visit_are_two_levels(self):
         env = Environment(load(1))
@@ -317,19 +333,51 @@ class EnvironmentTests(unittest.TestCase):
         self.assertTrue(card["contact_details"]["email"].endswith("@bench.example"))
         self.assertIn("phone", card["contact_details"])
 
-    def test_send_message_is_email_only(self):
-        env = Environment(load(1))
+    def test_recipient_must_be_a_mailbox_address(self):
+        task = load(1)
+        api = Environment(task).tools()
+        with self.assertRaises(ValueError):
+            api.send_email("reception", "咨询")
+        with self.assertRaises(ValueError):
+            api.send_email("not-an-address", "咨询")
+        with self.assertRaises(ValueError):
+            api.send_email("@bench.example", "咨询")
+
+    def test_unknown_mailbox_acknowledges_but_never_replies(self):
+        task = load(1)
+        env = Environment(task)
         api = env.tools()
-        with self.assertRaises(ValueError):
-            api.send_message("reception", "咨询", channel="chat")
-        with self.assertRaises(ValueError):
-            api.send_message("reception", "咨询", channel="ticket")
+        result = api.send_email("nobody@bench.example", "联系活动场地")
+        # The receipt is indistinguishable from a delivered mail and consumes
+        # budget, but no case exists and nothing ever arrives.
+        self.assertEqual(result["status"], "received")
+        self.assertEqual(env.agent_sends, 1)
+        self.assertNotIn(result["case_id"], env.cases)
+        inbox = api.wait_until(task["deadline_at"])
+        self.assertEqual(inbox["messages"], [])
+        self.assertTrue(any(e["kind"] == "dead_letter" for e in env.audit))
+
+    def test_misrouted_mail_gets_an_async_referral_email(self):
+        task = load(1)
+        env = Environment(task)
+        api = env.tools()
+        # reception only routes venue contact inquiries, not price questions.
+        result = api.send_email(mailbox(task, "reception"), "请提供报价和取消条款")
+        self.assertEqual(result["status"], "received")
+        # Nothing is answered at send time; the referral lands during work hours.
+        self.assertEqual(env.cases[result["case_id"]]["state"], "new")
+        inbox = api.wait_until(task["deadline_at"])
+        referral = next(m for m in inbox["messages"] if m["case_id"] == result["case_id"])
+        self.assertEqual(referral["status"], "referral")
+        self.assertIn("不属于我负责的范围", referral["text"])
+        self.assertNotIn("\n", referral["text"])
+        self.assertEqual(env.cases[result["case_id"]]["state"], "replied")
 
     def test_agent_email_gets_no_instant_reply(self):
         task = load(1)
         env = Environment(task)
         api = env.tools()
-        result = api.send_message("reception", "联系活动场地")
+        result = api.send_email(mailbox(task, "reception"), "联系活动场地")
         # Admission is deferred: nothing is routed at send time, and the reply
         # lands inside work hours at least 15 minutes later.
         self.assertEqual(env.cases[result["case_id"]]["state"], "new")
@@ -338,12 +386,22 @@ class EnvironmentTests(unittest.TestCase):
         reply = inbox["messages"][-1]
         self.assertGreater(parse(reply["at"]) - parse(task["start_at"]), timedelta(minutes=15))
 
+    def test_replies_are_single_paragraph_natural_language(self):
+        task = load(1)
+        env = Environment(task)
+        api = env.tools()
+        api.send_email(mailbox(task, "reception"), "联系活动场地")
+        inbox = api.wait_until(task["deadline_at"])
+        for message in inbox["messages"]:
+            self.assertNotIn("\n", message["text"])
+            self.assertTrue(message["text"].startswith("您好，我是"))
+
     def test_phone_call_semantics(self):
         task = load(1)
         env = Environment(task)
         api = env.tools()
         api.visit_page("venue")
-        api.send_message("reception", "联系活动场地")
+        api.send_email(mailbox(task, "reception"), "联系活动场地")
         while "sales" not in env.known_contacts:
             api.wait_until(task["deadline_at"])
         # sales is email-only: there is no number to dial.

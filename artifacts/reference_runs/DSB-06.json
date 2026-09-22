@@ -86,7 +86,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "霁光电器客服·孟竹：以下是本次查询或内部转交后已取得的信息。\n设备SN-A731仍在本次合成保修条款覆盖范围内。\n工程师诊断需要更换G-42密封圈。\n本次更换配件费用为0元。\n核实返厂补货批次后，最早可上门时段为11月18日10点，尚未预约。",
+      "text": "您好，我是霁光电器客服·孟竹。您咨询的事项已经核实，具体情况如下：设备SN-A731仍在本次合成保修条款覆盖范围内。工程师诊断需要更换G-42密封圈。本次更换配件费用为0元。核实返厂补货批次后，最早可上门时段为11月18日10点，尚未预约。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0001",
@@ -132,7 +132,7 @@
     {
       "at": "2026-11-04T08:00:00+00:00",
       "kind": "agent_send",
-      "recipient": "support",
+      "recipient": "mengzhu@bench.example",
       "text": "请核实保修和维修安排",
       "fields": {
         "serial": "SN-A731",
@@ -151,7 +151,7 @@
     {
       "at": "2026-11-04T08:00:00+00:00",
       "kind": "agent_send",
-      "recipient": "support",
+      "recipient": "mengzhu@bench.example",
       "text": "补充凭证后继续保修咨询",
       "fields": {
         "serial": "SN-A731",

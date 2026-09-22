@@ -138,8 +138,7 @@ def person(id, name, role, calendar, workflows, description, contact=None):
                 "states": ["new", "needs_information", "queued", "working", "waiting_internal", "replied", "failed"],
                 "followup_policy": "acknowledge_without_resetting_queue", "parent_waits_for_child": True},
             "recipient": {"rule_adapter": "dayspanbench.recipient.RuleRecipient", "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-                "instructions": f"你是{name}，负责{role}。{description} 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
-                "reply_prefix": f"{name}：以下是本次查询或内部转交后已取得的信息。"}}
+                "instructions": f"你是{name}，负责{role}。{description} 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"}}
 
 
 def send(to, text, label, fields=None, **kwargs):

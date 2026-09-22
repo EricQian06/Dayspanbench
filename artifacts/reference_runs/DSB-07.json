@@ -88,7 +88,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "北汀档案馆接待·关雨：以下是本次查询或内部转交后已取得的信息。\n本次数字化和授权服务合计800元。\n可继续联系：权利方联络员·Alex Chen",
+      "text": "您好，我是北汀档案馆接待·关雨。您咨询的事项已经核实，具体情况如下：本次数字化和授权服务合计800元。此外，相关事项建议您联系权利方联络员·Alex Chen，他们可以继续为您处理。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0001",
@@ -118,7 +118,7 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "权利方联络员·Alex Chen：以下是本次查询或内部转交后已取得的信息。\n图像ARC-71获准用于本次非商业实体展览。\n授权不包含网站或社交媒体公开发布。\n图像ARC-71获准用于本次非商业实体展览。\n授权不包含网站或社交媒体公开发布。",
+      "text": "您好，我是权利方联络员·Alex Chen。您咨询的事项已经核实，具体情况如下：图像ARC-71获准用于本次非商业实体展览。授权不包含网站或社交媒体公开发布。图像ARC-71获准用于本次非商业实体展览。授权不包含网站或社交媒体公开发布。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0002",
@@ -166,7 +166,7 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "北汀档案馆接待·关雨：以下是本次查询或内部转交后已取得的信息。\n可提供600dpi扫描件；文件用途仍受授权范围限制。",
+      "text": "您好，我是北汀档案馆接待·关雨。您咨询的事项已经核实，具体情况如下：可提供600dpi扫描件；文件用途仍受授权范围限制。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0006",
@@ -185,7 +185,7 @@
     {
       "at": "2026-11-05T07:00:00+00:00",
       "kind": "agent_send",
-      "recipient": "archive",
+      "recipient": "guanyu@bench.example",
       "text": "咨询档案费用与权利联系人",
       "fields": {
         "archive_id": "ARC-71",
@@ -321,7 +321,7 @@
     {
       "at": "2026-11-06T02:57:00+00:00",
       "kind": "agent_send",
-      "recipient": "rights",
+      "recipient": "alexchen@bench.example",
       "text": "请确认两种用途的权利授权",
       "fields": {
         "archive_id": "ARC-71",
@@ -457,7 +457,7 @@
     {
       "at": "2027-05-31T13:43:00+00:00",
       "kind": "agent_send",
-      "recipient": "archive",
+      "recipient": "guanyu@bench.example",
       "text": "许可收到后请确认数字化交付和扫描规格",
       "fields": {
         "archive_id": "ARC-71",

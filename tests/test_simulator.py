@@ -25,6 +25,10 @@ def load(n):
     return json.loads((ROOT / f"tasks/private/DSB-{n:02}.json").read_text(encoding="utf-8"))
 
 
+def mailbox(task, actor_id):
+    return next(a["contact_details"]["email"] for a in task["actors"] if a["id"] == actor_id)
+
+
 class FixtureClient:
     def __init__(self, route=None, reply=None):
         self.route_override, self.reply_override = route, reply
@@ -58,7 +62,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         client = FixtureClient(route=route)
         mapping = {a["id"]: LLMSimulator(client, a["id"], validation_retries=2) for a in task["actors"]}
         env = Environment(task, mapping)
-        result = env.tools().send_message("records", "请咨询学分转换。", {"course_code": "CS204"})
+        result = env.tools().send_email(mailbox(task, "records"), "请咨询学分转换。", {"course_code": "CS204"})
         self.assertEqual(env.agent_sends, 1)
         env.advance(parse("2026-11-05T18:00:00+08:00"))
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
@@ -92,7 +96,7 @@ class CharacterSimulatorTests(unittest.TestCase):
                 echoed = [{"key": key, "value_json": json.dumps(value), "source_quote": str(value)} for key, value in fields.items()]
                 client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": echoed})
                 env = Environment(task, recipients(task, client))
-                result = env.tools().send_message(actor, "请提供办理信息。", fields)
+                result = env.tools().send_email(mailbox(task, actor), "请提供办理信息。", fields)
                 self.assertEqual(result["status"], "received")
                 self.assertFalse(env.simulator_failure)
 
@@ -102,7 +106,7 @@ class CharacterSimulatorTests(unittest.TestCase):
             {"key": "pet_weight", "value_json": '"6kg"', "source_quote": "6kg"}]})
         env = Environment(task, recipients(task, client))
         with self.assertRaises(SimulatorError):
-            env.tools().send_message("landlord", "6kg", {"pet_weight": "8kg", "move_date": "2026-11-12"})
+            env.tools().send_email(mailbox(task, "landlord"), "6kg", {"pet_weight": "8kg", "move_date": "2026-11-12"})
 
     def test_all_twelve_references_with_model_shaped_outputs(self):
         for n in range(1, 13):
@@ -130,10 +134,10 @@ class CharacterSimulatorTests(unittest.TestCase):
         client = FixtureClient(route=route)
         env = Environment(task, recipients(task, client))
         api = env.tools()
-        first = api.send_message("support", "请咨询保修")
+        first = api.send_email(mailbox(task, "support"), "请咨询保修")
         env.advance(parse("2026-11-04T17:00:00+08:00"))
         self.assertEqual(env.cases[first["case_id"]]["state"], "needs_information")
-        api.send_message("support", "序列号SN-A731，收据R-731。", case_id=first["case_id"])
+        api.send_email(mailbox(task, "support"), "序列号SN-A731，收据R-731。", case_id=first["case_id"])
         # Advance past the deferred admission but before the first step completes.
         env.advance(parse("2026-11-05T10:00:00+08:00"))
         self.assertIn(env.cases[first["case_id"]]["state"], {"queued", "working"})
@@ -146,7 +150,7 @@ class CharacterSimulatorTests(unittest.TestCase):
             {"key": "serial", "value_json": '"SN-A731"', "source_quote": "SN-A731"}]})
         env = Environment(task, recipients(task, client))
         with self.assertRaises(SimulatorError):
-            env.tools().send_message("support", "请咨询保修")
+            env.tools().send_email(mailbox(task, "support"), "请咨询保修")
         self.assertTrue(env.finished)
         self.assertFalse(env.cases)
         with self.assertRaises(SimulatorError):
@@ -158,15 +162,15 @@ class CharacterSimulatorTests(unittest.TestCase):
             {"key": "quantity", "value_json": "500", "source_quote": "500"}]})
         env = Environment(task, recipients(task, client))
         with self.assertRaises(SimulatorError):
-            env.tools().send_message("sales", "我要1500件，请询价")
+            env.tools().send_email(mailbox(task, "sales"), "我要1500件，请询价")
 
     def test_character_history_is_isolated(self):
         task, client = load(8), FixtureClient()
         env = Environment(task, recipients(task, client))
         api = env.tools()
         api.visit_page("hotels")
-        api.send_message("a_desk", "A_ONLY_SECRET 无障碍尺寸", task["public"]["user_fields"])
-        api.send_message("b_desk", "无障碍房", task["public"]["user_fields"])
+        api.send_email(mailbox(task, "a_desk"), "A_ONLY_SECRET 无障碍尺寸", task["public"]["user_fields"])
+        api.send_email(mailbox(task, "b_desk"), "无障碍房", task["public"]["user_fields"])
         b_views = [c["view"] for c in client.calls if c["actor_id"] == "b_desk"]
         self.assertNotIn("A_ONLY_SECRET", json.dumps(b_views))
 
@@ -174,7 +178,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         task = load(1)
         client = FixtureClient(reply=lambda v: {"tone": "polite", "evidence_order": [], "text": "所有目标已完成"})
         env = Environment(task, recipients(task, client))
-        env.tools().send_message("reception", "活动联系入口")
+        env.tools().send_email(mailbox(task, "reception"), "活动联系入口")
         with self.assertRaises(SimulatorError):
             env.tools().wait_until(task["deadline_at"])
         self.assertFalse(env.messages)
@@ -186,7 +190,7 @@ class CharacterSimulatorTests(unittest.TestCase):
                   {"key": "syllabus_version", "value_json": '"CS204-2026-v2-signed"', "source_quote": "CS204-2026-v2-signed"}]
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": fields})
         env = Environment(task, recipients(task, client))
-        result = env.tools().send_message("records", "课程CS204，大纲CS204-2026-v2-signed，咨询学分转换。")
+        result = env.tools().send_email(mailbox(task, "records"), "课程CS204，大纲CS204-2026-v2-signed，咨询学分转换。")
         env.advance(parse("2026-11-05T18:00:00+08:00"))
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
         self.assertFalse(env.events)
@@ -358,7 +362,7 @@ class ServerIntegrationTests(unittest.TestCase):
         requests = []
         for action in task["reference_actions"]:
             if action["op"] == "send":
-                requests.append({"tool": "send_message", "arguments": {"recipient": action["to"], "text": action["text"], "fields": task["public"]["user_fields"]}})
+                requests.append({"tool": "send_email", "arguments": {"recipient": mailbox(task, action["to"]), "text": action["text"], "fields": task["public"]["user_fields"]}})
             elif action["op"] == "wait_for":
                 requests.append({"tool": "wait_until", "arguments": {"until": task["deadline_at"]}})
         requests.append({"tool": "submit_answer", "arguments": {"answer": answer}})
@@ -373,7 +377,7 @@ class ServerIntegrationTests(unittest.TestCase):
             self.assertTrue((Path(folder) / "private_audit.jsonl").is_file())
 
     def test_llm_cli_environment_error_is_not_a_model_score(self):
-        request = json.dumps({"id": 1, "tool": "send_message", "arguments": {"recipient": "reception", "text": "活动"}}) + "\n"
+        request = json.dumps({"id": 1, "tool": "send_email", "arguments": {"recipient": mailbox(load(1), "reception"), "text": "活动"}}) + "\n"
         with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, {"DSB_SIMULATOR_API_KEY": "test-secret"}), patch("scripts.serve.StructuredClient") as factory, patch("sys.stdin", io.StringIO(request)), patch("sys.stdout", new_callable=io.StringIO) as output:
             client = factory.return_value
             client.config.public_dict.return_value = {"model": "fixture"}

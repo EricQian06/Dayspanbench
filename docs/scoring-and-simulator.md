@@ -92,7 +92,7 @@ Chat模式使用标准库发送HTTP请求，与`OpenAI(base_url=...).chat.comple
 
 ```json
 {"id":1,"tool":"observe","arguments":{}}
-{"id":2,"tool":"send_message","arguments":{"recipient":"forwarder","text":"请核查货件PK-608的历史入库记录和后续联系入口。","fields":{"tracking":"PK-608"}}}
+{"id":2,"tool":"send_email","arguments":{"recipient":"luosen@bench.example","text":"请核查货件PK-608的历史入库记录和后续联系入口。","fields":{"tracking":"PK-608"}}}
 {"id":3,"tool":"wait_until","arguments":{"until":"2027-09-02T15:00:00+08:00"}}
 ```
 

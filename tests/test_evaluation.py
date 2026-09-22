@@ -18,6 +18,10 @@ def task():
     return json.loads((ROOT / "tasks/private/DSB-01.json").read_text(encoding="utf-8"))
 
 
+def mailbox(spec, actor_id):
+    return next(a["contact_details"]["email"] for a in spec["actors"] if a["id"] == actor_id)
+
+
 class ScriptedAgent(ChatAgent):
     """Author-generated test actions, never used in real evaluation."""
     def __init__(self, actions):
@@ -40,7 +44,7 @@ class EvaluationTests(unittest.TestCase):
         actions = []
         for action in spec["reference_actions"]:
             if action["op"] == "send":
-                actions.append({"tool": "send_message", "arguments": {"recipient": action["to"], "text": action["text"], "fields": spec["public"]["user_fields"]}})
+                actions.append({"tool": "send_email", "arguments": {"recipient": mailbox(spec, action["to"]), "text": action["text"], "fields": spec["public"]["user_fields"]}})
             elif action["op"] == "wait_for":
                 actions.append({"tool": "wait_until", "arguments": {"until": spec["deadline_at"]}})
         actions.append({"tool": "submit_answer", "arguments": {"answer": answer}})
@@ -84,7 +88,7 @@ class EvaluationTests(unittest.TestCase):
             config = LLMConfig("broken")
             def complete(self, **kwargs):
                 raise SimulatorError("Simulator HTTP failure (400)")
-        agent = ScriptedAgent([{"tool": "send_message", "arguments": {"recipient": "reception", "text": "活动"}}])
+        agent = ScriptedAgent([{"tool": "send_email", "arguments": {"recipient": mailbox(task(), "reception"), "text": "活动"}}])
         with tempfile.TemporaryDirectory() as folder:
             result = run_episode(task(), agent, TOOLS, Path(folder) / "run", simulator_client=BrokenSimulator())
         self.assertFalse(result["valid_episode"])
@@ -92,7 +96,7 @@ class EvaluationTests(unittest.TestCase):
 
     def test_public_tool_schema_rejects_invalid_types_and_unexposed_access(self):
         cases = [("__getattribute__", {"name": "_env"}), ("read_inbox", {"after": -1}),
-                 ("wait_until", {"until": 42}), ("send_message", {"recipient": [], "text": "x"}),
+                 ("wait_until", {"until": 42}), ("send_email", {"recipient": [], "text": "x"}),
                  ("observe", {"private": True}), ("read_inbox", {"after": True})]
         for name, arguments in cases:
             with self.subTest(name=name, arguments=arguments), self.assertRaises(ValueError):

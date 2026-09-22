@@ -70,7 +70,7 @@ def main(argv=None):
     if args.run_dir.exists() and any(args.run_dir.iterdir()):
         parser.error("run-dir must be new or empty")
     args.run_dir.mkdir(parents=True, exist_ok=True)
-    tool_specs = json.loads((ROOT / "docs/agent-tools.json").read_text())
+    tool_specs = json.loads((ROOT / "docs/agent-tools.json").read_text(encoding="utf-8"))
     if args.check_only:
         agent = ChatAgent(agent_config, token_parameter=args.agent_token_parameter)
         sim = StructuredClient(sim_config) if args.simulator == "llm" else None
@@ -127,7 +127,7 @@ def main(argv=None):
         with lock:
             print(message, flush=True)
     def worker(task_id):
-        task = json.loads((ROOT / "tasks/private" / (task_id + ".json")).read_text())
+        task = json.loads((ROOT / "tasks/private" / (task_id + ".json")).read_text(encoding="utf-8"))
         agent = ChatAgent(agent_config, token_parameter=args.agent_token_parameter)
         sim = StructuredClient(sim_config) if args.simulator == "llm" else None
         return run_episode(task, agent, tool_specs, args.run_dir / task_id, simulator_client=sim,
@@ -141,9 +141,9 @@ def main(argv=None):
             results.append(result)
             summary = summarize(results, task_ids)
             write_json(args.run_dir / "summary.json", summary)
-            (args.run_dir / "report.md").write_text(render_report(summary, args.agent_model, sim_model if args.simulator == "llm" else "rule"))
+            (args.run_dir / "report.md").write_text(render_report(summary, args.agent_model, sim_model if args.simulator == "llm" else "rule"), encoding="utf-8")
             progress(f"{result['task_id']} finished: {result['termination']}, valid={result['valid_episode']}, complete={result.get('complete', 'N/A')}")
-    print((args.run_dir / "report.md").read_text(), flush=True)
+    print((args.run_dir / "report.md").read_text(encoding="utf-8"), flush=True)
     return 2 if summary["invalid_episodes"] else 0
 
 

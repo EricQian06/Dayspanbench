@@ -102,8 +102,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是霁光电器客服·孟竹，负责保修材料受理。没有凭证不能判定覆盖；拿到诊断和库存后才报告可用时段。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
-      "reply_prefix": "霁光电器客服·孟竹：以下是本次查询或内部转交后已取得的信息。"
+      "instructions": "你是霁光电器客服·孟竹，负责保修材料受理。没有凭证不能判定覆盖；拿到诊断和库存后才报告可用时段。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:covered"

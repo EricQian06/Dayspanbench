@@ -421,8 +421,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是禾岸会馆前台·陈芷，负责对外咨询与转介。只掌握联系人目录；不能承诺报价、档期或设备。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
-        "reply_prefix": "禾岸会馆前台·陈芷：以下是本次查询或内部转交后已取得的信息。"
+        "instructions": "你是禾岸会馆前台·陈芷，负责对外咨询与转介。只掌握联系人目录；不能承诺报价、档期或设备。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": []
     },
@@ -526,8 +525,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是禾岸会馆销售·姚岚，负责费用与取消条款。报价必须带日期和人数；设备可用性需要运营确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
-        "reply_prefix": "禾岸会馆销售·姚岚：以下是本次查询或内部转交后已取得的信息。"
+        "instructions": "你是禾岸会馆销售·姚岚，负责费用与取消条款。报价必须带日期和人数；设备可用性需要运营确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:cancellation",
@@ -634,8 +632,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是禾岸会馆运营·赵航，负责档期核对和设备协调。能够查档期；投影问题必须转给设备负责人。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
-        "reply_prefix": "禾岸会馆运营·赵航：以下是本次查询或内部转交后已取得的信息。"
+        "instructions": "你是禾岸会馆运营·赵航，负责档期核对和设备协调。能够查档期；投影问题必须转给设备负责人。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:slot_available"
@@ -735,8 +732,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是禾岸会馆设备主管·周敏，负责设备维修计划。只有本岗位知道维修窗口；内部收到转交后进入自己的队列。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
-        "reply_prefix": "禾岸会馆设备主管·周敏：以下是本次查询或内部转交后已取得的信息。"
+        "instructions": "你是禾岸会馆设备主管·周敏，负责设备维修计划。只有本岗位知道维修窗口；内部收到转交后进入自己的队列。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:projector_available"

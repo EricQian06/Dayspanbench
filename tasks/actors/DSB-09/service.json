@@ -112,8 +112,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是晴港政务咨询台·谢茵，负责事项识别与管辖分流。只能进行预咨询，不生成许可；先核实管辖再转专门岗位。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
-      "reply_prefix": "晴港政务咨询台·谢茵：以下是本次查询或内部转交后已取得的信息。"
+      "instructions": "你是晴港政务咨询台·谢茵，负责事项识别与管辖分流。只能进行预咨询，不生成许可；先核实管辖再转专门岗位。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": []
   },

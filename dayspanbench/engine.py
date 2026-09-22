@@ -55,6 +55,9 @@ class Environment:
             for actor in task["actors"]
         }
         self.known_contacts = set(task["public"]["initial_contacts"])
+        # Mailboxes are the addressing surface: an address that belongs to no
+        # actor is a black hole that acknowledges delivery and never replies.
+        self.email_to_actor = {a["contact_details"]["email"]: a["id"] for a in task["actors"] if "email" in a.get("contact_details", {})}
         self.cases = {}
         self.evidence = {}
         self.messages = []
@@ -162,6 +165,47 @@ class Environment:
             self.start(case)
         return case
 
+    def new_unrouted_case(self, actor_id, fields):
+        """A delivered mail that matches none of the recipient's workflows.
+
+        It occupies the mailbox like any other mail, is read during work hours,
+        and is answered with a referral email instead of entering processing.
+        """
+        actor = self.actors[actor_id]
+        self.case_serial += 1
+        case = {"id": f"CASE-{self.case_serial:04d}", "actor": actor_id, "workflow": None,
+                "state": "new", "step": 0, "fields": deepcopy(fields), "evidence": [],
+                "contacts": [], "parent": None, "origin": "agent", "received_at": stamp(self.now)}
+        self.cases[case["id"]] = case
+        actor.cases.append(case["id"])
+        actor.inbox.append({"case_id": case["id"], "from": "agent", "fields": deepcopy(fields), "at": stamp(self.now)})
+        self.record("case_created", case_id=case["id"], actor=actor_id, parent=None, origin="agent", routed=False)
+        self.enqueue(self.admission_at(actor), "admit", case["id"])
+        return case
+
+    def referral_names(self, actor):
+        """People this actor's own workflows hand requests over to."""
+        names = []
+        for tool in actor.spec["tools"].values():
+            if tool["kind"] == "refer":
+                names.extend(self.actors[c].spec["name"] for c in tool["contacts"])
+        return list(dict.fromkeys(names))
+
+    def reply_referral(self, case):
+        """Answer a misrouted mail: not my responsibility, contact someone else."""
+        actor = self.actors[case["actor"]]
+        names = self.referral_names(actor)
+        if names:
+            body = f"您咨询的事项不属于我负责的范围，我无法直接办理；建议您联系{'、'.join(names)}，由他们继续为您处理。"
+        else:
+            body = "您咨询的事项不属于我负责的范围，我无法直接办理；建议您通过公开渠道找到相应事项的对接人后再来信。"
+        text = f"您好，我是{actor.spec['name']}。{body}如有其他问题，欢迎随时来信。"
+        # The misrouted mail walks the same visible lifecycle as a processed one.
+        self.transition(case, "queued")
+        self.transition(case, "working")
+        self.transition(case, "replied")
+        self.emit(case, text, status="referral")
+
 
 
     def start(self, case):
@@ -194,7 +238,7 @@ class Environment:
                 self.transition(case, "failed")
                 self.complete_failure(case, "内部转交缺少材料：" + ", ".join(missing))
             else:
-                self.emit(case, "请补充以下信息后继续处理：" + ", ".join(missing), status="needs_information")
+                self.emit(case, f"您好，我是{self.actors[case['actor']].spec['name']}。您提交的材料尚不完整，请补充以下信息后我们再继续处理：{', '.join(missing)}。如有其他问题，欢迎随时来信。", status="needs_information")
             return
         case["admitted_at"] = stamp(self.now)
         case["admission_evidence"] = admission_evidence
@@ -272,11 +316,18 @@ class Environment:
                 parent["step"] += 1
                 self.schedule_step(parent)
             else:
-                lines = [actor.spec["recipient"]["reply_prefix"]]
-                lines += [self.evidence[e]["text"] for e in case["evidence"]]
+                # One natural-language email paragraph, assembled deterministically.
+                parts = [f"您好，我是{actor.spec['name']}。"]
+                texts = [self.evidence[e]["text"] for e in case["evidence"]]
+                if texts:
+                    parts.append("您咨询的事项已经核实，具体情况如下：")
+                    parts.extend(texts)
+                else:
+                    parts.append("您咨询的事项已经按流程处理完毕。")
                 if case["contacts"]:
-                    lines.append("可继续联系：" + "、".join(self.actors[c].spec["name"] for c in case["contacts"]))
-                self.emit(case, "\n".join(lines), case["evidence"], list(dict.fromkeys(case["contacts"])))
+                    parts.append(f"此外，相关事项建议您联系{'、'.join(self.actors[c].spec['name'] for c in case['contacts'])}，他们可以继续为您处理。")
+                parts.append("如有其他问题，欢迎随时来信。")
+                self.emit(case, "".join(parts), case["evidence"], list(dict.fromkeys(case["contacts"])))
             return "done"
         else:
             raise ValueError("Unknown recipient tool")
@@ -288,7 +339,7 @@ class Environment:
             self.transition(parent, "failed")
             self.complete_failure(parent, reason)
         else:
-            self.emit(case, reason, status="failed")
+            self.emit(case, f"您好，我是{self.actors[case['actor']].spec['name']}。很抱歉，{reason}如有疑问欢迎再来信。", status="failed")
 
     def process_event(self, event):
         at, _, kind, case_id = event
@@ -300,7 +351,10 @@ class Environment:
             # Deferred email admission: routing and material checks happen
             # inside the recipient's work hours, never at send time.
             if case["state"] in {"new", "needs_information"}:
-                self.start(case)
+                if case.get("workflow") is None:
+                    self.reply_referral(case)
+                else:
+                    self.start(case)
             return
         if kind == "start":
             self.transition(case, "working")
@@ -355,27 +409,38 @@ class AgentTools:
         env.known_contacts.update(page.get("contacts", []))
         return {**deepcopy(page), "contact_details": [env.contact(c) for c in page.get("contacts", [])]}
 
-    def send_message(self, recipient, text, fields=None, channel="email", case_id=None):
+    def send_email(self, recipient, text, fields=None, case_id=None):
+        """Send mail to a mailbox address. The receipt is issued at send time and
+        is indistinguishable between delivery and a black-hole address; whether
+        the recipient is responsible for the request is only decided when the
+        mail is read, and mismatches are answered with a referral email."""
         env = self._env
         if not isinstance(text, str) or (fields is not None and not isinstance(fields, dict)):
             raise ValueError("text must be a string and fields must be an object")
+        if not isinstance(recipient, str) or recipient.count("@") != 1 or not recipient.split("@")[0] or not recipient.split("@")[1]:
+            raise ValueError("recipient must be an email address")
         if env.finished or env.now >= env.deadline:
             raise ValueError("Episode is closed for new messages")
-        if recipient not in env.known_contacts:
+        actor_id = env.email_to_actor.get(recipient)
+        if actor_id is not None and actor_id not in env.known_contacts:
             raise PermissionError("Contact has not been discovered")
-        if channel != "email":
-            raise ValueError("send_message only supports email; use call for phone")
-        actor = env.actors[recipient]
-        if "email" not in actor.spec["contact_details"]:
-            raise ValueError("Contact has no email address")
         if env.agent_sends >= env.task["public"]["message_budget"]:
             raise ValueError("Message budget exhausted")
         env.agent_sends += 1
-        env.record("agent_send", recipient=recipient, text=text, fields=fields or {}, channel=channel)
+        env.record("agent_send", recipient=recipient, text=text, fields=fields or {}, channel="email")
         existing = env.cases[case_id] if case_id else None
-        if existing and (existing["actor"] != recipient or existing["parent"]):
+        if existing and (existing["actor"] != actor_id or existing["parent"]):
             raise PermissionError("Case is not this agent's conversation")
-        view = {"actor_id": recipient, "name": actor.spec["name"], "role": actor.spec["role"],
+        if actor_id is None:
+            # Unknown mailbox: the delivery receipt looks normal, but nobody
+            # ever reads this mail and no case is opened. Waiting is the only
+            # way for the agent to notice.
+            env.case_serial += 1
+            dead_id = f"CASE-{env.case_serial:04d}"
+            env.record("dead_letter", case_id=dead_id, recipient=recipient)
+            return {"case_id": dead_id, "status": "received", "at": stamp(env.now)}
+        actor = env.actors[actor_id]
+        view = {"actor_id": actor_id, "name": actor.spec["name"], "role": actor.spec["role"],
                 "instructions": actor.spec["recipient"]["instructions"], "message": text,
                 "fields": deepcopy(fields or {}), "now": stamp(env.now), "history": deepcopy(actor.history),
                 "existing_workflow_id": existing["workflow"]["id"] if existing else None,
@@ -390,7 +455,7 @@ class AgentTools:
             workflow_id = existing["workflow"]["id"] if existing else env.recipient_call(actor, "choose", view)
         if case_id:
             case = env.cases[case_id]
-            if case["actor"] != recipient or case["parent"]:
+            if case["actor"] != actor_id or case["parent"]:
                 raise PermissionError("Case is not this agent's conversation")
             if case["state"] in {"new", "needs_information"}:
                 # A followup on an unadmitted or incomplete case supplies fields;
@@ -402,15 +467,18 @@ class AgentTools:
                     env.start(case)
             else:
                 # Following up is observable, but does not skip an internal queue.
-                env.emit(case, "已收到跟进；原受理时间和处理队列保持不变。", status="acknowledgement")
+                env.emit(case, f"您好，我是{actor.spec['name']}。已收到您的跟进邮件；原受理时间和处理顺序保持不变。如有其他问题，欢迎随时来信。",
+                         status="acknowledgement")
             return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
         if workflow_id is None:
-            prompt = "请说明要办理的事项：" + "；".join(w["label"] for w in actor.spec["workflows"])
-            actor.history.append({"role": "recipient", "text": prompt, "at": stamp(env.now)})
-            return {"status": "clarification_needed", "text": prompt}
+            # The request matches none of this person's workflows: not their
+            # responsibility. The mismatch is noticed when the mail is read and
+            # answered with a referral email, not at send time.
+            case = env.new_unrouted_case(actor_id, fields or {})
+            return {"case_id": case["id"], "status": "received", "at": stamp(env.now)}
         if workflow_id not in {w["id"] for w in actor.spec["workflows"]}:
             raise PermissionError("Undeclared workflow")
-        case = env.new_case(recipient, workflow_id, fields or {}, origin="agent")
+        case = env.new_case(actor_id, workflow_id, fields or {}, origin="agent")
         return {"case_id": case["id"], "status": "received", "at": stamp(env.now)}
 
     def call(self, recipient, text, fields=None):

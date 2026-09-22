@@ -116,8 +116,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是霁光工程师·韩则，负责诊断与维修窗口。仅周二、周四处理远程诊断和排期；周四14点集中诊断，补货后需复核型号和上门窗口。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。",
-      "reply_prefix": "霁光工程师·韩则：以下是本次查询或内部转交后已取得的信息。"
+      "instructions": "你是霁光工程师·韩则，负责诊断与维修窗口。仅周二、周四处理远程诊断和排期；周四14点集中诊断，补货后需复核型号和上门窗口。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:earliest_visit",

@@ -90,7 +90,7 @@
       "case_id": "CASE-0001",
       "status": "needs_information",
       "channel": "email",
-      "text": "请补充以下信息后继续处理：syllabus_version",
+      "text": "您好，我是澄川学院教务·唐宁。您提交的材料尚不完整，请补充以下信息后我们再继续处理：syllabus_version。如有其他问题，欢迎随时来信。",
       "evidence": [],
       "contacts": []
     },
@@ -101,7 +101,7 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "CS204课程负责人·梅芮：以下是本次查询或内部转交后已取得的信息。\nCS204课程正式签章大纲版本为CS204-2026-v2-signed。\nCS204课程正式签章大纲版本为CS204-2026-v2-signed。",
+      "text": "您好，我是CS204课程负责人·梅芮。您咨询的事项已经核实，具体情况如下：CS204课程正式签章大纲版本为CS204-2026-v2-signed。CS204课程正式签章大纲版本为CS204-2026-v2-signed。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0001",
@@ -131,7 +131,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "澄川学院教务·唐宁：以下是本次查询或内部转交后已取得的信息。\n学分委员会确认CS204可转换3学分。\n这3学分仅计入专业选修，不能替代必修课。\n该转换结论从2027春季学期开始适用。\n学分委员会确认CS204可转换3学分。\n这3学分仅计入专业选修，不能替代必修课。\n该转换结论从2027春季学期开始适用。",
+      "text": "您好，我是澄川学院教务·唐宁。您咨询的事项已经核实，具体情况如下：学分委员会确认CS204可转换3学分。这3学分仅计入专业选修，不能替代必修课。该转换结论从2027春季学期开始适用。学分委员会确认CS204可转换3学分。这3学分仅计入专业选修，不能替代必修课。该转换结论从2027春季学期开始适用。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0003",
@@ -195,7 +195,7 @@
     {
       "at": "2026-11-05T06:00:00+00:00",
       "kind": "agent_send",
-      "recipient": "records",
+      "recipient": "tangning@bench.example",
       "text": "咨询CS204学分转换",
       "fields": {
         "course_code": "CS204"
@@ -213,7 +213,7 @@
     {
       "at": "2026-11-05T06:00:00+00:00",
       "kind": "agent_send",
-      "recipient": "lecturer",
+      "recipient": "meirui@bench.example",
       "text": "请补发正式签章大纲",
       "fields": {
         "course_code": "CS204"
@@ -363,7 +363,7 @@
     {
       "at": "2026-11-10T05:39:00+00:00",
       "kind": "agent_send",
-      "recipient": "records",
+      "recipient": "tangning@bench.example",
       "text": "补充正式大纲继续办理学分咨询",
       "fields": {
         "course_code": "CS204",

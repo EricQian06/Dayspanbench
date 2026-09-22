@@ -33,20 +33,20 @@ class RecordedSimulator:
 
 
 def regrade_episode(directory, erratum):
-    original = json.loads((directory / "result.json").read_text())
+    original = json.loads((directory / "result.json").read_text(encoding="utf-8"))
     if not original["valid_episode"]:
         return original, False
-    manifest = json.loads((directory / "manifest.json").read_text())
-    task = json.loads((directory.parent / "task_snapshot" / (original["task_id"] + ".json")).read_text())
+    manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
+    task = json.loads((directory.parent / "task_snapshot" / (original["task_id"] + ".json")).read_text(encoding="utf-8"))
     assert hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest() == manifest["task_sha256"]
-    recorded = RecordedSimulator([json.loads(x) for x in (directory / "simulator_calls.jsonl").read_text().splitlines()])
+    recorded = RecordedSimulator([json.loads(x) for x in (directory / "simulator_calls.jsonl").read_text(encoding="utf-8").splitlines()])
     recipients = None if manifest["simulator"] == "rule" else {
         a["id"]: LLMSimulator(recorded, a["id"], history_limit=manifest["history_limit"],
             validation_retries=manifest.get("simulator_validation_retries", 0)) for a in task["actors"]}
     env = Environment(task, recipients)
     api = env.tools()
     final_grade = None
-    for line in (directory / "rpc_trace.jsonl").read_text().splitlines():
+    for line in (directory / "rpc_trace.jsonl").read_text(encoding="utf-8").splitlines():
         row = json.loads(line)
         action = row["request"]
         if action is None:
@@ -62,7 +62,7 @@ def regrade_episode(directory, erratum):
             final_grade = value
     assert len(recorded.calls) == len(recorded.rows), "Unconsumed simulator calls"
     answer_path = directory / "final_answer.json"
-    answer = json.loads(answer_path.read_text()) if answer_path.exists() else {}
+    answer = json.loads(answer_path.read_text(encoding="utf-8")) if answer_path.exists() else {}
     final_grade = final_grade or env.evaluate(answer)
     assert all(original[k] == v for k, v in final_grade.items()), "Original grade could not be reproduced"
     changed = task["id"] == erratum["task_id"]
@@ -82,9 +82,9 @@ def main():
     parser.add_argument("--erratum", type=Path, default=ROOT / "docs/scoring-errata/DSB11-alias-20260921.json")
     parser.add_argument("--output-dir", type=Path, help="New output directory; defaults to RUN_DIR/regraded")
     args = parser.parse_args()
-    raw = json.loads((args.run_dir / "summary.json").read_text())
-    manifest = json.loads((args.run_dir / "manifest.json").read_text())
-    erratum = json.loads(args.erratum.read_text())
+    raw = json.loads((args.run_dir / "summary.json").read_text(encoding="utf-8"))
+    manifest = json.loads((args.run_dir / "manifest.json").read_text(encoding="utf-8"))
+    erratum = json.loads(args.erratum.read_text(encoding="utf-8"))
     output = args.output_dir or args.run_dir / "regraded"
     output.mkdir(exist_ok=False)
     results, changed, verified = [], [], []
@@ -113,7 +113,7 @@ def main():
             f"原始可解决题成绩：{raw['resolved']['successes']}/{raw['resolved']['valid_episodes']}；"
             f"规则修正后：{summary['resolved']['successes']}/{summary['resolved']['valid_episodes']}。"
             "原始结果保留在上级目录的report.md和summary.json。\n\n")
-    (output / "report.md").write_text(report.replace("# DaySpanBench 实测报告\n\n", "# DaySpanBench 实测报告（规则修正复评分）\n\n" + note))
+    (output / "report.md").write_text(report.replace("# DaySpanBench 实测报告\n\n", "# DaySpanBench 实测报告（规则修正复评分）\n\n" + note), encoding="utf-8")
     print(json.dumps({"verified_replays": verified, "changed_tasks": changed, "resolved": summary["resolved"],
                       "invalid_episodes": summary["invalid_episodes"]}, ensure_ascii=False))
 

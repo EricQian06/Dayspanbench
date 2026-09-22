@@ -24,8 +24,10 @@ def run_reference(task, *, recipient=None):
                     if not matches:
                         raise AssertionError(f"Reference tries to supply unobserved fact {fact_id}")
                     fields[key] = deepcopy(matches[-1]["value"])
-            result = api.send_message(action["to"], action["text"], fields,
-                       action.get("channel", "email"), labels.get(action.get("followup")))
+            # The privileged witness addresses people by id and lets the engine
+            # translate to their mailbox, exactly like a discovered contact card.
+            mailbox = next(a["contact_details"]["email"] for a in task["actors"] if a["id"] == action["to"])
+            result = api.send_email(mailbox, action["text"], fields, labels.get(action.get("followup")))
             if "case_id" not in result:
                 raise AssertionError(f"Reference message not understood: {action}: {result}")
             labels[action["label"]] = result["case_id"]

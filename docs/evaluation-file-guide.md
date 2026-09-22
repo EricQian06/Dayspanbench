@@ -77,7 +77,7 @@ flowchart TD
 | `start_at/deadline_at` | 初始化、等待、新消息校验、评分 | 设置时钟和截止；截止后不接受新消息，但可以读取与最终提交 |
 | `public.brief/user_fields/authorization` | `observe`；新事项受理 | 告知任务和已知资料；受理时检查场景字段一致性。授权文本是任务约束，不是通用自然语言行为审核器 |
 | `public.initial_contacts/pages` | 初始化；观察、搜索、访问页面 | 初始化联系人；提供公开资料；访问页面注册新增联系人并给出其具体联络方式 |
-| `public.message_budget` | 每次`send_message`与`call` | 当前每题16次发送预算，包含补件、催问和电话拨打；不是全工具调用预算 |
+| `public.message_budget` | 每次`send_email`与`call` | 当前每题16次发送预算，包含补件、催问、投递到无人邮箱的信件和电话拨打；不是全工具调用预算 |
 | `public.answer_keys/conclusion_options/answer_format` | 初始观察和最终作答 | 告知可用答案字段与结论标签，不公开正确选项 |
 | `actors` | 初始化及每次交互 | 创建人物实例，提供角色、渠道、流程和白名单工具 |
 | `calendars` | 每个工具步骤排程时 | 计算工作窗口、周末、时区、连续等待与批次 |

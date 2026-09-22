@@ -45,7 +45,7 @@ def validate_task(task):
         check(set(actor["process_engine"]["states"]) == set(TRANSITIONS), f"{aid}: incompatible state machine")
         check(actor["process_engine"]["workers"] == 1, f"{aid}: only one worker supported")
         check(set(actor["knowledge"]) <= set(facts), f"{aid}: unknown knowledge fact")
-        check("email" in actor["contact_details"], f"{aid}: missing email address; send_message requires one")
+        check("email" in actor["contact_details"], f"{aid}: missing email address; send_email requires one")
         check(set(actor["channels"]) == set(actor["contact_details"]), f"{aid}: channels disagree with contact details")
         check(bool(actor["contact_details"]["email"].endswith("@bench.example")), f"{aid}: email not in the bench.example domain")
         for fid in actor["knowledge"]:
