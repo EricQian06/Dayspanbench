@@ -13,11 +13,11 @@
 | 参与方 | 放置和使用什么 | 当前实现 |
 |---|---|---|
 | 任务作者 / CI | 手写来源、验证脚本、测试、参考策略、任务卡生成器 | 在本仓库离线执行 |
-| 可信环境宿主 | 私有任务JSON、共享引擎、日历、接收者、评分逻辑 | `scripts/serve.py`启动一个进程、加载一题；独立环境实例持有该题全部角色 |
+| 可信环境主进程 | 私有任务JSON、共享引擎、日历、接收者、评分逻辑 | `scripts/serve.py`启动一个进程、加载一题；独立环境实例持有该题全部角色 |
 | 被测Agent及其模型调用器 | 七个工具的接口定义、公开观察、已收到消息、自己的记忆 | `scripts/evaluate.py`调用真实模型并调度公开工具；也可用JSONL服务接外部Agent |
 | 评测分析端 / 人类评审 | 最终分数、实际运行日志、私有审计；必要时对照作者参考回放 | 作者回放、episode日志和被测模型批量驱动器均已实现，自动生成结果总表与报告 |
 
-同一机器可以承载这些参与方，但被测Agent不应获得可信宿主的Python对象或项目文件系统。人物模拟器也不是被测Agent：人物接收消息，Agent负责主动咨询、补件、等待和作答。
+同一机器可以承载这些参与方，但被测Agent不应获得可信主进程的Python对象或项目文件系统。人物模拟器也不是被测Agent：人物接收消息，Agent负责主动咨询、补件、等待和作答。
 
 ```mermaid
 flowchart TD
@@ -51,7 +51,7 @@ flowchart TD
 | ⑤ 启动一个正式episode | 每个模型 × 每题 × 每次重复都重新启动 | `scripts/serve.py --task DSB-xx`加载该题私有JSON | 全新时钟、角色实例、事项、收件箱、事件队列和证据集合；可保存运行配置，尚无最终结果 |
 | ⑥ 模型循环调用工具 | episode运行中 | 接入方用`docs/agent-tools.json`描述工具；服务调用引擎、接收者和日历 | 公开观察、消息、凭证、联系人、模拟时间；状态保存在进程内存，可用--run-dir保存日志 |
 | ⑦ 最终提交与评分 | Agent决定完成，或到截止后作答 | `submit_answer`经Environment.evaluate调用scoring.py读取目标和本次证据 | 返回目标得分、成功类型、历时和消息数；指定--run-dir保存本次结果，不修改参考回放 |
-| ⑧ 保存与分析模型实验 | episode结束或异常终止后 | 外层实验驱动器保存本次真实请求、响应与分数；可信宿主保存内部审计 | 服务可保存RPC/内部审计/模拟器调用/评分；被测模型自身输出和成本需外层驱动器记录 |
+| ⑧ 保存与分析模型实验 | episode结束或异常终止后 | 外层实验驱动器保存本次真实请求、响应与分数；可信主进程保存内部审计 | 服务可保存RPC/内部审计/模拟器调用/评分；被测模型自身输出和成本需外层驱动器记录 |
 
 任务内容不变时，无需在每个模型episode前重跑①至④。正式episode只需要冻结好的私有定义和运行时代码。新的episode必须使用全新环境；在原实例里继续会继承消息、时间和证据。
 
@@ -61,7 +61,7 @@ flowchart TD
 
 | 文件 | 谁 / 在哪里使用 | 何时使用 | 当前实际消费者 | 被测Agent可见性 |
 |---|---|---|---|---|
-| `tasks/private/DSB-xx.json` | 可信环境宿主、验证器、作者回放器、任务卡生成器 | 初始化时整题加载；交互和评分时继续使用内存中的字段 | `serve.py`、`validate.py`、`replay.py`、`render_cards.py`、测试 | 不提供：含隐藏事实、标准目标、参考动作和完整人物流程 |
+| `tasks/private/DSB-xx.json` | 可信环境主进程、验证器、作者回放器、任务卡生成器 | 初始化时整题加载；交互和评分时继续使用内存中的字段 | `serve.py`、`validate.py`、`replay.py`、`render_cards.py`、测试 | 不提供：含隐藏事实、标准目标、参考动作和完整人物流程 |
 | `tasks/public/DSB-xx.json` | 发布任务的接入方、导出一致性检查 | 准备公开任务包时；静态验证时 | 当前仅由`validate.py`直接检查；`serve.py`不读此文件 | 可公开，但当前Agent入口直接调用`observe`即可，无需另外传文件 |
 | `tasks/actors/DSB-xx/<actor>.json` | 作者、人物模拟器开发者、验证器 | 审核人物权限、工具和流程时；未来独立角色服务可据此加载 | 当前`validate.py`直接读；运行时使用私有任务里内嵌的同名人物配置 | 不提供：包含人物私有知识、工具和内部流程 |
 | `docs/tasks/DSB-xx.md` | 人类评审、环境开发者、错误分析人员 | 测评前审题；测评后定位时间、材料或评分问题 | 人工阅读，无运行时消费者 | 不提供：含隐藏事实、答案条件及参考时间线 |
@@ -75,7 +75,7 @@ flowchart TD
 |---|---|---|
 | `id/title/domain/schema_version/task_set_version` | 导出、验证、审查和版本记录 | 任务标识与元数据；服务器不根据版本字段动态选择实现 |
 | `start_at/deadline_at` | 初始化、等待、新消息校验、评分 | 设置时钟和截止；截止后不接受新消息，但可以读取与最终提交 |
-| `public.brief/user_fields/authorization` | `observe`；新事项受理 | 告知委托和已知资料；受理时检查场景字段一致性。授权文本是任务约束，不是通用自然语言行为审核器 |
+| `public.brief/user_fields/authorization` | `observe`；新事项受理 | 告知任务和已知资料；受理时检查场景字段一致性。授权文本是任务约束，不是通用自然语言行为审核器 |
 | `public.initial_contacts/pages` | 初始化；观察、搜索、读页面 | 初始化联系人；提供公开资料；读页面注册新增联系人 |
 | `public.message_budget` | 每次`send_message` | 当前每题16次发送预算，包含补件和催问；不是全工具调用预算 |
 | `public.answer_keys/conclusion_options/answer_format` | 初始观察和最终作答 | 告知可用答案字段与结论标签，不公开正确选项 |
@@ -97,7 +97,7 @@ flowchart TD
 | `actor.process_engine` | 流程状态引擎 | 验证配置；运行时由引擎维护事项 | 状态迁移、单工作位和催问规则在`engine.py`实现；该清单不是任意状态机DSL，仅修改清单不能新增引擎能力 |
 | `actor.workflows` | 事项受理与步骤执行 | 收到请求后；每一步完成后 | 校验必需字段和已观察凭证，选择下一工具及等待时间 |
 | `actor.recipient.instructions`及工作流标签 | 接收者模拟器 | 新的外部消息需要判断意图时 | 构造当前人物的受限`view`；默认`RuleRecipient`做关键词路由 |
-| `actor.recipient.rule_adapter/llm_adapter` | 适配器说明 | 接入或审查时 | 字符串只是清单元数据，不会自动动态导入或调用模型；CLI可启用LLMSimulator，或由宿主注入自定义回调 |
+| `actor.recipient.rule_adapter/llm_adapter` | 适配器说明 | 接入或审查时 | 字符串只是清单元数据，不会自动动态导入或调用模型；CLI可启用LLMSimulator，或由主进程注入自定义回调 |
 | `actor.recipient.reply_prefix` | 回复生成 | 对Agent正式回复时 | 引擎把前缀与实际取得的证据拼成回复；人物LLM当前不自由生成事实 |
 | `actor.tools/knowledge` | 人物工具模拟器 | 排程步骤到期时 | 只允许本角色声明的查询、文书、转介、内部转交和回复 |
 | `calendar` | 日历模拟器 | 计算开始、完成、批次时刻 | 独立导出的完整角色日历；当前运行时从私有定义的`calendars`取同样内容 |
@@ -116,10 +116,10 @@ flowchart TD
 | [scripts/replay.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/scripts/replay.py) | 作者/CI，可行性验收 | 重跑全部12题参考路径并覆盖reference_runs；校验设计历时，生成summary.json |
 | [dayspanbench/reference.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/reference.py) | 作者/CI，被replay.py和测试调用 | 执行私有reference_actions，用实际观察到的证据和私有目标组装参考答案；不得当成被测模型的规划器 |
 | [scripts/render_cards.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/scripts/render_cards.py) | 作者，参考回放后 | 读取私有任务和参考回放，生成12份任务卡及总览；回放未更新就渲染会展示旧轨迹 |
-| [scripts/serve.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/scripts/serve.py) | 可信宿主，每次episode | 加载一题并分发JSONL；--simulator llm调用人物模型，--run-dir保存单次日志 |
-| [dayspanbench/engine.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py) | 可信宿主，初始化至评分全程 | ActorState、事项状态机、事件队列、人物工具和Agent工具；evaluate委托scoring.py |
-| [dayspanbench/calendar.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/calendar.py) | 可信宿主，每次排程和时间推进 | 时区、工作时段、连续时间、固定批次和not_before计算；没有真实睡眠 |
-| [dayspanbench/recipient.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/recipient.py) | 可信宿主，新消息意图路由 | 默认规则路由和旧的路由回调；新HTTP模拟器见simulator.py与llm.py |
+| [scripts/serve.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/scripts/serve.py) | 可信主进程，每次episode | 加载一题并分发JSONL；--simulator llm调用人物模型，--run-dir保存单次日志 |
+| [dayspanbench/engine.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py) | 可信主进程，初始化至评分全程 | ActorState、事项状态机、事件队列、人物工具和Agent工具；evaluate调用scoring.py |
+| [dayspanbench/calendar.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/calendar.py) | 可信主进程，每次排程和时间推进 | 时区、工作时段、连续时间、固定批次和not_before计算；没有真实睡眠 |
+| [dayspanbench/recipient.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/recipient.py) | 可信主进程，新消息意图路由 | 默认规则路由和旧的路由回调；新HTTP模拟器见simulator.py与llm.py |
 | [dayspanbench/__init__.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/__init__.py) | Python导入包时 | 包入口；无独立测评阶段或额外产物 |
 | [docs/agent-tools.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/agent-tools.json) | 模型接入方，注册工具时 | 七个公开工具的参数定义；需接入方转换为所用模型的工具格式，serve.py本身不读取或执行这个Schema |
 | [tests/test_environment.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tests/test_environment.py) | 开发/CI，正式实验前或引擎变更后 | 日历、权限、消息、证据、长期流程、参考历时和RPC回归测试；测试成功不是模型成功 |
@@ -145,15 +145,15 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 模拟器出错会记录`valid_episode=false`，不能当作有效Agent失败。被测模型自身的完整上下文、输出、token成本及批量调度仍由外层驱动器负责；服务不会自行运行被测模型。
 
-可约定`artifacts/evaluation_runs/<run_id>/DSB-xx/<repeat_id>/`为每次--run-dir。日志由可信宿主保管，尤其私有审计和人物提示词不能提供给Agent。日志与人物JSON都不是checkpoint，进程重启不能恢复状态。
+可约定`artifacts/evaluation_runs/<run_id>/DSB-xx/<repeat_id>/`为每次--run-dir。日志由可信主进程保管，尤其私有审计和人物提示词不能提供给Agent。日志与人物JSON都不是checkpoint，进程重启不能恢复状态。
 
 独立`serve.py`不限制读取或等待工具的总调用数；自动驱动器`evaluate.py`默认限制80个Agent决策步骤，每次生成最多4096个输出token，并设置API超时与重试上限。每题消息预算继续由环境执行。完整配置与日志说明见[自动测评流程](automatic-evaluation.md)。
 
 ## 8. DSB-12串起一次运行
 
 1. 作者修改`author_tasks.py`，导出DSB-12的私有定义、公开视图和5份人物包；验证并参考回放后生成任务卡。
-2. 可信宿主运行`python3 scripts/serve.py --task DSB-12`。它只读取DSB-12私有定义并创建5个人物实例；没有启动5个Python服务。
-3. 模型驱动器向同一持续运行的进程发送`observe`，把返回的公开委托和联系人交给被测Agent。人物包、任务卡和参考答案不进入模型上下文。
+2. 可信主进程运行`python3 scripts/serve.py --task DSB-12`。它只读取DSB-12私有定义并创建5个人物实例；没有启动5个Python服务。
+3. 模型驱动器向同一持续运行的进程发送`observe`，把返回的公开任务和联系人交给被测Agent。人物包、任务卡和参考答案不进入模型上下文。
 4. Agent联系`forwarder`；引擎创建事项并内部转给`warehouse`，到期后回传记录和新联系人。此阶段不会重新打开`warehouse.json`；使用的是启动时已加载的私有配置。
 5. Agent联系`exporter`取v2，再联系`customsdesk`初审；内部`broker/preliminary`到期返回登记号。随后Agent再次联系`exporter`取得v3和溯源材料。
 6. Agent带新版证据联系`customsdesk/final`，内部进入`broker/main`长期复核。`calendar.py`和事件队列负责跨月等待；原单证到期后不能用于新受理。
@@ -170,7 +170,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-01.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-01.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-01.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-01.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-01.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-01.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-01.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-01.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-01.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-01.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -186,7 +186,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-02.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-02.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-02.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-02.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-02.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-02.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-02.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-02.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-02.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-02.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -201,7 +201,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-03.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-03.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-03.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-03.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-03.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-03.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-03.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-03.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-03.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-03.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -216,7 +216,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-04.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-04.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-04.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-04.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-04.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-04.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-04.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-04.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-04.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-04.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -232,7 +232,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-05.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-05.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-05.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-05.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-05.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-05.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-05.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-05.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-05.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-05.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -247,7 +247,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-06.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-06.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-06.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-06.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-06.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-06.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-06.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-06.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-06.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-06.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -262,7 +262,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-07.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-07.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-07.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-07.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-07.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-07.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-07.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-07.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-07.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-07.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -277,7 +277,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-08.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-08.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-08.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-08.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-08.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-08.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-08.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-08.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-08.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-08.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -293,7 +293,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-09.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-09.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-09.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-09.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-09.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-09.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-09.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-09.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-09.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-09.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -308,7 +308,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-10.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-10.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-10.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-10.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-10.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-10.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-10.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-10.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-10.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-10.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -323,7 +323,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-11.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-11.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-11.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-11.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-11.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-11.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-11.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-11.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-11.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-11.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |
@@ -338,7 +338,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 | 文件 | 何时 / 在哪里使用 |
 |---|---|
-| [tasks/private/DSB-12.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-12.json) | 可信宿主启动、运行与评分；作者验证/回放/制卡也读取 |
+| [tasks/private/DSB-12.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/private/DSB-12.json) | 可信主进程启动、运行与评分；作者验证/回放/制卡也读取 |
 | [tasks/public/DSB-12.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tasks/public/DSB-12.json) | 准备公开发布或接入包、导出一致性验证；当前服务不单独读取 |
 | [docs/tasks/DSB-12.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/tasks/DSB-12.md) | 测评前人工审题、测评后对照分析；含隐藏信息 |
 | [artifacts/reference_runs/DSB-12.json](/Users/weiwen/Documents/ChatGPT/DaySpanBench/artifacts/reference_runs/DSB-12.json) | 作者参考验收、任务卡生成、轨迹对照；不是模型结果 |

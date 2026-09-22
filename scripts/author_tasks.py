@@ -278,7 +278,7 @@ a = [person("maintainer", "星舟项目维护者·简川", "问题复现与补�
      person("ci", "星舟CI值守·自动检查器", "兼容性构建测试", "always", [workflow("48小时构建验证", ["构建", "验证"], ["version", "compiler", "logs"], [lookup(["repro", "workaround"], elapsed(2880)), document(["workaround"], elapsed(0)), reply()])], "仅返回真实配置内的构建结果；不会承诺发布。", ["ticket"]),
      person("release", "星舟发布协调员·唐泊", "候选版与稳定版状态", "release", [workflow("季度候选发布核对", ["发布", "候选版"], ["version"], [lookup(["candidate", "stable"], {**weekly(1, "20:00", 120), "not_before": "2027-03-30T20:00:00+08:00"}), reply()])], "上游兼容窗口在2027年3月30日20点开放；候选版与稳定版需在该季度窗口分别核对。", ["ticket", "email"])]
 TASKS.append(task("DSB-11", "开源兼容性：补丁验证后跟进跨季度发布", "开源协作", "2026-11-07T20:30:00+08:00", "2027-04-01T23:00:00+08:00",
-    "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期。中间补丁可用不代表本委托完成。不要合并或发布。",
+    "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期。中间补丁可用不代表本任务完成。不要合并或发布。",
     {"version": "1.4.1", "compiler": "C19", "logs": "LOG-771"}, ["maintainer"], [page("repo", "星舟项目贡献说明", "维护者周一三五20—22点处理，CI连续运行48小时。补丁验证后，须在2027年3月30日20点的上游兼容窗口另行核实季度发布，切勿把补丁或候选版当稳定版。", ["maintainer"])], f, a,
     [goal("reproduced", True, "repro"), goal("verified_patch", "commit-7bc2", "workaround"), goal("candidate_version", "1.4.2-rc1", "candidate"), goal("stable_release_date", "尚无承诺日期", "stable")],
     "workaround_available_stable_uncommitted", [send("maintainer", "请核实兼容问题与补丁", "fix", channel="ticket"), wait("fix"), {"op": "advance", "at": "2027-03-29T20:00:00+08:00"}, send("maintainer", "请跟进季度发布和稳定版状态", "release", {"version": "1.4.1", "verified_commit": "$fact:workaround"}, channel="ticket"), wait("release")],

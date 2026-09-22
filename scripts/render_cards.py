@@ -43,7 +43,7 @@ def render():
                  f"领域：{task['domain']}。开始：{local(task['start_at'])}；截止：{local(task['deadline_at'])}（北京时间）。", "",
                  f"参考轨迹历时：**{result['calendar_days']:g}天（{result['calendar_hours']:g}小时）**。结果类别：`{task['completion_class']}`。", "",
                  f"跨度设计：{horizon['stratum']}；{horizon['mechanism']}。这是作者参考路径的历时，非最短可行耗时。", "",
-                 "## 用户委托", "", task["public"]["brief"], "", task["public"]["authorization"], "",
+                 "## 用户任务", "", task["public"]["brief"], "", task["public"]["authorization"], "",
                  "已给信息：", "", "```json", json.dumps(task["public"]["user_fields"], ensure_ascii=False, indent=2), "```", "",
                  "初始联系人：" + "、".join(task["public"]["initial_contacts"]), "", "## 时间机制", ""]
         lines += ["- " + mechanism for mechanism in task["temporal_mechanisms"]]

@@ -13,10 +13,10 @@ v0.3提供规则接收者与实际调用LLM的受约束人物模拟器。配置�
 | 类 | 功能 | 使用方式 |
 |---|---|---|
 | `RuleRecipient` | 按角色自身别名选择工作流 | 服务器默认；适合确定性回归 |
-| `LLMRecipient` | 保留旧的`callback(view) -> {workflow_id}`路由接口 | 宿主自行注入；不负责字段抽取与回复规划 |
-| `LLMSimulator` | 实际结构化LLM调用，支持路由、字段抽取、跨轮补件和受约束回复规划 | `serve.py --simulator llm`或宿主显式注入 |
+| `LLMRecipient` | 保留旧的`callback(view) -> {workflow_id}`路由接口 | 主进程自行注入；不负责字段抽取与回复规划 |
+| `LLMSimulator` | 实际结构化LLM调用，支持路由、字段抽取、跨轮补件和受约束回复规划 | `serve.py --simulator llm`或主进程显式注入 |
 
-接收者清单中的adapter字符串是说明元数据，不会自动动态导入执行；实际类型由宿主或CLI选择。
+接收者清单中的adapter字符串是说明元数据，不会自动动态导入执行；实际类型由主进程或CLI选择。
 
 ## Python接入示例
 
@@ -38,7 +38,7 @@ client = StructuredClient(LLMConfig(
 ))
 people = {a["id"]: LLMSimulator(client, a["id"]) for a in task["actors"]}
 env = Environment(task, recipient=people)
-tools = env.tools()  # 仅可信宿主持有对象；被测Agent只经RPC使用公开方法。
+tools = env.tools()  # 仅可信主进程持有对象；被测Agent只经RPC使用公开方法。
 tools.send_message("forwarder", "查询货件PK-608的入库记录", {"tracking": "PK-608"})
 ```
 
@@ -52,6 +52,6 @@ tools.send_message("forwarder", "查询货件PK-608的入库记录", {"tracking"
 
 `Environment.execute_tool`只执行当前人物声明的查询、文本证据签发、转介、内部转交和回复。证据附带对象、事实类型和签发权限，保留真实来源。材料受理与最终评分都使用这些属性，不能仅靠猜中编号获得分数。
 
-人物LLM只选择和组织，不直接执行工具、不修改日历或状态。模型输出越权、API拒绝或网络失败属于`SimulatorError`，episode终止并标记无效，不静默更换规则角色。CLI可保存调用输入、输出、用量和耗时；这些日志留在可信宿主。
+人物LLM只选择和组织，不直接执行工具、不修改日历或状态。模型输出越权、API拒绝或网络失败属于`SimulatorError`，episode终止并标记无效，不静默更换规则角色。CLI可保存调用输入、输出、用量和耗时；这些日志留在可信主进程。
 
 新人物应在作者脚本定义角色、权限、工作流、日历和必要能力。新增工具种类还需修改执行器、验证器及测试；新增评分目标应给出证据属性、归一化类型与必要业务约束。被测Agent始终仅使用七个公开工具。

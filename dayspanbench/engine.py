@@ -150,7 +150,7 @@ class Environment:
         for key in workflow.get("required_fields", []):
             expected = self.task["public"]["user_fields"].get(key)
             if key not in missing and expected is not None and case["fields"].get(key) != expected:
-                missing.append(key + "（与委托信息不符）")
+                missing.append(key + "（与任务信息不符）")
         admission_evidence = []
         for key, requirement in workflow.get("evidence_fields", {}).items():
             if key in missing:
