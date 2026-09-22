@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def load(n):
-    return json.loads((ROOT / "tasks/private" / f"DSB-{n:02d}.json").read_text())
+    return json.loads((ROOT / "tasks/private" / f"DSB-{n:02d}.json").read_text(encoding="utf-8"))
 
 
 class CalendarTests(unittest.TestCase):
@@ -254,7 +254,7 @@ class EnvironmentTests(unittest.TestCase):
             {"id": 4, "tool": "execute_tool", "arguments": {}},
         ]
         completed = subprocess.run([sys.executable, "scripts/serve.py", "--task", "DSB-01"],
-                    input="\n".join(json.dumps(r) for r in requests) + "\n", capture_output=True, text=True, cwd=ROOT, check=True)
+                    input="\n".join(json.dumps(r) for r in requests) + "\n", capture_output=True, text=True, encoding="utf-8", cwd=ROOT, check=True)
         responses = [json.loads(line) for line in completed.stdout.splitlines()]
         self.assertEqual(len(responses), 4)
         self.assertIn("conclusion_options", responses[0]["result"]["task"])

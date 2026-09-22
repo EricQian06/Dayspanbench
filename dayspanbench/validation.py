@@ -6,10 +6,10 @@ from .calendar import Calendar, parse
 from .engine import TRANSITIONS
 from .scoring import equivalent
 
-# Must match BRIEF_DATE_RULE in scripts/author_tasks.py.
-BRIEF_DATE_RULE_TEXT = "日期一律按委托信息原文的规范格式（YYYY-MM-DD"
-# user_fields values must already use the canonical date form the brief mandates:
-# YYYY-MM-DD, optionally slash-joined for date ranges like stay_dates.
+# The agent protocol (AGENT_PROMPT in dayspanbench/evaluation.py and
+# docs/environment-contract.md) requires dates in messages to use the canonical
+# YYYY-MM-DD form. user_fields must already comply: optionally slash-joined for
+# date ranges like stay_dates.
 CANONICAL_DATE = re.compile(r"\d{4}-\d{2}-\d{2}(?:/\d{4}-\d{2}-\d{2})*")
 DATE_LIKE = re.compile(r"\d{4}[-/年]|\d{1,2}月")
 
@@ -22,10 +22,9 @@ def validate_task(task):
             errors.append(message)
 
     check(task["schema_version"] == "0.2", "Unsupported schema version; regenerate task fixtures")
-    check(BRIEF_DATE_RULE_TEXT in task["public"]["brief"], "Public brief missing the canonical date-format communication rule")
     for key, value in task["public"]["user_fields"].items():
         if isinstance(value, str) and DATE_LIKE.search(value):
-            check(CANONICAL_DATE.fullmatch(value) is not None, f"user_fields '{key}' must use the canonical date format the brief mandates")
+            check(CANONICAL_DATE.fullmatch(value) is not None, f"user_fields '{key}' must use the canonical date format the agent protocol mandates")
     check(parse(task["deadline_at"]) > parse(task["start_at"]), "Deadline must follow start")
     check(task["expected_conclusion"] in task["public"]["conclusion_options"], "Correct conclusion label absent from public answer choices")
     check(len(task["public"]["conclusion_options"]) >= 2, "Conclusion choices reveal the answer")

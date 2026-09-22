@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def load(n):
-    return json.loads((ROOT / f"tasks/private/DSB-{n:02}.json").read_text())
+    return json.loads((ROOT / f"tasks/private/DSB-{n:02}.json").read_text(encoding="utf-8"))
 
 
 class FixtureClient:
@@ -314,7 +314,7 @@ class ServerIntegrationTests(unittest.TestCase):
     def test_quiet_mode_preserves_clean_jsonl(self):
         request = json.dumps({"id": 1, "tool": "observe", "arguments": {}})
         completed = subprocess.run([sys.executable, "scripts/serve.py", "--task", "DSB-12", "--quiet"],
-            input=request + "\n", text=True, capture_output=True, cwd=ROOT, check=True)
+            input=request + "\n", text=True, encoding="utf-8", capture_output=True, cwd=ROOT, check=True)
         self.assertEqual(completed.stderr, "")
         self.assertEqual(json.loads(completed.stdout)["result"]["task"]["id"], "DSB-12")
 
@@ -322,18 +322,18 @@ class ServerIntegrationTests(unittest.TestCase):
         request = json.dumps({"id": 1, "tool": "observe", "arguments": {}})
         with tempfile.TemporaryDirectory() as folder:
             completed = subprocess.run([sys.executable, "scripts/serve.py", "--task", "DSB-12", "--run-dir", folder],
-                input="\n \t\r\n" + request + "\n\n", text=True, capture_output=True, cwd=ROOT, check=True)
+                input="\n \t\r\n" + request + "\n\n", text=True, encoding="utf-8", capture_output=True, cwd=ROOT, check=True)
             responses = [json.loads(line) for line in completed.stdout.splitlines()]
             self.assertEqual(len(responses), 1)
             self.assertEqual(responses[0]["id"], 1)
             self.assertEqual(responses[0]["result"]["task"]["id"], "DSB-12")
-            self.assertEqual(len((Path(folder) / "rpc_trace.jsonl").read_text().splitlines()), 1)
-            self.assertEqual((Path(folder) / "private_audit.jsonl").read_text(), "")
+            self.assertEqual(len((Path(folder) / "rpc_trace.jsonl").read_text(encoding="utf-8").splitlines()), 1)
+            self.assertEqual((Path(folder) / "private_audit.jsonl").read_text(encoding="utf-8"), "")
 
     def test_bad_json_has_input_hint_and_next_request_still_works(self):
         request = json.dumps({"id": 2, "tool": "observe", "arguments": {}})
         completed = subprocess.run([sys.executable, "scripts/serve.py", "--task", "DSB-12"],
-            input="\nnot-json\n" + request + "\n", text=True, capture_output=True, cwd=ROOT, check=True)
+            input="\nnot-json\n" + request + "\n", text=True, encoding="utf-8", capture_output=True, cwd=ROOT, check=True)
         responses = [json.loads(line) for line in completed.stdout.splitlines()]
         self.assertEqual(len(responses), 2)
         error = responses[0]["error"]
@@ -357,9 +357,9 @@ class ServerIntegrationTests(unittest.TestCase):
         requests.append({"tool": "submit_answer", "arguments": {"answer": answer}})
         with tempfile.TemporaryDirectory() as folder:
             completed = subprocess.run([sys.executable, "scripts/serve.py", "--task", "DSB-01", "--run-dir", folder],
-                input="\n".join(json.dumps({"id": i, **r}) for i, r in enumerate(requests)), text=True, capture_output=True, cwd=ROOT)
+                input="\n".join(json.dumps({"id": i, **r}) for i, r in enumerate(requests)), text=True, encoding="utf-8", capture_output=True, cwd=ROOT)
             self.assertEqual(completed.returncode, 0, completed.stderr)
-            result = json.loads((Path(folder) / "result.json").read_text())
+            result = json.loads((Path(folder) / "result.json").read_text(encoding="utf-8"))
             self.assertTrue(result["valid_episode"])
             self.assertTrue(result["complete"])
             self.assertTrue((Path(folder) / "rpc_trace.jsonl").is_file())
@@ -376,10 +376,10 @@ class ServerIntegrationTests(unittest.TestCase):
             self.assertEqual(code, 2)
             response = json.loads(output.getvalue())
             self.assertTrue(response["error"]["terminal"])
-            result = json.loads((Path(folder) / "result.json").read_text())
+            result = json.loads((Path(folder) / "result.json").read_text(encoding="utf-8"))
             self.assertFalse(result["valid_episode"])
             self.assertNotIn("complete", result)
-            self.assertNotIn("test-secret", (Path(folder) / "manifest.json").read_text())
+            self.assertNotIn("test-secret", (Path(folder) / "manifest.json").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
