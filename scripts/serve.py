@@ -17,7 +17,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from dayspanbench.engine import Environment
+from dayspanbench.engine import Environment, PUBLIC_TOOLS
 from dayspanbench.llm import LLMConfig, StructuredClient, SimulatorError
 from dayspanbench.simulator import LLMSimulator
 
@@ -27,7 +27,7 @@ for _stream in (sys.stdin, sys.stdout, sys.stderr):
     if _stream is not None and hasattr(_stream, "reconfigure"):
         _stream.reconfigure(encoding="utf-8")
 
-ALLOWED = {"observe", "web_search", "visit_page", "send_email", "call", "read_inbox", "wait_until", "submit_answer"}
+ALLOWED = set(PUBLIC_TOOLS)
 
 
 def main(argv=None):

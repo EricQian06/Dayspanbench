@@ -43,7 +43,9 @@ class EvaluationTests(unittest.TestCase):
         spec["private_test_sentinel"] = "HIDDEN_SENTINEL"
         actions = []
         for action in spec["reference_actions"]:
-            if action["op"] == "send":
+            if action["op"] == "visit_page":
+                actions.append({"tool": "visit_page", "arguments": {"page_id": action["page"]}})
+            elif action["op"] == "send":
                 actions.append({"tool": "send_email", "arguments": {"recipient": mailbox(spec, action["to"]), "text": action["text"], "fields": spec["public"]["user_fields"]}})
             elif action["op"] == "wait_for":
                 actions.append({"tool": "wait_until", "arguments": {"until": spec["deadline_at"]}})
@@ -88,7 +90,8 @@ class EvaluationTests(unittest.TestCase):
             config = LLMConfig("broken")
             def complete(self, **kwargs):
                 raise SimulatorError("Simulator HTTP failure (400)")
-        agent = ScriptedAgent([{"tool": "send_email", "arguments": {"recipient": mailbox(task(), "reception"), "text": "活动"}}])
+        agent = ScriptedAgent([{"tool": "visit_page", "arguments": {"page_id": "venue"}},
+                               {"tool": "send_email", "arguments": {"recipient": mailbox(task(), "reception"), "text": "活动"}}])
         with tempfile.TemporaryDirectory() as folder:
             result = run_episode(task(), agent, TOOLS, Path(folder) / "run", simulator_client=BrokenSimulator())
         self.assertFalse(result["valid_episode"])

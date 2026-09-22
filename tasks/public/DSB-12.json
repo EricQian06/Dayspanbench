@@ -5,9 +5,7 @@
   "user_fields": {
     "tracking": "PK-608"
   },
-  "initial_contacts": [
-    "forwarder"
-  ],
+  "initial_contacts": [],
   "pages": [
     {
       "id": "logistics-intro",

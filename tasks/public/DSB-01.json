@@ -7,9 +7,7 @@
     "event_time": "18:00-21:00",
     "headcount": 80
   },
-  "initial_contacts": [
-    "reception"
-  ],
+  "initial_contacts": [],
   "pages": [
     {
       "id": "venue-intro",

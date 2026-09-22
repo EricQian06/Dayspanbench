@@ -6,9 +6,7 @@
     "location": "晴港北广场",
     "amplified": "使用两只扩声音箱"
   },
-  "initial_contacts": [
-    "service"
-  ],
+  "initial_contacts": [],
   "pages": [
     {
       "id": "service-intro",

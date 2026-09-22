@@ -1,5 +1,6 @@
 [
-  {"name":"observe","description":"读取当前时间、任务、可用结论标签、答案字段及已知联系人（含具体联络方式）。页面仅以搜索链接形式给出。","parameters":{"type":"object","properties":{},"additionalProperties":false}},
+  {"name":"observe","description":"读取当前时间、可用工具列表和邮箱未读消息数。任务详情请用recall_task获取。","parameters":{"type":"object","properties":{},"additionalProperties":false}},
+  {"name":"recall_task","description":"重新获取初始系统消息中的任务信息（任务简介、截止时间、用户字段、答案字段、结论标签及已直接提供的联系人名片），内容与初始完全一致，不随进度变化。","parameters":{"type":"object","properties":{},"additionalProperties":false}},
   {"name":"web_search","description":"浏览器搜索合成公开网络，返回结果链接列表（标题和摘要）；正文和联系人须通过visit_page访问。空查询返回全部链接。","parameters":{"type":"object","properties":{"query":{"type":"string"}},"required":["query"],"additionalProperties":false}},
   {"name":"visit_page","description":"访问搜索结果中的页面链接，取得正文及该页联系人的具体联络方式，并登记为已发现联系人。","parameters":{"type":"object","properties":{"page_id":{"type":"string"}},"required":["page_id"],"additionalProperties":false}},
   {"name":"send_email","description":"向指定邮箱地址发送电子邮件：咨询、补材料或跟进。仅返回投递回执；正式回复在对方工作时间经随机延迟后进入收件箱。投递回执不代表邮箱真实存在（无人使用的邮箱不会有任何回复），也不代表该事项由收件人负责（不负责时会收到转介说明）。收件人须为已发现联系人的邮箱地址。结构化fields填写已持有信息；case_id仅用于该事项补件或跟进。","parameters":{"type":"object","properties":{"recipient":{"type":"string","description":"收件人邮箱地址，例如 yaolan@bench.example"},"text":{"type":"string"},"fields":{"type":"object","additionalProperties":true},"case_id":{"type":"string"}},"required":["recipient","text"],"additionalProperties":false}},

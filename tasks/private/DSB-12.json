@@ -212,9 +212,7 @@
     "user_fields": {
       "tracking": "PK-608"
     },
-    "initial_contacts": [
-      "forwarder"
-    ],
+    "initial_contacts": [],
     "pages": [
       {
         "id": "logistics-intro",
@@ -1446,6 +1444,10 @@
     "受理回执或未来技术意见当放行证明"
   ],
   "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "logistics"
+    },
     {
       "op": "send",
       "to": "forwarder",

@@ -27,6 +27,10 @@ TRANSITIONS = {
     "replied": set(), "failed": set(),
 }
 
+# The complete agent-facing tool surface; serve.py allowlists the same names.
+PUBLIC_TOOLS = ("observe", "recall_task", "web_search", "visit_page",
+                "send_email", "call", "read_inbox", "wait_until", "submit_answer")
+
 
 @dataclass
 class ActorState:
@@ -68,6 +72,8 @@ class Environment:
         self.finished = False
         self.agent_sends = 0
         self.simulator_failure = None
+        # Inbox read high-water mark: everything above it counts as unread.
+        self.inbox_read = 0
 
     @classmethod
     def load(cls, path, **kwargs):
@@ -387,15 +393,21 @@ class AgentTools:
     """Expose these RPC methods, not a Python object reference, to untrusted agents."""
     def __init__(self, env):
         self._env = env
+        # Snapshot of the initial task brief, handed out by the system message and
+        # re-issued verbatim by recall_task; it never reflects later progress.
+        public = deepcopy(env.task["public"])
+        # Pages are discovered through web_search, never listed in the brief.
+        public.pop("pages", None)
+        self._brief = {"task": public, "deadline": stamp(env.deadline),
+                       "contacts": [env.contact(c) for c in sorted(env.task["public"]["initial_contacts"])]}
+
+    def recall_task(self):
+        return deepcopy(self._brief)
 
     def observe(self):
         env = self._env
-        public = deepcopy(env.task["public"])
-        # Search results only: page bodies and their contact cards require visit_page.
-        public["pages"] = [{"id": p["id"], "title": p["title"], "snippet": p.get("snippet", "")}
-                           for p in env.task["public"]["pages"]]
-        return {"now": stamp(env.now), "deadline": stamp(env.deadline), "task": public,
-                "contacts": [env.contact(c) for c in sorted(env.known_contacts)]}
+        return {"now": stamp(env.now), "tools": list(PUBLIC_TOOLS),
+                "unread_messages": max(0, len(env.messages) - env.inbox_read)}
 
     def web_search(self, query):
         terms = query.casefold().split()
@@ -538,6 +550,7 @@ class AgentTools:
                 "text": "对方已记录事项并受理；处理结果稍后另行回复，请留意收件箱。"}
 
     def read_inbox(self, after=0):
+        self._env.inbox_read = max(self._env.inbox_read, len(self._env.messages))
         return {"messages": deepcopy(self._env.messages[after:]), "cursor": len(self._env.messages), "now": stamp(self._env.now)}
 
     def wait_until(self, until, wake_on_message=True):

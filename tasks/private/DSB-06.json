@@ -214,9 +214,7 @@
       "receipt": "R-731",
       "symptom": "机身接缝漏水"
     },
-    "initial_contacts": [
-      "support"
-    ],
+    "initial_contacts": [],
     "pages": [
       {
         "id": "service-intro",
@@ -798,6 +796,10 @@
     "忽略工程师周一不办公"
   ],
   "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "service"
+    },
     {
       "op": "send",
       "to": "support",

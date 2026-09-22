@@ -62,12 +62,12 @@ flowchart TD
 | 文件 | 谁 / 在哪里使用 | 何时使用 | 当前实际消费者 | 被测Agent可见性 |
 |---|---|---|---|---|
 | `tasks/private/DSB-xx.json` | 可信环境主进程、验证器、作者回放器、任务卡生成器 | 初始化时整题加载；交互和评分时继续使用内存中的字段 | `serve.py`、`validate.py`、`replay.py`、`render_cards.py`、测试 | 不提供：含隐藏事实、标准目标、参考动作和完整人物流程 |
-| `tasks/public/DSB-xx.json` | 发布任务的接入方、导出一致性检查 | 准备公开任务包时；静态验证时 | 当前仅由`validate.py`直接检查；`serve.py`不读此文件 | 可公开，但当前Agent入口直接调用`observe`即可，无需另外传文件 |
+| `tasks/public/DSB-xx.json` | 发布任务的接入方、导出一致性检查 | 准备公开任务包时；静态验证时 | 当前仅由`validate.py`直接检查；`serve.py`不读此文件 | 可公开，但当前Agent入口由系统消息与`recall_task`直接给出任务简报，无需另外传文件 |
 | `tasks/actors/DSB-xx/<actor>.json` | 作者、人物模拟器开发者、验证器 | 审核人物权限、工具和流程时；未来独立角色服务可据此加载 | 当前`validate.py`直接读；运行时使用私有任务里内嵌的同名人物配置 | 不提供：包含人物私有知识、工具和内部流程 |
 | `docs/tasks/DSB-xx.md` | 人类评审、环境开发者、错误分析人员 | 测评前审题；测评后定位时间、材料或评分问题 | 人工阅读，无运行时消费者 | 不提供：含隐藏事实、答案条件及参考时间线 |
 | `artifacts/reference_runs/DSB-xx.json` | 作者验收、回归分析、任务卡生成器 | 验收参考路径；生成任务卡；与模型实际轨迹对照 | 由`replay.py`生成，由`render_cards.py`读取 | 不提供：含参考答案、特权轨迹和内部事件 |
 
-公开文件里的`pages`是可公开资料，浏览器分两级：`observe()`只返回每页的`id/title/snippet`搜索链接，正文必须通过`visit_page()`访问。`visit_page()`同时把该页联系人（含具体邮箱/电话）加入可联系集合；看到人物ID不等于已经可以发送消息。每个页面带`snippet`摘要字段，验证器会检查。
+公开文件里的`pages`是可公开资料，浏览器分两级：`web_search()`只返回每页的`id/title/snippet`搜索链接，正文必须通过`visit_page()`访问。`visit_page()`同时把该页联系人（含具体邮箱/电话）加入可联系集合；看到人物ID不等于已经可以发送消息。每个页面带`snippet`摘要字段，验证器会检查。机构/企业类对接人（会馆前台、客服、政务咨询台等）不出现在初始任务信息里，须由Agent搜索并访问公开页面发现；个人类联系人（如房东、二手卖家）在初始任务信息中直接给出名片。
 
 ## 4. 私有任务里各字段在哪一步发挥作用
 
@@ -75,10 +75,10 @@ flowchart TD
 |---|---|---|
 | `id/title/domain/schema_version/task_set_version` | 导出、验证、审查和版本记录 | 任务标识与元数据；服务器不根据版本字段动态选择实现 |
 | `start_at/deadline_at` | 初始化、等待、新消息校验、评分 | 设置时钟和截止；截止后不接受新消息，但可以读取与最终提交 |
-| `public.brief/user_fields/authorization` | `observe`；新事项受理 | 告知任务和已知资料；受理时检查场景字段一致性。授权文本是任务约束，不是通用自然语言行为审核器 |
-| `public.initial_contacts/pages` | 初始化；观察、搜索、访问页面 | 初始化联系人；提供公开资料；访问页面注册新增联系人并给出其具体联络方式 |
+| `public.brief/user_fields/authorization` | 系统消息与`recall_task`；新事项受理 | 告知任务和已知资料；受理时检查场景字段一致性。授权文本是任务约束，不是通用自然语言行为审核器 |
+| `public.initial_contacts/pages` | 初始化；搜索、访问页面 | 仅个人类初始联系人在任务简报中直接给出名片；机构类对接人须搜索发现。访问页面注册新增联系人并给出其具体联络方式 |
 | `public.message_budget` | 每次`send_email`与`call` | 当前每题16次发送预算，包含补件、催问、投递到无人邮箱的信件和电话拨打；不是全工具调用预算 |
-| `public.answer_keys/conclusion_options/answer_format` | 初始观察和最终作答 | 告知可用答案字段与结论标签，不公开正确选项 |
+| `public.answer_keys/conclusion_options/answer_format` | 初始任务信息和`recall_task`；最终作答 | 告知可用答案字段与结论标签，不公开正确选项 |
 | `actors` | 初始化及每次交互 | 创建人物实例，提供角色、渠道、流程和白名单工具 |
 | `calendars` | 每个工具步骤排程时 | 计算工作窗口、周末、时区、连续等待与批次 |
 | `facts` | 人物查询或签发证据时 | 可信工具模拟器按角色权限取数；不是人物LLM的整段输入 |
@@ -153,7 +153,7 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 
 1. 作者修改`author_tasks.py`，导出DSB-12的私有定义、公开视图和5份人物包；验证并参考回放后生成任务卡。
 2. 可信主进程运行`python3 scripts/serve.py --task DSB-12`。它只读取DSB-12私有定义并创建5个人物实例；没有启动5个Python服务。
-3. 模型驱动器向同一持续运行的进程发送`observe`，把返回的公开任务和联系人交给被测Agent。人物包、任务卡和参考答案不进入模型上下文。
+3. 模型驱动器向同一持续运行的进程发送`recall_task`（或`observe`），把返回的公开任务和初始联系人交给被测Agent。人物包、任务卡和参考答案不进入模型上下文。
 4. Agent联系`forwarder`；引擎创建事项并内部转给`warehouse`，到期后回传记录和新联系人。此阶段不会重新打开`warehouse.json`；使用的是启动时已加载的私有配置。
 5. Agent联系`exporter`取v2，再联系`customsdesk`初审；内部`broker/preliminary`到期返回登记号。随后Agent再次联系`exporter`取得v3和溯源材料。
 6. Agent带新版证据联系`customsdesk/final`，内部进入`broker/main`长期复核。`calendar.py`和事件队列负责跨月等待；原单证到期后不能用于新受理。
@@ -381,7 +381,7 @@ python3 scripts/serve.py --task DSB-12
 
 - [服务器只加载私有任务JSON，并按白名单分发工具](/Users/weiwen/Documents/ChatGPT/DaySpanBench/scripts/serve.py)。
 - [初始化角色实例与进程内状态](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
-- [observe只返回页面搜索链接，visit_page登记联系人](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
+- [observe只返回时间、工具与未读数，recall_task重发初始任务简报，web_search只返回页面搜索链接，visit_page登记联系人](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
 - [接收者仅取得受限view](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
 - [最终评分读取目标及本次证据](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/scoring.py)。
 - [submit_answer只返回一次评分](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。

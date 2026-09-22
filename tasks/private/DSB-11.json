@@ -214,9 +214,7 @@
       "compiler": "C19",
       "logs": "LOG-771"
     },
-    "initial_contacts": [
-      "maintainer"
-    ],
+    "initial_contacts": [],
     "pages": [
       {
         "id": "repo-intro",
@@ -864,6 +862,10 @@
     "杜撰稳定版承诺日期"
   ],
   "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "repo"
+    },
     {
       "op": "send",
       "to": "maintainer",

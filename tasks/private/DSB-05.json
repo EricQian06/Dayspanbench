@@ -213,9 +213,7 @@
       "quantity": 500,
       "spec": "M26-Q7"
     },
-    "initial_contacts": [
-      "sales"
-    ],
+    "initial_contacts": [],
     "pages": [
       {
         "id": "supplier-intro",

@@ -7,9 +7,7 @@
     "receipt": "R-731",
     "symptom": "机身接缝漏水"
   },
-  "initial_contacts": [
-    "support"
-  ],
+  "initial_contacts": [],
   "pages": [
     {
       "id": "service-intro",

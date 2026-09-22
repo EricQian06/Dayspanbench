@@ -45,7 +45,7 @@ def render():
                  f"跨度设计：{horizon['stratum']}；{horizon['mechanism']}。这是作者参考路径的历时，非最短可行耗时。", "",
                  "## 用户任务", "", task["public"]["brief"], "", task["public"]["authorization"], "",
                  "已给信息：", "", "```json", json.dumps(task["public"]["user_fields"], ensure_ascii=False, indent=2), "```", "",
-                 "初始联系人：" + "、".join(task["public"]["initial_contacts"]), "", "## 时间机制", ""]
+                 "初始联系人：" + ("、".join(task["public"]["initial_contacts"]) or "无（须由Agent搜索公开页面发现）"), "", "## 时间机制", ""]
         lines += ["- " + mechanism for mechanism in task["temporal_mechanisms"]]
         lines += ["", "## 人物、流程、接收者与工具", "",
                   "每个角色有独立收件箱、发件箱、工作日历和单工作位队列；每个事项运行独立状态机。父事项转交后进入 `waiting_internal`，只有内部答复返回才继续。", ""]

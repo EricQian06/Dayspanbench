@@ -6,9 +6,7 @@
     "wheelchair_width": "78cm，要求净宽至少80cm",
     "stay_dates": "2026-11-14/2026-11-16"
   },
-  "initial_contacts": [
-    "a_desk"
-  ],
+  "initial_contacts": [],
   "pages": [
     {
       "id": "hotels-intro",

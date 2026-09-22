@@ -212,9 +212,7 @@
     "user_fields": {
       "course_code": "CS204"
     },
-    "initial_contacts": [
-      "records"
-    ],
+    "initial_contacts": [],
     "pages": [
       {
         "id": "faculty-intro",
@@ -228,6 +226,7 @@
         "title": "澄川学院联系方式",
         "text": "学分转换预审联系教务唐宁；CS204课程签章大纲联系课程负责人梅芮（11月6—9日出差）。",
         "contacts": [
+          "records",
           "lecturer"
         ],
         "snippet": "教务与课程负责人的对接说明。"
@@ -812,15 +811,15 @@
   ],
   "reference_actions": [
     {
+      "op": "visit_page",
+      "page": "faculty"
+    },
+    {
       "op": "send",
       "to": "records",
       "text": "咨询CS204学分转换",
       "label": "credit",
       "fields": "$user"
-    },
-    {
-      "op": "visit_page",
-      "page": "faculty"
     },
     {
       "op": "send",

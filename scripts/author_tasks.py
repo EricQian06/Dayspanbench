@@ -185,12 +185,12 @@ a = [person("reception", "禾岸会馆前台·陈芷", "对外咨询与转介", 
      person("technician", "禾岸会馆设备主管·周敏", "设备维修计划", "office", [workflow("核对维修窗口", ["投影", "维修"], ["event_date"], [lookup(["projector"], business(240)), document(["projector"], business(0)), reply()])], "只有本岗位知道维修窗口；内部收到转交后进入自己的队列。")]
 TASKS.append(task("DSB-01", "活动场地：跨周末确认设备与报价", "活动服务", "2026-11-06T10:00:00+08:00", "2026-11-10T18:00:00+08:00",
     "请核实禾岸会馆能否在11月13日18—21点接待80人，预算12000元，必须有投影。问清总费用、取消条款、档期和投影是否可用，附可核实的书面依据。",
-    {"event_date": "2026-11-13", "event_time": "18:00-21:00", "headcount": 80}, ["reception"],
+    {"event_date": "2026-11-13", "event_time": "18:00-21:00", "headcount": 80}, [],
     [page("venue-intro", "禾岸会馆简介", "禾岸会馆提供活动场地租赁。旧版简介：8000元起，可容纳100人，有投影。具体档期和设施请通过联系方式页咨询。", [], "禾岸会馆活动场地简介：价格起点、容量与投影设备说明。"),
      page("venue", "禾岸会馆联系方式", "办公时间周一至周五9—12、13—17点。前台陈芷负责对外咨询与转介；报价、档期与设备须由相应对接人确认。", ["reception"], "禾岸会馆对接人与办公时间。"),
      page("venue-entry", "禾岸会馆预约入口", "预约需提供活动日期、时段和人数；本页面仅说明所需信息，不能在线完成预约，请通过邮件与对接人确认。", [], "预约所需材料与办理说明；不支持在线预约。")],
     f, a, [goal("total_cost", 10500, "price"), goal("cancellation", "72小时内取消收取50%", "cancel"), goal("slot_available", True, "slot"), goal("projector_available", False, "projector")],
-    "unsuitable", [send("reception", "请提供活动场地的联系入口", "front"), wait("front"), send("sales", "请发报价和取消条款", "quote"), send("operations", "请核实档期和投影", "ops"), wait("quote"), wait("ops")],
+    "unsuitable", [{"op": "visit_page", "page": "venue"}, send("reception", "请提供活动场地的联系入口", "front"), wait("front"), send("sales", "请发报价和取消条款", "quote"), send("operations", "请核实档期和投影", "ops"), wait("quote"), wait("ops")],
     ["周末停办", "并行询价与设备确认", "跨岗位内部转交", "过时网页与当前事实冲突"], ["将8000元起当作总价", "未核实投影即判断适用", "把内部转交受理当作完成"]))
 
 # 02: Individual landlord — evening responses + Friday property review.
@@ -218,12 +218,12 @@ a = [person("records", "澄川学院教务·唐宁", "学分转换预审", "offi
      person("board", "澄川学院学分委员会秘书·程昕", "春季跨校学分审议", "office", [workflow("春季跨校审议", ["学分", "审议"], ["course_code", "syllabus_version"], [lookup(["credits", "scope", "effective"], {**weekly(1, "10:00", 120), "not_before": "2027-02-02T10:00:00+08:00"}), document(["credits", "scope", "effective"], business(0)), reply()])], "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审。")]
 TASKS.append(task("DSB-03", "学分转换：秋季补件与春季集中审议", "高校教务", "2026-11-05T14:00:00+08:00", "2027-02-03T17:00:00+08:00",
     "确认CS204能转换多少学分、计入哪类课程、何时生效。我目前只有旧大纲，需要向课程负责人获取正式版本。请获得教务的书面结论，不提交正式选课变更。",
-    {"course_code": "CS204"}, ["records"],
+    {"course_code": "CS204"}, [],
     [page("faculty-intro", "澄川学院CS204课程简介", "CS204为本学期开设课程，签章材料由课程负责人管理。跨校转换在2027年2月2日10点春季委员会集中审议；秋季预审不等于最终批准。", [], "CS204课程与跨校学分转换安排说明。"),
-     page("faculty", "澄川学院联系方式", "学分转换预审联系教务唐宁；CS204课程签章大纲联系课程负责人梅芮（11月6—9日出差）。", ["lecturer"], "教务与课程负责人的对接说明。"),
+     page("faculty", "澄川学院联系方式", "学分转换预审联系教务唐宁；CS204课程签章大纲联系课程负责人梅芮（11月6—9日出差）。", ["records", "lecturer"], "教务与课程负责人的对接说明。"),
      page("faculty-entry", "学分转换办理入口", "办理需提供课程代码与现行签章大纲版本；本页面仅说明材料要求，不能在线提交选课变更。", [], "学分转换材料要求；不支持在线提交。")], f, a,
     [goal("syllabus_version", "CS204-2026-v2-signed", "syllabus"), goal("credits", 3, "credits"), goal("credit_scope", "专业选修", "scope"), goal("effective_term", "2027春季", "effective")],
-    "eligible_with_scope_limit", [send("records", "咨询CS204学分转换", "credit"), {"op": "visit_page", "page": "faculty"}, send("lecturer", "请补发正式签章大纲", "syllabus"), wait("syllabus"), send("records", "补充正式大纲继续办理学分咨询", "credit", {"course_code": "CS204", "syllabus_version": "$fact:syllabus"}, followup="credit"), wait("credit")],
+    "eligible_with_scope_limit", [{"op": "visit_page", "page": "faculty"}, send("records", "咨询CS204学分转换", "credit"), send("lecturer", "请补发正式签章大纲", "syllabus"), wait("syllabus"), send("records", "补充正式大纲继续办理学分咨询", "credit", {"course_code": "CS204", "syllabus_version": "$fact:syllabus"}, followup="credit"), wait("credit")],
     ["材料门槛", "角色出差不可用", "跨年度等待春季委员会", "跨人物证据传递"], ["猜测签章编号", "沿用2024年旧材料", "把材料预审当作春季批准"]))
 
 # 04: Laboratory — safety certificate + supplies + non-working-hour calibration.
@@ -237,12 +237,12 @@ a = [person("labdesk", "南屿共享实验室前台·叶青", "使用条件与�
 a[2]["workflows"][0]["evidence_fields"] = {"safety_certificate": "certificate"}
 TASKS.append(task("DSB-04", "共享仪器：培训、进口耗材与七天稳定性校准", "科研设施", "2026-11-04T09:30:00+08:00", "2026-11-25T17:00:00+08:00",
     "为样品S-482确认最早测量时间和费用。我已报名11月6日14点安全培训并会按时完成，但目前没有合格记录。请在培训完成后取得凭证，并核实耗材和校准后的可用窗口，暂不预约仪器。",
-    {"sample_id": "S-482", "person_name": "顾晓"}, ["labdesk"],
+    {"sample_id": "S-482", "person_name": "顾晓"}, [],
     [page("lab-intro", "南屿共享实验室简介", "仪器使用需安全培训记录，培训每周五14点。本批进口耗材预计11月17日到库，之后需要连续7天稳定性校准和人工复核。", [], "共享仪器使用条件、培训批次与校准安排。"),
      page("lab", "南屿实验室联系方式", "使用条件与联系人请咨询前台叶青；安全培训记录联系安全员温遥；仪器校准、耗材和费用联系仪器管理员杜和。", ["labdesk"], "实验室各岗位对接说明。"),
      page("lab-entry", "仪器使用申请入口", "申请需提供样品编号与安全培训记录号；本页面仅说明受理条件，不能在线预约仪器。", [], "仪器使用申请材料说明；不支持在线预约。")], f, a,
     [goal("safety_certificate", "SAFE-NOV06-482", "certificate"), goal("filter_batch", "F-26B", "filter"), goal("earliest_measurement", "2026-11-25T13:00:00+08:00", "window"), goal("price", 1800, "price")],
-    "available_after_calibration", [send("labdesk", "咨询测量仪器联系入口", "front"), wait("front"), send("safety", "请求完成培训并取得安全记录", "safe"), wait("safe"), send("instrument", "核实测量时间、校准和费用", "measure", {"sample_id": "S-482", "safety_certificate": "$fact:certificate"}), wait("measure")],
+    "available_after_calibration", [{"op": "visit_page", "page": "lab"}, send("labdesk", "咨询测量仪器联系入口", "front"), wait("front"), send("safety", "请求完成培训并取得安全记录", "safe"), wait("safe"), send("instrument", "核实测量时间、校准和费用", "measure", {"sample_id": "S-482", "safety_certificate": "$fact:certificate"}), wait("measure")],
     ["周五培训批次", "进口耗材批次到货", "连续7天设备过程", "校准结束后仍等待人员复核"], ["7天连续运行误算为7个工作日", "有耗材就认为可测量", "伪造安全培训记录"]))
 
 # 05: Manufacturing — quote expires while waiting for QA.
@@ -255,7 +255,7 @@ a = [person("sales", "棱川制造销售·罗岑", "批次报价", "office", [wo
      person("qa", "棱川制造质检·傅黎", "材料检测报告", "office", [workflow("材料Q7报告", ["质检", "报告", "Q7"], ["spec"], [lookup([], elapsed(40320), "28天耐久性测试"), lookup(["qa"], weekly(0, "10:00", 120)), document(["qa"], business(0)), reply()])], "样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。")]
 TASKS.append(task("DSB-05", "制造采购：28天耐久测试后重新询价", "制造供应链", "2026-11-03T14:00:00+08:00", "2026-12-08T15:00:00+08:00",
     "询问棱川制造500件M26规格产品的有效总报价、最小订单量、最早出库时间，并取得Q7质检结果。报告完成时仍需有效报价，预算19000元；不要下单。",
-    {"quantity": 500, "spec": "M26-Q7"}, ["sales"],
+    {"quantity": 500, "spec": "M26-Q7"}, [],
     [page("supplier-intro", "棱川制造简介", "棱川制造承接批次制造。报价有效期短于28天耐久性测试；测试结束后的周一10点复核报告。销售与质检可并行咨询，报告完成后应重新确认报价。", [], "批次制造、耐久测试与报价有效期说明。"),
      page("supplier", "棱川制造联系方式", "批次报价联系销售罗岑；材料检测报告联系质检傅黎。", ["sales", "qa"], "销售与质检对接说明。"),
      page("supplier-entry", "采购询价入口", "询价需提供数量与规格；质检确认需材料批次规格。本页面仅说明材料要求，不能在线下单。", [], "询价与质检材料说明；不支持在线下单。")], f, a,
@@ -271,12 +271,12 @@ a = [person("support", "霁光电器客服·孟竹", "保修材料受理", "offi
      person("parts", "霁光零件库·纪桐", "配件与费用", "factory", [workflow("零件库存复核", ["库存", "配件"], ["serial"], [lookup(["cost"], business(960, not_before="2026-11-13T08:30:00+08:00")), reply()])], "原厂补货批次11月13日到库，需16个工作小时核验；周六办公、周日关闭。")]
 TASKS.append(task("DSB-06", "家电保修：等待原厂补货与工程师轮值", "售后服务", "2026-11-04T16:00:00+08:00", "2026-11-18T09:00:00+08:00",
     "设备SN-A731漏水。确认是否在保修范围、需要什么配件、配件费用、最早可上门时间。购机凭证R-731已在我手中，只咨询，不预约。",
-    {"serial": "SN-A731", "receipt": "R-731", "symptom": "机身接缝漏水"}, ["support"],
+    {"serial": "SN-A731", "receipt": "R-731", "symptom": "机身接缝漏水"}, [],
     [page("service-intro", "霁光电器售后简介", "保修咨询需序列号和购机凭证；工程师仅周二、周四处理远程诊断。", [], "保修受理条件与工程师轮值说明。"),
      page("service", "霁光电器联系方式", "保修材料受理联系客服孟竹；诊断与维修窗口由工程师另行排期。", ["support"], "售后客服对接说明。"),
      page("service-entry", "报修入口", "报修需提供设备序列号、购机凭证与故障描述；本页面仅说明材料要求，不能在线预约维修。", [], "报修材料说明；不支持在线预约。")], f, a,
     [goal("covered", True, "covered"), goal("replacement_part", "G-42密封圈", "part"), goal("part_cost", 0, "cost"), goal("earliest_visit", "2026-11-18T10:00:00+08:00", "visit")],
-    "covered_pending_booking", [send("support", "请核实保修和维修安排", "repair", {"serial": "SN-A731", "symptom": "机身接缝漏水"}), send("support", "补充凭证后继续保修咨询", "repair", followup="repair"), wait("repair")],
+    "covered_pending_booking", [{"op": "visit_page", "page": "service"}, send("support", "请核实保修和维修安排", "repair", {"serial": "SN-A731", "symptom": "机身接缝漏水"}), send("support", "补充凭证后继续保修咨询", "repair", followup="repair"), wait("repair")],
     ["缺材料状态与补件", "原厂批次补货", "工程师每周两天办公", "零件库周六办公", "多级转交后回传"], ["漏凭证仍要求出结果", "库存到位即认为已预约", "忽略工程师周一不办公"]))
 
 # 07: Archive — rights-holder succession review, then a separate digitization request.
@@ -287,12 +287,12 @@ a = [person("archive", "北汀档案馆接待·关雨", "档案使用咨询", "o
      person("digitizer", "档案数字化员·林澈", "扫描规格", "office", [workflow("扫描质量核对", ["扫描", "规格"], ["archive_id"], [lookup([], elapsed(4320), "保护性数字化与图像恢复连续处理72小时"), document(["scan"], business(60)), reply()])], "扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。")]
 TASKS.append(task("DSB-07", "档案使用：权利继受核验后重新启动数字化", "文化档案", "2026-11-05T15:00:00+08:00", "2027-06-07T17:00:00+08:00",
     "为2027年7月的非商业展览核实ARC-71图像的实体及网站用途权限，问清总费用与扫描分辨率。权利继受正在核验；取得权利方确认后请再次联系档案馆核实数字化交付。不付费、不发布。",
-    {"archive_id": "ARC-71", "usage": "非商业实体展览及展览网站"}, ["archive"],
+    {"archive_id": "ARC-71", "usage": "非商业实体展览及展览网站"}, [],
     [page("archive-intro", "北汀档案馆简介", "档案馆提供档案数字化与授权服务。该图像处于权利继受核验期，境外联络方预计2027年5月28日集中核对文件。用途获确认后需申请人再次联系档案馆核实数字化交付，实体许可不自动包括网络用途。", [], "档案使用授权与数字化交付流程说明。"),
      page("archive", "北汀档案馆联系方式", "档案使用咨询联系接待关雨；权利继受确认由境外权利方联络员处理。", ["archive"], "档案馆接待对接说明。"),
      page("archive-entry", "档案使用申请入口", "申请需提供档案编号与用途说明；取得权利确认后须再次申请数字化交付。本页面仅说明流程，不能在线取得许可。", [], "档案使用申请材料说明；不支持在线取得许可。")], f, a,
     [goal("physical_exhibit_allowed", True, "exhibit"), goal("online_allowed", False, "online"), goal("total_fee", 800, "fee"), goal("scan_dpi", 600, "scan")],
-    "physical_only", [send("archive", "咨询档案费用与权利联系人", "front"), wait("front"), send("rights", "请确认两种用途的权利授权", "rights"), wait("rights"), send("archive", "许可收到后请确认数字化交付和扫描规格", "scan", {"archive_id": "ARC-71", "exhibition_permission": "$fact:exhibit"}), wait("scan")],
+    "physical_only", [{"op": "visit_page", "page": "archive"}, send("archive", "咨询档案费用与权利联系人", "front"), wait("front"), send("rights", "请确认两种用途的权利授权", "rights"), wait("rights"), send("archive", "许可收到后请确认数字化交付和扫描规格", "scan", {"archive_id": "ARC-71", "exhibition_permission": "$fact:exhibit"}), wait("scan")],
     ["跨年度权利继受核验", "纽约冬令时和夏令时", "取得许可后必须再次发起请求", "72小时图像恢复与人工验收"], ["等待期间擅自假定许可", "实体授权误推为网络授权", "收到许可后忘记重启数字化查询"]))
 
 # 08: Accessible accommodation — alternative providers, measurements unavailable on weekends.
@@ -305,7 +305,7 @@ a = [person("a_desk", "A旅舍前台·蓝心", "无障碍房咨询", "daily", [w
      person("b_tech", "B酒店设施主管·郑砚", "指定房型现场尺寸", "office", [workflow("指定房间量测", ["尺寸", "测量"], ["wheelchair_width"], [lookup(["b_door", "b_bath"], business(120, not_before="2026-11-11T10:00:00+08:00")), document(["b_door", "b_bath"], business(0)), reply()])], "指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。")]
 TASKS.append(task("DSB-08", "无障碍住宿：两家机构比较与延后的现场测量", "出行住宿", "2026-11-06T13:30:00+08:00", "2026-11-12T18:00:00+08:00",
     "在A旅舍和B酒店中选择11月14—16日两晚住宿，预算2600元。轮椅宽78cm，房门和浴室净宽均须至少80cm。获取实测尺寸，并确认合适酒店的房态和总价，不预订。",
-    {"wheelchair_width": "78cm，要求净宽至少80cm", "stay_dates": "2026-11-14/2026-11-16"}, ["a_desk"],
+    {"wheelchair_width": "78cm，要求净宽至少80cm", "stay_dates": "2026-11-14/2026-11-16"}, [],
     [page("hotels-intro", "候选住宿简介", "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段。", [], "两家候选住宿概况与现场测量安排。"),
      page("hotels", "候选住宿联系方式", "A旅舍前台蓝心；B酒店预订咨询米禾。现场测量分别由两家设施人员处理。", ["a_desk", "b_desk"], "两家前台对接说明。"),
      page("hotels-entry", "住宿预订入口", "确认无障碍房型需轮椅宽度与入住日期；本页面仅说明材料，不能在线预订。", [], "无障碍房确认材料说明；不支持在线预订。")], f, a,
@@ -324,12 +324,12 @@ a = [person("service", "晴港政务咨询台·谢茵", "事项识别与管辖�
      person("sound", "活动环境咨询员·陆笙", "扩声事项分类和材料", "office", [workflow("意见征集阶段确认", ["征集", "扩声", "材料"], ["location", "amplified"], [lookup(["consultation_receipt"], business(60, not_before="2026-12-03T09:00:00+08:00")), document(["consultation_receipt"], elapsed(0)), reply()]), workflow("联合分类复核", ["联合复核", "最终分类"], ["location", "amplified", "consultation_receipt"], [lookup(["category", "documents", "earliest"], business(240, not_before="2026-12-28T09:00:00+08:00")), document(["category", "documents", "earliest"], business(60)), reply()], id="final", evidence_fields={"consultation_receipt": "consultation_receipt"})], "本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核。")]
 TASKS.append(task("DSB-09", "公共活动咨询：意见征集与年末联合复核", "公共服务", "2026-11-03T15:00:00+08:00", "2026-12-29T17:00:00+08:00",
     "为2027年1月晴港北广场的小型扩声活动询问主管机构、事项分类、应备材料和最早办理窗口。跟进意见征集并携回执再次申请联合复核。只做预咨询，不能写成已获许可；场景规则均为合成。",
-    {"location": "晴港北广场", "amplified": "使用两只扩声音箱"}, ["service"],
+    {"location": "晴港北广场", "amplified": "使用两只扩声音箱"}, [],
     [page("service-intro", "晴港公共活动咨询简介", "拟办活动先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。", [], "公共活动预咨询流程与时间安排。"),
      page("service", "晴港公共活动咨询联系方式", "事项识别与管辖分流联系咨询台谢茵；扩声事项分类与材料联系活动环境咨询员。", ["service"], "政务咨询台对接说明。"),
      page("service-entry", "活动办理入口", "办理需提供活动地点与扩声设备说明；本页面为预咨询说明，不构成许可申请入口。", [], "活动预咨询材料说明；不支持在线申请许可。")], f, a,
     [goal("responsible_office", "街区公共空间管理处", "jurisdiction"), goal("consultation_receipt", "CONSULT-DEC03-19", "consultation_receipt"), goal("case_category", "临时扩声活动预咨询", "category"), goal("required_documents", ["平面图", "时段说明", "声设备清单"], "documents"), goal("earliest_processing_date", "2027-01-04", "earliest")],
-    "consultation_only_not_approval", [send("service", "请核实活动办理管辖", "front"), wait("front"), send("sound", "请确认本轮扩声意见征集及回执", "consult"), wait("consult"), send("sound", "请按回执进行联合复核和最终分类", "sound", {"location": "晴港北广场", "amplified": "使用两只扩声音箱", "consultation_receipt": "$fact:consultation_receipt"}), wait("sound")],
+    "consultation_only_not_approval", [{"op": "visit_page", "page": "service"}, send("service", "请核实活动办理管辖", "front"), wait("front"), send("sound", "请确认本轮扩声意见征集及回执", "consult"), wait("consult"), send("sound", "请按回执进行联合复核和最终分类", "sound", {"location": "晴港北广场", "amplified": "使用两只扩声音箱", "consultation_receipt": "$fact:consultation_receipt"}), wait("sound")],
     ["先管辖后专业咨询", "30天跨部门征集期", "携回执再次发起联合复核", "跨年度后续办理窗口"], ["咨询回执当许可证", "没有回执即跳过征集", "收到回执后不继续申请最终复核"]))
 
 # 10: Individual seller — owner depends on a friend with weekend access to a reader.
@@ -357,12 +357,12 @@ a = [person("maintainer", "星舟项目维护者·简川", "问题复现与补�
      person("release", "星舟发布协调员·唐泊", "候选版与稳定版状态", "release", [workflow("季度候选发布核对", ["发布", "候选版"], ["version"], [lookup(["candidate", "stable"], {**weekly(1, "20:00", 120), "not_before": "2027-03-30T20:00:00+08:00"}), reply()])], "上游兼容窗口在2027年3月30日20点开放；候选版与稳定版需在该季度窗口分别核对。")]
 TASKS.append(task("DSB-11", "开源兼容性：补丁验证后跟进跨季度发布", "开源协作", "2026-11-07T20:30:00+08:00", "2027-04-01T23:00:00+08:00",
     "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期。中间补丁可用不代表本任务完成。不要合并或发布。",
-    {"version": "1.4.1", "compiler": "C19", "logs": "LOG-771"}, ["maintainer"],
+    {"version": "1.4.1", "compiler": "C19", "logs": "LOG-771"}, [],
     [page("repo-intro", "星舟项目贡献说明", "维护者周一三五20—22点处理，CI连续运行48小时。补丁验证后，须在2027年3月30日20点的上游兼容窗口另行核实季度发布，切勿把补丁或候选版当稳定版。", [], "开源项目维护安排与发布窗口说明。"),
      page("repo", "星舟项目联系方式", "兼容问题与补丁协调联系维护者简川；候选版与稳定版状态联系发布协调员。", ["maintainer"], "维护者与发布协调对接说明。"),
      page("repo-entry", "问题反馈入口", "提交需提供版本、编译器与日志编号；本页面仅说明材料，不能在线合并或发布。", [], "问题提交材料说明；不支持在线合并。")], f, a,
     [goal("reproduced", True, "repro"), goal("verified_patch", "commit-7bc2", "workaround"), goal("candidate_version", "1.4.2-rc1", "candidate"), goal("stable_release_date", "尚无承诺日期", "stable")],
-    "workaround_available_stable_uncommitted", [send("maintainer", "请核实兼容问题与补丁", "fix"), wait("fix"), {"op": "advance", "at": "2027-03-29T20:00:00+08:00"}, send("maintainer", "请跟进季度发布和稳定版状态", "release", {"version": "1.4.1", "verified_commit": "$fact:workaround"}), wait("release")],
+    "workaround_available_stable_uncommitted", [{"op": "visit_page", "page": "repo"}, send("maintainer", "请核实兼容问题与补丁", "fix"), wait("fix"), {"op": "advance", "at": "2027-03-29T20:00:00+08:00"}, send("maintainer", "请跟进季度发布和稳定版状态", "release", {"version": "1.4.1", "verified_commit": "$fact:workaround"}), wait("release")],
     ["志愿者离散晚间窗口", "48小时自动构建", "跨季度后带原补丁证据继续沟通", "上游兼容窗口", "候选版与稳定版区别"], ["初步补丁可用就提前结束", "跨季度后丢失原补丁证据", "杜撰稳定版承诺日期"]))
 
 # 12: Prototype held for classification review. Several active stages across 300 days.
@@ -379,13 +379,13 @@ a = [person("forwarder", "远澄货运客服·白榆", "货件入库信息", "of
      person("broker", "境外代理·Morgan Lee", "原型设备归类与技术意见复核", "new_york", [workflow("归类初审", ["初审", "归类"], ["tracking", "declaration_version"], [lookup(["review_case"], business(120, not_before="2027-02-04T09:00:00-05:00")), document(["review_case"], elapsed(0)), reply()], id="preliminary"), workflow("长期技术复核", ["长期复核", "放行"], ["tracking", "declaration_version", "review_reference", "batch_trace"], [lookup(["release"], business(1440, not_before="2027-09-10T09:00:00-04:00")), document(["release"], business(0)), reply()])], "纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。")]
 TASKS.append(task("DSB-12", "跨境原型设备：300天内的初审、二次补件与未决放行", "跨境设备争议核查", "2026-11-06T15:00:00+08:00", "2027-09-02T15:00:00+08:00",
     "跟进因归类争议留置的科研原型设备PK-608，到2027年9月2日15点汇报。核实历史入库交接、取得初审登记号，按要求向出口方取得有效新版单证和制造批次溯源资料，再发起长期复核。若放行未确认，明确已完成步骤与仍待确认事项。不要把历史入库、初审登记或补件受理当成当前放行；不支付费用或作法律承诺。",
-    {"tracking": "PK-608"}, ["forwarder"],
+    {"tracking": "PK-608"}, [],
     [page("logistics-intro", "远澄货运简介", "本合成场景有多阶段归类争议核查：首轮更正单证预计2026年12月7日可取；初审窗口2027年2月4日；制造档案预计4月6日可核验，届时需更新单证并再次申请长期复核。境外技术意见窗口为9月10日，无放行承诺。", [], "留置核查流程与各阶段时间窗口。"),
      page("logistics", "远澄货运联系方式", "货件状态与联系入口联系客服白榆；单证与批次溯源联系出口方单证员。", ["forwarder"], "货运客服与单证对接说明。"),
      page("logistics-entry", "留置核查办理入口", "办理需提供运单号与有效申报单证版本；本页面仅说明材料，不能在线发起复核或支付费用。", [], "留置核查材料说明；不支持在线发起复核。")], f, a,
     [goal("initial_warehouse_record", "2026年11月已完成始发仓入库扫描", "warehouse"), goal("review_reference", "HOLD-608-9", "review_case"), goal("declaration_version", "DEC-608-v3", "declaration_latest"), goal("batch_trace", "TRACE-M608-2027", "batch_trace"),
      {"key": "release_status", "status": "unconfirmed"}],
-    "release_unconfirmed_at_deadline", [send("forwarder", "查询货件状态和联系入口", "front"), wait("front"), send("exporter", "请补发首轮更正申报资料", "doc_v2"), wait("doc_v2"), send("customsdesk", "请办理归类初审登记", "preliminary", {"tracking": "PK-608", "declaration_version": "$fact:declaration"}), wait("preliminary"), send("exporter", "请取得第二轮新版单证及批次溯源", "doc_v3", {"tracking": "PK-608", "review_reference": "$fact:review_case"}), wait("doc_v3"), send("customsdesk", "请按新版材料发起长期复核并查询放行状态", "release", {"tracking": "PK-608", "declaration_version": "$fact:declaration_latest", "review_reference": "$fact:review_case", "batch_trace": "$fact:batch_trace"}), wait("release")],
+    "release_unconfirmed_at_deadline", [{"op": "visit_page", "page": "logistics"}, send("forwarder", "查询货件状态和联系入口", "front"), wait("front"), send("exporter", "请补发首轮更正申报资料", "doc_v2"), wait("doc_v2"), send("customsdesk", "请办理归类初审登记", "preliminary", {"tracking": "PK-608", "declaration_version": "$fact:declaration"}), wait("preliminary"), send("exporter", "请取得第二轮新版单证及批次溯源", "doc_v3", {"tracking": "PK-608", "review_reference": "$fact:review_case"}), wait("doc_v3"), send("customsdesk", "请按新版材料发起长期复核并查询放行状态", "release", {"tracking": "PK-608", "declaration_version": "$fact:declaration_latest", "review_reference": "$fact:review_case", "batch_trace": "$fact:batch_trace"}), wait("release")],
     ["跨年度多轮事项", "定期归类初审窗口", "旧单证过期与跨人物证据更新", "制造档案恢复后的第二轮补件", "纽约夏令时切换", "300天截止仍早于技术复核窗口"], ["只发一条查询后等待300天", "拿旧单证或初审登记跳过第二轮补件", "把历史仓库记录当当前货位", "受理回执或未来技术意见当放行证明"], completion_class="bounded_unresolved"))
 
 
