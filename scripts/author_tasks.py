@@ -104,12 +104,18 @@ def goal(key, expected, *facts):
     return {"key": key, "expected": expected, "accepted_facts": list(facts)}
 
 
+# Uniform communication rule appended to every public brief: dates must be quoted
+# in the canonical YYYY-MM-DD form used by user_fields, so recipients can match
+# scenario identifiers without free-form date phrasing.
+BRIEF_DATE_RULE = "与各对接方往来沟通时，日期一律按委托信息原文的规范格式（YYYY-MM-DD，如2026-11-13）书写，请勿改用其他写法。"
+
+
 def task(id, title, domain, start, deadline, brief, user_fields, initial, pages, facts, actors, goals, conclusion, reference,
          mechanisms, failure_modes, completion_class="resolved"):
-    return {"schema_version": "0.2", "task_set_version": "0.3.0", "id": id, "title": title, "domain": domain,
+    return {"schema_version": "0.2", "task_set_version": "0.3.1", "id": id, "title": title, "domain": domain,
         "start_at": start, "deadline_at": deadline, "display_timezone": "Asia/Shanghai",
         "synthetic": True, "completion_class": completion_class, "calendars": CALENDARS,
-        "public": {"id": id, "title": title, "brief": brief, "user_fields": user_fields,
+        "public": {"id": id, "title": title, "brief": brief + BRIEF_DATE_RULE, "user_fields": user_fields,
             "initial_contacts": initial, "pages": pages, "message_budget": 16,
             "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
             "answer_keys": [g["key"] for g in goals]},
