@@ -8,10 +8,11 @@
     "description": "每周五14点培训，结束后签发记录。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "wenyao@bench.example"
+    },
     "knowledge": [
       "certificate"
     ],

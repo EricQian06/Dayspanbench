@@ -72,25 +72,26 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 192.0,
-    "calendar_days": 8.0,
+    "calendar_hours": 192.33,
+    "calendar_days": 8.013889,
     "agent_messages": 1,
     "contacted_actors": 1,
-    "as_of": "2026-11-11T11:30:00+00:00"
+    "as_of": "2026-11-11T11:50:00+00:00"
   },
   "agent_messages": [
     {
       "id": "MSG-0001",
-      "at": "2026-11-11T11:30:00+00:00",
+      "at": "2026-11-11T11:50:00+00:00",
       "from": "landlord",
       "case_id": "CASE-0001",
       "status": "reply",
+      "channel": "email",
       "text": "房东·林霁：以下是本次查询或内部转交后已取得的信息。\n月租5600元；这是信息咨询，不构成租约。\n该房源押金4000元，不另收宠物押金。\n已核准一只8公斤成年犬符合楼宇宠物规则。\n11月11日公布的新一期货梯表显示12日无可用时段，最早可安排11月13日10点搬入。",
       "evidence": [
         {
           "id": "EV-0001",
           "issuer": "landlord",
-          "issued_at": "2026-11-03T12:30:00+00:00",
+          "issued_at": "2026-11-04T11:24:00+00:00",
           "text": "月租5600元；这是信息咨询，不构成租约。",
           "value": 5600,
           "valid_until": null,
@@ -99,7 +100,7 @@
         {
           "id": "EV-0002",
           "issuer": "landlord",
-          "issued_at": "2026-11-03T12:30:00+00:00",
+          "issued_at": "2026-11-04T11:24:00+00:00",
           "text": "该房源押金4000元，不另收宠物押金。",
           "value": 4000,
           "valid_until": null,
@@ -117,7 +118,7 @@
         {
           "id": "EV-0004",
           "issuer": "manager",
-          "issued_at": "2026-11-11T02:00:00+00:00",
+          "issued_at": "2026-11-11T02:13:00+00:00",
           "text": "11月11日公布的新一期货梯表显示12日无可用时段，最早可安排11月13日10点搬入。",
           "value": "2026-11-13T10:00:00+08:00",
           "valid_until": null,
@@ -144,10 +145,11 @@
       "kind": "case_created",
       "case_id": "CASE-0001",
       "actor": "landlord",
-      "parent": null
+      "parent": null,
+      "origin": "agent"
     },
     {
-      "at": "2026-11-03T11:30:00+00:00",
+      "at": "2026-11-03T12:07:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "landlord",
@@ -155,17 +157,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-03T11:30:00+00:00",
+      "at": "2026-11-03T12:07:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "landlord",
       "step": "main_1",
-      "start_at": "2026-11-03T11:30:00+00:00",
-      "due_at": "2026-11-03T12:30:00+00:00",
+      "start_at": "2026-11-03T12:07:00+00:00",
+      "due_at": "2026-11-04T11:24:00+00:00",
       "tool": "landlord.main.1.lookup"
     },
     {
-      "at": "2026-11-03T11:30:00+00:00",
+      "at": "2026-11-03T12:07:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "landlord",
@@ -173,7 +175,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-03T12:30:00+00:00",
+      "at": "2026-11-04T11:24:00+00:00",
       "kind": "tool_call",
       "actor": "landlord",
       "case_id": "CASE-0001",
@@ -181,7 +183,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-03T12:30:00+00:00",
+      "at": "2026-11-04T11:24:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "landlord",
@@ -189,17 +191,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-03T12:30:00+00:00",
+      "at": "2026-11-04T11:24:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "landlord",
       "step": "main_2",
-      "start_at": "2026-11-03T12:30:00+00:00",
-      "due_at": "2026-11-03T12:30:00+00:00",
+      "start_at": "2026-11-04T11:24:00+00:00",
+      "due_at": "2026-11-04T11:57:00+00:00",
       "tool": "landlord.main.2.delegate"
     },
     {
-      "at": "2026-11-03T12:30:00+00:00",
+      "at": "2026-11-04T11:24:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "landlord",
@@ -207,7 +209,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-03T12:30:00+00:00",
+      "at": "2026-11-04T11:57:00+00:00",
       "kind": "tool_call",
       "actor": "landlord",
       "case_id": "CASE-0001",
@@ -215,7 +217,7 @@
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-03T12:30:00+00:00",
+      "at": "2026-11-04T11:57:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "landlord",
@@ -223,14 +225,15 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-03T12:30:00+00:00",
+      "at": "2026-11-04T11:57:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0002",
       "actor": "manager",
-      "parent": "CASE-0001"
+      "parent": "CASE-0001",
+      "origin": "agent"
     },
     {
-      "at": "2026-11-03T12:30:00+00:00",
+      "at": "2026-11-04T11:57:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "manager",
@@ -238,17 +241,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-03T12:30:00+00:00",
+      "at": "2026-11-04T11:57:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "manager",
       "step": "main_1",
-      "start_at": "2026-11-04T01:00:00+00:00",
-      "due_at": "2026-11-04T02:00:00+00:00",
+      "start_at": "2026-11-05T01:00:00+00:00",
+      "due_at": "2026-11-05T02:06:00+00:00",
       "tool": "manager.main.1.delegate"
     },
     {
-      "at": "2026-11-04T01:00:00+00:00",
+      "at": "2026-11-05T01:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "manager",
@@ -256,7 +259,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-04T02:00:00+00:00",
+      "at": "2026-11-05T02:06:00+00:00",
       "kind": "tool_call",
       "actor": "manager",
       "case_id": "CASE-0002",
@@ -264,7 +267,7 @@
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-04T02:00:00+00:00",
+      "at": "2026-11-05T02:06:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "manager",
@@ -272,14 +275,15 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-04T02:00:00+00:00",
+      "at": "2026-11-05T02:06:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0003",
       "actor": "reviewer",
-      "parent": "CASE-0002"
+      "parent": "CASE-0002",
+      "origin": "agent"
     },
     {
-      "at": "2026-11-04T02:00:00+00:00",
+      "at": "2026-11-05T02:06:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "reviewer",
@@ -287,7 +291,7 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-04T02:00:00+00:00",
+      "at": "2026-11-05T02:06:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "reviewer",
@@ -327,7 +331,7 @@
       "actor": "reviewer",
       "step": "main_2",
       "start_at": "2026-11-06T07:00:00+00:00",
-      "due_at": "2026-11-06T07:00:00+00:00",
+      "due_at": "2026-11-06T07:15:00+00:00",
       "tool": "reviewer.main.2.reply"
     },
     {
@@ -339,7 +343,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-06T07:00:00+00:00",
+      "at": "2026-11-06T07:15:00+00:00",
       "kind": "tool_call",
       "actor": "reviewer",
       "case_id": "CASE-0003",
@@ -347,7 +351,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-06T07:00:00+00:00",
+      "at": "2026-11-06T07:15:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "reviewer",
@@ -355,13 +359,13 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-06T07:00:00+00:00",
+      "at": "2026-11-06T07:15:00+00:00",
       "kind": "handoff_return",
       "case_id": "CASE-0003",
       "parent": "CASE-0002"
     },
     {
-      "at": "2026-11-06T07:00:00+00:00",
+      "at": "2026-11-06T07:15:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "manager",
@@ -369,13 +373,13 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T07:00:00+00:00",
+      "at": "2026-11-06T07:15:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "manager",
       "step": "main_2",
       "start_at": "2026-11-11T01:00:00+00:00",
-      "due_at": "2026-11-11T02:00:00+00:00",
+      "due_at": "2026-11-11T02:13:00+00:00",
       "tool": "manager.main.2.lookup"
     },
     {
@@ -387,7 +391,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-11T02:00:00+00:00",
+      "at": "2026-11-11T02:13:00+00:00",
       "kind": "tool_call",
       "actor": "manager",
       "case_id": "CASE-0002",
@@ -395,7 +399,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-11T02:00:00+00:00",
+      "at": "2026-11-11T02:13:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "manager",
@@ -403,17 +407,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-11T02:00:00+00:00",
+      "at": "2026-11-11T02:13:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "manager",
       "step": "main_3",
-      "start_at": "2026-11-11T02:00:00+00:00",
-      "due_at": "2026-11-11T02:30:00+00:00",
+      "start_at": "2026-11-11T02:13:00+00:00",
+      "due_at": "2026-11-11T03:04:00+00:00",
       "tool": "manager.main.3.reply"
     },
     {
-      "at": "2026-11-11T02:00:00+00:00",
+      "at": "2026-11-11T02:13:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "manager",
@@ -421,7 +425,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-11T02:30:00+00:00",
+      "at": "2026-11-11T03:04:00+00:00",
       "kind": "tool_call",
       "actor": "manager",
       "case_id": "CASE-0002",
@@ -429,7 +433,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-11T02:30:00+00:00",
+      "at": "2026-11-11T03:04:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "manager",
@@ -437,13 +441,13 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-11T02:30:00+00:00",
+      "at": "2026-11-11T03:04:00+00:00",
       "kind": "handoff_return",
       "case_id": "CASE-0002",
       "parent": "CASE-0001"
     },
     {
-      "at": "2026-11-11T02:30:00+00:00",
+      "at": "2026-11-11T03:04:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "landlord",
@@ -451,13 +455,13 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-11T02:30:00+00:00",
+      "at": "2026-11-11T03:04:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "landlord",
       "step": "main_3",
       "start_at": "2026-11-11T11:00:00+00:00",
-      "due_at": "2026-11-11T11:30:00+00:00",
+      "due_at": "2026-11-11T11:50:00+00:00",
       "tool": "landlord.main.3.reply"
     },
     {
@@ -469,7 +473,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-11T11:30:00+00:00",
+      "at": "2026-11-11T11:50:00+00:00",
       "kind": "tool_call",
       "actor": "landlord",
       "case_id": "CASE-0001",
@@ -477,7 +481,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-11T11:30:00+00:00",
+      "at": "2026-11-11T11:50:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "landlord",
@@ -485,7 +489,7 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-11T11:30:00+00:00",
+      "at": "2026-11-11T11:50:00+00:00",
       "kind": "delivery",
       "message_id": "MSG-0001",
       "case_id": "CASE-0001",

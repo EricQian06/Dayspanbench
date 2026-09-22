@@ -8,10 +8,11 @@
     "description": "周末不在岗；测量记录区分净宽与含框宽度。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "jiangyan@bench.example"
+    },
     "knowledge": [
       "a_bath",
       "a_door"

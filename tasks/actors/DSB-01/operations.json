@@ -8,10 +8,11 @@
     "description": "能够查档期；投影问题必须转给设备负责人。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "zhaohang@bench.example"
+    },
     "knowledge": [
       "slot"
     ],

@@ -10,6 +10,7 @@ import unittest
 from unittest.mock import patch
 from urllib.error import HTTPError, URLError
 
+from dayspanbench.calendar import parse
 from dayspanbench.engine import Environment
 from dayspanbench.llm import LLMConfig, StructuredClient, SimulatorError
 from dayspanbench.recipient import RuleRecipient
@@ -59,6 +60,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         env = Environment(task, mapping)
         result = env.tools().send_message("records", "请咨询学分转换。", {"course_code": "CS204"})
         self.assertEqual(env.agent_sends, 1)
+        env.advance(parse("2026-11-05T18:00:00+08:00"))
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
         self.assertEqual(len(attempts), 2)
         self.assertIn("validation_feedback", attempts[1])
@@ -108,7 +110,8 @@ class CharacterSimulatorTests(unittest.TestCase):
             with self.subTest(task=n):
                 env, _, result = run_reference(task, recipient=recipients(task, client))
                 self.assertTrue(result["complete"])
-                self.assertEqual(result["calendar_days"], task["horizon_design"]["reference_days"])
+                window = (parse(task["deadline_at"]) - parse(task["start_at"])).total_seconds() / 3600
+                self.assertLessEqual(result["calendar_hours"], window)
                 self.assertTrue(any(c["purpose"] == "reply" for c in client.calls))
                 self.assertEqual(len({id(a.recipient) for a in env.actors.values()}), len(task["actors"]))
                 for call in client.calls:
@@ -128,9 +131,12 @@ class CharacterSimulatorTests(unittest.TestCase):
         env = Environment(task, recipients(task, client))
         api = env.tools()
         first = api.send_message("support", "请咨询保修")
+        env.advance(parse("2026-11-04T17:00:00+08:00"))
         self.assertEqual(env.cases[first["case_id"]]["state"], "needs_information")
         api.send_message("support", "序列号SN-A731，收据R-731。", case_id=first["case_id"])
-        self.assertEqual(env.cases[first["case_id"]]["state"], "queued")
+        # Advance past the deferred admission but before the first step completes.
+        env.advance(parse("2026-11-05T10:00:00+08:00"))
+        self.assertIn(env.cases[first["case_id"]]["state"], {"queued", "working"})
         self.assertEqual(env.cases[first["case_id"]]["fields"], {"serial": "SN-A731", "receipt": "R-731"})
         self.assertTrue(any(h["role"] == "recipient" for h in client.calls[-1]["view"]["history"]))
 
@@ -158,7 +164,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         task, client = load(8), FixtureClient()
         env = Environment(task, recipients(task, client))
         api = env.tools()
-        api.read_page("hotels")
+        api.visit_page("hotels")
         api.send_message("a_desk", "A_ONLY_SECRET 无障碍尺寸", task["public"]["user_fields"])
         api.send_message("b_desk", "无障碍房", task["public"]["user_fields"])
         b_views = [c["view"] for c in client.calls if c["actor_id"] == "b_desk"]
@@ -181,6 +187,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": fields})
         env = Environment(task, recipients(task, client))
         result = env.tools().send_message("records", "课程CS204，大纲CS204-2026-v2-signed，咨询学分转换。")
+        env.advance(parse("2026-11-05T18:00:00+08:00"))
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
         self.assertFalse(env.events)
 

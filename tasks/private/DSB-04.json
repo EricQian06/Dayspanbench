@@ -218,12 +218,27 @@
     ],
     "pages": [
       {
-        "id": "lab",
-        "title": "南屿共享实验室",
+        "id": "lab-intro",
+        "title": "南屿共享实验室简介",
         "text": "仪器使用需安全培训记录，培训每周五14点。本批进口耗材预计11月17日到库，之后需要连续7天稳定性校准和人工复核。",
+        "contacts": [],
+        "snippet": "共享仪器使用条件、培训批次与校准安排。"
+      },
+      {
+        "id": "lab",
+        "title": "南屿实验室联系方式",
+        "text": "使用条件与联系人请咨询前台叶青；安全培训记录联系安全员温遥；仪器校准、耗材和费用联系仪器管理员杜和。",
         "contacts": [
           "labdesk"
-        ]
+        ],
+        "snippet": "实验室各岗位对接说明。"
+      },
+      {
+        "id": "lab-entry",
+        "title": "仪器使用申请入口",
+        "text": "申请需提供样品编号与安全培训记录号；本页面仅说明受理条件，不能在线预约仪器。",
+        "contacts": [],
+        "snippet": "仪器使用申请材料说明；不支持在线预约。"
       }
     ],
     "message_budget": 16,
@@ -331,9 +346,12 @@
       "calendar": "office",
       "channels": [
         "email",
-        "chat",
-        "ticket"
+        "phone"
       ],
+      "contact_details": {
+        "email": "yeqing@bench.example",
+        "phone": "+86 13800000003"
+      },
       "knowledge": [],
       "tools": {
         "labdesk.main.1.refer": {
@@ -411,10 +429,11 @@
       "description": "每周五14点培训，结束后签发记录。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "wenyao@bench.example"
+      },
       "knowledge": [
         "certificate"
       ],
@@ -514,9 +533,11 @@
       "description": "须核实培训凭证；耗材到库后才启动连续7天稳定性校准。",
       "calendar": "office",
       "channels": [
-        "email",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "duhe@bench.example"
+      },
       "knowledge": [
         "price",
         "window"
@@ -668,10 +689,11 @@
       "description": "本批供应商11月17日10点后送达，入库检查还需要2个工作小时。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "songye@bench.example"
+      },
       "knowledge": [
         "filter"
       ],
@@ -915,8 +937,7 @@
       "fields": {
         "sample_id": "S-482",
         "safety_certificate": "$fact:certificate"
-      },
-      "channel": "ticket"
+      }
     },
     {
       "op": "wait_for",

@@ -8,10 +8,11 @@
     "description": "只有本岗位知道维修窗口；内部收到转交后进入自己的队列。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "zhoumin@bench.example"
+    },
     "knowledge": [
       "projector"
     ],

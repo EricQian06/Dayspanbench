@@ -34,8 +34,8 @@ def render():
                "这些是作者参考轨迹的历时，不是任务的最短时间，也不是任何LLM的成绩。DSB-12评价截止前的受阻处理，不能并入已获取全部信息的成功率。", "",
                "| 任务 | 场景 | 人物 | 参考历时 | 时间档 | 参考结束（北京时间） | 结果类型 |", "|---|---|---:|---:|---|---|---|"]
     for path in sorted((ROOT / "tasks/private").glob("*.json")):
-        task = json.loads(path.read_text())
-        run = json.loads((ROOT / "artifacts/reference_runs" / path.name).read_text())
+        task = json.loads(path.read_text(encoding="utf-8"))
+        run = json.loads((ROOT / "artifacts/reference_runs" / path.name).read_text(encoding="utf-8"))
         result = run["result"]
         horizon = task["horizon_design"]
         summary.append(f"| [{task['id']}](tasks/{task['id']}.md) | {task['title']} | {len(task['actors'])} | {result['calendar_days']:g}天 / {result['calendar_hours']:g}小时 | {horizon['stratum']} | {local(result['as_of'])} | {task['completion_class']} |")
@@ -94,8 +94,8 @@ def render():
         lines += ["", "## 机器可读文件", "", f"- [Agent公开任务](../../tasks/public/{task['id']}.json)",
                   f"- [环境私有定义](../../tasks/private/{task['id']}.json)",
                   f"- [完整参考回放](../../artifacts/reference_runs/{task['id']}.json)", "", task["alternate_paths"], ""]
-        (out / f"{task['id']}.md").write_text("\n".join(lines))
-    (ROOT / "docs/task-catalog.md").write_text("\n".join(summary) + "\n")
+        (out / f"{task['id']}.md").write_text("\n".join(lines), encoding="utf-8")
+    (ROOT / "docs/task-catalog.md").write_text("\n".join(summary) + "\n", encoding="utf-8")
     print("Rendered 12 review cards, 41 actor dossiers within cards, and the task catalog.")
 
 

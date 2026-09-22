@@ -11,13 +11,28 @@
   ],
   "pages": [
     {
-      "id": "hotels",
-      "title": "候选住宿目录",
+      "id": "hotels-intro",
+      "title": "候选住宿简介",
       "text": "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段。",
+      "contacts": [],
+      "snippet": "两家候选住宿概况与现场测量安排。"
+    },
+    {
+      "id": "hotels",
+      "title": "候选住宿联系方式",
+      "text": "A旅舍前台蓝心；B酒店预订咨询米禾。现场测量分别由两家设施人员处理。",
       "contacts": [
         "a_desk",
         "b_desk"
-      ]
+      ],
+      "snippet": "两家前台对接说明。"
+    },
+    {
+      "id": "hotels-entry",
+      "title": "住宿预订入口",
+      "text": "确认无障碍房型需轮椅宽度与入住日期；本页面仅说明材料，不能在线预订。",
+      "contacts": [],
+      "snippet": "无障碍房确认材料说明；不支持在线预订。"
     }
   ],
   "message_budget": 16,

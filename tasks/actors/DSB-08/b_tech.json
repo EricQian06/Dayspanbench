@@ -8,10 +8,11 @@
     "description": "指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "zhengyan@bench.example"
+    },
     "knowledge": [
       "b_bath",
       "b_door"

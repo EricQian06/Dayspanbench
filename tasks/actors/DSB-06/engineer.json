@@ -8,10 +8,11 @@
     "description": "仅周二、周四处理远程诊断和排期；周四14点集中诊断，补货后需复核型号和上门窗口。",
     "calendar": "engineer",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "hanze@bench.example"
+    },
     "knowledge": [
       "part",
       "visit"

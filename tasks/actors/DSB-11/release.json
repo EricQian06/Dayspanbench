@@ -8,9 +8,11 @@
     "description": "上游兼容窗口在2027年3月30日20点开放；候选版与稳定版需在该季度窗口分别核对。",
     "calendar": "release",
     "channels": [
-      "ticket",
       "email"
     ],
+    "contact_details": {
+      "email": "tangbo@bench.example"
+    },
     "knowledge": [
       "candidate",
       "stable"

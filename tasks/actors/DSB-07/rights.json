@@ -10,6 +10,9 @@
     "channels": [
       "email"
     ],
+    "contact_details": {
+      "email": "alexchen@bench.example"
+    },
     "knowledge": [
       "exhibit",
       "online"
@@ -153,5 +156,5 @@
     }
   },
   "start_at": "2026-11-05T15:00:00+08:00",
-  "deadline_at": "2027-06-04T17:00:00+08:00"
+  "deadline_at": "2027-06-07T17:00:00+08:00"
 }

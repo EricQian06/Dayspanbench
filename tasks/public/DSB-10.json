@@ -11,12 +11,27 @@
   ],
   "pages": [
     {
-      "id": "camera",
-      "title": "CAM-402二手信息",
+      "id": "camera-intro",
+      "title": "CAM-402二手信息简介",
       "text": "卖家写快门约一万次，实测情况待核。卖家晚间回复。",
+      "contacts": [],
+      "snippet": "二手相机出售信息与实测安排。"
+    },
+    {
+      "id": "camera",
+      "title": "卖家联系方式",
+      "text": "相机咨询联系卖家沈栖；取件时段可联系桥溪快运咨询台。",
       "contacts": [
         "seller"
-      ]
+      ],
+      "snippet": "卖家与取件咨询对接说明。"
+    },
+    {
+      "id": "camera-entry",
+      "title": "交易咨询入口",
+      "text": "核实实测情况需提供序列号；本页面仅说明信息要求，不能在线下单或付款。",
+      "contacts": [],
+      "snippet": "交易咨询材料说明；不支持在线交易。"
     }
   ],
   "message_budget": 16,

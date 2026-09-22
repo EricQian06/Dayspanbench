@@ -5,3 +5,4 @@ __pycache__/
 artifacts/evaluation_runs/
 .DS_Store
 CLAUDE.md
+.claude/

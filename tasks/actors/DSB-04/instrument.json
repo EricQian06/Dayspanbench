@@ -8,9 +8,11 @@
     "description": "须核实培训凭证；耗材到库后才启动连续7天稳定性校准。",
     "calendar": "office",
     "channels": [
-      "email",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "duhe@bench.example"
+    },
     "knowledge": [
       "price",
       "window"

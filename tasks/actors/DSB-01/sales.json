@@ -8,10 +8,11 @@
     "description": "报价必须带日期和人数；设备可用性需要运营确认。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "yaolan@bench.example"
+    },
     "knowledge": [
       "cancel",
       "price"

@@ -8,9 +8,11 @@
     "description": "只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。",
     "calendar": "maintainer",
     "channels": [
-      "ticket",
       "email"
     ],
+    "contact_details": {
+      "email": "jianchuan@bench.example"
+    },
     "knowledge": [],
     "tools": {
       "maintainer.main.1.lookup": {

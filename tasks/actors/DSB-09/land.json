@@ -8,10 +8,11 @@
     "description": "每周四10点复核共享场地边界清单。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "wuyi@bench.example"
+    },
     "knowledge": [
       "jurisdiction"
     ],

@@ -9,9 +9,12 @@
     "calendar": "daily",
     "channels": [
       "email",
-      "chat",
-      "ticket"
+      "phone"
     ],
+    "contact_details": {
+      "email": "mihe@bench.example",
+      "phone": "+86 13800000006"
+    },
     "knowledge": [
       "b_available",
       "b_price"

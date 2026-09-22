@@ -10,12 +10,12 @@ from dayspanbench.llm import LLMConfig, SimulatorError
 from dayspanbench.reference import run_reference
 
 ROOT = Path(__file__).resolve().parents[1]
-TOOLS = json.loads((ROOT / "docs/agent-tools.json").read_text())
+TOOLS = json.loads((ROOT / "docs/agent-tools.json").read_text(encoding="utf-8"))
 DEFINITIONS = {t["name"]: t for t in TOOLS}
 
 
 def task():
-    return json.loads((ROOT / "tasks/private/DSB-01.json").read_text())
+    return json.loads((ROOT / "tasks/private/DSB-01.json").read_text(encoding="utf-8"))
 
 
 class ScriptedAgent(ChatAgent):
@@ -53,7 +53,7 @@ class EvaluationTests(unittest.TestCase):
             text = json.dumps([c["request"] for c in agent.calls])
             for forbidden in ("HIDDEN_SENTINEL", '"expected_conclusion"', '"reference_actions"', '"goal_results"', "secret-never-log"):
                 self.assertNotIn(forbidden, text)
-            self.assertNotIn("secret-never-log", (Path(folder) / "DSB-01/manifest.json").read_text())
+            self.assertNotIn("secret-never-log", (Path(folder) / "DSB-01/manifest.json").read_text(encoding="utf-8"))
             self.assertEqual(result["agent_usage"]["total_tokens"], len(actions) * 15)
 
     def test_invalid_action_can_recover_but_budget_exhaustion_is_valid_failure(self):

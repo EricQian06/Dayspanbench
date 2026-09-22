@@ -9,14 +9,14 @@ from dayspanbench.validation import validate_task
 failures = []
 paths = sorted((ROOT / "tasks/private").glob("*.json"))
 for path in paths:
-    task = json.loads(path.read_text())
+    task = json.loads(path.read_text(encoding="utf-8"))
     errors = validate_task(task)
     expected_public = {**task["public"], "start_at": task["start_at"], "deadline_at": task["deadline_at"]}
-    actual_public = json.loads((ROOT / "tasks/public" / path.name).read_text())
+    actual_public = json.loads((ROOT / "tasks/public" / path.name).read_text(encoding="utf-8"))
     if actual_public != expected_public:
         errors.append("Public export drift or private-field leak")
     for actor in task["actors"]:
-        bundle = json.loads((ROOT / "tasks/actors" / task["id"] / f"{actor['id']}.json").read_text())
+        bundle = json.loads((ROOT / "tasks/actors" / task["id"] / f"{actor['id']}.json").read_text(encoding="utf-8"))
         if bundle["actor"] != actor or bundle["calendar"] != task["calendars"][actor["calendar"]]:
             errors.append(f"Actor export drift: {actor['id']}")
         if bundle["local_facts"] != {fid: task["facts"][fid] for fid in actor["knowledge"]}:

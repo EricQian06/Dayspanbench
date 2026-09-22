@@ -8,10 +8,11 @@
     "description": "先提供费用和权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "guanyu@bench.example"
+    },
     "knowledge": [
       "fee"
     ],
@@ -201,5 +202,5 @@
     }
   },
   "start_at": "2026-11-05T15:00:00+08:00",
-  "deadline_at": "2027-06-04T17:00:00+08:00"
+  "deadline_at": "2027-06-07T17:00:00+08:00"
 }

@@ -218,13 +218,28 @@
     ],
     "pages": [
       {
-        "id": "hotels",
-        "title": "候选住宿目录",
+        "id": "hotels-intro",
+        "title": "候选住宿简介",
         "text": "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段。",
+        "contacts": [],
+        "snippet": "两家候选住宿概况与现场测量安排。"
+      },
+      {
+        "id": "hotels",
+        "title": "候选住宿联系方式",
+        "text": "A旅舍前台蓝心；B酒店预订咨询米禾。现场测量分别由两家设施人员处理。",
         "contacts": [
           "a_desk",
           "b_desk"
-        ]
+        ],
+        "snippet": "两家前台对接说明。"
+      },
+      {
+        "id": "hotels-entry",
+        "title": "住宿预订入口",
+        "text": "确认无障碍房型需轮椅宽度与入住日期；本页面仅说明材料，不能在线预订。",
+        "contacts": [],
+        "snippet": "无障碍房确认材料说明；不支持在线预订。"
       }
     ],
     "message_budget": 16,
@@ -401,9 +416,12 @@
       "calendar": "daily",
       "channels": [
         "email",
-        "chat",
-        "ticket"
+        "phone"
       ],
+      "contact_details": {
+        "email": "lanxin@bench.example",
+        "phone": "+86 13800000005"
+      },
       "knowledge": [],
       "tools": {
         "a_desk.main.1.delegate": {
@@ -485,10 +503,11 @@
       "description": "周末不在岗；测量记录区分净宽与含框宽度。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "jiangyan@bench.example"
+      },
       "knowledge": [
         "a_bath",
         "a_door"
@@ -590,9 +609,12 @@
       "calendar": "daily",
       "channels": [
         "email",
-        "chat",
-        "ticket"
+        "phone"
       ],
+      "contact_details": {
+        "email": "mihe@bench.example",
+        "phone": "+86 13800000006"
+      },
       "knowledge": [
         "b_available",
         "b_price"
@@ -696,10 +718,11 @@
       "description": "指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "zhengyan@bench.example"
+      },
       "knowledge": [
         "b_bath",
         "b_door"
@@ -1047,7 +1070,7 @@
   ],
   "reference_actions": [
     {
-      "op": "read_page",
+      "op": "visit_page",
       "page": "hotels"
     },
     {

@@ -219,12 +219,27 @@
     ],
     "pages": [
       {
+        "id": "venue-intro",
+        "title": "禾岸会馆简介",
+        "text": "禾岸会馆提供活动场地租赁。旧版简介：8000元起，可容纳100人，有投影。具体档期和设施请通过联系方式页咨询。",
+        "contacts": [],
+        "snippet": "禾岸会馆活动场地简介：价格起点、容量与投影设备说明。"
+      },
+      {
         "id": "venue",
-        "title": "禾岸会馆活动页",
-        "text": "旧版简介：8000元起，可容纳100人，有投影。具体档期和设施请联系前台。办公时间周一至周五9—12、13—17点。",
+        "title": "禾岸会馆联系方式",
+        "text": "办公时间周一至周五9—12、13—17点。前台陈芷负责对外咨询与转介；报价、档期与设备须由相应对接人确认。",
         "contacts": [
           "reception"
-        ]
+        ],
+        "snippet": "禾岸会馆对接人与办公时间。"
+      },
+      {
+        "id": "venue-entry",
+        "title": "禾岸会馆预约入口",
+        "text": "预约需提供活动日期、时段和人数；本页面仅说明所需信息，不能在线完成预约，请通过邮件与对接人确认。",
+        "contacts": [],
+        "snippet": "预约所需材料与办理说明；不支持在线预约。"
       }
     ],
     "message_budget": 16,
@@ -335,9 +350,12 @@
       "calendar": "office",
       "channels": [
         "email",
-        "chat",
-        "ticket"
+        "phone"
       ],
+      "contact_details": {
+        "email": "chenzhi@bench.example",
+        "phone": "+86 13800000001"
+      },
       "knowledge": [],
       "tools": {
         "reception.main.1.refer": {
@@ -415,10 +433,11 @@
       "description": "报价必须带日期和人数；设备可用性需要运营确认。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "yaolan@bench.example"
+      },
       "knowledge": [
         "cancel",
         "price"
@@ -522,10 +541,11 @@
       "description": "能够查档期；投影问题必须转给设备负责人。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "zhaohang@bench.example"
+      },
       "knowledge": [
         "slot"
       ],
@@ -628,10 +648,11 @@
       "description": "只有本岗位知道维修窗口；内部收到转交后进入自己的队列。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "zhoumin@bench.example"
+      },
       "knowledge": [
         "projector"
       ],

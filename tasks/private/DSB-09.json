@@ -218,12 +218,27 @@
     ],
     "pages": [
       {
+        "id": "service-intro",
+        "title": "晴港公共活动咨询简介",
+        "text": "拟办活动先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。",
+        "contacts": [],
+        "snippet": "公共活动预咨询流程与时间安排。"
+      },
+      {
         "id": "service",
-        "title": "晴港公共活动咨询",
-        "text": "先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。",
+        "title": "晴港公共活动咨询联系方式",
+        "text": "事项识别与管辖分流联系咨询台谢茵；扩声事项分类与材料联系活动环境咨询员。",
         "contacts": [
           "service"
-        ]
+        ],
+        "snippet": "政务咨询台对接说明。"
+      },
+      {
+        "id": "service-entry",
+        "title": "活动办理入口",
+        "text": "办理需提供活动地点与扩声设备说明；本页面为预咨询说明，不构成许可申请入口。",
+        "contacts": [],
+        "snippet": "活动预咨询材料说明；不支持在线申请许可。"
       }
     ],
     "message_budget": 16,
@@ -347,9 +362,12 @@
       "calendar": "office",
       "channels": [
         "email",
-        "chat",
-        "ticket"
+        "phone"
       ],
+      "contact_details": {
+        "email": "xieyin@bench.example",
+        "phone": "+86 13800000007"
+      },
       "knowledge": [],
       "tools": {
         "service.main.1.lookup": {
@@ -459,10 +477,11 @@
       "description": "每周四10点复核共享场地边界清单。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "wuyi@bench.example"
+      },
       "knowledge": [
         "jurisdiction"
       ],
@@ -561,10 +580,11 @@
       "description": "本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "lusheng@bench.example"
+      },
       "knowledge": [
         "category",
         "consultation_receipt",

@@ -67,7 +67,7 @@ flowchart TD
 | `docs/tasks/DSB-xx.md` | 人类评审、环境开发者、错误分析人员 | 测评前审题；测评后定位时间、材料或评分问题 | 人工阅读，无运行时消费者 | 不提供：含隐藏事实、答案条件及参考时间线 |
 | `artifacts/reference_runs/DSB-xx.json` | 作者验收、回归分析、任务卡生成器 | 验收参考路径；生成任务卡；与模型实际轨迹对照 | 由`replay.py`生成，由`render_cards.py`读取 | 不提供：含参考答案、特权轨迹和内部事件 |
 
-公开文件里的`pages`是可公开资料。在当前代码中，`observe()`已经返回整个`public`对象，因而页面正文也会出现在首次观察中。`read_page()`仍负责把该页的联系人加入可联系集合；看到人物ID不等于已经可以发送消息。不能把当前版本描述成“必须搜索后才能看到页面正文”。
+公开文件里的`pages`是可公开资料，浏览器分两级：`observe()`只返回每页的`id/title/snippet`搜索链接，正文必须通过`visit_page()`访问。`visit_page()`同时把该页联系人（含具体邮箱/电话）加入可联系集合；看到人物ID不等于已经可以发送消息。每个页面带`snippet`摘要字段，验证器会检查。
 
 ## 4. 私有任务里各字段在哪一步发挥作用
 
@@ -76,8 +76,8 @@ flowchart TD
 | `id/title/domain/schema_version/task_set_version` | 导出、验证、审查和版本记录 | 任务标识与元数据；服务器不根据版本字段动态选择实现 |
 | `start_at/deadline_at` | 初始化、等待、新消息校验、评分 | 设置时钟和截止；截止后不接受新消息，但可以读取与最终提交 |
 | `public.brief/user_fields/authorization` | `observe`；新事项受理 | 告知任务和已知资料；受理时检查场景字段一致性。授权文本是任务约束，不是通用自然语言行为审核器 |
-| `public.initial_contacts/pages` | 初始化；观察、搜索、读页面 | 初始化联系人；提供公开资料；读页面注册新增联系人 |
-| `public.message_budget` | 每次`send_message` | 当前每题16次发送预算，包含补件和催问；不是全工具调用预算 |
+| `public.initial_contacts/pages` | 初始化；观察、搜索、访问页面 | 初始化联系人；提供公开资料；访问页面注册新增联系人并给出其具体联络方式 |
+| `public.message_budget` | 每次`send_message`与`call` | 当前每题16次发送预算，包含补件、催问和电话拨打；不是全工具调用预算 |
 | `public.answer_keys/conclusion_options/answer_format` | 初始观察和最终作答 | 告知可用答案字段与结论标签，不公开正确选项 |
 | `actors` | 初始化及每次交互 | 创建人物实例，提供角色、渠道、流程和白名单工具 |
 | `calendars` | 每个工具步骤排程时 | 计算工作窗口、周末、时区、连续等待与批次 |
@@ -381,7 +381,7 @@ python3 scripts/serve.py --task DSB-12
 
 - [服务器只加载私有任务JSON，并按白名单分发工具](/Users/weiwen/Documents/ChatGPT/DaySpanBench/scripts/serve.py)。
 - [初始化角色实例与进程内状态](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
-- [observe返回整个公开对象，read_page登记联系人](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
+- [observe只返回页面搜索链接，visit_page登记联系人](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
 - [接收者仅取得受限view](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
 - [最终评分读取目标及本次证据](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/scoring.py)。
 - [submit_answer只返回一次评分](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。

@@ -217,12 +217,27 @@
     ],
     "pages": [
       {
+        "id": "logistics-intro",
+        "title": "远澄货运简介",
+        "text": "本合成场景有多阶段归类争议核查：首轮更正单证预计2026年12月7日可取；初审窗口2027年2月4日；制造档案预计4月6日可核验，届时需更新单证并再次申请长期复核。境外技术意见窗口为9月10日，无放行承诺。",
+        "contacts": [],
+        "snippet": "留置核查流程与各阶段时间窗口。"
+      },
+      {
         "id": "logistics",
-        "title": "远澄原型设备留置核查",
-        "text": "本合成场景有多阶段归类争议核查：首轮更正单证预计2026年12月7日可取；初审窗口2027年2月4日；制造档案预计4月6日可核验，届时需更新单证并再次申请长期复核。境外技术意见窗口为9月10日，无放行承诺。 材料齐备后，也可向单证联络人申请转介境外代理，直接发起长期复核；材料门槛和处理窗口相同。",
+        "title": "远澄货运联系方式",
+        "text": "货件状态与联系入口联系客服白榆；单证与批次溯源联系出口方单证员。 材料齐备后，也可向单证联络人申请转介境外代理，直接发起长期复核；材料门槛和处理窗口相同。",
         "contacts": [
           "forwarder"
-        ]
+        ],
+        "snippet": "货运客服与单证对接说明。"
+      },
+      {
+        "id": "logistics-entry",
+        "title": "留置核查办理入口",
+        "text": "办理需提供运单号与有效申报单证版本；本页面仅说明材料，不能在线发起复核或支付费用。",
+        "contacts": [],
+        "snippet": "留置核查材料说明；不支持在线发起复核。"
       }
     ],
     "message_budget": 16,
@@ -351,9 +366,12 @@
       "calendar": "office",
       "channels": [
         "email",
-        "chat",
-        "ticket"
+        "phone"
       ],
+      "contact_details": {
+        "email": "baiyu@bench.example",
+        "phone": "+86 13800000010"
+      },
       "knowledge": [],
       "tools": {
         "forwarder.main.1.delegate": {
@@ -451,10 +469,11 @@
       "description": "周末无人工查件；核对后出具扫描记录。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "shijin@bench.example"
+      },
       "knowledge": [
         "warehouse"
       ],
@@ -551,10 +570,11 @@
       "description": "首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "heyou@bench.example"
+      },
       "knowledge": [
         "batch_trace",
         "declaration",
@@ -735,10 +755,11 @@
       "description": "原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。",
       "calendar": "office",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "daijun@bench.example"
+      },
       "knowledge": [],
       "tools": {
         "customsdesk.main.1.delegate": {
@@ -1031,6 +1052,9 @@
       "channels": [
         "email"
       ],
+      "contact_details": {
+        "email": "morganlee@bench.example"
+      },
       "knowledge": [
         "release",
         "review_case"

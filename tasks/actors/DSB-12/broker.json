@@ -10,6 +10,9 @@
     "channels": [
       "email"
     ],
+    "contact_details": {
+      "email": "morganlee@bench.example"
+    },
     "knowledge": [
       "release",
       "review_case"

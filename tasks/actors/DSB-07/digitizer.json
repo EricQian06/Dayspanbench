@@ -8,10 +8,11 @@
     "description": "扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "linche@bench.example"
+    },
     "knowledge": [
       "scan"
     ],
@@ -136,5 +137,5 @@
     }
   },
   "start_at": "2026-11-05T15:00:00+08:00",
-  "deadline_at": "2027-06-04T17:00:00+08:00"
+  "deadline_at": "2027-06-07T17:00:00+08:00"
 }

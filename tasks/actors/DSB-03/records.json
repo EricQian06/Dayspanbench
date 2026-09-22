@@ -8,10 +8,11 @@
     "description": "必须取得当前签章大纲；不能把旧大纲送交委员会。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "tangning@bench.example"
+    },
     "knowledge": [],
     "tools": {
       "records.main.1.lookup": {

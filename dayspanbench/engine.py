@@ -9,6 +9,7 @@ from dataclasses import dataclass, field
 from datetime import timedelta
 import heapq
 import json
+import random
 from pathlib import Path
 
 from .calendar import Calendar, parse, stamp
@@ -40,10 +41,13 @@ class ActorState:
 
 
 class Environment:
-    def __init__(self, task: dict, recipient=None):
+    def __init__(self, task: dict, recipient=None, seed=0):
         self.task = deepcopy(task)
         self.now = parse(task["start_at"])
         self.deadline = parse(task["deadline_at"])
+        # Seeded pseudo-randomness keeps replay/validate deterministic while
+        # agent-initiated handling latencies still vary per step.
+        self.rng = random.Random(seed)
         self.actors = {
             actor["id"]: ActorState(actor, Calendar(task["calendars"][actor["calendar"]]), self.now,
                 (recipient.get(actor["id"]) or RuleRecipient()) if isinstance(recipient, dict)
@@ -99,8 +103,12 @@ class Environment:
         self.known_contacts.update(contacts)
         message = {"id": f"MSG-{len(self.messages)+1:04d}", "at": stamp(self.now),
                    "from": case["actor"], "case_id": case["id"], "status": status,
+                   "channel": "phone" if case.get("origin") == "phone" else "email",
                    "text": text, "evidence": [], "contacts": [self.contact(cid) for cid in contacts]}
         for evidence_id in evidence_ids or []:
+            if case.get("origin") == "phone":
+                # Spoken answers carry information but never written evidence.
+                continue
             ev = self.evidence[evidence_id]
             ev["agent_visible"] = True
             message["evidence"].append({key: deepcopy(ev[key]) for key in
@@ -121,22 +129,40 @@ class Environment:
 
     def contact(self, actor_id):
         actor = self.actors[actor_id].spec
-        return {key: deepcopy(actor[key]) for key in ("id", "name", "role", "channels")}
+        return {"id": actor["id"], "name": actor["name"], "role": actor["role"],
+                "contact_details": deepcopy(actor["contact_details"])}
 
-    def new_case(self, actor_id, workflow_id, fields, parent=None):
+    def admission_at(self, actor):
+        """Email from the agent is first read inside the recipient's work hours."""
+        return actor.calendar.add_business(self.now, self.rng.randint(10, 40))
+
+    def enqueue_admission(self, actor, case_id):
+        """Schedule admission unless one is already pending for this case."""
+        if any(kind == "admit" and cid == case_id for _, _, kind, cid in self.events):
+            return
+        self.enqueue(self.admission_at(actor), "admit", case_id)
+
+    def new_case(self, actor_id, workflow_id, fields, parent=None, origin=None):
         actor = self.actors[actor_id]
         workflow = next(w for w in actor.spec["workflows"] if w["id"] == workflow_id)
         self.case_serial += 1
         case = {"id": f"CASE-{self.case_serial:04d}", "actor": actor_id, "workflow": deepcopy(workflow),
                 "state": "new", "step": 0, "fields": deepcopy(fields), "evidence": [],
-                "contacts": [], "parent": parent, "received_at": stamp(self.now)}
+                "contacts": [], "parent": parent, "origin": origin, "received_at": stamp(self.now)}
         self.cases[case["id"]] = case
         actor.cases.append(case["id"])
         actor.inbox.append({"case_id": case["id"], "from": self.cases[parent]["actor"] if parent else "agent",
                             "fields": deepcopy(fields), "at": stamp(self.now)})
-        self.record("case_created", case_id=case["id"], actor=actor_id, parent=parent)
-        self.start(case)
+        self.record("case_created", case_id=case["id"], actor=actor_id, parent=parent, origin=origin)
+        if origin == "agent" and parent is None:
+            # No instant routing: the recipient reads the mail during work hours.
+            # Internal handoffs carry no reading delay; the parent step already ran.
+            self.enqueue(self.admission_at(actor), "admit", case["id"])
+        else:
+            self.start(case)
         return case
+
+
 
     def start(self, case):
         workflow = case["workflow"]
@@ -174,11 +200,23 @@ class Environment:
         case["admission_evidence"] = admission_evidence
         self.schedule_step(case)
 
+    def jittered_delay(self, case, delay):
+        """Agent-initiated email never gets instant handling: business delays get a
+        randomized surcharge, other modes at least a 15-minute floor."""
+        if case.get("origin") != "agent":
+            return delay
+        adjusted = dict(delay)
+        if adjusted.get("mode", "business") == "business":
+            adjusted["minutes"] = max(adjusted.get("minutes", 0), 15) + self.rng.randint(5, 25)
+        else:
+            adjusted["minutes"] = max(adjusted.get("minutes", 0), 15)
+        return adjusted
+
     def schedule_step(self, case):
         self.transition(case, "queued")
         actor = self.actors[case["actor"]]
         step = case["workflow"]["steps"][case["step"]]
-        start, end, resource_free = actor.calendar.schedule(self.now, step["delay"], actor.free_at)
+        start, end, resource_free = actor.calendar.schedule(self.now, self.jittered_delay(case, step["delay"]), actor.free_at)
         actor.free_at = resource_free
         self.record("scheduled", case_id=case["id"], actor=case["actor"], step=step["id"],
                     start_at=stamp(start), due_at=stamp(end), tool=step["tool"])
@@ -222,7 +260,7 @@ class Environment:
             self.transition(case, "waiting_internal")
             self.new_case(tool["target"], tool["workflow"],
                           {k: case["fields"][k] for k in tool["forward_fields"] if k in case["fields"]},
-                          parent=case["id"])
+                          parent=case["id"], origin=case.get("origin"))
             return "waiting"
         elif tool["kind"] == "reply":
             self.transition(case, "replied")
@@ -258,6 +296,12 @@ class Environment:
         case = self.cases[case_id]
         if case["state"] in {"failed", "replied"}:
             return
+        if kind == "admit":
+            # Deferred email admission: routing and material checks happen
+            # inside the recipient's work hours, never at send time.
+            if case["state"] in {"new", "needs_information"}:
+                self.start(case)
+            return
         if kind == "start":
             self.transition(case, "working")
         elif kind == "complete":
@@ -292,16 +336,20 @@ class AgentTools:
 
     def observe(self):
         env = self._env
-        return {"now": stamp(env.now), "deadline": stamp(env.deadline), "task": deepcopy(env.task["public"]),
+        public = deepcopy(env.task["public"])
+        # Search results only: page bodies and their contact cards require visit_page.
+        public["pages"] = [{"id": p["id"], "title": p["title"], "snippet": p.get("snippet", "")}
+                           for p in env.task["public"]["pages"]]
+        return {"now": stamp(env.now), "deadline": stamp(env.deadline), "task": public,
                 "contacts": [env.contact(c) for c in sorted(env.known_contacts)]}
 
-    def search_public(self, query):
+    def web_search(self, query):
         terms = query.casefold().split()
         pages = self._env.task["public"]["pages"]
-        return [{"id": p["id"], "title": p["title"], "text": p["text"]} for p in pages
-                if not terms or any(t in (p["title"]+p["text"]).casefold() for t in terms)]
+        return [{"id": p["id"], "title": p["title"], "snippet": p.get("snippet", "")} for p in pages
+                if not terms or any(t in (p["title"] + p["text"] + p.get("snippet", "")).casefold() for t in terms)]
 
-    def read_page(self, page_id):
+    def visit_page(self, page_id):
         env = self._env
         page = next(p for p in env.task["public"]["pages"] if p["id"] == page_id)
         env.known_contacts.update(page.get("contacts", []))
@@ -315,9 +363,11 @@ class AgentTools:
             raise ValueError("Episode is closed for new messages")
         if recipient not in env.known_contacts:
             raise PermissionError("Contact has not been discovered")
+        if channel != "email":
+            raise ValueError("send_message only supports email; use call for phone")
         actor = env.actors[recipient]
-        if channel not in actor.spec["channels"]:
-            raise ValueError("Unsupported channel")
+        if "email" not in actor.spec["contact_details"]:
+            raise ValueError("Contact has no email address")
         if env.agent_sends >= env.task["public"]["message_budget"]:
             raise ValueError("Message budget exhausted")
         env.agent_sends += 1
@@ -342,9 +392,14 @@ class AgentTools:
             case = env.cases[case_id]
             if case["actor"] != recipient or case["parent"]:
                 raise PermissionError("Case is not this agent's conversation")
-            if case["state"] == "needs_information":
+            if case["state"] in {"new", "needs_information"}:
+                # A followup on an unadmitted or incomplete case supplies fields;
+                # admission is deferred to the recipient's work hours either way.
                 case["fields"].update(deepcopy(fields or {}))
-                env.start(case)
+                if case.get("origin") == "agent":
+                    env.enqueue_admission(actor, case_id)
+                else:
+                    env.start(case)
             else:
                 # Following up is observable, but does not skip an internal queue.
                 env.emit(case, "已收到跟进；原受理时间和处理队列保持不变。", status="acknowledgement")
@@ -355,8 +410,64 @@ class AgentTools:
             return {"status": "clarification_needed", "text": prompt}
         if workflow_id not in {w["id"] for w in actor.spec["workflows"]}:
             raise PermissionError("Undeclared workflow")
-        case = env.new_case(recipient, workflow_id, fields or {})
+        case = env.new_case(recipient, workflow_id, fields or {}, origin="agent")
         return {"case_id": case["id"], "status": "received", "at": stamp(env.now)}
+
+    def call(self, recipient, text, fields=None):
+        """Synchronous phone call: only answered inside the recipient's work hours.
+
+        Quick interactions complete during the call; longer workflows continue
+        asynchronously and the written reply later reaches the inbox without
+        evidence attachments, since spoken answers issue no documents.
+        """
+        env = self._env
+        if not isinstance(text, str) or (fields is not None and not isinstance(fields, dict)):
+            raise ValueError("text must be a string and fields must be an object")
+        if env.finished or env.now >= env.deadline:
+            raise ValueError("Episode is closed for new calls")
+        if recipient not in env.known_contacts:
+            raise PermissionError("Contact has not been discovered")
+        actor = env.actors[recipient]
+        if "phone" not in actor.spec["contact_details"]:
+            raise ValueError("Contact has no phone number")
+        if env.agent_sends >= env.task["public"]["message_budget"]:
+            raise ValueError("Message budget exhausted")
+        env.agent_sends += 1
+        env.record("agent_call", recipient=recipient, text=text, fields=fields or {})
+        if not actor.calendar.is_open(env.now):
+            return {"status": "no_answer", "recipient": recipient, "at": stamp(env.now),
+                    "text": "电话无人接听：当前不在对方的接听时段。"}
+        view = {"actor_id": recipient, "name": actor.spec["name"], "role": actor.spec["role"],
+                "instructions": actor.spec["recipient"]["instructions"], "message": "[电话] " + text,
+                "fields": deepcopy(fields or {}), "now": stamp(env.now), "history": deepcopy(actor.history),
+                "existing_workflow_id": None,
+                "workflows": [{k: deepcopy(w[k]) for k in ("id", "label", "aliases", "required_fields")} for w in actor.spec["workflows"]],
+                "local_cases": [{"id": cid, "state": env.cases[cid]["state"]} for cid in actor.cases]}
+        actor.history.append({"role": "agent", "text": "[电话] " + text, "fields": deepcopy(fields or {}),
+                              "case_id": None, "at": stamp(env.now)})
+        if hasattr(actor.recipient, "route"):
+            decision = env.recipient_call(actor, "route", view)
+            workflow_id = decision["workflow_id"]
+            fields = {**decision["fields"], **(fields or {})}
+        else:
+            workflow_id = env.recipient_call(actor, "choose", view)
+        if workflow_id is None:
+            prompt = "请说明要办理的事项：" + "；".join(w["label"] for w in actor.spec["workflows"])
+            actor.history.append({"role": "recipient", "text": prompt, "at": stamp(env.now)})
+            return {"status": "clarification_needed", "text": prompt}
+        if workflow_id not in {w["id"] for w in actor.spec["workflows"]}:
+            raise PermissionError("Undeclared workflow")
+        case = env.new_case(recipient, workflow_id, fields or {}, origin="phone")
+        limit = min(env.now + timedelta(minutes=60), env.deadline)
+        while case["state"] not in {"replied", "failed"} and not any(m["case_id"] == case["id"] for m in env.messages):
+            if not env.events or env.events[0][0] > limit:
+                break
+            env.advance(min(env.events[0][0], limit), wake_on_message=True)
+        message = next((m for m in env.messages if m["case_id"] == case["id"]), None)
+        if message:
+            return {"status": "answered", "case_id": case["id"], "at": message["at"], "text": message["text"]}
+        return {"status": "processing", "case_id": case["id"], "at": stamp(env.now),
+                "text": "对方已记录事项并受理；处理结果稍后另行回复，请留意收件箱。"}
 
     def read_inbox(self, after=0):
         return {"messages": deepcopy(self._env.messages[after:]), "cursor": len(self._env.messages), "now": stamp(self._env.now)}

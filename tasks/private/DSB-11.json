@@ -219,12 +219,27 @@
     ],
     "pages": [
       {
-        "id": "repo",
+        "id": "repo-intro",
         "title": "星舟项目贡献说明",
         "text": "维护者周一三五20—22点处理，CI连续运行48小时。补丁验证后，须在2027年3月30日20点的上游兼容窗口另行核实季度发布，切勿把补丁或候选版当稳定版。",
+        "contacts": [],
+        "snippet": "开源项目维护安排与发布窗口说明。"
+      },
+      {
+        "id": "repo",
+        "title": "星舟项目联系方式",
+        "text": "兼容问题与补丁协调联系维护者简川；候选版与稳定版状态联系发布协调员。",
         "contacts": [
           "maintainer"
-        ]
+        ],
+        "snippet": "维护者与发布协调对接说明。"
+      },
+      {
+        "id": "repo-entry",
+        "title": "问题反馈入口",
+        "text": "提交需提供版本、编译器与日志编号；本页面仅说明材料，不能在线合并或发布。",
+        "contacts": [],
+        "snippet": "问题提交材料说明；不支持在线合并。"
       }
     ],
     "message_budget": 16,
@@ -330,9 +345,11 @@
       "description": "只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。",
       "calendar": "maintainer",
       "channels": [
-        "ticket",
         "email"
       ],
+      "contact_details": {
+        "email": "jianchuan@bench.example"
+      },
       "knowledge": [],
       "tools": {
         "maintainer.main.1.lookup": {
@@ -508,8 +525,11 @@
       "description": "仅返回真实配置内的构建结果；不会承诺发布。",
       "calendar": "always",
       "channels": [
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "ci@bench.example"
+      },
       "knowledge": [
         "repro",
         "workaround"
@@ -611,9 +631,11 @@
       "description": "上游兼容窗口在2027年3月30日20点开放；候选版与稳定版需在该季度窗口分别核对。",
       "calendar": "release",
       "channels": [
-        "ticket",
         "email"
       ],
+      "contact_details": {
+        "email": "tangbo@bench.example"
+      },
       "knowledge": [
         "candidate",
         "stable"
@@ -850,8 +872,7 @@
       "to": "maintainer",
       "text": "请核实兼容问题与补丁",
       "label": "fix",
-      "fields": "$user",
-      "channel": "ticket"
+      "fields": "$user"
     },
     {
       "op": "wait_for",
@@ -869,8 +890,7 @@
       "fields": {
         "version": "1.4.1",
         "verified_commit": "$fact:workaround"
-      },
-      "channel": "ticket"
+      }
     },
     {
       "op": "wait_for",

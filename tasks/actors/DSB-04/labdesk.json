@@ -9,9 +9,12 @@
     "calendar": "office",
     "channels": [
       "email",
-      "chat",
-      "ticket"
+      "phone"
     ],
+    "contact_details": {
+      "email": "yeqing@bench.example",
+      "phone": "+86 13800000003"
+    },
     "knowledge": [],
     "tools": {
       "labdesk.main.1.refer": {

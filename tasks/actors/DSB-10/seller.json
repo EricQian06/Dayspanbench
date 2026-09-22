@@ -8,9 +8,13 @@
     "description": "只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测。",
     "calendar": "evening",
     "channels": [
-      "chat",
-      "email"
+      "email",
+      "phone"
     ],
+    "contact_details": {
+      "email": "shenqi@bench.example",
+      "phone": "+86 13800000008"
+    },
     "knowledge": [
       "asking",
       "estimate",

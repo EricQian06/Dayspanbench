@@ -8,10 +8,11 @@
     "description": "本批供应商11月17日10点后送达，入库检查还需要2个工作小时。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "songye@bench.example"
+    },
     "knowledge": [
       "filter"
     ],

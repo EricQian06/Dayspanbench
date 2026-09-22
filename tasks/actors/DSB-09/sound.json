@@ -8,10 +8,11 @@
     "description": "本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "lusheng@bench.example"
+    },
     "knowledge": [
       "category",
       "consultation_receipt",

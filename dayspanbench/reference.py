@@ -10,8 +10,8 @@ def run_reference(task, *, recipient=None):
     api = env.tools()
     labels = {}
     for action in task["reference_actions"]:
-        if action["op"] == "read_page":
-            api.read_page(action["page"])
+        if action["op"] == "visit_page":
+            api.visit_page(action["page"])
         elif action["op"] == "advance":
             api.wait_until(action["at"], wake_on_message=False)
         elif action["op"] == "send":
@@ -32,10 +32,13 @@ def run_reference(task, *, recipient=None):
         elif action["op"] == "wait_for":
             case_id = labels[action["label"]]
             case = env.cases[case_id]
-            if case["state"] == "needs_information":
-                raise AssertionError(f"Reference waits for missing materials: {case_id}")
             while case["state"] not in {"failed", "replied"} and env.now < env.deadline:
                 api.wait_until(task["deadline_at"])
+            # Deferred admission means a freshly resubmitted case may still look
+            # unadmitted; only a stuck needs_information after the clock ran out
+            # is an authoring error.
+            if case["state"] == "needs_information":
+                raise AssertionError(f"Reference waits for missing materials: {case_id}")
             if case["state"] == "failed":
                 raise AssertionError(f"Reference case failed: {case_id}")
         else:

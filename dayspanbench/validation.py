@@ -45,6 +45,9 @@ def validate_task(task):
         check(set(actor["process_engine"]["states"]) == set(TRANSITIONS), f"{aid}: incompatible state machine")
         check(actor["process_engine"]["workers"] == 1, f"{aid}: only one worker supported")
         check(set(actor["knowledge"]) <= set(facts), f"{aid}: unknown knowledge fact")
+        check("email" in actor["contact_details"], f"{aid}: missing email address; send_message requires one")
+        check(set(actor["channels"]) == set(actor["contact_details"]), f"{aid}: channels disagree with contact details")
+        check(bool(actor["contact_details"]["email"].endswith("@bench.example")), f"{aid}: email not in the bench.example domain")
         for fid in actor["knowledge"]:
             check("attest:" + facts[fid]["attributes"]["predicate"] in actor["evidence_authorities"], f"{aid}: missing attestation authority")
         check(bool(actor["channels"]), f"{aid}: no channel")
@@ -82,8 +85,13 @@ def validate_task(task):
     for spec in task["calendars"].values():
         Calendar(spec).next_open(parse(task["start_at"]))
     check(set(task["public"]["initial_contacts"]) <= set(actors), "Unknown initial contact")
+    phones = [a["contact_details"]["phone"] for a in task["actors"] if "phone" in a["contact_details"]]
+    check(len(phones) == len(set(phones)), "Duplicate phone numbers")
+    emails = [a["contact_details"]["email"] for a in task["actors"]]
+    check(len(emails) == len(set(emails)), "Duplicate email addresses")
     for page in task["public"]["pages"]:
         check(set(page["contacts"]) <= set(actors), "Unknown directory contact")
+        check(bool(page.get("snippet")), f"Page {page['id']}: missing search snippet")
     check(len(set(g["key"] for g in task["goals"])) == len(task["goals"]), "Duplicate goal keys")
     for goal in task["goals"]:
         if goal.get("status") == "unconfirmed":

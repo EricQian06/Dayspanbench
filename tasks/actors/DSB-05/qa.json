@@ -8,10 +8,11 @@
     "description": "样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "fuli@bench.example"
+    },
     "knowledge": [
       "qa"
     ],

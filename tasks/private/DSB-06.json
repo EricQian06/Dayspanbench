@@ -219,12 +219,27 @@
     ],
     "pages": [
       {
-        "id": "service",
-        "title": "霁光电器售后",
+        "id": "service-intro",
+        "title": "霁光电器售后简介",
         "text": "保修咨询需序列号和购机凭证；工程师仅周二、周四处理远程诊断。",
+        "contacts": [],
+        "snippet": "保修受理条件与工程师轮值说明。"
+      },
+      {
+        "id": "service",
+        "title": "霁光电器联系方式",
+        "text": "保修材料受理联系客服孟竹；诊断与维修窗口由工程师另行排期。",
         "contacts": [
           "support"
-        ]
+        ],
+        "snippet": "售后客服对接说明。"
+      },
+      {
+        "id": "service-entry",
+        "title": "报修入口",
+        "text": "报修需提供设备序列号、购机凭证与故障描述；本页面仅说明材料要求，不能在线预约维修。",
+        "contacts": [],
+        "snippet": "报修材料说明；不支持在线预约。"
       }
     ],
     "message_budget": 16,
@@ -335,9 +350,12 @@
       "calendar": "office",
       "channels": [
         "email",
-        "chat",
-        "ticket"
+        "phone"
       ],
+      "contact_details": {
+        "email": "mengzhu@bench.example",
+        "phone": "+86 13800000004"
+      },
       "knowledge": [
         "covered"
       ],
@@ -439,10 +457,11 @@
       "description": "仅周二、周四处理远程诊断和排期；周四14点集中诊断，补货后需复核型号和上门窗口。",
       "calendar": "engineer",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "hanze@bench.example"
+      },
       "knowledge": [
         "part",
         "visit"
@@ -561,10 +580,11 @@
       "description": "原厂补货批次11月13日到库，需16个工作小时核验；周六办公、周日关闭。",
       "calendar": "factory",
       "channels": [
-        "email",
-        "chat",
-        "ticket"
+        "email"
       ],
+      "contact_details": {
+        "email": "jitong@bench.example"
+      },
       "knowledge": [
         "cost"
       ],

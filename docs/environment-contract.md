@@ -72,15 +72,16 @@ stateDiagram-v2
 
 | 工具 | 主要参数 | 作用 |
 |---|---|---|
-| `observe` | 无 | 当前时间、任务、答案格式、已知联系人 |
-| `search_public` | `query` | 搜索当前任务的合成公开资料 |
-| `read_page` | `page_id` | 打开页面并取得其联系人详情 |
-| `send_message` | `recipient,text,fields,channel,case_id?` | 首次联系或补件/跟进；需要已发现的联系人 |
+| `observe` | 无 | 当前时间、任务、答案格式、已知联系人（含具体联络方式）；页面仅以搜索链接呈现 |
+| `web_search` | `query` | 浏览器搜索合成公开网络，返回结果链接（标题+摘要），不含正文 |
+| `visit_page` | `page_id` | 访问页面链接，取得正文及该页联系人的具体联络方式 |
+| `send_message` | `recipient,text,fields,case_id?` | 发送电子邮件：首次联系或补件/跟进；需要已发现的联系人 |
+| `call` | `recipient,text,fields?` | 拨打电话：仅对方接听时段有人接听；口头答复不构成书面凭证；计入消息预算 |
 | `read_inbox` | `after=0` | 读取自游标后的可见消息 |
 | `wait_until` | `until,wake_on_message=true` | 推进虚拟时钟；不会真实睡眠 |
 | `submit_answer` | `answer` | 唯一一次最终提交和评分 |
 
-email/chat/ticket在当前版本共用异步消息机制；人物可声明不支持某渠道。没有真实邮箱、电话或付款工具。模型不能直接调用人物内部的查询或转交函数。
+每个人物有具体的联络方式：邮箱为`人名拼音@bench.example`，电话互不相同；联系人卡片`contact_details`只列出该人物实际拥有的渠道。邮件是异步渠道：对方只在工作时间段处理，且带有种子化随机延迟（不会秒回，受理本身也要等到工作时段）。电话为同步渠道：仅在对方接听时段接听，简短事项通话中即时答复，但口头答复不附书面凭证。没有真实邮箱、电话或付款工具。模型不能直接调用人物内部的查询或转交函数。
 
 公开工具JSON Schema见[agent-tools.json](agent-tools.json)。
 

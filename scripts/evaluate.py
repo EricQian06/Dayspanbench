@@ -36,6 +36,7 @@ def main(argv=None):
     parser.add_argument("--timeout", type=float, default=60)
     parser.add_argument("--retries", type=int, default=1)
     parser.add_argument("--max-steps", type=int, default=80)
+    parser.add_argument("--seed", type=int, default=0, help="Seed for agent-side email handling-latency jitter; recorded in the manifest")
     parser.add_argument("--history-limit", type=int, default=24)
     parser.add_argument("--workers", type=int, default=3)
     parser.add_argument("--tasks", nargs="+", choices=[f"DSB-{n:02}" for n in range(1, 13)])
@@ -113,7 +114,7 @@ def main(argv=None):
                 "agent_config": agent_config.public_dict(), "simulator_config": sim_config.public_dict() if args.simulator == "llm" else None,
                 "agent_protocol": "json_action_chat", "agent_token_parameter": args.agent_token_parameter,
                 "tasks": task_ids, "repeats": 1, "max_steps": args.max_steps, "history_limit": args.history_limit,
-                "workers": args.workers, "simulator_validation_retries": args.simulator_validation_retries,
+                "workers": args.workers, "simulator_validation_retries": args.simulator_validation_retries, "seed": args.seed,
                 "started_at": datetime.now(timezone.utc).isoformat(),
                 "code_sha256": {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in source_files}}
     write_json(args.run_dir / "manifest.json", manifest)
@@ -131,7 +132,7 @@ def main(argv=None):
         sim = StructuredClient(sim_config) if args.simulator == "llm" else None
         return run_episode(task, agent, tool_specs, args.run_dir / task_id, simulator_client=sim,
                            max_steps=args.max_steps, history_limit=args.history_limit,
-                           simulator_validation_retries=args.simulator_validation_retries, progress=progress)
+                           simulator_validation_retries=args.simulator_validation_retries, seed=args.seed, progress=progress)
     results = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = {pool.submit(worker, task_id): task_id for task_id in task_ids}

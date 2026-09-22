@@ -8,10 +8,11 @@
     "description": "原厂补货批次11月13日到库，需16个工作小时核验；周六办公、周日关闭。",
     "calendar": "factory",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "jitong@bench.example"
+    },
     "knowledge": [
       "cost"
     ],

@@ -8,10 +8,11 @@
     "description": "周末无人工查件；核对后出具扫描记录。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "shijin@bench.example"
+    },
     "knowledge": [
       "warehouse"
     ],

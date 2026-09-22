@@ -8,8 +8,11 @@
     "description": "仅返回真实配置内的构建结果；不会承诺发布。",
     "calendar": "always",
     "channels": [
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "ci@bench.example"
+    },
     "knowledge": [
       "repro",
       "workaround"

@@ -8,10 +8,11 @@
     "description": "工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时。",
     "calendar": "factory",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "suyu@bench.example"
+    },
     "knowledge": [
       "dispatch",
       "moq"

@@ -8,10 +8,11 @@
     "description": "原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "daijun@bench.example"
+    },
     "knowledge": [],
     "tools": {
       "customsdesk.main.1.delegate": {

@@ -27,7 +27,7 @@ for _stream in (sys.stdin, sys.stdout, sys.stderr):
     if _stream is not None and hasattr(_stream, "reconfigure"):
         _stream.reconfigure(encoding="utf-8")
 
-ALLOWED = {"observe", "search_public", "read_page", "send_message", "read_inbox", "wait_until", "submit_answer"}
+ALLOWED = {"observe", "web_search", "visit_page", "send_message", "call", "read_inbox", "wait_until", "submit_answer"}
 
 
 def main(argv=None):
@@ -100,7 +100,7 @@ def main(argv=None):
             tool = request["tool"]
             if tool not in ALLOWED:
                 raise PermissionError("Tool not exposed to evaluated agents")
-            if not args.quiet and args.simulator == "llm" and tool in {"send_message", "wait_until"}:
+            if not args.quiet and args.simulator == "llm" and tool in {"send_message", "call", "wait_until"}:
                 print(f"[DaySpanBench] 正在处理 {tool}；如触发人物交互，将等待模拟器API返回。", file=sys.stderr, flush=True)
             result = getattr(api, tool)(**request.get("arguments", {}))
             response = {"id": request.get("id"), "result": result}

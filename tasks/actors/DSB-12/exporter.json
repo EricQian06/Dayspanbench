@@ -8,10 +8,11 @@
     "description": "首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "heyou@bench.example"
+    },
     "knowledge": [
       "batch_trace",
       "declaration",

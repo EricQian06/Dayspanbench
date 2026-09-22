@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def load(n):
-    return json.loads((ROOT / f"tasks/private/DSB-{n:02}.json").read_text())
+    return json.loads((ROOT / f"tasks/private/DSB-{n:02}.json").read_text(encoding="utf-8"))
 
 
 class OutcomeScoringTests(unittest.TestCase):
@@ -55,9 +55,6 @@ class OutcomeScoringTests(unittest.TestCase):
         task = load(8)
         actions = task["reference_actions"]
         actions[1], actions[2] = actions[2], actions[1]
-        for action in actions:
-            if action["op"] == "send":
-                action["channel"] = "chat"
         env, answer, result = run_reference(task)
         self.assertTrue(result["complete"])
         answer["claims"].reverse()

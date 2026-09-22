@@ -8,9 +8,11 @@
     "description": "周末才能接触读取器；测试只对CAM-402有效。",
     "calendar": "weekend",
     "channels": [
-      "chat",
       "email"
     ],
+    "contact_details": {
+      "email": "kewen@bench.example"
+    },
     "knowledge": [
       "actual",
       "hotshoe"

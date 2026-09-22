@@ -9,9 +9,12 @@
     "calendar": "office",
     "channels": [
       "email",
-      "chat",
-      "ticket"
+      "phone"
     ],
+    "contact_details": {
+      "email": "xieyin@bench.example",
+      "phone": "+86 13800000007"
+    },
     "knowledge": [],
     "tools": {
       "service.main.1.lookup": {

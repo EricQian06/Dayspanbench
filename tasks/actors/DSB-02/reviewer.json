@@ -8,10 +8,11 @@
     "description": "每周五14点集中复核材料；错过批次进入下一周。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "dingyue@bench.example"
+    },
     "knowledge": [
       "pet"
     ],

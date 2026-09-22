@@ -8,10 +8,11 @@
     "description": "初次报价有有效期；质检完成后若已过期，需重新确认。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "luocen@bench.example"
+    },
     "knowledge": [
       "quote_new",
       "quote_old"

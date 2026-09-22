@@ -8,10 +8,11 @@
     "description": "收到房东转交后提交周五审核；11月11日才开放新一期货梯表，之后核实搬入时间。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "xuqiao@bench.example"
+    },
     "knowledge": [
       "moving"
     ],

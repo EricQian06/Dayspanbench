@@ -8,10 +8,11 @@
     "description": "11月6日至9日出差，11月10日恢复处理；只核准本课程材料。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "meirui@bench.example"
+    },
     "knowledge": [
       "syllabus"
     ],

@@ -34,6 +34,10 @@ class Calendar:
             for a, b in windows
         ]
 
+    def is_open(self, now: datetime) -> bool:
+        day = now.astimezone(self.zone).date()
+        return any(a <= now < b for a, b in self.intervals(day))
+
     def next_open(self, now: datetime) -> datetime:
         day = now.astimezone(self.zone).date()
         for _ in range(370):

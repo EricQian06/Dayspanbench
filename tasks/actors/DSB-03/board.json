@@ -8,10 +8,11 @@
     "description": "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审。",
     "calendar": "office",
     "channels": [
-      "email",
-      "chat",
-      "ticket"
+      "email"
     ],
+    "contact_details": {
+      "email": "chengxin@bench.example"
+    },
     "knowledge": [
       "credits",
       "effective",

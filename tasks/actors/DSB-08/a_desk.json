@@ -9,9 +9,12 @@
     "calendar": "daily",
     "channels": [
       "email",
-      "chat",
-      "ticket"
+      "phone"
     ],
+    "contact_details": {
+      "email": "lanxin@bench.example",
+      "phone": "+86 13800000005"
+    },
     "knowledge": [],
     "tools": {
       "a_desk.main.1.delegate": {
