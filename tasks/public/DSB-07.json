@@ -13,7 +13,8 @@
       "title": "北汀档案馆简介",
       "text": "档案馆提供档案数字化与授权服务。该图像处于权利继受核验期，境外联络方预计2027年5月28日集中核对文件。用途获确认后需申请人再次联系档案馆核实数字化交付，实体许可不自动包括网络用途。",
       "contacts": [],
-      "snippet": "档案使用授权与数字化交付流程说明。"
+      "snippet": "档案使用授权与数字化交付流程说明。",
+      "url": "https://beiting.bench/intro"
     },
     {
       "id": "archive",
@@ -22,14 +23,16 @@
       "contacts": [
         "archive"
       ],
-      "snippet": "档案馆接待对接说明。"
+      "snippet": "档案馆接待对接说明。",
+      "url": "https://beiting.bench/contact"
     },
     {
       "id": "archive-entry",
       "title": "档案使用申请入口",
       "text": "申请需提供档案编号与用途说明；取得权利确认后须再次申请数字化交付。本页面仅说明流程，不能在线取得许可。",
       "contacts": [],
-      "snippet": "档案使用申请材料说明；不支持在线取得许可。"
+      "snippet": "档案使用申请材料说明；不支持在线取得许可。",
+      "url": "https://beiting.bench/entry"
     }
   ],
   "message_budget": 16,

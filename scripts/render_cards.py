@@ -79,6 +79,8 @@ def render():
                   "## 已验证参考时间线", "", "时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。", "",
                   "| 开始 | 完成/预计完成 | 人物 | 阶段 |", "|---|---|---|---|"]
         actor_map = {a["id"]: a for a in task["actors"]}
+        # Messages are addressed by sender mailbox; resolve back to the actor.
+        by_email = {a["contact_details"]["email"]: a for a in task["actors"]}
         for event in run["private_audit"]:
             if event["kind"] == "scheduled":
                 name = actor_map[event["actor"]]["name"]
@@ -86,7 +88,7 @@ def render():
                 lines.append(f"| {local(event['start_at'])} | {local(event['due_at'])} | {name} | {phase} |")
         lines += ["", "Agent收到的实质回复：", ""]
         for message in run["agent_messages"]:
-            lines.append(f"- {local(message['at'])}：{actor_map[message['from']]['name']}，`{message['status']}`，{len(message['evidence'])}条文本证据。")
+            lines.append(f"- {local(message['at'])}：{by_email[message['from']]['name']}，`{message['status']}`，{len(message['evidence'])}条文本证据。")
         if run["pending_cases"]:
             lines += ["", "截止时仍在等待：", ""]
             lines += [f"- {c['actor']} / {c['id']}：`{c['state']}`。" for c in run["pending_cases"]]

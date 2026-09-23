@@ -75,45 +75,27 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 76.47,
-    "calendar_days": 3.186111,
+    "calendar_hours": 99.73,
+    "calendar_days": 4.155556,
     "agent_messages": 3,
     "contacted_actors": 3,
-    "as_of": "2026-11-09T06:28:00+00:00"
+    "as_of": "2026-11-10T05:44:00+00:00"
   },
   "agent_messages": [
     {
       "id": "MSG-0001",
-      "at": "2026-11-06T03:39:00+00:00",
-      "from": "reception",
+      "at": "2026-11-06T07:50:00+00:00",
+      "from": "chenzhi@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是禾岸会馆前台·陈芷。您咨询的事项已经按流程处理完毕。此外，相关事项建议您联系禾岸会馆销售·姚岚、禾岸会馆运营·赵航，他们可以继续为您处理。如有其他问题，欢迎随时来信。",
-      "evidence": [],
-      "contacts": [
-        {
-          "id": "sales",
-          "name": "禾岸会馆销售·姚岚",
-          "role": "费用与取消条款",
-          "contact_details": {
-            "email": "yaolan@bench.example"
-          }
-        },
-        {
-          "id": "operations",
-          "name": "禾岸会馆运营·赵航",
-          "role": "档期核对和设备协调",
-          "contact_details": {
-            "email": "zhaohang@bench.example"
-          }
-        }
-      ]
+      "text": "您好，我是禾岸会馆前台·陈芷。您咨询的事项已经按流程处理完毕。此外，相关事项建议您联系禾岸会馆销售·姚岚（yaolan@bench.example）、禾岸会馆运营·赵航（zhaohang@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
+      "evidence": []
     },
     {
       "id": "MSG-0002",
-      "at": "2026-11-09T01:36:00+00:00",
-      "from": "sales",
+      "at": "2026-11-09T08:50:00+00:00",
+      "from": "yaolan@bench.example",
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
@@ -122,7 +104,7 @@
         {
           "id": "EV-0002",
           "issuer": "sales",
-          "issued_at": "2026-11-06T08:31:00+00:00",
+          "issued_at": "2026-11-09T07:45:00+00:00",
           "text": "11月13日18—21点，80人活动：场租9000元、服务费1500元，总价10500元。",
           "value": 10500,
           "valid_until": null,
@@ -131,7 +113,7 @@
         {
           "id": "EV-0003",
           "issuer": "sales",
-          "issued_at": "2026-11-06T08:31:00+00:00",
+          "issued_at": "2026-11-09T07:45:00+00:00",
           "text": "活动前72小时内取消收取总价的50%。",
           "value": "72小时内取消收取50%",
           "valid_until": null,
@@ -140,7 +122,7 @@
         {
           "id": "EV-0004",
           "issuer": "sales",
-          "issued_at": "2026-11-09T01:21:00+00:00",
+          "issued_at": "2026-11-09T08:35:00+00:00",
           "text": "11月13日18—21点，80人活动：场租9000元、服务费1500元，总价10500元。",
           "value": 10500,
           "valid_until": null,
@@ -149,19 +131,18 @@
         {
           "id": "EV-0005",
           "issuer": "sales",
-          "issued_at": "2026-11-09T01:21:00+00:00",
+          "issued_at": "2026-11-09T08:35:00+00:00",
           "text": "活动前72小时内取消收取总价的50%。",
           "value": "72小时内取消收取50%",
           "valid_until": null,
           "kind": "document"
         }
-      ],
-      "contacts": []
+      ]
     },
     {
       "id": "MSG-0003",
-      "at": "2026-11-09T06:28:00+00:00",
-      "from": "operations",
+      "at": "2026-11-10T05:44:00+00:00",
+      "from": "zhaohang@bench.example",
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
@@ -170,7 +151,7 @@
         {
           "id": "EV-0001",
           "issuer": "operations",
-          "issued_at": "2026-11-06T06:23:00+00:00",
+          "issued_at": "2026-11-09T05:49:00+00:00",
           "text": "11月13日18—21点场地有空档，80人容量可满足。",
           "value": true,
           "valid_until": null,
@@ -179,7 +160,7 @@
         {
           "id": "EV-0006",
           "issuer": "technician",
-          "issued_at": "2026-11-09T03:57:00+00:00",
+          "issued_at": "2026-11-10T03:23:00+00:00",
           "text": "投影设备11月13日全天维修，场地方也不能提供替代投影设备。",
           "value": false,
           "valid_until": null,
@@ -188,14 +169,13 @@
         {
           "id": "EV-0007",
           "issuer": "technician",
-          "issued_at": "2026-11-09T05:29:00+00:00",
+          "issued_at": "2026-11-10T03:55:00+00:00",
           "text": "投影设备11月13日全天维修，场地方也不能提供替代投影设备。",
           "value": false,
           "valid_until": null,
           "kind": "document"
         }
-      ],
-      "contacts": []
+      ]
     }
   ],
   "private_audit": [
@@ -220,7 +200,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-06T02:37:00+00:00",
+      "at": "2026-11-06T06:48:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "reception",
@@ -228,17 +208,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T02:37:00+00:00",
+      "at": "2026-11-06T06:48:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "reception",
       "step": "main_1",
-      "start_at": "2026-11-06T02:37:00+00:00",
-      "due_at": "2026-11-06T03:24:00+00:00",
+      "start_at": "2026-11-06T06:48:00+00:00",
+      "due_at": "2026-11-06T07:35:00+00:00",
       "tool": "reception.main.1.refer"
     },
     {
-      "at": "2026-11-06T02:37:00+00:00",
+      "at": "2026-11-06T06:48:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "reception",
@@ -246,7 +226,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-06T03:24:00+00:00",
+      "at": "2026-11-06T07:35:00+00:00",
       "kind": "tool_call",
       "actor": "reception",
       "case_id": "CASE-0001",
@@ -254,7 +234,7 @@
       "tool_kind": "refer"
     },
     {
-      "at": "2026-11-06T03:24:00+00:00",
+      "at": "2026-11-06T07:35:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "reception",
@@ -262,17 +242,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T03:24:00+00:00",
+      "at": "2026-11-06T07:35:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "reception",
       "step": "main_2",
-      "start_at": "2026-11-06T03:24:00+00:00",
-      "due_at": "2026-11-06T03:39:00+00:00",
+      "start_at": "2026-11-06T07:35:00+00:00",
+      "due_at": "2026-11-06T07:50:00+00:00",
       "tool": "reception.main.2.reply"
     },
     {
-      "at": "2026-11-06T03:24:00+00:00",
+      "at": "2026-11-06T07:35:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "reception",
@@ -280,7 +260,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-06T03:39:00+00:00",
+      "at": "2026-11-06T07:50:00+00:00",
       "kind": "tool_call",
       "actor": "reception",
       "case_id": "CASE-0001",
@@ -288,7 +268,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-06T03:39:00+00:00",
+      "at": "2026-11-06T07:50:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "reception",
@@ -296,14 +276,14 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-06T03:39:00+00:00",
+      "at": "2026-11-06T07:50:00+00:00",
       "kind": "delivery",
       "message_id": "MSG-0001",
       "case_id": "CASE-0001",
       "status": "reply"
     },
     {
-      "at": "2026-11-06T03:39:00+00:00",
+      "at": "2026-11-06T07:50:00+00:00",
       "kind": "agent_send",
       "recipient": "yaolan@bench.example",
       "text": "请发报价和取消条款",
@@ -315,7 +295,7 @@
       "channel": "email"
     },
     {
-      "at": "2026-11-06T03:39:00+00:00",
+      "at": "2026-11-06T07:50:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0002",
       "actor": "sales",
@@ -323,7 +303,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-06T03:39:00+00:00",
+      "at": "2026-11-06T07:50:00+00:00",
       "kind": "agent_send",
       "recipient": "zhaohang@bench.example",
       "text": "请核实档期和投影",
@@ -335,7 +315,7 @@
       "channel": "email"
     },
     {
-      "at": "2026-11-06T03:39:00+00:00",
+      "at": "2026-11-06T07:50:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0003",
       "actor": "operations",
@@ -343,7 +323,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-06T05:13:00+00:00",
+      "at": "2026-11-09T03:27:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "sales",
@@ -351,17 +331,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T05:13:00+00:00",
+      "at": "2026-11-09T03:27:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "sales",
       "step": "main_1",
-      "start_at": "2026-11-06T05:13:00+00:00",
-      "due_at": "2026-11-06T08:31:00+00:00",
+      "start_at": "2026-11-09T03:27:00+00:00",
+      "due_at": "2026-11-09T07:45:00+00:00",
       "tool": "sales.main.1.lookup"
     },
     {
-      "at": "2026-11-06T05:13:00+00:00",
+      "at": "2026-11-09T03:27:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "sales",
@@ -369,7 +349,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-06T05:17:00+00:00",
+      "at": "2026-11-09T03:43:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "operations",
@@ -377,17 +357,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T05:17:00+00:00",
+      "at": "2026-11-09T03:43:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "operations",
       "step": "main_1",
-      "start_at": "2026-11-06T05:17:00+00:00",
-      "due_at": "2026-11-06T06:23:00+00:00",
+      "start_at": "2026-11-09T03:43:00+00:00",
+      "due_at": "2026-11-09T05:49:00+00:00",
       "tool": "operations.main.1.lookup"
     },
     {
-      "at": "2026-11-06T05:17:00+00:00",
+      "at": "2026-11-09T03:43:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "operations",
@@ -395,7 +375,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-06T06:23:00+00:00",
+      "at": "2026-11-09T05:49:00+00:00",
       "kind": "tool_call",
       "actor": "operations",
       "case_id": "CASE-0003",
@@ -403,7 +383,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-06T06:23:00+00:00",
+      "at": "2026-11-09T05:49:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "operations",
@@ -411,17 +391,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T06:23:00+00:00",
+      "at": "2026-11-09T05:49:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "operations",
       "step": "main_2",
-      "start_at": "2026-11-06T06:23:00+00:00",
-      "due_at": "2026-11-06T07:36:00+00:00",
+      "start_at": "2026-11-09T05:49:00+00:00",
+      "due_at": "2026-11-09T07:02:00+00:00",
       "tool": "operations.main.2.delegate"
     },
     {
-      "at": "2026-11-06T06:23:00+00:00",
+      "at": "2026-11-09T05:49:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "operations",
@@ -429,7 +409,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-06T07:36:00+00:00",
+      "at": "2026-11-09T07:02:00+00:00",
       "kind": "tool_call",
       "actor": "operations",
       "case_id": "CASE-0003",
@@ -437,7 +417,7 @@
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-06T07:36:00+00:00",
+      "at": "2026-11-09T07:02:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "operations",
@@ -445,7 +425,7 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-06T07:36:00+00:00",
+      "at": "2026-11-09T07:02:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0004",
       "actor": "technician",
@@ -453,7 +433,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-06T07:36:00+00:00",
+      "at": "2026-11-09T07:02:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "technician",
@@ -461,17 +441,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T07:36:00+00:00",
+      "at": "2026-11-09T07:02:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0004",
       "actor": "technician",
       "step": "main_1",
-      "start_at": "2026-11-06T07:36:00+00:00",
-      "due_at": "2026-11-09T03:57:00+00:00",
+      "start_at": "2026-11-09T07:02:00+00:00",
+      "due_at": "2026-11-10T03:23:00+00:00",
       "tool": "technician.main.1.lookup"
     },
     {
-      "at": "2026-11-06T07:36:00+00:00",
+      "at": "2026-11-09T07:02:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "technician",
@@ -479,7 +459,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-06T08:31:00+00:00",
+      "at": "2026-11-09T07:45:00+00:00",
       "kind": "tool_call",
       "actor": "sales",
       "case_id": "CASE-0002",
@@ -487,7 +467,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-06T08:31:00+00:00",
+      "at": "2026-11-09T07:45:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "sales",
@@ -495,17 +475,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T08:31:00+00:00",
+      "at": "2026-11-09T07:45:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "sales",
       "step": "main_2",
-      "start_at": "2026-11-06T08:31:00+00:00",
-      "due_at": "2026-11-09T01:21:00+00:00",
+      "start_at": "2026-11-09T07:45:00+00:00",
+      "due_at": "2026-11-09T08:35:00+00:00",
       "tool": "sales.main.2.document"
     },
     {
-      "at": "2026-11-06T08:31:00+00:00",
+      "at": "2026-11-09T07:45:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "sales",
@@ -513,7 +493,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T01:21:00+00:00",
+      "at": "2026-11-09T08:35:00+00:00",
       "kind": "tool_call",
       "actor": "sales",
       "case_id": "CASE-0002",
@@ -521,7 +501,7 @@
       "tool_kind": "document"
     },
     {
-      "at": "2026-11-09T01:21:00+00:00",
+      "at": "2026-11-09T08:35:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "sales",
@@ -529,17 +509,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T01:21:00+00:00",
+      "at": "2026-11-09T08:35:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "sales",
       "step": "main_3",
-      "start_at": "2026-11-09T01:21:00+00:00",
-      "due_at": "2026-11-09T01:36:00+00:00",
+      "start_at": "2026-11-09T08:35:00+00:00",
+      "due_at": "2026-11-09T08:50:00+00:00",
       "tool": "sales.main.3.reply"
     },
     {
-      "at": "2026-11-09T01:21:00+00:00",
+      "at": "2026-11-09T08:35:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "sales",
@@ -547,7 +527,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T01:36:00+00:00",
+      "at": "2026-11-09T08:50:00+00:00",
       "kind": "tool_call",
       "actor": "sales",
       "case_id": "CASE-0002",
@@ -555,7 +535,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-09T01:36:00+00:00",
+      "at": "2026-11-09T08:50:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "sales",
@@ -563,14 +543,14 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-09T01:36:00+00:00",
+      "at": "2026-11-09T08:50:00+00:00",
       "kind": "delivery",
       "message_id": "MSG-0002",
       "case_id": "CASE-0002",
       "status": "reply"
     },
     {
-      "at": "2026-11-09T03:57:00+00:00",
+      "at": "2026-11-10T03:23:00+00:00",
       "kind": "tool_call",
       "actor": "technician",
       "case_id": "CASE-0004",
@@ -578,7 +558,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-09T03:57:00+00:00",
+      "at": "2026-11-10T03:23:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "technician",
@@ -586,17 +566,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T03:57:00+00:00",
+      "at": "2026-11-10T03:23:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0004",
       "actor": "technician",
       "step": "main_2",
-      "start_at": "2026-11-09T03:57:00+00:00",
-      "due_at": "2026-11-09T05:29:00+00:00",
+      "start_at": "2026-11-10T03:23:00+00:00",
+      "due_at": "2026-11-10T03:55:00+00:00",
       "tool": "technician.main.2.document"
     },
     {
-      "at": "2026-11-09T03:57:00+00:00",
+      "at": "2026-11-10T03:23:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "technician",
@@ -604,7 +584,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T05:29:00+00:00",
+      "at": "2026-11-10T03:55:00+00:00",
       "kind": "tool_call",
       "actor": "technician",
       "case_id": "CASE-0004",
@@ -612,7 +592,7 @@
       "tool_kind": "document"
     },
     {
-      "at": "2026-11-09T05:29:00+00:00",
+      "at": "2026-11-10T03:55:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "technician",
@@ -620,17 +600,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T05:29:00+00:00",
+      "at": "2026-11-10T03:55:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0004",
       "actor": "technician",
       "step": "main_3",
-      "start_at": "2026-11-09T05:29:00+00:00",
-      "due_at": "2026-11-09T05:44:00+00:00",
+      "start_at": "2026-11-10T03:55:00+00:00",
+      "due_at": "2026-11-10T04:10:00+00:00",
       "tool": "technician.main.3.reply"
     },
     {
-      "at": "2026-11-09T05:29:00+00:00",
+      "at": "2026-11-10T03:55:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "technician",
@@ -638,7 +618,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T05:44:00+00:00",
+      "at": "2026-11-10T04:10:00+00:00",
       "kind": "tool_call",
       "actor": "technician",
       "case_id": "CASE-0004",
@@ -646,7 +626,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-09T05:44:00+00:00",
+      "at": "2026-11-10T04:10:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "technician",
@@ -654,13 +634,13 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-09T05:44:00+00:00",
+      "at": "2026-11-10T04:10:00+00:00",
       "kind": "handoff_return",
       "case_id": "CASE-0004",
       "parent": "CASE-0003"
     },
     {
-      "at": "2026-11-09T05:44:00+00:00",
+      "at": "2026-11-10T04:10:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "operations",
@@ -668,17 +648,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T05:44:00+00:00",
+      "at": "2026-11-10T04:10:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "operations",
       "step": "main_3",
-      "start_at": "2026-11-09T05:44:00+00:00",
-      "due_at": "2026-11-09T06:28:00+00:00",
+      "start_at": "2026-11-10T05:00:00+00:00",
+      "due_at": "2026-11-10T05:44:00+00:00",
       "tool": "operations.main.3.reply"
     },
     {
-      "at": "2026-11-09T05:44:00+00:00",
+      "at": "2026-11-10T05:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "operations",
@@ -686,7 +666,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T06:28:00+00:00",
+      "at": "2026-11-10T05:44:00+00:00",
       "kind": "tool_call",
       "actor": "operations",
       "case_id": "CASE-0003",
@@ -694,7 +674,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-09T06:28:00+00:00",
+      "at": "2026-11-10T05:44:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "operations",
@@ -702,7 +682,7 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-09T06:28:00+00:00",
+      "at": "2026-11-10T05:44:00+00:00",
       "kind": "delivery",
       "message_id": "MSG-0003",
       "case_id": "CASE-0003",

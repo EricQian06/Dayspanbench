@@ -11,7 +11,10 @@ def run_reference(task, *, recipient=None):
     labels = {}
     for action in task["reference_actions"]:
         if action["op"] == "visit_page":
-            api.visit_page(action["page"])
+            # Reference actions keep the internal page id; resolve it to the
+            # public URL the agent-facing tool requires.
+            page = next(p for p in task["public"]["pages"] if p["id"] == action["page"])
+            api.visit_page(page["url"])
         elif action["op"] == "advance":
             api.wait_until(action["at"], wake_on_message=False)
         elif action["op"] == "send":

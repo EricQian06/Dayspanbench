@@ -15,7 +15,8 @@
       "title": "青栎房源简介",
       "text": "青栎公寓在租房源。房东通常19—21点回复。宠物需物业周五复核；11月11日开放新一期货梯表，才能确认下半月搬入时段。",
       "contacts": [],
-      "snippet": "青栎在租房源概况与搬入安排说明。"
+      "snippet": "青栎在租房源概况与搬入安排说明。",
+      "url": "https://qingli.bench/intro"
     },
     {
       "id": "listing",
@@ -24,14 +25,16 @@
       "contacts": [
         "landlord"
       ],
-      "snippet": "房东与物业的对接说明。"
+      "snippet": "房东与物业的对接说明。",
+      "url": "https://qingli.bench/contact"
     },
     {
       "id": "listing-entry",
       "title": "入住办理入口",
       "text": "入住需先确认宠物规则与货梯时段；本页面仅说明流程，不构成租约，也不能在线签约。",
       "contacts": [],
-      "snippet": "入住条件说明；不支持在线签约。"
+      "snippet": "入住条件说明；不支持在线签约。",
+      "url": "https://qingli.bench/entry"
     }
   ],
   "message_budget": 16,

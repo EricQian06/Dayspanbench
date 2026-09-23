@@ -62,10 +62,11 @@ class CharacterSimulatorTests(unittest.TestCase):
         client = FixtureClient(route=route)
         mapping = {a["id"]: LLMSimulator(client, a["id"], validation_retries=2) for a in task["actors"]}
         env = Environment(task, mapping)
-        env.tools().visit_page("faculty")
+        env.tools().visit_page("https://chengchuan.bench/contact")
         result = env.tools().send_email(mailbox(task, "records"), "请咨询学分转换。", {"course_code": "CS204"})
         self.assertEqual(env.agent_sends, 1)
-        env.advance(parse("2026-11-05T18:00:00+08:00"))
+        while env.events and env.cases[result["case_id"]]["state"] == "new":
+            env.advance(env.events[0][0])
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
         self.assertEqual(len(attempts), 2)
         self.assertIn("validation_feedback", attempts[1])
@@ -99,7 +100,7 @@ class CharacterSimulatorTests(unittest.TestCase):
                 env = Environment(task, recipients(task, client))
                 api = env.tools()
                 if number == 1:
-                    api.visit_page("venue")
+                    api.visit_page("https://heanhuiguan.bench/contact")
                 result = api.send_email(mailbox(task, actor), "请提供办理信息。", fields)
                 self.assertEqual(result["status"], "received")
                 self.assertFalse(env.simulator_failure)
@@ -138,13 +139,16 @@ class CharacterSimulatorTests(unittest.TestCase):
         client = FixtureClient(route=route)
         env = Environment(task, recipients(task, client))
         api = env.tools()
-        api.visit_page("service")
+        api.visit_page("https://jiguang.bench/contact")
         first = api.send_email(mailbox(task, "support"), "请咨询保修")
-        env.advance(parse("2026-11-04T17:00:00+08:00"))
+        while env.events and env.cases[first["case_id"]]["state"] == "new":
+            env.advance(env.events[0][0])
         self.assertEqual(env.cases[first["case_id"]]["state"], "needs_information")
         api.send_email(mailbox(task, "support"), "序列号SN-A731，收据R-731。", case_id=first["case_id"])
-        # Advance past the deferred admission but before the first step completes.
-        env.advance(parse("2026-11-05T10:00:00+08:00"))
+        # Advance past the deferred re-admission; the first step is now queued
+        # or running, with the extracted fields recorded on the case.
+        while env.events and env.cases[first["case_id"]]["state"] == "needs_information":
+            env.advance(env.events[0][0])
         self.assertIn(env.cases[first["case_id"]]["state"], {"queued", "working"})
         self.assertEqual(env.cases[first["case_id"]]["fields"], {"serial": "SN-A731", "receipt": "R-731"})
         self.assertTrue(any(h["role"] == "recipient" for h in client.calls[-1]["view"]["history"]))
@@ -154,7 +158,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
             {"key": "serial", "value_json": '"SN-A731"', "source_quote": "SN-A731"}]})
         env = Environment(task, recipients(task, client))
-        env.tools().visit_page("service")
+        env.tools().visit_page("https://jiguang.bench/contact")
         with self.assertRaises(SimulatorError):
             env.tools().send_email(mailbox(task, "support"), "请咨询保修")
         self.assertTrue(env.finished)
@@ -167,7 +171,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
             {"key": "quantity", "value_json": "500", "source_quote": "500"}]})
         env = Environment(task, recipients(task, client))
-        env.tools().visit_page("supplier")
+        env.tools().visit_page("https://lengchuan.bench/contact")
         with self.assertRaises(SimulatorError):
             env.tools().send_email(mailbox(task, "sales"), "我要1500件，请询价")
 
@@ -175,7 +179,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         task, client = load(8), FixtureClient()
         env = Environment(task, recipients(task, client))
         api = env.tools()
-        api.visit_page("hotels")
+        api.visit_page("https://wuzhangzhusu.bench/contact")
         api.send_email(mailbox(task, "a_desk"), "A_ONLY_SECRET 无障碍尺寸", task["public"]["user_fields"])
         api.send_email(mailbox(task, "b_desk"), "无障碍房", task["public"]["user_fields"])
         b_views = [c["view"] for c in client.calls if c["actor_id"] == "b_desk"]
@@ -185,7 +189,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         task = load(1)
         client = FixtureClient(reply=lambda v: {"tone": "polite", "evidence_order": [], "text": "所有目标已完成"})
         env = Environment(task, recipients(task, client))
-        env.tools().visit_page("venue")
+        env.tools().visit_page("https://heanhuiguan.bench/contact")
         env.tools().send_email(mailbox(task, "reception"), "活动联系入口")
         with self.assertRaises(SimulatorError):
             env.tools().wait_until(task["deadline_at"])
@@ -198,9 +202,10 @@ class CharacterSimulatorTests(unittest.TestCase):
                   {"key": "syllabus_version", "value_json": '"CS204-2026-v2-signed"', "source_quote": "CS204-2026-v2-signed"}]
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": fields})
         env = Environment(task, recipients(task, client))
-        env.tools().visit_page("faculty")
+        env.tools().visit_page("https://chengchuan.bench/contact")
         result = env.tools().send_email(mailbox(task, "records"), "课程CS204，大纲CS204-2026-v2-signed，咨询学分转换。")
-        env.advance(parse("2026-11-05T18:00:00+08:00"))
+        while env.events:
+            env.advance(env.events[0][0])
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
         self.assertFalse(env.events)
 
@@ -371,7 +376,8 @@ class ServerIntegrationTests(unittest.TestCase):
         requests = []
         for action in task["reference_actions"]:
             if action["op"] == "visit_page":
-                requests.append({"tool": "visit_page", "arguments": {"page_id": action["page"]}})
+                url = next(p["url"] for p in task["public"]["pages"] if p["id"] == action["page"])
+                requests.append({"tool": "visit_page", "arguments": {"url": url}})
             elif action["op"] == "send":
                 requests.append({"tool": "send_email", "arguments": {"recipient": mailbox(task, action["to"]), "text": action["text"], "fields": task["public"]["user_fields"]}})
             elif action["op"] == "wait_for":
@@ -388,7 +394,7 @@ class ServerIntegrationTests(unittest.TestCase):
             self.assertTrue((Path(folder) / "private_audit.jsonl").is_file())
 
     def test_llm_cli_environment_error_is_not_a_model_score(self):
-        request = (json.dumps({"id": 1, "tool": "visit_page", "arguments": {"page_id": "venue"}}) + "\n"
+        request = (json.dumps({"id": 1, "tool": "visit_page", "arguments": {"url": "https://heanhuiguan.bench/contact"}}) + "\n"
                    + json.dumps({"id": 2, "tool": "send_email", "arguments": {"recipient": mailbox(load(1), "reception"), "text": "活动"}}) + "\n")
         with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, {"DSB_SIMULATOR_API_KEY": "test-secret"}), patch("scripts.serve.StructuredClient") as factory, patch("sys.stdin", io.StringIO(request)), patch("sys.stdout", new_callable=io.StringIO) as output:
             client = factory.return_value

@@ -44,7 +44,8 @@ class EvaluationTests(unittest.TestCase):
         actions = []
         for action in spec["reference_actions"]:
             if action["op"] == "visit_page":
-                actions.append({"tool": "visit_page", "arguments": {"page_id": action["page"]}})
+                url = next(p["url"] for p in spec["public"]["pages"] if p["id"] == action["page"])
+                actions.append({"tool": "visit_page", "arguments": {"url": url}})
             elif action["op"] == "send":
                 actions.append({"tool": "send_email", "arguments": {"recipient": mailbox(spec, action["to"]), "text": action["text"], "fields": spec["public"]["user_fields"]}})
             elif action["op"] == "wait_for":
@@ -90,7 +91,7 @@ class EvaluationTests(unittest.TestCase):
             config = LLMConfig("broken")
             def complete(self, **kwargs):
                 raise SimulatorError("Simulator HTTP failure (400)")
-        agent = ScriptedAgent([{"tool": "visit_page", "arguments": {"page_id": "venue"}},
+        agent = ScriptedAgent([{"tool": "visit_page", "arguments": {"url": "https://heanhuiguan.bench/contact"}},
                                {"tool": "send_email", "arguments": {"recipient": mailbox(task(), "reception"), "text": "活动"}}])
         with tempfile.TemporaryDirectory() as folder:
             result = run_episode(task(), agent, TOOLS, Path(folder) / "run", simulator_client=BrokenSimulator())

@@ -82,7 +82,7 @@
     {
       "id": "MSG-0001",
       "at": "2026-11-17T08:56:00+00:00",
-      "from": "support",
+      "from": "mengzhu@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
@@ -91,7 +91,7 @@
         {
           "id": "EV-0001",
           "issuer": "support",
-          "issued_at": "2026-11-05T01:54:00+00:00",
+          "issued_at": "2026-11-05T03:11:00+00:00",
           "text": "设备SN-A731仍在本次合成保修条款覆盖范围内。",
           "value": true,
           "valid_until": null,
@@ -124,8 +124,7 @@
           "valid_until": null,
           "kind": "fact"
         }
-      ],
-      "contacts": []
+      ]
     }
   ],
   "private_audit": [
@@ -161,7 +160,7 @@
       "channel": "email"
     },
     {
-      "at": "2026-11-04T08:37:00+00:00",
+      "at": "2026-11-05T01:54:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "support",
@@ -169,17 +168,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-04T08:37:00+00:00",
+      "at": "2026-11-05T01:54:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "support",
       "step": "main_1",
-      "start_at": "2026-11-04T08:37:00+00:00",
-      "due_at": "2026-11-05T01:54:00+00:00",
+      "start_at": "2026-11-05T01:54:00+00:00",
+      "due_at": "2026-11-05T03:11:00+00:00",
       "tool": "support.main.1.lookup"
     },
     {
-      "at": "2026-11-04T08:37:00+00:00",
+      "at": "2026-11-05T01:54:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "support",
@@ -187,7 +186,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-05T01:54:00+00:00",
+      "at": "2026-11-05T03:11:00+00:00",
       "kind": "tool_call",
       "actor": "support",
       "case_id": "CASE-0001",
@@ -195,7 +194,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-05T01:54:00+00:00",
+      "at": "2026-11-05T03:11:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "support",
@@ -203,17 +202,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-05T01:54:00+00:00",
+      "at": "2026-11-05T03:11:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "support",
       "step": "main_2",
-      "start_at": "2026-11-05T01:54:00+00:00",
-      "due_at": "2026-11-05T03:12:00+00:00",
+      "start_at": "2026-11-05T03:11:00+00:00",
+      "due_at": "2026-11-05T05:29:00+00:00",
       "tool": "support.main.2.delegate"
     },
     {
-      "at": "2026-11-05T01:54:00+00:00",
+      "at": "2026-11-05T03:11:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "support",
@@ -221,7 +220,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-05T03:12:00+00:00",
+      "at": "2026-11-05T05:29:00+00:00",
       "kind": "tool_call",
       "actor": "support",
       "case_id": "CASE-0001",
@@ -229,7 +228,7 @@
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-05T03:12:00+00:00",
+      "at": "2026-11-05T05:29:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "support",
@@ -237,7 +236,7 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-05T03:12:00+00:00",
+      "at": "2026-11-05T05:29:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0002",
       "actor": "engineer",
@@ -245,7 +244,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-05T03:12:00+00:00",
+      "at": "2026-11-05T05:29:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "engineer",
@@ -253,7 +252,7 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-05T03:12:00+00:00",
+      "at": "2026-11-05T05:29:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "engineer",

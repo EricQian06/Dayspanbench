@@ -85,13 +85,29 @@ def validate_task(task):
     for spec in task["calendars"].values():
         Calendar(spec).next_open(parse(task["start_at"]))
     check(set(task["public"]["initial_contacts"]) <= set(actors), "Unknown initial contact")
+    delay = task.get("reply_delay")
+    check(isinstance(delay, list) and len(delay) == 2
+          and all(isinstance(m, int) and m > 0 for m in delay) and delay[0] <= delay[1],
+          "reply_delay must be two ascending positive business minutes [min, max]")
+    # Every actor that some workflow refers to, or that the agent may need to
+    # follow up on, must be reachable by mail: referral prose carries mailboxes.
+    for actor in actors.values():
+        for tool in actor["tools"].values():
+            if tool["kind"] == "refer":
+                check(all("email" in actors[c]["contact_details"] for c in tool["contacts"]),
+                      f"{actor['id']}: referral target without a mailbox")
     phones = [a["contact_details"]["phone"] for a in task["actors"] if "phone" in a["contact_details"]]
     check(len(phones) == len(set(phones)), "Duplicate phone numbers")
     emails = [a["contact_details"]["email"] for a in task["actors"]]
     check(len(emails) == len(set(emails)), "Duplicate email addresses")
+    urls = []
     for page in task["public"]["pages"]:
         check(set(page["contacts"]) <= set(actors), "Unknown directory contact")
         check(bool(page.get("snippet")), f"Page {page['id']}: missing search snippet")
+        check(bool(page.get("url", "")) and page["url"].startswith("https://") and ".bench/" in page["url"],
+              f"Page {page['id']}: missing or malformed URL")
+        urls.append(page["url"])
+    check(len(urls) == len(set(urls)), "Duplicate page URLs")
     check(len(set(g["key"] for g in task["goals"])) == len(task["goals"]), "Duplicate goal keys")
     for goal in task["goals"]:
         if goal.get("status") == "unconfirmed":

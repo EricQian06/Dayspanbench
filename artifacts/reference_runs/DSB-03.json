@@ -85,19 +85,18 @@
   "agent_messages": [
     {
       "id": "MSG-0001",
-      "at": "2026-11-05T06:37:00+00:00",
-      "from": "records",
+      "at": "2026-11-06T01:48:00+00:00",
+      "from": "tangning@bench.example",
       "case_id": "CASE-0001",
       "status": "needs_information",
       "channel": "email",
       "text": "您好，我是澄川学院教务·唐宁。您提交的材料尚不完整，请补充以下信息后我们再继续处理：syllabus_version。如有其他问题，欢迎随时来信。",
-      "evidence": [],
-      "contacts": []
+      "evidence": []
     },
     {
       "id": "MSG-0002",
       "at": "2026-11-10T05:39:00+00:00",
-      "from": "lecturer",
+      "from": "meirui@bench.example",
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
@@ -121,13 +120,12 @@
           "valid_until": null,
           "kind": "document"
         }
-      ],
-      "contacts": []
+      ]
     },
     {
       "id": "MSG-0003",
       "at": "2027-02-02T07:01:00+00:00",
-      "from": "records",
+      "from": "tangning@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
@@ -187,8 +185,7 @@
           "valid_until": null,
           "kind": "document"
         }
-      ],
-      "contacts": []
+      ]
     }
   ],
   "private_audit": [
@@ -229,7 +226,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-05T06:22:00+00:00",
+      "at": "2026-11-05T08:49:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "lecturer",
@@ -237,7 +234,7 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-05T06:22:00+00:00",
+      "at": "2026-11-05T08:49:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "lecturer",
@@ -247,7 +244,7 @@
       "tool": "lecturer.main.1.lookup"
     },
     {
-      "at": "2026-11-05T06:37:00+00:00",
+      "at": "2026-11-06T01:48:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "records",
@@ -255,7 +252,7 @@
       "new": "needs_information"
     },
     {
-      "at": "2026-11-05T06:37:00+00:00",
+      "at": "2026-11-06T01:48:00+00:00",
       "kind": "delivery",
       "message_id": "MSG-0001",
       "case_id": "CASE-0001",
@@ -372,7 +369,7 @@
       "channel": "email"
     },
     {
-      "at": "2026-11-10T05:57:00+00:00",
+      "at": "2026-11-10T08:12:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "records",
@@ -380,17 +377,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-10T05:57:00+00:00",
+      "at": "2026-11-10T08:12:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "records",
       "step": "main_1",
-      "start_at": "2026-11-10T05:57:00+00:00",
-      "due_at": "2026-11-11T01:18:00+00:00",
+      "start_at": "2026-11-10T08:12:00+00:00",
+      "due_at": "2026-11-11T03:33:00+00:00",
       "tool": "records.main.1.lookup"
     },
     {
-      "at": "2026-11-10T05:57:00+00:00",
+      "at": "2026-11-10T08:12:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "records",
@@ -398,7 +395,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-11T01:18:00+00:00",
+      "at": "2026-11-11T03:33:00+00:00",
       "kind": "tool_call",
       "actor": "records",
       "case_id": "CASE-0001",
@@ -406,7 +403,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-11T01:18:00+00:00",
+      "at": "2026-11-11T03:33:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "records",
@@ -414,17 +411,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-11T01:18:00+00:00",
+      "at": "2026-11-11T03:33:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "records",
       "step": "main_2",
-      "start_at": "2026-11-11T01:18:00+00:00",
-      "due_at": "2026-11-11T02:38:00+00:00",
+      "start_at": "2026-11-11T03:33:00+00:00",
+      "due_at": "2026-11-11T05:53:00+00:00",
       "tool": "records.main.2.delegate"
     },
     {
-      "at": "2026-11-11T01:18:00+00:00",
+      "at": "2026-11-11T03:33:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "records",
@@ -432,7 +429,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-11T02:38:00+00:00",
+      "at": "2026-11-11T05:53:00+00:00",
       "kind": "tool_call",
       "actor": "records",
       "case_id": "CASE-0001",
@@ -440,7 +437,7 @@
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-11T02:38:00+00:00",
+      "at": "2026-11-11T05:53:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "records",
@@ -448,7 +445,7 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-11T02:38:00+00:00",
+      "at": "2026-11-11T05:53:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0003",
       "actor": "board",
@@ -456,7 +453,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-11T02:38:00+00:00",
+      "at": "2026-11-11T05:53:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "board",
@@ -464,7 +461,7 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-11T02:38:00+00:00",
+      "at": "2026-11-11T05:53:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "board",

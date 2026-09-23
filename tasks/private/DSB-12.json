@@ -205,6 +205,10 @@
       ]
     }
   },
+  "reply_delay": [
+    120,
+    240
+  ],
   "public": {
     "id": "DSB-12",
     "title": "跨境原型设备：300天内的初审、二次补件与未决放行",
@@ -219,7 +223,8 @@
         "title": "远澄货运简介",
         "text": "本合成场景有多阶段归类争议核查：首轮更正单证预计2026年12月7日可取；初审窗口2027年2月4日；制造档案预计4月6日可核验，届时需更新单证并再次申请长期复核。境外技术意见窗口为9月10日，无放行承诺。",
         "contacts": [],
-        "snippet": "留置核查流程与各阶段时间窗口。"
+        "snippet": "留置核查流程与各阶段时间窗口。",
+        "url": "https://yuancheng.bench/intro"
       },
       {
         "id": "logistics",
@@ -228,14 +233,16 @@
         "contacts": [
           "forwarder"
         ],
-        "snippet": "货运客服与单证对接说明。"
+        "snippet": "货运客服与单证对接说明。",
+        "url": "https://yuancheng.bench/contact"
       },
       {
         "id": "logistics-entry",
         "title": "留置核查办理入口",
         "text": "办理需提供运单号与有效申报单证版本；本页面仅说明材料，不能在线发起复核或支付费用。",
         "contacts": [],
-        "snippet": "留置核查材料说明；不支持在线发起复核。"
+        "snippet": "留置核查材料说明；不支持在线发起复核。",
+        "url": "https://yuancheng.bench/entry"
       }
     ],
     "message_budget": 16,

@@ -205,6 +205,10 @@
       ]
     }
   },
+  "reply_delay": [
+    120,
+    240
+  ],
   "public": {
     "id": "DSB-03",
     "title": "学分转换：秋季补件与春季集中审议",
@@ -219,7 +223,8 @@
         "title": "澄川学院CS204课程简介",
         "text": "CS204为本学期开设课程，签章材料由课程负责人管理。跨校转换在2027年2月2日10点春季委员会集中审议；秋季预审不等于最终批准。",
         "contacts": [],
-        "snippet": "CS204课程与跨校学分转换安排说明。"
+        "snippet": "CS204课程与跨校学分转换安排说明。",
+        "url": "https://chengchuan.bench/intro"
       },
       {
         "id": "faculty",
@@ -229,14 +234,16 @@
           "records",
           "lecturer"
         ],
-        "snippet": "教务与课程负责人的对接说明。"
+        "snippet": "教务与课程负责人的对接说明。",
+        "url": "https://chengchuan.bench/contact"
       },
       {
         "id": "faculty-entry",
         "title": "学分转换办理入口",
         "text": "办理需提供课程代码与现行签章大纲版本；本页面仅说明材料要求，不能在线提交选课变更。",
         "contacts": [],
-        "snippet": "学分转换材料要求；不支持在线提交。"
+        "snippet": "学分转换材料要求；不支持在线提交。",
+        "url": "https://chengchuan.bench/entry"
       }
     ],
     "message_budget": 16,

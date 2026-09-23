@@ -15,7 +15,8 @@
       "title": "CAM-402二手信息简介",
       "text": "卖家写快门约一万次，实测情况待核。卖家晚间回复。",
       "contacts": [],
-      "snippet": "二手相机出售信息与实测安排。"
+      "snippet": "二手相机出售信息与实测安排。",
+      "url": "https://ershoushangji.bench/intro"
     },
     {
       "id": "camera",
@@ -24,14 +25,16 @@
       "contacts": [
         "seller"
       ],
-      "snippet": "卖家与取件咨询对接说明。"
+      "snippet": "卖家与取件咨询对接说明。",
+      "url": "https://ershoushangji.bench/contact"
     },
     {
       "id": "camera-entry",
       "title": "交易咨询入口",
       "text": "核实实测情况需提供序列号；本页面仅说明信息要求，不能在线下单或付款。",
       "contacts": [],
-      "snippet": "交易咨询材料说明；不支持在线交易。"
+      "snippet": "交易咨询材料说明；不支持在线交易。",
+      "url": "https://ershoushangji.bench/entry"
     }
   ],
   "message_budget": 16,

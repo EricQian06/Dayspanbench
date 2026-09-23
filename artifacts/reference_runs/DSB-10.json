@@ -87,26 +87,26 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 72.85,
-    "calendar_days": 3.035417,
+    "calendar_hours": 73.4,
+    "calendar_days": 3.058333,
     "agent_messages": 2,
     "contacted_actors": 2,
-    "as_of": "2026-11-09T02:51:00+00:00"
+    "as_of": "2026-11-09T03:24:00+00:00"
   },
   "agent_messages": [
     {
       "id": "MSG-0001",
       "at": "2026-11-08T13:26:00+00:00",
-      "from": "seller",
+      "from": "shenqi@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是相机卖家·沈栖。您咨询的事项已经核实，具体情况如下：卖方询价3200元，未承诺保留商品。卖方回忆快门约一万次，未经读取，不应视为实测。卖方说明按现状转让，不支持退货。对序列号CAM-402读取的实际快门次数为42731。CAM-402热靴触发测试失败，当前不能正常使用外置闪光灯。对序列号CAM-402读取的实际快门次数为42731。CAM-402热靴触发测试失败，当前不能正常使用外置闪光灯。此外，相关事项建议您联系桥溪快运取件咨询·曾澜，他们可以继续为您处理。如有其他问题，欢迎随时来信。",
+      "text": "您好，我是相机卖家·沈栖。您咨询的事项已经核实，具体情况如下：卖方询价3200元，未承诺保留商品。卖方回忆快门约一万次，未经读取，不应视为实测。卖方说明按现状转让，不支持退货。对序列号CAM-402读取的实际快门次数为42731。CAM-402热靴触发测试失败，当前不能正常使用外置闪光灯。对序列号CAM-402读取的实际快门次数为42731。CAM-402热靴触发测试失败，当前不能正常使用外置闪光灯。此外，相关事项建议您联系桥溪快运取件咨询·曾澜（zenglan@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0001",
           "issuer": "seller",
-          "issued_at": "2026-11-06T13:24:00+00:00",
+          "issued_at": "2026-11-07T12:11:00+00:00",
           "text": "卖方询价3200元，未承诺保留商品。",
           "value": 3200,
           "valid_until": null,
@@ -115,7 +115,7 @@
         {
           "id": "EV-0002",
           "issuer": "seller",
-          "issued_at": "2026-11-06T13:24:00+00:00",
+          "issued_at": "2026-11-07T12:11:00+00:00",
           "text": "卖方回忆快门约一万次，未经读取，不应视为实测。",
           "value": 10000,
           "valid_until": null,
@@ -124,7 +124,7 @@
         {
           "id": "EV-0003",
           "issuer": "seller",
-          "issued_at": "2026-11-06T13:24:00+00:00",
+          "issued_at": "2026-11-07T12:11:00+00:00",
           "text": "卖方说明按现状转让，不支持退货。",
           "value": "不支持退货",
           "valid_until": null,
@@ -166,23 +166,12 @@
           "valid_until": null,
           "kind": "document"
         }
-      ],
-      "contacts": [
-        {
-          "id": "courier",
-          "name": "桥溪快运取件咨询·曾澜",
-          "role": "取件时段查询",
-          "contact_details": {
-            "email": "zenglan@bench.example",
-            "phone": "+86 13800000009"
-          }
-        }
       ]
     },
     {
       "id": "MSG-0002",
-      "at": "2026-11-09T02:51:00+00:00",
-      "from": "courier",
+      "at": "2026-11-09T03:24:00+00:00",
+      "from": "zenglan@bench.example",
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
@@ -191,14 +180,13 @@
         {
           "id": "EV-0008",
           "issuer": "courier",
-          "issued_at": "2026-11-09T02:36:00+00:00",
+          "issued_at": "2026-11-09T03:09:00+00:00",
           "text": "若交易成立，最早可取件时间为11月9日14点；本次仅查询。",
           "value": "2026-11-09T14:00:00+08:00",
           "valid_until": null,
           "kind": "fact"
         }
-      ],
-      "contacts": []
+      ]
     }
   ],
   "private_audit": [
@@ -222,7 +210,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-06T12:37:00+00:00",
+      "at": "2026-11-06T13:24:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "seller",
@@ -230,17 +218,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T12:37:00+00:00",
+      "at": "2026-11-06T13:24:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "seller",
       "step": "main_1",
-      "start_at": "2026-11-06T12:37:00+00:00",
-      "due_at": "2026-11-06T13:24:00+00:00",
+      "start_at": "2026-11-06T13:24:00+00:00",
+      "due_at": "2026-11-07T12:11:00+00:00",
       "tool": "seller.main.1.lookup"
     },
     {
-      "at": "2026-11-06T12:37:00+00:00",
+      "at": "2026-11-06T13:24:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "seller",
@@ -248,7 +236,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-06T13:24:00+00:00",
+      "at": "2026-11-07T12:11:00+00:00",
       "kind": "tool_call",
       "actor": "seller",
       "case_id": "CASE-0001",
@@ -256,7 +244,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-06T13:24:00+00:00",
+      "at": "2026-11-07T12:11:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "seller",
@@ -264,17 +252,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T13:24:00+00:00",
+      "at": "2026-11-07T12:11:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "seller",
       "step": "main_2",
-      "start_at": "2026-11-06T13:24:00+00:00",
-      "due_at": "2026-11-07T12:12:00+00:00",
+      "start_at": "2026-11-07T12:11:00+00:00",
+      "due_at": "2026-11-07T12:59:00+00:00",
       "tool": "seller.main.2.delegate"
     },
     {
-      "at": "2026-11-06T13:24:00+00:00",
+      "at": "2026-11-07T12:11:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "seller",
@@ -282,7 +270,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-07T12:12:00+00:00",
+      "at": "2026-11-07T12:59:00+00:00",
       "kind": "tool_call",
       "actor": "seller",
       "case_id": "CASE-0001",
@@ -290,7 +278,7 @@
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-07T12:12:00+00:00",
+      "at": "2026-11-07T12:59:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "seller",
@@ -298,7 +286,7 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-07T12:12:00+00:00",
+      "at": "2026-11-07T12:59:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0002",
       "actor": "friend",
@@ -306,7 +294,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-07T12:12:00+00:00",
+      "at": "2026-11-07T12:59:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "friend",
@@ -314,7 +302,7 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-07T12:12:00+00:00",
+      "at": "2026-11-07T12:59:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "friend",
@@ -524,7 +512,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-09T01:22:00+00:00",
+      "at": "2026-11-09T01:55:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "courier",
@@ -532,17 +520,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T01:22:00+00:00",
+      "at": "2026-11-09T01:55:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "courier",
       "step": "main_1",
-      "start_at": "2026-11-09T01:22:00+00:00",
-      "due_at": "2026-11-09T02:36:00+00:00",
+      "start_at": "2026-11-09T01:55:00+00:00",
+      "due_at": "2026-11-09T03:09:00+00:00",
       "tool": "courier.main.1.lookup"
     },
     {
-      "at": "2026-11-09T01:22:00+00:00",
+      "at": "2026-11-09T01:55:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "courier",
@@ -550,7 +538,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T02:36:00+00:00",
+      "at": "2026-11-09T03:09:00+00:00",
       "kind": "tool_call",
       "actor": "courier",
       "case_id": "CASE-0003",
@@ -558,7 +546,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-09T02:36:00+00:00",
+      "at": "2026-11-09T03:09:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "courier",
@@ -566,17 +554,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T02:36:00+00:00",
+      "at": "2026-11-09T03:09:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "courier",
       "step": "main_2",
-      "start_at": "2026-11-09T02:36:00+00:00",
-      "due_at": "2026-11-09T02:51:00+00:00",
+      "start_at": "2026-11-09T03:09:00+00:00",
+      "due_at": "2026-11-09T03:24:00+00:00",
       "tool": "courier.main.2.reply"
     },
     {
-      "at": "2026-11-09T02:36:00+00:00",
+      "at": "2026-11-09T03:09:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "courier",
@@ -584,7 +572,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T02:51:00+00:00",
+      "at": "2026-11-09T03:24:00+00:00",
       "kind": "tool_call",
       "actor": "courier",
       "case_id": "CASE-0003",
@@ -592,7 +580,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-09T02:51:00+00:00",
+      "at": "2026-11-09T03:24:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "courier",
@@ -600,7 +588,7 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-09T02:51:00+00:00",
+      "at": "2026-11-09T03:24:00+00:00",
       "kind": "delivery",
       "message_id": "MSG-0002",
       "case_id": "CASE-0003",

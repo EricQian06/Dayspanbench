@@ -13,7 +13,8 @@
       "title": "晴港公共活动咨询简介",
       "text": "拟办活动先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。",
       "contacts": [],
-      "snippet": "公共活动预咨询流程与时间安排。"
+      "snippet": "公共活动预咨询流程与时间安排。",
+      "url": "https://qinggang.bench/intro"
     },
     {
       "id": "service",
@@ -22,14 +23,16 @@
       "contacts": [
         "service"
       ],
-      "snippet": "政务咨询台对接说明。"
+      "snippet": "政务咨询台对接说明。",
+      "url": "https://qinggang.bench/contact"
     },
     {
       "id": "service-entry",
       "title": "活动办理入口",
       "text": "办理需提供活动地点与扩声设备说明；本页面为预咨询说明，不构成许可申请入口。",
       "contacts": [],
-      "snippet": "活动预咨询材料说明；不支持在线申请许可。"
+      "snippet": "活动预咨询材料说明；不支持在线申请许可。",
+      "url": "https://qinggang.bench/entry"
     }
   ],
   "message_budget": 16,

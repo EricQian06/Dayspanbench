@@ -205,6 +205,10 @@
       ]
     }
   },
+  "reply_delay": [
+    120,
+    240
+  ],
   "public": {
     "id": "DSB-05",
     "title": "制造采购：28天耐久测试后重新询价",
@@ -220,7 +224,8 @@
         "title": "棱川制造简介",
         "text": "棱川制造承接批次制造。报价有效期短于28天耐久性测试；测试结束后的周一10点复核报告。销售与质检可并行咨询，报告完成后应重新确认报价。",
         "contacts": [],
-        "snippet": "批次制造、耐久测试与报价有效期说明。"
+        "snippet": "批次制造、耐久测试与报价有效期说明。",
+        "url": "https://lengchuan.bench/intro"
       },
       {
         "id": "supplier",
@@ -230,14 +235,16 @@
           "sales",
           "qa"
         ],
-        "snippet": "销售与质检对接说明。"
+        "snippet": "销售与质检对接说明。",
+        "url": "https://lengchuan.bench/contact"
       },
       {
         "id": "supplier-entry",
         "title": "采购询价入口",
         "text": "询价需提供数量与规格；质检确认需材料批次规格。本页面仅说明材料要求，不能在线下单。",
         "contacts": [],
-        "snippet": "询价与质检材料说明；不支持在线下单。"
+        "snippet": "询价与质检材料说明；不支持在线下单。",
+        "url": "https://lengchuan.bench/entry"
       }
     ],
     "message_budget": 16,

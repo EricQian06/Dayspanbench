@@ -52,6 +52,9 @@ class Environment:
         # Seeded pseudo-randomness keeps replay/validate deterministic while
         # agent-initiated handling latencies still vary per step.
         self.rng = random.Random(seed)
+        # (min, max) business minutes of reply latency for agent-initiated mail,
+        # sized per task: a same-day service desk replies in hours, not seconds.
+        self.reply_delay = tuple(task["reply_delay"])
         self.actors = {
             actor["id"]: ActorState(actor, Calendar(task["calendars"][actor["calendar"]]), self.now,
                 (recipient.get(actor["id"]) or RuleRecipient()) if isinstance(recipient, dict)
@@ -109,11 +112,16 @@ class Environment:
                     "evidence": [{k: deepcopy(self.evidence[e][k]) for k in ("id", "text", "value", "issuer", "valid_until")}
                                  for e in evidence_ids or []]}
             text = self.recipient_call(actor, "render", view)
+        # Contacts are only spoken of in the natural-language text (the sender
+        # shares their mailboxes in prose); structured contact cards never ride
+        # along. The referral still registers them as discoverable, since
+        # otherwise the agent could never follow up on the advice.
         self.known_contacts.update(contacts)
         message = {"id": f"MSG-{len(self.messages)+1:04d}", "at": stamp(self.now),
-                   "from": case["actor"], "case_id": case["id"], "status": status,
+                   "from": actor.spec["contact_details"]["email"],
+                   "case_id": case["id"], "status": status,
                    "channel": "phone" if case.get("origin") == "phone" else "email",
-                   "text": text, "evidence": [], "contacts": [self.contact(cid) for cid in contacts]}
+                   "text": text, "evidence": []}
         for evidence_id in evidence_ids or []:
             if case.get("origin") == "phone":
                 # Spoken answers carry information but never written evidence.
@@ -142,8 +150,11 @@ class Environment:
                 "contact_details": deepcopy(actor["contact_details"])}
 
     def admission_at(self, actor):
-        """Email from the agent is first read inside the recipient's work hours."""
-        return actor.calendar.add_business(self.now, self.rng.randint(10, 40))
+        """Email from the agent is read no sooner than the task's reply delay:
+        first pushed to the recipient's earliest opening, then delayed by a
+        random business duration of task-specific magnitude. Never instant."""
+        low, high = self.reply_delay
+        return actor.calendar.add_business(self.now, self.rng.randint(low, high))
 
     def enqueue_admission(self, actor, case_id):
         """Schedule admission unless one is already pending for this case."""
@@ -191,18 +202,23 @@ class Environment:
 
     def referral_names(self, actor):
         """People this actor's own workflows hand requests over to."""
-        names = []
+        targets = []
         for tool in actor.spec["tools"].values():
             if tool["kind"] == "refer":
-                names.extend(self.actors[c].spec["name"] for c in tool["contacts"])
-        return list(dict.fromkeys(names))
+                targets.extend(tool["contacts"])
+        return list(dict.fromkeys(targets))
+
+    def contact_mentions(self, actor_ids):
+        """Names plus mailboxes in prose: the only channel contact details travel."""
+        return "、".join(f"{self.actors[c].spec['name']}（{self.actors[c].spec['contact_details']['email']}）"
+                         for c in actor_ids)
 
     def reply_referral(self, case):
         """Answer a misrouted mail: not my responsibility, contact someone else."""
         actor = self.actors[case["actor"]]
-        names = self.referral_names(actor)
-        if names:
-            body = f"您咨询的事项不属于我负责的范围，我无法直接办理；建议您联系{'、'.join(names)}，由他们继续为您处理。"
+        mentions = self.contact_mentions(dict.fromkeys(self.referral_names(actor)))
+        if mentions:
+            body = f"您咨询的事项不属于我负责的范围，我无法直接办理；建议您联系{mentions}，由他们继续为您处理。"
         else:
             body = "您咨询的事项不属于我负责的范围，我无法直接办理；建议您通过公开渠道找到相应事项的对接人后再来信。"
         text = f"您好，我是{actor.spec['name']}。{body}如有其他问题，欢迎随时来信。"
@@ -331,7 +347,7 @@ class Environment:
                 else:
                     parts.append("您咨询的事项已经按流程处理完毕。")
                 if case["contacts"]:
-                    parts.append(f"此外，相关事项建议您联系{'、'.join(self.actors[c].spec['name'] for c in case['contacts'])}，他们可以继续为您处理。")
+                    parts.append(f"此外，相关事项建议您联系{self.contact_mentions(dict.fromkeys(case['contacts']))}，他们可以继续为您处理。")
                 parts.append("如有其他问题，欢迎随时来信。")
                 self.emit(case, "".join(parts), case["evidence"], list(dict.fromkeys(case["contacts"])))
             return "done"
@@ -412,14 +428,23 @@ class AgentTools:
     def web_search(self, query):
         terms = query.casefold().split()
         pages = self._env.task["public"]["pages"]
-        return [{"id": p["id"], "title": p["title"], "snippet": p.get("snippet", "")} for p in pages
+        return [{"url": p["url"], "title": p["title"], "snippet": p.get("snippet", "")} for p in pages
                 if not terms or any(t in (p["title"] + p["text"] + p.get("snippet", "")).casefold() for t in terms)]
 
-    def visit_page(self, page_id):
+    def visit_page(self, url):
         env = self._env
-        page = next(p for p in env.task["public"]["pages"] if p["id"] == page_id)
+        # Only synthetic https://...bench/... addresses exist; anything else is
+        # not a page in this scenario.
+        if (not isinstance(url, str) or not url.startswith("https://")
+                or ".bench/" not in url or " " in url):
+            raise ValueError("url must be a https://*.bench/* page address")
+        page = next((p for p in env.task["public"]["pages"] if p["url"] == url), None)
+        if page is None:
+            raise ValueError("Unknown page address")
         env.known_contacts.update(page.get("contacts", []))
-        return {**deepcopy(page), "contact_details": [env.contact(c) for c in page.get("contacts", [])]}
+        visible = {k: deepcopy(v) for k, v in page.items() if k != "id"}
+        visible["contact_details"] = [env.contact(c) for c in page.get("contacts", [])]
+        return visible
 
     def send_email(self, recipient, text, fields=None, case_id=None):
         """Send mail to a mailbox address. The receipt is issued at send time and

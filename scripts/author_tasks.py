@@ -154,10 +154,13 @@ def goal(key, expected, *facts):
 
 
 def task(id, title, domain, start, deadline, brief, user_fields, initial, pages, facts, actors, goals, conclusion, reference,
-         mechanisms, failure_modes, completion_class="resolved"):
+         mechanisms, failure_modes, completion_class="resolved", reply_delay=(120, 240)):
     return {"schema_version": "0.2", "task_set_version": "0.3.0", "id": id, "title": title, "domain": domain,
         "start_at": start, "deadline_at": deadline, "display_timezone": "Asia/Shanghai",
         "synthetic": True, "completion_class": completion_class, "calendars": CALENDARS,
+        # Business minutes between a delivery and the recipient's first read:
+        # handwritten per task, matching the scenario's service tempo.
+        "reply_delay": list(reply_delay),
         "public": {"id": id, "title": title, "brief": brief, "user_fields": user_fields,
             "initial_contacts": initial, "pages": pages, "message_budget": 16,
             "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
@@ -170,6 +173,36 @@ def task(id, title, domain, start, deadline, brief, user_fields, initial, pages,
 
 def page(id, title, text, contacts, snippet):
     return {"id": id, "title": title, "text": text, "contacts": contacts, "snippet": snippet}
+
+
+# Every task's public pages live on one synthetic site named after the
+# organization: https://<org-pinyin>.bench/{intro,contact,entry}. The internal
+# page id (e.g. "venue") stays private; agents only ever see the URL.
+PAGE_SITES = {
+    "DSB-01": "heanhuiguan",   # 禾岸会馆
+    "DSB-02": "qingli",        # 青栎公寓
+    "DSB-03": "chengchuan",    # 澄川学院
+    "DSB-04": "nanyu",         # 南屿共享实验室
+    "DSB-05": "lengchuan",     # 棱川制造
+    "DSB-06": "jiguang",       # 霁光电器
+    "DSB-07": "beiting",       # 北汀档案馆
+    "DSB-08": "wuzhangzhusu",  # 无障碍住宿比选
+    "DSB-09": "qinggang",      # 晴港政务
+    "DSB-10": "ershoushangji", # 二手相机信息
+    "DSB-11": "xingzhou",      # 星舟项目
+    "DSB-12": "yuancheng",     # 远澄货运
+}
+
+
+def page_url(task_id, page):
+    """Derive the public URL from the internal id: bare ids are contact pages."""
+    if page["id"].endswith("-intro"):
+        suffix = "intro"
+    elif page["id"].endswith("-entry"):
+        suffix = "entry"
+    else:
+        suffix = "contact"
+    return f"https://{PAGE_SITES[task_id]}.bench/{suffix}"
 
 
 TASKS = []
@@ -207,7 +240,7 @@ TASKS.append(task("DSB-02", "租房咨询：物业周审与新一期货梯表", 
      page("listing-entry", "入住办理入口", "入住需先确认宠物规则与货梯时段；本页面仅说明流程，不构成租约，也不能在线签约。", [], "入住条件说明；不支持在线签约。")],
     f, a, [goal("monthly_rent", 5600, "rent"), goal("deposit", 4000, "deposit"), goal("pet_allowed", True, "pet"), goal("earliest_move", "2026-11-13T10:00:00+08:00", "moving")],
     "requires_date_change", [send("landlord", "咨询租房、宠物及搬入条件", "housing"), wait("housing")],
-    ["个人只在晚间回复", "机构白天办公", "固定周五审核", "新一期货梯表尚未开放"], ["把广告可养宠视为批准", "忽略房东与物业时间错位", "把11月12日误报为可搬入"]))
+    ["个人只在晚间回复", "机构白天办公", "固定周五审核", "新一期货梯表尚未开放"], ["把广告可养宠视为批准", "忽略房东与物业时间错位", "把11月12日误报为可搬入"], reply_delay=(60, 150)))
 
 # 03: University — missing signed syllabus + missed weekly board.
 f = {"syllabus": fact("CS204-2026-v2-signed", "CS204课程正式签章大纲版本为CS204-2026-v2-signed。"),
@@ -277,7 +310,7 @@ TASKS.append(task("DSB-06", "家电保修：等待原厂补货与工程师轮值
      page("service-entry", "报修入口", "报修需提供设备序列号、购机凭证与故障描述；本页面仅说明材料要求，不能在线预约维修。", [], "报修材料说明；不支持在线预约。")], f, a,
     [goal("covered", True, "covered"), goal("replacement_part", "G-42密封圈", "part"), goal("part_cost", 0, "cost"), goal("earliest_visit", "2026-11-18T10:00:00+08:00", "visit")],
     "covered_pending_booking", [{"op": "visit_page", "page": "service"}, send("support", "请核实保修和维修安排", "repair", {"serial": "SN-A731", "symptom": "机身接缝漏水"}), send("support", "补充凭证后继续保修咨询", "repair", followup="repair"), wait("repair")],
-    ["缺材料状态与补件", "原厂批次补货", "工程师每周两天办公", "零件库周六办公", "多级转交后回传"], ["漏凭证仍要求出结果", "库存到位即认为已预约", "忽略工程师周一不办公"]))
+    ["缺材料状态与补件", "原厂批次补货", "工程师每周两天办公", "零件库周六办公", "多级转交后回传"], ["漏凭证仍要求出结果", "库存到位即认为已预约", "忽略工程师周一不办公"], reply_delay=(60, 120)))
 
 # 07: Archive — rights-holder succession review, then a separate digitization request.
 f = {"exhibit": fact(True, "图像ARC-71获准用于本次非商业实体展览。"), "online": fact(False, "授权不包含网站或社交媒体公开发布。"),
@@ -311,7 +344,7 @@ TASKS.append(task("DSB-08", "无障碍住宿：两家机构比较与延后的现
      page("hotels-entry", "住宿预订入口", "确认无障碍房型需轮椅宽度与入住日期；本页面仅说明材料，不能在线预订。", [], "无障碍房确认材料说明；不支持在线预订。")], f, a,
     [goal("a_door_cm", 72, "a_door"), goal("a_bathroom_cm", 68, "a_bath"), goal("b_door_cm", 92, "b_door"), goal("b_bathroom_cm", 85, "b_bath"), goal("b_available", True, "b_available"), goal("b_total_price", 2360, "b_price")],
     "choose_b", [{"op": "visit_page", "page": "hotels"}, send("a_desk", "请现场核实无障碍尺寸", "a"), send("b_desk", "咨询无障碍房态、费用和尺寸", "b"), wait("a"), wait("b")],
-    ["周末接待与工作日技术岗", "并行联系两家机构", "房间特定可进入时间", "过期网页尺寸"], ["门框宽当净宽", "第一家回复后过早停止", "拿一个房型数据替代另一个"]))
+    ["周末接待与工作日技术岗", "并行联系两家机构", "房间特定可进入时间", "过期网页尺寸"], ["门框宽当净宽", "第一家回复后过早停止", "拿一个房型数据替代另一个"], reply_delay=(60, 180)))
 
 # 09: Public-service consultation — jurisdiction referral + two independent reviews.
 f = {"jurisdiction": fact("街区公共空间管理处", "拟用地点属于街区公共空间管理处管辖；不是私人场地。"),
@@ -347,7 +380,7 @@ TASKS.append(task("DSB-10", "二手相机：夜间联系、周末实测与取件
      page("camera-entry", "交易咨询入口", "核实实测情况需提供序列号；本页面仅说明信息要求，不能在线下单或付款。", [], "交易咨询材料说明；不支持在线交易。")], f, a,
     [goal("asking_price", 3200, "asking"), goal("measured_shutter", 42731, "actual"), goal("hotshoe_works", False, "hotshoe"), goal("return_policy", "不支持退货", "returns"), goal("earliest_pickup", "2026-11-09T14:00:00+08:00", "pickup")],
     "does_not_meet_requirements", [send("seller", "请核实相机快门热靴及实测条件", "camera"), wait("camera"), send("courier", "查询最早取件时段", "courier"), wait("courier")],
-    ["晚间个人可达性", "朋友周末才能测试", "周末快递咨询", "主观回忆与实测证据冲突"], ["接受卖方估计为实测", "朋友回复即认为卖家已承诺", "替用户作购买决定"]))
+    ["晚间个人可达性", "朋友周末才能测试", "周末快递咨询", "主观回忆与实测证据冲突"], ["接受卖方估计为实测", "朋友回复即认为卖家已承诺", "替用户作购买决定"], reply_delay=(30, 90)))
 
 # 11: Open-source — volunteer schedules + 48h CI + release manager.
 f = {"repro": fact(True, "提交的日志可重现在编译器C19下的兼容问题。"), "workaround": fact("commit-7bc2", "CI在commit-7bc2上验证该兼容问题已修复。"),
@@ -363,7 +396,7 @@ TASKS.append(task("DSB-11", "开源兼容性：补丁验证后跟进跨季度发
      page("repo-entry", "问题反馈入口", "提交需提供版本、编译器与日志编号；本页面仅说明材料，不能在线合并或发布。", [], "问题提交材料说明；不支持在线合并。")], f, a,
     [goal("reproduced", True, "repro"), goal("verified_patch", "commit-7bc2", "workaround"), goal("candidate_version", "1.4.2-rc1", "candidate"), goal("stable_release_date", "尚无承诺日期", "stable")],
     "workaround_available_stable_uncommitted", [{"op": "visit_page", "page": "repo"}, send("maintainer", "请核实兼容问题与补丁", "fix"), wait("fix"), {"op": "advance", "at": "2027-03-29T20:00:00+08:00"}, send("maintainer", "请跟进季度发布和稳定版状态", "release", {"version": "1.4.1", "verified_commit": "$fact:workaround"}), wait("release")],
-    ["志愿者离散晚间窗口", "48小时自动构建", "跨季度后带原补丁证据继续沟通", "上游兼容窗口", "候选版与稳定版区别"], ["初步补丁可用就提前结束", "跨季度后丢失原补丁证据", "杜撰稳定版承诺日期"]))
+    ["志愿者离散晚间窗口", "48小时自动构建", "跨季度后带原补丁证据继续沟通", "上游兼容窗口", "候选版与稳定版区别"], ["初步补丁可用就提前结束", "跨季度后丢失原补丁证据", "杜撰稳定版承诺日期"], reply_delay=(60, 180)))
 
 # 12: Prototype held for classification review. Several active stages across 300 days.
 f = {"warehouse": fact("2026年11月已完成始发仓入库扫描", "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。"),
@@ -503,6 +536,8 @@ def write_tasks():
     for original in TASKS:
         item = deepcopy(original)
         add_direct_review_path(item)
+        for page in item["public"]["pages"]:
+            page["url"] = page_url(item["id"], page)
         configure_scoring(item)
         days, bucket, reason = horizon_design[item["id"]]
         item["horizon_design"] = {"reference_days": days, "stratum": bucket, "mechanism": reason,
