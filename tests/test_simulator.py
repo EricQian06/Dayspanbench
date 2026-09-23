@@ -73,6 +73,17 @@ class CharacterSimulatorTests(unittest.TestCase):
         self.assertNotIn("validation_feedback", attempts[0])
         self.assertFalse(env.simulator_failure)
 
+    def test_existing_workflow_key_echo_is_normalized(self):
+        view = {"actor_id": "test", "message": "跟进CASE-0004", "fields": {"sample_id": "S-482"}, "history": [],
+                "workflows": [{"id": "main", "required_fields": ["sample_id"]}], "existing_workflow_id": "main"}
+        client = FixtureClient(route=lambda _: {"existing_workflow_id": "main", "fields": []})
+        self.assertEqual(LLMSimulator(client, "test").route(view), {"workflow_id": "main", "fields": {}})
+        # A mismatched or fabricated echoed key is still rejected.
+        with self.assertRaises(SimulatorError):
+            LLMSimulator(FixtureClient(route=lambda _: {"existing_workflow_id": "side", "fields": []}), "test").route(view)
+        with self.assertRaises(SimulatorError):
+            LLMSimulator(FixtureClient(route=lambda _: {"existing_workflow_id": None, "fields": []}), "test").route(view)
+
     def test_validation_retries_are_bounded_and_do_not_retry_transport_errors(self):
         view = {"actor_id": "test", "message": "test", "fields": {}, "history": [],
                 "workflows": [{"id": "main", "required_fields": []}], "existing_workflow_id": None}

@@ -353,6 +353,10 @@ class EnvironmentTests(unittest.TestCase):
         self.assertTrue(all(set(l) == {"url", "title", "snippet"} for l in links))
         self.assertTrue(all(l["url"].startswith("https://") and ".bench/" in l["url"] for l in links))
         self.assertNotIn("reception", json.dumps(api.web_search("联系方式"), ensure_ascii=False))
+        # Empty queries and terms that match nothing return no links at all.
+        self.assertEqual(api.web_search(""), [])
+        self.assertEqual(api.web_search("   "), [])
+        self.assertEqual(api.web_search("完全不相关的查询词"), [])
         # Only proper page addresses are accepted; ids and foreign URLs are not.
         with self.assertRaises(ValueError):
             api.visit_page("venue")
@@ -410,6 +414,32 @@ class EnvironmentTests(unittest.TestCase):
         self.assertIn("不属于我负责的范围", referral["text"])
         self.assertNotIn("\n", referral["text"])
         self.assertEqual(env.cases[result["case_id"]]["state"], "replied")
+
+    def test_followup_on_replied_case_reopens_when_it_routes(self):
+        task = load(5)
+        env = Environment(task)
+        api = env.tools()
+        api.visit_page("https://lengchuan.bench/contact")
+        first = api.send_email(mailbox(task, "sales"), "初次报价", {"quantity": 500, "spec": "M26-Q7"})
+        api.wait_until("2026-11-10T12:00:00+08:00")  # first quote has been replied
+        self.assertEqual(env.cases[first["case_id"]]["state"], "replied")
+        # A follow-up on the replied case that names a new request is re-routed
+        # as a fresh case: it cannot restart or skip the original one.
+        reopened = api.send_email(mailbox(task, "sales"), "旧报价已过期，请重新确认报价",
+                                  {"quantity": 500, "spec": "M26-Q7"}, case_id=first["case_id"])
+        self.assertNotEqual(reopened["case_id"], first["case_id"])
+        self.assertEqual(env.cases[reopened["case_id"]]["workflow"]["id"], "refresh")
+        self.assertEqual(env.cases[first["case_id"]]["state"], "replied")
+        self.assertTrue(any(e["kind"] == "followup_reopened" and e["case_id"] == reopened["case_id"]
+                            for e in env.audit))
+        # An unmatched follow-up stays an acknowledgement and opens nothing.
+        before = len(env.cases)
+        ack = api.send_email(mailbox(task, "sales"), "谢谢，辛苦了", case_id=first["case_id"])
+        self.assertEqual(ack["case_id"], first["case_id"])
+        self.assertEqual(len(env.cases), before)
+        api.wait_until(task["deadline_at"])
+        reply = next(m for m in env.messages if m["case_id"] == reopened["case_id"] and m["status"] == "reply")
+        self.assertTrue(any(e["value"] == 18600 for e in reply["evidence"]))
 
     def test_agent_email_gets_no_instant_reply(self):
         task = load(1)

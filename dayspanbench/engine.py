@@ -9,6 +9,7 @@ from dataclasses import dataclass, field
 from datetime import timedelta
 import heapq
 import json
+import re
 import random
 from pathlib import Path
 
@@ -426,10 +427,26 @@ class AgentTools:
                 "unread_messages": max(0, len(env.messages) - env.inbox_read)}
 
     def web_search(self, query):
-        terms = query.casefold().split()
+        # A page is only returned when the query matches its title or snippet;
+        # an empty query matches nothing. Page bodies are not searchable: the
+        # agent must find the page first, then visit it. Relevance is not
+        # whole-term substring: Chinese terms are matched on character bigrams
+        # (南屿共享实验室 vs 南屿实验室联系方式 share 南屿/实验室), while
+        # latin terms must match whole.
+        if not isinstance(query, str):
+            raise ValueError("query must be a string")
+        units = set()
+        for term in query.casefold().split():
+            for run in re.findall(r"[a-z0-9]+|[一-鿿]+", term):
+                if run[0].isascii() or len(run) == 1:
+                    units.add(run)
+                else:
+                    units.update(run[i:i + 2] for i in range(len(run) - 1))
+        if not units:
+            return []
         pages = self._env.task["public"]["pages"]
         return [{"url": p["url"], "title": p["title"], "snippet": p.get("snippet", "")} for p in pages
-                if not terms or any(t in (p["title"] + p["text"] + p.get("snippet", "")).casefold() for t in terms)]
+                if any(u in (p["title"] + p.get("snippet", "")).casefold() for u in units)]
 
     def visit_page(self, url):
         env = self._env
@@ -480,7 +497,8 @@ class AgentTools:
         view = {"actor_id": actor_id, "name": actor.spec["name"], "role": actor.spec["role"],
                 "instructions": actor.spec["recipient"]["instructions"], "message": text,
                 "fields": deepcopy(fields or {}), "now": stamp(env.now), "history": deepcopy(actor.history),
-                "existing_workflow_id": existing["workflow"]["id"] if existing else None,
+                "existing_workflow_id": existing["workflow"]["id"]
+                    if existing and existing["workflow"] and existing["state"] in {"new", "needs_information"} else None,
                 "workflows": [{k: deepcopy(w[k]) for k in ("id", "label", "aliases", "required_fields")} for w in actor.spec["workflows"]],
                 "local_cases": [{"id": cid, "state": env.cases[cid]["state"]} for cid in actor.cases]}
         actor.history.append({"role": "agent", "text": text, "fields": deepcopy(fields or {}), "case_id": case_id, "at": stamp(env.now)})
@@ -488,8 +506,12 @@ class AgentTools:
             decision = env.recipient_call(actor, "route", view)
             workflow_id = decision["workflow_id"]
             fields = {**decision["fields"], **(fields or {})}
+        elif existing and existing["workflow"] and existing["state"] in {"new", "needs_information"}:
+            # Continuing an open case keeps its workflow; the routed followup
+            # on a closed or in-flight case below is matched fresh instead.
+            workflow_id = existing["workflow"]["id"]
         else:
-            workflow_id = existing["workflow"]["id"] if existing else env.recipient_call(actor, "choose", view)
+            workflow_id = env.recipient_call(actor, "choose", view)
         if case_id:
             case = env.cases[case_id]
             if case["actor"] != actor_id or case["parent"]:
@@ -502,9 +524,17 @@ class AgentTools:
                     env.enqueue_admission(actor, case_id)
                 else:
                     env.start(case)
+            elif workflow_id is not None:
+                # A follow-up on a closed or in-flight case carrying a new
+                # request is re-routed like any fresh mail: it opens a new case
+                # with the normal admission delay, so it cannot skip the
+                # recipient's queue or restart the original one.
+                reopened = env.new_case(actor_id, workflow_id, fields or {}, origin="agent")
+                env.record("followup_reopened", case_id=reopened["id"], original_case=case_id)
+                return {"case_id": reopened["id"], "status": "received", "at": stamp(env.now)}
             else:
                 # Following up is observable, but does not skip an internal queue.
-                env.emit(case, f"您好，我是{actor.spec['name']}。已收到您的跟进邮件；原受理时间和处理顺序保持不变。如有其他问题，欢迎随时来信。",
+                env.emit(case, f"您好，我是{actor.spec['name']}。已收到您的跟进邮件；原事项的受理时间和处理顺序保持不变。这封邮件未匹配到我需处理的新事项；如需办理其他业务，请在邮件中说明具体内容。如有其他问题，欢迎随时来信。",
                          status="acknowledgement")
             return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
         if workflow_id is None:
