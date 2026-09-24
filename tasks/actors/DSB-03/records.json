@@ -19,7 +19,10 @@
         "kind": "lookup",
         "facts": []
       },
-      "records.main.2.delegate": {
+      "records.main.2.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "records.main.3.delegate": {
         "kind": "delegate",
         "target": "board",
         "workflow": "main",
@@ -28,7 +31,7 @@
           "syllabus_version"
         ]
       },
-      "records.main.3.reply": {
+      "records.main.4.reply": {
         "kind": "reply"
       }
     },
@@ -75,8 +78,8 @@
           },
           {
             "id": "main_2",
-            "label": "内部转交",
-            "tool": "records.main.2.delegate",
+            "label": "发出受理回执",
+            "tool": "records.main.2.acknowledge",
             "delay": {
               "mode": "business",
               "minutes": 60
@@ -84,8 +87,17 @@
           },
           {
             "id": "main_3",
+            "label": "内部转交",
+            "tool": "records.main.3.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_4",
             "label": "向请求者回复已取得的结果",
-            "tool": "records.main.3.reply",
+            "tool": "records.main.4.reply",
             "delay": {
               "mode": "business",
               "minutes": 60

@@ -76,11 +76,11 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 2137.02,
-    "calendar_days": 89.042361,
+    "calendar_hours": 2137.07,
+    "calendar_days": 89.044444,
     "agent_messages": 3,
     "contacted_actors": 2,
-    "as_of": "2027-02-02T07:01:00+00:00"
+    "as_of": "2027-02-02T07:04:00+00:00"
   },
   "agent_messages": [
     {
@@ -124,7 +124,17 @@
     },
     {
       "id": "MSG-0003",
-      "at": "2027-02-02T07:01:00+00:00",
+      "at": "2026-11-11T05:53:00+00:00",
+      "from": "tangning@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是澄川学院教务·唐宁。您提交的材料已核验齐全，本事项已受理并按流程转办，办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2027-02-02T07:04:00+00:00",
       "from": "tangning@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
@@ -161,7 +171,7 @@
         {
           "id": "EV-0006",
           "issuer": "board",
-          "issued_at": "2027-02-02T05:32:00+00:00",
+          "issued_at": "2027-02-02T05:29:00+00:00",
           "text": "学分委员会确认CS204可转换3学分。",
           "value": 3,
           "valid_until": null,
@@ -170,7 +180,7 @@
         {
           "id": "EV-0007",
           "issuer": "board",
-          "issued_at": "2027-02-02T05:32:00+00:00",
+          "issued_at": "2027-02-02T05:29:00+00:00",
           "text": "这3学分仅计入专业选修，不能替代必修课。",
           "value": "专业选修",
           "valid_until": null,
@@ -179,7 +189,7 @@
         {
           "id": "EV-0008",
           "issuer": "board",
-          "issued_at": "2027-02-02T05:32:00+00:00",
+          "issued_at": "2027-02-02T05:29:00+00:00",
           "text": "该转换结论从2027春季学期开始适用。",
           "value": "2027春季",
           "valid_until": null,
@@ -418,7 +428,7 @@
       "step": "main_2",
       "start_at": "2026-11-11T03:33:00+00:00",
       "due_at": "2026-11-11T05:53:00+00:00",
-      "tool": "records.main.2.delegate"
+      "tool": "records.main.2.acknowledge"
     },
     {
       "at": "2026-11-11T03:33:00+00:00",
@@ -433,8 +443,15 @@
       "kind": "tool_call",
       "actor": "records",
       "case_id": "CASE-0001",
-      "tool": "records.main.2.delegate",
-      "tool_kind": "delegate"
+      "tool": "records.main.2.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2026-11-11T05:53:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
     },
     {
       "at": "2026-11-11T05:53:00+00:00",
@@ -442,10 +459,44 @@
       "case_id": "CASE-0001",
       "actor": "records",
       "old": "working",
-      "new": "waiting_internal"
+      "new": "queued"
     },
     {
       "at": "2026-11-11T05:53:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "records",
+      "step": "main_3",
+      "start_at": "2026-11-11T05:53:00+00:00",
+      "due_at": "2026-11-11T07:10:00+00:00",
+      "tool": "records.main.3.delegate"
+    },
+    {
+      "at": "2026-11-11T05:53:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "records",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-11T07:10:00+00:00",
+      "kind": "tool_call",
+      "actor": "records",
+      "case_id": "CASE-0001",
+      "tool": "records.main.3.delegate",
+      "tool_kind": "delegate"
+    },
+    {
+      "at": "2026-11-11T07:10:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "records",
+      "old": "working",
+      "new": "waiting_internal"
+    },
+    {
+      "at": "2026-11-11T07:10:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0003",
       "actor": "board",
@@ -453,7 +504,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-11T05:53:00+00:00",
+      "at": "2026-11-11T07:10:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "board",
@@ -461,7 +512,7 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-11T05:53:00+00:00",
+      "at": "2026-11-11T07:10:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "board",
@@ -501,7 +552,7 @@
       "actor": "board",
       "step": "main_2",
       "start_at": "2027-02-02T05:00:00+00:00",
-      "due_at": "2027-02-02T05:32:00+00:00",
+      "due_at": "2027-02-02T05:29:00+00:00",
       "tool": "board.main.2.document"
     },
     {
@@ -513,7 +564,7 @@
       "new": "working"
     },
     {
-      "at": "2027-02-02T05:32:00+00:00",
+      "at": "2027-02-02T05:29:00+00:00",
       "kind": "tool_call",
       "actor": "board",
       "case_id": "CASE-0003",
@@ -521,7 +572,7 @@
       "tool_kind": "document"
     },
     {
-      "at": "2027-02-02T05:32:00+00:00",
+      "at": "2027-02-02T05:29:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "board",
@@ -529,17 +580,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-02-02T05:32:00+00:00",
+      "at": "2027-02-02T05:29:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "board",
       "step": "main_3",
-      "start_at": "2027-02-02T05:32:00+00:00",
-      "due_at": "2027-02-02T05:47:00+00:00",
+      "start_at": "2027-02-02T05:29:00+00:00",
+      "due_at": "2027-02-02T05:44:00+00:00",
       "tool": "board.main.3.reply"
     },
     {
-      "at": "2027-02-02T05:32:00+00:00",
+      "at": "2027-02-02T05:29:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "board",
@@ -547,7 +598,7 @@
       "new": "working"
     },
     {
-      "at": "2027-02-02T05:47:00+00:00",
+      "at": "2027-02-02T05:44:00+00:00",
       "kind": "tool_call",
       "actor": "board",
       "case_id": "CASE-0003",
@@ -555,7 +606,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2027-02-02T05:47:00+00:00",
+      "at": "2027-02-02T05:44:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "board",
@@ -563,13 +614,13 @@
       "new": "replied"
     },
     {
-      "at": "2027-02-02T05:47:00+00:00",
+      "at": "2027-02-02T05:44:00+00:00",
       "kind": "handoff_return",
       "case_id": "CASE-0003",
       "parent": "CASE-0001"
     },
     {
-      "at": "2027-02-02T05:47:00+00:00",
+      "at": "2027-02-02T05:44:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "records",
@@ -577,17 +628,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-02-02T05:47:00+00:00",
+      "at": "2027-02-02T05:44:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "records",
-      "step": "main_3",
-      "start_at": "2027-02-02T05:47:00+00:00",
-      "due_at": "2027-02-02T07:01:00+00:00",
-      "tool": "records.main.3.reply"
+      "step": "main_4",
+      "start_at": "2027-02-02T05:44:00+00:00",
+      "due_at": "2027-02-02T07:04:00+00:00",
+      "tool": "records.main.4.reply"
     },
     {
-      "at": "2027-02-02T05:47:00+00:00",
+      "at": "2027-02-02T05:44:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "records",
@@ -595,15 +646,15 @@
       "new": "working"
     },
     {
-      "at": "2027-02-02T07:01:00+00:00",
+      "at": "2027-02-02T07:04:00+00:00",
       "kind": "tool_call",
       "actor": "records",
       "case_id": "CASE-0001",
-      "tool": "records.main.3.reply",
+      "tool": "records.main.4.reply",
       "tool_kind": "reply"
     },
     {
-      "at": "2027-02-02T07:01:00+00:00",
+      "at": "2027-02-02T07:04:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "records",
@@ -611,9 +662,9 @@
       "new": "replied"
     },
     {
-      "at": "2027-02-02T07:01:00+00:00",
+      "at": "2027-02-02T07:04:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0003",
+      "message_id": "MSG-0004",
       "case_id": "CASE-0001",
       "status": "reply"
     }

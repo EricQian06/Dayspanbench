@@ -79,6 +79,8 @@ def validate_task(task):
                     edges[wid].append((tool["target"], tool["workflow"]))
                 elif tool["kind"] == "refer":
                     check(set(tool["contacts"]) <= set(actors), f"{wid}: nonexistent referral")
+                elif tool["kind"] == "acknowledge":
+                    pass  # mid-workflow acceptance receipt; no extra structure
                 else:
                     check(tool["kind"] == "reply", f"{wid}: unsupported tool")
             check(actor["tools"][workflow["steps"][-1]["tool"]]["kind"] == "reply", f"{wid}: workflow must terminate in reply")

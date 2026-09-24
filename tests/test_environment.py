@@ -80,7 +80,7 @@ class EnvironmentTests(unittest.TestCase):
         # Deterministic under the default latency seed; guards against unintended
         # drift in admission/jitter behavior.
         expected = {1: "2026-11-10T05:44:00+00:00", 2: "2026-11-11T11:47:00+00:00",
-                    3: "2027-02-02T07:01:00+00:00", 4: "2026-11-25T02:58:00+00:00",
+                    3: "2027-02-02T07:04:00+00:00", 4: "2026-11-25T02:58:00+00:00",
                     5: "2026-12-08T03:48:00+00:00", 6: "2026-11-17T08:56:00+00:00",
                     7: "2027-06-07T03:11:00+00:00", 8: "2026-11-11T06:57:00+00:00",
                     9: "2026-12-28T07:49:00+00:00", 10: "2026-11-09T03:24:00+00:00",
@@ -89,6 +89,47 @@ class EnvironmentTests(unittest.TestCase):
             with self.subTest(task=n):
                 env, _, _ = run_reference(load(n))
                 self.assertEqual(env.now, parse(time))
+
+    def test_in_flight_followup_with_unchanged_fields_only_acknowledges(self):
+        # A progress ping on a case that is already delegated internally must
+        # not spawn a duplicate internal case that competes for the recipient
+        # office's weekly slot and pushes the original past the deadline.
+        task = load(3)
+        env = Environment(task)
+        api = env.tools()
+        api.visit_page("https://chengchuan.bench/contact")
+        # Legitimate material: the syllabus version must come from the
+        # lecturer's attested reply, not out of thin air.
+        api.send_email(mailbox(task, "lecturer"), "请补发正式签章大纲", {"course_code": "CS204"})
+        api.wait_until("2026-11-10T15:00:00+08:00")  # lecturer has replied after the trip
+        syllabus = next(m for m in env.messages if m["status"] == "reply")["evidence"][0]["value"]
+        first = api.send_email(mailbox(task, "records"), "咨询CS204学分转换",
+                               {"course_code": "CS204", "syllabus_version": syllabus})
+        # A mid-workflow acceptance receipt reaches the inbox before the
+        # internal handoff, without closing the case. Drain the event queue
+        # until the handoff happens rather than guessing jittered timestamps.
+        while env.cases[first["case_id"]]["state"] != "waiting_internal" and env.events:
+            env.advance(env.events[0][0])
+        case = env.cases[first["case_id"]]
+        self.assertEqual(case["state"], "waiting_internal")
+        self.assertTrue(any(m["case_id"] == first["case_id"] and m["status"] == "acknowledgement"
+                            for m in env.messages))
+        before = len(env.cases)
+        ack = api.send_email(mailbox(task, "records"), "请问办理进度如何",
+                             {"course_code": "CS204", "syllabus_version": syllabus},
+                             case_id=first["case_id"])
+        self.assertEqual(ack["case_id"], first["case_id"])
+        self.assertEqual(len(env.cases), before)
+        self.assertFalse(any(e["kind"] == "followup_reopened" for e in env.audit))
+        # The delegate's weekly slot reservation is untouched: the board case
+        # still starts at the spring session, not a week later.
+        board = next(c for c in env.cases.values() if c["actor"] == "board")
+        self.assertEqual(board["state"], "queued")
+        # A follow-up that actually changes the material does re-open.
+        reopened = api.send_email(mailbox(task, "records"), "大纲版本有更新，请按新版本办理",
+                                  {"course_code": "CS204", "syllabus_version": "CS204-2026-v3"},
+                                  case_id=first["case_id"])
+        self.assertNotEqual(reopened["case_id"], first["case_id"])
 
     def test_missing_material_and_forged_material_are_not_accepted(self):
         task = load(3)

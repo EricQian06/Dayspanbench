@@ -104,6 +104,10 @@ def reply(delay=None):
     return {"kind": "reply", "delay": delay or elapsed(0), "label": "向请求者回复已取得的结果"}
 
 
+def acknowledge(delay, label="发出受理回执"):
+    return {"kind": "acknowledge", "delay": delay, "label": label}
+
+
 def workflow(label, aliases, fields, steps, id="main", **kwargs):
     return {"id": id, "label": label, "aliases": aliases, "required_fields": fields, "raw_steps": steps, **kwargs}
 
@@ -246,7 +250,7 @@ TASKS.append(task("DSB-02", "租房咨询：物业周审与新一期货梯表", 
 f = {"syllabus": fact("CS204-2026-v2-signed", "CS204课程正式签章大纲版本为CS204-2026-v2-signed。"),
      "credits": fact(3, "学分委员会确认CS204可转换3学分。"), "scope": fact("专业选修", "这3学分仅计入专业选修，不能替代必修课。"),
      "effective": fact("2027春季", "该转换结论从2027春季学期开始适用。")}
-a = [person("records", "澄川学院教务·唐宁", "学分转换预审", "office", [workflow("学分转换咨询", ["学分", "转换", "大纲"], ["course_code", "syllabus_version"], [lookup([], business(180), "核验签章与材料版本"), delegate("board", business(60), ["course_code", "syllabus_version"]), reply(business(60))], evidence_fields={"syllabus_version": "syllabus"})], "必须取得当前签章大纲；不能把旧大纲送交委员会。"),
+a = [person("records", "澄川学院教务·唐宁", "学分转换预审", "office", [workflow("学分转换咨询", ["学分", "转换", "大纲"], ["course_code", "syllabus_version"], [lookup([], business(180), "核验签章与材料版本"), acknowledge(business(60), "发出受理回执"), delegate("board", business(60), ["course_code", "syllabus_version"]), reply(business(60))], evidence_fields={"syllabus_version": "syllabus"})], "必须取得当前签章大纲；不能把旧大纲送交委员会。"),
      person("lecturer", "CS204课程负责人·梅芮", "签章课程大纲", "office", [workflow("补发正式大纲", ["大纲", "签章", "课程"], ["course_code"], [lookup(["syllabus"], business(120, not_before="2026-11-10T09:00:00+08:00")), document(["syllabus"], business(60)), reply()])], "11月6日至9日出差，11月10日恢复处理；只核准本课程材料。"),
      person("board", "澄川学院学分委员会秘书·程昕", "春季跨校学分审议", "office", [workflow("春季跨校审议", ["学分", "审议"], ["course_code", "syllabus_version"], [lookup(["credits", "scope", "effective"], {**weekly(1, "10:00", 120), "not_before": "2027-02-02T10:00:00+08:00"}), document(["credits", "scope", "effective"], business(0)), reply()])], "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审。")]
 TASKS.append(task("DSB-03", "学分转换：秋季补件与春季集中审议", "高校教务", "2026-11-05T14:00:00+08:00", "2027-02-03T17:00:00+08:00",
@@ -272,7 +276,7 @@ TASKS.append(task("DSB-04", "共享仪器：培训、进口耗材与七天稳定
     "为样品S-482确认最早测量时间和费用。我已报名11月6日14点安全培训并会按时完成，但目前没有合格记录。请在培训完成后取得凭证，并核实耗材和校准后的可用窗口，暂不预约仪器。",
     {"sample_id": "S-482", "person_name": "顾晓"}, [],
     [page("lab-intro", "南屿共享实验室简介", "仪器使用需安全培训记录，培训每周五14点。本批进口耗材预计11月17日到库，之后需要连续7天稳定性校准和人工复核。", [], "共享仪器使用条件、培训批次与校准安排。"),
-     page("lab", "南屿实验室联系方式", "使用条件与联系人请咨询前台叶青；安全培训记录联系安全员温遥；仪器校准、耗材和费用联系仪器管理员杜和。", ["labdesk"], "实验室各岗位对接说明。"),
+     page("lab", "南屿实验室联系方式", "各岗位联系人的联系方式（邮箱）请咨询前台叶青，由前台提供后续对接入口。使用条件与联系人请咨询前台叶青；安全培训记录联系安全员温遥；仪器校准、耗材和费用联系仪器管理员杜和。", ["labdesk"], "实验室各岗位对接说明。"),
      page("lab-entry", "仪器使用申请入口", "申请需提供样品编号与安全培训记录号；本页面仅说明受理条件，不能在线预约仪器。", [], "仪器使用申请材料说明；不支持在线预约。")], f, a,
     [goal("safety_certificate", "SAFE-NOV06-482", "certificate"), goal("filter_batch", "F-26B", "filter"), goal("earliest_measurement", "2026-11-25T13:00:00+08:00", "window"), goal("price", 1800, "price")],
     "available_after_calibration", [{"op": "visit_page", "page": "lab"}, send("labdesk", "咨询测量仪器联系入口", "front"), wait("front"), send("safety", "请求完成培训并取得安全记录", "safe"), wait("safe"), send("instrument", "核实测量时间、校准和费用", "measure", {"sample_id": "S-482", "safety_certificate": "$fact:certificate"}), wait("measure")],

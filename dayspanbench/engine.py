@@ -323,6 +323,11 @@ class Environment:
                 self.issue(case, fact_id, "document")
         elif tool["kind"] == "refer":
             case["contacts"].extend(tool["contacts"])
+        elif tool["kind"] == "acknowledge":
+            # Acceptance receipt issued mid-workflow: the case is confirmed as
+            # admissible and continues to the next step without closing.
+            self.emit(case, f"您好，我是{actor.spec['name']}。您提交的材料已核验齐全，本事项已受理并按流程转办，办结后会书面回复您。",
+                      status="acknowledgement")
         elif tool["kind"] == "delegate":
             self.transition(case, "waiting_internal")
             self.new_case(tool["target"], tool["workflow"],
@@ -525,10 +530,24 @@ class AgentTools:
                 else:
                     env.start(case)
             elif workflow_id is not None:
-                # A follow-up on a closed or in-flight case carrying a new
-                # request is re-routed like any fresh mail: it opens a new case
-                # with the normal admission delay, so it cannot skip the
-                # recipient's queue or restart the original one.
+                # A follow-up on a closed or in-flight case carrying a genuinely
+                # new or changed request is re-routed like any fresh mail: it
+                # opens a new case with the normal admission delay, so it cannot
+                # skip the recipient's queue or restart the original one. A
+                # progress ping with unchanged fields only acknowledges; it must
+                # not spawn a duplicate internal case that competes with (and
+                # can push past the deadline) the original one.
+                combined = {**case["fields"], **(fields or {})}
+                # A closed (replied/failed) case may legitimately re-open the
+                # same request from scratch; an in-flight case only counts a
+                # follow-up as material when the fields actually change.
+                material = (case["state"] in {"replied", "failed"}
+                            or any(case["fields"].get(k) != (fields or {}).get(k)
+                                   for k in combined))
+                if not material:
+                    env.emit(case, f"您好，我是{actor.spec['name']}。您的事项已在办理中，受理时间和处理顺序保持不变，办结后会书面回复。如有其他问题，欢迎随时来信。",
+                             status="acknowledgement")
+                    return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
                 reopened = env.new_case(actor_id, workflow_id, fields or {}, origin="agent")
                 env.record("followup_reopened", case_id=reopened["id"], original_case=case_id)
                 return {"case_id": reopened["id"], "status": "received", "at": stamp(env.now)}
