@@ -22,7 +22,10 @@
         "kind": "lookup",
         "facts": []
       },
-      "sales.main.2.delegate": {
+      "sales.main.2.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "sales.main.3.delegate": {
         "kind": "delegate",
         "target": "factory",
         "workflow": "main",
@@ -31,19 +34,19 @@
           "spec"
         ]
       },
-      "sales.main.3.lookup": {
+      "sales.main.4.lookup": {
         "kind": "lookup",
         "facts": [
           "quote_old"
         ]
       },
-      "sales.main.4.document": {
+      "sales.main.5.document": {
         "kind": "document",
         "facts": [
           "quote_old"
         ]
       },
-      "sales.main.5.reply": {
+      "sales.main.6.reply": {
         "kind": "reply"
       },
       "sales.refresh.1.lookup": {
@@ -87,35 +90,44 @@
           },
           {
             "id": "main_2",
+            "label": "发出受理回执",
+            "tool": "sales.main.2.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
             "label": "内部转交",
-            "tool": "sales.main.2.delegate",
+            "tool": "sales.main.3.delegate",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "main_3",
+            "id": "main_4",
             "label": "查询业务记录",
-            "tool": "sales.main.3.lookup",
+            "tool": "sales.main.4.lookup",
             "delay": {
               "mode": "business",
               "minutes": 120
             }
           },
           {
-            "id": "main_4",
+            "id": "main_5",
             "label": "签发书面确认",
-            "tool": "sales.main.4.document",
+            "tool": "sales.main.5.document",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "main_5",
+            "id": "main_6",
             "label": "向请求者回复已取得的结果",
-            "tool": "sales.main.5.reply",
+            "tool": "sales.main.6.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0

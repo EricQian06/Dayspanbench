@@ -27,7 +27,10 @@
           "b_price"
         ]
       },
-      "b_desk.main.2.delegate": {
+      "b_desk.main.2.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "b_desk.main.3.delegate": {
         "kind": "delegate",
         "target": "b_tech",
         "workflow": "main",
@@ -35,7 +38,7 @@
           "wheelchair_width"
         ]
       },
-      "b_desk.main.3.reply": {
+      "b_desk.main.4.reply": {
         "kind": "reply"
       }
     },
@@ -64,8 +67,8 @@
           },
           {
             "id": "main_2",
-            "label": "内部转交",
-            "tool": "b_desk.main.2.delegate",
+            "label": "发出受理回执",
+            "tool": "b_desk.main.2.acknowledge",
             "delay": {
               "mode": "business",
               "minutes": 30
@@ -73,8 +76,17 @@
           },
           {
             "id": "main_3",
+            "label": "内部转交",
+            "tool": "b_desk.main.3.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
             "label": "向请求者回复已取得的结果",
-            "tool": "b_desk.main.3.reply",
+            "tool": "b_desk.main.4.reply",
             "delay": {
               "mode": "business",
               "minutes": 30

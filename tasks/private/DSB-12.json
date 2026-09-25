@@ -206,8 +206,8 @@
     }
   },
   "reply_delay": [
-    120,
-    240
+    20,
+    45
   ],
   "public": {
     "id": "DSB-12",
@@ -220,29 +220,37 @@
     "pages": [
       {
         "id": "logistics-intro",
-        "title": "远澄货运简介",
+        "title": "远澄货运简介与归类留置核查流程",
         "text": "本合成场景有多阶段归类争议核查：首轮更正单证预计2026年12月7日可取；初审窗口2027年2月4日；制造档案预计4月6日可核验，届时需更新单证并再次申请长期复核。境外技术意见窗口为9月10日，无放行承诺。",
         "contacts": [],
-        "snippet": "留置核查流程与各阶段时间窗口。",
+        "snippet": "归类留置核查流程、初审登记与长期复核时间窗口。",
         "url": "https://yuancheng.bench/intro"
       },
       {
         "id": "logistics",
-        "title": "远澄货运联系方式",
-        "text": "各岗位联系人的联系方式（邮箱）请咨询客服白榆，由客服提供后续对接入口。货件状态与联系入口联系客服白榆；单证与批次溯源联系出口方单证员。 材料齐备后，也可向单证联络人申请转介境外代理，直接发起长期复核；材料门槛和处理窗口相同。",
+        "title": "远澄货运联系方式与咨询入口",
+        "text": "各岗位联系人的联系方式（邮箱）请咨询客服白榆，由客服提供后续对接入口。货件状态与入库查询联系客服白榆；单证版本与批次溯源联系出口方单证员；初审登记与长期复核联系单证联络。 材料齐备后，也可向单证联络人申请转介境外代理，直接发起长期复核；材料门槛和处理窗口相同。",
         "contacts": [
           "forwarder"
         ],
-        "snippet": "货运客服与单证对接说明。",
+        "snippet": "客服、单证、登记、溯源、复核、放行状态等事项的联系入口。",
         "url": "https://yuancheng.bench/contact"
       },
       {
         "id": "logistics-entry",
-        "title": "留置核查办理入口",
+        "title": "留置核查办理入口与材料说明",
         "text": "办理需提供运单号与有效申报单证版本；本页面仅说明材料，不能在线发起复核或支付费用。",
         "contacts": [],
-        "snippet": "留置核查材料说明；不支持在线发起复核。",
+        "snippet": "留置核查材料与单证版本要求说明；不支持在线发起复核或状态查询。",
         "url": "https://yuancheng.bench/entry"
+      },
+      {
+        "id": "logistics-faq",
+        "title": "留置核查常见问题与术语说明",
+        "text": "常见问题：归类初审登记号由单证联络岗位办理并出具，登记仅表示进入流程，不等于放行；申报单证版本以出口方单证员补发的有效版本为准，旧版本过期后不能继续受理；制造批次溯源资料由出口方提供，须在新版单证取得后一并提交；货件入库与历史扫描记录可经客服入口向始发仓查证；放行状态与长期复核结果须补齐新版单证和溯源资料后由单证联络发起查询，本站不提供在线查询，任何回执也不是放行证明。各阶段时间窗口见简介页。",
+        "contacts": [],
+        "snippet": "登记号、单证版本、批次溯源、入库扫描记录、状态查询、长期复核与放行等术语的办理去向说明。",
+        "url": "https://yuancheng.bench/faq"
       }
     ],
     "message_budget": 16,
@@ -379,7 +387,10 @@
       },
       "knowledge": [],
       "tools": {
-        "forwarder.main.1.delegate": {
+        "forwarder.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "forwarder.main.2.delegate": {
           "kind": "delegate",
           "target": "warehouse",
           "workflow": "main",
@@ -387,14 +398,14 @@
             "tracking"
           ]
         },
-        "forwarder.main.2.refer": {
+        "forwarder.main.3.refer": {
           "kind": "refer",
           "contacts": [
             "exporter",
             "customsdesk"
           ]
         },
-        "forwarder.main.3.reply": {
+        "forwarder.main.4.reply": {
           "kind": "reply"
         }
       },
@@ -414,26 +425,35 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "内部转交",
-              "tool": "forwarder.main.1.delegate",
-              "delay": {
-                "mode": "business",
-                "minutes": 60
-              }
-            },
-            {
-              "id": "main_2",
-              "label": "查询联系人目录并转介",
-              "tool": "forwarder.main.2.refer",
+              "label": "发出受理回执",
+              "tool": "forwarder.main.1.acknowledge",
               "delay": {
                 "mode": "business",
                 "minutes": 30
               }
             },
             {
+              "id": "main_2",
+              "label": "内部转交",
+              "tool": "forwarder.main.2.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
               "id": "main_3",
+              "label": "查询联系人目录并转介",
+              "tool": "forwarder.main.3.refer",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_4",
               "label": "向请求者回复已取得的结果",
-              "tool": "forwarder.main.3.reply",
+              "tool": "forwarder.main.4.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -584,36 +604,42 @@
         "declaration_latest"
       ],
       "tools": {
-        "exporter.main.1.lookup": {
+        "exporter.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "exporter.main.2.lookup": {
           "kind": "lookup",
           "facts": [
             "declaration"
           ]
         },
-        "exporter.main.2.document": {
+        "exporter.main.3.document": {
           "kind": "document",
           "facts": [
             "declaration"
           ]
         },
-        "exporter.main.3.reply": {
+        "exporter.main.4.reply": {
           "kind": "reply"
         },
-        "exporter.refresh.1.lookup": {
+        "exporter.refresh.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "exporter.refresh.2.lookup": {
           "kind": "lookup",
           "facts": [
             "declaration_latest",
             "batch_trace"
           ]
         },
-        "exporter.refresh.2.document": {
+        "exporter.refresh.3.document": {
           "kind": "document",
           "facts": [
             "declaration_latest",
             "batch_trace"
           ]
         },
-        "exporter.refresh.3.reply": {
+        "exporter.refresh.4.reply": {
           "kind": "reply"
         }
       },
@@ -632,8 +658,17 @@
           "steps": [
             {
               "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "exporter.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
               "label": "查询业务记录",
-              "tool": "exporter.main.1.lookup",
+              "tool": "exporter.main.2.lookup",
               "delay": {
                 "mode": "business",
                 "minutes": 120,
@@ -641,18 +676,18 @@
               }
             },
             {
-              "id": "main_2",
+              "id": "main_3",
               "label": "签发书面确认",
-              "tool": "exporter.main.2.document",
+              "tool": "exporter.main.3.document",
               "delay": {
                 "mode": "business",
                 "minutes": 60
               }
             },
             {
-              "id": "main_3",
+              "id": "main_4",
               "label": "向请求者回复已取得的结果",
-              "tool": "exporter.main.3.reply",
+              "tool": "exporter.main.4.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -694,8 +729,17 @@
           "steps": [
             {
               "id": "refresh_1",
+              "label": "发出受理回执",
+              "tool": "exporter.refresh.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "refresh_2",
               "label": "查询业务记录",
-              "tool": "exporter.refresh.1.lookup",
+              "tool": "exporter.refresh.2.lookup",
               "delay": {
                 "mode": "business",
                 "minutes": 120,
@@ -703,18 +747,18 @@
               }
             },
             {
-              "id": "refresh_2",
+              "id": "refresh_3",
               "label": "签发书面确认",
-              "tool": "exporter.refresh.2.document",
+              "tool": "exporter.refresh.3.document",
               "delay": {
                 "mode": "business",
                 "minutes": 60
               }
             },
             {
-              "id": "refresh_3",
+              "id": "refresh_4",
               "label": "向请求者回复已取得的结果",
-              "tool": "exporter.refresh.3.reply",
+              "tool": "exporter.refresh.4.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -764,7 +808,10 @@
       },
       "knowledge": [],
       "tools": {
-        "customsdesk.main.1.delegate": {
+        "customsdesk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "customsdesk.main.2.delegate": {
           "kind": "delegate",
           "target": "broker",
           "workflow": "preliminary",
@@ -773,10 +820,13 @@
             "declaration_version"
           ]
         },
-        "customsdesk.main.2.reply": {
+        "customsdesk.main.3.reply": {
           "kind": "reply"
         },
-        "customsdesk.final.1.delegate": {
+        "customsdesk.final.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "customsdesk.final.2.delegate": {
           "kind": "delegate",
           "target": "broker",
           "workflow": "main",
@@ -787,7 +837,7 @@
             "batch_trace"
           ]
         },
-        "customsdesk.final.2.reply": {
+        "customsdesk.final.3.reply": {
           "kind": "reply"
         },
         "customsdesk.direct_entry.1.refer": {
@@ -833,17 +883,26 @@
           "steps": [
             {
               "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "customsdesk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
               "label": "内部转交",
-              "tool": "customsdesk.main.1.delegate",
+              "tool": "customsdesk.main.2.delegate",
               "delay": {
                 "mode": "business",
                 "minutes": 60
               }
             },
             {
-              "id": "main_2",
+              "id": "main_3",
               "label": "向请求者回复已取得的结果",
-              "tool": "customsdesk.main.2.reply",
+              "tool": "customsdesk.main.3.reply",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -917,17 +976,26 @@
           "steps": [
             {
               "id": "final_1",
+              "label": "发出受理回执",
+              "tool": "customsdesk.final.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "final_2",
               "label": "内部转交",
-              "tool": "customsdesk.final.1.delegate",
+              "tool": "customsdesk.final.2.delegate",
               "delay": {
                 "mode": "business",
                 "minutes": 60
               }
             },
             {
-              "id": "final_2",
+              "id": "final_3",
               "label": "向请求者回复已取得的结果",
-              "tool": "customsdesk.final.2.reply",
+              "tool": "customsdesk.final.3.reply",
               "delay": {
                 "mode": "business",
                 "minutes": 30

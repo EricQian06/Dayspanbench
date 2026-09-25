@@ -17,7 +17,10 @@
     },
     "knowledge": [],
     "tools": {
-      "forwarder.main.1.delegate": {
+      "forwarder.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "forwarder.main.2.delegate": {
         "kind": "delegate",
         "target": "warehouse",
         "workflow": "main",
@@ -25,14 +28,14 @@
           "tracking"
         ]
       },
-      "forwarder.main.2.refer": {
+      "forwarder.main.3.refer": {
         "kind": "refer",
         "contacts": [
           "exporter",
           "customsdesk"
         ]
       },
-      "forwarder.main.3.reply": {
+      "forwarder.main.4.reply": {
         "kind": "reply"
       }
     },
@@ -52,26 +55,35 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "内部转交",
-            "tool": "forwarder.main.1.delegate",
-            "delay": {
-              "mode": "business",
-              "minutes": 60
-            }
-          },
-          {
-            "id": "main_2",
-            "label": "查询联系人目录并转介",
-            "tool": "forwarder.main.2.refer",
+            "label": "发出受理回执",
+            "tool": "forwarder.main.1.acknowledge",
             "delay": {
               "mode": "business",
               "minutes": 30
             }
           },
           {
+            "id": "main_2",
+            "label": "内部转交",
+            "tool": "forwarder.main.2.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
             "id": "main_3",
+            "label": "查询联系人目录并转介",
+            "tool": "forwarder.main.3.refer",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
             "label": "向请求者回复已取得的结果",
-            "tool": "forwarder.main.3.reply",
+            "tool": "forwarder.main.4.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0

@@ -116,6 +116,17 @@ class CharacterSimulatorTests(unittest.TestCase):
                 self.assertEqual(result["status"], "received")
                 self.assertFalse(env.simulator_failure)
 
+    def test_bare_json_value_json_is_normalized(self):
+        # Models may emit value_json as a bare number/bool instead of the
+        # schema-required JSON-encoded string; routing must still succeed.
+        view = {"actor_id": "test", "message": "需要500件M26", "fields": {}, "history": [],
+                "workflows": [{"id": "main", "required_fields": ["quantity"]}],
+                "existing_workflow_id": None}
+        client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
+            {"key": "quantity", "value_json": 500, "source_quote": "500"}]})
+        self.assertEqual(LLMSimulator(client, "test").route(view),
+                         {"workflow_id": "main", "fields": {"quantity": 500}})
+
     def test_conflicting_explicit_field_echo_still_invalidates_simulator(self):
         task = load(2)
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
@@ -393,6 +404,10 @@ class ServerIntegrationTests(unittest.TestCase):
                 requests.append({"tool": "send_email", "arguments": {"recipient": mailbox(task, action["to"]), "text": action["text"], "fields": task["public"]["user_fields"]}})
             elif action["op"] == "wait_for":
                 requests.append({"tool": "wait_until", "arguments": {"until": task["deadline_at"]}})
+        # Extra waits absorb the mid-workflow acknowledgement receipts so the
+        # submission happens after the final reply, not after an early ack.
+        for _ in range(4):
+            requests.append({"tool": "wait_until", "arguments": {"until": task["deadline_at"]}})
         requests.append({"tool": "submit_answer", "arguments": {"answer": answer}})
         with tempfile.TemporaryDirectory() as folder:
             completed = subprocess.run([sys.executable, "scripts/serve.py", "--task", "DSB-01", "--run-dir", folder],

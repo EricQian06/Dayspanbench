@@ -19,36 +19,42 @@
       "declaration_latest"
     ],
     "tools": {
-      "exporter.main.1.lookup": {
+      "exporter.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "exporter.main.2.lookup": {
         "kind": "lookup",
         "facts": [
           "declaration"
         ]
       },
-      "exporter.main.2.document": {
+      "exporter.main.3.document": {
         "kind": "document",
         "facts": [
           "declaration"
         ]
       },
-      "exporter.main.3.reply": {
+      "exporter.main.4.reply": {
         "kind": "reply"
       },
-      "exporter.refresh.1.lookup": {
+      "exporter.refresh.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "exporter.refresh.2.lookup": {
         "kind": "lookup",
         "facts": [
           "declaration_latest",
           "batch_trace"
         ]
       },
-      "exporter.refresh.2.document": {
+      "exporter.refresh.3.document": {
         "kind": "document",
         "facts": [
           "declaration_latest",
           "batch_trace"
         ]
       },
-      "exporter.refresh.3.reply": {
+      "exporter.refresh.4.reply": {
         "kind": "reply"
       }
     },
@@ -67,8 +73,17 @@
         "steps": [
           {
             "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "exporter.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
             "label": "查询业务记录",
-            "tool": "exporter.main.1.lookup",
+            "tool": "exporter.main.2.lookup",
             "delay": {
               "mode": "business",
               "minutes": 120,
@@ -76,18 +91,18 @@
             }
           },
           {
-            "id": "main_2",
+            "id": "main_3",
             "label": "签发书面确认",
-            "tool": "exporter.main.2.document",
+            "tool": "exporter.main.3.document",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "main_3",
+            "id": "main_4",
             "label": "向请求者回复已取得的结果",
-            "tool": "exporter.main.3.reply",
+            "tool": "exporter.main.4.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -129,8 +144,17 @@
         "steps": [
           {
             "id": "refresh_1",
+            "label": "发出受理回执",
+            "tool": "exporter.refresh.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "refresh_2",
             "label": "查询业务记录",
-            "tool": "exporter.refresh.1.lookup",
+            "tool": "exporter.refresh.2.lookup",
             "delay": {
               "mode": "business",
               "minutes": 120,
@@ -138,18 +162,18 @@
             }
           },
           {
-            "id": "refresh_2",
+            "id": "refresh_3",
             "label": "签发书面确认",
-            "tool": "exporter.refresh.2.document",
+            "tool": "exporter.refresh.3.document",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "refresh_3",
+            "id": "refresh_4",
             "label": "向请求者回复已取得的结果",
-            "tool": "exporter.refresh.3.reply",
+            "tool": "exporter.refresh.4.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0

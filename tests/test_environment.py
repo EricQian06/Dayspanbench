@@ -79,12 +79,12 @@ class EnvironmentTests(unittest.TestCase):
     def test_golden_calendar_completion_times(self):
         # Deterministic under the default latency seed; guards against unintended
         # drift in admission/jitter behavior.
-        expected = {1: "2026-11-10T05:44:00+00:00", 2: "2026-11-11T11:47:00+00:00",
-                    3: "2027-02-02T07:04:00+00:00", 4: "2026-11-25T02:58:00+00:00",
-                    5: "2026-12-08T03:48:00+00:00", 6: "2026-11-17T08:56:00+00:00",
-                    7: "2027-06-07T03:11:00+00:00", 8: "2026-11-11T06:57:00+00:00",
-                    9: "2026-12-28T07:49:00+00:00", 10: "2026-11-09T03:24:00+00:00",
-                    11: "2027-03-31T12:51:00+00:00", 12: "2027-09-02T07:00:00+00:00"}
+        expected = {1: "2026-11-09T07:14:00+00:00", 2: "2026-11-11T11:44:00+00:00",
+                    3: "2027-02-02T07:04:00+00:00", 4: "2026-11-25T02:50:00+00:00",
+                    5: "2026-12-07T08:25:00+00:00", 6: "2026-11-17T08:52:00+00:00",
+                    7: "2027-06-07T02:00:00+00:00", 8: "2026-11-11T06:48:00+00:00",
+                    9: "2026-12-28T07:49:00+00:00", 10: "2026-11-09T02:56:00+00:00",
+                    11: "2027-03-31T12:50:00+00:00", 12: "2027-09-02T07:00:00+00:00"}
         for n, time in expected.items():
             with self.subTest(task=n):
                 env, _, _ = run_reference(load(n))
@@ -169,6 +169,21 @@ class EnvironmentTests(unittest.TestCase):
         self.assertNotIn('"expected_conclusion"', visible)
         self.assertNotIn('"facts"', visible)
         self.assertNotIn("全天维修", visible)
+
+    def test_unit_variant_field_still_admits(self):
+        # A quantity quoted with a synonym unit ("8公斤") describes the same case
+        # as the canonical user_fields spelling ("8kg") and must not bounce to
+        # needs_information; a genuinely different quantity still must.
+        task = load(2)
+        env = Environment(task)
+        api = env.tools()
+        variant = {**task["public"]["user_fields"], "pet_weight": "8公斤"}
+        result = api.send_email(mailbox(task, "landlord"), "咨询宠物入住", variant)
+        while env.events:
+            env.advance(env.events[0][0])
+        case = env.cases[result["case_id"]]
+        self.assertEqual(case["fields"]["pet_weight"], "8kg")
+        self.assertNotEqual(case["state"], "needs_information")
 
     def test_followup_does_not_change_completion(self):
         task = load(2)
@@ -462,7 +477,10 @@ class EnvironmentTests(unittest.TestCase):
         api = env.tools()
         api.visit_page("https://lengchuan.bench/contact")
         first = api.send_email(mailbox(task, "sales"), "初次报价", {"quantity": 500, "spec": "M26-Q7"})
-        api.wait_until("2026-11-10T12:00:00+08:00")  # first quote has been replied
+        # First quote has been replied; drain the queue instead of guessing
+        # the exact (jittered) reply time.
+        while env.cases[first["case_id"]]["state"] != "replied" and env.events:
+            env.advance(env.events[0][0])
         self.assertEqual(env.cases[first["case_id"]]["state"], "replied")
         # A follow-up on the replied case that names a new request is re-routed
         # as a fresh case: it cannot restart or skip the original one.

@@ -206,8 +206,8 @@
     }
   },
   "reply_delay": [
-    120,
-    240
+    20,
+    45
   ],
   "public": {
     "id": "DSB-04",
@@ -546,7 +546,10 @@
         "window"
       ],
       "tools": {
-        "instrument.main.1.delegate": {
+        "instrument.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "instrument.main.2.delegate": {
           "kind": "delegate",
           "target": "stores",
           "workflow": "main",
@@ -554,25 +557,25 @@
             "sample_id"
           ]
         },
-        "instrument.main.2.lookup": {
+        "instrument.main.3.lookup": {
           "kind": "lookup",
           "facts": []
         },
-        "instrument.main.3.lookup": {
+        "instrument.main.4.lookup": {
           "kind": "lookup",
           "facts": [
             "window",
             "price"
           ]
         },
-        "instrument.main.4.document": {
+        "instrument.main.5.document": {
           "kind": "document",
           "facts": [
             "window",
             "price"
           ]
         },
-        "instrument.main.5.reply": {
+        "instrument.main.6.reply": {
           "kind": "reply"
         }
       },
@@ -593,44 +596,53 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "内部转交",
-              "tool": "instrument.main.1.delegate",
-              "delay": {
-                "mode": "business",
-                "minutes": 60
-              }
-            },
-            {
-              "id": "main_2",
-              "label": "连续7天稳定性校准，可跨夜运行",
-              "tool": "instrument.main.2.lookup",
-              "delay": {
-                "mode": "elapsed",
-                "minutes": 10080
-              }
-            },
-            {
-              "id": "main_3",
-              "label": "核对校准结果和使用窗口",
-              "tool": "instrument.main.3.lookup",
-              "delay": {
-                "mode": "business",
-                "minutes": 240
-              }
-            },
-            {
-              "id": "main_4",
-              "label": "签发书面确认",
-              "tool": "instrument.main.4.document",
+              "label": "发出受理回执",
+              "tool": "instrument.main.1.acknowledge",
               "delay": {
                 "mode": "business",
                 "minutes": 30
               }
             },
             {
+              "id": "main_2",
+              "label": "内部转交",
+              "tool": "instrument.main.2.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "连续7天稳定性校准，可跨夜运行",
+              "tool": "instrument.main.3.lookup",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 10080
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "核对校准结果和使用窗口",
+              "tool": "instrument.main.4.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 240
+              }
+            },
+            {
               "id": "main_5",
+              "label": "签发书面确认",
+              "tool": "instrument.main.5.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_6",
               "label": "向请求者回复已取得的结果",
-              "tool": "instrument.main.5.reply",
+              "tool": "instrument.main.6.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0

@@ -206,8 +206,8 @@
     }
   },
   "reply_delay": [
-    60,
-    120
+    12,
+    30
   ],
   "public": {
     "id": "DSB-06",
@@ -371,7 +371,10 @@
             "covered"
           ]
         },
-        "support.main.2.delegate": {
+        "support.main.2.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "support.main.3.delegate": {
           "kind": "delegate",
           "target": "engineer",
           "workflow": "main",
@@ -380,7 +383,7 @@
             "symptom"
           ]
         },
-        "support.main.3.reply": {
+        "support.main.4.reply": {
           "kind": "reply"
         }
       },
@@ -409,17 +412,26 @@
             },
             {
               "id": "main_2",
+              "label": "发出受理回执",
+              "tool": "support.main.2.acknowledge",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            },
+            {
+              "id": "main_3",
               "label": "内部转交",
-              "tool": "support.main.2.delegate",
+              "tool": "support.main.3.delegate",
               "delay": {
                 "mode": "business",
                 "minutes": 60
               }
             },
             {
-              "id": "main_3",
+              "id": "main_4",
               "label": "向请求者回复已取得的结果",
-              "tool": "support.main.3.reply",
+              "tool": "support.main.4.reply",
               "delay": {
                 "mode": "business",
                 "minutes": 60

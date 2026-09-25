@@ -91,6 +91,17 @@ def validate_task(task):
     check(isinstance(delay, list) and len(delay) == 2
           and all(isinstance(m, int) and m > 0 for m in delay) and delay[0] <= delay[1],
           "reply_delay must be two ascending positive business minutes [min, max]")
+    # The random admission delay must stay within 25% of every recipient's
+    # shortest contiguous work window, so a reply never spills into the next
+    # window because of randomness alone.
+    def _minutes(span):
+        start, end = span
+        return int(end[:2]) * 60 + int(end[3:]) - int(start[:2]) * 60 - int(start[3:])
+    used = {actor["calendar"] for actor in task["actors"]}
+    min_window = min(_minutes(span) for name, spec in task["calendars"].items()
+                     if name in used for span in spec["hours"])
+    check(delay[1] <= min_window // 4,
+          f"reply_delay max {delay[1]}min exceeds 25% of shortest work window {min_window}min")
     # Every actor that some workflow refers to, or that the agent may need to
     # follow up on, must be reachable by mail: referral prose carries mailboxes.
     for actor in actors.values():

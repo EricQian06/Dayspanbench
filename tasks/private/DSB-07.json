@@ -206,8 +206,8 @@
     }
   },
   "reply_delay": [
-    120,
-    240
+    20,
+    45
   ],
   "public": {
     "id": "DSB-07",
@@ -377,7 +377,10 @@
         "archive.main.3.reply": {
           "kind": "reply"
         },
-        "archive.digitize.1.delegate": {
+        "archive.digitize.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "archive.digitize.2.delegate": {
           "kind": "delegate",
           "target": "digitizer",
           "workflow": "main",
@@ -385,7 +388,7 @@
             "archive_id"
           ]
         },
-        "archive.digitize.2.reply": {
+        "archive.digitize.3.reply": {
           "kind": "reply"
         }
       },
@@ -465,17 +468,26 @@
           "steps": [
             {
               "id": "digitize_1",
+              "label": "发出受理回执",
+              "tool": "archive.digitize.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "digitize_2",
               "label": "内部转交",
-              "tool": "archive.digitize.1.delegate",
+              "tool": "archive.digitize.2.delegate",
               "delay": {
                 "mode": "business",
                 "minutes": 120
               }
             },
             {
-              "id": "digitize_2",
+              "id": "digitize_3",
               "label": "向请求者回复已取得的结果",
-              "tool": "archive.digitize.2.reply",
+              "tool": "archive.digitize.3.reply",
               "delay": {
                 "mode": "business",
                 "minutes": 120
@@ -526,21 +538,24 @@
         "online"
       ],
       "tools": {
-        "rights.main.1.lookup": {
+        "rights.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "rights.main.2.lookup": {
           "kind": "lookup",
           "facts": [
             "exhibit",
             "online"
           ]
         },
-        "rights.main.2.document": {
+        "rights.main.3.document": {
           "kind": "document",
           "facts": [
             "exhibit",
             "online"
           ]
         },
-        "rights.main.3.reply": {
+        "rights.main.4.reply": {
           "kind": "reply"
         }
       },
@@ -560,8 +575,17 @@
           "steps": [
             {
               "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "rights.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
               "label": "查询业务记录",
-              "tool": "rights.main.1.lookup",
+              "tool": "rights.main.2.lookup",
               "delay": {
                 "mode": "business",
                 "minutes": 480,
@@ -569,18 +593,18 @@
               }
             },
             {
-              "id": "main_2",
+              "id": "main_3",
               "label": "签发书面确认",
-              "tool": "rights.main.2.document",
+              "tool": "rights.main.3.document",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
               }
             },
             {
-              "id": "main_3",
+              "id": "main_4",
               "label": "向请求者回复已取得的结果",
-              "tool": "rights.main.3.reply",
+              "tool": "rights.main.4.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0

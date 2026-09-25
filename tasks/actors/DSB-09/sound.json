@@ -20,19 +20,22 @@
       "earliest"
     ],
     "tools": {
-      "sound.main.1.lookup": {
+      "sound.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "sound.main.2.lookup": {
         "kind": "lookup",
         "facts": [
           "consultation_receipt"
         ]
       },
-      "sound.main.2.document": {
+      "sound.main.3.document": {
         "kind": "document",
         "facts": [
           "consultation_receipt"
         ]
       },
-      "sound.main.3.reply": {
+      "sound.main.4.reply": {
         "kind": "reply"
       },
       "sound.final.1.lookup": {
@@ -71,8 +74,17 @@
         "steps": [
           {
             "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "sound.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
             "label": "查询业务记录",
-            "tool": "sound.main.1.lookup",
+            "tool": "sound.main.2.lookup",
             "delay": {
               "mode": "business",
               "minutes": 60,
@@ -80,18 +92,18 @@
             }
           },
           {
-            "id": "main_2",
+            "id": "main_3",
             "label": "签发书面确认",
-            "tool": "sound.main.2.document",
+            "tool": "sound.main.3.document",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
             }
           },
           {
-            "id": "main_3",
+            "id": "main_4",
             "label": "向请求者回复已取得的结果",
-            "tool": "sound.main.3.reply",
+            "tool": "sound.main.4.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0

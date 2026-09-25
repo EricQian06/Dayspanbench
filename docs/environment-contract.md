@@ -77,7 +77,7 @@ stateDiagram-v2
 | `web_search` | `query` | 浏览器搜索合成公开网络，返回结果链接（网址+标题+摘要），不含正文 |
 | `visit_page` | `url` | 访问网页地址（形如`https://组织拼音.bench/页面`），取得正文及该页联系人的具体联络方式；仅接受`web_search`返回的网址 |
 | `send_email` | `recipient,text,fields,case_id?` | 向指定邮箱地址发送电子邮件：首次联系或补件/跟进；收件人须为已发现联系人的邮箱。投递回执不代表邮箱真实存在（无人使用的邮箱永无回复），也不代表该事项由收件人负责（不负责时会在其工作时间收到转介说明）。`case_id`用于未完结事项的补件；对已完结或处理中的事项，跟进邮件若包含新的具体请求会被重新路由为新事项（按正常受理延迟排队），否则仅收到确认回执，不影响原事项 |
-| `call` | `recipient,text,fields?` | 拨打电话：仅对方接听时段有人接听；口头答复不构成书面凭证；计入消息预算 |
+| `call` | `recipient,text,fields?` | 拨打电话：`recipient`填写联系人卡片中的`id`（不是姓名、邮箱或电话号码）；仅对方接听时段有人接听；口头答复不构成书面凭证；计入消息预算 |
 | `read_inbox` | `after=0` | 读取自游标后的可见消息 |
 | `wait_until` | `until,wake_on_message=true` | 推进虚拟时钟；不会真实睡眠 |
 | `submit_answer` | `answer` | 唯一一次最终提交和评分 |

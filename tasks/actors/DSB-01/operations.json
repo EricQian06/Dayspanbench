@@ -23,7 +23,10 @@
           "slot"
         ]
       },
-      "operations.main.2.delegate": {
+      "operations.main.2.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "operations.main.3.delegate": {
         "kind": "delegate",
         "target": "technician",
         "workflow": "main",
@@ -32,7 +35,7 @@
           "event_time"
         ]
       },
-      "operations.main.3.reply": {
+      "operations.main.4.reply": {
         "kind": "reply"
       }
     },
@@ -62,17 +65,26 @@
           },
           {
             "id": "main_2",
+            "label": "发出受理回执",
+            "tool": "operations.main.2.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
             "label": "内部转交",
-            "tool": "operations.main.2.delegate",
+            "tool": "operations.main.3.delegate",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "main_3",
+            "id": "main_4",
             "label": "向请求者回复已取得的结果",
-            "tool": "operations.main.3.reply",
+            "tool": "operations.main.4.reply",
             "delay": {
               "mode": "business",
               "minutes": 30

@@ -103,7 +103,17 @@
   "agent_messages": [
     {
       "id": "MSG-0001",
-      "at": "2026-11-05T07:49:00+00:00",
+      "at": "2026-11-04T01:26:00+00:00",
+      "from": "xieyin@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是晴港政务咨询台·谢茵。您提交的材料已核验齐全，本事项已受理并按流程转办，办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2026-11-05T08:11:00+00:00",
       "from": "xieyin@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
@@ -122,7 +132,7 @@
         {
           "id": "EV-0002",
           "issuer": "land",
-          "issued_at": "2026-11-05T06:06:00+00:00",
+          "issued_at": "2026-11-05T06:21:00+00:00",
           "text": "拟用地点属于街区公共空间管理处管辖；不是私人场地。",
           "value": "街区公共空间管理处",
           "valid_until": null,
@@ -131,7 +141,17 @@
       ]
     },
     {
-      "id": "MSG-0002",
+      "id": "MSG-0003",
+      "at": "2026-11-06T01:27:00+00:00",
+      "from": "lusheng@bench.example",
+      "case_id": "CASE-0003",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是活动环境咨询员·陆笙。您提交的材料已核验齐全，本事项已受理并按流程转办，办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0004",
       "at": "2026-12-03T02:50:00+00:00",
       "from": "lusheng@bench.example",
       "case_id": "CASE-0003",
@@ -160,7 +180,7 @@
       ]
     },
     {
-      "id": "MSG-0003",
+      "id": "MSG-0005",
       "at": "2026-12-28T07:49:00+00:00",
       "from": "lusheng@bench.example",
       "case_id": "CASE-0004",
@@ -171,7 +191,7 @@
         {
           "id": "EV-0005",
           "issuer": "sound",
-          "issued_at": "2026-12-28T06:14:00+00:00",
+          "issued_at": "2026-12-28T06:23:00+00:00",
           "text": "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。",
           "value": "临时扩声活动预咨询",
           "valid_until": null,
@@ -180,7 +200,7 @@
         {
           "id": "EV-0006",
           "issuer": "sound",
-          "issued_at": "2026-12-28T06:14:00+00:00",
+          "issued_at": "2026-12-28T06:23:00+00:00",
           "text": "需要准备平面图、时段说明和声设备清单。",
           "value": [
             "平面图",
@@ -193,7 +213,7 @@
         {
           "id": "EV-0007",
           "issuer": "sound",
-          "issued_at": "2026-12-28T06:14:00+00:00",
+          "issued_at": "2026-12-28T06:23:00+00:00",
           "text": "按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日；不是活动批准日期。",
           "value": "2027-01-04",
           "valid_until": null,
@@ -254,7 +274,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-04T02:48:00+00:00",
+      "at": "2026-11-03T07:32:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -262,17 +282,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-04T02:48:00+00:00",
+      "at": "2026-11-03T07:32:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "service",
       "step": "main_1",
-      "start_at": "2026-11-04T02:48:00+00:00",
-      "due_at": "2026-11-04T05:05:00+00:00",
+      "start_at": "2026-11-03T07:32:00+00:00",
+      "due_at": "2026-11-03T08:50:00+00:00",
       "tool": "service.main.1.lookup"
     },
     {
-      "at": "2026-11-04T02:48:00+00:00",
+      "at": "2026-11-03T07:32:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -280,7 +300,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-04T05:05:00+00:00",
+      "at": "2026-11-03T08:50:00+00:00",
       "kind": "tool_call",
       "actor": "service",
       "case_id": "CASE-0001",
@@ -288,7 +308,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-04T05:05:00+00:00",
+      "at": "2026-11-03T08:50:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -296,17 +316,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-04T05:05:00+00:00",
+      "at": "2026-11-03T08:50:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "service",
       "step": "main_2",
-      "start_at": "2026-11-04T05:05:00+00:00",
-      "due_at": "2026-11-04T06:23:00+00:00",
-      "tool": "service.main.2.delegate"
+      "start_at": "2026-11-03T08:50:00+00:00",
+      "due_at": "2026-11-04T01:26:00+00:00",
+      "tool": "service.main.2.acknowledge"
     },
     {
-      "at": "2026-11-04T05:05:00+00:00",
+      "at": "2026-11-03T08:50:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -314,15 +334,56 @@
       "new": "working"
     },
     {
-      "at": "2026-11-04T06:23:00+00:00",
+      "at": "2026-11-04T01:26:00+00:00",
       "kind": "tool_call",
       "actor": "service",
       "case_id": "CASE-0001",
-      "tool": "service.main.2.delegate",
+      "tool": "service.main.2.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2026-11-04T01:26:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2026-11-04T01:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "service",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-04T01:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "service",
+      "step": "main_3",
+      "start_at": "2026-11-04T01:26:00+00:00",
+      "due_at": "2026-11-04T02:39:00+00:00",
+      "tool": "service.main.3.delegate"
+    },
+    {
+      "at": "2026-11-04T01:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "service",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-04T02:39:00+00:00",
+      "kind": "tool_call",
+      "actor": "service",
+      "case_id": "CASE-0001",
+      "tool": "service.main.3.delegate",
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-04T06:23:00+00:00",
+      "at": "2026-11-04T02:39:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -330,7 +391,7 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-04T06:23:00+00:00",
+      "at": "2026-11-04T02:39:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0002",
       "actor": "land",
@@ -338,7 +399,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-04T06:23:00+00:00",
+      "at": "2026-11-04T02:39:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "land",
@@ -346,7 +407,7 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-04T06:23:00+00:00",
+      "at": "2026-11-04T02:39:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "land",
@@ -386,7 +447,7 @@
       "actor": "land",
       "step": "main_2",
       "start_at": "2026-11-05T05:00:00+00:00",
-      "due_at": "2026-11-05T06:06:00+00:00",
+      "due_at": "2026-11-05T06:21:00+00:00",
       "tool": "land.main.2.document"
     },
     {
@@ -398,7 +459,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-05T06:06:00+00:00",
+      "at": "2026-11-05T06:21:00+00:00",
       "kind": "tool_call",
       "actor": "land",
       "case_id": "CASE-0002",
@@ -406,7 +467,7 @@
       "tool_kind": "document"
     },
     {
-      "at": "2026-11-05T06:06:00+00:00",
+      "at": "2026-11-05T06:21:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "land",
@@ -414,17 +475,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-05T06:06:00+00:00",
+      "at": "2026-11-05T06:21:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "land",
       "step": "main_3",
-      "start_at": "2026-11-05T06:06:00+00:00",
-      "due_at": "2026-11-05T06:21:00+00:00",
+      "start_at": "2026-11-05T06:21:00+00:00",
+      "due_at": "2026-11-05T06:36:00+00:00",
       "tool": "land.main.3.reply"
     },
     {
-      "at": "2026-11-05T06:06:00+00:00",
+      "at": "2026-11-05T06:21:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "land",
@@ -432,7 +493,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-05T06:21:00+00:00",
+      "at": "2026-11-05T06:36:00+00:00",
       "kind": "tool_call",
       "actor": "land",
       "case_id": "CASE-0002",
@@ -440,7 +501,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-05T06:21:00+00:00",
+      "at": "2026-11-05T06:36:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "land",
@@ -448,13 +509,13 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-05T06:21:00+00:00",
+      "at": "2026-11-05T06:36:00+00:00",
       "kind": "handoff_return",
       "case_id": "CASE-0002",
       "parent": "CASE-0001"
     },
     {
-      "at": "2026-11-05T06:21:00+00:00",
+      "at": "2026-11-05T06:36:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -462,17 +523,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-05T06:21:00+00:00",
+      "at": "2026-11-05T06:36:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "service",
-      "step": "main_3",
-      "start_at": "2026-11-05T06:21:00+00:00",
-      "due_at": "2026-11-05T07:34:00+00:00",
-      "tool": "service.main.3.refer"
+      "step": "main_4",
+      "start_at": "2026-11-05T06:36:00+00:00",
+      "due_at": "2026-11-05T07:56:00+00:00",
+      "tool": "service.main.4.refer"
     },
     {
-      "at": "2026-11-05T06:21:00+00:00",
+      "at": "2026-11-05T06:36:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -480,15 +541,15 @@
       "new": "working"
     },
     {
-      "at": "2026-11-05T07:34:00+00:00",
+      "at": "2026-11-05T07:56:00+00:00",
       "kind": "tool_call",
       "actor": "service",
       "case_id": "CASE-0001",
-      "tool": "service.main.3.refer",
+      "tool": "service.main.4.refer",
       "tool_kind": "refer"
     },
     {
-      "at": "2026-11-05T07:34:00+00:00",
+      "at": "2026-11-05T07:56:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -496,17 +557,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-05T07:34:00+00:00",
+      "at": "2026-11-05T07:56:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "service",
-      "step": "main_4",
-      "start_at": "2026-11-05T07:34:00+00:00",
-      "due_at": "2026-11-05T07:49:00+00:00",
-      "tool": "service.main.4.reply"
+      "step": "main_5",
+      "start_at": "2026-11-05T07:56:00+00:00",
+      "due_at": "2026-11-05T08:11:00+00:00",
+      "tool": "service.main.5.reply"
     },
     {
-      "at": "2026-11-05T07:34:00+00:00",
+      "at": "2026-11-05T07:56:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -514,15 +575,15 @@
       "new": "working"
     },
     {
-      "at": "2026-11-05T07:49:00+00:00",
+      "at": "2026-11-05T08:11:00+00:00",
       "kind": "tool_call",
       "actor": "service",
       "case_id": "CASE-0001",
-      "tool": "service.main.4.reply",
+      "tool": "service.main.5.reply",
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-05T07:49:00+00:00",
+      "at": "2026-11-05T08:11:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "service",
@@ -530,14 +591,14 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-05T07:49:00+00:00",
+      "at": "2026-11-05T08:11:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0001",
+      "message_id": "MSG-0002",
       "case_id": "CASE-0001",
       "status": "reply"
     },
     {
-      "at": "2026-11-05T07:49:00+00:00",
+      "at": "2026-11-05T08:11:00+00:00",
       "kind": "agent_send",
       "recipient": "lusheng@bench.example",
       "text": "请确认本轮扩声意见征集及回执",
@@ -548,7 +609,7 @@
       "channel": "email"
     },
     {
-      "at": "2026-11-05T07:49:00+00:00",
+      "at": "2026-11-05T08:11:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0003",
       "actor": "sound",
@@ -556,7 +617,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-06T02:54:00+00:00",
+      "at": "2026-11-05T08:43:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "sound",
@@ -564,14 +625,55 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T02:54:00+00:00",
+      "at": "2026-11-05T08:43:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "sound",
       "step": "main_1",
+      "start_at": "2026-11-05T08:43:00+00:00",
+      "due_at": "2026-11-06T01:27:00+00:00",
+      "tool": "sound.main.1.acknowledge"
+    },
+    {
+      "at": "2026-11-05T08:43:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "sound",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-06T01:27:00+00:00",
+      "kind": "tool_call",
+      "actor": "sound",
+      "case_id": "CASE-0003",
+      "tool": "sound.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2026-11-06T01:27:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0003",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2026-11-06T01:27:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "sound",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-06T01:27:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0003",
+      "actor": "sound",
+      "step": "main_2",
       "start_at": "2026-12-03T01:00:00+00:00",
       "due_at": "2026-12-03T02:20:00+00:00",
-      "tool": "sound.main.1.lookup"
+      "tool": "sound.main.2.lookup"
     },
     {
       "at": "2026-12-03T01:00:00+00:00",
@@ -586,7 +688,7 @@
       "kind": "tool_call",
       "actor": "sound",
       "case_id": "CASE-0003",
-      "tool": "sound.main.1.lookup",
+      "tool": "sound.main.2.lookup",
       "tool_kind": "lookup"
     },
     {
@@ -602,10 +704,10 @@
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "sound",
-      "step": "main_2",
+      "step": "main_3",
       "start_at": "2026-12-03T02:20:00+00:00",
       "due_at": "2026-12-03T02:35:00+00:00",
-      "tool": "sound.main.2.document"
+      "tool": "sound.main.3.document"
     },
     {
       "at": "2026-12-03T02:20:00+00:00",
@@ -620,7 +722,7 @@
       "kind": "tool_call",
       "actor": "sound",
       "case_id": "CASE-0003",
-      "tool": "sound.main.2.document",
+      "tool": "sound.main.3.document",
       "tool_kind": "document"
     },
     {
@@ -636,10 +738,10 @@
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "sound",
-      "step": "main_3",
+      "step": "main_4",
       "start_at": "2026-12-03T02:35:00+00:00",
       "due_at": "2026-12-03T02:50:00+00:00",
-      "tool": "sound.main.3.reply"
+      "tool": "sound.main.4.reply"
     },
     {
       "at": "2026-12-03T02:35:00+00:00",
@@ -654,7 +756,7 @@
       "kind": "tool_call",
       "actor": "sound",
       "case_id": "CASE-0003",
-      "tool": "sound.main.3.reply",
+      "tool": "sound.main.4.reply",
       "tool_kind": "reply"
     },
     {
@@ -668,7 +770,7 @@
     {
       "at": "2026-12-03T02:50:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0002",
+      "message_id": "MSG-0004",
       "case_id": "CASE-0003",
       "status": "reply"
     },
@@ -693,7 +795,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-12-03T06:41:00+00:00",
+      "at": "2026-12-03T03:21:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "sound",
@@ -701,13 +803,13 @@
       "new": "queued"
     },
     {
-      "at": "2026-12-03T06:41:00+00:00",
+      "at": "2026-12-03T03:21:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0004",
       "actor": "sound",
       "step": "final_1",
       "start_at": "2026-12-28T01:00:00+00:00",
-      "due_at": "2026-12-28T06:14:00+00:00",
+      "due_at": "2026-12-28T06:23:00+00:00",
       "tool": "sound.final.1.lookup"
     },
     {
@@ -719,7 +821,7 @@
       "new": "working"
     },
     {
-      "at": "2026-12-28T06:14:00+00:00",
+      "at": "2026-12-28T06:23:00+00:00",
       "kind": "tool_call",
       "actor": "sound",
       "case_id": "CASE-0004",
@@ -727,7 +829,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-12-28T06:14:00+00:00",
+      "at": "2026-12-28T06:23:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "sound",
@@ -735,17 +837,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-12-28T06:14:00+00:00",
+      "at": "2026-12-28T06:23:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0004",
       "actor": "sound",
       "step": "final_2",
-      "start_at": "2026-12-28T06:14:00+00:00",
+      "start_at": "2026-12-28T06:23:00+00:00",
       "due_at": "2026-12-28T07:34:00+00:00",
       "tool": "sound.final.2.document"
     },
     {
-      "at": "2026-12-28T06:14:00+00:00",
+      "at": "2026-12-28T06:23:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "sound",
@@ -805,7 +907,7 @@
     {
       "at": "2026-12-28T07:49:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0003",
+      "message_id": "MSG-0005",
       "case_id": "CASE-0004",
       "status": "reply"
     }

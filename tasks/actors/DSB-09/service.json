@@ -21,7 +21,10 @@
         "kind": "lookup",
         "facts": []
       },
-      "service.main.2.delegate": {
+      "service.main.2.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "service.main.3.delegate": {
         "kind": "delegate",
         "target": "land",
         "workflow": "main",
@@ -29,13 +32,13 @@
           "location"
         ]
       },
-      "service.main.3.refer": {
+      "service.main.4.refer": {
         "kind": "refer",
         "contacts": [
           "sound"
         ]
       },
-      "service.main.4.reply": {
+      "service.main.5.reply": {
         "kind": "reply"
       }
     },
@@ -64,17 +67,17 @@
           },
           {
             "id": "main_2",
-            "label": "内部转交",
-            "tool": "service.main.2.delegate",
+            "label": "发出受理回执",
+            "tool": "service.main.2.acknowledge",
             "delay": {
               "mode": "business",
-              "minutes": 60
+              "minutes": 30
             }
           },
           {
             "id": "main_3",
-            "label": "查询联系人目录并转介",
-            "tool": "service.main.3.refer",
+            "label": "内部转交",
+            "tool": "service.main.3.delegate",
             "delay": {
               "mode": "business",
               "minutes": 60
@@ -82,8 +85,17 @@
           },
           {
             "id": "main_4",
+            "label": "查询联系人目录并转介",
+            "tool": "service.main.4.refer",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_5",
             "label": "向请求者回复已取得的结果",
-            "tool": "service.main.4.reply",
+            "tool": "service.main.5.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0

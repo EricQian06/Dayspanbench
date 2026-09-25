@@ -17,7 +17,10 @@
     },
     "knowledge": [],
     "tools": {
-      "a_desk.main.1.delegate": {
+      "a_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "a_desk.main.2.delegate": {
         "kind": "delegate",
         "target": "a_tech",
         "workflow": "main",
@@ -25,7 +28,7 @@
           "wheelchair_width"
         ]
       },
-      "a_desk.main.2.reply": {
+      "a_desk.main.3.reply": {
         "kind": "reply"
       }
     },
@@ -45,17 +48,26 @@
         "steps": [
           {
             "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "a_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
             "label": "内部转交",
-            "tool": "a_desk.main.1.delegate",
+            "tool": "a_desk.main.2.delegate",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "main_2",
+            "id": "main_3",
             "label": "向请求者回复已取得的结果",
-            "tool": "a_desk.main.2.reply",
+            "tool": "a_desk.main.3.reply",
             "delay": {
               "mode": "business",
               "minutes": 30

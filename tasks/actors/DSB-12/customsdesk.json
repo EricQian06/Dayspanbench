@@ -15,7 +15,10 @@
     },
     "knowledge": [],
     "tools": {
-      "customsdesk.main.1.delegate": {
+      "customsdesk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "customsdesk.main.2.delegate": {
         "kind": "delegate",
         "target": "broker",
         "workflow": "preliminary",
@@ -24,10 +27,13 @@
           "declaration_version"
         ]
       },
-      "customsdesk.main.2.reply": {
+      "customsdesk.main.3.reply": {
         "kind": "reply"
       },
-      "customsdesk.final.1.delegate": {
+      "customsdesk.final.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "customsdesk.final.2.delegate": {
         "kind": "delegate",
         "target": "broker",
         "workflow": "main",
@@ -38,7 +44,7 @@
           "batch_trace"
         ]
       },
-      "customsdesk.final.2.reply": {
+      "customsdesk.final.3.reply": {
         "kind": "reply"
       },
       "customsdesk.direct_entry.1.refer": {
@@ -84,17 +90,26 @@
         "steps": [
           {
             "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "customsdesk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
             "label": "内部转交",
-            "tool": "customsdesk.main.1.delegate",
+            "tool": "customsdesk.main.2.delegate",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "main_2",
+            "id": "main_3",
             "label": "向请求者回复已取得的结果",
-            "tool": "customsdesk.main.2.reply",
+            "tool": "customsdesk.main.3.reply",
             "delay": {
               "mode": "business",
               "minutes": 30
@@ -168,17 +183,26 @@
         "steps": [
           {
             "id": "final_1",
+            "label": "发出受理回执",
+            "tool": "customsdesk.final.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "final_2",
             "label": "内部转交",
-            "tool": "customsdesk.final.1.delegate",
+            "tool": "customsdesk.final.2.delegate",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "final_2",
+            "id": "final_3",
             "label": "向请求者回复已取得的结果",
-            "tool": "customsdesk.final.2.reply",
+            "tool": "customsdesk.final.3.reply",
             "delay": {
               "mode": "business",
               "minutes": 30

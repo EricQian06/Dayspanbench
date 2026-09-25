@@ -50,6 +50,11 @@ class EvaluationTests(unittest.TestCase):
                 actions.append({"tool": "send_email", "arguments": {"recipient": mailbox(spec, action["to"]), "text": action["text"], "fields": spec["public"]["user_fields"]}})
             elif action["op"] == "wait_for":
                 actions.append({"tool": "wait_until", "arguments": {"until": spec["deadline_at"]}})
+        # Mid-workflow acknowledgement receipts now add extra inbox messages;
+        # extra waits absorb them so submission happens after the final reply
+        # (each wait_until wakes on the next message or on the deadline).
+        for _ in range(4):
+            actions.append({"tool": "wait_until", "arguments": {"until": spec["deadline_at"]}})
         actions.append({"tool": "submit_answer", "arguments": {"answer": answer}})
         agent = ScriptedAgent(actions)
         with tempfile.TemporaryDirectory() as folder:

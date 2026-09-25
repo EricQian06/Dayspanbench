@@ -17,23 +17,26 @@
       "qa"
     ],
     "tools": {
-      "qa.main.1.lookup": {
+      "qa.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "qa.main.2.lookup": {
         "kind": "lookup",
         "facts": []
       },
-      "qa.main.2.lookup": {
+      "qa.main.3.lookup": {
         "kind": "lookup",
         "facts": [
           "qa"
         ]
       },
-      "qa.main.3.document": {
+      "qa.main.4.document": {
         "kind": "document",
         "facts": [
           "qa"
         ]
       },
-      "qa.main.4.reply": {
+      "qa.main.5.reply": {
         "kind": "reply"
       }
     },
@@ -52,17 +55,26 @@
         "steps": [
           {
             "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "qa.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
             "label": "28天耐久性测试",
-            "tool": "qa.main.1.lookup",
+            "tool": "qa.main.2.lookup",
             "delay": {
               "mode": "elapsed",
               "minutes": 40320
             }
           },
           {
-            "id": "main_2",
+            "id": "main_3",
             "label": "查询业务记录",
-            "tool": "qa.main.2.lookup",
+            "tool": "qa.main.3.lookup",
             "delay": {
               "mode": "weekly",
               "weekday": 0,
@@ -71,18 +83,18 @@
             }
           },
           {
-            "id": "main_3",
+            "id": "main_4",
             "label": "签发书面确认",
-            "tool": "qa.main.3.document",
+            "tool": "qa.main.4.document",
             "delay": {
               "mode": "business",
               "minutes": 0
             }
           },
           {
-            "id": "main_4",
+            "id": "main_5",
             "label": "向请求者回复已取得的结果",
-            "tool": "qa.main.4.reply",
+            "tool": "qa.main.5.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0

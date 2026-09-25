@@ -206,8 +206,8 @@
     }
   },
   "reply_delay": [
-    60,
-    150
+    10,
+    30
   ],
   "public": {
     "id": "DSB-02",
@@ -376,7 +376,10 @@
             "deposit"
           ]
         },
-        "landlord.main.2.delegate": {
+        "landlord.main.2.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "landlord.main.3.delegate": {
           "kind": "delegate",
           "target": "manager",
           "workflow": "main",
@@ -385,7 +388,7 @@
             "move_date"
           ]
         },
-        "landlord.main.3.reply": {
+        "landlord.main.4.reply": {
           "kind": "reply"
         }
       },
@@ -415,17 +418,26 @@
             },
             {
               "id": "main_2",
+              "label": "发出受理回执",
+              "tool": "landlord.main.2.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
               "label": "内部转交",
-              "tool": "landlord.main.2.delegate",
+              "tool": "landlord.main.3.delegate",
               "delay": {
                 "mode": "business",
                 "minutes": 0
               }
             },
             {
-              "id": "main_3",
+              "id": "main_4",
               "label": "向请求者回复已取得的结果",
-              "tool": "landlord.main.3.reply",
+              "tool": "landlord.main.4.reply",
               "delay": {
                 "mode": "business",
                 "minutes": 30

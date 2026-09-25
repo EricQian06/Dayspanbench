@@ -32,7 +32,10 @@
       "archive.main.3.reply": {
         "kind": "reply"
       },
-      "archive.digitize.1.delegate": {
+      "archive.digitize.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "archive.digitize.2.delegate": {
         "kind": "delegate",
         "target": "digitizer",
         "workflow": "main",
@@ -40,7 +43,7 @@
           "archive_id"
         ]
       },
-      "archive.digitize.2.reply": {
+      "archive.digitize.3.reply": {
         "kind": "reply"
       }
     },
@@ -120,17 +123,26 @@
         "steps": [
           {
             "id": "digitize_1",
+            "label": "发出受理回执",
+            "tool": "archive.digitize.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "digitize_2",
             "label": "内部转交",
-            "tool": "archive.digitize.1.delegate",
+            "tool": "archive.digitize.2.delegate",
             "delay": {
               "mode": "business",
               "minutes": 120
             }
           },
           {
-            "id": "digitize_2",
+            "id": "digitize_3",
             "label": "向请求者回复已取得的结果",
-            "tool": "archive.digitize.2.reply",
+            "tool": "archive.digitize.3.reply",
             "delay": {
               "mode": "business",
               "minutes": 120

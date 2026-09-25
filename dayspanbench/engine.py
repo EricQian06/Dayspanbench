@@ -32,6 +32,41 @@ TRANSITIONS = {
 PUBLIC_TOOLS = ("observe", "recall_task", "web_search", "visit_page",
                 "send_email", "call", "read_inbox", "wait_until", "submit_answer")
 
+# Unit synonyms for scenario field values: a value written with a different but
+# equivalent unit ("8公斤") still describes the user's actual case, so admission
+# must not bounce it against the canonical user_fields spelling ("8kg").
+UNIT_SYNONYMS = (
+    ("kg", ("kg", "公斤", "千克")),
+    ("cny", ("cny", "rmb", "元", "人民币")),
+    ("g", ("g", "克", "公克")),
+    ("km", ("km", "公里", "千米")),
+    ("m", ("m", "米", "公尺")),
+    ("cm", ("cm", "厘米", "公分")),
+)
+
+_UNIT_LOOKUP = {unit: canon for canon, synonyms in UNIT_SYNONYMS for unit in synonyms}
+
+
+def normalize_field_value(value):
+    """Reduce a quantity-like string to (number, canonical unit); None otherwise."""
+    import unicodedata
+    if not isinstance(value, str):
+        return None
+    text = unicodedata.normalize("NFKC", value).strip().casefold().replace(" ", "").replace("，", ",")
+    match = re.fullmatch(r"([+-]?\d+(?:\.\d+)?)([a-z一-鿿,]*)", text)
+    if not match or match.group(2) not in _UNIT_LOOKUP:
+        return None
+    return (float(match.group(1)), _UNIT_LOOKUP[match.group(2)])
+
+
+def field_value_equivalent(value, expected):
+    """Exact match, or the same quantity written with a synonym unit."""
+    if value == expected:
+        return True
+    return (isinstance(value, str) and isinstance(expected, str)
+            and normalize_field_value(value) is not None
+            and normalize_field_value(value) == normalize_field_value(expected))
+
 
 @dataclass
 class ActorState:
@@ -200,6 +235,17 @@ class Environment:
         self.record("case_created", case_id=case["id"], actor=actor_id, parent=None, origin="agent", routed=False)
         self.enqueue(self.admission_at(actor), "admit", case["id"])
         return case
+
+    def canonicalize_fields(self, fields):
+        """Rewrite scenario-field values that differ from user_fields only by a
+        synonym unit into the canonical spelling, so a literal quote like
+        "8公斤" still admits against the canonical "8kg". Anti-fabrication is
+        unaffected: values that do not describe the user's case still mismatch."""
+        canonical = {}
+        for key, value in (fields or {}).items():
+            expected = self.task["public"]["user_fields"].get(key)
+            canonical[key] = expected if expected is not None and field_value_equivalent(value, expected) else value
+        return canonical
 
     def referral_names(self, actor):
         """People this actor's own workflows hand requests over to."""
@@ -482,7 +528,9 @@ class AgentTools:
             raise ValueError("Episode is closed for new messages")
         actor_id = env.email_to_actor.get(recipient)
         if actor_id is not None and actor_id not in env.known_contacts:
-            raise PermissionError("Contact has not been discovered")
+            raise PermissionError(
+                "Contact has not been discovered; recipient must be the email address of "
+                "an already discovered contact")
         if env.agent_sends >= env.task["public"]["message_budget"]:
             raise ValueError("Message budget exhausted")
         env.agent_sends += 1
@@ -510,13 +558,15 @@ class AgentTools:
         if hasattr(actor.recipient, "route"):
             decision = env.recipient_call(actor, "route", view)
             workflow_id = decision["workflow_id"]
-            fields = {**decision["fields"], **(fields or {})}
+            fields = env.canonicalize_fields({**decision["fields"], **(fields or {})})
         elif existing and existing["workflow"] and existing["state"] in {"new", "needs_information"}:
             # Continuing an open case keeps its workflow; the routed followup
             # on a closed or in-flight case below is matched fresh instead.
             workflow_id = existing["workflow"]["id"]
+            fields = env.canonicalize_fields(fields)
         else:
             workflow_id = env.recipient_call(actor, "choose", view)
+            fields = env.canonicalize_fields(fields)
         if case_id:
             case = env.cases[case_id]
             if case["actor"] != actor_id or case["parent"]:
@@ -580,7 +630,9 @@ class AgentTools:
         if env.finished or env.now >= env.deadline:
             raise ValueError("Episode is closed for new calls")
         if recipient not in env.known_contacts:
-            raise PermissionError("Contact has not been discovered")
+            raise PermissionError(
+                "Contact has not been discovered; recipient must be the contact's id "
+                "from the contact card, not a name, email address, or phone number")
         actor = env.actors[recipient]
         if "phone" not in actor.spec["contact_details"]:
             raise ValueError("Contact has no phone number")
@@ -602,9 +654,10 @@ class AgentTools:
         if hasattr(actor.recipient, "route"):
             decision = env.recipient_call(actor, "route", view)
             workflow_id = decision["workflow_id"]
-            fields = {**decision["fields"], **(fields or {})}
+            fields = env.canonicalize_fields({**decision["fields"], **(fields or {})})
         else:
             workflow_id = env.recipient_call(actor, "choose", view)
+            fields = env.canonicalize_fields(fields)
         if workflow_id is None:
             prompt = "请说明要办理的事项：" + "；".join(w["label"] for w in actor.spec["workflows"])
             actor.history.append({"role": "recipient", "text": prompt, "at": stamp(env.now)})

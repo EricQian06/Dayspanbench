@@ -29,7 +29,10 @@
           "returns"
         ]
       },
-      "seller.main.2.delegate": {
+      "seller.main.2.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "seller.main.3.delegate": {
         "kind": "delegate",
         "target": "friend",
         "workflow": "main",
@@ -37,13 +40,13 @@
           "serial"
         ]
       },
-      "seller.main.3.refer": {
+      "seller.main.4.refer": {
         "kind": "refer",
         "contacts": [
           "courier"
         ]
       },
-      "seller.main.4.reply": {
+      "seller.main.5.reply": {
         "kind": "reply"
       }
     },
@@ -72,8 +75,8 @@
           },
           {
             "id": "main_2",
-            "label": "内部转交",
-            "tool": "seller.main.2.delegate",
+            "label": "发出受理回执",
+            "tool": "seller.main.2.acknowledge",
             "delay": {
               "mode": "business",
               "minutes": 30
@@ -81,17 +84,26 @@
           },
           {
             "id": "main_3",
+            "label": "内部转交",
+            "tool": "seller.main.3.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
             "label": "查询联系人目录并转介",
-            "tool": "seller.main.3.refer",
+            "tool": "seller.main.4.refer",
             "delay": {
               "mode": "business",
               "minutes": 0
             }
           },
           {
-            "id": "main_4",
+            "id": "main_5",
             "label": "向请求者回复已取得的结果",
-            "tool": "seller.main.4.reply",
+            "tool": "seller.main.5.reply",
             "delay": {
               "mode": "business",
               "minutes": 30

@@ -106,7 +106,12 @@ class LLMSimulator:
                 if not isinstance(key, str) or key in seen:
                     raise ValueError()
                 seen.add(key)
-                value = json.loads(field["value_json"])
+                # Tolerate models that emit a bare JSON value (number/bool) instead of
+                # the schema-required JSON-encoded string; re-encoding is lossless.
+                raw = field["value_json"]
+                if isinstance(raw, bool) or type(raw) in {int, float}:
+                    raw = json.dumps(raw)
+                value = json.loads(raw)
                 if type(value) not in {str, int, float, bool}:
                     raise ValueError()
                 if type(value) is float and not math.isfinite(value):
