@@ -130,6 +130,13 @@ class EnvironmentTests(unittest.TestCase):
                                   {"course_code": "CS204", "syllabus_version": "CS204-2026-v3"},
                                   case_id=first["case_id"])
         self.assertNotEqual(reopened["case_id"], first["case_id"])
+        # A progress ping with no fields at all also only acknowledges: it
+        # must not be treated as a new request and re-routed into a duplicate
+        # parallel case.
+        before = len(env.cases)
+        ping = api.send_email(mailbox(task, "records"), "请问办理进度如何", {}, case_id=first["case_id"])
+        self.assertEqual(ping["case_id"], first["case_id"])
+        self.assertEqual(len(env.cases), before)
 
     def test_missing_material_and_forged_material_are_not_accepted(self):
         task = load(3)

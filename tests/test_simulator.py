@@ -68,10 +68,28 @@ class CharacterSimulatorTests(unittest.TestCase):
         while env.events and env.cases[result["case_id"]]["state"] == "new":
             env.advance(env.events[0][0])
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
-        self.assertEqual(len(attempts), 2)
-        self.assertIn("validation_feedback", attempts[1])
-        self.assertNotIn("validation_feedback", attempts[0])
+        self.assertEqual(len(attempts), 1)
         self.assertFalse(env.simulator_failure)
+
+    def test_malformed_field_is_dropped_but_workflow_survives(self):
+        # A well-chosen workflow with one malformed field extraction must not
+        # collapse the whole routing decision to null: the agent's request
+        # dead-ends behind a generic acknowledgement instead of being asked
+        # for the missing material.
+        view = {"actor_id": "test", "message": "请核实数字化交付，权利方已确认实体展览用途获准",
+                "fields": {"archive_id": "ARC-71"}, "history": [],
+                "workflows": [{"id": "main", "required_fields": ["archive_id", "usage"]},
+                              {"id": "digitize", "required_fields": ["archive_id", "exhibition_permission"]}]}
+        client = FixtureClient(route=lambda _: {"workflow_id": "digitize", "fields": [
+            {"key": "archive_id", "value_json": '"ARC-71"', "source_quote": "ARC-71"},
+            {"key": "exhibition_permission", "value_json": '"已书面确认实体展览用途获准"',
+             "source_quote": "权利方已书面确认实体展览用途获准"}]})
+        # exhibition_permission's quote does not verbatim-match its value_json,
+        # so it is dropped; archive_id is an exact echo of an explicit field and
+        # is likewise skipped (the engine already carries explicit fields).
+        # The digitize routing itself survives instead of collapsing to null.
+        self.assertEqual(LLMSimulator(client, "test").route(view),
+                         {"workflow_id": "digitize", "fields": {}})
 
     def test_existing_workflow_key_echo_is_normalized(self):
         view = {"actor_id": "test", "message": "跟进CASE-0004", "fields": {"sample_id": "S-482"}, "history": [],
@@ -140,13 +158,17 @@ class CharacterSimulatorTests(unittest.TestCase):
                          {"workflow_id": "main", "fields": {"location": "晴港北广场",
                                                            "amplification": "使用两只扩声音箱"}})
 
-    def test_conflicting_explicit_field_echo_still_invalidates_simulator(self):
+    def test_conflicting_explicit_field_echo_is_dropped_not_admitted(self):
+        # The simulator contradicts the agent's explicit field; the echo is
+        # dropped (never admitted) but the workflow choice survives, and the
+        # case proceeds with the agent's own declared value.
         task = load(2)
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
             {"key": "pet_weight", "value_json": '"6kg"', "source_quote": "6kg"}]})
         env = Environment(task, recipients(task, client))
-        with self.assertRaises(SimulatorError):
-            env.tools().send_email(mailbox(task, "landlord"), "6kg", {"pet_weight": "8kg", "move_date": "2026-11-12"})
+        result = env.tools().send_email(mailbox(task, "landlord"), "6kg", {"pet_weight": "8kg", "move_date": "2026-11-12"})
+        self.assertFalse(env.simulator_failure)
+        self.assertEqual(env.cases[result["case_id"]]["fields"]["pet_weight"], "8kg")
 
     def test_all_twelve_references_with_model_shaped_outputs(self):
         for n in range(1, 13):
@@ -188,27 +210,30 @@ class CharacterSimulatorTests(unittest.TestCase):
         self.assertEqual(env.cases[first["case_id"]]["fields"], {"serial": "SN-A731", "receipt": "R-731"})
         self.assertTrue(any(h["role"] == "recipient" for h in client.calls[-1]["view"]["history"]))
 
-    def test_invented_fields_abort_instead_of_silently_falling_back(self):
+    def test_invented_fields_are_dropped_without_aborting(self):
+        # A fabricated field (not present in any agent text) is dropped; the
+        # routing survives and the case opens to be asked for real material.
         task = load(6)
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
             {"key": "serial", "value_json": '"SN-A731"', "source_quote": "SN-A731"}]})
         env = Environment(task, recipients(task, client))
         env.tools().visit_page("https://jiguang.bench/contact")
-        with self.assertRaises(SimulatorError):
-            env.tools().send_email(mailbox(task, "support"), "请咨询保修")
-        self.assertTrue(env.finished)
-        self.assertFalse(env.cases)
-        with self.assertRaises(SimulatorError):
-            env.evaluate({"claims": []})
+        result = env.tools().send_email(mailbox(task, "support"), "请咨询保修")
+        self.assertFalse(env.simulator_failure)
+        case = env.cases[result["case_id"]]
+        self.assertNotIn("serial", case["fields"])
 
     def test_numeric_substring_is_not_a_supported_extraction(self):
+        # "500" as a substring of "1500" is not a verbatim extraction; it is
+        # dropped rather than admitted, and the workflow still routes.
         task = load(5)
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
             {"key": "quantity", "value_json": "500", "source_quote": "500"}]})
         env = Environment(task, recipients(task, client))
         env.tools().visit_page("https://lengchuan.bench/contact")
-        with self.assertRaises(SimulatorError):
-            env.tools().send_email(mailbox(task, "sales"), "我要1500件，请询价")
+        result = env.tools().send_email(mailbox(task, "sales"), "我要1500件，请询价")
+        self.assertFalse(env.simulator_failure)
+        self.assertNotIn("quantity", env.cases[result["case_id"]]["fields"])
 
     def test_character_history_is_isolated(self):
         task, client = load(8), FixtureClient()

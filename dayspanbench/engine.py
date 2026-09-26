@@ -263,7 +263,8 @@ class Environment:
     def reply_referral(self, case):
         """Answer a misrouted mail: not my responsibility, contact someone else."""
         actor = self.actors[case["actor"]]
-        mentions = self.contact_mentions(dict.fromkeys(self.referral_names(actor)))
+        referred = list(dict.fromkeys(self.referral_names(actor)))
+        mentions = self.contact_mentions(referred)
         if mentions:
             body = f"您咨询的事项不属于我负责的范围，我无法直接办理；建议您联系{mentions}，由他们继续为您处理。"
         else:
@@ -273,7 +274,7 @@ class Environment:
         self.transition(case, "queued")
         self.transition(case, "working")
         self.transition(case, "replied")
-        self.emit(case, text, status="referral")
+        self.emit(case, text, contacts=referred, status="referral")
 
 
 
@@ -597,13 +598,15 @@ class AgentTools:
                 # progress ping with unchanged fields only acknowledges; it must
                 # not spawn a duplicate internal case that competes with (and
                 # can push past the deadline) the original one.
-                combined = {**case["fields"], **(fields or {})}
-                # A closed (replied/failed) case may legitimately re-open the
-                # same request from scratch; an in-flight case only counts a
-                # follow-up as material when the fields actually change.
+                # A progress ping (empty or restated fields) only acknowledges;
+                # only fields the follow-up actually carries and that change an
+                # existing value count as material.
+                new_fields = fields or {}
                 material = (case["state"] in {"replied", "failed"}
-                            or any(case["fields"].get(k) != (fields or {}).get(k)
-                                   for k in combined))
+                            or any(case["fields"].get(k) != v
+                                   for k, v in new_fields.items()
+                                   if k in case["fields"])
+                            or any(k not in case["fields"] for k in new_fields))
                 if not material:
                     env.emit(case, f"您好，我是{actor.spec['name']}。您的事项已在办理中，受理时间和处理顺序保持不变，办结后会书面回复。如有其他问题，欢迎随时来信。",
                              status="acknowledgement")
