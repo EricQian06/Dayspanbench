@@ -3,6 +3,7 @@
 from dataclasses import dataclass, field
 import json
 import time
+from typing import Mapping
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
@@ -27,8 +28,13 @@ class LLMConfig:
     timeout: float = 30
     max_retries: int = 2
     max_tokens: int = 2048
+    # Extra request fields merged into the provider payload (e.g. thinking
+    # suppression for reasoning models: {"thinking": {"type": "disabled"}}).
+    extra_body: Mapping = field(default_factory=dict)
 
     def __post_init__(self):
+        if not isinstance(self.extra_body, Mapping):
+            raise ValueError("extra_body must be a JSON object mapping")
         url = urlsplit(self.base_url)
         if not self.model or url.scheme not in {"https", "http"} or not url.hostname or url.username or url.password or url.query or url.fragment:
             raise ValueError("A model and a valid credential-free base URL are required")
@@ -36,11 +42,11 @@ class LLMConfig:
             raise ValueError("Use HTTPS except for a local simulator service")
         if self.api not in {"chat", "responses"} or self.output_format not in {"json_schema", "json_object"}:
             raise ValueError("Unsupported simulator API/format")
-        if not 0 < self.timeout <= 60 or not 0 <= self.max_retries <= 3 or self.max_tokens <= 0:
+        if not 0 < self.timeout <= 300 or not 0 <= self.max_retries <= 3 or self.max_tokens <= 0:
             raise ValueError("Invalid timeout, retry count or token budget")
 
     def public_dict(self):
-        return {key: getattr(self, key) for key in ("model", "base_url", "api", "output_format", "timeout", "max_retries", "max_tokens")}
+        return {key: getattr(self, key) for key in ("model", "base_url", "api", "output_format", "timeout", "max_retries", "max_tokens", "extra_body")}
 
 
 class StructuredClient:
@@ -75,6 +81,7 @@ class StructuredClient:
             payload = {"model": config.model, "input": messages, "text": {"format": fmt},
                        "max_output_tokens": config.max_tokens, "store": False}
             endpoint = "/responses"
+        payload.update(config.extra_body)
         record = {"purpose": purpose, "actor_id": actor_id, "model": config.model, "request": payload, "attempts": 0}
         self.calls.append(record)
         started = time.monotonic()

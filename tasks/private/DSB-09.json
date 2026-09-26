@@ -215,7 +215,7 @@
     "brief": "为2027年1月晴港北广场的小型扩声活动询问主管机构、事项分类、应备材料和最早办理窗口。跟进意见征集并携回执再次申请联合复核。只做预咨询，不能写成已获许可；场景规则均为合成。",
     "user_fields": {
       "location": "晴港北广场",
-      "amplified": "使用两只扩声音箱"
+      "sound_equipment": "使用两只扩声音箱"
     },
     "initial_contacts": [],
     "pages": [
@@ -291,7 +291,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "responsible_office"
@@ -305,7 +305,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "case_category"
@@ -323,7 +323,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "required_documents"
@@ -337,7 +337,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "earliest_processing_date"
@@ -351,7 +351,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "consultation_receipt"
@@ -411,7 +411,7 @@
           ],
           "required_fields": [
             "location",
-            "amplified"
+            "sound_equipment"
           ],
           "steps": [
             {
@@ -656,7 +656,7 @@
           ],
           "required_fields": [
             "location",
-            "amplified"
+            "sound_equipment"
           ],
           "steps": [
             {
@@ -708,7 +708,7 @@
           ],
           "required_fields": [
             "location",
-            "amplified",
+            "sound_equipment",
             "consultation_receipt"
           ],
           "evidence_fields": {
@@ -717,7 +717,7 @@
                 "task": "DSB-09",
                 "case": {
                   "location": "晴港北广场",
-                  "amplified": "使用两只扩声音箱"
+                  "sound_equipment": "使用两只扩声音箱"
                 }
               },
               "predicate": "consultation_receipt",
@@ -803,7 +803,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "responsible_office",
@@ -832,7 +832,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "consultation_receipt",
@@ -861,7 +861,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "case_category",
@@ -894,7 +894,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "required_documents",
@@ -921,7 +921,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "earliest_processing_date",
@@ -984,7 +984,7 @@
       "label": "sound",
       "fields": {
         "location": "晴港北广场",
-        "amplified": "使用两只扩声音箱",
+        "sound_equipment": "使用两只扩声音箱",
         "consultation_receipt": "$fact:consultation_receipt"
       }
     },

@@ -33,7 +33,9 @@ def main(argv=None):
     parser.add_argument("--simulator-format", choices=["json_schema", "json_object"], default="json_schema")
     parser.add_argument("--simulator-max-tokens", type=int, default=8192)
     parser.add_argument("--simulator-validation-retries", type=int, choices=range(4), default=2)
-    parser.add_argument("--timeout", type=float, default=60)
+    parser.add_argument("--simulator-extra-body", default='{"thinking": {"type": "disabled"}}',
+                        help="JSON object merged into simulator request payloads; pass '{}' to keep provider defaults")
+    parser.add_argument("--timeout", type=float, default=180)
     parser.add_argument("--retries", type=int, default=1)
     parser.add_argument("--max-steps", type=int, default=80)
     parser.add_argument("--seed", type=int, default=0, help="Seed for agent-side email handling-latency jitter; recorded in the manifest")
@@ -61,10 +63,13 @@ def main(argv=None):
     if not 1 <= args.workers <= 12 or args.max_steps < 1 or args.history_limit < 1:
         parser.error("workers must be 1..12; max-steps and history-limit must be positive")
     try:
+        simulator_extra = json.loads(args.simulator_extra_body)
+        if not isinstance(simulator_extra, dict):
+            raise ValueError("--simulator-extra-body must be a JSON object")
         agent_config = LLMConfig(args.agent_model, api_key=agent_key, base_url=agent_base,
             timeout=args.timeout, max_retries=args.retries, max_tokens=args.agent_max_tokens)
         sim_config = LLMConfig(sim_model, api_key=sim_key, base_url=sim_base, output_format=args.simulator_format,
-            timeout=args.timeout, max_retries=args.retries, max_tokens=args.simulator_max_tokens)
+            timeout=args.timeout, max_retries=args.retries, max_tokens=args.simulator_max_tokens, extra_body=simulator_extra)
     except ValueError as error:
         parser.error(str(error))
     if args.run_dir.exists() and any(args.run_dir.iterdir()):

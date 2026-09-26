@@ -403,16 +403,20 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(api.recall_task(), api.recall_task())
         self.assertEqual(set(api.observe()), {"now", "tools", "unread_messages"})
         self.assertEqual(api.observe()["unread_messages"], 0)
-        links = api.web_search("禾岸会馆")
+        links = api.web_search("禾岸会馆")["results"]
         self.assertTrue(links)
         # Search results are URLs, never internal ids or page bodies.
         self.assertTrue(all(set(l) == {"url", "title", "snippet"} for l in links))
         self.assertTrue(all(l["url"].startswith("https://") and ".bench/" in l["url"] for l in links))
         self.assertNotIn("reception", json.dumps(api.web_search("联系方式"), ensure_ascii=False))
-        # Empty queries and terms that match nothing return no links at all.
-        self.assertEqual(api.web_search(""), [])
-        self.assertEqual(api.web_search("   "), [])
-        self.assertEqual(api.web_search("完全不相关的查询词"), [])
+        # Empty queries and terms that match nothing return no links at all,
+        # but the hint still reports how many pages remain undiscovered.
+        total = len(load(1)["public"]["pages"])
+        empty = api.web_search("")
+        self.assertEqual(empty["results"], [])
+        self.assertEqual(empty["hint"]["undiscovered_pages"], total - len({l["url"] for l in links}))
+        self.assertEqual(api.web_search("   ")["results"], [])
+        self.assertEqual(api.web_search("完全不相关的查询词")["results"], [])
         # Only proper page addresses are accepted; ids and foreign URLs are not.
         with self.assertRaises(ValueError):
             api.visit_page("venue")

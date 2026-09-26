@@ -19,7 +19,7 @@
 ```json
 {
   "location": "晴港北广场",
-  "amplified": "使用两只扩声音箱"
+  "sound_equipment": "使用两只扩声音箱"
 }
 ```
 
@@ -48,7 +48,7 @@
 
 **流程：活动事项咨询** (`main`)
 
-必须提供：location、amplified
+必须提供：location、sound_equipment
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
@@ -90,7 +90,7 @@
 
 **流程：意见征集阶段确认** (`main`)
 
-必须提供：location、amplified
+必须提供：location、sound_equipment
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
@@ -101,9 +101,9 @@
 
 **流程：联合分类复核** (`final`)
 
-必须提供：location、amplified、consultation_receipt
+必须提供：location、sound_equipment、consultation_receipt
 
-证据门槛：{"consultation_receipt": {"subject": {"task": "DSB-09", "case": {"location": "晴港北广场", "amplified": "使用两只扩声音箱"}}, "predicate": "consultation_receipt", "authorities": ["attest:consultation_receipt"], "normalization": {"type": "text", "aliases": {}}}}；仅猜对值不算取得凭证。
+证据门槛：{"consultation_receipt": {"subject": {"task": "DSB-09", "case": {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"}}, "predicate": "consultation_receipt", "authorities": ["attest:consultation_receipt"], "normalization": {"type": "text", "aliases": {}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
@@ -136,7 +136,7 @@
         "task": "DSB-09",
         "case": {
           "location": "晴港北广场",
-          "amplified": "使用两只扩声音箱"
+          "sound_equipment": "使用两只扩声音箱"
         }
       },
       "predicate": "responsible_office",
@@ -165,7 +165,7 @@
         "task": "DSB-09",
         "case": {
           "location": "晴港北广场",
-          "amplified": "使用两只扩声音箱"
+          "sound_equipment": "使用两只扩声音箱"
         }
       },
       "predicate": "consultation_receipt",
@@ -194,7 +194,7 @@
         "task": "DSB-09",
         "case": {
           "location": "晴港北广场",
-          "amplified": "使用两只扩声音箱"
+          "sound_equipment": "使用两只扩声音箱"
         }
       },
       "predicate": "case_category",
@@ -227,7 +227,7 @@
         "task": "DSB-09",
         "case": {
           "location": "晴港北广场",
-          "amplified": "使用两只扩声音箱"
+          "sound_equipment": "使用两只扩声音箱"
         }
       },
       "predicate": "required_documents",
@@ -254,7 +254,7 @@
         "task": "DSB-09",
         "case": {
           "location": "晴港北广场",
-          "amplified": "使用两只扩声音箱"
+          "sound_equipment": "使用两只扩声音箱"
         }
       },
       "predicate": "earliest_processing_date",

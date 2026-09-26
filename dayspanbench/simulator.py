@@ -87,6 +87,21 @@ class LLMSimulator:
                     and result["existing_workflow_id"] == view.get("existing_workflow_id") and view.get("existing_workflow_id"):
                 wid = result.pop("existing_workflow_id")
                 result["workflow_id"] = wid
+            # Some models return fields as a flat {key: value} object instead of the
+            # schema's array of {key, value_json, source_quote}. Normalizing is
+            # lossless: each value still has to pass the verbatim source_quote checks
+            # below, so nothing unquoted can slip through.
+            if isinstance(result.get("fields"), dict):
+                normalized = []
+                for key, value in result["fields"].items():
+                    if isinstance(value, bool) or type(value) in {int, float, str}:
+                        normalized.append({"key": key, "value_json": json.dumps(value, ensure_ascii=False),
+                                           "source_quote": value if isinstance(value, str) else json.dumps(value, ensure_ascii=False)})
+                    else:
+                        normalized = None
+                        break
+                if normalized is not None:
+                    result["fields"] = normalized
             if set(result) != {"workflow_id", "fields"} or not isinstance(result["fields"], list):
                 raise ValueError()
             wid = result["workflow_id"]
@@ -112,6 +127,11 @@ class LLMSimulator:
                 if isinstance(raw, bool) or type(raw) in {int, float}:
                     raw = json.dumps(raw)
                 value = json.loads(raw)
+                if isinstance(value, bool) and isinstance(quote, str) \
+                        and unicodedata.normalize("NFKC", quote).strip().casefold() not in {"true", "false"}:
+                    # Booleans have no verbatim natural-language form: the quoted
+                    # fragment (e.g. 使用两只扩声音箱) is the grounded value.
+                    value = quote
                 if type(value) not in {str, int, float, bool}:
                     raise ValueError()
                 if type(value) is float and not math.isfinite(value):

@@ -69,7 +69,7 @@
         ],
         "required_fields": [
           "location",
-          "amplified"
+          "sound_equipment"
         ],
         "steps": [
           {
@@ -121,7 +121,7 @@
         ],
         "required_fields": [
           "location",
-          "amplified",
+          "sound_equipment",
           "consultation_receipt"
         ],
         "evidence_fields": {
@@ -130,7 +130,7 @@
               "task": "DSB-09",
               "case": {
                 "location": "晴港北广场",
-                "amplified": "使用两只扩声音箱"
+                "sound_equipment": "使用两只扩声音箱"
               }
             },
             "predicate": "consultation_receipt",
@@ -232,7 +232,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "case_category"
@@ -246,7 +246,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "consultation_receipt"
@@ -264,7 +264,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "required_documents"
@@ -278,7 +278,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "earliest_processing_date"

@@ -468,6 +468,9 @@ class AgentTools:
         public.pop("pages", None)
         self._brief = {"task": public, "deadline": stamp(env.deadline),
                        "contacts": [env.contact(c) for c in sorted(env.task["public"]["initial_contacts"])]}
+        # Pages the agent has already discovered (surfaced by web_search or
+        # visited); used to hint how many pages remain undiscovered.
+        self._seen_pages = set()
 
     def recall_task(self):
         return deepcopy(self._brief)
@@ -494,10 +497,16 @@ class AgentTools:
                 else:
                     units.update(run[i:i + 2] for i in range(len(run) - 1))
         if not units:
-            return []
-        pages = self._env.task["public"]["pages"]
-        return [{"url": p["url"], "title": p["title"], "snippet": p.get("snippet", "")} for p in pages
-                if any(u in (p["title"] + p.get("snippet", "")).casefold() for u in units)]
+            results = []
+        else:
+            pages = self._env.task["public"]["pages"]
+            results = [{"url": p["url"], "title": p["title"], "snippet": p.get("snippet", "")} for p in pages
+                       if any(u in (p["title"] + p.get("snippet", "")).casefold() for u in units)]
+        self._seen_pages.update(r["url"] for r in results)
+        total = len(self._env.task["public"]["pages"])
+        return {"results": results,
+                "hint": {"total_pages": total,
+                         "undiscovered_pages": total - len(self._seen_pages)}}
 
     def visit_page(self, url):
         env = self._env
@@ -509,6 +518,7 @@ class AgentTools:
         page = next((p for p in env.task["public"]["pages"] if p["url"] == url), None)
         if page is None:
             raise ValueError("Unknown page address")
+        self._seen_pages.add(url)
         env.known_contacts.update(page.get("contacts", []))
         visible = {k: deepcopy(v) for k, v in page.items() if k != "id"}
         visible["contact_details"] = [env.contact(c) for c in page.get("contacts", [])]

@@ -132,7 +132,7 @@
           "task": "DSB-09",
           "case": {
             "location": "晴港北广场",
-            "amplified": "使用两只扩声音箱"
+            "sound_equipment": "使用两只扩声音箱"
           }
         },
         "predicate": "responsible_office"

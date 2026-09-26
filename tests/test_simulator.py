@@ -127,6 +127,19 @@ class CharacterSimulatorTests(unittest.TestCase):
         self.assertEqual(LLMSimulator(client, "test").route(view),
                          {"workflow_id": "main", "fields": {"quantity": 500}})
 
+    def test_boolean_with_natural_language_quote_coerces_to_quote_string(self):
+        # DSB-09 regression: models route amplification as boolean true while
+        # quoting the natural-language fragment; the quote is the grounded value.
+        view = {"actor_id": "test", "message": "在晴港北广场使用两只扩声音箱举办活动。", "fields": {}, "history": [],
+                "workflows": [{"id": "main", "required_fields": ["location", "amplification"]}],
+                "existing_workflow_id": None}
+        client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
+            {"key": "location", "value_json": '"晴港北广场"', "source_quote": "晴港北广场"},
+            {"key": "amplification", "value_json": "true", "source_quote": "使用两只扩声音箱"}]})
+        self.assertEqual(LLMSimulator(client, "test").route(view),
+                         {"workflow_id": "main", "fields": {"location": "晴港北广场",
+                                                           "amplification": "使用两只扩声音箱"}})
+
     def test_conflicting_explicit_field_echo_still_invalidates_simulator(self):
         task = load(2)
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [

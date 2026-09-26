@@ -30,7 +30,7 @@ python3 scripts/evaluate.py \
 
 被测模型通过非流式Chat Completions返回`{"tool":"...","arguments":{...}}`。工具定义写入系统消息，不依赖服务商的原生function calling或JSON Schema支持。默认给Agent发送`max_tokens=4096`；可显式用`--agent-token-parameter max_completion_tokens`切换参数名，或`omit`不发送上限。`--agent-max-tokens`设置额度。人物模拟器默认输出预算为8192个token（`--simulator-max-tokens`），包含服务计入其中的推理token；仍默认使用严格`json_schema`；服务不支持时可显式选择`--simulator-format json_object`，不会自动换模式或换模型。
 
-`--timeout`默认60秒，`--retries`默认1，仅对429/5xx和传输故障有限重试。并行度是独立题目数，各题的模型会话、环境与人物历史完全分开。`--max-steps`默认80，每次模型决策消耗一步，格式错误和工具参数错误也计入步数。消息预算另外由各题环境限制。
+`--timeout`默认180秒，`--retries`默认1，仅对429/5xx和传输故障有限重试。并行度是独立题目数，各题的模型会话、环境与人物历史完全分开。`--max-steps`默认80，每次模型决策消耗一步，格式错误和工具参数错误也计入步数。消息预算另外由各题环境限制。
 
 自动测评默认`--simulator-validation-retries 2`：人物LLM若生成不合格的字段抽取或回复计划，最多再请求两次，并告知同一角色校验要求。不会补充私有答案，不会降低证据标准，不会退回规则人物；重试仍失败则episode无效。每次实际请求及`validation_error`均保存，成本也纳入统计。这和HTTP故障重试是两种独立预算。已有显式字段的等值回显会忽略；值冲突仍拒绝。独立`serve.py`的人物校验重试仍默认0。
 
