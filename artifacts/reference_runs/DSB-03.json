@@ -129,7 +129,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是澄川学院教务·唐宁。您提交的材料已核验齐全，本事项已受理并按流程转办，办结后会书面回复您。",
+      "text": "您好，我是澄川学院教务·唐宁。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-02-02 14:00（当地时间）办结并书面回复您，期间无需再次来信催办，处理顺序不会因催办提前。",
       "evidence": []
     },
     {
@@ -377,6 +377,16 @@
         "syllabus_version": "CS204-2026-v2-signed"
       },
       "channel": "email"
+    },
+    {
+      "at": "2026-11-10T06:07:00+00:00",
+      "kind": "material_understood",
+      "case_id": "CASE-0001",
+      "field": "syllabus_version",
+      "evidence": [
+        "EV-0001",
+        "EV-0002"
+      ]
     },
     {
       "at": "2026-11-10T06:07:00+00:00",

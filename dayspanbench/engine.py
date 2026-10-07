@@ -14,8 +14,9 @@ import random
 from pathlib import Path
 
 from .calendar import Calendar, parse, stamp
+from .comprehension import understood_evidence
 from .recipient import RuleRecipient
-from .scoring import evidence_matches, equivalent, evaluate as evaluate_outcome
+from .scoring import evaluate as evaluate_outcome
 from .llm import SimulatorError
 
 
@@ -204,7 +205,8 @@ class Environment:
         self.case_serial += 1
         case = {"id": f"CASE-{self.case_serial:04d}", "actor": actor_id, "workflow": deepcopy(workflow),
                 "state": "new", "step": 0, "fields": deepcopy(fields), "evidence": [],
-                "contacts": [], "parent": parent, "origin": origin, "received_at": stamp(self.now)}
+                "contacts": [], "parent": parent, "origin": origin, "received_at": stamp(self.now),
+                "correspondence": []}
         self.cases[case["id"]] = case
         actor.cases.append(case["id"])
         actor.inbox.append({"case_id": case["id"], "from": self.cases[parent]["actor"] if parent else "agent",
@@ -295,11 +297,18 @@ class Environment:
         for key, requirement in workflow.get("evidence_fields", {}).items():
             if key in missing:
                 continue
-            obtained = [ev["id"] for ev in self.evidence.values()
-                        if evidence_matches(ev, requirement, self.now)
-                        and equivalent(ev["value"], case["fields"].get(key), requirement["normalization"])]
+            # The recipient reads what the applicant actually submitted: the
+            # structured field value plus the prose of their letters. Quoting
+            # the confirmation, citing its evidence id, or restating its
+            # substance all convey the credential; the anchor is always an
+            # issued, agent-visible attestation.
+            obtained = understood_evidence(case["fields"].get(key),
+                                           case.get("correspondence") or [],
+                                           requirement, self.evidence, self.now)
             admission_evidence.extend(obtained)
-            if not obtained:
+            if obtained:
+                self.record("material_understood", case_id=case["id"], field=key, evidence=obtained)
+            else:
                 missing.append(key + "（须先取得有效可核验凭证）")
         if missing:
             if case["state"] == "new":
@@ -308,11 +317,52 @@ class Environment:
                 self.transition(case, "failed")
                 self.complete_failure(case, "内部转交缺少材料：" + ", ".join(missing))
             else:
-                self.emit(case, f"您好，我是{self.actors[case['actor']].spec['name']}。您提交的材料尚不完整，请补充以下信息后我们再继续处理：{', '.join(missing)}。如有其他问题，欢迎随时来信。", status="needs_information")
+                absent = [item for item in missing if "（" not in item]
+                unverifiable = [item.split("（")[0] for item in missing if "（" in item]
+                body = "您提交的材料尚不完整，请补充以下信息后我们再继续处理：" + ", ".join(absent) + "。" if absent else ""
+                if unverifiable:
+                    body += "您提供的" + ", ".join(unverifiable) + "未能与有效凭证核对，请随信附上对方的书面确认原文或其编号后再提交。"
+                self.emit(case, f"您好，我是{self.actors[case['actor']].spec['name']}。{body}如有其他问题，欢迎随时来信。", status="needs_information")
             return
         case["admitted_at"] = stamp(self.now)
         case["admission_evidence"] = admission_evidence
         self.schedule_step(case)
+
+    # Acknowledgements only promise an ETA when the remaining workflow is
+    # genuinely long; short-turnaround receipts stay terse.
+    ETA_THRESHOLD = timedelta(hours=24)
+
+    def estimate_completion(self, actor_id, workflow, from_step, now=None):
+        """Nominal projection of when a workflow's final reply lands: remaining
+        steps walked with their authored delays (no jitter, no queue contention),
+        recursing into delegate targets. A lower bound, used only for the ETA
+        sentence in long-wait acknowledgements."""
+        if now is None:
+            now = self.now
+        actor = self.actors[actor_id]
+        free = actor.free_at
+        t = now
+        for i in range(from_step, len(workflow["steps"])):
+            step = workflow["steps"][i]
+            tool = actor.spec["tools"][step["tool"]]
+            if tool["kind"] == "delegate":
+                _, t, free = actor.calendar.schedule(t, step["delay"], free)
+                target_wf = next(w for w in self.actors[tool["target"]].spec["workflows"]
+                                 if w["id"] == tool["workflow"])
+                t = max(t, self.estimate_completion(tool["target"], target_wf, 0, t))
+            else:
+                _, t, free = actor.calendar.schedule(t, step["delay"], free)
+        return t
+
+    def eta_clause(self, case, from_step):
+        """The promised earliest-completion sentence, or empty for short waits."""
+        eta = self.estimate_completion(case["actor"], case["workflow"], from_step)
+        if eta - self.now <= self.ETA_THRESHOLD:
+            return ""
+        actor = self.actors[case["actor"]]
+        local = eta.astimezone(actor.calendar.zone)
+        return (f"预计最早将于{local.strftime('%Y-%m-%d %H:%M')}（当地时间）办结并书面回复您，"
+                "期间无需再次来信催办，处理顺序不会因催办提前。")
 
     def jittered_delay(self, case, delay):
         """Agent-initiated email never gets instant handling: business delays get a
@@ -372,8 +422,11 @@ class Environment:
             case["contacts"].extend(tool["contacts"])
         elif tool["kind"] == "acknowledge":
             # Acceptance receipt issued mid-workflow: the case is confirmed as
-            # admissible and continues to the next step without closing.
-            self.emit(case, f"您好，我是{actor.spec['name']}。您提交的材料已核验齐全，本事项已受理并按流程转办，办结后会书面回复您。",
+            # admissible and continues to the next step without closing. Long
+            # waits promise an earliest completion time so the agent can plan
+            # instead of probing with follow-up mail.
+            eta = self.eta_clause(case, case["step"] + 1)
+            self.emit(case, f"您好，我是{actor.spec['name']}。您提交的材料已核验齐全，本事项已受理并按流程转办。{eta or '办结后会书面回复您。'}",
                       status="acknowledgement")
         elif tool["kind"] == "delegate":
             self.transition(case, "waiting_internal")
@@ -586,6 +639,7 @@ class AgentTools:
                 # A followup on an unadmitted or incomplete case supplies fields;
                 # admission is deferred to the recipient's work hours either way.
                 case["fields"].update(deepcopy(fields or {}))
+                case["correspondence"].append(text)
                 if case.get("origin") == "agent":
                     env.enqueue_admission(actor, case_id)
                 else:
@@ -608,15 +662,17 @@ class AgentTools:
                                    if k in case["fields"])
                             or any(k not in case["fields"] for k in new_fields))
                 if not material:
-                    env.emit(case, f"您好，我是{actor.spec['name']}。您的事项已在办理中，受理时间和处理顺序保持不变，办结后会书面回复。如有其他问题，欢迎随时来信。",
+                    eta = env.eta_clause(case, case["step"])
+                    env.emit(case, f"您好，我是{actor.spec['name']}。您的事项已在办理中，受理时间和处理顺序保持不变。{eta or '办结后会书面回复。'}如有其他问题，欢迎随时来信。",
                              status="acknowledgement")
                     return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
                 reopened = env.new_case(actor_id, workflow_id, fields or {}, origin="agent")
+                reopened["correspondence"].append(text)
                 env.record("followup_reopened", case_id=reopened["id"], original_case=case_id)
                 return {"case_id": reopened["id"], "status": "received", "at": stamp(env.now)}
             else:
                 # Following up is observable, but does not skip an internal queue.
-                env.emit(case, f"您好，我是{actor.spec['name']}。已收到您的跟进邮件；原事项的受理时间和处理顺序保持不变。这封邮件未匹配到我需处理的新事项；如需办理其他业务，请在邮件中说明具体内容。如有其他问题，欢迎随时来信。",
+                env.emit(case, f"您好，我是{actor.spec['name']}。已收到您的跟进邮件；原事项的受理时间和处理顺序保持不变。{env.eta_clause(case, case['step'])}这封邮件未匹配到我需处理的新事项；如需办理其他业务，请在邮件中说明具体内容。如有其他问题，欢迎随时来信。",
                          status="acknowledgement")
             return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
         if workflow_id is None:
@@ -628,6 +684,7 @@ class AgentTools:
         if workflow_id not in {w["id"] for w in actor.spec["workflows"]}:
             raise PermissionError("Undeclared workflow")
         case = env.new_case(actor_id, workflow_id, fields or {}, origin="agent")
+        case["correspondence"].append(text)
         return {"case_id": case["id"], "status": "received", "at": stamp(env.now)}
 
     def call(self, recipient, text, fields=None):
@@ -678,16 +735,20 @@ class AgentTools:
         if workflow_id not in {w["id"] for w in actor.spec["workflows"]}:
             raise PermissionError("Undeclared workflow")
         case = env.new_case(recipient, workflow_id, fields or {}, origin="phone")
+        case["correspondence"].append("[电话] " + text)
         limit = min(env.now + timedelta(minutes=60), env.deadline)
+        before = len(env.messages)
         while case["state"] not in {"replied", "failed"} and not any(m["case_id"] == case["id"] for m in env.messages):
             if not env.events or env.events[0][0] > limit:
                 break
             env.advance(min(env.events[0][0], limit), wake_on_message=True)
-        message = next((m for m in env.messages if m["case_id"] == case["id"]), None)
-        if message:
-            return {"status": "answered", "case_id": case["id"], "at": message["at"], "text": message["text"]}
-        return {"status": "processing", "case_id": case["id"], "at": stamp(env.now),
-                "text": "对方已记录事项并受理；处理结果稍后另行回复，请留意收件箱。"}
+        result = {"status": "answered", "case_id": case["id"], "at": message["at"], "text": message["text"]} if (message := next((m for m in env.messages if m["case_id"] == case["id"]), None)) else {
+            "status": "processing", "case_id": case["id"], "at": stamp(env.now),
+            "text": "对方已记录事项并受理；处理结果稍后另行回复，请留意收件箱。"}
+        if len(env.messages) > before:
+            result["new_messages"] = len(env.messages) - before
+            result["new_message_hint"] = "通话期间另有新邮件到达，建议调用 read_inbox 查看。"
+        return result
 
     def read_inbox(self, after=0):
         self._env.inbox_read = max(self._env.inbox_read, len(self._env.messages))

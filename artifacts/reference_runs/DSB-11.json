@@ -473,6 +473,16 @@
     },
     {
       "at": "2027-03-29T12:26:00+00:00",
+      "kind": "material_understood",
+      "case_id": "CASE-0003",
+      "field": "verified_commit",
+      "evidence": [
+        "EV-0002",
+        "EV-0003"
+      ]
+    },
+    {
+      "at": "2027-03-29T12:26:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "maintainer",
