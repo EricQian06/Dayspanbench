@@ -192,7 +192,7 @@ stateDiagram-v2
 - `at`：送达时间。
 - `from`：发件人邮箱地址，来电以邮箱地址标识。
 - `case_id`：所属事项编号。
-- `status`：`reply`（正式回复）、`referral`（转介说明）、`needs_information`（缺件提示）、`acknowledgement`（确认回执）、`failed`（办理失败）之一。剩余办理周期较长（超过一天）的事项，其确认回执会注明预计最早的办结时间；这是不含排队与处理抖动的下界估计，催办不会使其提前。
+- `status`：`reply`（正式回复）、`referral`（转介说明）、`needs_information`（缺件提示）、`acknowledgement`（确认回执）、`failed`（办理失败）之一。缺件提示会区分缺字段、字段值与登记情况不一致、凭证未能核验三种情形。剩余办理周期较长（超过一天）的事项，其确认回执会注明预计最早的办结时间；这是不含排队与处理抖动的下界估计，催办不会使其提前。
 - `channel`：`email`或`phone`。
 - `text`：正文，单段自然语言；被转介联系人的邮箱以自然语言写在正文中。
 - `evidence`：随信送达的结构化证据列表，电话答复恒为空。每条证据含`id`（证据编号，如`EV-0002`）、`issuer`（签发人）、`issued_at`（签发时间）、`text`（内容）、`value`（值）、`valid_until`（有效期上界，受理须早于该时刻）、`kind`（种类）。

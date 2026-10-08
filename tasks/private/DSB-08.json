@@ -226,7 +226,7 @@
     "title": "无障碍住宿：两家机构比较与延后的现场测量",
     "brief": "在A旅舍和B酒店中选择11月14—16日两晚住宿，预算2600元。轮椅宽78cm，房门和浴室净宽均须至少80cm。获取实测尺寸，并确认合适酒店的房态和总价，不预订。",
     "user_fields": {
-      "wheelchair_width": "78cm，要求净宽至少80cm",
+      "wheelchair_width": "78cm",
       "stay_dates": "2026-11-14/2026-11-16"
     },
     "initial_contacts": [],
@@ -234,7 +234,7 @@
       {
         "id": "hotels-intro",
         "title": "候选住宿简介",
-        "text": "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段。",
+        "text": "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段；B酒店指定房型的无障碍复测按临近入住统一排期。",
         "contacts": [],
         "snippet": "两家候选住宿概况与现场测量安排。",
         "url": "https://wuzhangzhusu.bench/intro"
@@ -346,7 +346,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -360,7 +360,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -374,7 +374,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -388,7 +388,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -402,7 +402,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -416,7 +416,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -632,7 +632,7 @@
       "id": "b_desk",
       "name": "B酒店预订咨询·米禾",
       "role": "房态与费用",
-      "description": "房态与价格可以先查询，是否可通行须现场量测。",
+      "description": "房态与价格可以先查询，是否可通行须现场量测；无障碍复测按临近入住的排期受理。",
       "calendar": "daily",
       "channels": [
         "email",
@@ -654,10 +654,13 @@
             "b_price"
           ]
         },
-        "b_desk.main.2.acknowledge": {
+        "b_desk.main.2.reply": {
+          "kind": "reply"
+        },
+        "b_desk.measure.1.acknowledge": {
           "kind": "acknowledge"
         },
-        "b_desk.main.3.delegate": {
+        "b_desk.measure.2.delegate": {
           "kind": "delegate",
           "target": "b_tech",
           "workflow": "main",
@@ -665,21 +668,22 @@
             "wheelchair_width"
           ]
         },
-        "b_desk.main.4.reply": {
+        "b_desk.measure.3.reply": {
           "kind": "reply"
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "无障碍房确认",
+          "label": "房态与费用查询",
           "aliases": [
-            "无障碍",
-            "尺寸",
-            "房态"
+            "房态",
+            "价格",
+            "费用",
+            "房价",
+            "总价"
           ],
           "required_fields": [
-            "wheelchair_width",
             "stay_dates"
           ],
           "steps": [
@@ -694,26 +698,55 @@
             },
             {
               "id": "main_2",
-              "label": "发出受理回执",
-              "tool": "b_desk.main.2.acknowledge",
-              "delay": {
-                "mode": "business",
-                "minutes": 30
-              }
-            },
-            {
-              "id": "main_3",
-              "label": "内部转交",
-              "tool": "b_desk.main.3.delegate",
-              "delay": {
-                "mode": "business",
-                "minutes": 30
-              }
-            },
-            {
-              "id": "main_4",
               "label": "向请求者回复已取得的结果",
-              "tool": "b_desk.main.4.reply",
+              "tool": "b_desk.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "measure",
+          "label": "无障碍复测确认",
+          "aliases": [
+            "无障碍",
+            "轮椅",
+            "尺寸",
+            "复测",
+            "测量"
+          ],
+          "required_fields": [
+            "wheelchair_width",
+            "stay_dates"
+          ],
+          "accept_after": "2026-11-09T09:00:00+08:00",
+          "early_reply": "指定房型的无障碍复测要按临近入住的排期统一安排，目前还未开始受理，您的来信我先登记。临近入住时再来信即可，届时按流程安排现场测量。",
+          "steps": [
+            {
+              "id": "measure_1",
+              "label": "发出受理回执",
+              "tool": "b_desk.measure.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "measure_2",
+              "label": "内部转交",
+              "tool": "b_desk.measure.2.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "measure_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "b_desk.measure.3.reply",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -742,7 +775,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是B酒店预订咨询·米禾，负责房态与费用。房态与价格可以先查询，是否可通行须现场量测。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是B酒店预订咨询·米禾，负责房态与费用。房态与价格可以先查询，是否可通行须现场量测；无障碍复测按临近入住的排期受理。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:b_available",
@@ -866,7 +899,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -909,7 +942,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -952,7 +985,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -995,7 +1028,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -1038,7 +1071,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -1065,7 +1098,7 @@
         "subject": {
           "task": "DSB-08",
           "case": {
-            "wheelchair_width": "78cm，要求净宽至少80cm",
+            "wheelchair_width": "78cm",
             "stay_dates": "2026-11-14/2026-11-16"
           }
         },
@@ -1097,11 +1130,13 @@
   "temporal_mechanisms": [
     "周末接待与工作日技术岗",
     "并行联系两家机构",
+    "B侧复测受理窗口（窗口外仅登记）",
     "房间特定可进入时间",
     "过期网页尺寸"
   ],
   "failure_modes": [
     "门框宽当净宽",
+    "把登记回执当作已受理后不再跟进",
     "第一家回复后过早停止",
     "拿一个房型数据替代另一个"
   ],
@@ -1120,8 +1155,21 @@
     {
       "op": "send",
       "to": "b_desk",
-      "text": "咨询无障碍房态、费用和尺寸",
-      "label": "b",
+      "text": "咨询指定日期房态与两晚总价",
+      "label": "b_price",
+      "fields": {
+        "stay_dates": "2026-11-14/2026-11-16"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2026-11-09T09:30:00+08:00"
+    },
+    {
+      "op": "send",
+      "to": "b_desk",
+      "text": "请安排指定房型无障碍复测",
+      "label": "b_measure",
       "fields": "$user"
     },
     {
@@ -1130,7 +1178,7 @@
     },
     {
       "op": "wait_for",
-      "label": "b"
+      "label": "b_measure"
     }
   ],
   "reference_is_privileged": true,

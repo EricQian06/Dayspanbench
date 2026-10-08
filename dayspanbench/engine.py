@@ -304,13 +304,17 @@ class Environment:
         missing = [key for key in workflow.get("required_fields", []) if case["fields"].get(key) is None or case["fields"].get(key) == ""]
         # Scenario-specific identifiers must correspond to the user's actual case.
         # Free-form intent remains the recipient adapter's responsibility.
+        # Mismatched values get their own feedback sentence: telling the applicant
+        # to attach a credential for a value they merely misspelled sends them
+        # into an unrecoverable loop (DSB-08 lesson).
+        mismatched = []
         for key in workflow.get("required_fields", []):
             expected = self.task["public"]["user_fields"].get(key)
             if key not in missing and expected is not None and case["fields"].get(key) != expected:
-                missing.append(key + "（与任务信息不符）")
+                mismatched.append(key)
         admission_evidence = []
         for key, requirement in workflow.get("evidence_fields", {}).items():
-            if key in missing:
+            if key in missing or key in mismatched:
                 continue
             # The recipient reads what the applicant actually submitted: the
             # structured field value plus the prose of their letters. Quoting
@@ -325,7 +329,8 @@ class Environment:
                 self.record("material_understood", case_id=case["id"], field=key, evidence=obtained)
             else:
                 missing.append(key + "（须先取得有效可核验凭证）")
-        if missing:
+        if missing or mismatched:
+            missing += [key + "（与任务信息不符）" for key in mismatched]
             if case["state"] == "new":
                 self.transition(case, "needs_information")
             if case.get("parent"):
@@ -333,8 +338,10 @@ class Environment:
                 self.complete_failure(case, "内部转交缺少材料：" + ", ".join(missing))
             else:
                 absent = [item for item in missing if "（" not in item]
-                unverifiable = [item.split("（")[0] for item in missing if "（" in item]
+                unverifiable = [item.split("（")[0] for item in missing if item.endswith("（须先取得有效可核验凭证）")]
                 body = "您提交的材料尚不完整，请补充以下信息后我们再继续处理：" + ", ".join(absent) + "。" if absent else ""
+                if mismatched:
+                    body += "您提供的" + ", ".join(mismatched) + "与登记情况不一致，请核对相关信息后重新提交。"
                 if unverifiable:
                     body += "您提供的" + ", ".join(unverifiable) + "未能与有效凭证核对，请随信附上对方的书面确认原文或其编号后再提交。"
                 self.emit(case, f"您好，我是{self.actors[case['actor']].spec['name']}。{body}如有其他问题，欢迎随时来信。", status="needs_information")

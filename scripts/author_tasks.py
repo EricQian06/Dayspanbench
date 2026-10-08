@@ -344,17 +344,17 @@ f = {"a_door": fact(72, "A旅舍现场复测净门宽72cm，旧网页88cm包含�
      "b_available": fact(True, "11月14—16日指定无障碍房有可售房，尚未预订。"), "b_price": fact(2360, "11月14—16日两晚总房费2360元。")}
 a = [person("a_desk", "A旅舍前台·蓝心", "无障碍房咨询", "daily", [workflow("通行尺寸确认", ["无障碍", "轮椅", "尺寸"], ["wheelchair_width", "stay_dates"], [acknowledge(business(30)), delegate("a_tech", business(60), ["wheelchair_width"]), reply(business(30))])], "每天营业，但不能用旧网页尺寸替代现场复测。", contact=["email", "phone"]),
      person("a_tech", "A旅舍设施员·蒋延", "现场测量", "office", [workflow("现场通行测量", ["尺寸", "测量"], ["wheelchair_width"], [lookup(["a_door", "a_bath"], business(120)), document(["a_door", "a_bath"], business(0)), reply()])], "周末不在岗；测量记录区分净宽与含框宽度。"),
-     person("b_desk", "B酒店预订咨询·米禾", "房态与费用", "daily", [workflow("无障碍房确认", ["无障碍", "尺寸", "房态"], ["wheelchair_width", "stay_dates"], [lookup(["b_available", "b_price"], business(60)), acknowledge(business(30)), delegate("b_tech", business(30), ["wheelchair_width"]), reply(business(30))])], "房态与价格可以先查询，是否可通行须现场量测。", contact=["email", "phone"]),
+     person("b_desk", "B酒店预订咨询·米禾", "房态与费用", "daily", [workflow("房态与费用查询", ["房态", "价格", "费用", "房价", "总价"], ["stay_dates"], [lookup(["b_available", "b_price"], business(60)), reply()]), workflow("无障碍复测确认", ["无障碍", "轮椅", "尺寸", "复测", "测量"], ["wheelchair_width", "stay_dates"], [acknowledge(business(30)), delegate("b_tech", business(30), ["wheelchair_width"]), reply(business(30))], id="measure", accept_after="2026-11-09T09:00:00+08:00", early_reply="指定房型的无障碍复测要按临近入住的排期统一安排，目前还未开始受理，您的来信我先登记。临近入住时再来信即可，届时按流程安排现场测量。")], "房态与价格可以先查询，是否可通行须现场量测；无障碍复测按临近入住的排期受理。", contact=["email", "phone"]),
      person("b_tech", "B酒店设施主管·郑砚", "指定房型现场尺寸", "office", [workflow("指定房间量测", ["尺寸", "测量"], ["wheelchair_width"], [lookup(["b_door", "b_bath"], business(120, not_before="2026-11-11T10:00:00+08:00")), document(["b_door", "b_bath"], business(0)), reply()])], "指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。")]
 TASKS.append(task("DSB-08", "无障碍住宿：两家机构比较与延后的现场测量", "出行住宿", "2026-11-06T13:30:00+08:00", "2026-11-12T18:00:00+08:00",
     "在A旅舍和B酒店中选择11月14—16日两晚住宿，预算2600元。轮椅宽78cm，房门和浴室净宽均须至少80cm。获取实测尺寸，并确认合适酒店的房态和总价，不预订。",
-    {"wheelchair_width": "78cm，要求净宽至少80cm", "stay_dates": "2026-11-14/2026-11-16"}, [],
-    [page("hotels-intro", "候选住宿简介", "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段。", [], "两家候选住宿概况与现场测量安排。"),
+    {"wheelchair_width": "78cm", "stay_dates": "2026-11-14/2026-11-16"}, [],
+    [page("hotels-intro", "候选住宿简介", "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段；B酒店指定房型的无障碍复测按临近入住统一排期。", [], "两家候选住宿概况与现场测量安排。"),
      page("hotels", "候选住宿联系方式", "A旅舍前台蓝心；B酒店预订咨询米禾。现场测量分别由两家设施人员处理。", ["a_desk", "b_desk"], "两家前台对接说明。"),
      page("hotels-entry", "无障碍住宿预订入口", "无障碍住宿预订说明：确认A旅舍或B酒店的无障碍房型需提供轮椅宽度与入住日期；通行尺寸以现场复测为准。本页面仅说明材料，不能在线预订。", [], "A旅舍与B酒店无障碍房确认材料说明；不支持在线预订。")], f, a,
     [goal("a_door_cm", 72, "a_door"), goal("a_bathroom_cm", 68, "a_bath"), goal("b_door_cm", 92, "b_door"), goal("b_bathroom_cm", 85, "b_bath"), goal("b_available", True, "b_available"), goal("b_total_price", 2360, "b_price")],
-    "choose_b", [{"op": "visit_page", "page": "hotels"}, send("a_desk", "请现场核实无障碍尺寸", "a"), send("b_desk", "咨询无障碍房态、费用和尺寸", "b"), wait("a"), wait("b")],
-    ["周末接待与工作日技术岗", "并行联系两家机构", "房间特定可进入时间", "过期网页尺寸"], ["门框宽当净宽", "第一家回复后过早停止", "拿一个房型数据替代另一个"], reply_delay=(20, 45)))
+    "choose_b", [{"op": "visit_page", "page": "hotels"}, send("a_desk", "请现场核实无障碍尺寸", "a"), send("b_desk", "咨询指定日期房态与两晚总价", "b_price", {"stay_dates": "2026-11-14/2026-11-16"}), {"op": "advance", "at": "2026-11-09T09:30:00+08:00"}, send("b_desk", "请安排指定房型无障碍复测", "b_measure"), wait("a"), wait("b_measure")],
+    ["周末接待与工作日技术岗", "并行联系两家机构", "B侧复测受理窗口（窗口外仅登记）", "房间特定可进入时间", "过期网页尺寸"], ["门框宽当净宽", "把登记回执当作已受理后不再跟进", "第一家回复后过早停止", "拿一个房型数据替代另一个"], reply_delay=(20, 45)))
 
 # 09: Public-service consultation — jurisdiction referral + two independent reviews.
 f = {"jurisdiction": fact("街区公共空间管理处", "拟用地点属于街区公共空间管理处管辖；不是私人场地。"),

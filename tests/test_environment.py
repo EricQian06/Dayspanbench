@@ -82,7 +82,7 @@ class EnvironmentTests(unittest.TestCase):
         expected = {1: "2026-11-09T07:14:00+00:00", 2: "2026-11-11T11:44:00+00:00",
                     3: "2027-02-02T07:04:00+00:00", 4: "2026-11-25T02:50:00+00:00",
                     5: "2026-12-07T08:25:00+00:00", 6: "2026-11-17T08:52:00+00:00",
-                    7: "2027-06-07T02:00:00+00:00", 8: "2026-11-11T06:48:00+00:00",
+                    7: "2027-06-07T02:00:00+00:00", 8: "2026-11-11T06:55:00+00:00",
                     9: "2026-12-28T07:49:00+00:00", 10: "2026-11-09T02:56:00+00:00",
                     11: "2027-02-24T12:46:00+00:00", 12: "2027-09-02T07:00:00+00:00"}
         for n, time in expected.items():
@@ -222,14 +222,66 @@ class EnvironmentTests(unittest.TestCase):
         api.visit_page("https://wuzhangzhusu.bench/contact")
         fields = task["public"]["user_fields"]
         a = api.send_email(mailbox(task, "a_desk"), "无障碍尺寸", fields)
-        b = api.send_email(mailbox(task, "b_desk"), "无障碍尺寸", fields)
+        # Before B's measurement window opens the desk only registers the
+        # request; file after the window opens to get it admitted.
+        early = api.send_email(mailbox(task, "b_desk"), "无障碍复测", fields)
+        api.wait_until("2026-11-09T09:30:00+08:00", wake_on_message=False)
+        self.assertTrue(any(e["kind"] == "early_reply" and e["case_id"] == early["case_id"] for e in env.audit))
+        self.assertFalse(any(e["kind"] == "scheduled" and e.get("actor") == "b_desk" and e["case_id"] == early["case_id"]
+                              for e in env.audit))
+        b = api.send_email(mailbox(task, "b_desk"), "无障碍复测", fields)
         self.assertNotEqual(a["case_id"], b["case_id"])
-        api.wait_until("2026-11-06T17:00:00+08:00", wake_on_message=False)
+        self.assertNotEqual(early["case_id"], b["case_id"])
+        api.wait_until("2026-11-09T17:00:00+08:00", wake_on_message=False)
         scheduled = [e for e in env.audit if e["kind"] == "scheduled"]
-        # Independent people are admitted and scheduled without waiting for each other.
-        self.assertEqual({s["actor"] for s in scheduled[:2]}, {"a_desk", "b_desk"})
-        started = [parse(s["start_at"]) for s in scheduled[:2]]
-        self.assertTrue(all(parse(load(8)["start_at"]) <= s <= parse(load(8)["start_at"]) + timedelta(days=1) for s in started))
+        # Independent people are admitted and scheduled without waiting for each
+        # other: each desk's first step runs on its own filing timeline.
+        first_by_actor = {}
+        for s in scheduled:
+            first_by_actor.setdefault(s["actor"], parse(s["start_at"]))
+        self.assertEqual(set(first_by_actor), {"a_desk", "b_desk", "a_tech", "b_tech"})
+        self.assertLess(first_by_actor["a_desk"], parse(load(8)["start_at"]) + timedelta(days=1))
+        self.assertGreaterEqual(first_by_actor["b_desk"], parse("2026-11-09T09:00:00+08:00"))
+        self.assertLess(first_by_actor["b_desk"], parse("2026-11-09T17:00:00+08:00"))
+
+    def test_dsb08_measurement_window_and_atomic_field(self):
+        # Before 11-09 09:00 B's measurement desk only registers the request;
+        # the price workflow stays open, and a semantically correct "78cm"
+        # (unit synonym of the canonical value) still admits after the window.
+        task = load(8)
+        env = Environment(task)
+        api = env.tools()
+        api.visit_page("https://wuzhangzhusu.bench/contact")
+        fields = dict(task["public"]["user_fields"])
+        # Price/availability is answered immediately, window or not.
+        price = api.send_email(mailbox(task, "b_desk"), "房态价格总价查询", {"stay_dates": fields["stay_dates"]})
+        api.wait_until("2026-11-06T18:00:00+08:00", wake_on_message=False)
+        self.assertTrue(any(m["case_id"] == price["case_id"] and m["status"] == "reply" for m in env.messages))
+        # Early measurement request: registration only, no evidence, no queue.
+        early = api.send_email(mailbox(task, "b_desk"), "无障碍复测", fields)
+        api.wait_until("2026-11-09T09:00:00+08:00", wake_on_message=False)
+        self.assertTrue(any(e["kind"] == "early_reply" and e["case_id"] == early["case_id"] for e in env.audit))
+        early_case = env.cases[early["case_id"]]
+        self.assertEqual(early_case["state"], "replied")
+        self.assertFalse(any(m["case_id"] == early["case_id"] and m["evidence"] for m in env.messages))
+        # In-window filing with a synonym unit spelling of the width admits.
+        filed = api.send_email(mailbox(task, "b_desk"), "无障碍复测",
+                               {**fields, "wheelchair_width": "78厘米"})
+        while env.cases[filed["case_id"]]["state"] != "waiting_internal" and env.events:
+            env.advance(env.events[0][0])
+        self.assertEqual(env.cases[filed["case_id"]]["state"], "waiting_internal")
+        self.assertTrue(any(m["case_id"] == filed["case_id"] and m["status"] == "acknowledgement"
+                            for m in env.messages))
+        # Mismatched width gets a distinguishable needs_information sentence.
+        env2 = Environment(task)
+        api2 = env2.tools()
+        api2.visit_page("https://wuzhangzhusu.bench/contact")
+        api2.wait_until("2026-11-09T09:30:00+08:00", wake_on_message=False)
+        bad = api2.send_email(mailbox(task, "b_desk"), "无障碍复测", {**fields, "wheelchair_width": "90cm"})
+        reply = api2.wait_until("2026-11-09T17:00:00+08:00", wake_on_message=False)
+        text = next(m["text"] for m in reply["messages"] if m["case_id"] == bad["case_id"])
+        self.assertIn("与登记情况不一致", text)
+        self.assertNotIn("有效凭证", text)
 
     def test_wait_wakes_for_agent_delivery_not_private_transition(self):
         task = load(2)
