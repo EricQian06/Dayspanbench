@@ -170,6 +170,18 @@
         ]
       ]
     },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
     "new_york": {
       "timezone": "America/New_York",
       "weekdays": [

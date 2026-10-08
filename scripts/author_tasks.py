@@ -75,6 +75,7 @@ CALENDARS = {
     "engineer": {"timezone": "Asia/Shanghai", "weekdays": [1, 3], "hours": [["10:00", "12:00"], ["14:00", "17:00"]]},
     "maintainer": {"timezone": "Asia/Shanghai", "weekdays": [0, 2, 4], "hours": [["20:00", "22:00"]]},
     "release": {"timezone": "Asia/Shanghai", "weekdays": [1, 3], "hours": [["20:00", "22:00"]]},
+    "upstream": {"timezone": "Asia/Shanghai", "weekdays": [3], "hours": [["20:00", "22:00"]]},
     "new_york": {"timezone": "America/New_York", "weekdays": [0, 1, 2, 3, 4], "hours": [["09:00", "17:00"]]},
     "always": {"timezone": "UTC", "weekdays": list(range(7)), "hours": [["00:00", "23:59"]]},
 }
@@ -391,21 +392,32 @@ TASKS.append(task("DSB-10", "二手相机：夜间联系、周末实测与取件
     "does_not_meet_requirements", [send("seller", "请核实相机快门热靴及实测条件", "camera"), wait("camera"), send("courier", "查询最早取件时段", "courier"), wait("courier")],
     ["晚间个人可达性", "朋友周末才能测试", "周末快递咨询", "主观回忆与实测证据冲突"], ["接受卖方估计为实测", "朋友回复即认为卖家已承诺", "替用户作购买决定"], reply_delay=(10, 30)))
 
-# 11: Open-source — volunteer schedules + 48h CI + release manager.
+# 11: Open-source — patch verification first, then a windowed release check.
+# Information is deliberately dispersed: the quarterly rhythm lives on the
+# intro page, the window date and the "filed via the maintainer" path on the
+# FAQ page, the verified-patch linkage only as an indirect sentence, and the
+# acceptance window edges nowhere (early mail gets a vague registration-only
+# reply). The patience test sits after filing: an acknowledged multi-hop
+# batch chain (release Tue batch -> upstream Thu batch -> back) with an ETA.
 f = {"repro": fact(True, "提交的日志可重现在编译器C19下的兼容问题。"), "workaround": fact("commit-7bc2", "CI在commit-7bc2上验证该兼容问题已修复。"),
-     "candidate": fact("1.4.2-rc1", "发布负责人确认当前仅有候选版1.4.2-rc1。"), "stable": fact("尚无承诺日期", "正式稳定版没有承诺发布日期；候选版不能标为稳定版。")}
-a = [person("maintainer", "星舟项目维护者·简川", "问题复现与补丁协调", "maintainer", [workflow("兼容问题确认", ["兼容", "复现", "日志", "补丁"], ["version", "compiler", "logs"], [lookup([], business(120), "核实最小复现上下文"), delegate("ci", elapsed(0), ["version", "compiler", "logs"]), lookup([], business(60), "维护者复核CI结果"), reply(business(30))]), workflow("季度发布状态复核", ["季度发布", "候选发布", "稳定版状态"], ["version", "verified_commit"], [delegate("release", elapsed(0), ["version"]), reply(business(30))], id="release_check", evidence_fields={"verified_commit": "workaround"})], "只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。"),
+     "candidate": fact("1.4.2-rc1", "发布负责人确认当前仅有候选版1.4.2-rc1。", available_at="2027-02-09T20:00:00+08:00"),
+     "stable": fact("尚无承诺日期", "正式稳定版没有承诺发布日期；候选版不能标为稳定版。", available_at="2027-02-09T20:00:00+08:00")}
+a = [person("maintainer", "星舟项目维护者·简川", "问题复现与补丁协调", "maintainer", [workflow("兼容问题确认", ["兼容", "复现", "日志", "补丁"], ["version", "compiler", "logs"], [lookup([], business(120), "核实最小复现上下文"), acknowledge(business(30)), delegate("ci", elapsed(0), ["version", "compiler", "logs"]), lookup([], business(60), "维护者复核CI结果"), reply(business(30))]),
+        workflow("季度发布状态复核", ["季度发布", "候选版", "稳定版", "发布状态", "发布窗口"], ["version", "verified_commit"], [acknowledge(business(30)), delegate("release", elapsed(0), ["version"]), reply(business(30))], id="release_check", accept_after="2027-01-26T20:00:00+08:00", accept_before="2027-02-23T22:00:00+08:00", early_reply="本季度的发布核对还没开始受理，您的来信我先登记。等临近上游兼容窗口时再来信即可，届时按流程办理。", evidence_fields={"verified_commit": "workaround"})],
+     "只在周一三五20—22点处理；先给补丁验证结果；季度发布核对按上游窗口安排，未到窗口不予受理。"),
      person("ci", "星舟CI值守·自动检查器", "兼容性构建测试", "always", [workflow("48小时构建验证", ["构建", "验证"], ["version", "compiler", "logs"], [lookup(["repro", "workaround"], elapsed(2880)), document(["workaround"], elapsed(0)), reply()])], "仅返回真实配置内的构建结果；不会承诺发布。"),
-     person("release", "星舟发布协调员·唐泊", "候选版与稳定版状态", "release", [workflow("季度候选发布核对", ["发布", "候选版"], ["version"], [lookup(["candidate", "stable"], {**weekly(1, "20:00", 120), "not_before": "2027-03-30T20:00:00+08:00"}), reply()])], "上游兼容窗口在2027年3月30日20点开放；候选版与稳定版需在该季度窗口分别核对。")]
-TASKS.append(task("DSB-11", "开源兼容性：补丁验证后跟进跨季度发布", "开源协作", "2026-11-07T20:30:00+08:00", "2027-04-01T23:00:00+08:00",
+     person("release", "星舟发布协调员·唐泊", "候选版发布状态", "release", [workflow("候选版核对", ["发布", "候选版"], ["version"], [lookup(["candidate"], {**weekly(1, "20:00", 120), "not_before": "2027-02-09T20:00:00+08:00"}), delegate("upstream", business(30), ["version"]), reply(business(30))])], "每季度上游兼容窗口核对候选版；稳定版状态须向上游委员会查证，不能自行答复。"),
+     person("upstream", "上游发布委员会·秘书处", "稳定版状态归档", "upstream", [workflow("稳定版状态查证", ["稳定版"], ["version"], [lookup(["stable"], weekly(3, "20:00", 120)), reply()])], "每周四20—22点集中查证归档；不对项目外部直接受理。")]
+TASKS.append(task("DSB-11", "开源兼容性：补丁验证后按窗口复核发布状态", "开源协作", "2026-11-07T20:30:00+08:00", "2027-03-03T23:00:00+08:00",
     "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期。中间补丁可用不代表本任务完成。不要合并或发布。",
     {"version": "1.4.1", "compiler": "C19", "logs": "LOG-771"}, [],
-    [page("repo-intro", "星舟项目贡献说明", "维护者周一三五20—22点处理，CI连续运行48小时。补丁验证后，须在2027年3月30日20点的上游兼容窗口另行核实季度发布，切勿把补丁或候选版当稳定版。", [], "开源项目维护安排与发布窗口说明。"),
-     page("repo", "星舟项目联系方式", "兼容问题与补丁协调联系维护者简川；候选版与稳定版状态联系发布协调员。", ["maintainer"], "维护者与发布协调对接说明。"),
-     page("repo-entry", "星舟项目问题反馈入口", "星舟项目问题反馈说明：提交兼容性问题需提供版本、编译器与日志编号；补丁验证与发布状态由维护者和发布协调员分别核实。本页面仅说明材料，不能在线合并或发布。", [], "星舟项目问题提交材料说明；不支持在线合并。")], f, a,
+    [page("repo-intro", "星舟项目贡献说明", "维护者周一三五20—22点处理来信，CI连续运行48小时。项目按季度发布，每季度上游兼容窗口统一核对候选版与稳定版状态；补丁或候选版都不能当作稳定版。", [], "开源项目维护安排与发布节奏说明。"),
+     page("repo", "星舟项目联系方式", "兼容问题与补丁协调联系维护者简川；其余事项的对接入口见对应说明页。", ["maintainer"], "项目联系与对接说明。"),
+     page("repo-faq", "星舟项目发布流程说明", "季度发布核对须通过维护者转交办理；本季上游兼容窗口为2027年2月9日20点。核实发布状态需关联已验证的补丁。本页仅作流程说明，不能在线合并或发布。", [], "季度发布核对流程与窗口说明。"),
+     page("repo-entry", "星舟项目问题反馈入口", "提交兼容性问题需提供版本、编译器与日志编号；补丁验证与发布状态分别在不同阶段核实。本页面仅说明材料，不能在线合并或发布。", [], "星舟项目问题提交材料说明；不支持在线合并。")], f, a,
     [goal("reproduced", True, "repro"), goal("verified_patch", "commit-7bc2", "workaround"), goal("candidate_version", "1.4.2-rc1", "candidate"), goal("stable_release_date", "尚无承诺日期", "stable")],
-    "workaround_available_stable_uncommitted", [{"op": "visit_page", "page": "repo"}, send("maintainer", "请核实兼容问题与补丁", "fix"), wait("fix"), {"op": "advance", "at": "2027-03-29T20:00:00+08:00"}, send("maintainer", "请跟进季度发布和稳定版状态", "release", {"version": "1.4.1", "verified_commit": "$fact:workaround"}), wait("release")],
-    ["志愿者离散晚间窗口", "48小时自动构建", "跨季度后带原补丁证据继续沟通", "上游兼容窗口", "候选版与稳定版区别"], ["初步补丁可用就提前结束", "跨季度后丢失原补丁证据", "杜撰稳定版承诺日期"], reply_delay=(10, 30)))
+    "workaround_available_stable_uncommitted", [{"op": "visit_page", "page": "repo"}, send("maintainer", "请核实兼容问题与补丁", "fix"), wait("fix"), {"op": "advance", "at": "2027-01-27T20:30:00+08:00"}, send("maintainer", "请转交核实季度发布的候选版与稳定版状态", "release", {"version": "1.4.1", "verified_commit": "$fact:workaround"}), wait("release")],
+    ["志愿者离散晚间窗口", "48小时自动构建", "受理窗口外的来信仅登记不受理", "带ETA回执的多级批次等待", "候选版与稳定版分岗核实"], ["初步补丁可用就提前结束", "把登记回执当作已受理", "错过受理窗口", "把候选版证据当作稳定版结论", "杜撰稳定版承诺日期"], reply_delay=(10, 30)))
 
 # 12: Prototype held for classification review. Several active stages across 300 days.
 f = {"warehouse": fact("2026年11月已完成始发仓入库扫描", "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。"),
@@ -524,7 +536,7 @@ def write_tasks():
         "DSB-08": (5, "短期", "指定房间可进入时间与两机构交叉核实"),
         "DSB-09": (55, "中长期", "30天征询及年末联合分类复核"),
         "DSB-10": (2, "短期", "夜间个人联系与周末实测"),
-        "DSB-11": (144, "长期", "短期修复后跨季度跟进候选发布"),
+        "DSB-11": (109, "长期", "短期修复后按季度受理窗口发起多级批次等待"),
         "DSB-12": (300, "长期", "原型设备归类争议、第二轮补件和未决技术复核"),
     }
     conclusion_options = {

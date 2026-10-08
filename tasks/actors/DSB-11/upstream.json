@@ -1,0 +1,122 @@
+{
+  "private": true,
+  "task_id": "DSB-11",
+  "actor": {
+    "id": "upstream",
+    "name": "上游发布委员会·秘书处",
+    "role": "稳定版状态归档",
+    "description": "每周四20—22点集中查证归档；不对项目外部直接受理。",
+    "calendar": "upstream",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "upstream@bench.example"
+    },
+    "knowledge": [
+      "stable"
+    ],
+    "tools": {
+      "upstream.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "stable"
+        ]
+      },
+      "upstream.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "稳定版状态查证",
+        "aliases": [
+          "稳定版"
+        ],
+        "required_fields": [
+          "version"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "upstream.main.1.lookup",
+            "delay": {
+              "mode": "weekly",
+              "weekday": 3,
+              "time": "20:00",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "upstream.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是上游发布委员会·秘书处，负责稳定版状态归档。每周四20—22点集中查证归档；不对项目外部直接受理。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:stable_release_date"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      3
+    ],
+    "hours": [
+      [
+        "20:00",
+        "22:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "stable": {
+      "value": "尚无承诺日期",
+      "text": "正式稳定版没有承诺发布日期；候选版不能标为稳定版。",
+      "available_at": "2027-02-09T20:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "stable_release_date"
+      }
+    }
+  },
+  "start_at": "2026-11-07T20:30:00+08:00",
+  "deadline_at": "2027-03-03T23:00:00+08:00"
+}

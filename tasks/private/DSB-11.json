@@ -2,10 +2,10 @@
   "schema_version": "0.2",
   "task_set_version": "0.3.0",
   "id": "DSB-11",
-  "title": "开源兼容性：补丁验证后跟进跨季度发布",
+  "title": "开源兼容性：补丁验证后按窗口复核发布状态",
   "domain": "开源协作",
   "start_at": "2026-11-07T20:30:00+08:00",
-  "deadline_at": "2027-04-01T23:00:00+08:00",
+  "deadline_at": "2027-03-03T23:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
   "synthetic": true,
   "completion_class": "resolved",
@@ -170,6 +170,18 @@
         ]
       ]
     },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
     "new_york": {
       "timezone": "America/New_York",
       "weekdays": [
@@ -211,7 +223,7 @@
   ],
   "public": {
     "id": "DSB-11",
-    "title": "开源兼容性：补丁验证后跟进跨季度发布",
+    "title": "开源兼容性：补丁验证后按窗口复核发布状态",
     "brief": "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期。中间补丁可用不代表本任务完成。不要合并或发布。",
     "user_fields": {
       "version": "1.4.1",
@@ -223,25 +235,33 @@
       {
         "id": "repo-intro",
         "title": "星舟项目贡献说明",
-        "text": "维护者周一三五20—22点处理，CI连续运行48小时。补丁验证后，须在2027年3月30日20点的上游兼容窗口另行核实季度发布，切勿把补丁或候选版当稳定版。",
+        "text": "维护者周一三五20—22点处理来信，CI连续运行48小时。项目按季度发布，每季度上游兼容窗口统一核对候选版与稳定版状态；补丁或候选版都不能当作稳定版。",
         "contacts": [],
-        "snippet": "开源项目维护安排与发布窗口说明。",
+        "snippet": "开源项目维护安排与发布节奏说明。",
         "url": "https://xingzhou.bench/intro"
       },
       {
         "id": "repo",
         "title": "星舟项目联系方式",
-        "text": "兼容问题与补丁协调联系维护者简川；候选版与稳定版状态联系发布协调员。",
+        "text": "兼容问题与补丁协调联系维护者简川；其余事项的对接入口见对应说明页。",
         "contacts": [
           "maintainer"
         ],
-        "snippet": "维护者与发布协调对接说明。",
+        "snippet": "项目联系与对接说明。",
         "url": "https://xingzhou.bench/contact"
+      },
+      {
+        "id": "repo-faq",
+        "title": "星舟项目发布流程说明",
+        "text": "季度发布核对须通过维护者转交办理；本季上游兼容窗口为2027年2月9日20点。核实发布状态需关联已验证的补丁。本页仅作流程说明，不能在线合并或发布。",
+        "contacts": [],
+        "snippet": "季度发布核对流程与窗口说明。",
+        "url": "https://xingzhou.bench/faq"
       },
       {
         "id": "repo-entry",
         "title": "星舟项目问题反馈入口",
-        "text": "星舟项目问题反馈说明：提交兼容性问题需提供版本、编译器与日志编号；补丁验证与发布状态由维护者和发布协调员分别核实。本页面仅说明材料，不能在线合并或发布。",
+        "text": "提交兼容性问题需提供版本、编译器与日志编号；补丁验证与发布状态分别在不同阶段核实。本页面仅说明材料，不能在线合并或发布。",
         "contacts": [],
         "snippet": "星舟项目问题提交材料说明；不支持在线合并。",
         "url": "https://xingzhou.bench/entry"
@@ -314,6 +334,7 @@
     "candidate": {
       "value": "1.4.2-rc1",
       "text": "发布负责人确认当前仅有候选版1.4.2-rc1。",
+      "available_at": "2027-02-09T20:00:00+08:00",
       "attributes": {
         "subject": {
           "task": "DSB-11",
@@ -329,6 +350,7 @@
     "stable": {
       "value": "尚无承诺日期",
       "text": "正式稳定版没有承诺发布日期；候选版不能标为稳定版。",
+      "available_at": "2027-02-09T20:00:00+08:00",
       "attributes": {
         "subject": {
           "task": "DSB-11",
@@ -347,7 +369,7 @@
       "id": "maintainer",
       "name": "星舟项目维护者·简川",
       "role": "问题复现与补丁协调",
-      "description": "只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。",
+      "description": "只在周一三五20—22点处理；先给补丁验证结果；季度发布核对按上游窗口安排，未到窗口不予受理。",
       "calendar": "maintainer",
       "channels": [
         "email"
@@ -361,7 +383,10 @@
           "kind": "lookup",
           "facts": []
         },
-        "maintainer.main.2.delegate": {
+        "maintainer.main.2.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "maintainer.main.3.delegate": {
           "kind": "delegate",
           "target": "ci",
           "workflow": "main",
@@ -371,14 +396,17 @@
             "logs"
           ]
         },
-        "maintainer.main.3.lookup": {
+        "maintainer.main.4.lookup": {
           "kind": "lookup",
           "facts": []
         },
-        "maintainer.main.4.reply": {
+        "maintainer.main.5.reply": {
           "kind": "reply"
         },
-        "maintainer.release_check.1.delegate": {
+        "maintainer.release_check.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "maintainer.release_check.2.delegate": {
           "kind": "delegate",
           "target": "release",
           "workflow": "main",
@@ -386,7 +414,7 @@
             "version"
           ]
         },
-        "maintainer.release_check.2.reply": {
+        "maintainer.release_check.3.reply": {
           "kind": "reply"
         }
       },
@@ -417,26 +445,35 @@
             },
             {
               "id": "main_2",
+              "label": "发出受理回执",
+              "tool": "maintainer.main.2.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
               "label": "内部转交",
-              "tool": "maintainer.main.2.delegate",
+              "tool": "maintainer.main.3.delegate",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
               }
             },
             {
-              "id": "main_3",
+              "id": "main_4",
               "label": "维护者复核CI结果",
-              "tool": "maintainer.main.3.lookup",
+              "tool": "maintainer.main.4.lookup",
               "delay": {
                 "mode": "business",
                 "minutes": 60
               }
             },
             {
-              "id": "main_4",
+              "id": "main_5",
               "label": "向请求者回复已取得的结果",
-              "tool": "maintainer.main.4.reply",
+              "tool": "maintainer.main.5.reply",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -450,13 +487,18 @@
           "label": "季度发布状态复核",
           "aliases": [
             "季度发布",
-            "候选发布",
-            "稳定版状态"
+            "候选版",
+            "稳定版",
+            "发布状态",
+            "发布窗口"
           ],
           "required_fields": [
             "version",
             "verified_commit"
           ],
+          "accept_after": "2027-01-26T20:00:00+08:00",
+          "accept_before": "2027-02-23T22:00:00+08:00",
+          "early_reply": "本季度的发布核对还没开始受理，您的来信我先登记。等临近上游兼容窗口时再来信即可，届时按流程办理。",
           "evidence_fields": {
             "verified_commit": {
               "subject": {
@@ -480,17 +522,26 @@
           "steps": [
             {
               "id": "release_check_1",
+              "label": "发出受理回执",
+              "tool": "maintainer.release_check.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "release_check_2",
               "label": "内部转交",
-              "tool": "maintainer.release_check.1.delegate",
+              "tool": "maintainer.release_check.2.delegate",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
               }
             },
             {
-              "id": "release_check_2",
+              "id": "release_check_3",
               "label": "向请求者回复已取得的结果",
-              "tool": "maintainer.release_check.2.reply",
+              "tool": "maintainer.release_check.3.reply",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -518,7 +569,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是星舟项目维护者·简川，负责问题复现与补丁协调。只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是星舟项目维护者·简川，负责问题复现与补丁协调。只在周一三五20—22点处理；先给补丁验证结果；季度发布核对按上游窗口安排，未到窗口不予受理。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": []
     },
@@ -630,8 +681,8 @@
     {
       "id": "release",
       "name": "星舟发布协调员·唐泊",
-      "role": "候选版与稳定版状态",
-      "description": "上游兼容窗口在2027年3月30日20点开放；候选版与稳定版需在该季度窗口分别核对。",
+      "role": "候选版发布状态",
+      "description": "每季度上游兼容窗口核对候选版；稳定版状态须向上游委员会查证，不能自行答复。",
       "calendar": "release",
       "channels": [
         "email"
@@ -640,25 +691,31 @@
         "email": "tangbo@bench.example"
       },
       "knowledge": [
-        "candidate",
-        "stable"
+        "candidate"
       ],
       "tools": {
         "release.main.1.lookup": {
           "kind": "lookup",
           "facts": [
-            "candidate",
-            "stable"
+            "candidate"
           ]
         },
-        "release.main.2.reply": {
+        "release.main.2.delegate": {
+          "kind": "delegate",
+          "target": "upstream",
+          "workflow": "main",
+          "forward_fields": [
+            "version"
+          ]
+        },
+        "release.main.3.reply": {
           "kind": "reply"
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "季度候选发布核对",
+          "label": "候选版核对",
           "aliases": [
             "发布",
             "候选版"
@@ -676,13 +733,108 @@
                 "weekday": 1,
                 "time": "20:00",
                 "minutes": 120,
-                "not_before": "2027-03-30T20:00:00+08:00"
+                "not_before": "2027-02-09T20:00:00+08:00"
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "内部转交",
+              "tool": "release.main.2.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "release.main.3.reply",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是星舟发布协调员·唐泊，负责候选版发布状态。每季度上游兼容窗口核对候选版；稳定版状态须向上游委员会查证，不能自行答复。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:candidate_version"
+      ]
+    },
+    {
+      "id": "upstream",
+      "name": "上游发布委员会·秘书处",
+      "role": "稳定版状态归档",
+      "description": "每周四20—22点集中查证归档；不对项目外部直接受理。",
+      "calendar": "upstream",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "upstream@bench.example"
+      },
+      "knowledge": [
+        "stable"
+      ],
+      "tools": {
+        "upstream.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "stable"
+          ]
+        },
+        "upstream.main.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "稳定版状态查证",
+          "aliases": [
+            "稳定版"
+          ],
+          "required_fields": [
+            "version"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "upstream.main.1.lookup",
+              "delay": {
+                "mode": "weekly",
+                "weekday": 3,
+                "time": "20:00",
+                "minutes": 120
               }
             },
             {
               "id": "main_2",
               "label": "向请求者回复已取得的结果",
-              "tool": "release.main.2.reply",
+              "tool": "upstream.main.2.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -711,10 +863,9 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是星舟发布协调员·唐泊，负责候选版与稳定版状态。上游兼容窗口在2027年3月30日20点开放；候选版与稳定版需在该季度窗口分别核对。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是上游发布委员会·秘书处，负责稳定版状态归档。每周四20—22点集中查证归档；不对项目外部直接受理。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
-        "attest:candidate_version",
         "attest:stable_release_date"
       ]
     }
@@ -859,13 +1010,15 @@
   "temporal_mechanisms": [
     "志愿者离散晚间窗口",
     "48小时自动构建",
-    "跨季度后带原补丁证据继续沟通",
-    "上游兼容窗口",
-    "候选版与稳定版区别"
+    "受理窗口外的来信仅登记不受理",
+    "带ETA回执的多级批次等待",
+    "候选版与稳定版分岗核实"
   ],
   "failure_modes": [
     "初步补丁可用就提前结束",
-    "跨季度后丢失原补丁证据",
+    "把登记回执当作已受理",
+    "错过受理窗口",
+    "把候选版证据当作稳定版结论",
     "杜撰稳定版承诺日期"
   ],
   "reference_actions": [
@@ -886,12 +1039,12 @@
     },
     {
       "op": "advance",
-      "at": "2027-03-29T20:00:00+08:00"
+      "at": "2027-01-27T20:30:00+08:00"
     },
     {
       "op": "send",
       "to": "maintainer",
-      "text": "请跟进季度发布和稳定版状态",
+      "text": "请转交核实季度发布的候选版与稳定版状态",
       "label": "release",
       "fields": {
         "version": "1.4.1",
@@ -906,9 +1059,9 @@
   "reference_is_privileged": true,
   "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
   "horizon_design": {
-    "reference_days": 144,
+    "reference_days": 109,
     "stratum": "长期",
-    "mechanism": "短期修复后跨季度跟进候选发布",
+    "mechanism": "短期修复后按季度受理窗口发起多级批次等待",
     "distribution": "manually stratified approximately logarithmic"
   }
 }

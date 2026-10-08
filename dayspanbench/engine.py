@@ -282,6 +282,21 @@ class Environment:
 
     def start(self, case):
         workflow = case["workflow"]
+        # An acceptance window's opening edge only gates the agent's own mail:
+        # a request filed before accept_after is answered with a registration-
+        # only reply and never enters the queue, so early filing cannot
+        # silently reserve a place in a later batch. Internal handoffs are
+        # exempt; the parent step already ran inside the window.
+        if (workflow.get("accept_after") and not case.get("parent")
+                and self.now < parse(workflow["accept_after"])):
+            self.transition(case, "queued")
+            self.transition(case, "working")
+            self.transition(case, "replied")
+            self.record("early_reply", case_id=case["id"], actor=case["actor"],
+                        accept_after=workflow["accept_after"])
+            body = workflow.get("early_reply") or "您咨询的事项还未开始受理，暂时无法办理，请稍后再来。"
+            self.emit(case, f"您好，我是{self.actors[case['actor']].spec['name']}。{body}如有其他问题，欢迎随时来信。")
+            return
         if workflow.get("accept_before") and self.now >= parse(workflow["accept_before"]):
             self.transition(case, "failed")
             self.complete_failure(case, "该轮受理截止时间已过，无法按原时间完成。")
@@ -361,8 +376,8 @@ class Environment:
             return ""
         actor = self.actors[case["actor"]]
         local = eta.astimezone(actor.calendar.zone)
-        return (f"预计最早将于{local.strftime('%Y-%m-%d %H:%M')}（当地时间）办结并书面回复您，"
-                "期间无需再次来信催办，处理顺序不会因催办提前。")
+        return (f"预计最早将于{local.strftime('%Y-%m-%d %H:%M')}（当地时间）办结并书面回复您；"
+                "该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。")
 
     def jittered_delay(self, case, delay):
         """Agent-initiated email never gets instant handling: business delays get a
@@ -616,7 +631,7 @@ class AgentTools:
                 "fields": deepcopy(fields or {}), "now": stamp(env.now), "history": deepcopy(actor.history),
                 "existing_workflow_id": existing["workflow"]["id"]
                     if existing and existing["workflow"] and existing["state"] in {"new", "needs_information"} else None,
-                "workflows": [{k: deepcopy(w[k]) for k in ("id", "label", "aliases", "required_fields")} for w in actor.spec["workflows"]],
+                "workflows": [{k: deepcopy(w[k]) for k in ("id", "label", "aliases", "required_fields", "accept_after", "accept_before") if k in w} for w in actor.spec["workflows"]],
                 "local_cases": [{"id": cid, "state": env.cases[cid]["state"]} for cid in actor.cases]}
         actor.history.append({"role": "agent", "text": text, "fields": deepcopy(fields or {}), "case_id": case_id, "at": stamp(env.now)})
         if hasattr(actor.recipient, "route"):
@@ -717,7 +732,7 @@ class AgentTools:
                 "instructions": actor.spec["recipient"]["instructions"], "message": "[电话] " + text,
                 "fields": deepcopy(fields or {}), "now": stamp(env.now), "history": deepcopy(actor.history),
                 "existing_workflow_id": None,
-                "workflows": [{k: deepcopy(w[k]) for k in ("id", "label", "aliases", "required_fields")} for w in actor.spec["workflows"]],
+                "workflows": [{k: deepcopy(w[k]) for k in ("id", "label", "aliases", "required_fields", "accept_after", "accept_before") if k in w} for w in actor.spec["workflows"]],
                 "local_cases": [{"id": cid, "state": env.cases[cid]["state"]} for cid in actor.cases]}
         actor.history.append({"role": "agent", "text": "[电话] " + text, "fields": deepcopy(fields or {}),
                               "case_id": None, "at": stamp(env.now)})

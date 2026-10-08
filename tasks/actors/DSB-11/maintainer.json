@@ -5,7 +5,7 @@
     "id": "maintainer",
     "name": "星舟项目维护者·简川",
     "role": "问题复现与补丁协调",
-    "description": "只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。",
+    "description": "只在周一三五20—22点处理；先给补丁验证结果；季度发布核对按上游窗口安排，未到窗口不予受理。",
     "calendar": "maintainer",
     "channels": [
       "email"
@@ -19,7 +19,10 @@
         "kind": "lookup",
         "facts": []
       },
-      "maintainer.main.2.delegate": {
+      "maintainer.main.2.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "maintainer.main.3.delegate": {
         "kind": "delegate",
         "target": "ci",
         "workflow": "main",
@@ -29,14 +32,17 @@
           "logs"
         ]
       },
-      "maintainer.main.3.lookup": {
+      "maintainer.main.4.lookup": {
         "kind": "lookup",
         "facts": []
       },
-      "maintainer.main.4.reply": {
+      "maintainer.main.5.reply": {
         "kind": "reply"
       },
-      "maintainer.release_check.1.delegate": {
+      "maintainer.release_check.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "maintainer.release_check.2.delegate": {
         "kind": "delegate",
         "target": "release",
         "workflow": "main",
@@ -44,7 +50,7 @@
           "version"
         ]
       },
-      "maintainer.release_check.2.reply": {
+      "maintainer.release_check.3.reply": {
         "kind": "reply"
       }
     },
@@ -75,26 +81,35 @@
           },
           {
             "id": "main_2",
+            "label": "发出受理回执",
+            "tool": "maintainer.main.2.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
             "label": "内部转交",
-            "tool": "maintainer.main.2.delegate",
+            "tool": "maintainer.main.3.delegate",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
             }
           },
           {
-            "id": "main_3",
+            "id": "main_4",
             "label": "维护者复核CI结果",
-            "tool": "maintainer.main.3.lookup",
+            "tool": "maintainer.main.4.lookup",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "main_4",
+            "id": "main_5",
             "label": "向请求者回复已取得的结果",
-            "tool": "maintainer.main.4.reply",
+            "tool": "maintainer.main.5.reply",
             "delay": {
               "mode": "business",
               "minutes": 30
@@ -108,13 +123,18 @@
         "label": "季度发布状态复核",
         "aliases": [
           "季度发布",
-          "候选发布",
-          "稳定版状态"
+          "候选版",
+          "稳定版",
+          "发布状态",
+          "发布窗口"
         ],
         "required_fields": [
           "version",
           "verified_commit"
         ],
+        "accept_after": "2027-01-26T20:00:00+08:00",
+        "accept_before": "2027-02-23T22:00:00+08:00",
+        "early_reply": "本季度的发布核对还没开始受理，您的来信我先登记。等临近上游兼容窗口时再来信即可，届时按流程办理。",
         "evidence_fields": {
           "verified_commit": {
             "subject": {
@@ -138,17 +158,26 @@
         "steps": [
           {
             "id": "release_check_1",
+            "label": "发出受理回执",
+            "tool": "maintainer.release_check.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "release_check_2",
             "label": "内部转交",
-            "tool": "maintainer.release_check.1.delegate",
+            "tool": "maintainer.release_check.2.delegate",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
             }
           },
           {
-            "id": "release_check_2",
+            "id": "release_check_3",
             "label": "向请求者回复已取得的结果",
-            "tool": "maintainer.release_check.2.reply",
+            "tool": "maintainer.release_check.3.reply",
             "delay": {
               "mode": "business",
               "minutes": 30
@@ -176,7 +205,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是星舟项目维护者·简川，负责问题复现与补丁协调。只在周一三五20—22点处理；先给补丁验证结果，申请人应在次年第一季度发布窗口另行核实候选版与稳定版。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是星舟项目维护者·简川，负责问题复现与补丁协调。只在周一三五20—22点处理；先给补丁验证结果；季度发布核对按上游窗口安排，未到窗口不予受理。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": []
   },
@@ -196,5 +225,5 @@
   },
   "local_facts": {},
   "start_at": "2026-11-07T20:30:00+08:00",
-  "deadline_at": "2027-04-01T23:00:00+08:00"
+  "deadline_at": "2027-03-03T23:00:00+08:00"
 }

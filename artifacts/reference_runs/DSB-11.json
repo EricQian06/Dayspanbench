@@ -73,16 +73,26 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 3456.33,
-    "calendar_days": 144.013889,
+    "calendar_hours": 2616.27,
+    "calendar_days": 109.011111,
     "agent_messages": 2,
     "contacted_actors": 1,
-    "as_of": "2027-03-31T12:50:00+00:00"
+    "as_of": "2027-02-24T12:46:00+00:00"
   },
   "agent_messages": [
     {
       "id": "MSG-0001",
-      "at": "2026-11-16T13:14:00+00:00",
+      "at": "2026-11-11T13:16:00+00:00",
+      "from": "jianchuan@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是星舟项目维护者·简川。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-16 20:46（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2026-11-18T12:04:00+00:00",
       "from": "jianchuan@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
@@ -92,7 +102,7 @@
         {
           "id": "EV-0001",
           "issuer": "ci",
-          "issued_at": "2026-11-13T12:55:00+00:00",
+          "issued_at": "2026-11-13T13:31:00+00:00",
           "text": "提交的日志可重现在编译器C19下的兼容问题。",
           "value": true,
           "valid_until": null,
@@ -101,7 +111,7 @@
         {
           "id": "EV-0002",
           "issuer": "ci",
-          "issued_at": "2026-11-13T12:55:00+00:00",
+          "issued_at": "2026-11-13T13:31:00+00:00",
           "text": "CI在commit-7bc2上验证该兼容问题已修复。",
           "value": "commit-7bc2",
           "valid_until": null,
@@ -110,7 +120,7 @@
         {
           "id": "EV-0003",
           "issuer": "ci",
-          "issued_at": "2026-11-13T13:10:00+00:00",
+          "issued_at": "2026-11-13T13:46:00+00:00",
           "text": "CI在commit-7bc2上验证该兼容问题已修复。",
           "value": "commit-7bc2",
           "valid_until": null,
@@ -119,8 +129,18 @@
       ]
     },
     {
-      "id": "MSG-0002",
-      "at": "2027-03-31T12:50:00+00:00",
+      "id": "MSG-0003",
+      "at": "2027-01-27T13:42:00+00:00",
+      "from": "jianchuan@bench.example",
+      "case_id": "CASE-0003",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是星舟项目维护者·简川。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-02-24 20:30（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2027-02-24T12:46:00+00:00",
       "from": "jianchuan@bench.example",
       "case_id": "CASE-0003",
       "status": "reply",
@@ -130,7 +150,7 @@
         {
           "id": "EV-0004",
           "issuer": "release",
-          "issued_at": "2027-03-30T14:00:00+00:00",
+          "issued_at": "2027-02-09T14:00:00+00:00",
           "text": "发布负责人确认当前仅有候选版1.4.2-rc1。",
           "value": "1.4.2-rc1",
           "valid_until": null,
@@ -138,8 +158,8 @@
         },
         {
           "id": "EV-0005",
-          "issuer": "release",
-          "issued_at": "2027-03-30T14:00:00+00:00",
+          "issuer": "upstream",
+          "issued_at": "2027-02-18T14:00:00+00:00",
           "text": "正式稳定版没有承诺发布日期；候选版不能标为稳定版。",
           "value": "尚无承诺日期",
           "valid_until": null,
@@ -218,8 +238,8 @@
       "actor": "maintainer",
       "step": "main_2",
       "start_at": "2026-11-11T12:40:00+00:00",
-      "due_at": "2026-11-11T12:55:00+00:00",
-      "tool": "maintainer.main.2.delegate"
+      "due_at": "2026-11-11T13:16:00+00:00",
+      "tool": "maintainer.main.2.acknowledge"
     },
     {
       "at": "2026-11-11T12:40:00+00:00",
@@ -230,15 +250,56 @@
       "new": "working"
     },
     {
-      "at": "2026-11-11T12:55:00+00:00",
+      "at": "2026-11-11T13:16:00+00:00",
       "kind": "tool_call",
       "actor": "maintainer",
       "case_id": "CASE-0001",
-      "tool": "maintainer.main.2.delegate",
+      "tool": "maintainer.main.2.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2026-11-11T13:16:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2026-11-11T13:16:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "maintainer",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-11T13:16:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "maintainer",
+      "step": "main_3",
+      "start_at": "2026-11-11T13:16:00+00:00",
+      "due_at": "2026-11-11T13:31:00+00:00",
+      "tool": "maintainer.main.3.delegate"
+    },
+    {
+      "at": "2026-11-11T13:16:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "maintainer",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-11T13:31:00+00:00",
+      "kind": "tool_call",
+      "actor": "maintainer",
+      "case_id": "CASE-0001",
+      "tool": "maintainer.main.3.delegate",
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-11T12:55:00+00:00",
+      "at": "2026-11-11T13:31:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "maintainer",
@@ -246,7 +307,7 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-11T12:55:00+00:00",
+      "at": "2026-11-11T13:31:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0002",
       "actor": "ci",
@@ -254,7 +315,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-11T12:55:00+00:00",
+      "at": "2026-11-11T13:31:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "ci",
@@ -262,17 +323,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-11T12:55:00+00:00",
+      "at": "2026-11-11T13:31:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "ci",
       "step": "main_1",
-      "start_at": "2026-11-11T12:55:00+00:00",
-      "due_at": "2026-11-13T12:55:00+00:00",
+      "start_at": "2026-11-11T13:31:00+00:00",
+      "due_at": "2026-11-13T13:31:00+00:00",
       "tool": "ci.main.1.lookup"
     },
     {
-      "at": "2026-11-11T12:55:00+00:00",
+      "at": "2026-11-11T13:31:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "ci",
@@ -280,7 +341,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-13T12:55:00+00:00",
+      "at": "2026-11-13T13:31:00+00:00",
       "kind": "tool_call",
       "actor": "ci",
       "case_id": "CASE-0002",
@@ -288,7 +349,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-13T12:55:00+00:00",
+      "at": "2026-11-13T13:31:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "ci",
@@ -296,17 +357,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-13T12:55:00+00:00",
+      "at": "2026-11-13T13:31:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "ci",
       "step": "main_2",
-      "start_at": "2026-11-13T12:55:00+00:00",
-      "due_at": "2026-11-13T13:10:00+00:00",
+      "start_at": "2026-11-13T13:31:00+00:00",
+      "due_at": "2026-11-13T13:46:00+00:00",
       "tool": "ci.main.2.document"
     },
     {
-      "at": "2026-11-13T12:55:00+00:00",
+      "at": "2026-11-13T13:31:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "ci",
@@ -314,7 +375,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-13T13:10:00+00:00",
+      "at": "2026-11-13T13:46:00+00:00",
       "kind": "tool_call",
       "actor": "ci",
       "case_id": "CASE-0002",
@@ -322,7 +383,7 @@
       "tool_kind": "document"
     },
     {
-      "at": "2026-11-13T13:10:00+00:00",
+      "at": "2026-11-13T13:46:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "ci",
@@ -330,17 +391,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-13T13:10:00+00:00",
+      "at": "2026-11-13T13:46:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "ci",
       "step": "main_3",
-      "start_at": "2026-11-13T13:10:00+00:00",
-      "due_at": "2026-11-13T13:25:00+00:00",
+      "start_at": "2026-11-13T13:46:00+00:00",
+      "due_at": "2026-11-13T14:01:00+00:00",
       "tool": "ci.main.3.reply"
     },
     {
-      "at": "2026-11-13T13:10:00+00:00",
+      "at": "2026-11-13T13:46:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "ci",
@@ -348,7 +409,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-13T13:25:00+00:00",
+      "at": "2026-11-13T14:01:00+00:00",
       "kind": "tool_call",
       "actor": "ci",
       "case_id": "CASE-0002",
@@ -356,7 +417,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-13T13:25:00+00:00",
+      "at": "2026-11-13T14:01:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "ci",
@@ -364,13 +425,13 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-13T13:25:00+00:00",
+      "at": "2026-11-13T14:01:00+00:00",
       "kind": "handoff_return",
       "case_id": "CASE-0002",
       "parent": "CASE-0001"
     },
     {
-      "at": "2026-11-13T13:25:00+00:00",
+      "at": "2026-11-13T14:01:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "maintainer",
@@ -378,17 +439,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-13T13:25:00+00:00",
+      "at": "2026-11-13T14:01:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "maintainer",
-      "step": "main_3",
-      "start_at": "2026-11-13T13:25:00+00:00",
-      "due_at": "2026-11-16T12:31:00+00:00",
-      "tool": "maintainer.main.3.lookup"
+      "step": "main_4",
+      "start_at": "2026-11-16T12:00:00+00:00",
+      "due_at": "2026-11-16T13:13:00+00:00",
+      "tool": "maintainer.main.4.lookup"
     },
     {
-      "at": "2026-11-13T13:25:00+00:00",
+      "at": "2026-11-16T12:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "maintainer",
@@ -396,15 +457,15 @@
       "new": "working"
     },
     {
-      "at": "2026-11-16T12:31:00+00:00",
+      "at": "2026-11-16T13:13:00+00:00",
       "kind": "tool_call",
       "actor": "maintainer",
       "case_id": "CASE-0001",
-      "tool": "maintainer.main.3.lookup",
+      "tool": "maintainer.main.4.lookup",
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-16T12:31:00+00:00",
+      "at": "2026-11-16T13:13:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "maintainer",
@@ -412,17 +473,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-16T12:31:00+00:00",
+      "at": "2026-11-16T13:13:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "maintainer",
-      "step": "main_4",
-      "start_at": "2026-11-16T12:31:00+00:00",
-      "due_at": "2026-11-16T13:14:00+00:00",
-      "tool": "maintainer.main.4.reply"
+      "step": "main_5",
+      "start_at": "2026-11-16T13:13:00+00:00",
+      "due_at": "2026-11-18T12:04:00+00:00",
+      "tool": "maintainer.main.5.reply"
     },
     {
-      "at": "2026-11-16T12:31:00+00:00",
+      "at": "2026-11-16T13:13:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "maintainer",
@@ -430,15 +491,15 @@
       "new": "working"
     },
     {
-      "at": "2026-11-16T13:14:00+00:00",
+      "at": "2026-11-18T12:04:00+00:00",
       "kind": "tool_call",
       "actor": "maintainer",
       "case_id": "CASE-0001",
-      "tool": "maintainer.main.4.reply",
+      "tool": "maintainer.main.5.reply",
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-16T13:14:00+00:00",
+      "at": "2026-11-18T12:04:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "maintainer",
@@ -446,17 +507,17 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-16T13:14:00+00:00",
+      "at": "2026-11-18T12:04:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0001",
+      "message_id": "MSG-0002",
       "case_id": "CASE-0001",
       "status": "reply"
     },
     {
-      "at": "2027-03-29T12:00:00+00:00",
+      "at": "2027-01-27T12:30:00+00:00",
       "kind": "agent_send",
       "recipient": "jianchuan@bench.example",
-      "text": "请跟进季度发布和稳定版状态",
+      "text": "请转交核实季度发布的候选版与稳定版状态",
       "fields": {
         "version": "1.4.1",
         "verified_commit": "commit-7bc2"
@@ -464,7 +525,7 @@
       "channel": "email"
     },
     {
-      "at": "2027-03-29T12:00:00+00:00",
+      "at": "2027-01-27T12:30:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0003",
       "actor": "maintainer",
@@ -472,7 +533,7 @@
       "origin": "agent"
     },
     {
-      "at": "2027-03-29T12:26:00+00:00",
+      "at": "2027-01-27T12:55:00+00:00",
       "kind": "material_understood",
       "case_id": "CASE-0003",
       "field": "verified_commit",
@@ -482,7 +543,7 @@
       ]
     },
     {
-      "at": "2027-03-29T12:26:00+00:00",
+      "at": "2027-01-27T12:55:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "maintainer",
@@ -490,17 +551,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-03-29T12:26:00+00:00",
+      "at": "2027-01-27T12:55:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "maintainer",
       "step": "release_check_1",
-      "start_at": "2027-03-29T12:26:00+00:00",
-      "due_at": "2027-03-29T12:41:00+00:00",
-      "tool": "maintainer.release_check.1.delegate"
+      "start_at": "2027-01-27T12:55:00+00:00",
+      "due_at": "2027-01-27T13:42:00+00:00",
+      "tool": "maintainer.release_check.1.acknowledge"
     },
     {
-      "at": "2027-03-29T12:26:00+00:00",
+      "at": "2027-01-27T12:55:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "maintainer",
@@ -508,15 +569,56 @@
       "new": "working"
     },
     {
-      "at": "2027-03-29T12:41:00+00:00",
+      "at": "2027-01-27T13:42:00+00:00",
       "kind": "tool_call",
       "actor": "maintainer",
       "case_id": "CASE-0003",
-      "tool": "maintainer.release_check.1.delegate",
+      "tool": "maintainer.release_check.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-01-27T13:42:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0003",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-01-27T13:42:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "maintainer",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-01-27T13:42:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0003",
+      "actor": "maintainer",
+      "step": "release_check_2",
+      "start_at": "2027-01-27T13:42:00+00:00",
+      "due_at": "2027-01-27T13:57:00+00:00",
+      "tool": "maintainer.release_check.2.delegate"
+    },
+    {
+      "at": "2027-01-27T13:42:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0003",
+      "actor": "maintainer",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-01-27T13:57:00+00:00",
+      "kind": "tool_call",
+      "actor": "maintainer",
+      "case_id": "CASE-0003",
+      "tool": "maintainer.release_check.2.delegate",
       "tool_kind": "delegate"
     },
     {
-      "at": "2027-03-29T12:41:00+00:00",
+      "at": "2027-01-27T13:57:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "maintainer",
@@ -524,7 +626,7 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2027-03-29T12:41:00+00:00",
+      "at": "2027-01-27T13:57:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0004",
       "actor": "release",
@@ -532,7 +634,7 @@
       "origin": "agent"
     },
     {
-      "at": "2027-03-29T12:41:00+00:00",
+      "at": "2027-01-27T13:57:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "release",
@@ -540,17 +642,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-03-29T12:41:00+00:00",
+      "at": "2027-01-27T13:57:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0004",
       "actor": "release",
       "step": "main_1",
-      "start_at": "2027-03-30T12:00:00+00:00",
-      "due_at": "2027-03-30T14:00:00+00:00",
+      "start_at": "2027-02-09T12:00:00+00:00",
+      "due_at": "2027-02-09T14:00:00+00:00",
       "tool": "release.main.1.lookup"
     },
     {
-      "at": "2027-03-30T12:00:00+00:00",
+      "at": "2027-02-09T12:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "release",
@@ -558,7 +660,7 @@
       "new": "working"
     },
     {
-      "at": "2027-03-30T14:00:00+00:00",
+      "at": "2027-02-09T14:00:00+00:00",
       "kind": "tool_call",
       "actor": "release",
       "case_id": "CASE-0004",
@@ -566,7 +668,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2027-03-30T14:00:00+00:00",
+      "at": "2027-02-09T14:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "release",
@@ -574,17 +676,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-03-30T14:00:00+00:00",
+      "at": "2027-02-09T14:00:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0004",
       "actor": "release",
       "step": "main_2",
-      "start_at": "2027-03-30T14:00:00+00:00",
-      "due_at": "2027-03-30T14:15:00+00:00",
-      "tool": "release.main.2.reply"
+      "start_at": "2027-02-11T12:00:00+00:00",
+      "due_at": "2027-02-11T12:44:00+00:00",
+      "tool": "release.main.2.delegate"
     },
     {
-      "at": "2027-03-30T14:00:00+00:00",
+      "at": "2027-02-11T12:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "release",
@@ -592,15 +694,147 @@
       "new": "working"
     },
     {
-      "at": "2027-03-30T14:15:00+00:00",
+      "at": "2027-02-11T12:44:00+00:00",
       "kind": "tool_call",
       "actor": "release",
       "case_id": "CASE-0004",
-      "tool": "release.main.2.reply",
+      "tool": "release.main.2.delegate",
+      "tool_kind": "delegate"
+    },
+    {
+      "at": "2027-02-11T12:44:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "release",
+      "old": "working",
+      "new": "waiting_internal"
+    },
+    {
+      "at": "2027-02-11T12:44:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0005",
+      "actor": "upstream",
+      "parent": "CASE-0004",
+      "origin": "agent"
+    },
+    {
+      "at": "2027-02-11T12:44:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0005",
+      "actor": "upstream",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-02-11T12:44:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0005",
+      "actor": "upstream",
+      "step": "main_1",
+      "start_at": "2027-02-18T12:00:00+00:00",
+      "due_at": "2027-02-18T14:00:00+00:00",
+      "tool": "upstream.main.1.lookup"
+    },
+    {
+      "at": "2027-02-18T12:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0005",
+      "actor": "upstream",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-02-18T14:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "upstream",
+      "case_id": "CASE-0005",
+      "tool": "upstream.main.1.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-02-18T14:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0005",
+      "actor": "upstream",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-02-18T14:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0005",
+      "actor": "upstream",
+      "step": "main_2",
+      "start_at": "2027-02-18T14:00:00+00:00",
+      "due_at": "2027-02-18T14:15:00+00:00",
+      "tool": "upstream.main.2.reply"
+    },
+    {
+      "at": "2027-02-18T14:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0005",
+      "actor": "upstream",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-02-18T14:15:00+00:00",
+      "kind": "tool_call",
+      "actor": "upstream",
+      "case_id": "CASE-0005",
+      "tool": "upstream.main.2.reply",
       "tool_kind": "reply"
     },
     {
-      "at": "2027-03-30T14:15:00+00:00",
+      "at": "2027-02-18T14:15:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0005",
+      "actor": "upstream",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-02-18T14:15:00+00:00",
+      "kind": "handoff_return",
+      "case_id": "CASE-0005",
+      "parent": "CASE-0004"
+    },
+    {
+      "at": "2027-02-18T14:15:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "release",
+      "old": "waiting_internal",
+      "new": "queued"
+    },
+    {
+      "at": "2027-02-18T14:15:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0004",
+      "actor": "release",
+      "step": "main_3",
+      "start_at": "2027-02-23T12:00:00+00:00",
+      "due_at": "2027-02-23T12:50:00+00:00",
+      "tool": "release.main.3.reply"
+    },
+    {
+      "at": "2027-02-23T12:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0004",
+      "actor": "release",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-02-23T12:50:00+00:00",
+      "kind": "tool_call",
+      "actor": "release",
+      "case_id": "CASE-0004",
+      "tool": "release.main.3.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-02-23T12:50:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "release",
@@ -608,13 +842,13 @@
       "new": "replied"
     },
     {
-      "at": "2027-03-30T14:15:00+00:00",
+      "at": "2027-02-23T12:50:00+00:00",
       "kind": "handoff_return",
       "case_id": "CASE-0004",
       "parent": "CASE-0003"
     },
     {
-      "at": "2027-03-30T14:15:00+00:00",
+      "at": "2027-02-23T12:50:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "maintainer",
@@ -622,17 +856,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-03-30T14:15:00+00:00",
+      "at": "2027-02-23T12:50:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "maintainer",
-      "step": "release_check_2",
-      "start_at": "2027-03-31T12:00:00+00:00",
-      "due_at": "2027-03-31T12:50:00+00:00",
-      "tool": "maintainer.release_check.2.reply"
+      "step": "release_check_3",
+      "start_at": "2027-02-24T12:00:00+00:00",
+      "due_at": "2027-02-24T12:46:00+00:00",
+      "tool": "maintainer.release_check.3.reply"
     },
     {
-      "at": "2027-03-31T12:00:00+00:00",
+      "at": "2027-02-24T12:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "maintainer",
@@ -640,15 +874,15 @@
       "new": "working"
     },
     {
-      "at": "2027-03-31T12:50:00+00:00",
+      "at": "2027-02-24T12:46:00+00:00",
       "kind": "tool_call",
       "actor": "maintainer",
       "case_id": "CASE-0003",
-      "tool": "maintainer.release_check.2.reply",
+      "tool": "maintainer.release_check.3.reply",
       "tool_kind": "reply"
     },
     {
-      "at": "2027-03-31T12:50:00+00:00",
+      "at": "2027-02-24T12:46:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "maintainer",
@@ -656,9 +890,9 @@
       "new": "replied"
     },
     {
-      "at": "2027-03-31T12:50:00+00:00",
+      "at": "2027-02-24T12:46:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0002",
+      "message_id": "MSG-0004",
       "case_id": "CASE-0003",
       "status": "reply"
     }

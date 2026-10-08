@@ -74,7 +74,7 @@ class EnvironmentTests(unittest.TestCase):
                 self.assertLessEqual(result["calendar_hours"], window)
                 self.assertEqual({c["actor"] for c in env.cases.values()}, {a["id"] for a in task["actors"]})
                 actors += len(task["actors"])
-        self.assertEqual(actors, 41)
+        self.assertEqual(actors, 42)
 
     def test_golden_calendar_completion_times(self):
         # Deterministic under the default latency seed; guards against unintended
@@ -84,7 +84,7 @@ class EnvironmentTests(unittest.TestCase):
                     5: "2026-12-07T08:25:00+00:00", 6: "2026-11-17T08:52:00+00:00",
                     7: "2027-06-07T02:00:00+00:00", 8: "2026-11-11T06:48:00+00:00",
                     9: "2026-12-28T07:49:00+00:00", 10: "2026-11-09T02:56:00+00:00",
-                    11: "2027-03-31T12:50:00+00:00", 12: "2027-09-02T07:00:00+00:00"}
+                    11: "2027-02-24T12:46:00+00:00", 12: "2027-09-02T07:00:00+00:00"}
         for n, time in expected.items():
             with self.subTest(task=n):
                 env, _, _ = run_reference(load(n))
@@ -266,7 +266,7 @@ class EnvironmentTests(unittest.TestCase):
 
     def test_log_scale_horizon_distribution(self):
         days = sorted(load(n)["horizon_design"]["reference_days"] for n in range(1, 13))
-        self.assertEqual(days, [2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 210, 300])
+        self.assertEqual(days, [2, 3, 5, 8, 13, 21, 34, 55, 89, 109, 210, 300])
         bins = [(2, 7), (8, 30), (31, 100), (101, 300)]
         self.assertEqual([sum(lo <= day <= hi for day in days) for lo, hi in bins], [3, 3, 3, 3])
 
