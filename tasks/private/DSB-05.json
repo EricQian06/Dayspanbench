@@ -423,19 +423,22 @@
         "sales.main.6.reply": {
           "kind": "reply"
         },
-        "sales.refresh.1.lookup": {
+        "sales.refresh.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "sales.refresh.2.lookup": {
           "kind": "lookup",
           "facts": [
             "quote_new"
           ]
         },
-        "sales.refresh.2.document": {
+        "sales.refresh.3.document": {
           "kind": "document",
           "facts": [
             "quote_new"
           ]
         },
-        "sales.refresh.3.reply": {
+        "sales.refresh.4.reply": {
           "kind": "reply"
         }
       },
@@ -516,7 +519,15 @@
           "aliases": [
             "重新确认报价",
             "刷新报价",
-            "更新报价"
+            "更新报价",
+            "重新询价",
+            "重新报价",
+            "新报价",
+            "再次报价",
+            "有效报价",
+            "当前有效",
+            "报价过期",
+            "报价已过期"
           ],
           "required_fields": [
             "quantity",
@@ -525,8 +536,17 @@
           "steps": [
             {
               "id": "refresh_1",
+              "label": "发出受理回执",
+              "tool": "sales.refresh.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "refresh_2",
               "label": "查询业务记录",
-              "tool": "sales.refresh.1.lookup",
+              "tool": "sales.refresh.2.lookup",
               "delay": {
                 "mode": "business",
                 "minutes": 60,
@@ -534,18 +554,18 @@
               }
             },
             {
-              "id": "refresh_2",
+              "id": "refresh_3",
               "label": "签发书面确认",
-              "tool": "sales.refresh.2.document",
+              "tool": "sales.refresh.3.document",
               "delay": {
                 "mode": "business",
                 "minutes": 0
               }
             },
             {
-              "id": "refresh_3",
+              "id": "refresh_4",
               "label": "向请求者回复已取得的结果",
-              "tool": "sales.refresh.3.reply",
+              "tool": "sales.refresh.4.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0

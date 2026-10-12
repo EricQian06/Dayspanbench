@@ -81,9 +81,9 @@ class EnvironmentTests(unittest.TestCase):
         # drift in admission/jitter behavior.
         expected = {1: "2026-11-09T07:14:00+00:00", 2: "2026-11-11T11:44:00+00:00",
                     3: "2027-02-02T07:04:00+00:00", 4: "2026-11-25T02:50:00+00:00",
-                    5: "2026-12-07T08:25:00+00:00", 6: "2026-11-17T08:52:00+00:00",
+                    5: "2026-12-08T01:16:00+00:00", 6: "2026-11-17T08:52:00+00:00",
                     7: "2027-06-07T02:00:00+00:00", 8: "2026-11-11T06:55:00+00:00",
-                    9: "2026-12-28T07:49:00+00:00", 10: "2026-11-09T02:56:00+00:00",
+                    9: "2026-12-28T07:49:00+00:00", 10: "2026-11-08T02:54:00+00:00",
                     11: "2027-02-24T12:46:00+00:00", 12: "2027-09-02T07:00:00+00:00"}
         for n, time in expected.items():
             with self.subTest(task=n):
@@ -621,6 +621,10 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(ack["case_id"], first["case_id"])
         self.assertEqual(len(env.cases), before)
         api.wait_until(task["deadline_at"])
+        # The refresh workflow's acknowledgement receipt wakes the wait early;
+        # drain to the terminal state before looking for the final reply.
+        while env.cases[reopened["case_id"]]["state"] != "replied" and env.events:
+            env.advance(env.events[0][0])
         reply = next(m for m in env.messages if m["case_id"] == reopened["case_id"] and m["status"] == "reply")
         self.assertTrue(any(e["value"] == 18600 for e in reply["evidence"]))
 
@@ -673,6 +677,89 @@ class EnvironmentTests(unittest.TestCase):
                                   {"event_date": "2026-11-13", "headcount": 80})
         self.assertEqual(followup["status"], "received")
 
+    def test_ping_without_case_reference_joins_the_open_case(self):
+        # A progress ping that carries no case_id must neither spawn a rival
+        # case (it would compete with the original queue) nor draw a referral
+        # from a person actively serving the sender: it acknowledges the open
+        # case and restates its ETA (DSB-02 lesson).
+        task = load(2)
+        env = Environment(task)
+        api = env.tools()
+        filed = api.send_email(mailbox(task, "landlord"), "咨询租房宠物搬入",
+                                task["public"]["user_fields"])
+        api.wait_until("2026-11-06T21:00:00+08:00", wake_on_message=False)
+        self.assertEqual(env.cases[filed["case_id"]]["state"], "waiting_internal")
+        agent_cases_before = [c for c in env.cases.values()
+                              if c.get("origin") == "agent" and not c.get("parent")]
+        # Alias-less ping and alias-matched ping both land on the open case.
+        for text in ("请问进度如何？", "请问租房事项的进度如何？"):
+            ping = api.send_email(mailbox(task, "landlord"), text)
+            self.assertEqual(ping["case_id"], filed["case_id"])
+        agent_cases_after = [c for c in env.cases.values()
+                             if c.get("origin") == "agent" and not c.get("parent")]
+        self.assertEqual(len(agent_cases_after), len(agent_cases_before))
+        api.wait_until(task["deadline_at"], wake_on_message=False)
+        pings = [m for m in env.messages if m["case_id"] == filed["case_id"]
+                 and m["status"] == "acknowledgement"]
+        self.assertGreaterEqual(len(pings), 2)
+        self.assertFalse(any(m["status"] == "referral" and m["case_id"] == filed["case_id"]
+                             for m in env.messages))
+
+    def test_restated_eta_follows_child_progress_and_never_shrinks_trust(self):
+        # Re-asserting the ETA of a waiting_internal case must follow the
+        # delegate child's real progress: after the Friday reviewer batch has
+        # run, a ping may not promise the next weekly batch (DSB-02 once
+        # re-promised 11-13 for a case finishing 11-11).
+        task = load(2)
+        env = Environment(task)
+        api = env.tools()
+        filed = api.send_email(mailbox(task, "landlord"), "咨询租房宠物搬入",
+                                task["public"]["user_fields"])
+        api.wait_until("2026-11-09T21:00:00+08:00", wake_on_message=False)
+        api.send_email(mailbox(task, "landlord"), "请问进度如何？")
+        api.wait_until(task["deadline_at"], wake_on_message=False)
+        acks = [m for m in env.messages if m["case_id"] == filed["case_id"]
+                and m["status"] == "acknowledgement"]
+        import re
+        promised = [re.search(r"预计最早将于(.+?)（当地时间）办结", m["text"]).group(1) for m in acks]
+        final = next(m for m in env.messages if m["case_id"] == filed["case_id"] and m["status"] == "reply")
+        # Every promise is conservative: the reply never lands after the
+        # promised minute (an agent may safely wait until it), and never more
+        # than a day before it (the promise stays informative). The promise is
+        # in the recipient's timezone (Asia/Shanghai, +08:00).
+        for text in promised:
+            self.assertGreaterEqual(parse(text + "+08:00"), parse(final["at"]))
+            self.assertLess(parse(text + "+08:00"), parse(final["at"]) + timedelta(days=1))
+
+    def test_promise_eta_is_conservative_across_seeds(self):
+        # The acknowledgement's "earliest completion" must never be beaten by
+        # the real run: the projection includes the worst-case agent jitter
+        # (DSB-04 once promised 09:30 and delivered 10:50, and the agent gave
+        # up exactly at the promised minute).
+        import re
+        task = load(4)
+        for seed in range(4):
+            env = Environment(task, seed=seed)
+            api = env.tools()
+            api.visit_page("https://nanyu.bench/contact")
+            api.send_email(mailbox(task, "labdesk"), "测量仪器联系")
+            # The labdesk referral names the safety officer and the instrument
+            # keeper; only then are they addressable. File before the Friday
+            # 14:00 training batch so the certificate is in hand.
+            api.wait_until("2026-11-05T17:00:00+08:00", wake_on_message=False)
+            api.send_email(mailbox(task, "safety"), "培训安全记录", {"person_name": "顾晓"})
+            while not any(m["status"] == "reply" and m["from"] == mailbox(task, "safety")
+                          for m in env.messages):
+                env.advance(env.events[0][0] if env.events else parse(task["deadline_at"]))
+            api.send_email(mailbox(task, "instrument"), "核实测量校准费用",
+                           {"sample_id": "S-482", "safety_certificate": "SAFE-NOV06-482"})
+            api.wait_until(task["deadline_at"], wake_on_message=False)
+            ack = next(m for m in env.messages if m["status"] == "acknowledgement"
+                       and "杜和" in m["text"])
+            reply = next(m for m in env.messages if m["status"] == "reply" and "杜和" in m["text"])
+            promised = re.search(r"预计最早将于(.+?)（当地时间）办结", ack["text"]).group(1)
+            self.assertGreaterEqual(parse(promised + "+08:00"), parse(reply["at"]),
+                                    f"seed {seed}: promise {promised} beaten by {reply['at']}")
 
     def test_phone_call_semantics(self):
         task = load(1)

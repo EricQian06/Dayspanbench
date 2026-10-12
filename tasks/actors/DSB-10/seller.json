@@ -87,8 +87,8 @@
             "label": "内部转交",
             "tool": "seller.main.3.delegate",
             "delay": {
-              "mode": "business",
-              "minutes": 30
+              "mode": "elapsed",
+              "minutes": 0
             }
           },
           {

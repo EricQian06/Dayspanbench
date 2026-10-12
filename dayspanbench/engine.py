@@ -395,11 +395,29 @@ class Environment:
     # genuinely long; short-turnaround receipts stay terse.
     ETA_THRESHOLD = timedelta(hours=24)
 
-    def estimate_completion(self, actor_id, workflow, from_step, now=None):
+    # Upper bound of the randomized surcharge jittered_delay adds to each
+    # business step of an agent-initiated case.
+    JITTER_CEILING = 25
+
+    def projected_delay(self, delay, origin):
+        """Delay as the ETA projection sees it: for agent-origin cases every
+        business step is inflated to its worst-case jitter so the promised
+        "earliest" completion is never beaten by the real run."""
+        if origin != "agent":
+            return delay
+        adjusted = dict(delay)
+        if adjusted.get("mode", "business") == "business":
+            adjusted["minutes"] = max(adjusted.get("minutes", 0), 15) + self.JITTER_CEILING
+        else:
+            adjusted["minutes"] = max(adjusted.get("minutes", 0), 15)
+        return adjusted
+
+    def estimate_completion(self, actor_id, workflow, from_step, now=None, origin=None):
         """Nominal projection of when a workflow's final reply lands: remaining
-        steps walked with their authored delays (no jitter, no queue contention),
-        recursing into delegate targets. A lower bound, used only for the ETA
-        sentence in long-wait acknowledgements."""
+        steps walked with their authored delays (worst-case jitter included for
+        agent-origin cases, but no queue contention), recursing into delegate
+        targets. A lower bound, used only for the ETA sentence in long-wait
+        acknowledgements."""
         if now is None:
             now = self.now
         actor = self.actors[actor_id]
@@ -409,20 +427,60 @@ class Environment:
             step = workflow["steps"][i]
             tool = actor.spec["tools"][step["tool"]]
             if tool["kind"] == "delegate":
-                _, t, free = actor.calendar.schedule(t, step["delay"], free)
+                _, t, free = actor.calendar.schedule(t, self.projected_delay(step["delay"], origin), free)
                 target_wf = next(w for w in self.actors[tool["target"]].spec["workflows"]
                                  if w["id"] == tool["workflow"])
-                t = max(t, self.estimate_completion(tool["target"], target_wf, 0, t))
+                t = max(t, self.estimate_completion(tool["target"], target_wf, 0, t, origin=origin))
             else:
-                _, t, free = actor.calendar.schedule(t, step["delay"], free)
+                _, t, free = actor.calendar.schedule(t, self.projected_delay(step["delay"], origin), free)
         return t
 
-    def eta_clause(self, case, from_step):
+    def active_child(self, case, workflow_id):
+        """The latest not-yet-returned delegate child of a waiting case."""
+        children = [c for c in self.cases.values()
+                    if c.get("parent") == case["id"] and c["workflow"] is not None
+                    and c["workflow"]["id"] == workflow_id and c["state"] not in {"replied", "failed"}]
+        return children[-1] if children else None
+
+    def case_completion(self, case):
+        """Projection for a live case: the current step uses its already
+        scheduled due time, a waiting_internal step follows the active child's
+        real progress instead of re-simulating it from scratch — re-estimating
+        a finished reviewer from "now" once pushed a DSB-02 receipt a whole
+        weekly batch past its original promise."""
+        t = self.now
+        actor = self.actors[case["actor"]]
+        workflow = case["workflow"]
+        step_index = case["step"]
+        if case["state"] in {"queued", "working"}:
+            if case.get("due_at"):
+                t = max(t, parse(case["due_at"]))
+            step_index += 1
+        elif case["state"] == "waiting_internal":
+            step = workflow["steps"][step_index]
+            tool = actor.spec["tools"][step["tool"]]
+            child = self.active_child(case, tool.get("workflow", "main"))
+            if child is not None:
+                t = self.case_completion(child)
+            else:
+                _, t, _ = actor.calendar.schedule(t, step["delay"], actor.free_at)
+                target_wf = next(w for w in self.actors[tool["target"]].spec["workflows"]
+                                 if w["id"] == tool["workflow"])
+                t = max(t, self.estimate_completion(tool["target"], target_wf, 0, t, origin=case.get("origin")))
+            step_index += 1
+        elif case["state"] in {"new", "needs_information"}:
+            return self.estimate_completion(case["actor"], workflow, 0, origin=case.get("origin"))
+        else:  # replied / failed: nothing left to promise
+            return t
+        return self.estimate_completion(case["actor"], workflow, step_index, t,
+                                        origin=case.get("origin"))
+
+    def eta_clause(self, case, from_step=None):
         """The promised earliest-completion sentence, or empty for short waits.
         An unrouted case has no workflow to project, so it promises nothing."""
         if case["workflow"] is None:
             return ""
-        eta = self.estimate_completion(case["actor"], case["workflow"], from_step)
+        eta = self.case_completion(case)
         if eta - self.now <= self.ETA_THRESHOLD:
             return ""
         actor = self.actors[case["actor"]]
@@ -448,6 +506,7 @@ class Environment:
         step = case["workflow"]["steps"][case["step"]]
         start, end, resource_free = actor.calendar.schedule(self.now, self.jittered_delay(case, step["delay"]), actor.free_at)
         actor.free_at = resource_free
+        case["due_at"] = stamp(end)
         self.record("scheduled", case_id=case["id"], actor=case["actor"], step=step["id"],
                     start_at=stamp(start), due_at=stamp(end), tool=step["tool"])
         self.enqueue(start, "start", case["id"])
@@ -491,7 +550,7 @@ class Environment:
             # admissible and continues to the next step without closing. Long
             # waits promise an earliest completion time so the agent can plan
             # instead of probing with follow-up mail.
-            eta = self.eta_clause(case, case["step"] + 1)
+            eta = self.eta_clause(case)
             self.emit(case, f"您好，我是{actor.spec['name']}。您提交的材料已核验齐全，本事项已受理并按流程转办。{eta or '办结后会书面回复您。'}",
                       status="acknowledgement")
         elif tool["kind"] == "delegate":
@@ -697,6 +756,26 @@ class AgentTools:
         else:
             workflow_id = env.recipient_call(actor, "choose", view)
             fields = env.canonicalize_fields(fields)
+        if case_id is None and actor_id is not None:
+            # A fresh letter that belongs to an already open conversation is a
+            # follow-up, not a rival case: routing matched the same workflow
+            # (progress ping, restated or corrected values), or matched nothing
+            # while exactly one agent case is in flight here. Without this,
+            # every ping without a case reference spawned a duplicate case
+            # competing with the original queue, or drew a cold referral from
+            # a person who is actively serving the sender.
+            in_flight = [c for c in (env.cases[cid] for cid in actor.cases)
+                         if c.get("origin") == "agent" and not c.get("parent")
+                         and c["workflow"] is not None
+                         and c["state"] not in {"replied", "failed"}]
+            if workflow_id is not None:
+                same = [c for c in in_flight if c["workflow"]["id"] == workflow_id]
+                merged = same[-1] if same else None
+            else:
+                merged = in_flight[-1] if len(in_flight) == 1 else None
+            if merged is not None:
+                case_id = merged["id"]
+                existing = merged
         if case_id:
             case = env.cases[case_id]
             if case["actor"] != actor_id or case["parent"]:
@@ -728,7 +807,7 @@ class AgentTools:
                                    if k in case["fields"])
                             or any(k not in case["fields"] for k in new_fields))
                 if not material:
-                    eta = env.eta_clause(case, case["step"])
+                    eta = env.eta_clause(case)
                     env.emit(case, f"您好，我是{actor.spec['name']}。您的事项已在办理中，受理时间和处理顺序保持不变。{eta or '办结后会书面回复。'}如有其他问题，欢迎随时来信。",
                              status="acknowledgement")
                     return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
