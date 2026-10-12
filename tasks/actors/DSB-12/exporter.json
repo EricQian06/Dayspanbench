@@ -70,6 +70,8 @@
         "required_fields": [
           "tracking"
         ],
+        "accept_after": "2026-11-24T09:00:00+08:00",
+        "early_reply": "首轮更正单证的核验尚未开始，您的来信已登记。待补正资料进入可取状态后再来函，届时按流程办理。",
         "steps": [
           {
             "id": "main_1",
@@ -123,6 +125,8 @@
           "tracking",
           "review_reference"
         ],
+        "accept_after": "2027-03-23T09:00:00+08:00",
+        "early_reply": "制造批次档案的恢复核验尚未开始，您的来信已登记。档案恢复可核验后再来函办理第二轮单证与溯源。",
         "evidence_fields": {
           "review_reference": {
             "subject": {

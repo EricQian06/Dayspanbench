@@ -69,6 +69,8 @@
           "tracking",
           "declaration_version"
         ],
+        "accept_after": "2027-01-21T09:00:00+08:00",
+        "early_reply": "归类初审登记的集中办理窗口尚未开始，您的来信已登记。临近初审窗口时再来函，届时按流程办理。",
         "evidence_fields": {
           "declaration_version": {
             "subject": {

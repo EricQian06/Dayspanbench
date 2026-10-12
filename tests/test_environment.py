@@ -192,6 +192,29 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(case["fields"]["pet_weight"], "8kg")
         self.assertNotEqual(case["state"], "needs_information")
 
+    def test_bare_number_and_date_variant_fields_still_admit(self):
+        # "8" and "11月12日" (no unit / Chinese date spelling) describe the same
+        # case as "8kg" / "2026-11-12"; a different number or date still bounces.
+        task = load(2)
+        for variant in ({"pet_weight": "8", "move_date": "11月12日"},
+                        {"pet_weight": "8", "move_date": "2026年11月12日"}):
+            env = Environment(task)
+            api = env.tools()
+            case = env.cases[api.send_email(mailbox(task, "landlord"), "咨询宠物入住", variant)["case_id"]]
+            while env.events:
+                env.advance(env.events[0][0])
+            self.assertEqual(case["fields"]["pet_weight"], "8kg")
+            self.assertEqual(case["fields"]["move_date"], "2026-11-12")
+            self.assertNotEqual(case["state"], "needs_information")
+        for variant in ({"pet_weight": "9", "move_date": "2026-11-12"},
+                        {"pet_weight": "8", "move_date": "11月13日"}):
+            env = Environment(task)
+            api = env.tools()
+            case = env.cases[api.send_email(mailbox(task, "landlord"), "咨询宠物入住", variant)["case_id"]]
+            while env.events:
+                env.advance(env.events[0][0])
+            self.assertEqual(case["state"], "needs_information")
+
     def test_followup_does_not_change_completion(self):
         task = load(2)
         env = Environment(task)
@@ -330,6 +353,7 @@ class EnvironmentTests(unittest.TestCase):
         front = api.send_email(mailbox(task, "forwarder"), "查询货件状态", task["public"]["user_fields"])
         while env.cases[front["case_id"]]["state"] != "replied":
             api.wait_until(task["deadline_at"])
+        api.wait_until("2026-11-25T10:00:00+08:00", wake_on_message=False)
         doc = api.send_email(mailbox(task, "exporter"), "取得首轮更正申报资料", {"tracking": "PK-608"})
         while env.cases[doc["case_id"]]["state"] != "replied":
             api.wait_until(task["deadline_at"])
@@ -350,6 +374,43 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(result["calendar_days"], 300)
         self.assertFalse(result["resolved_success"])
         self.assertTrue(result["bounded_handling_success"])
+
+    def test_premature_dsb12_mail_gets_registration_reply_only(self):
+        # Before an accept_after window opens, a complete request earns only a
+        # registration reply: no case is queued, no evidence is issued.
+        task = load(12)
+        env = Environment(task)
+        api = env.tools()
+        api.visit_page("https://yuancheng.bench/contact")
+        front = api.send_email(mailbox(task, "forwarder"), "查询货件状态", task["public"]["user_fields"])
+        while env.cases[front["case_id"]]["state"] != "replied":
+            api.wait_until(task["deadline_at"])
+        early = api.send_email(mailbox(task, "exporter"), "请补发首轮更正申报资料", {"tracking": "PK-608"})
+        api.wait_until("2026-12-01T10:00:00+08:00", wake_on_message=False)
+        case = env.cases[early["case_id"]]
+        self.assertEqual(case["state"], "replied")
+        self.assertEqual(case["workflow"]["id"], "main")
+        self.assertFalse(case["evidence"])
+        self.assertFalse(any(e["fact_id"] == "declaration" for e in env.evidence.values()))
+        self.assertTrue(any(e["kind"] == "early_reply" for e in env.audit))
+        # Filing again inside the window opens a normal case with an ETA receipt.
+        again = api.send_email(mailbox(task, "exporter"), "请补发首轮更正申报资料", {"tracking": "PK-608"})
+        while env.cases[again["case_id"]]["state"] != "replied":
+            api.wait_until(task["deadline_at"])
+        self.assertTrue(any(e["agent_visible"] and e["fact_id"] == "declaration" for e in env.evidence.values()))
+
+    def test_followup_on_unrouted_case_acknowledges_without_error(self):
+        # A follow-up quoting the case_id of an unrouted (referral-replied) case
+        # must acknowledge instead of crashing on the missing workflow.
+        task = load(12)
+        env = Environment(task)
+        api = env.tools()
+        api.visit_page("https://yuancheng.bench/contact")
+        misrouted = api.send_email(mailbox(task, "forwarder"), "请问航班时刻表", {"tracking": "PK-608"})
+        while env.cases[misrouted["case_id"]]["state"] != "replied":
+            api.wait_until(task["deadline_at"])
+        result = api.send_email(mailbox(task, "forwarder"), "请问该找谁办理？", case_id=misrouted["case_id"])
+        self.assertEqual(result["status"], "received")
 
     def test_wrong_pending_stage_does_not_count_as_completed_followthrough(self):
         env, answer, _ = run_reference(load(12))

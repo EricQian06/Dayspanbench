@@ -6,7 +6,7 @@ object, the task fixtures, the host filesystem, or the private audit log.
 
 from copy import deepcopy
 from dataclasses import dataclass, field
-from datetime import timedelta
+from datetime import date, timedelta
 import heapq
 import json
 import re
@@ -49,24 +49,65 @@ _UNIT_LOOKUP = {unit: canon for canon, synonyms in UNIT_SYNONYMS for unit in syn
 
 
 def normalize_field_value(value):
-    """Reduce a quantity-like string to (number, canonical unit); None otherwise."""
+    """Reduce a quantity-like string to (number, canonical unit); None otherwise.
+
+    A bare number ("8") keeps unit None: it still describes the user's case
+    ("8kg"), so quantity equivalence treats None as matching any unit.
+    """
     import unicodedata
     if not isinstance(value, str):
         return None
     text = unicodedata.normalize("NFKC", value).strip().casefold().replace(" ", "").replace("，", ",")
     match = re.fullmatch(r"([+-]?\d+(?:\.\d+)?)([a-z一-鿿,]*)", text)
-    if not match or match.group(2) not in _UNIT_LOOKUP:
+    if not match:
         return None
-    return (float(match.group(1)), _UNIT_LOOKUP[match.group(2)])
+    unit = match.group(2)
+    if unit == "":
+        return (float(match.group(1)), None)
+    return (float(match.group(1)), _UNIT_LOOKUP[unit]) if unit in _UNIT_LOOKUP else None
+
+
+def normalize_field_date(value, default_year):
+    """Reduce a date-like string to datetime.date; None otherwise.
+
+    Handles ISO (2026-11-12), slashes, and Chinese spellings (11月12日,
+    2026年11月12日); a year-less spelling borrows the reference value's year.
+    """
+    if not isinstance(value, str):
+        return None
+    text = value.strip()
+    match = re.fullmatch(r"(\d{4})[-/年.](\d{1,2})[-/月.](\d{1,2})日?", text)
+    if not match:
+        match = re.fullmatch(r"(\d{1,2})[-/月.](\d{1,2})日?", text)
+        if not match:
+            return None
+        year = default_year
+    else:
+        year = int(match.group(1))
+    try:
+        return date(year, int(match.group(2) if match.lastindex == 3 else match.group(1)),
+                    int(match.group(3) if match.lastindex == 3 else match.group(2)))
+    except ValueError:
+        return None
 
 
 def field_value_equivalent(value, expected):
-    """Exact match, or the same quantity written with a synonym unit."""
+    """Exact match, the same quantity written with a synonym or no unit,
+    or the same date in another common spelling."""
     if value == expected:
         return True
-    return (isinstance(value, str) and isinstance(expected, str)
-            and normalize_field_value(value) is not None
-            and normalize_field_value(value) == normalize_field_value(expected))
+    if not (isinstance(value, str) and isinstance(expected, str)):
+        return False
+    left = normalize_field_value(value)
+    right = normalize_field_value(expected)
+    if left is not None and right is not None:
+        if left[0] != right[0]:
+            return False
+        return left[1] is None or right[1] is None or left[1] == right[1]
+    year_match = re.match(r"\s*(\d{4})", expected)
+    default_year = int(year_match.group(1)) if year_match else None
+    left_date = normalize_field_date(value, default_year)
+    return left_date is not None and left_date == normalize_field_date(expected, default_year)
 
 
 @dataclass
@@ -377,7 +418,10 @@ class Environment:
         return t
 
     def eta_clause(self, case, from_step):
-        """The promised earliest-completion sentence, or empty for short waits."""
+        """The promised earliest-completion sentence, or empty for short waits.
+        An unrouted case has no workflow to project, so it promises nothing."""
+        if case["workflow"] is None:
+            return ""
         eta = self.estimate_completion(case["actor"], case["workflow"], from_step)
         if eta - self.now <= self.ETA_THRESHOLD:
             return ""
