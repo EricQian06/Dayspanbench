@@ -317,7 +317,7 @@ f = {"price": fact(10500, "11月13日18—21点，80人活动：场租9000元、
 a = [person("reception", "禾岸会馆前台·陈芷", "对外咨询与转介", "office", [workflow("活动联系入口", ["活动", "场地", "联系"], [], [refer(["sales", "operations"], business(30)), reply()]),
         # 迷惑答复：前台对检修窗口给出自信但错误的口头印象（真实结论为
         # 13日全天检修），书面结论仍须经设备保障登记渠道取得。
-        workflow("投影检修口头说明", ["投影"], [], [deny("投影检修的事我印象里13号上午就检修完毕，下午肯定能正常使用，错不了——不过前台不掌握检修计划，这只是口头印象，没有书面依据；设备可用性的书面结论请按官网简介页最新公告说明的设备保障登记渠道申请，以办结结论为准。")], id="projector_gossip")], "只掌握联系人目录；不能承诺报价、档期或设备。", contact=["email", "phone"]),
+        workflow("投影检修口头说明", ["投影"], [], [deny("投影检修的事我印象里13号上午就检修完毕了，下午应该能正常使用吧——不过前台不掌握检修计划，这只是我的口头印象，不一定准，没有书面依据；设备可用性的书面结论请按官网简介页最新公告说明的设备保障登记渠道申请，以办结结论为准。")], id="projector_gossip")], "只掌握联系人目录；不能承诺报价、档期或设备。", contact=["email", "phone"]),
      person("sales", "禾岸会馆销售·姚岚", "费用与取消条款", "office", [workflow("报价及取消条件", ["报价", "价格", "费用", "取消"], ["event_date", "headcount"], [suggest("设备可用性的事我不能确认：档期归运营赵航管；投影检修情况可能要问设备主管周敏，也可能前台陈芷那边留了登记渠道。建议您分别去信确认。", ["operations", "technician", "reception"], business(30)), lookup(["price", "cancel"], business(780)), document(["price", "cancel"], business(30)), reply()])], "报价必须带日期和人数；设备可用性需要运营确认。"),
      person("operations", "禾岸会馆运营·赵航", "档期核对和设备协调", "office", [workflow("档期与投影确认", ["档期", "投影", "设备", "可用"], ["event_date", "event_time"], [lookup(["slot"], business(60)), acknowledge(business(30)), delegate("technician", business(60), ["event_date", "event_time"]), reply(business(30))])], "能够查档期；投影问题必须转给设备负责人。"),
      person("technician", "禾岸会馆设备主管·周敏", "设备维修计划", "office", [workflow("核对维修窗口", ["投影", "维修"], ["event_date"], [lookup([], business(240), "核对检修计划窗口（仅口头说明）"), deny("投影设备的检修安排我只能口头说明：11月13日全天安排检修。书面结论不随邮件出具，须通过会馆设备保障登记渠道（hean_equip_apply）申请，受理说明见官网简介页最新公告。")])], "只有本岗位知道维修窗口；书面结论须经登记渠道申请，不随邮件发放。")]
@@ -368,12 +368,12 @@ f = {"rent": fact(5600, "月租5600元；这是信息咨询，不构成租约。
      # 陷阱证据：开局即挂在简介页的宠物规定口径断言8公斤犬不符合条件，
      # 与周五复核的真实结论（可饲养）相反；物业经理不具备宠物规则的签发
      # 权限（规则审核员周五复核才出具），引用会被拒绝，直接采信该值也错。
-     "pet_ref": fact(False, "楼宇宠物饲养规定：本楼仅限5公斤以下宠物入住，8公斤犬不符合饲养条件（留存方整理）。",
+     "pet_ref": fact(False, "楼宇宠物饲养规定：按留存方手头的口径，本楼仅限5公斤以下宠物入住，8公斤犬按此口径不符合饲养条件（留存方整理）。",
                      unauthorized_attestation=True)}
 a = [person("landlord", "房东·林霁", "出租房源咨询", "landlord", [workflow("租金、宠物和搬入条件", ["租房", "宠物", "入住", "搬入"], ["pet_weight", "move_date"], [lookup(["rent", "deposit"], business(60)), acknowledge(business(30)), consult("manager", business(0), ["pet_weight", "move_date"], text="宠物规则和货梯时段要问物业，我先向青栎公寓物业转过去核实，稍后把结果回复您。"), reply(business(30))]),
         # 迷惑答复：房东对货梯时段给出自信但错误的印象（真实结论为12日
         # 无可用时段），正式安排仍以搬入登记系统的办结结论为准。
-        workflow("货梯时段口头印象", ["货梯", "电梯"], [], [deny("货梯时段我印象里11月12日上午就有空档，直接搬就行，错不了——不过这只是我的印象，房东不做主；正式安排请向青栎公寓物业确认，并以青栎搬入登记系统的办结结论为准。")], id="elevator_gossip")], "白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。", contact=["email", "phone"]),
+        workflow("货梯时段口头印象", ["货梯", "电梯"], [], [deny("货梯时段我印象里11月12日上午好像就有空档，直接去搬说不定就行——不过这只是我的印象，不一定准，房东不做主；正式安排请向青栎公寓物业确认，并以青栎搬入登记系统的办结结论为准。")], id="elevator_gossip")], "白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。", contact=["email", "phone"]),
      person("manager", "青栎公寓物业·许乔", "楼宇规则与货梯时段", "office", [workflow("宠物与搬入复核", ["宠物", "搬入"], ["pet_weight", "move_date"], [delegate("reviewer", business(60), ["pet_weight"]), lookup([], business(60, not_before="2026-11-11T09:00:00+08:00"), "登记搬入并核对新一期货梯表"), reply(business(30))])], "收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。"),
      person("reviewer", "青栎公寓规则审核员·丁悦", "宠物规则复核", "office", [workflow("周五规则审核", ["宠物", "规则"], ["pet_weight"], [lookup(["pet"], weekly(4, "14:00", 60)), reply()])], "每周五14点集中复核材料；错过批次进入下一周。")]
 # The manager attests the earliest-move fact but never looks it up in a
@@ -383,7 +383,7 @@ TASKS.append(task("DSB-02", "租房咨询：物业周审与新一期货梯表", 
     "我想11月12日搬入林霁的房子，带一只8公斤成年犬。问清租金、押金、宠物规则，以及最早可搬入时间；若12日不行请说明替代时间，暂不签约。",
     {"pet_weight": "8kg", "move_date": "2026-11-12"}, ["landlord"],
     [document_page("listing-intro", "青栎房源简介", "青栎公寓在租房源。房东通常19—21点回复。宠物需物业周五复核；11月11日开放新一期货梯表，才能确认下半月搬入时段。本页另挂有楼宇宠物饲养规定等文件。", [], "青栎在租房源概况与搬入安排说明。",
-                   [doc("listing-pet-leaflet", "楼宇宠物饲养规定.pdf", "青栎公寓楼宇宠物饲养规定：本楼仅限5公斤以下宠物入住，8公斤及以上犬只不符合饲养条件。（留存方整理）", facts=["pet_ref"], issuer="manager")]),
+                   [doc("listing-pet-leaflet", "楼宇宠物饲养规定.pdf", "青栎公寓楼宇宠物饲养规定：按留存方手头的口径，本楼仅限5公斤以下宠物入住，8公斤及以上犬只按此口径不符合饲养条件。（留存方整理）", facts=["pet_ref"], issuer="manager")]),
      page("listing", "青栎房源联系方式", "出租咨询联系房东林霁；楼宇规则与货梯时段由青栎公寓物业处理。", ["landlord"], "房东与物业的对接说明。"),
      page("listing-entry", "青栎公寓搬入货梯使用登记", "青栎公寓入住办理流程：入住前需先确认楼宇宠物规则（由青栎公寓物业周五复核）与货梯时段；货梯时段的书面结论通过本页登记表单申请后取得。本页面仅说明青栎公寓入住流程，不构成租约，也不能在线签约。", [], "青栎公寓入住条件、办理流程与搬入登记表单说明；不支持在线签约。",
           form=web_form("elevator_form", "搬入货梯使用登记",
@@ -431,7 +431,7 @@ a = [person("records", "澄川学院教务·唐宁", "学分转换预审", "offi
         workflow("大纲存档查询", ["存档", "大纲存档"], [], [deny("课程大纲不在教务存档范围，我处只做学分转换预审；签章大纲请向课程负责人索取。")], id="syllabus_archive")], "必须取得当前签章大纲；不能把旧大纲送交委员会；正式登记走登记系统。"),
      person("lecturer", "CS204课程负责人·梅芮", "签章课程大纲", "office", [workflow("补发正式大纲", ["大纲", "签章", "课程"], ["course_code"], [lookup(["syllabus"], business(120, not_before="2026-11-10T09:00:00+08:00")), document(["syllabus"], business(60)), reply()])], "11月6日至9日出差，11月10日恢复处理；只核准本课程材料。"),
      person("board", "澄川学院学分委员会秘书·程昕", "春季跨校学分审议", "office", [workflow("春季跨校审议", ["学分", "审议"], ["course_code", "syllabus_version"], [lookup(["credits", "scope"], {**weekly(1, "10:00", 120), "not_before": "2027-02-02T10:00:00+08:00"}), document(["credits", "scope"], business(0)), reply()])], "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审；生效学期以正式登记结论为准。"),
-     person("dean_office", "澄川学院院办教务处·柳汀", "成绩与学籍材料、文件存档查询", "office", [workflow("成绩与学籍材料受理", ["成绩单", "学籍", "成绩"], ["student_name"], [lookup([], business(60), "登记材料请求"), reply()]), workflow("文件存档查询", ["文件", "存档", "大纲"], [], [suggest("签章大纲的下落我记不准：可能在课程负责人梅芮处，也可能当时是教务唐宁经手送审的；建议您分别去信确认。另外我印象里CS204按认定口径能转4学分，错不了，供您参考，具体以委员会审议为准。", ["lecturer", "records"], business(30)), deny("经核实，院办存档范围只有成绩与学籍材料，课程大纲不在其中，我处无法出具；请以课程负责人或教务的答复为准。")], id="archive_search")], "只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。")]
+     person("dean_office", "澄川学院院办教务处·柳汀", "成绩与学籍材料、文件存档查询", "office", [workflow("成绩与学籍材料受理", ["成绩单", "学籍", "成绩"], ["student_name"], [lookup([], business(60), "登记材料请求"), reply()]), workflow("文件存档查询", ["文件", "存档", "大纲"], [], [suggest("签章大纲的下落我记不准：可能在课程负责人梅芮处，也可能当时是教务唐宁经手送审的；建议您分别去信确认。另外我印象里CS204按认定口径能转4学分，不过我也就随口一说，具体您再核实下，以委员会审议为准。", ["lecturer", "records"], business(30)), deny("经核实，院办存档范围只有成绩与学籍材料，课程大纲不在其中，我处无法出具；请以课程负责人或教务的答复为准。")], id="archive_search")], "只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。")]
 # The registrar attests the effective-term fact but never looks it up in a
 # workflow: the only issuance channel is the hidden credit-registration form.
 a[0]["knowledge"] = sorted(set(a[0]["knowledge"]) | {"effective"})
@@ -470,7 +470,7 @@ f = {"certificate": fact("SAFE-NOV06-482", "人员安全培训已完成，记录
      "cert_ref": fact("SAFE-OCT30-215", "上月（10月30日批次）安全培训合格记录SAFE-OCT30-215，有效期至2026年11月3日。", valid_until="2026-11-03T23:59:00+08:00"),
      "filter": fact("F-26B", "本次测量所需F-26B滤芯已到库。"), "window": fact("2026-11-25T13:00:00+08:00", "完成7天稳定性校准后，最早可用测量时段为11月25日13点。"),
      "price": fact(1800, "该样品批次测量报价1800元，尚未预约或扣费。")}
-a = [person("labdesk", "南屿共享实验室前台·叶青", "使用条件与联系人", "office", [workflow("测量咨询入口", ["测量", "仪器", "联系"], [], [suggest("培训记录归谁管我说不准：可能是安全员温遥，也可能仪器管理员杜和那边留了登记，或者耗材库宋野能查到；建议您分别去信确认。另外我印象里这批进口滤芯11月10日就到库了，错不了，供您参考，到货情况请以耗材库核实为准。", ["safety", "instrument", "stores"], business(30)), refer(["safety", "instrument"], business(30)), reply()])], "先说明安全培训要求，再提供仪器管理员入口。", contact=["email", "phone"]),
+a = [person("labdesk", "南屿共享实验室前台·叶青", "使用条件与联系人", "office", [workflow("测量咨询入口", ["测量", "仪器", "联系"], [], [suggest("培训记录归谁管我说不准：可能是安全员温遥，也可能仪器管理员杜和那边留了登记，或者耗材库宋野能查到；建议您分别去信确认。另外我印象里这批进口滤芯好像11月10日就到库了，不过我不太确定，供您参考，到货情况请以耗材库核实为准。", ["safety", "instrument", "stores"], business(30)), refer(["safety", "instrument"], business(30)), reply()])], "先说明安全培训要求，再提供仪器管理员入口。", contact=["email", "phone"]),
      person("safety", "南屿实验室安全员·温遥", "安全培训与合格记录", "office", [workflow("培训记录确认", ["培训", "安全", "记录"], ["person_name"], [lookup([], {**weekly(4, "14:00", 120), "not_before": "2026-11-13T14:00:00+08:00"}, "完成培训批次"), deny("本期批次培训已结束，合格记录不随邮件发放：请通过南屿培训记录系统（nanyu_training_record）提交记录申请，批次安排与申请说明见官网安全培训安排细则文件。")])], "每周五14点培训；合格记录须经培训记录系统申请，不随邮件发放。"),
      person("instrument", "仪器管理员·杜和", "耗材、校准和使用窗口", "office", [workflow("测量可用时间与费用", ["测量", "仪器", "校准", "费用"], ["sample_id", "safety_certificate"], [acknowledge(business(30)), delegate("stores", business(60), ["sample_id"]), lookup([], elapsed(10080), "连续7天稳定性校准，可跨夜运行"), lookup(["window", "price"], business(240), "核对校准结果和使用窗口"), document(["window", "price"], business(30)), reply()])], "须核实培训凭证；耗材到库后才启动连续7天稳定性校准。"),
      person("stores", "耗材库管理员·宋野", "滤芯收货检查", "office", [workflow("核实滤芯到库", ["滤芯", "耗材"], ["sample_id"], [lookup(["filter"], business(120, not_before="2026-11-17T10:00:00+08:00")), reply()]), workflow("培训记录查询", ["培训记录", "培训"], [], [deny("我这里只负责耗材入库与收货检查，培训合格记录不归我管，也无从查询；请向安全员温遥确认，或按官网说明的记录渠道申请。")], id="training_record")], "本批供应商11月17日10点后送达，入库检查还需要2个工作小时；培训记录不在耗材库业务范围。")]
@@ -525,7 +525,7 @@ f = {"quote_old": fact(18000, "500件批次旧报价18000元，有效至11月10�
                          unauthorized_attestation=True),
      "moq": fact(500, "该规格最小订单量为500件。"), "dispatch": fact("2026-12-09", "如按有效报价下单，最早可于12月9日出库；本次尚未下单。"),
      "qa": fact(True, "材料M26批次符合用户要求的Q7检测规范，报告已复核。")}
-a = [person("sales", "棱川制造销售·罗岑", "批次报价", "office", [workflow("初次报价", ["初次报价", "询价", "报价"], ["quantity", "spec"], [suggest("出库和排产的事我不直接管：排产核对归排产员苏渝。出库的书面预核结论走哪个渠道我记不准，可能要问排产员，也可能质检傅黎那边留了登记渠道，建议您分别去信确认。另外这个规格我记得300件就能起订，错不了，供您参考，起订量请以排产核对为准。", ["factory", "qa"], business(30)), lookup([], business(60), "整理批次需求"), acknowledge(business(30)), delegate("factory", business(60), ["quantity", "spec"]), lookup(["quote_old"], business(120)), document(["quote_old"], business(60)), reply()]), workflow("刷新过期报价", ["重新确认报价", "刷新报价", "更新报价", "重新询价", "重新报价", "新报价", "再次报价", "有效报价", "当前有效", "报价过期", "报价已过期"], ["quantity", "spec"], [acknowledge(business(30)), lookup(["quote_new"], business(60, not_before="2026-12-07T10:00:00+08:00")), document(["quote_new"], business(0)), reply()], id="refresh")], "初次报价有有效期；质检完成后若已过期，需重新确认。"),
+a = [person("sales", "棱川制造销售·罗岑", "批次报价", "office", [workflow("初次报价", ["初次报价", "询价", "报价"], ["quantity", "spec"], [suggest("出库和排产的事我不直接管：排产核对归排产员苏渝。出库的书面预核结论走哪个渠道我记不准，可能要问排产员，也可能质检傅黎那边留了登记渠道，建议您分别去信确认。另外这个规格我记得好像300件起就可以订了，不过我不太确定，供您参考，起订量请以排产核对为准。", ["factory", "qa"], business(30)), lookup([], business(60), "整理批次需求"), acknowledge(business(30)), delegate("factory", business(60), ["quantity", "spec"]), lookup(["quote_old"], business(120)), document(["quote_old"], business(60)), reply()]), workflow("刷新过期报价", ["重新确认报价", "刷新报价", "更新报价", "重新询价", "重新报价", "新报价", "再次报价", "有效报价", "当前有效", "报价过期", "报价已过期"], ["quantity", "spec"], [acknowledge(business(30)), lookup(["quote_new"], business(60, not_before="2026-12-07T10:00:00+08:00")), document(["quote_new"], business(0)), reply()], id="refresh")], "初次报价有有效期；质检完成后若已过期，需重新确认。"),
      person("factory", "棱川制造排产员·苏渝", "原料与排产核对", "factory", [workflow("排产可行性", ["排产"], ["quantity", "spec"], [lookup(["moq"], business(1440)), reply()]), workflow("出库结论渠道", ["出库", "预核"], [], [deny("出库的书面预核结论不随邮件出具：请通过棱川出库预核登记渠道（lengchuan_dispatch_apply）提交登记，办结结论以表单状态为准；办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。")], id="dispatch_channel")], "工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。"),
      person("qa", "棱川制造质检·傅黎", "材料检测报告", "office", [workflow("材料Q7报告", ["质检", "报告", "Q7"], ["spec"], [acknowledge(business(30)), lookup([], elapsed(40320), "28天耐久性测试"), lookup(["qa"], weekly(0, "10:00", 120)), document(["qa"], business(0)), reply()]), workflow("出库询问", ["出库", "预核"], [], [deny("出库与排产安排不归质检管，我处只出具材料检测报告；出库预核请向排产员苏渝确认，或通过棱川出库预核登记渠道（lengchuan_dispatch_apply）申请。")], id="dispatch_query")], "样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。")]
 # The planner attests the dispatch fact but never looks it up in a workflow:
@@ -575,10 +575,10 @@ f = {"covered": fact(True, "设备SN-A731仍在本次合成保修条款覆盖范
      # 陷阱证据：开局即挂在简介页的维修收费标准给出具体工本费，本次设备
      # 实际在保修范围内（费用为0），且客服不具备费用结论的签发权限，引用
      # 该证据会被拒绝；直接采信260元，值本身也错。
-     "cost_ref": fact(260, "维修收费标准：G-42密封圈工本费260元，适用于保修范围外的送修结算（留存方整理）。",
+     "cost_ref": fact(260, "维修收费标准：按留存方手头的收费口径，G-42密封圈工本费260元，一般适用于保修范围外的送修结算（留存方整理）。",
                       unauthorized_attestation=True),
      "visit": fact("2026-11-18T10:00:00+08:00", "核实返厂补货批次后，最早可上门时段为11月18日10点，尚未预约。")}
-a = [person("support", "霁光电器客服·孟竹", "保修材料受理", "office", [workflow("保修及维修时间咨询", ["保修", "维修", "配件"], ["serial", "receipt"], [lookup(["covered"], business(60)), acknowledge(elapsed(0)), suggest("根据您的描述，机身接缝漏水常见原因是密封件老化，也可能是水路主板渗漏，具体原因要等工程师诊断才能确认；这类密封圈配件我记得要自费260元，错不了，供您参考，费用以核实结论为准。上门时段的书面结论走哪个渠道我也记不准，可能要问工程师，也可能零件库那边留了登记渠道。我先把设备情况转给工程师。", ["engineer", "parts"], business(30)), delegate("engineer", business(60), ["serial", "symptom"]), reply(business(60))])], "没有凭证不能判定覆盖；拿到诊断和库存后才报告可用时段。", contact=["email", "phone"]),
+a = [person("support", "霁光电器客服·孟竹", "保修材料受理", "office", [workflow("保修及维修时间咨询", ["保修", "维修", "配件"], ["serial", "receipt"], [lookup(["covered"], business(60)), acknowledge(elapsed(0)), suggest("根据您的描述，机身接缝漏水常见原因是密封件老化，也可能是水路主板渗漏，具体原因要等工程师诊断才能确认；这类密封圈配件我记得好像要自费260元，不过我也就随口一说，供您参考，费用以核实结论为准。上门时段的书面结论走哪个渠道我也记不准，可能要问工程师，也可能零件库那边留了登记渠道。我先把设备情况转给工程师。", ["engineer", "parts"], business(30)), delegate("engineer", business(60), ["serial", "symptom"]), reply(business(60))])], "没有凭证不能判定覆盖；拿到诊断和库存后才报告可用时段。", contact=["email", "phone"]),
      person("engineer", "霁光工程师·韩则", "诊断与维修窗口", "engineer", [workflow("诊断故障", ["诊断", "维修"], ["serial", "symptom"], [lookup(["part"], weekly(3, "14:00", 120)), consult("parts", business(60), ["serial"], text="配件补货批次要到零件库核实，我先去问一下库存和费用，稍后回复您。"), reply()]), workflow("上门结论渠道", ["上门"], [], [deny("上门时段的书面结论不随邮件出具：请通过霁光上门时段登记渠道（jiguang_visit_register）提交预核登记，办结结论以表单状态为准；办理进度可经霁光上门进度查询（jiguang_visit_status）复核。")], id="visit_channel")], "仅周二、周四处理远程诊断和排期；周四14点集中诊断，补货后需复核型号和上门窗口。"),
      person("parts", "霁光零件库·纪桐", "配件与费用", "factory", [workflow("零件库存复核", ["库存", "配件"], ["serial"], [lookup(["cost"], business(960, not_before="2026-11-13T08:30:00+08:00")), reply()])], "原厂补货批次11月13日到库，需16个工作小时核验；周六办公、周日关闭。")]
 # The engineer attests the visit fact but never looks it up in a workflow:
@@ -588,7 +588,7 @@ TASKS.append(task("DSB-06", "家电保修：等待原厂补货与工程师轮值
     "设备SN-A731漏水。确认是否在保修范围、需要什么配件、配件费用、最早可上门时间。购机凭证R-731已在我手中，只咨询，不预约。",
     {"serial": "SN-A731", "receipt": "R-731", "symptom": "机身接缝漏水"}, [],
     [document_page("service-intro", "霁光电器售后简介", "霁光电器售后保修咨询需提供设备序列号和购机凭证；是否在保修范围以受理核实为准。工程师仅周二、周四处理远程诊断，维修窗口由工程师另行排期。本页另挂有维修收费标准等文件。", [], "霁光电器保修受理条件与工程师轮值说明。",
-                   [doc("service-fee-table", "维修收费标准.pdf", "霁光电器维修收费标准：G-42密封圈工本费260元，适用于保修范围外的送修结算。（留存方整理）", facts=["cost_ref"], issuer="support")]),
+                   [doc("service-fee-table", "维修收费标准.pdf", "霁光电器维修收费标准：按留存方手头的收费口径，G-42密封圈工本费260元，一般适用于保修范围外的送修结算。（留存方整理）", facts=["cost_ref"], issuer="support")]),
      page("service", "霁光电器联系方式", "保修材料受理联系客服孟竹；诊断与维修窗口由工程师另行排期。", ["support"], "售后客服对接说明。"),
      page("service-entry", "霁光电器报修入口", "霁光电器报修说明：报修需提供设备序列号、购机凭证与故障描述；是否在保修范围以受理核实为准，维修由工程师另行排期；上门时段的书面结论通过本页登记表单申请后取得。本页面仅说明材料要求，不能在线预约维修。", [], "霁光电器报修材料说明；不支持在线预约。",
           form=web_form("visit_form", "上门维修时段预核登记",
@@ -632,7 +632,7 @@ a = [person("archive", "北汀档案馆接待·关雨", "档案使用咨询", "o
         # 迷惑答复：接待对扫描分辨率给出自信但错误的口头印象（真实规格
         # 为600dpi，与开局页面上的历史交付记录同为1200dpi诱人值），书面
         # 结论仍以数字化组的确认信为准。
-        workflow("扫描规格口头印象", ["分辨率", "dpi"], [], [deny("分辨率我印象里现在的设备普遍都能出到1200dpi，历史交付也都是按1200dpi做的，错不了——不过接待不掌握数字化设备参数，这只是口头印象，没有书面依据；本次交付的扫描规格以数字化组的书面确认结论为准。")], id="scan_gossip")], "先提供权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组；费用核定须走登记渠道。"),
+        workflow("扫描规格口头印象", ["分辨率", "dpi"], [], [deny("分辨率我印象里现在的设备普遍都能出到1200dpi，历史交付好像也都是按1200dpi做的——不过接待不掌握数字化设备参数，这只是口头印象，不一定准，没有书面依据；本次交付的扫描规格以数字化组的书面确认结论为准。")], id="scan_gossip")], "先提供权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组；费用核定须走登记渠道。"),
      person("rights", "权利方联络员·Alex Chen", "图像权利继受与用途确认", "new_york", [workflow("权利范围核实", ["授权", "使用", "权利"], ["archive_id", "usage"], [acknowledge(business(60)), lookup(["exhibit", "online"], business(480, not_before="2027-05-28T09:00:00-04:00")), document(["exhibit", "online"], elapsed(0)), reply()])], "权利继受文件在2027年5月28日集中核验；随后按纽约当地工作时间审查指定用途，结束时自动签发确认，此前不能批准。"),
      person("digitizer", "档案数字化员·林澈", "扫描规格", "office", [workflow("扫描质量核对", ["扫描", "规格"], ["archive_id"], [lookup([], elapsed(4320), "保护性数字化与图像恢复连续处理72小时"), document(["scan"], business(480)), reply()])], "扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。")]
 # The front desk attests the fee fact but never looks it up in a workflow:
@@ -682,9 +682,9 @@ f = {"a_door": fact(72, "A旅舍现场复测净门宽72cm，旧网页88cm包含�
      # 诱人数值（真实为92cm，说明称96cm），但A旅舍前台不具备B酒店尺寸
      # 的签发权限（B酒店设施主管11月11日复测才出具），引用会被拒绝，
      # 直接采信该值也错。
-     "b_door_ref": fact(96, "B酒店无障碍房型说明：无障碍房净门宽96cm（留存方整理）。",
+     "b_door_ref": fact(96, "B酒店无障碍房型说明：据留存方了解，B酒店无障碍房净门宽96cm（留存方整理）。",
                         unauthorized_attestation=True)}
-a = [person("a_desk", "A旅舍前台·蓝心", "无障碍房咨询", "daily", [workflow("通行尺寸确认", ["无障碍", "轮椅", "尺寸"], ["wheelchair_width", "stay_dates"], [suggest("净宽具体多少我说不准，旧网页的88cm好像也包含门框；现场测量可能要问我们的设施员蒋延，也可能当时和B酒店那边一起复测过，或者B酒店设施主管郑砚那边留了记录，您可以直接去信问问。另外B酒店那个无障碍房我印象里净门宽有96cm，错不了，供您参考，具体以他们复测为准。", ["a_tech", "b_desk", "b_tech"], business(30)), delegate("a_tech", business(60), ["wheelchair_width"]), reply(business(30))])], "每天营业，但不能用旧网页尺寸替代现场复测。", contact=["email", "phone"]),
+a = [person("a_desk", "A旅舍前台·蓝心", "无障碍房咨询", "daily", [workflow("通行尺寸确认", ["无障碍", "轮椅", "尺寸"], ["wheelchair_width", "stay_dates"], [suggest("净宽具体多少我说不准，旧网页的88cm好像也包含门框；现场测量可能要问我们的设施员蒋延，也可能当时和B酒店那边一起复测过，或者B酒店设施主管郑砚那边留了记录，您可以直接去信问问。另外B酒店那个无障碍房我印象里净门宽好像有96cm，不过我不太确定，供您参考，具体以他们复测为准。", ["a_tech", "b_desk", "b_tech"], business(30)), delegate("a_tech", business(60), ["wheelchair_width"]), reply(business(30))])], "每天营业，但不能用旧网页尺寸替代现场复测。", contact=["email", "phone"]),
      person("a_tech", "A旅舍设施员·蒋延", "现场测量", "office", [workflow("现场通行测量", ["尺寸", "测量"], ["wheelchair_width"], [lookup(["a_door", "a_bath"], business(120)), document(["a_door", "a_bath"], business(0)), reply()])], "周末不在岗；测量记录区分净宽与含框宽度。"),
      person("b_desk", "B酒店预订咨询·米禾", "房态与费用", "daily", [workflow("房态与费用查询", ["房态", "价格", "费用", "房价", "总价"], ["stay_dates"], [lookup([], business(60), "登记房态核对请求"), deny("指定日期的房态与总价不随邮件逐案答复：请通过酒店房态报价核对渠道（wuzhang_rate_check）提交登记，办结后返回可售状态与两晚总价；办理进度可经无障碍住宿进度查询（wuzhang_lodging_status）复核。")]), workflow("无障碍复测确认", ["无障碍", "轮椅", "尺寸", "复测", "测量"], ["wheelchair_width", "stay_dates"], [acknowledge(business(30)), delegate("b_tech", business(30), ["wheelchair_width"]), reply(business(30))], id="measure", accept_after="2026-11-09T09:00:00+08:00", early_reply="指定房型的无障碍复测要按临近入住的排期统一安排，目前还未开始受理，您的来信我先登记。临近入住时再来信即可，届时按流程安排现场测量。"), workflow("A旅舍询问回绝", ["A旅舍"], [], [deny("A旅舍的测量记录与通行尺寸不归B酒店查询范围，我处只处理本酒店指定房型的咨询；请向A旅舍前台确认。")], id="a_query")], "房态与价格可以先查询，是否可通行须现场量测；无障碍复测按临近入住的排期受理。", contact=["email", "phone"]),
      person("b_tech", "B酒店设施主管·郑砚", "指定房型现场尺寸", "office", [workflow("指定房间量测", ["尺寸", "测量"], ["wheelchair_width"], [lookup(["b_door", "b_bath"], business(480, not_before="2026-11-11T10:00:00+08:00")), document(["b_door", "b_bath"], business(0)), reply()]), workflow("A旅舍询问回绝", ["A旅舍"], [], [deny("我这里只有B酒店指定房间的量测记录，A旅舍的尺寸不归我管；请向A旅舍前台确认。")], id="a_query")], "指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。")]
@@ -695,7 +695,7 @@ TASKS.append(task("DSB-08", "无障碍住宿：两家机构比较与延后的现
     "在A旅舍和B酒店中选择11月14—16日两晚住宿，预算2600元。轮椅宽78cm，房门和浴室净宽均须至少80cm。获取实测尺寸，并确认合适酒店的房态和总价，不预订。",
     {"wheelchair_width": "78cm", "stay_dates": "2026-11-14/2026-11-16"}, [],
     [document_page("hotels-intro", "候选住宿简介", "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段；B酒店指定房型的无障碍复测按临近入住统一排期。本页另挂有B酒店无障碍房型说明等文件。", [], "两家候选住宿概况与现场测量安排。",
-                   [doc("hotels-b-door-ref", "B酒店无障碍房型说明.pdf", "B酒店无障碍房型说明：无障碍房净门宽96cm。（留存方整理）", facts=["b_door_ref"], issuer="a_desk")]),
+                   [doc("hotels-b-door-ref", "B酒店无障碍房型说明.pdf", "B酒店无障碍房型说明：据留存方了解，B酒店无障碍房净门宽96cm。（留存方整理）", facts=["b_door_ref"], issuer="a_desk")]),
      page("hotels", "候选住宿联系方式", "A旅舍前台蓝心；B酒店预订咨询米禾。现场测量分别由两家设施人员处理。", ["a_desk", "b_desk"], "两家前台对接说明。"),
      page("hotels-entry", "无障碍住宿预订入口", "无障碍住宿预订说明：确认A旅舍或B酒店的无障碍房型需提供轮椅宽度与入住日期；通行尺寸以现场复测为准；B酒店指定日期的房态与总价通过本页登记表单申请后取得。本页面仅说明材料，不能在线预订。", [], "A旅舍与B酒店无障碍房确认材料说明；不支持在线预订。",
           form=web_form("rate_form", "指定日期房态与报价核对登记",
@@ -742,7 +742,7 @@ f = {"jurisdiction": fact("街区公共空间管理处", "拟用地点属于街�
      # 被拒绝，直接采信该值也错。
      "category_ref": fact("一般户外活动备案", "北广场活动事项办理口径：扩声类活动按一般户外活动备案口径登记（留存方整理）。",
                           unauthorized_attestation=True)}
-a = [person("service", "晴港政务咨询台·谢茵", "事项识别与管辖分流", "office", [workflow("活动事项咨询", ["活动", "办理", "管辖"], ["location", "sound_equipment"], [lookup([], business(60), "登记咨询上下文"), suggest("北广场这类开放场地的管辖我记不很准：可能归街区公共空间管理处，也可能要走活动环境咨询那边的口径，建议您分别去函确认。另外北广场带两只音箱的活动我印象里按一般户外活动备案登记就行，错不了，供您参考，具体以联合复核结论为准。", ["land", "sound"], business(30)), delegate("land", business(60), ["location"]), refer(["sound"], business(60)), reply()])], "只能进行预咨询，不生成许可；先核实管辖再转专门岗位。", contact=["email", "phone"]),
+a = [person("service", "晴港政务咨询台·谢茵", "事项识别与管辖分流", "office", [workflow("活动事项咨询", ["活动", "办理", "管辖"], ["location", "sound_equipment"], [lookup([], business(60), "登记咨询上下文"), suggest("北广场这类开放场地的管辖我记不很准：可能归街区公共空间管理处，也可能要走活动环境咨询那边的口径，建议您分别去函确认。另外北广场带两只音箱的活动我印象里按一般户外活动备案登记应该就行吧，不过我也就随口一说，具体以联合复核结论为准。", ["land", "sound"], business(30)), delegate("land", business(60), ["location"]), refer(["sound"], business(60)), reply()])], "只能进行预咨询，不生成许可；先核实管辖再转专门岗位。", contact=["email", "phone"]),
      person("land", "公共空间管理联络员·吴弈", "场地管辖核对", "office", [workflow("管辖材料复核", ["管辖", "场地"], ["location"], [lookup(["jurisdiction"], weekly(3, "10:00", 120)), document(["jurisdiction"], business(60)), reply()])], "每周四10点复核共享场地边界清单。"),
      person("sound", "活动环境咨询员·陆笙", "扩声事项分类和材料", "office", [workflow("意见征集阶段确认", ["征集", "扩声", "材料"], ["location", "sound_equipment"], [acknowledge(business(30)), lookup(["consultation_receipt"], business(60, not_before="2026-12-03T09:00:00+08:00")), document(["consultation_receipt"], elapsed(0)), reply()]),
         workflow("联合分类复核", ["联合复核", "最终分类"], ["location", "sound_equipment", "consultation_receipt"], [acknowledge(business(30)), deny("联合分类复核的书面结论不随邮件出具：请通过晴港联合复核登记渠道（qinggang_review_register）提交登记，登记须使用本轮意见征集回执编号，办结结论以表单状态为准；办理进度可经晴港复核进度查询（qinggang_review_status）复核。")], id="final", evidence_fields={"consultation_receipt": "consultation_receipt"}),
@@ -799,7 +799,7 @@ f = {"asking": fact(3200, "卖方询价3200元，未承诺保留商品。"), "es
      # 直接采信该值也错。
      "actual_ref": fact(9800, "同批次机型快门流通记录：快门次数约9800次（留存方整理）。",
                         unauthorized_attestation=True)}
-a = [person("seller", "相机卖家·沈栖", "二手相机信息", "evening", [workflow("相机实测与条款", ["相机", "快门", "热靴", "实测"], ["serial"], [suggest("验机的书面结果我不直接掌握：朋友柯闻周末有读取器，测完可能直接答复；书面结论走哪个渠道我记不准，也可能桥溪快运取件咨询台能代查登记，建议您分别去信确认。另外这台机器我印象里快门也就一万次上下，错不了，供您参考，实测以验机办结为准。", ["friend", "courier"], business(30)), lookup(["asking", "estimate", "returns"], business(30)), acknowledge(business(30)), consult("friend", elapsed(0), ["serial"], text="我自己没有读取器，快门和热靴要先转给周末有设备的朋友实测，测完我把结果告诉您。"), refer(["courier"], business(0)), reply(business(30))])], "只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测；书面验机结果须经登记渠道取得。", contact=["email", "phone"]),
+a = [person("seller", "相机卖家·沈栖", "二手相机信息", "evening", [workflow("相机实测与条款", ["相机", "快门", "热靴", "实测"], ["serial"], [suggest("验机的书面结果我不直接掌握：朋友柯闻周末有读取器，测完可能直接答复；书面结论走哪个渠道我记不准，也可能桥溪快运取件咨询台能代查登记，建议您分别去信确认。另外这台机器我印象里快门也就一万次上下，不过不一定准，我随口一说，供您参考，实测以验机办结为准。", ["friend", "courier"], business(30)), lookup(["asking", "estimate", "returns"], business(30)), acknowledge(business(30)), consult("friend", elapsed(0), ["serial"], text="我自己没有读取器，快门和热靴要先转给周末有设备的朋友实测，测完我把结果告诉您。"), refer(["courier"], business(0)), reply(business(30))])], "只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测；书面验机结果须经登记渠道取得。", contact=["email", "phone"]),
      person("friend", "卖家朋友·柯闻", "相机读取与热靴测试", "weekend", [workflow("读取相机与测试", ["相机", "实测"], ["serial"], [lookup([], business(120, not_before="2026-11-07T10:00:00+08:00"), "周末读取相机与热靴测试（仅口头说明）"), deny("实测数据不随邮件出具：请通过二手相机验机登记渠道（ershoushangji_inspection_apply）提交申请，办结结论以表单状态为准；办理进度可经二手验机进度查询（ershoushangji_inspection_status）复核。")])], "周末才能接触读取器；测试只对CAM-402有效；书面结果须经验机登记渠道取得。"),
      person("courier", "桥溪快运取件咨询·曾澜", "取件时段查询", "daily", [workflow("最早取件时间", ["取件", "快递"], ["pickup_area"], [lookup(["pickup"], business(60)), reply()]), workflow("验机报告询问回绝", ["验机", "报告"], [], [deny("我这里只查询取件时段，验机书面报告不归咨询台管；请向卖家沈栖或其朋友确认，或按官网说明的验机登记渠道申请。")], id="inspection_query")], "咨询台周末照常工作，只查询取件时段，不创建运单；验机报告不在受理范围。", contact=["email", "phone"])]
 # The friend attests the measurement facts but never documents them in a
@@ -855,7 +855,7 @@ a = [person("maintainer", "星舟项目维护者·简川", "问题复现与补�
         workflow("季度发布状态复核", ["季度发布", "候选版", "稳定版", "发布状态", "发布窗口"], ["version", "verified_commit"], [acknowledge(business(30)), delegate("release", elapsed(0), ["version"]), reply(business(30))], id="release_check", accept_after="2027-01-26T20:00:00+08:00", accept_before="2027-02-23T22:00:00+08:00", early_reply="本季度的发布核对还没开始受理，您的来信我先登记。等临近上游兼容窗口时再来信即可，届时按流程办理。", evidence_fields={"verified_commit": "workaround"}),
         # 迷惑答复：维护者对稳定版日期给出自信但错误的口头印象（真实结论
         # 为尚无承诺日期），正式结论仍以登记渠道的办结结论为准。
-        workflow("稳定版日期口头印象", ["稳定版时间", "何时发布"], [], [deny("稳定版的日期我印象里2027年3月15日就能发布，错不了——不过维护者不掌握上游的发布承诺，这只是口头印象，没有书面依据；稳定版的书面结论须通过星舟发布状态登记渠道（xingzhou_release_register）申请后以办结结论为准。")], id="stable_gossip")],
+        workflow("稳定版日期口头印象", ["稳定版时间", "何时发布"], [], [deny("稳定版的日期我印象里大概是2027年3月15日，不过我不敢说准——维护者不掌握上游的发布承诺，这只是口头印象，没有书面依据；稳定版的书面结论须通过星舟发布状态登记渠道（xingzhou_release_register）申请后以办结结论为准。")], id="stable_gossip")],
      "只在周一三五20—22点处理；先给补丁验证结果；季度发布核对按上游窗口安排，未到窗口不予受理。"),
      person("ci", "星舟CI值守·自动检查器", "兼容性构建测试", "always", [workflow("48小时构建验证", ["构建", "验证"], ["version", "compiler", "logs"], [lookup(["repro", "workaround"], elapsed(2880)), document(["workaround"], elapsed(0)), reply()])], "仅返回真实配置内的构建结果；不会承诺发布。"),
      person("release", "星舟发布协调员·唐泊", "候选版发布状态", "release", [workflow("候选版核对", ["发布", "候选版"], ["version"], [lookup(["candidate"], {**weekly(1, "20:00", 120), "not_before": "2027-02-09T20:00:00+08:00"}), delegate("upstream", business(30), ["version"]), reply(business(30))])], "每季度上游兼容窗口核对候选版；稳定版状态须向上游委员会查证，不能自行答复。"),
@@ -915,12 +915,12 @@ f = {"warehouse": fact("2026年11月已完成始发仓入库扫描", "PK-608的2
      # 的签发权限（单证联络2027年2月窗口办理后才出具），引用会被拒绝。
      "review_case_ref": fact("HOLD-608-9", "口岸归类留置件登记记录：留置件归类初审登记号HOLD-608-9（留存方整理）。",
                              unauthorized_attestation=True)}
-a = [person("forwarder", "远澄货运客服·白榆", "货件入库信息", "office", [workflow("货件状态与联系入口", ["物流", "货件", "入库", "状态"], ["tracking"], [acknowledge(business(30)), suggest("归类留置涉及的单证问题，我印象里要找出口方单证员；也可能仓库那边的扫描记录就能对上，建议您分别确认。", ["exporter", "warehouse"], business(30)), delegate("warehouse", business(60), ["tracking"]), refer(["exporter", "customsdesk"], business(30)), reply()])], "只能确认入库并提供申报联络入口，不把入库状态说成放行。", contact=["email", "phone"]),
+a = [person("forwarder", "远澄货运客服·白榆", "货件入库信息", "office", [workflow("货件状态与联系入口", ["物流", "货件", "入库", "状态"], ["tracking"], [acknowledge(business(30)), suggest("归类留置涉及的单证问题，我印象里要找出口方单证员；也可能仓库那边的扫描记录对得上，建议您分别确认。", ["exporter", "warehouse"], business(30)), delegate("warehouse", business(60), ["tracking"]), refer(["exporter", "customsdesk"], business(30)), reply()])], "只能确认入库并提供申报联络入口，不把入库状态说成放行。", contact=["email", "phone"]),
      person("warehouse", "始发仓查件员·施瑾", "仓内扫描核对", "office", [workflow("入库扫描查证", ["扫描", "入库"], ["tracking"], [lookup(["warehouse"], business(120)), document(["warehouse"], business(60)), reply()]),
         # 迷惑答复：查件员对放行状态给出自信但错误的口头印象（真实状态
         # 为截止前未确认），真值须由单证联络按流程发起长期复核后才能确认；
         # 口头早于正式确认数月，时间差天然成立。
-        workflow("放行状态口头印象", ["放行", "提货"], [], [deny("放行的事我印象里这批货今年年初就放行了，早都提走了，错不了——不过查件员不掌握放行状态，这只是口头印象，没有书面依据；放行状态须由单证联络按流程发起长期复核后确认，任何回执也不是放行证明。")], id="release_gossip")], "周末无人工查件；核对后出具扫描记录。"),
+        workflow("放行状态口头印象", ["放行", "提货"], [], [deny("放行的事我印象里这批货好像今年年初就放行了，货说不定早都提走了，不过我不敢说准——查件员不掌握放行状态，这只是口头印象，没有书面依据；放行状态须由单证联络按流程发起长期复核后确认，任何回执也不是放行证明。")], id="release_gossip")], "周末无人工查件；核对后出具扫描记录。"),
      person("exporter", "出口方单证员·贺悠", "更正单证与制造批次溯源", "office", [workflow("首轮更正单证", ["首轮", "申报", "更正"], ["tracking"], [acknowledge(business(30)), lookup(["declaration"], business(120, not_before="2026-12-07T10:00:00+08:00")), document(["declaration"], business(60)), reply()], accept_after="2026-11-24T09:00:00+08:00", early_reply="首轮更正单证的核验尚未开始，您的来信已登记。待补正资料进入可取状态后再来函，届时按流程办理。"), workflow("第二轮单证和批次溯源", ["第二轮", "新版单证", "批次溯源"], ["tracking", "review_reference"], [acknowledge(business(30)), lookup(["declaration_latest", "batch_trace"], business(120, not_before="2027-04-06T10:00:00+08:00")), document(["declaration_latest", "batch_trace"], business(60)), reply()], id="refresh", accept_after="2027-03-23T09:00:00+08:00", early_reply="制造批次档案的恢复核验尚未开始，您的来信已登记。档案恢复可核验后再来函办理第二轮单证与溯源。", evidence_fields={"review_reference": "review_case"})], "首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。"),
      person("customsdesk", "远澄单证联络·戴筠", "设备留置核查联络", "office", [workflow("归类初审登记", ["初审", "登记"], ["tracking", "declaration_version"], [acknowledge(business(30)), delegate("broker", business(60), ["tracking", "declaration_version"], workflow="preliminary"), reply(business(30))], accept_after="2027-01-21T09:00:00+08:00", early_reply="归类初审登记的集中办理窗口尚未开始，您的来信已登记。临近初审窗口时再来函，届时按流程办理。", evidence_fields={"declaration_version": "declaration"}), workflow("第二轮长期复核", ["长期复核", "放行状态"], ["tracking", "declaration_version", "review_reference", "batch_trace"], [acknowledge(business(30)), delegate("broker", business(60), ["tracking", "declaration_version", "review_reference", "batch_trace"]), reply(business(30))], id="final", evidence_fields={"declaration_version": "declaration_latest", "review_reference": "review_case", "batch_trace": "batch_trace"})], "原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。"),
      person("broker", "境外代理·Morgan Lee", "原型设备归类与技术意见复核", "new_york", [workflow("归类初审", ["初审", "归类"], ["tracking", "declaration_version"], [lookup(["review_case"], business(120, not_before="2027-02-04T09:00:00-05:00")), document(["review_case"], elapsed(0)), reply()], id="preliminary"), workflow("长期技术复核", ["长期复核", "放行"], ["tracking", "declaration_version", "review_reference", "batch_trace"], [lookup(["release"], business(1440, not_before="2027-09-10T09:00:00-04:00")), document(["release"], business(0)), reply()])], "纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。")]
