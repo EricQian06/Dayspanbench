@@ -141,7 +141,7 @@
     {
       "id": "MSG-0001",
       "at": "2027-07-31T14:35:00+00:00",
-      "from": "priyanair2@bench.example",
+      "from": "priyanair3@bench.example",
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
@@ -151,7 +151,7 @@
     {
       "id": "MSG-0002",
       "at": "2027-07-31T16:29:00+00:00",
-      "from": "priyanair2@bench.example",
+      "from": "priyanair3@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
@@ -286,7 +286,7 @@
     {
       "at": "2027-07-31T13:25:00+00:00",
       "kind": "agent_send",
-      "recipient": "priyanair2@bench.example",
+      "recipient": "priyanair3@bench.example",
       "text": "Please confirm seated step-free viewing capacity and the step-free bus route for our family of three",
       "fields": {
         "date": "2027-07-31",

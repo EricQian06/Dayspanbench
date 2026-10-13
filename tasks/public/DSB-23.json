@@ -1,0 +1,97 @@
+{
+  "id": "DSB-23",
+  "title": "Lyon pet stay: delayed late arrival, written pet acceptance and supervision",
+  "brief": "Book two nights in Lyon for April 16-18 for me and my dog Nino, within 420 EUR including pet fees and parking; my train arrives 23:10 on Friday and I return Sunday at 10:38. Ask me for the missing constraints and authorization first; the hotel must accept this exact dog in writing, someone must stay with him the whole time, and watch the arrival time - if the train slips, re-check before booking. No payment, no pet-policy workaround.",
+  "user_fields": {
+    "city": "Lyon",
+    "checkin": "2027-04-16",
+    "checkout": "2027-04-18",
+    "budget_eur": 420
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "lyon-intro",
+      "title": "Lyon pet travel board",
+      "text": "Synthetic hotel and rail listings for a Lyon stay with a dog; listing claims alone do not establish pet acceptance. Current hotel terms and the rail arrival record are found through the trip records service (trip_records), and both can change - the train may slip and the hotel's terms with it, so re-check before booking. Personal constraints and authorization can be clarified through the traveler desk (camille_dialogue). Written pet and parking acceptance comes from the hotel desk by mail; supervision is acknowledged by the companion herself by mail.",
+      "contacts": [],
+      "snippet": "Lyon hotel listings, the rail arrival record and the traveler requirements desk.",
+      "url": "https://lyonpetstay.bench/intro"
+    },
+    {
+      "id": "lyon-contacts",
+      "title": "Hotel, companion and rail contacts",
+      "text": "The Villa des Roses hotel desk (Marc Aubert) issues written pet acceptances and late-check-in extensions; travel companion Lea Bernard acknowledges animal supervision; the rail service desk (Julien Fabre) reports the current train arrival. All answer daily during business hours.",
+      "contacts": [
+        "hotel_desk",
+        "companion_lea",
+        "rail_desk"
+      ],
+      "snippet": "Contacts for the hotel desk, the travel companion and the rail service desk.",
+      "url": "https://lyonpetstay.bench/contact"
+    },
+    {
+      "id": "lyon-entry",
+      "title": "Pet stay booking service",
+      "text": "Stays are booked through the booking service (stay_book): pick one current trip_records listing whose written terms accept the exact dog and parking and whose late-check-in limit covers the current arrival plus the 25-minute transfer; obtain the companion's supervision acknowledgement for that same itinerary and the traveler's approval of the exact plan (hotel, pet policy, current arrival deadline, supervision, total); then request that one stay. At most one booking; the dog is never left unattended and the driver or desk is never a supervision substitute; no payment.",
+      "contacts": [],
+      "snippet": "Pet stay booking service: written exact-dog acceptance, current arrival fit, named supervision, one booking, no payment.",
+      "url": "https://lyonpetstay.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: search listings, contact the hotel, companion and rail desk, gather written acceptance and acknowledgements, and place at most the one booking the traveler has approved; no payment, no unattended dog, no pet-policy workaround.",
+  "answer_keys": [
+    "pet_acceptance_written",
+    "train_arrival_current",
+    "late_checkin_deadline",
+    "companion_supervision_acknowledged",
+    "stay_confirmed",
+    "total_cost"
+  ],
+  "value_normalization": {
+    "pet_acceptance_written": {
+      "type": "boolean"
+    },
+    "train_arrival_current": {
+      "type": "text"
+    },
+    "late_checkin_deadline": {
+      "type": "text"
+    },
+    "companion_supervision_acknowledged": {
+      "type": "boolean"
+    },
+    "stay_confirmed": {
+      "type": "boolean"
+    },
+    "total_cost": {
+      "type": "number",
+      "units": {}
+    }
+  },
+  "conclusion_options": {
+    "stay_booked": "One approved pet stay with written acceptance, a fitting late-arrival extension and named supervision within budget",
+    "unconfirmed": "Pet acceptance, the arrival fit or supervision could not be confirmed in time",
+    "not_feasible": "No hotel satisfies the exact-dog, parking, arrival and budget constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-04-16T18:00:00+02:00",
+  "deadline_at": "2027-04-18T18:00:00+02:00"
+}

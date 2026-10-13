@@ -1,0 +1,161 @@
+{
+  "private": true,
+  "task_id": "DSB-41",
+  "actor": {
+    "id": "citystep_desk",
+    "name": "CityStep Access route desk·Tomas Iglesias",
+    "role": "route accessibility verification records",
+    "description": "Confirms current step-free routes in writing; stale or unverifiable routes are reported as such.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "tomasiglesias@bench.example"
+    },
+    "knowledge": [
+      "route_401_ok",
+      "route_406_ok"
+    ],
+    "tools": {
+      "citystep_desk.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "route_401_ok",
+          "route_406_ok"
+        ]
+      },
+      "citystep_desk.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "route_401_ok",
+          "route_406_ok"
+        ]
+      },
+      "citystep_desk.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Route accessibility verification",
+        "aliases": [
+          "route",
+          "step-free",
+          "stairs",
+          "walk",
+          "citystep",
+          "transfer"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "check the current verified step-free routes",
+            "tool": "citystep_desk.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 90
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "citystep_desk.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "citystep_desk.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是CityStep Access route desk·Tomas Iglesias，负责route accessibility verification records。Confirms current step-free routes in writing; stale or unverifiable routes are reported as such. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:routes_step_free"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "route_401_ok": {
+      "value": true,
+      "text": "CityStep verification CS-SEA-01: the current route from the Lakefront family suite to the Space Needle is step-free with zero stairs and a longest walking segment of 0.3 miles (one transfer).",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "routes_step_free"
+      }
+    },
+    "route_406_ok": {
+      "value": true,
+      "text": "CityStep verification CS-SEA-06: the current route from the Lakefront family suite to the Seattle Great Wheel is step-free with zero stairs and a longest walking segment of 0.25 miles (one transfer).",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "routes_step_free"
+      }
+    }
+  },
+  "start_at": "2027-05-01T09:00:00-05:00",
+  "deadline_at": "2027-05-20T18:00:00-05:00"
+}

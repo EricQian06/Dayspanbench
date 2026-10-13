@@ -1,0 +1,211 @@
+{
+  "private": true,
+  "task_id": "DSB-27",
+  "actor": {
+    "id": "access_desk",
+    "name": "Sessions and sharing desk·Priya Nair",
+    "role": "session inventory, revocations and share restoration",
+    "description": "Attests the preserved trusted state and unchanged unrelated shares; session revocations and share restorations go through the scoped services (session_revoke, share_restore) and need the owner's exact approval.",
+    "calendar": "kolkata_office",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "priyanair2@bench.example"
+    },
+    "knowledge": [
+      "contractor_unchanged",
+      "partner_share_restored",
+      "session_revoked",
+      "trusted_preserved"
+    ],
+    "tools": {
+      "access_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "access_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "trusted_preserved",
+          "contractor_unchanged"
+        ]
+      },
+      "access_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "trusted_preserved",
+          "contractor_unchanged"
+        ]
+      },
+      "access_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Trusted state and sharing audit",
+        "aliases": [
+          "session",
+          "share",
+          "trusted",
+          "pixel",
+          "key",
+          "contractor",
+          "preserve",
+          "audit",
+          "meera",
+          "goa",
+          "permission"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "access_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "verify the trusted sessions and the unrelated shares are unchanged",
+            "tool": "access_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "access_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "access_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Sessions and sharing desk·Priya Nair，负责session inventory, revocations and share restoration。Attests the preserved trusted state and unchanged unrelated shares; session revocations and share restorations go through the scoped services (session_revoke, share_restore) and need the owner's exact approval. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:contractor_share_unchanged",
+      "attest:partner_share_restored",
+      "attest:trusted_access_preserved",
+      "attest:unknown_session_revoked"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Kolkata",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:30",
+        "18:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "contractor_unchanged": {
+      "value": true,
+      "text": "The unrelated contractor share share-CONTRACT (contractor-test, viewer on WorkFolder) is unchanged by the recovery.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-27",
+          "case": {
+            "account": "arjun-test",
+            "session": "WIN-FRA-09",
+            "date": "2027-01-12"
+          }
+        },
+        "predicate": "contractor_share_unchanged"
+      }
+    },
+    "partner_share_restored": {
+      "value": true,
+      "text": "After the provider migration dropped it, share-MEERA was restored exactly: meera-test retains editor access on album Goa2024, and access was not broadened.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-27",
+          "case": {
+            "account": "arjun-test",
+            "session": "WIN-FRA-09",
+            "date": "2027-01-12"
+          }
+        },
+        "predicate": "partner_share_restored"
+      }
+    },
+    "session_revoked": {
+      "value": true,
+      "text": "Only the unknown Windows session WIN-FRA-09 was revoked; the trusted Pixel session arjun-pixel and hardware key A9C2 remain active and unchanged.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-27",
+          "case": {
+            "account": "arjun-test",
+            "session": "WIN-FRA-09",
+            "date": "2027-01-12"
+          }
+        },
+        "predicate": "unknown_session_revoked"
+      }
+    },
+    "trusted_preserved": {
+      "value": true,
+      "text": "Provider records confirm the trusted Pixel session arjun-pixel and hardware key A9C2 are active and unchanged after the recovery.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-27",
+          "case": {
+            "account": "arjun-test",
+            "session": "WIN-FRA-09",
+            "date": "2027-01-12"
+          }
+        },
+        "predicate": "trusted_access_preserved"
+      }
+    }
+  },
+  "start_at": "2027-01-12T09:00:00+05:30",
+  "deadline_at": "2027-01-14T12:00:00+05:30"
+}

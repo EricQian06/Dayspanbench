@@ -1,0 +1,307 @@
+{
+  "private": true,
+  "task_id": "DSB-20",
+  "actor": {
+    "id": "manager",
+    "name": "Maple Row Property Group manager·Dana Reyes",
+    "role": "listing verification and the remediation evidence file",
+    "description": "Confirms listing terms and the signed inspection finding in writing; the report chain, holds and signing packets are issued only through the desks on the entry and FAQ pages, never by mail.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "danareyes@bench.example"
+    },
+    "knowledge": [
+      "bedrooms",
+      "drying_verified",
+      "hold_active",
+      "lease_unsigned",
+      "mold_reported",
+      "packet_delivered",
+      "rent_usd",
+      "repair_completed",
+      "repair_duties_preserved"
+    ],
+    "tools": {
+      "manager.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "manager.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "rent_usd",
+          "bedrooms",
+          "mold_reported"
+        ]
+      },
+      "manager.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "rent_usd",
+          "bedrooms",
+          "mold_reported"
+        ]
+      },
+      "manager.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Listing and condition verification",
+        "aliases": [
+          "listing",
+          "rent",
+          "bedroom",
+          "unit",
+          "condition",
+          "mold",
+          "verify",
+          "inspection",
+          "september"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "manager.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the listing terms and the August 17 inspection finding",
+            "tool": "manager.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 180
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "manager.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "manager.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Maple Row Property Group manager·Dana Reyes，负责listing verification and the remediation evidence file。Confirms listing terms and the signed inspection finding in writing; the report chain, holds and signing packets are issued only through the desks on the entry and FAQ pages, never by mail. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:bedrooms",
+      "attest:drying_verified",
+      "attest:hold_active_no_deposit",
+      "attest:lease_unsigned",
+      "attest:mold_reported",
+      "attest:rent",
+      "attest:repair_completed",
+      "attest:repair_duties_preserved",
+      "attest:signing_packet_delivered"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "bedrooms": {
+      "value": 2,
+      "text": "unitA has two bedrooms.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "bedrooms"
+      }
+    },
+    "drying_verified": {
+      "value": true,
+      "text": "Signed drying report dry-A: structural drying of unitA verified August 22, 2027, after the completed repair.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "drying_verified"
+      }
+    },
+    "hold_active": {
+      "value": true,
+      "text": "A zero-fee hold (hold-XHH1) on unitA is active until 2027-08-25 17:00 Central time; no deposit and no signature were taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "hold_active_no_deposit"
+      }
+    },
+    "lease_unsigned": {
+      "value": true,
+      "text": "The lease remains unsigned; signature and move-in stay pending Jasmine Cooper's personal review.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "lease_unsigned"
+      }
+    },
+    "mold_reported": {
+      "value": true,
+      "text": "Signed inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "mold_reported"
+      }
+    },
+    "packet_delivered": {
+      "value": true,
+      "text": "The exact lease packet (lease v1 with inspect-A, repair-A, dry-A and retest-A attached, packet-XHH1) was delivered to Jasmine Cooper's signing inbox.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "signing_packet_delivered"
+      }
+    },
+    "rent_usd": {
+      "value": 2100,
+      "text": "Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "rent"
+      }
+    },
+    "repair_completed": {
+      "value": true,
+      "text": "Signed repair report repair-A: professional remediation of unitA's bedroom completed August 20, 2027.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "repair_completed"
+      }
+    },
+    "repair_duties_preserved": {
+      "value": true,
+      "text": "The delivered lease preserves the landlord's repair obligations; nothing was waived.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "repair_duties_preserved"
+      }
+    }
+  },
+  "start_at": "2027-08-18T09:00:00-05:00",
+  "deadline_at": "2027-08-24T17:00:00-05:00"
+}

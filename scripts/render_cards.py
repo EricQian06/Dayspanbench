@@ -29,7 +29,8 @@ def delay_text(delay):
 def render():
     out = ROOT / "docs/tasks"
     out.mkdir(parents=True, exist_ok=True)
-    summary = ["# DaySpanBench 手写任务集 v0.3", "", "12个合成场景、41个独立角色。所有时间线由事件引擎回放验证。", "",
+    count = 0
+    summary = ["# DaySpanBench 手写任务集 v0.4", "", "42个合成场景（12个中文原创场景 + 30个自LATCH_BENCH语料移植的英文场景）、96个独立角色。所有时间线由事件引擎回放验证。", "",
                "参考历时采用近似对数间隔：**2、3、5、8、13、21、34、55、89、144、210、300天**。2–7天、8–30天、31–100天、101–300天四档各3题；这是测评采样设计，不代表现实办事时间的频率分布。详见[跨度设计](horizon-design.md)。", "",
                "这些是作者参考轨迹的历时，不是任务的最短时间，也不是任何LLM的成绩。DSB-12评价截止前的受阻处理，不能并入已获取全部信息的成功率。", "",
                "| 任务 | 场景 | 人物 | 参考历时 | 时间档 | 参考结束（北京时间） | 结果类型 |", "|---|---|---:|---:|---|---|---|"]
@@ -97,8 +98,9 @@ def render():
                   f"- [环境私有定义](../../tasks/private/{task['id']}.json)",
                   f"- [完整参考回放](../../artifacts/reference_runs/{task['id']}.json)", "", task["alternate_paths"], ""]
         (out / f"{task['id']}.md").write_text("\n".join(lines), encoding="utf-8")
+        count += 1
     (ROOT / "docs/task-catalog.md").write_text("\n".join(summary) + "\n", encoding="utf-8")
-    print("Rendered 12 review cards, 41 actor dossiers within cards, and the task catalog.")
+    print(f"Rendered {count} review cards, actor dossiers within cards, and the task catalog.")
 
 
 if __name__ == "__main__":

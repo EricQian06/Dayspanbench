@@ -1,0 +1,285 @@
+{
+  "private": true,
+  "task_id": "DSB-23",
+  "actor": {
+    "id": "hotel_desk",
+    "name": "Villa des Roses hotel desk·Marc Aubert",
+    "role": "written pet acceptance, parking terms and late check-in extensions",
+    "description": "Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission.",
+    "calendar": "paris_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "marcaubert@bench.example"
+    },
+    "knowledge": [
+      "late_extension",
+      "pet_accepted",
+      "stay_confirmed",
+      "total_cost"
+    ],
+    "tools": {
+      "hotel_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "hotel_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "pet_accepted"
+        ]
+      },
+      "hotel_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "pet_accepted"
+        ]
+      },
+      "hotel_desk.main.4.reply": {
+        "kind": "reply"
+      },
+      "hotel_desk.extension.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "hotel_desk.extension.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "late_extension"
+        ]
+      },
+      "hotel_desk.extension.3.document": {
+        "kind": "document",
+        "facts": [
+          "late_extension"
+        ]
+      },
+      "hotel_desk.extension.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Pet and parking verification",
+        "aliases": [
+          "pet",
+          "dog",
+          "nino",
+          "28",
+          "weight",
+          "parking",
+          "verify",
+          "acceptance",
+          "vet",
+          "letter"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "hotel_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the written pet acceptance and parking terms",
+            "tool": "hotel_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 40
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "hotel_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "hotel_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "extension",
+        "label": "Late check-in extension",
+        "aliases": [
+          "extension",
+          "extend",
+          "midnight",
+          "00:05",
+          "past the",
+          "later than"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "extension_1",
+            "label": "发出受理回执",
+            "tool": "hotel_desk.extension.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "extension_2",
+            "label": "issue the written late check-in extension for the delayed itinerary",
+            "tool": "hotel_desk.extension.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 40
+            }
+          },
+          {
+            "id": "extension_3",
+            "label": "签发书面确认",
+            "tool": "hotel_desk.extension.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "extension_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "hotel_desk.extension.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Villa des Roses hotel desk·Marc Aubert，负责written pet acceptance, parking terms and late check-in extensions。Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:late_checkin_deadline",
+      "attest:pet_acceptance_written",
+      "attest:stay_confirmed",
+      "attest:total_cost"
+    ]
+  },
+  "calendar": {
+    "timezone": "Europe/Paris",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "late_extension": {
+      "value": "00:30",
+      "text": "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
+      "available_at": "2027-04-17T08:30:00+02:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "late_checkin_deadline"
+      }
+    },
+    "pet_accepted": {
+      "value": true,
+      "text": "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "pet_acceptance_written"
+      }
+    },
+    "stay_confirmed": {
+      "value": true,
+      "text": "Reservation stay-XPT1 confirms two nights at the Villa des Roses, 2027-04-16 to 2027-04-18, for Camille Moreau and Nino: written 28 kg pet acceptance, the extended 00:30 late check-in, open-air parking for the 2.05 m car and Lea's supervision linked; total 378 EUR; no payment taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "stay_confirmed"
+      }
+    },
+    "total_cost": {
+      "value": 378,
+      "text": "The stay total is 378 EUR - 310 EUR room for two nights, 20 EUR pet fee and 48 EUR open-air parking for two nights - within the 420 EUR budget.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "total_cost"
+      }
+    }
+  },
+  "start_at": "2027-04-16T18:00:00+02:00",
+  "deadline_at": "2027-04-18T18:00:00+02:00"
+}

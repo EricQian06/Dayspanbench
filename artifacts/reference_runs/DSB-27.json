@@ -1,0 +1,531 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-27",
+  "answer": {
+    "conclusion": "recovered_scoped",
+    "claims": [
+      {
+        "key": "owner_proof_attested",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0005"
+        ]
+      },
+      {
+        "key": "account_recovered",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0006"
+        ]
+      },
+      {
+        "key": "unknown_session_revoked",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0007"
+        ]
+      },
+      {
+        "key": "partner_share_restored",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0008"
+        ]
+      },
+      {
+        "key": "trusted_access_preserved",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0003"
+        ]
+      },
+      {
+        "key": "contractor_share_unchanged",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0004"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-27",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "owner_proof_attested",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "account_recovered",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "unknown_session_revoked",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "partner_share_restored",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "trusted_access_preserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "contractor_share_unchanged",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 7.58,
+    "calendar_days": 0.315972,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-01-12T11:05:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-01-12T05:20:00+00:00",
+      "from": "priyanair2@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Sessions and sharing desk·Priya Nair。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-01-12T08:24:00+00:00",
+      "from": "priyanair2@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Sessions and sharing desk·Priya Nair。您咨询的事项已经核实，具体情况如下：Provider records confirm the trusted Pixel session arjun-pixel and hardware key A9C2 are active and unchanged after the recovery.The unrelated contractor share share-CONTRACT (contractor-test, viewer on WorkFolder) is unchanged by the recovery.Provider records confirm the trusted Pixel session arjun-pixel and hardware key A9C2 are active and unchanged after the recovery.The unrelated contractor share share-CONTRACT (contractor-test, viewer on WorkFolder) is unchanged by the recovery.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0001",
+          "issuer": "access_desk",
+          "issued_at": "2027-01-12T07:26:00+00:00",
+          "text": "Provider records confirm the trusted Pixel session arjun-pixel and hardware key A9C2 are active and unchanged after the recovery.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0002",
+          "issuer": "access_desk",
+          "issued_at": "2027-01-12T07:26:00+00:00",
+          "text": "The unrelated contractor share share-CONTRACT (contractor-test, viewer on WorkFolder) is unchanged by the recovery.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0003",
+          "issuer": "access_desk",
+          "issued_at": "2027-01-12T08:09:00+00:00",
+          "text": "Provider records confirm the trusted Pixel session arjun-pixel and hardware key A9C2 are active and unchanged after the recovery.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0004",
+          "issuer": "access_desk",
+          "issued_at": "2027-01-12T08:09:00+00:00",
+          "text": "The unrelated contractor share share-CONTRACT (contractor-test, viewer on WorkFolder) is unchanged by the recovery.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-01-12T03:30:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "owner_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-01-12T03:30:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "owner_dialogue",
+      "question": "Which devices and recovery methods are trusted, what sharing must survive, and what approval do you give for the recovery?",
+      "matched": true
+    },
+    {
+      "at": "2027-01-12T03:30:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "account_inventory",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-01-12T03:30:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "account_inventory",
+      "query": "account",
+      "entries": []
+    },
+    {
+      "at": "2027-01-12T03:30:00+00:00",
+      "kind": "agent_send",
+      "recipient": "priyanair2@bench.example",
+      "text": "Please verify the trusted Pixel session and hardware key are preserved and the contractor share is unchanged through the recovery",
+      "fields": {
+        "account": "arjun-test",
+        "session": "WIN-FRA-09",
+        "date": "2027-01-12"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-01-12T03:30:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-01-12T04:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-01-12T04:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "step": "main_1",
+      "start_at": "2027-01-12T04:32:00+00:00",
+      "due_at": "2027-01-12T05:20:00+00:00",
+      "tool": "access_desk.main.1.acknowledge"
+    },
+    {
+      "at": "2027-01-12T04:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-01-12T05:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "access_desk",
+      "case_id": "CASE-0001",
+      "tool": "access_desk.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-01-12T05:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-01-12T05:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-01-12T05:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "step": "main_2",
+      "start_at": "2027-01-12T05:20:00+00:00",
+      "due_at": "2027-01-12T07:26:00+00:00",
+      "tool": "access_desk.main.2.lookup"
+    },
+    {
+      "at": "2027-01-12T05:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-01-12T06:10:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "account_inventory",
+      "removed": [],
+      "added": [
+        "proof-DIG1"
+      ]
+    },
+    {
+      "at": "2027-01-12T07:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "access_desk",
+      "case_id": "CASE-0001",
+      "tool": "access_desk.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-01-12T07:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-01-12T07:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "step": "main_3",
+      "start_at": "2027-01-12T07:26:00+00:00",
+      "due_at": "2027-01-12T08:09:00+00:00",
+      "tool": "access_desk.main.3.document"
+    },
+    {
+      "at": "2027-01-12T07:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-01-12T08:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "access_desk",
+      "case_id": "CASE-0001",
+      "tool": "access_desk.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-01-12T08:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-01-12T08:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "step": "main_4",
+      "start_at": "2027-01-12T08:09:00+00:00",
+      "due_at": "2027-01-12T08:24:00+00:00",
+      "tool": "access_desk.main.4.reply"
+    },
+    {
+      "at": "2027-01-12T08:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-01-12T08:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "access_desk",
+      "case_id": "CASE-0001",
+      "tool": "access_desk.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-01-12T08:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "access_desk",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-01-12T08:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-01-12T08:24:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "account_inventory",
+      "query": "proof",
+      "entries": [
+        "proof-DIG1"
+      ]
+    },
+    {
+      "at": "2027-01-12T08:24:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "owner_dialogue",
+      "question": "Do you approve the exact plan: recover arjun-test via proof-DIG1, revoke only WIN-FRA-09, and restore only share-MEERA (meera-test, editor on Goa2024) if the provider drops it?",
+      "matched": true
+    },
+    {
+      "at": "2027-01-12T08:24:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "recovery_apply",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-01-12T08:24:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "recovery_apply",
+      "entry": "proof-DIG1",
+      "accepted": true
+    },
+    {
+      "at": "2027-01-12T08:24:00+00:00",
+      "kind": "page_updated",
+      "page": "recovery-entry",
+      "url": "https://cloudrecovery.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-01-12T08:24:00+00:00",
+      "kind": "selection_processed",
+      "tool": "recovery_apply",
+      "accepted": true,
+      "result": "Recovery applied: receipt recovery-DIG1 - account arjun-test is unlocked with the trusted sessions and hardware key retained. Provider reconciliation is pending and settles by 15:00 today; the authenticator was not reset and no bulk logout occurred. Audit the real state only after reconciliation settles."
+    },
+    {
+      "at": "2027-01-12T08:40:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "recovery_apply",
+      "query": "recovery"
+    },
+    {
+      "at": "2027-01-12T08:40:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "session_revoke",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-01-12T08:40:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "session_revoke",
+      "entry": "WIN-FRA-09",
+      "accepted": true
+    },
+    {
+      "at": "2027-01-12T09:10:00+00:00",
+      "kind": "page_updated",
+      "page": "recovery-entry",
+      "url": "https://cloudrecovery.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-01-12T09:10:00+00:00",
+      "kind": "selection_processed",
+      "tool": "session_revoke",
+      "accepted": true,
+      "result": "Session revoked: only the unknown Windows session WIN-FRA-09. The trusted Pixel session arjun-pixel and hardware key A9C2 remain active and unchanged, and no other session or share was touched."
+    },
+    {
+      "at": "2027-01-12T09:20:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "session_revoke",
+      "query": "session"
+    },
+    {
+      "at": "2027-01-12T09:30:00+00:00",
+      "kind": "page_updated",
+      "page": "recovery-intro",
+      "url": "https://cloudrecovery.bench/intro"
+    },
+    {
+      "at": "2027-01-12T09:30:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "account_inventory",
+      "removed": [
+        "share-MEERA"
+      ],
+      "added": [
+        "share-MEERA-dropped"
+      ]
+    },
+    {
+      "at": "2027-01-12T09:35:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "account_inventory",
+      "query": "share",
+      "entries": [
+        "share-CONTRACT",
+        "share-MEERA-dropped"
+      ]
+    },
+    {
+      "at": "2027-01-12T09:35:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "share_restore",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-01-12T09:35:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "share_restore",
+      "entry": "share-MEERA-dropped",
+      "accepted": true
+    },
+    {
+      "at": "2027-01-12T11:00:00+00:00",
+      "kind": "page_updated",
+      "page": "recovery-entry",
+      "url": "https://cloudrecovery.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-01-12T11:00:00+00:00",
+      "kind": "selection_processed",
+      "tool": "share_restore",
+      "accepted": true,
+      "result": "Share restored: share-MEERA is active again exactly as before - meera-test holds editor access on album Goa2024. Access was not broadened, no ownership or admin role was granted, and the contractor share share-CONTRACT is unchanged."
+    },
+    {
+      "at": "2027-01-12T11:05:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "share_restore",
+      "query": "share"
+    }
+  ],
+  "pending_cases": []
+}

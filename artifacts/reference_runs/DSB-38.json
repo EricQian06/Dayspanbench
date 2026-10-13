@@ -1,0 +1,745 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-38",
+  "answer": {
+    "conclusion": "transfer_complete",
+    "claims": [
+      {
+        "key": "chip_scan_verified",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "shelter_consent_held",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0003"
+        ]
+      },
+      {
+        "key": "registry_owner_transferred",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0005"
+        ]
+      },
+      {
+        "key": "license_fee_user_paid",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0007"
+        ]
+      },
+      {
+        "key": "municipal_license_issued",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0006"
+        ]
+      },
+      {
+        "key": "shelter_release_authorized",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0008"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-38",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "chip_scan_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "shelter_consent_held",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "registry_owner_transferred",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "license_fee_user_paid",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "municipal_license_issued",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "shelter_release_authorized",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 30.5,
+    "calendar_days": 1.270833,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-03-23T20:30:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-03-22T15:20:00+00:00",
+      "from": "dr.mayaosei@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Riverside vet clinic·Dr. Maya Osei。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-03-22T15:20:00+00:00",
+      "from": "jordanhale@bench.example",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Municipal pet records desk·Jordan Hale。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2027-03-22T17:46:00+00:00",
+      "from": "jordanhale@bench.example",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Municipal pet records desk·Jordan Hale。您咨询的事项已经核实，具体情况如下：Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0001",
+          "issuer": "pet_admin",
+          "issued_at": "2027-03-22T16:41:00+00:00",
+          "text": "Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0003",
+          "issuer": "pet_admin",
+          "issued_at": "2027-03-22T17:31:00+00:00",
+          "text": "Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2027-03-22T18:05:00+00:00",
+      "from": "dr.mayaosei@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Riverside vet clinic·Dr. Maya Osei。您咨询的事项已经核实，具体情况如下：Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0002",
+          "issuer": "clinic",
+          "issued_at": "2027-03-22T17:03:00+00:00",
+          "text": "Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0004",
+          "issuer": "clinic",
+          "issued_at": "2027-03-22T17:50:00+00:00",
+          "text": "Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-03-22T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "adopter_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-03-22T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "adopter_dialogue",
+      "question": "Which Luna is she, what are your adopter details, and what approval do you give for the transfer, license and release?",
+      "matched": true
+    },
+    {
+      "at": "2027-03-22T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "pet_records",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-03-22T14:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "pet_records",
+      "query": "Luna",
+      "entries": [
+        "intake-88421",
+        "luna-greyhound",
+        "rabies-greyhound"
+      ]
+    },
+    {
+      "at": "2027-03-22T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "dr.mayaosei@bench.example",
+      "text": "Please perform a noninvasive scan of intake APA-88421's existing chip and confirm the chip number in writing",
+      "fields": {
+        "intake": "APA-88421",
+        "pet": "Luna",
+        "deadline": "2027-03-24"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-03-22T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-03-22T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "jordanhale@bench.example",
+      "text": "Please confirm the signed shelter transfer consent for intake APA-88421 to Imani Bennett",
+      "fields": {
+        "intake": "APA-88421",
+        "pet": "Luna",
+        "deadline": "2027-03-24"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-03-22T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-03-22T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-22T14:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "step": "main_1",
+      "start_at": "2027-03-22T14:32:00+00:00",
+      "due_at": "2027-03-22T15:20:00+00:00",
+      "tool": "clinic.main.1.acknowledge"
+    },
+    {
+      "at": "2027-03-22T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-22T14:44:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-22T14:44:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "step": "main_1",
+      "start_at": "2027-03-22T14:44:00+00:00",
+      "due_at": "2027-03-22T15:20:00+00:00",
+      "tool": "pet_admin.main.1.acknowledge"
+    },
+    {
+      "at": "2027-03-22T14:44:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinic",
+      "case_id": "CASE-0001",
+      "tool": "clinic.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "step": "main_2",
+      "start_at": "2027-03-22T15:20:00+00:00",
+      "due_at": "2027-03-22T17:03:00+00:00",
+      "tool": "clinic.main.2.lookup"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "pet_admin",
+      "case_id": "CASE-0002",
+      "tool": "pet_admin.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "step": "main_2",
+      "start_at": "2027-03-22T15:20:00+00:00",
+      "due_at": "2027-03-22T16:41:00+00:00",
+      "tool": "pet_admin.main.2.lookup"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-22T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-22T16:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "pet_records",
+      "removed": [],
+      "added": [
+        "transfer-ready"
+      ]
+    },
+    {
+      "at": "2027-03-22T16:41:00+00:00",
+      "kind": "tool_call",
+      "actor": "pet_admin",
+      "case_id": "CASE-0002",
+      "tool": "pet_admin.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-03-22T16:41:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-22T16:41:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "step": "main_3",
+      "start_at": "2027-03-22T16:41:00+00:00",
+      "due_at": "2027-03-22T17:31:00+00:00",
+      "tool": "pet_admin.main.3.document"
+    },
+    {
+      "at": "2027-03-22T16:41:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-22T17:03:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinic",
+      "case_id": "CASE-0001",
+      "tool": "clinic.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-03-22T17:03:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-22T17:03:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "step": "main_3",
+      "start_at": "2027-03-22T17:03:00+00:00",
+      "due_at": "2027-03-22T17:50:00+00:00",
+      "tool": "clinic.main.3.document"
+    },
+    {
+      "at": "2027-03-22T17:03:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-22T17:31:00+00:00",
+      "kind": "tool_call",
+      "actor": "pet_admin",
+      "case_id": "CASE-0002",
+      "tool": "pet_admin.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-03-22T17:31:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-22T17:31:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "step": "main_4",
+      "start_at": "2027-03-22T17:31:00+00:00",
+      "due_at": "2027-03-22T17:46:00+00:00",
+      "tool": "pet_admin.main.4.reply"
+    },
+    {
+      "at": "2027-03-22T17:31:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-22T17:46:00+00:00",
+      "kind": "tool_call",
+      "actor": "pet_admin",
+      "case_id": "CASE-0002",
+      "tool": "pet_admin.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-03-22T17:46:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "pet_admin",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-03-22T17:46:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    },
+    {
+      "at": "2027-03-22T17:50:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinic",
+      "case_id": "CASE-0001",
+      "tool": "clinic.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-03-22T17:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-22T17:50:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "step": "main_4",
+      "start_at": "2027-03-22T17:50:00+00:00",
+      "due_at": "2027-03-22T18:05:00+00:00",
+      "tool": "clinic.main.4.reply"
+    },
+    {
+      "at": "2027-03-22T17:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinic",
+      "case_id": "CASE-0001",
+      "tool": "clinic.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0004",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "pet_records",
+      "query": "transfer",
+      "entries": [
+        "registry-home",
+        "transfer-ready"
+      ]
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "adopter_dialogue",
+      "question": "Do you approve the exact packet: transfer chip 981020000123456 on HomeAgain-test to Imani Bennett, issue the matching license after your own 27 USD payment, and obtain the shelter release?",
+      "matched": true
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "registry_transfer",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "registry_transfer",
+      "entry": "transfer-ready",
+      "accepted": true
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "page_updated",
+      "page": "pet-entry",
+      "url": "https://pettransfer.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "selection_processed",
+      "tool": "registry_transfer",
+      "accepted": true,
+      "result": "Registry transferred: transfer-P1 - HomeAgain-test chip 981020000123456 owner updated from the shelter to Imani Bennett, 2704 East 12th Street, Apt 6, Test City (registry version 2). No license or release was created, and no other chip or registry was touched."
+    },
+    {
+      "at": "2027-03-22T18:10:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "registry_transfer",
+      "query": "transfer"
+    },
+    {
+      "at": "2027-03-23T16:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "pet_records",
+      "removed": [],
+      "added": [
+        "license-ready"
+      ]
+    },
+    {
+      "at": "2027-03-23T16:05:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "pet_records",
+      "query": "license",
+      "entries": [
+        "transfer-ready",
+        "license-ready"
+      ]
+    },
+    {
+      "at": "2027-03-23T16:05:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "license_issue",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-03-23T16:05:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "license_issue",
+      "entry": "license-ready",
+      "accepted": true
+    },
+    {
+      "at": "2027-03-23T17:05:00+00:00",
+      "kind": "page_updated",
+      "page": "pet-entry",
+      "url": "https://pettransfer.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-03-23T17:05:00+00:00",
+      "kind": "selection_processed",
+      "tool": "license_issue",
+      "accepted": true,
+      "result": "License issued: license-P1 for chip 981020000123456, owner Imani Bennett - matching the transferred registry record and the settled receipt-P1 (27 USD, paid by the adopter through the portal). No account was charged by the agent and no subscription was added."
+    },
+    {
+      "at": "2027-03-23T17:30:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "license_issue",
+      "query": "license"
+    },
+    {
+      "at": "2027-03-23T19:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "pet_records",
+      "removed": [],
+      "added": [
+        "release-ready"
+      ]
+    },
+    {
+      "at": "2027-03-23T19:10:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "pet_records",
+      "query": "release",
+      "entries": [
+        "release-ready"
+      ]
+    },
+    {
+      "at": "2027-03-23T19:10:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "shelter_release",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-03-23T19:10:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "shelter_release",
+      "entry": "release-ready",
+      "accepted": true
+    },
+    {
+      "at": "2027-03-23T20:10:00+00:00",
+      "kind": "page_updated",
+      "page": "pet-entry",
+      "url": "https://pettransfer.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-03-23T20:10:00+00:00",
+      "kind": "selection_processed",
+      "tool": "shelter_release",
+      "accepted": true,
+      "result": "Release authorized: release-P1 for intake APA-88421 to Imani Bennett, after the matching registry transfer and license-P1. This authorizes shelter pickup only - the dog has not been collected yet."
+    },
+    {
+      "at": "2027-03-23T20:30:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "shelter_release",
+      "query": "release"
+    }
+  ],
+  "pending_cases": []
+}

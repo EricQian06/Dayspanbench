@@ -1,0 +1,604 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-20",
+  "answer": {
+    "conclusion": "held_packet_delivered",
+    "claims": [
+      {
+        "key": "rent",
+        "status": "confirmed",
+        "value": 2100,
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0004",
+          "EV-0007",
+          "EV-0013"
+        ]
+      },
+      {
+        "key": "bedrooms",
+        "status": "confirmed",
+        "value": 2,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0005",
+          "EV-0008",
+          "EV-0014"
+        ]
+      },
+      {
+        "key": "repair_completed",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0010"
+        ]
+      },
+      {
+        "key": "drying_verified",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0011"
+        ]
+      },
+      {
+        "key": "retest_independent_pass",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0012"
+        ]
+      },
+      {
+        "key": "hold_active_no_deposit",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0015"
+        ]
+      },
+      {
+        "key": "signing_packet_delivered",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0016"
+        ]
+      },
+      {
+        "key": "repair_duties_preserved",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0017"
+        ]
+      },
+      {
+        "key": "lease_unsigned",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0018"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-20",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "rent",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "bedrooms",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "repair_completed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "drying_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "retest_independent_pass",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "hold_active_no_deposit",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "signing_packet_delivered",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "repair_duties_preserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "lease_unsigned",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 144.0,
+    "calendar_days": 6.0,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-08-24T14:00:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-08-18T15:20:00+00:00",
+      "from": "danareyes@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Maple Row Property Group manager·Dana Reyes。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-08-18T19:24:00+00:00",
+      "from": "danareyes@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Maple Row Property Group manager·Dana Reyes。您咨询的事项已经核实，具体情况如下：Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.unitA has two bedrooms.Signed inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.unitA has two bedrooms.Signed inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0004",
+          "issuer": "manager",
+          "issued_at": "2027-08-18T18:26:00+00:00",
+          "text": "Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.",
+          "value": 2100,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0005",
+          "issuer": "manager",
+          "issued_at": "2027-08-18T18:26:00+00:00",
+          "text": "unitA has two bedrooms.",
+          "value": 2,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0006",
+          "issuer": "manager",
+          "issued_at": "2027-08-18T18:26:00+00:00",
+          "text": "Signed inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0007",
+          "issuer": "manager",
+          "issued_at": "2027-08-18T19:09:00+00:00",
+          "text": "Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.",
+          "value": 2100,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0008",
+          "issuer": "manager",
+          "issued_at": "2027-08-18T19:09:00+00:00",
+          "text": "unitA has two bedrooms.",
+          "value": 2,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0009",
+          "issuer": "manager",
+          "issued_at": "2027-08-18T19:09:00+00:00",
+          "text": "Signed inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-08-18T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "jasmine_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-08-18T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "jasmine_dialogue",
+      "question": "What are the rental requirements, the condition constraints on unitA, the signing scope and the approval arrangements?",
+      "matched": true
+    },
+    {
+      "at": "2027-08-18T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "rental_records_search",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-08-18T14:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "rental_records_search",
+      "query": "two bedroom rental under 2200 September",
+      "entries": [
+        "unitA",
+        "unitB",
+        "unitC",
+        "photos-A",
+        "test-A-draft"
+      ]
+    },
+    {
+      "at": "2027-08-18T14:00:00+00:00",
+      "kind": "agent_fetch_document",
+      "url": "https://maplerow.bench/files/inspect-A.pdf",
+      "facts": [
+        "mold_reported"
+      ]
+    },
+    {
+      "at": "2027-08-18T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "danareyes@bench.example",
+      "text": "Please verify the unitA listing: rent, bedrooms and the August 17 mold inspection finding.",
+      "fields": {
+        "move_in_date": "2027-09-01",
+        "max_rent_usd": 2200,
+        "bedrooms": 2,
+        "preferred_unit": "unitA"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-08-18T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-08-18T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-08-18T14:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "step": "main_1",
+      "start_at": "2027-08-18T14:32:00+00:00",
+      "due_at": "2027-08-18T15:20:00+00:00",
+      "tool": "manager.main.1.acknowledge"
+    },
+    {
+      "at": "2027-08-18T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-08-18T15:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "manager",
+      "case_id": "CASE-0001",
+      "tool": "manager.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-08-18T15:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-08-18T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-08-18T15:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "step": "main_2",
+      "start_at": "2027-08-18T15:20:00+00:00",
+      "due_at": "2027-08-18T18:26:00+00:00",
+      "tool": "manager.main.2.lookup"
+    },
+    {
+      "at": "2027-08-18T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-08-18T18:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "manager",
+      "case_id": "CASE-0001",
+      "tool": "manager.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-08-18T18:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-08-18T18:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "step": "main_3",
+      "start_at": "2027-08-18T18:26:00+00:00",
+      "due_at": "2027-08-18T19:09:00+00:00",
+      "tool": "manager.main.3.document"
+    },
+    {
+      "at": "2027-08-18T18:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-08-18T19:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "manager",
+      "case_id": "CASE-0001",
+      "tool": "manager.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-08-18T19:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-08-18T19:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "step": "main_4",
+      "start_at": "2027-08-18T19:09:00+00:00",
+      "due_at": "2027-08-18T19:24:00+00:00",
+      "tool": "manager.main.4.reply"
+    },
+    {
+      "at": "2027-08-18T19:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-08-18T19:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "manager",
+      "case_id": "CASE-0001",
+      "tool": "manager.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-08-18T19:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "manager",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-08-18T19:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-08-18T19:24:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "remediation_request_desk",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-08-18T19:24:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "remediation_records_desk",
+      "found": true,
+      "tool_kind": "record"
+    },
+    {
+      "at": "2027-08-18T19:24:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "remediation_request_desk",
+      "form": "remediation_request_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-08-18T21:24:00+00:00",
+      "kind": "page_updated",
+      "page": "rentals-entry",
+      "url": "https://maplerow.bench/entry",
+      "cause": "form"
+    },
+    {
+      "at": "2027-08-18T21:24:00+00:00",
+      "kind": "form_processed",
+      "form": "remediation_request_form",
+      "accepted": true,
+      "result": "Remediation job job-XHH registered for unitA: landlord-funded professional remediation, structural drying and an independent retest, in that order. Signed reports are issued through the remediation records desk as each stage completes; nothing is pushed."
+    },
+    {
+      "at": "2027-08-22T14:30:00+00:00",
+      "kind": "agent_hidden_record",
+      "tool": "remediation_records_desk",
+      "key": "repair-A",
+      "found": [
+        "repair-A"
+      ]
+    },
+    {
+      "at": "2027-08-22T14:30:00+00:00",
+      "kind": "agent_hidden_record",
+      "tool": "remediation_records_desk",
+      "key": "dry-A",
+      "found": [
+        "dry-A"
+      ]
+    },
+    {
+      "at": "2027-08-23T19:00:00+00:00",
+      "kind": "page_updated",
+      "page": "rentals-entry",
+      "url": "https://maplerow.bench/entry"
+    },
+    {
+      "at": "2027-08-23T19:30:00+00:00",
+      "kind": "agent_hidden_record",
+      "tool": "remediation_records_desk",
+      "key": "retest-A",
+      "found": [
+        "retest-A"
+      ]
+    },
+    {
+      "at": "2027-08-23T19:30:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "rental_records_search",
+      "query": "unitA cleared",
+      "entries": [
+        "unitA",
+        "unitB",
+        "photos-A",
+        "test-A-draft",
+        "test-B",
+        "unitA-cleared"
+      ]
+    },
+    {
+      "at": "2027-08-23T19:30:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "jasmine_dialogue",
+      "question": "The full signed chain for unitA is complete: inspection, repair, drying and an independent passing retest. Do you approve a no-deposit hold on unitA at 2100 USD and delivery of the exact signing packet with the four attached reports?",
+      "matched": true
+    },
+    {
+      "at": "2027-08-23T19:30:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "unit_hold_desk",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-08-23T19:30:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "unit_hold_desk",
+      "entry": "unitA-cleared",
+      "accepted": true
+    },
+    {
+      "at": "2027-08-23T21:30:00+00:00",
+      "kind": "page_updated",
+      "page": "rentals-entry",
+      "url": "https://maplerow.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-08-23T21:30:00+00:00",
+      "kind": "selection_processed",
+      "tool": "unit_hold_desk",
+      "accepted": true,
+      "result": "Hold confirmed: hold-XHH1 on Maple Row unitA, 2100 USD per month, move-in 2027-09-01, zero hold fee, active until 2027-08-25 17:00 Central time. No deposit and no signature were taken; the hold rests on the complete signed report chain (inspect-A, repair-A, dry-A, retest-A)."
+    },
+    {
+      "at": "2027-08-23T22:00:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "unit_hold_desk",
+      "query": "hold"
+    },
+    {
+      "at": "2027-08-23T22:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "lease_packet_desk",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-08-23T22:00:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "lease_packet_desk",
+      "form": "lease_packet_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-08-24T00:00:00+00:00",
+      "kind": "page_updated",
+      "page": "rentals-faq",
+      "url": "https://maplerow.bench/faq",
+      "cause": "form"
+    },
+    {
+      "at": "2027-08-24T00:00:00+00:00",
+      "kind": "form_processed",
+      "form": "lease_packet_form",
+      "accepted": true,
+      "result": "Packet delivered: packet-XHH1, lease v1 for unitA at 2100 USD with exactly inspect-A, repair-A, dry-A and retest-A attached, repair duties preserved, delivered unsigned to Jasmine Cooper's signing inbox. Signature and move-in remain pending her personal review; no payment was taken."
+    }
+  ],
+  "pending_cases": []
+}

@@ -1,0 +1,149 @@
+{
+  "private": true,
+  "task_id": "DSB-28",
+  "actor": {
+    "id": "pathway_adviser",
+    "name": "Certificate program adviser·Rosa Kim",
+    "role": "pathway verification, prerequisite sequencing and first-stage reservations",
+    "description": "Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "rosakim@bench.example"
+    },
+    "knowledge": [
+      "first_stage_reserved",
+      "pathway_verified"
+    ],
+    "tools": {
+      "pathway_adviser.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "pathway_adviser.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Pathway verification",
+        "aliases": [
+          "pathway",
+          "verify",
+          "prerequisite",
+          "sequence",
+          "order",
+          "cost",
+          "total",
+          "fee",
+          "certificate",
+          "adviser",
+          "exemption",
+          "cert"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "pathway_adviser.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "pathway_adviser.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Certificate program adviser·Rosa Kim，负责pathway verification, prerequisite sequencing and first-stage reservations。Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:first_stage_reserved",
+      "attest:pathway_verified_by_adviser"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "first_stage_reserved": {
+      "value": true,
+      "text": "One first-stage c02 (Python Foundation) seat was reserved after the learner approved the exact whole-path plan; no payment was taken, the later stages remain unreserved and conditional, and no certificate has been awarded.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-28",
+          "case": {
+            "start_date": "2027-09-06",
+            "weekly_hours": 8,
+            "budget_usd": 2500
+          }
+        },
+        "predicate": "first_stage_reserved"
+      }
+    },
+    "pathway_verified": {
+      "value": true,
+      "text": "Adviser reply-E1 verified the analytics certificate path c02 (Python Foundation) -> c03 (Applied Analytics) -> c04 (Certificate Capstone): sixteen weeks, six study hours weekly, 1900 USD total including the 100 USD assessment fee. Sequential completion is required with no exemption for spreadsheet skills, and later-stage seats are conditional, not guaranteed.",
+      "available_at": "2027-08-24T09:00:00-05:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-28",
+          "case": {
+            "start_date": "2027-09-06",
+            "weekly_hours": 8,
+            "budget_usd": 2500
+          }
+        },
+        "predicate": "pathway_verified_by_adviser"
+      }
+    }
+  },
+  "start_at": "2027-08-23T09:00:00-05:00",
+  "deadline_at": "2027-08-25T17:00:00-05:00"
+}

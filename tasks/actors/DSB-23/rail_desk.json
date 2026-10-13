@@ -1,0 +1,158 @@
+{
+  "private": true,
+  "task_id": "DSB-23",
+  "actor": {
+    "id": "rail_desk",
+    "name": "Rail service desk·Julien Fabre",
+    "role": "current train arrival and delay status",
+    "description": "Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit.",
+    "calendar": "paris_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "julienfabre@bench.example"
+    },
+    "knowledge": [
+      "train_arrival"
+    ],
+    "tools": {
+      "rail_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "rail_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "train_arrival"
+        ]
+      },
+      "rail_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "train_arrival"
+        ]
+      },
+      "rail_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Train arrival status",
+        "aliases": [
+          "train",
+          "rail",
+          "arrival",
+          "delay",
+          "delayed",
+          "station",
+          "transfer",
+          "schedule"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "rail_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the current arrival time of train train-XPT",
+            "tool": "rail_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "rail_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "rail_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Rail service desk·Julien Fabre，负责current train arrival and delay status。Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:train_arrival_current"
+    ]
+  },
+  "calendar": {
+    "timezone": "Europe/Paris",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "train_arrival": {
+      "value": "23:40",
+      "text": "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "train_arrival_current"
+      }
+    }
+  },
+  "start_at": "2027-04-16T18:00:00+02:00",
+  "deadline_at": "2027-04-18T18:00:00+02:00"
+}

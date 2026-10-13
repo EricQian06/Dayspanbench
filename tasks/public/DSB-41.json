@@ -1,0 +1,124 @@
+{
+  "id": "DSB-41",
+  "title": "Five-person Chicago-Seattle family trip: recovered inventory and exact approval",
+  "brief": "Please arrange a practical five-person, five-night family trip from Chicago to Seattle in June 2027. Keep it safe and within our budget. Ask me for anything important before you commit to anything.",
+  "user_fields": {
+    "outbound_date": "2027-06-12",
+    "return_date": "2027-06-17",
+    "travellers": 5
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "trip-intro",
+      "title": "Skybridge Travel Portal",
+      "text": "Synthetic flight and hotel inventory for benchmark scenarios. Current flights are listed through the flight search service (flight_search) and current hotels through the hotel search service (hotel_search); quotes can be revised, cancelled or sold out mid-week, so an earlier result may go stale - re-check before booking. Door-to-door transport alternatives are compared through the transport comparison service (transport_modes). Accessibility routes come from the CityStep route service (access_routes), restaurant allergen records from the SafePlate dining service (dining_search), and current attraction listings from the attraction service (attraction_search). The traveller's own requirements can be clarified only through the family profile desk (trip_dialogue). Written accessibility confirmations come from the providers themselves by mail.",
+      "contacts": [],
+      "snippet": "Skybridge Travel Portal: current flight and hotel inventory, transport comparison, routes, dining and attraction services.",
+      "url": "https://skybridgetrip.bench/intro"
+    },
+    {
+      "id": "trip-contacts",
+      "title": "Skybridge portal contacts",
+      "text": "The Lakefront Suites Seattle accessibility desk is handled by Dana Rowe; the Skybridge Air inventory desk by Marcus Vaughn; the SafePlate Directory verification desk by Priya Nair; the CityStep Access route desk by Tomas Iglesias; and the Family Trip Desk plan desk by Rhea Sutton. All five desks answer daily during business hours.",
+      "contacts": [
+        "lakefront_desk",
+        "skybridge_desk",
+        "safeplate_desk",
+        "citystep_desk",
+        "trip_desk"
+      ],
+      "snippet": "Contacts for the Lakefront, Skybridge, SafePlate, CityStep and trip-plan desks.",
+      "url": "https://skybridgetrip.bench/contact"
+    },
+    {
+      "id": "trip-entry",
+      "title": "Portal booking desks",
+      "text": "Bookings go through four desks. The Lakefront hold desk (place_hotel_hold) can hold the accessible-suite rate shown in one current hotel_search row - a hold is not a booking and lapses if not converted in time. The flight booking desk (book_flight) and the hotel booking desk (book_hotel) each take exactly one current listing for the whole family. The trip plan desk (confirm_trip_plan) records the exact final plan chosen from one current trip plan listing (trip_plans). The traveller can review and approve the exact plan only from May 12 at 12:00 Chicago time; submit bookings only after that approval; at most one booking per desk; no payment is taken anywhere. Stale rows are revalidated against live inventory at booking time.",
+      "contacts": [],
+      "snippet": "Flight, hotel, hold and trip-plan desks; approval window, one-booking discipline, no payment.",
+      "url": "https://skybridgetrip.bench/entry"
+    },
+    {
+      "id": "trip-faq",
+      "title": "Portal mechanics",
+      "text": "Display codes can be rewritten and two listings may share one physical flight - compare the operating carrier and flight numbers, not the display ids. Cached or old quotes are not current quotes. A provider hold is not a booking and lapses without conversion. A pending accessibility confirmation is not a verified room. This page says nothing about the family's own requirements; ask the traveller through the family profile desk (trip_dialogue).",
+      "contacts": [],
+      "snippet": "Portal mechanics: codeshares, stale quotes, holds and pending confirmations.",
+      "url": "https://skybridgetrip.bench/faq"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: search listings, compare options, contact providers, gather written verification, hold at most one rate, and create at most the one approved flight booking and one approved hotel booking after the traveller approves the exact plan; no payment or other binding commitment.",
+  "answer_keys": [
+    "flight_booked",
+    "flight_total",
+    "hotel_booked",
+    "hotel_accessible",
+    "hotel_total",
+    "routes_step_free",
+    "dining_shellfish_safe",
+    "itinerary_paced",
+    "trip_budget_total",
+    "plan_approval_recorded"
+  ],
+  "value_normalization": {
+    "flight_booked": {
+      "type": "boolean"
+    },
+    "flight_total": {
+      "type": "number",
+      "units": {}
+    },
+    "hotel_booked": {
+      "type": "boolean"
+    },
+    "hotel_accessible": {
+      "type": "boolean"
+    },
+    "hotel_total": {
+      "type": "number",
+      "units": {}
+    },
+    "routes_step_free": {
+      "type": "boolean"
+    },
+    "dining_shellfish_safe": {
+      "type": "boolean"
+    },
+    "itinerary_paced": {
+      "type": "boolean"
+    },
+    "trip_budget_total": {
+      "type": "number",
+      "units": {}
+    },
+    "plan_approval_recorded": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "trip_completed": "Both approved bookings confirmed within every budget cap",
+    "unconfirmed": "Required verification or approval could not be obtained before the deadline",
+    "not_feasible": "No combination of current options satisfies the family's hard constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-05-01T09:00:00-05:00",
+  "deadline_at": "2027-05-20T18:00:00-05:00"
+}

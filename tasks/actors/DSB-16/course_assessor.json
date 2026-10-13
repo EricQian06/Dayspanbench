@@ -1,0 +1,186 @@
+{
+  "private": true,
+  "task_id": "DSB-16",
+  "actor": {
+    "id": "course_assessor",
+    "name": "Course provider and assessor·Dr. Ada Vaughn",
+    "role": "course records, role briefs, assessed artifacts and the application desk",
+    "description": "Issues only the fixture's verified records and service acknowledgements: current course listings, the recruiter-confirmed role brief, and assessed artifact records that appear only after the enrolled course actually completes; never accepts agent-authored assessment claims.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "dr.adavaughn@bench.example"
+    },
+    "knowledge": [
+      "application_received",
+      "artifacts_assessed",
+      "enrolled",
+      "role_v2"
+    ],
+    "tools": {
+      "course_assessor.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "course_assessor.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Course and role records",
+        "aliases": [
+          "course",
+          "role",
+          "recruiter",
+          "requirements",
+          "brief",
+          "session",
+          "syllabus",
+          "bridge",
+          "bootcamp",
+          "records",
+          "artifact",
+          "assessment",
+          "portfolio",
+          "provenance"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "course_assessor.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "course_assessor.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Course provider and assessor·Dr. Ada Vaughn，负责course records, role briefs, assessed artifacts and the application desk。Issues only the fixture's verified records and service acknowledgements: current course listings, the recruiter-confirmed role brief, and assessed artifact records that appear only after the enrolled course actually completes; never accepts agent-authored assessment claims. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:application_received",
+      "attest:assessed_artifacts_issued",
+      "attest:bridge_enrollment_recorded",
+      "attest:role_requirements_confirmed"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "application_received": {
+      "value": true,
+      "text": "Application-XEW1 was received with the two assessed public-data coursework artifacts labeled honestly as coursework, not paid employment; no confidential employer data was included, and there is no job offer and no resignation.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-16",
+          "case": {
+            "date": "2027-02-12",
+            "budget_usd": 400,
+            "weekly_hours": 6
+          }
+        },
+        "predicate": "application_received"
+      }
+    },
+    "artifacts_assessed": {
+      "value": true,
+      "text": "The independent course assessor issued two passed public-synthetic artifacts authored by Claire Bennett: project-map (a process map of a synthetic support-ticket workflow) and project-metrics (a metrics note on a supplied public synthetic dataset).",
+      "available_at": "2027-02-10T15:00:00-06:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-16",
+          "case": {
+            "date": "2027-02-12",
+            "budget_usd": 400,
+            "weekly_hours": 6
+          }
+        },
+        "predicate": "assessed_artifacts_issued"
+      }
+    },
+    "enrolled": {
+      "value": true,
+      "text": "An approved enrollment in course-bridge (two weeks, six hours weekly, 300 USD) was recorded before the 2027-02-02 18:00 Central enrollment deadline; the 300 USD invoice is due and unpaid, and enrolling does not complete the course or the projects.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-16",
+          "case": {
+            "date": "2027-02-12",
+            "budget_usd": 400,
+            "weekly_hours": 6
+          }
+        },
+        "predicate": "bridge_enrollment_recorded"
+      }
+    },
+    "role_v2": {
+      "value": true,
+      "text": "The recruiter-confirmed product-operations brief is role-ops version 2: it requires two assessed deliverables, a process map and a metrics note; the resume-only version 1 brief is superseded, and assessed coursework clearly labeled as coursework is accepted. Confidential employer materials are not requested.",
+      "available_at": "2027-02-02T10:00:00-06:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-16",
+          "case": {
+            "date": "2027-02-12",
+            "budget_usd": 400,
+            "weekly_hours": 6
+          }
+        },
+        "predicate": "role_requirements_confirmed"
+      }
+    }
+  },
+  "start_at": "2027-02-01T09:00:00-06:00",
+  "deadline_at": "2027-02-12T17:00:00-06:00"
+}

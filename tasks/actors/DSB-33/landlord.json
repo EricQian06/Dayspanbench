@@ -1,0 +1,179 @@
+{
+  "private": true,
+  "task_id": "DSB-33",
+  "actor": {
+    "id": "landlord",
+    "name": "Juniper Heights landlord·Grace Whitfield",
+    "role": "inspection authority and cost responsibility",
+    "description": "Confirms inspection cost responsibility, the approved providers and the inspection-only scope in writing; bookings go through the dispatch board's booking desk.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "gracewhitfield@bench.example"
+    },
+    "knowledge": [
+      "landlord_pays",
+      "no_repair"
+    ],
+    "tools": {
+      "landlord.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "landlord.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "landlord_pays",
+          "no_repair"
+        ]
+      },
+      "landlord.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "landlord_pays",
+          "no_repair"
+        ]
+      },
+      "landlord.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Inspection authority and cost responsibility",
+        "aliases": [
+          "landlord",
+          "authority",
+          "responsibility",
+          "authorize",
+          "approve",
+          "plumber",
+          "cost",
+          "pay",
+          "inspection",
+          "leak",
+          "unit"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "landlord.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "review the inspection authorization for unit-H",
+            "tool": "landlord.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 90
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "landlord.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "landlord.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Juniper Heights landlord·Grace Whitfield，负责inspection authority and cost responsibility。Confirms inspection cost responsibility, the approved providers and the inspection-only scope in writing; bookings go through the dispatch board's booking desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:landlord_pays",
+      "attest:no_repair_authorized"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "landlord_pays": {
+      "value": true,
+      "text": "The landlord's written authorization auth-HOM1: the landlord is responsible for the inspection cost, cap 45 USD, approved providers pipe-A and pipe-B, and repairs are not authorized.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-33",
+          "case": {
+            "unit": "unit-H",
+            "availability_date": "2027-06-12",
+            "fee_cap_usd": 45
+          }
+        },
+        "predicate": "landlord_pays"
+      }
+    },
+    "no_repair": {
+      "value": true,
+      "text": "No repair was authorized or performed; the appointment is strictly inspection-only.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-33",
+          "case": {
+            "unit": "unit-H",
+            "availability_date": "2027-06-12",
+            "fee_cap_usd": 45
+          }
+        },
+        "predicate": "no_repair_authorized"
+      }
+    }
+  },
+  "start_at": "2027-06-10T09:00:00-05:00",
+  "deadline_at": "2027-06-12T12:00:00-05:00"
+}

@@ -1,0 +1,146 @@
+{
+  "private": true,
+  "task_id": "DSB-42",
+  "actor": {
+    "id": "shopify_recruiter",
+    "name": "Shopify recruiter desk·Sam Ortiz",
+    "role": "Shopify final interview scheduling only",
+    "description": "Handles only the Shopify interview and its own slot confirmation; never receives information about any other employer or the candidate's family details.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "samortiz2@bench.example"
+    },
+    "knowledge": [
+      "shopify_offer",
+      "shopify_rescheduled"
+    ],
+    "tools": {
+      "shopify_recruiter.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "shopify_recruiter.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Shopify scheduling confirmation",
+        "aliases": [
+          "interview",
+          "reschedule",
+          "slot",
+          "time",
+          "schedule",
+          "confirm",
+          "availability",
+          "shopify",
+          "panel"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "shopify_recruiter.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "shopify_recruiter.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Shopify recruiter desk·Sam Ortiz，负责Shopify final interview scheduling only。Handles only the Shopify interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:shopify_offer_confirmed",
+      "attest:shopify_rescheduled"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "shopify_offer": {
+      "value": true,
+      "text": "The Shopify recruiter separately confirmed replacement slot w02: Friday September 17, 2027 09:00-10:30 Central time (10:00-11:30 UTC-04:00), ninety minutes, initially with meeting link link-shopify-old.",
+      "available_at": "2027-09-14T11:00:00-05:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-42",
+          "case": {
+            "protected_date": "2027-09-15",
+            "deadline_date": "2027-09-15",
+            "interviews": 2
+          }
+        },
+        "predicate": "shopify_offer_confirmed"
+      }
+    },
+    "shopify_rescheduled": {
+      "value": true,
+      "text": "The Shopify replacement was confirmed with the current link link-shopify-new (slot w02 version 2, after the September 15 09:30 rotation: Friday September 17, 2027 09:00-10:30 Central, ninety minutes); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-42",
+          "case": {
+            "protected_date": "2027-09-15",
+            "deadline_date": "2027-09-15",
+            "interviews": 2
+          }
+        },
+        "predicate": "shopify_rescheduled"
+      }
+    }
+  },
+  "start_at": "2027-09-13T09:00:00-05:00",
+  "deadline_at": "2027-09-15T17:00:00-05:00"
+}

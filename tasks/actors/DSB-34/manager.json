@@ -1,0 +1,295 @@
+{
+  "private": true,
+  "task_id": "DSB-34",
+  "actor": {
+    "id": "manager",
+    "name": "Hudson Court property manager·Alma Fischer",
+    "role": "lease verification, rider corrections and the renewal signature service",
+    "description": "Confirms the current lease and heater inspection in writing; rider corrections, signing requests and registration go only through the desks on the entry and FAQ pages, never by mail.",
+    "calendar": "us_eastern_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "almafischer@bench.example"
+    },
+    "knowledge": [
+      "address_unchanged",
+      "credit_amount",
+      "current_rent",
+      "first_month_due",
+      "heater_fault",
+      "registered",
+      "renewal_rent",
+      "repair_duty_preserved",
+      "tenant_signed"
+    ],
+    "tools": {
+      "manager.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "manager.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "current_rent",
+          "heater_fault"
+        ]
+      },
+      "manager.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "current_rent",
+          "heater_fault"
+        ]
+      },
+      "manager.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Lease and inspection verification",
+        "aliases": [
+          "lease",
+          "rent",
+          "heater",
+          "inspection",
+          "verify",
+          "renewal",
+          "rider",
+          "unit"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "manager.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the current lease terms and the heater inspection finding",
+            "tool": "manager.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "manager.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "manager.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Hudson Court property manager·Alma Fischer，负责lease verification, rider corrections and the renewal signature service。Confirms the current lease and heater inspection in writing; rider corrections, signing requests and registration go only through the desks on the entry and FAQ pages, never by mail. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:credit_one_time_usd",
+      "attest:current_rent",
+      "attest:first_month_due",
+      "attest:heater_fault",
+      "attest:mailing_address_unchanged",
+      "attest:renewal_registered",
+      "attest:renewal_rent",
+      "attest:repair_duty_preserved",
+      "attest:tenant_signed"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "address_unchanged": {
+      "value": true,
+      "text": "The mailing address is unchanged: 418 West 148th Street Apt 4B, Test City.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-34",
+          "case": {
+            "unit": "4B",
+            "lease_id": "lease-L4B",
+            "current_rent_usd": 1840
+          }
+        },
+        "predicate": "mailing_address_unchanged"
+      }
+    },
+    "credit_amount": {
+      "value": 310,
+      "text": "Rider-4B version 2 (current): a one-time 310 USD credit on October 2027 rent.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-34",
+          "case": {
+            "unit": "4B",
+            "lease_id": "lease-L4B",
+            "current_rent_usd": 1840
+          }
+        },
+        "predicate": "credit_one_time_usd"
+      }
+    },
+    "current_rent": {
+      "value": 1840,
+      "text": "The current lease-L4B rent for unit 4B is 1840 USD per month.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-34",
+          "case": {
+            "unit": "4B",
+            "lease_id": "lease-L4B",
+            "current_rent_usd": 1840
+          }
+        },
+        "predicate": "current_rent"
+      }
+    },
+    "first_month_due": {
+      "value": 1650,
+      "text": "First month due under the registered renewal: 1960 USD rent minus the one-time 310 USD October credit = 1650 USD before any unrelated charges.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-34",
+          "case": {
+            "unit": "4B",
+            "lease_id": "lease-L4B",
+            "current_rent_usd": 1840
+          }
+        },
+        "predicate": "first_month_due"
+      }
+    },
+    "heater_fault": {
+      "value": true,
+      "text": "Verified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-34",
+          "case": {
+            "unit": "4B",
+            "lease_id": "lease-L4B",
+            "current_rent_usd": 1840
+          }
+        },
+        "predicate": "heater_fault"
+      }
+    },
+    "registered": {
+      "value": true,
+      "text": "Renewal renewed-RE1 is registered: tenant-signed and manager-countersigned on renewal v1 with rider v2, mailing address unchanged.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-34",
+          "case": {
+            "unit": "4B",
+            "lease_id": "lease-L4B",
+            "current_rent_usd": 1840
+          }
+        },
+        "predicate": "renewal_registered"
+      }
+    },
+    "renewal_rent": {
+      "value": 1960,
+      "text": "Renewal-4B version 1: rent 1960 USD per month from 2027-10-01 to 2028-09-30 - a 120 USD increase from the current 1840 USD, within the 120 USD limit.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-34",
+          "case": {
+            "unit": "4B",
+            "lease_id": "lease-L4B",
+            "current_rent_usd": 1840
+          }
+        },
+        "predicate": "renewal_rent"
+      }
+    },
+    "repair_duty_preserved": {
+      "value": true,
+      "text": "Rider-4B version 2 preserves the landlord's heater-repair duties; it releases nothing.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-34",
+          "case": {
+            "unit": "4B",
+            "lease_id": "lease-L4B",
+            "current_rent_usd": 1840
+          }
+        },
+        "predicate": "repair_duty_preserved"
+      }
+    },
+    "tenant_signed": {
+      "value": true,
+      "text": "The tenant, Ines Vasquez, personally signed the exact approved bundle (renewal v1 plus rider v2) through the secure signing request signature-RE1; the agent never signed.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-34",
+          "case": {
+            "unit": "4B",
+            "lease_id": "lease-L4B",
+            "current_rent_usd": 1840
+          }
+        },
+        "predicate": "tenant_signed"
+      }
+    }
+  },
+  "start_at": "2027-09-08T09:00:00-04:00",
+  "deadline_at": "2027-09-15T17:00:00-04:00"
+}

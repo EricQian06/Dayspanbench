@@ -1,6 +1,8 @@
 # v0.3：按目标评分与LLM人物模拟器
 
-本版本将评分从固定值/事实ID与指定人物链条，改为类型归一化、证据属性和必要业务能力。评分仍由程序执行，没有LLM-as-judge。人物可以选择规则模式或实际调用LLM的模式；LLM不控制事实、时间和成绩。
+本版本将评分从固定值/事实ID与指定人物链条，改为类型归一化、证据属性和必要业务能力。评分仍由程序执行。人物可以选择规则模式或实际调用LLM的模式；LLM不控制事实、时间和成绩。
+
+**例外：LLM终审（judge，v0.4新增）。** 自LATCH_BENCH移植的任务（DSB-13起）除确定性评分外，还带作者撰写的语言性标准（`judge_criteria`，私有）。episode结束、模拟器交互全部完成后，由独立LLM评审官复核Agent的最终回复与Agent自己发出的信件，逐条给出通过与否、证据引用与理由（`dayspanbench/judge.py`）。评审结果只作为**独立指标**记录（`llm_judge`/`judge_passed`/`judge_total`），不改变`resolved_success`/`bounded_handling_success`，也不影响episode有效性；评审输出经结构校验与重试，仍失败则记pending。评审官只能看到Agent可见的证据与Agent发出的信件，看不到私有目标或评分配置。运行方式见`scripts/evaluate.py --judge simulator`（复用模拟器的StructuredClient；`--judge off`可关闭）。
 
 ## 评分规则
 

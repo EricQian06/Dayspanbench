@@ -790,6 +790,55 @@
     }
   },
   {
+    "task_id": "DSB-16",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "role_requirements_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "bridge_enrollment_recorded",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "assessed_artifacts_issued",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "application_received",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 224.0,
+    "calendar_days": 9.333333,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-02-10T23:00:00+00:00",
+    "title": "Portfolio gate: assessed coursework before a truthful job application",
+    "actors": 1,
+    "deadline": "2027-02-12T17:00:00-06:00",
+    "horizon_design": {
+      "reference_days": 11,
+      "stratum": "mid-short",
+      "mechanism": "recruiter brief confirmation, enrollment deadline and a fixed-time assessment event gating the application",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
     "task_id": "DSB-17",
     "scoring_version": "0.3.0",
     "complete": true,
@@ -977,6 +1026,80 @@
     }
   },
   {
+    "task_id": "DSB-20",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "rent",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "bedrooms",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "repair_completed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "drying_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "retest_independent_pass",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "hold_active_no_deposit",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "signing_packet_delivered",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "repair_duties_preserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "lease_unsigned",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 144.0,
+    "calendar_days": 6.0,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-08-24T14:00:00+00:00",
+    "title": "Remediation gate: hold unitA only after the full evidence chain",
+    "actors": 2,
+    "deadline": "2027-08-24T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 6,
+      "stratum": "mid-short",
+      "mechanism": "staged remediation-drying-retest event chain across six days",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
     "task_id": "DSB-21",
     "scoring_version": "0.3.0",
     "complete": true,
@@ -1110,6 +1233,114 @@
     }
   },
   {
+    "task_id": "DSB-23",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "pet_acceptance_written",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "train_arrival_current",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "late_checkin_deadline",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "companion_supervision_acknowledged",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "stay_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 21.0,
+    "calendar_days": 0.875,
+    "agent_messages": 3,
+    "contacted_actors": 2,
+    "as_of": "2027-04-17T13:00:00+00:00",
+    "title": "Lyon pet stay: delayed late arrival, written pet acceptance and supervision",
+    "actors": 3,
+    "deadline": "2027-04-18T18:00:00+02:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "evening train delay, overnight written extension and supervision rebound before booking",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-24",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "estimate_confirmed_in_writing",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "review_version_current",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "focus_hours_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "work_plan_acknowledged",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 32.0,
+    "calendar_days": 1.333333,
+    "agent_messages": 2,
+    "contacted_actors": 1,
+    "as_of": "2027-10-05T22:00:00+00:00",
+    "title": "Deadline replan: moved review, protected calendar, honest work-plan commitment",
+    "actors": 1,
+    "deadline": "2027-10-06T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "written estimate turnaround plus a mid-morning review move that invalidates the first plan",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
     "task_id": "DSB-25",
     "scoring_version": "0.3.0",
     "complete": true,
@@ -1165,6 +1396,163 @@
       "reference_days": 2,
       "stratum": "短期",
       "mechanism": "mid-episode promo expiry plus installment approval gate",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-26",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "caregivers_vetted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "staffing_review_final",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "caregiver_withdrawal_handled",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "care_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "trip_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 55.83,
+    "calendar_days": 2.326389,
+    "agent_messages": 2,
+    "contacted_actors": 1,
+    "as_of": "2027-09-03T21:50:00+00:00",
+    "title": "Conference travel booked only after replacement care is confirmed",
+    "actors": 2,
+    "deadline": "2027-09-03T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "overnight vetting review, deadline-morning withdrawal and a care-gated travel booking",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-27",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "owner_proof_attested",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "account_recovered",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "unknown_session_revoked",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "partner_share_restored",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "trusted_access_preserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "contractor_share_unchanged",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 7.58,
+    "calendar_days": 0.315972,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-01-12T11:05:00+00:00",
+    "title": "Scoped account recovery: official proof, one session revoked, partner share restored",
+    "actors": 2,
+    "deadline": "2027-01-14T12:00:00+05:30",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "mid-day owner proof, delayed provider share migration and post-reconciliation audit",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-28",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "pathway_verified_by_adviser",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "first_stage_reserved",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 50.0,
+    "calendar_days": 2.083333,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-08-25T16:00:00+00:00",
+    "title": "Analytics pathway: verified prerequisites and one first-stage reservation",
+    "actors": 1,
+    "deadline": "2027-08-25T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "adviser verification turnaround plus a mid-case course schedule rewrite",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -1395,6 +1783,139 @@
     }
   },
   {
+    "task_id": "DSB-33",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "inspection_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "slot_date",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "slot_start",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "provider",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "fee_usd",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "landlord_pays",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "tenant_present_only",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "no_repair_authorized",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 28.0,
+    "calendar_days": 1.166667,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-06-11T18:00:00+00:00",
+    "title": "Attended leak inspection: one approved slot, no repairs",
+    "actors": 2,
+    "deadline": "2027-06-12T12:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "landlord authorization turnaround plus a mid-case slot inventory change",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-34",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "renewal_rent",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "credit_one_time_usd",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "first_month_due",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "repair_duty_preserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "mailing_address_unchanged",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "renewal_registered",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "tenant_signed",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 151.0,
+    "calendar_days": 6.291667,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-09-14T20:00:00+00:00",
+    "title": "Credit renewal: correct the written rider, then register the signed bundle",
+    "actors": 1,
+    "deadline": "2027-09-15T17:00:00-04:00",
+    "horizon_design": {
+      "reference_days": 7,
+      "stratum": "mid-short",
+      "mechanism": "rider correction turnaround plus a fixed-time signature and registration event",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
     "task_id": "DSB-35",
     "scoring_version": "0.3.0",
     "complete": true,
@@ -1582,6 +2103,109 @@
     }
   },
   {
+    "task_id": "DSB-38",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "chip_scan_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "shelter_consent_held",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "registry_owner_transferred",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "license_fee_user_paid",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "municipal_license_issued",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "shelter_release_authorized",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 30.5,
+    "calendar_days": 1.270833,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-03-23T20:30:00+00:00",
+    "title": "Pet ownership transfer: right Luna across registry, license and shelter release",
+    "actors": 2,
+    "deadline": "2027-03-24T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "late-morning clinic scan, next-day adopter fee receipt and a three-stage service chain",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-39",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "final_review_time_published",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "focus_plan_applied",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "ceo_reply_drafted_unsent",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 76.5,
+    "calendar_days": 3.1875,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-05-10T18:30:00+00:00",
+    "title": "Weekly replanning: protected caregiver week, unsent CEO reply, applied focus plan",
+    "actors": 1,
+    "deadline": "2027-05-10T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 3,
+      "stratum": "中短期",
+      "mechanism": "CEO request arrival, a weekend gap and the Monday checkpoint revision gating the applied plan",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
     "task_id": "DSB-40",
     "scoring_version": "0.3.0",
     "complete": true,
@@ -1637,6 +2261,134 @@
       "reference_days": 2,
       "stratum": "短期",
       "mechanism": "mid-episode delivery-slot rewrite plus approval window",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-41",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "flight_booked",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "flight_total",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "hotel_booked",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "hotel_accessible",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "hotel_total",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "routes_step_free",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "dining_shellfish_safe",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "itinerary_paced",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "trip_budget_total",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "plan_approval_recorded",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 318.0,
+    "calendar_days": 13.25,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-05-14T20:00:00+00:00",
+    "title": "Five-person Chicago-Seattle family trip: recovered inventory and exact approval",
+    "actors": 5,
+    "deadline": "2027-05-20T18:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 13,
+      "stratum": "中短期",
+      "mechanism": "mid-window flight cancellation and hotel rate change plus a lapsing hold and a late approval gate",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-42",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "stripe_offer_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "shopify_offer_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "stripe_rescheduled",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "shopify_rescheduled",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 51.5,
+    "calendar_days": 2.145833,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-09-15T17:30:00+00:00",
+    "title": "Interview rescheduling: two separate recruiters, rotated link, no cross-employer disclosure",
+    "actors": 2,
+    "deadline": "2027-09-15T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "recruiter offer confirmation, a mid-morning link rotation and two separate per-employer desks",
       "distribution": "manually stratified approximately logarithmic"
     }
   }

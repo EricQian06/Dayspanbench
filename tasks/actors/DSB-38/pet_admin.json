@@ -1,0 +1,225 @@
+{
+  "private": true,
+  "task_id": "DSB-38",
+  "actor": {
+    "id": "pet_admin",
+    "name": "Municipal pet records desk·Jordan Hale",
+    "role": "chip registry transfers, municipal licenses and shelter releases",
+    "description": "Keeps the chip registry, municipal license and shelter release services; each stage requires the prior stage's processed record, the adopter's exact approval and the same animal - and the license fee is paid by the adopter personally, never by an agent.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "jordanhale@bench.example"
+    },
+    "knowledge": [
+      "fee_paid",
+      "license_issued",
+      "registry_transferred",
+      "release_authorized",
+      "shelter_consent"
+    ],
+    "tools": {
+      "pet_admin.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "pet_admin.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "shelter_consent"
+        ]
+      },
+      "pet_admin.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "shelter_consent"
+        ]
+      },
+      "pet_admin.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Shelter consent and records",
+        "aliases": [
+          "consent",
+          "shelter",
+          "adoption",
+          "records",
+          "intake",
+          "owner",
+          "certificate",
+          "rabies"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "pet_admin.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the signed shelter transfer consent and the intake records",
+            "tool": "pet_admin.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "pet_admin.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "pet_admin.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Municipal pet records desk·Jordan Hale，负责chip registry transfers, municipal licenses and shelter releases。Keeps the chip registry, municipal license and shelter release services; each stage requires the prior stage's processed record, the adopter's exact approval and the same animal - and the license fee is paid by the adopter personally, never by an agent. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:license_fee_user_paid",
+      "attest:municipal_license_issued",
+      "attest:registry_owner_transferred",
+      "attest:shelter_consent_held",
+      "attest:shelter_release_authorized"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "fee_paid": {
+      "value": true,
+      "text": "Fee receipt receipt-P1: Imani Bennett personally paid the 27 USD municipal pet license fee through the portal; the agent initiated and paid nothing.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-38",
+          "case": {
+            "intake": "APA-88421",
+            "pet": "Luna",
+            "deadline": "2027-03-24"
+          }
+        },
+        "predicate": "license_fee_user_paid"
+      }
+    },
+    "license_issued": {
+      "value": true,
+      "text": "Municipal license license-P1 issued for chip 981020000123456, owner Imani Bennett, matching the transferred registry record and the settled fee receipt.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-38",
+          "case": {
+            "intake": "APA-88421",
+            "pet": "Luna",
+            "deadline": "2027-03-24"
+          }
+        },
+        "predicate": "municipal_license_issued"
+      }
+    },
+    "registry_transferred": {
+      "value": true,
+      "text": "Registry transfer transfer-P1: HomeAgain-test chip 981020000123456 owner updated from the shelter to Imani Bennett, 2704 East 12th Street, Apt 6, Test City (registry version 2).",
+      "attributes": {
+        "subject": {
+          "task": "DSB-38",
+          "case": {
+            "intake": "APA-88421",
+            "pet": "Luna",
+            "deadline": "2027-03-24"
+          }
+        },
+        "predicate": "registry_owner_transferred"
+      }
+    },
+    "release_authorized": {
+      "value": true,
+      "text": "Release authorization release-P1 authorizes the shelter to release intake APA-88421 to Imani Bennett; physical pickup has not yet occurred.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-38",
+          "case": {
+            "intake": "APA-88421",
+            "pet": "Luna",
+            "deadline": "2027-03-24"
+          }
+        },
+        "predicate": "shelter_release_authorized"
+      }
+    },
+    "shelter_consent": {
+      "value": true,
+      "text": "Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-38",
+          "case": {
+            "intake": "APA-88421",
+            "pet": "Luna",
+            "deadline": "2027-03-24"
+          }
+        },
+        "predicate": "shelter_consent_held"
+      }
+    }
+  },
+  "start_at": "2027-03-22T09:00:00-05:00",
+  "deadline_at": "2027-03-24T17:00:00-05:00"
+}

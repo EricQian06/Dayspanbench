@@ -1,0 +1,573 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-24",
+  "answer": {
+    "conclusion": "plan_committed",
+    "claims": [
+      {
+        "key": "estimate_confirmed_in_writing",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0002"
+        ]
+      },
+      {
+        "key": "review_version_current",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0003"
+        ]
+      },
+      {
+        "key": "focus_hours_reserved",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "work_plan_acknowledged",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0005"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-24",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "estimate_confirmed_in_writing",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "review_version_current",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "focus_hours_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "work_plan_acknowledged",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 32.0,
+    "calendar_days": 1.333333,
+    "agent_messages": 2,
+    "contacted_actors": 1,
+    "as_of": "2027-10-05T22:00:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-10-04T15:20:00+00:00",
+      "from": "danareyes2@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Operations manager·Dana Reyes。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-10-04T23:24:00+00:00",
+      "from": "danareyes2@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Operations manager·Dana Reyes。您咨询的事项已经核实，具体情况如下：The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0001",
+          "issuer": "ops_manager",
+          "issued_at": "2027-10-04T22:26:00+00:00",
+          "text": "The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0002",
+          "issuer": "ops_manager",
+          "issued_at": "2027-10-04T23:09:00+00:00",
+          "text": "The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2027-10-05T15:26:00+00:00",
+      "from": "danareyes2@bench.example",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Operations manager·Dana Reyes。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2027-10-05T15:41:00+00:00",
+      "from": "danareyes2@bench.example",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Operations manager·Dana Reyes。您咨询的事项已经按流程处理完毕。如有其他问题，欢迎随时来信。",
+      "evidence": []
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-10-04T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "work_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-10-04T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "work_dialogue",
+      "question": "What are the deliverable, availability, privacy rules, approval scope and submission buffer for the review preparation?",
+      "matched": true
+    },
+    {
+      "at": "2027-10-04T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "prep_catalog",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-10-04T14:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "prep_catalog",
+      "query": "preparation plans",
+      "entries": [
+        "plan-v1-oct8",
+        "plan-pickup-trap",
+        "plan-overload",
+        "plan-late-end"
+      ]
+    },
+    {
+      "at": "2027-10-04T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "danareyes2@bench.example",
+      "text": "Please confirm the remaining effort estimate for review-pack-XPW in writing",
+      "fields": {
+        "review_date": "2027-10-06",
+        "focus_hours": 8,
+        "workday_start": "09:00",
+        "workday_end": "17:00"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-10-04T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-10-04T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-04T14:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "step": "main_1",
+      "start_at": "2027-10-04T14:32:00+00:00",
+      "due_at": "2027-10-04T15:20:00+00:00",
+      "tool": "ops_manager.main.1.acknowledge"
+    },
+    {
+      "at": "2027-10-04T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-04T15:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "ops_manager",
+      "case_id": "CASE-0001",
+      "tool": "ops_manager.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-10-04T15:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-10-04T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-04T15:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "step": "main_2",
+      "start_at": "2027-10-04T15:20:00+00:00",
+      "due_at": "2027-10-04T22:26:00+00:00",
+      "tool": "ops_manager.main.2.lookup"
+    },
+    {
+      "at": "2027-10-04T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-04T22:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "ops_manager",
+      "case_id": "CASE-0001",
+      "tool": "ops_manager.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-10-04T22:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-04T22:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "step": "main_3",
+      "start_at": "2027-10-04T22:26:00+00:00",
+      "due_at": "2027-10-04T23:09:00+00:00",
+      "tool": "ops_manager.main.3.document"
+    },
+    {
+      "at": "2027-10-04T22:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-04T23:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "ops_manager",
+      "case_id": "CASE-0001",
+      "tool": "ops_manager.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-10-04T23:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-04T23:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "step": "main_4",
+      "start_at": "2027-10-04T23:09:00+00:00",
+      "due_at": "2027-10-04T23:24:00+00:00",
+      "tool": "ops_manager.main.4.reply"
+    },
+    {
+      "at": "2027-10-04T23:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-04T23:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "ops_manager",
+      "case_id": "CASE-0001",
+      "tool": "ops_manager.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-10-04T23:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "ops_manager",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-10-04T23:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-10-05T13:30:00+00:00",
+      "kind": "page_updated",
+      "page": "board-intro",
+      "url": "https://deadlinereplan.bench/intro"
+    },
+    {
+      "at": "2027-10-05T13:30:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "prep_catalog",
+      "removed": [
+        "plan-v1-oct8"
+      ],
+      "added": [
+        "plan-xpw-v2"
+      ]
+    },
+    {
+      "at": "2027-10-05T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "danareyes2@bench.example",
+      "text": "Please confirm the current leadership review timing and preparation cutoff for review-pack-XPW",
+      "fields": {
+        "review_date": "2027-10-06",
+        "focus_hours": 8,
+        "workday_start": "09:00",
+        "workday_end": "17:00"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-10-05T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0002",
+      "actor": "ops_manager",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-10-05T14:36:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "ops_manager",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-05T14:36:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "ops_manager",
+      "step": "review_1",
+      "start_at": "2027-10-05T14:36:00+00:00",
+      "due_at": "2027-10-05T15:26:00+00:00",
+      "tool": "ops_manager.review.1.acknowledge"
+    },
+    {
+      "at": "2027-10-05T14:36:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "ops_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-05T15:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "ops_manager",
+      "case_id": "CASE-0002",
+      "tool": "ops_manager.review.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-10-05T15:26:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-10-05T15:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "ops_manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-05T15:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "ops_manager",
+      "step": "review_2",
+      "start_at": "2027-10-05T15:26:00+00:00",
+      "due_at": "2027-10-05T15:41:00+00:00",
+      "tool": "ops_manager.review.2.reply"
+    },
+    {
+      "at": "2027-10-05T15:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "ops_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-05T15:41:00+00:00",
+      "kind": "tool_call",
+      "actor": "ops_manager",
+      "case_id": "CASE-0002",
+      "tool": "ops_manager.review.2.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-10-05T15:41:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "ops_manager",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-10-05T15:41:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0004",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    },
+    {
+      "at": "2027-10-05T15:41:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "prep_catalog",
+      "query": "current preparation plan",
+      "entries": [
+        "plan-pickup-trap",
+        "plan-overload",
+        "plan-late-end",
+        "plan-xpw-v2"
+      ]
+    },
+    {
+      "at": "2027-10-05T15:41:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "work_dialogue",
+      "question": "The review moved to October 6 at 15:00 with a 14:00 cutoff. Do you approve reserving October 5 09:00-12:00 and 13:00-16:00 plus October 6 09:00-11:00, and committing the same allocation to the work board?",
+      "matched": true
+    },
+    {
+      "at": "2027-10-05T15:41:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "focus_reserve",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-10-05T15:41:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "focus_reserve",
+      "entry": "plan-xpw-v2",
+      "accepted": true
+    },
+    {
+      "at": "2027-10-05T16:41:00+00:00",
+      "kind": "page_updated",
+      "page": "board-entry",
+      "url": "https://deadlinereplan.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-10-05T16:41:00+00:00",
+      "kind": "selection_processed",
+      "tool": "focus_reserve",
+      "accepted": true,
+      "result": "Reservation confirmed: focus-XPW1 reserves October 5 09:00-12:00 and 13:00-16:00 plus October 6 09:00-11:00 Central as Focus blocks - eight hours, all finished before the October 6 14:00 preparation cutoff. Every existing private event is untouched, and the review pack itself remains not_started."
+    },
+    {
+      "at": "2027-10-05T20:30:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "focus_reserve",
+      "query": "reservation"
+    },
+    {
+      "at": "2027-10-05T20:30:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "board_commit",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-10-05T20:30:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "board_commit",
+      "entry": "plan-xpw-v2",
+      "accepted": true
+    },
+    {
+      "at": "2027-10-05T21:30:00+00:00",
+      "kind": "page_updated",
+      "page": "board-entry",
+      "url": "https://deadlinereplan.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-10-05T21:30:00+00:00",
+      "kind": "selection_processed",
+      "tool": "board_commit",
+      "accepted": true,
+      "result": "Work board acknowledged: plan-XPW1 commits the same eight-hour allocation linked to reservation focus-XPW1 for review-pack-XPW (work version 2), sharing only neutral availability blocks, the deliverable id and its due time. The deliverable remains not_started with zero completed hours."
+    },
+    {
+      "at": "2027-10-05T22:00:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "board_commit",
+      "query": "work plan"
+    }
+  ],
+  "pending_cases": []
+}

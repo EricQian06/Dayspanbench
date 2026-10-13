@@ -1,0 +1,753 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-26",
+  "answer": {
+    "conclusion": "care_gated_trip",
+    "claims": [
+      {
+        "key": "caregivers_vetted",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0002"
+        ]
+      },
+      {
+        "key": "staffing_review_final",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0003",
+          "EV-0005"
+        ]
+      },
+      {
+        "key": "caregiver_withdrawal_handled",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0004",
+          "EV-0006"
+        ]
+      },
+      {
+        "key": "care_reserved",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0007"
+        ]
+      },
+      {
+        "key": "trip_confirmed",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0008"
+        ]
+      },
+      {
+        "key": "total_cost",
+        "status": "confirmed",
+        "value": 1080,
+        "evidence_ids": [
+          "EV-0009"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-26",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "caregivers_vetted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "staffing_review_final",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "caregiver_withdrawal_handled",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "care_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "trip_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 55.83,
+    "calendar_days": 2.326389,
+    "agent_messages": 2,
+    "contacted_actors": 1,
+    "as_of": "2027-09-03T21:50:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-09-01T15:20:00+00:00",
+      "from": "nadiaochoa@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Vetted care coordination desk·Nadia Ochoa。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-09-02 12:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-09-02T17:24:00+00:00",
+      "from": "nadiaochoa@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Vetted care coordination desk·Nadia Ochoa。您咨询的事项已经核实，具体情况如下：The care agency's vetting review (September 2, 10:00 Central) cleared caregivers Dana Whitfield (care-A) and Rosa Ibarra (care-B) for the 2027-09-08 09:00-14:00 gap.The care agency's vetting review (September 2, 10:00 Central) cleared caregivers Dana Whitfield (care-A) and Rosa Ibarra (care-B) for the 2027-09-08 09:00-14:00 gap.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0001",
+          "issuer": "care_desk",
+          "issued_at": "2027-09-02T16:26:00+00:00",
+          "text": "The care agency's vetting review (September 2, 10:00 Central) cleared caregivers Dana Whitfield (care-A) and Rosa Ibarra (care-B) for the 2027-09-08 09:00-14:00 gap.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0002",
+          "issuer": "care_desk",
+          "issued_at": "2027-09-02T17:09:00+00:00",
+          "text": "The care agency's vetting review (September 2, 10:00 Central) cleared caregivers Dana Whitfield (care-A) and Rosa Ibarra (care-B) for the 2027-09-08 09:00-14:00 gap.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2027-09-02T18:50:00+00:00",
+      "from": "nadiaochoa@bench.example",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Vetted care coordination desk·Nadia Ochoa。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2027-09-03T18:06:00+00:00",
+      "from": "nadiaochoa@bench.example",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Vetted care coordination desk·Nadia Ochoa。您咨询的事项已经核实，具体情况如下：The care agency's final staffing review completed on 2027-09-03 at 09:00 Central time.Dana Whitfield (care-A) withdrew on September 3; any linked care booking and approval were cancelled at no fee, and Rosa Ibarra (care-B) remained available.The care agency's final staffing review completed on 2027-09-03 at 09:00 Central time.Dana Whitfield (care-A) withdrew on September 3; any linked care booking and approval were cancelled at no fee, and Rosa Ibarra (care-B) remained available.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0003",
+          "issuer": "care_desk",
+          "issued_at": "2027-09-03T17:07:00+00:00",
+          "text": "The care agency's final staffing review completed on 2027-09-03 at 09:00 Central time.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0004",
+          "issuer": "care_desk",
+          "issued_at": "2027-09-03T17:07:00+00:00",
+          "text": "Dana Whitfield (care-A) withdrew on September 3; any linked care booking and approval were cancelled at no fee, and Rosa Ibarra (care-B) remained available.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0005",
+          "issuer": "care_desk",
+          "issued_at": "2027-09-03T17:51:00+00:00",
+          "text": "The care agency's final staffing review completed on 2027-09-03 at 09:00 Central time.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0006",
+          "issuer": "care_desk",
+          "issued_at": "2027-09-03T17:51:00+00:00",
+          "text": "Dana Whitfield (care-A) withdrew on September 3; any linked care booking and approval were cancelled at no fee, and Rosa Ibarra (care-B) remained available.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-09-01T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "priya_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-09-01T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "priya_dialogue",
+      "question": "What care does my child need while I travel, what is the budget, and what approval do you give for caregivers and the trip?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-01T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "trip_options",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-09-01T14:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "trip_options",
+      "query": "care",
+      "entries": [
+        "care-A",
+        "care-B",
+        "care-C"
+      ]
+    },
+    {
+      "at": "2027-09-01T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "nadiaochoa@bench.example",
+      "text": "Please run the vetting review for caregiver candidates care-A (Dana Whitfield) and care-B (Rosa Ibarra) for the September 8 gap",
+      "fields": {
+        "city": "Chicago",
+        "trip_start": "2027-09-07",
+        "trip_end": "2027-09-09"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-09-01T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-09-01T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-01T14:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "step": "main_1",
+      "start_at": "2027-09-01T14:32:00+00:00",
+      "due_at": "2027-09-01T15:20:00+00:00",
+      "tool": "care_desk.main.1.acknowledge"
+    },
+    {
+      "at": "2027-09-01T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-01T15:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0001",
+      "tool": "care_desk.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-09-01T15:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-09-01T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-01T15:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "step": "main_2",
+      "start_at": "2027-09-01T15:20:00+00:00",
+      "due_at": "2027-09-02T16:26:00+00:00",
+      "tool": "care_desk.main.2.lookup"
+    },
+    {
+      "at": "2027-09-01T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-02T15:00:00+00:00",
+      "kind": "page_updated",
+      "page": "caregate-intro",
+      "url": "https://caregate.bench/intro"
+    },
+    {
+      "at": "2027-09-02T15:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "trip_options",
+      "removed": [
+        "care-A",
+        "care-B"
+      ],
+      "added": [
+        "care-A-vetted",
+        "care-B-vetted"
+      ]
+    },
+    {
+      "at": "2027-09-02T16:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0001",
+      "tool": "care_desk.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-09-02T16:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-02T16:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "step": "main_3",
+      "start_at": "2027-09-02T16:26:00+00:00",
+      "due_at": "2027-09-02T17:09:00+00:00",
+      "tool": "care_desk.main.3.document"
+    },
+    {
+      "at": "2027-09-02T16:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-02T17:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0001",
+      "tool": "care_desk.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-09-02T17:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-02T17:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "step": "main_4",
+      "start_at": "2027-09-02T17:09:00+00:00",
+      "due_at": "2027-09-02T17:24:00+00:00",
+      "tool": "care_desk.main.4.reply"
+    },
+    {
+      "at": "2027-09-02T17:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-02T17:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0001",
+      "tool": "care_desk.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-09-02T17:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-09-02T17:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-09-02T17:24:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "trip_options",
+      "query": "care",
+      "entries": [
+        "care-C",
+        "care-A-vetted",
+        "care-B-vetted"
+      ]
+    },
+    {
+      "at": "2027-09-02T17:24:00+00:00",
+      "kind": "agent_send",
+      "recipient": "nadiaochoa@bench.example",
+      "text": "Please report the final staffing review outcome and any caregiver withdrawal before I book travel",
+      "fields": {
+        "city": "Chicago",
+        "trip_start": "2027-09-07",
+        "trip_end": "2027-09-09"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-09-02T17:24:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-09-02T18:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-02T18:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "step": "staffing_1",
+      "start_at": "2027-09-02T18:00:00+00:00",
+      "due_at": "2027-09-02T18:50:00+00:00",
+      "tool": "care_desk.staffing.1.acknowledge"
+    },
+    {
+      "at": "2027-09-02T18:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-02T18:50:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0002",
+      "tool": "care_desk.staffing.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-09-02T18:50:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-09-02T18:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-02T18:50:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "step": "staffing_2",
+      "start_at": "2027-09-02T18:50:00+00:00",
+      "due_at": "2027-09-03T17:07:00+00:00",
+      "tool": "care_desk.staffing.2.lookup"
+    },
+    {
+      "at": "2027-09-02T18:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-03T14:00:00+00:00",
+      "kind": "page_updated",
+      "page": "caregate-intro",
+      "url": "https://caregate.bench/intro"
+    },
+    {
+      "at": "2027-09-03T14:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "trip_options",
+      "removed": [
+        "care-A-vetted"
+      ],
+      "added": [
+        "care-B-final"
+      ]
+    },
+    {
+      "at": "2027-09-03T16:10:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "trip_options",
+      "removed": [],
+      "added": [
+        "T1-linked"
+      ]
+    },
+    {
+      "at": "2027-09-03T17:07:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0002",
+      "tool": "care_desk.staffing.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-09-03T17:07:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-03T17:07:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "step": "staffing_3",
+      "start_at": "2027-09-03T17:07:00+00:00",
+      "due_at": "2027-09-03T17:51:00+00:00",
+      "tool": "care_desk.staffing.3.document"
+    },
+    {
+      "at": "2027-09-03T17:07:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-03T17:51:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0002",
+      "tool": "care_desk.staffing.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-09-03T17:51:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-03T17:51:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "step": "staffing_4",
+      "start_at": "2027-09-03T17:51:00+00:00",
+      "due_at": "2027-09-03T18:06:00+00:00",
+      "tool": "care_desk.staffing.4.reply"
+    },
+    {
+      "at": "2027-09-03T17:51:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-03T18:06:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0002",
+      "tool": "care_desk.staffing.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-09-03T18:06:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-09-03T18:06:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0004",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    },
+    {
+      "at": "2027-09-03T18:06:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "trip_options",
+      "query": "care",
+      "entries": [
+        "care-C",
+        "care-B-final",
+        "T1-linked"
+      ]
+    },
+    {
+      "at": "2027-09-03T18:06:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "priya_dialogue",
+      "question": "Dana Whitfield withdrew; do you approve Rosa Ibarra (care-B, 180 USD) as the replacement for the September 8 09:00-14:00 gap, linked to trip T1 at 900 USD?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-03T18:06:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "care_reserve",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-09-03T18:06:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "care_reserve",
+      "entry": "care-B-final",
+      "accepted": true
+    },
+    {
+      "at": "2027-09-03T18:06:00+00:00",
+      "kind": "page_updated",
+      "page": "caregate-entry",
+      "url": "https://caregate.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-09-03T18:06:00+00:00",
+      "kind": "selection_processed",
+      "tool": "care_reserve",
+      "accepted": true,
+      "result": "Care reserved: care-booking-XTF2 - vetted caregiver Rosa Ibarra (care-B) for 2027-09-08 09:00-14:00 under Priya Shah's named replacement approval, covering the gap grandmother cannot. Dana Whitfield's earlier booking was cancelled at no fee; no travel is booked here."
+    },
+    {
+      "at": "2027-09-03T21:30:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "care_reserve",
+      "query": "care"
+    },
+    {
+      "at": "2027-09-03T21:40:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "trip_options",
+      "query": "trip",
+      "entries": [
+        "T1",
+        "T2",
+        "T3",
+        "T1-linked"
+      ]
+    },
+    {
+      "at": "2027-09-03T21:40:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "trip_reserve",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-09-03T21:40:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "trip_reserve",
+      "entry": "T1-linked",
+      "accepted": true
+    },
+    {
+      "at": "2027-09-03T21:40:00+00:00",
+      "kind": "page_updated",
+      "page": "caregate-entry",
+      "url": "https://caregate.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-09-03T21:40:00+00:00",
+      "kind": "selection_processed",
+      "tool": "trip_reserve",
+      "accepted": true,
+      "result": "Trip confirmed: trip-XTF1 - conference trip T1 (September 7-9, flights, hotel and airport transfers) linked to the active care-booking-XTF2 reservation for Rosa Ibarra. Home arrival 2027-09-09 17:30 leaves 90 minutes before grandmother ends at 19:00; combined total 1080 USD within the 1200 USD cap; no payment taken and no travel has occurred."
+    },
+    {
+      "at": "2027-09-03T21:50:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "trip_reserve",
+      "query": "trip"
+    }
+  ],
+  "pending_cases": []
+}

@@ -1,0 +1,159 @@
+{
+  "private": true,
+  "task_id": "DSB-41",
+  "actor": {
+    "id": "trip_desk",
+    "name": "Family Trip Desk plan desk·Rhea Sutton",
+    "role": "final plan recording",
+    "description": "Only records plans the traveller has approved; never invents or revises plan contents.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "rheasutton@bench.example"
+    },
+    "knowledge": [
+      "budget_total",
+      "itinerary_paced",
+      "plan_approved"
+    ],
+    "tools": {
+      "trip_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "trip_desk.main.2.deny": {
+        "kind": "deny",
+        "text": "The exact plan is approved with the traveller directly through the family profile desk (trip_dialogue); the recorded written plan confirmation comes only through the trip plan desk (confirm_trip_plan) named on the entry page."
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Plan recording questions",
+        "aliases": [
+          "plan",
+          "itinerary",
+          "budget",
+          "approval",
+          "total"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "trip_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "明确表示不知情或不归管",
+            "tool": "trip_desk.main.2.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Family Trip Desk plan desk·Rhea Sutton，负责final plan recording。Only records plans the traveller has approved; never invents or revises plan contents. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:itinerary_paced",
+      "attest:plan_approval_recorded",
+      "attest:trip_budget_total"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "budget_total": {
+      "value": 5615,
+      "text": "The complete current trip budget is 5615 USD: airfare 2390, hotel 1680, ground transport 360, food 620, attractions 265 and 300 contingency - within every category cap and the 6000 USD trip cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "trip_budget_total"
+      }
+    },
+    "itinerary_paced": {
+      "value": true,
+      "text": "The recorded itinerary keeps at most one major attraction per day (Space Needle on June 13, Great Wheel on June 16) with hotel rest afternoons on June 14 and June 15, and uses only current verified step-free routes and shellfish-safe family dining.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "itinerary_paced"
+      }
+    },
+    "plan_approved": {
+      "value": true,
+      "text": "Morgan Lee approved the exact final plan (flight air-209 / SB-733, hotel htl-302 / LFS-FAM-2, current quote versions, complete total 5615 USD, refundable cancellation terms) on May 12, 2027 after 12:00 Chicago time, before either booking was submitted.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "plan_approval_recorded"
+      }
+    }
+  },
+  "start_at": "2027-05-01T09:00:00-05:00",
+  "deadline_at": "2027-05-20T18:00:00-05:00"
+}

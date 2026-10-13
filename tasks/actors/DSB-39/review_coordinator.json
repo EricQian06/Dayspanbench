@@ -1,0 +1,162 @@
+{
+  "private": true,
+  "task_id": "DSB-39",
+  "actor": {
+    "id": "review_coordinator",
+    "name": "Review coordinator·Priya Shah",
+    "role": "confirmed meeting times, the weekly calendar service and the request inbox",
+    "description": "Publishes only the review's confirmed time and runs the calendar and inbox services; sees redacted free/busy only, never family details, and never sends replies or accepts meetings on the user's behalf.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "priyashah@bench.example"
+    },
+    "knowledge": [
+      "focus_applied",
+      "reply_drafted",
+      "review_final"
+    ],
+    "tools": {
+      "review_coordinator.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "review_coordinator.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Review time confirmation",
+        "aliases": [
+          "review",
+          "time",
+          "final",
+          "coordinator",
+          "meeting",
+          "checkpoint",
+          "calendar",
+          "confirm"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "review_coordinator.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "review_coordinator.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Review coordinator·Priya Shah，负责confirmed meeting times, the weekly calendar service and the request inbox。Publishes only the review's confirmed time and runs the calendar and inbox services; sees redacted free/busy only, never family details, and never sends replies or accepts meetings on the user's behalf. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:ceo_reply_drafted_unsent",
+      "attest:final_review_time_published",
+      "attest:focus_plan_applied"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "focus_applied": {
+      "value": true,
+      "text": "The approved plan of ten two-hour Focus blocks (1200 minutes across May 10-14, inside work hours and outside lunch, standups, protected Busy entries and the revised review) was applied to the private calendar; no protected entry moved.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-39",
+          "case": {
+            "week_start": "2027-05-10",
+            "week_end": "2027-05-14",
+            "focus_hours": 20
+          }
+        },
+        "predicate": "focus_plan_applied"
+      }
+    },
+    "reply_drafted": {
+      "value": true,
+      "text": "An unsent reply draft to the CEO request declines Tuesday May 11 16:30-18:00 with a generic prior commitment and proposes Friday May 14 15:00-16:30; it was never sent and no external invitation was accepted.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-39",
+          "case": {
+            "week_start": "2027-05-10",
+            "week_end": "2027-05-14",
+            "focus_hours": 20
+          }
+        },
+        "predicate": "ceo_reply_drafted_unsent"
+      }
+    },
+    "review_final": {
+      "value": true,
+      "text": "Coordination checkpoint (May 10, 10:00 Central): the final leadership review is Wednesday May 12, 2027 09:00-10:00 Central (calendar revision cal-v2), replacing 11:00-12:00; every other commitment is unchanged.",
+      "available_at": "2027-05-10T10:00:00-05:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-39",
+          "case": {
+            "week_start": "2027-05-10",
+            "week_end": "2027-05-14",
+            "focus_hours": 20
+          }
+        },
+        "predicate": "final_review_time_published"
+      }
+    }
+  },
+  "start_at": "2027-05-07T09:00:00-05:00",
+  "deadline_at": "2027-05-10T17:00:00-05:00"
+}

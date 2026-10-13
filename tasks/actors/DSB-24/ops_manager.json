@@ -1,0 +1,255 @@
+{
+  "private": true,
+  "task_id": "DSB-24",
+  "actor": {
+    "id": "ops_manager",
+    "name": "Operations manager·Dana Reyes",
+    "role": "work requirements, written estimates, focus reservations and the work board",
+    "description": "Issues only verified work records: the written effort estimate and the current review version and cutoff; never accepts private-calendar details, family or school titles, or work-completed claims.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "danareyes2@bench.example"
+    },
+    "knowledge": [
+      "estimate_confirmed",
+      "focus_reserved",
+      "plan_acknowledged",
+      "review_v2"
+    ],
+    "tools": {
+      "ops_manager.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "ops_manager.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "estimate_confirmed"
+        ]
+      },
+      "ops_manager.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "estimate_confirmed"
+        ]
+      },
+      "ops_manager.main.4.reply": {
+        "kind": "reply"
+      },
+      "ops_manager.review.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "ops_manager.review.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Written effort estimate",
+        "aliases": [
+          "estimate",
+          "hours",
+          "effort",
+          "remaining",
+          "work",
+          "pack",
+          "confirm"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "ops_manager.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the written effort estimate",
+            "tool": "ops_manager.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 420
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "ops_manager.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "ops_manager.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "review",
+        "label": "Review timing",
+        "aliases": [
+          "review",
+          "moved",
+          "earlier",
+          "cutoff",
+          "deadline",
+          "timing",
+          "version",
+          "leadership"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "review_1",
+            "label": "发出受理回执",
+            "tool": "ops_manager.review.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "review_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "ops_manager.review.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Operations manager·Dana Reyes，负责work requirements, written estimates, focus reservations and the work board。Issues only verified work records: the written effort estimate and the current review version and cutoff; never accepts private-calendar details, family or school titles, or work-completed claims. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:estimate_confirmed_in_writing",
+      "attest:focus_hours_reserved",
+      "attest:review_version_current",
+      "attest:work_plan_acknowledged"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "estimate_confirmed": {
+      "value": true,
+      "text": "The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.",
+      "available_at": "2027-10-04T15:00:00-05:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-24",
+          "case": {
+            "review_date": "2027-10-06",
+            "focus_hours": 8,
+            "workday_start": "09:00",
+            "workday_end": "17:00"
+          }
+        },
+        "predicate": "estimate_confirmed_in_writing"
+      }
+    },
+    "focus_reserved": {
+      "value": true,
+      "text": "The approved eight-hour allocation - October 5 09:00-12:00 and 13:00-16:00, October 6 09:00-11:00 Central - was reserved on the calendar as Focus blocks before the 14:00 cutoff; every existing private event is untouched.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-24",
+          "case": {
+            "review_date": "2027-10-06",
+            "focus_hours": 8,
+            "workday_start": "09:00",
+            "workday_end": "17:00"
+          }
+        },
+        "predicate": "focus_hours_reserved"
+      }
+    },
+    "plan_acknowledged": {
+      "value": true,
+      "text": "The work board acknowledged the same eight-hour preparation plan linked to reservation focus-XPW1, sharing only neutral availability blocks, the deliverable id and its due time; the deliverable remains not_started with zero completed hours.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-24",
+          "case": {
+            "review_date": "2027-10-06",
+            "focus_hours": 8,
+            "workday_start": "09:00",
+            "workday_end": "17:00"
+          }
+        },
+        "predicate": "work_plan_acknowledged"
+      }
+    },
+    "review_v2": {
+      "value": true,
+      "text": "Provider update (October 5, 08:30 Central): the leadership review moved to October 6, 2027 15:00 Central with a 14:00 preparation cutoff, work version 2; plans built on the October 8 review are stale.",
+      "available_at": "2027-10-05T08:30:00-05:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-24",
+          "case": {
+            "review_date": "2027-10-06",
+            "focus_hours": 8,
+            "workday_start": "09:00",
+            "workday_end": "17:00"
+          }
+        },
+        "predicate": "review_version_current"
+      }
+    }
+  },
+  "start_at": "2027-10-04T09:00:00-05:00",
+  "deadline_at": "2027-10-06T17:00:00-05:00"
+}

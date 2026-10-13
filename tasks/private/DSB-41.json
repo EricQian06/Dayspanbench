@@ -1,0 +1,3093 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.4.0",
+  "id": "DSB-41",
+  "title": "Five-person Chicago-Seattle family trip: recovered inventory and exact approval",
+  "domain": "travel_hospitality",
+  "start_at": "2027-05-01T09:00:00-05:00",
+  "deadline_at": "2027-05-20T18:00:00-05:00",
+  "display_timezone": "America/Chicago",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
+    }
+  },
+  "reply_delay": [
+    20,
+    45
+  ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "page_updates": [
+    {
+      "page": "trip-intro",
+      "at": "2027-05-10T09:00:00-05:00",
+      "snippet": "May 10 update: flight SB-417 (and its AC-9417 codeshare) has been cancelled after a schedule change; earlier flight results are stale - revalidate before booking."
+    },
+    {
+      "page": "trip-intro",
+      "at": "2027-05-12T09:00:00-05:00",
+      "snippet": "May 12 update: the Lakefront Accessible Family Suite rate changed from 1560 to 1890 USD for the stay, over the traveller's hotel cap; the old quote expired. Current rates are in the hotel search service."
+    },
+    {
+      "page": "trip-intro",
+      "at": "2027-05-14T09:00:00-05:00",
+      "snippet": "May 14 update: the Lakefront accessibility desk reports the unconfirmed hold on the Accessible Family Suite has lapsed; the room requires reselection. No booking exists for the lapsed hold."
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "flight_search",
+      "usage": "Skybridge flight search. Argument: query (optional string), e.g. \"ORD SEA nonstop round trip\" or a flight code. Returns current round-trip listings with operating carrier, flight numbers, seats, arrival times and total fares; rows can be cancelled or revised mid-week, so re-check before booking.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "flight",
+          "airfare",
+          "air",
+          "nonstop",
+          "airline",
+          "skybridge",
+          "trip"
+        ],
+        "clue": "A flight search service named flight_search lists the current round-trip Chicago-Seattle fares.",
+        "entries": [
+          {
+            "id": "air-201",
+            "title": "SB-417 - nonstop round trip ORD-SEA, arrive 10:35 (quote flight-q-201-v1)",
+            "text": "Skybridge Air. Outbound 2027-06-12 08:20-10:35 (SB417), return 2027-06-17 13:10-19:05 (SB418), nonstop, five seats together, refundable, 2280 USD for five. Quote verified 2027-05-01.",
+            "fields": {
+              "display_id": "SB-417",
+              "origin": "ORD",
+              "destination": "SEA",
+              "outbound_date": "2027-06-12",
+              "outbound_depart": "08:20",
+              "outbound_arrive": "10:35",
+              "return_date": "2027-06-17",
+              "return_depart": "13:10",
+              "return_arrive": "19:05",
+              "stops": 0,
+              "seats": 5,
+              "seats_together": true,
+              "fare": "refundable",
+              "total_usd": 2280,
+              "quote_version": "flight-q-201-v1",
+              "operating_carrier": "Skybridge Air",
+              "operating_flight_numbers": "SB417/SB418",
+              "physical_flight_key": "SB|417|2027-06-12|08:20"
+            },
+            "expires_at": "2027-05-10T09:00:00-05:00"
+          },
+          {
+            "id": "air-202",
+            "title": "AC-9417 - codeshare of the same physical SB-417 flight (quote flight-q-202-v1)",
+            "text": "Sold as AeroConnect AC-9417 but operated by Skybridge Air as SB417/SB418 - the same physical flight as SB-417 (physical key SB|417|2027-06-12|08:20), not a second independent option. Same times, five seats together, refundable, 2260 USD for five.",
+            "fields": {
+              "display_id": "AC-9417",
+              "origin": "ORD",
+              "destination": "SEA",
+              "outbound_date": "2027-06-12",
+              "outbound_depart": "08:20",
+              "outbound_arrive": "10:35",
+              "return_date": "2027-06-17",
+              "return_depart": "13:10",
+              "return_arrive": "19:05",
+              "stops": 0,
+              "seats": 5,
+              "seats_together": true,
+              "fare": "refundable",
+              "total_usd": 2260,
+              "quote_version": "flight-q-202-v1",
+              "operating_carrier": "Skybridge Air",
+              "operating_flight_numbers": "SB417/SB418",
+              "physical_flight_key": "SB|417|2027-06-12|08:20",
+              "same_physical_flight_as": "air-201"
+            }
+          },
+          {
+            "id": "air-203",
+            "title": "SB-511 - one-stop round trip, nonrefundable (quote flight-q-203-v1)",
+            "text": "Outbound 2027-06-12 06:40-12:40 with one stop, return 2027-06-17 12:30-20:25 with one stop; seats not together; nonrefundable; 1760 USD for five. The cheapest listing, but it breaks the nonstop and refundable requirements.",
+            "fields": {
+              "display_id": "SB-511",
+              "origin": "ORD",
+              "destination": "SEA",
+              "outbound_arrive": "12:40",
+              "stops": 1,
+              "seats": 5,
+              "seats_together": false,
+              "fare": "nonrefundable",
+              "total_usd": 1760,
+              "quote_version": "flight-q-203-v1"
+            }
+          },
+          {
+            "id": "air-204",
+            "title": "SB-620 - nonstop round trip, sold out",
+            "text": "Nonstop and refundable at 1980 USD, but sold out: zero seats remain for the stay dates.",
+            "fields": {
+              "display_id": "SB-620",
+              "destination": "SEA",
+              "stops": 0,
+              "seats": 0,
+              "fare": "refundable",
+              "total_usd": 1980,
+              "status": "sold_out"
+            }
+          },
+          {
+            "id": "air-205",
+            "title": "SB-701 - nonstop round trip, stale cached quote",
+            "text": "Nonstop and refundable, 2050 USD for five, but the quote (flight-q-205-old) was last verified 2027-04-20; the cached price is not a current quote.",
+            "fields": {
+              "display_id": "SB-701",
+              "destination": "SEA",
+              "stops": 0,
+              "seats": 5,
+              "fare": "refundable",
+              "total_usd": 2050,
+              "quote_version": "flight-q-205-old",
+              "last_verified": "2027-04-20",
+              "status": "stale"
+            }
+          },
+          {
+            "id": "air-206",
+            "title": "SB-900 - nonstop round trip, only two seats left",
+            "text": "Nonstop and refundable at 1900 USD, but only two seats remain - fewer than the five needed.",
+            "fields": {
+              "display_id": "SB-900",
+              "destination": "SEA",
+              "stops": 0,
+              "seats": 2,
+              "seats_together": true,
+              "fare": "refundable",
+              "total_usd": 1900
+            }
+          },
+          {
+            "id": "air-207",
+            "title": "SB-740 - nonstop round trip to PAE, not SEA",
+            "text": "Nonstop and refundable at 2140 USD, but it lands at Everett PAE, not the required Seattle-Tacoma SEA.",
+            "fields": {
+              "display_id": "SB-740",
+              "origin": "ORD",
+              "destination": "PAE",
+              "stops": 0,
+              "seats": 5,
+              "fare": "refundable",
+              "total_usd": 2140,
+              "status": "policy_mismatch"
+            }
+          },
+          {
+            "id": "air-208",
+            "title": "SB-812 - nonstop round trip, arrives 17:20",
+            "text": "Nonstop and refundable at 2320 USD, but the outbound arrives 17:20 local, after the 16:00 arrival limit.",
+            "fields": {
+              "display_id": "SB-812",
+              "destination": "SEA",
+              "outbound_arrive": "17:20",
+              "stops": 0,
+              "seats": 5,
+              "fare": "refundable",
+              "total_usd": 2320,
+              "status": "policy_mismatch"
+            }
+          },
+          {
+            "id": "air-209",
+            "title": "SB-733 - nonstop round trip ORD-SEA, arrive 15:20 (quote flight-q-209-v1)",
+            "text": "Skybridge Air. Outbound 2027-06-12 10:55-15:20 (SB733), return 2027-06-17 14:40-20:35 (SB734), nonstop, five seats together, refundable, 2390 USD for five. Quote verified 2027-05-01.",
+            "fields": {
+              "display_id": "SB-733",
+              "origin": "ORD",
+              "destination": "SEA",
+              "outbound_date": "2027-06-12",
+              "outbound_depart": "10:55",
+              "outbound_arrive": "15:20",
+              "return_date": "2027-06-17",
+              "return_depart": "14:40",
+              "return_arrive": "20:35",
+              "stops": 0,
+              "seats": 5,
+              "seats_together": true,
+              "fare": "refundable",
+              "total_usd": 2390,
+              "quote_version": "flight-q-209-v1",
+              "operating_carrier": "Skybridge Air",
+              "operating_flight_numbers": "SB733/SB734",
+              "physical_flight_key": "SB|733|2027-06-12|10:55"
+            }
+          },
+          {
+            "id": "air-210",
+            "title": "SB-650 - nonstop round trip, cancelled",
+            "text": "Nonstop and refundable at 2180 USD, but the flight is cancelled; do not treat it as current inventory.",
+            "fields": {
+              "display_id": "SB-650",
+              "destination": "SEA",
+              "stops": 0,
+              "seats": 5,
+              "fare": "refundable",
+              "total_usd": 2180,
+              "status": "cancelled"
+            }
+          }
+        ],
+        "updates": [
+          {
+            "at": "2027-05-10T09:00:00-05:00",
+            "remove": [
+              "air-201",
+              "air-202"
+            ],
+            "add": [
+              {
+                "id": "air-201-cancelled",
+                "title": "SB-417 / AC-9417 - cancelled after a schedule change",
+                "text": "On May 10 Skybridge Air cancelled physical flight SB|417|2027-06-12|08:20 after a schedule change; both the SB-417 listing and its AC-9417 codeshare are gone. Revalidate any earlier selection and choose a different current flight.",
+                "fields": {
+                  "status": "cancelled",
+                  "physical_flight_key": "SB|417|2027-06-12|08:20"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "hotel_search",
+      "usage": "Hotel search. Argument: query (optional string), e.g. \"accessible family suite\" or a property name. Returns current stay listings with occupancy, roll-in-shower evidence, area, refundability and stay totals; rates can change or expire, so re-check before booking.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "hotel",
+          "suite",
+          "stay",
+          "accommodation",
+          "roll-in",
+          "accessible",
+          "lakefront"
+        ],
+        "clue": "A hotel search service named hotel_search lists the current Seattle stay rates.",
+        "entries": [
+          {
+            "id": "htl-301",
+            "title": "LFS-ACCESS-1 - Accessible Family Suite, South Lake Union (pending provider confirmation)",
+            "text": "Lakefront Suites Seattle. Occupancy five, two queen beds plus sofa bed, step-free entrance and elevator; the roll-in shower is still pending accessibility-desk confirmation (no verification id yet). Refundable, free until 2027-06-09 18:00 Pacific. 1560 USD for the five-night stay.",
+            "fields": {
+              "display_id": "LFS-ACCESS-1",
+              "area": "South Lake Union",
+              "occupancy": 5,
+              "roll_in_shower": "pending",
+              "refundable": true,
+              "free_until": "2027-06-09",
+              "total_usd": 1560,
+              "status": "pending_provider_confirmation"
+            }
+          },
+          {
+            "id": "htl-301-confirmed",
+            "title": "LFS-ACCESS-1 - Accessible Family Suite, provider-confirmed (hold until May 14)",
+            "text": "Lakefront accessibility-desk verification access-htl-301-2027: the exact suite has a roll-in shower and five-person occupancy. Refundable, 1560 USD for the stay; a rate hold is granted until 2027-05-14 09:00 and lapses if not converted into a booking. This is a held rate, not a confirmed booking.",
+            "fields": {
+              "display_id": "LFS-ACCESS-1",
+              "area": "South Lake Union",
+              "occupancy": 5,
+              "roll_in_shower": true,
+              "refundable": true,
+              "total_usd": 1560,
+              "verification": "access-htl-301-2027",
+              "hold_until": "2027-05-14T09:00"
+            },
+            "available_at": "2027-05-03T08:00:00-05:00",
+            "expires_at": "2027-05-12T09:00:00-05:00"
+          },
+          {
+            "id": "htl-302",
+            "title": "LFS-FAM-2 - Family Suite, South Lake Union (provider-confirmed)",
+            "text": "Lakefront Suites Seattle. Occupancy five, two queen beds plus sofa bed, step-free entrance, elevator and a provider-verified roll-in shower with grab bars (verification access-htl-302-2027). Refundable, free until 2027-06-09 18:00 Pacific. 1680 USD for the five-night stay.",
+            "fields": {
+              "display_id": "LFS-FAM-2",
+              "area": "South Lake Union",
+              "occupancy": 5,
+              "roll_in_shower": true,
+              "refundable": true,
+              "free_until": "2027-06-09",
+              "total_usd": 1680,
+              "verification": "access-htl-302-2027",
+              "beds": "two queen beds plus sofa bed",
+              "status": "confirmed"
+            },
+            "facts": [
+              "hotel_accessible"
+            ],
+            "issuer": "lakefront_desk"
+          },
+          {
+            "id": "htl-303",
+            "title": "DOWNTOWN-3 - Pioneer Square Partner Hotel",
+            "text": "Occupancy five and refundable at 1320 USD in an allowed area, but the accessible bathroom is a tub with grab bars - no roll-in shower.",
+            "fields": {
+              "display_id": "DOWNTOWN-3",
+              "area": "Pioneer Square",
+              "occupancy": 5,
+              "roll_in_shower": false,
+              "refundable": true,
+              "total_usd": 1320
+            }
+          },
+          {
+            "id": "htl-304",
+            "title": "NORTHGATE-4 - Northgate Accessible Inn (sold out)",
+            "text": "Roll-in shower and refundable at 1490 USD, but sold out for the stay dates.",
+            "fields": {
+              "display_id": "NORTHGATE-4",
+              "area": "Northgate",
+              "occupancy": 5,
+              "roll_in_shower": true,
+              "refundable": true,
+              "total_usd": 1490,
+              "status": "sold_out"
+            }
+          },
+          {
+            "id": "htl-305",
+            "title": "AIRPORT-5 - SeaTac Airport Lodge (occupancy four)",
+            "text": "Roll-in shower and refundable at 1180 USD, but maximum occupancy four - too small for five travellers.",
+            "fields": {
+              "display_id": "AIRPORT-5",
+              "area": "SeaTac",
+              "occupancy": 4,
+              "roll_in_shower": true,
+              "refundable": true,
+              "total_usd": 1180
+            }
+          },
+          {
+            "id": "htl-306",
+            "title": "CAPITOL-6 - Capitol Hill Residence (nonrefundable)",
+            "text": "Roll-in shower, occupancy five, 1290 USD in an allowed area, but the rate is nonrefundable and would need an explicit fresh approval the family has not given.",
+            "fields": {
+              "display_id": "CAPITOL-6",
+              "area": "Capitol Hill",
+              "occupancy": 5,
+              "roll_in_shower": true,
+              "refundable": false,
+              "total_usd": 1290
+            }
+          },
+          {
+            "id": "htl-307",
+            "title": "LFS-OLD-7 - Lakefront cached accessible rate (stale)",
+            "text": "A cached 1500 USD accessible rate last verified 2027-04-20; the quote is stale and the roll-in shower is unverified.",
+            "fields": {
+              "display_id": "LFS-OLD-7",
+              "area": "South Lake Union",
+              "occupancy": 5,
+              "roll_in_shower": "pending",
+              "refundable": true,
+              "total_usd": 1500,
+              "last_verified": "2027-04-20",
+              "status": "stale"
+            }
+          },
+          {
+            "id": "htl-308",
+            "title": "SEATAC-8 - Airport Lodge Family Room",
+            "text": "Roll-in shower, occupancy five, refundable at 1600 USD, but it sits at SeaTac - outside the central areas - and the daily downtown sightseeing route exceeds the family's walking and transfer budget.",
+            "fields": {
+              "display_id": "SEATAC-8",
+              "area": "SeaTac",
+              "occupancy": 5,
+              "roll_in_shower": true,
+              "refundable": true,
+              "total_usd": 1600,
+              "location_warning": "daily downtown route exceeds walking budget"
+            }
+          }
+        ],
+        "updates": [
+          {
+            "at": "2027-05-12T09:00:00-05:00",
+            "remove": [
+              "htl-301-confirmed"
+            ],
+            "add": [
+              {
+                "id": "htl-301-v2",
+                "title": "LFS-ACCESS-1 - rate changed to 1890 USD (old quote expired)",
+                "text": "The old 1560 USD quote expired on May 12; the current stay rate is 1890 USD, over a 1800 USD hotel cap. The held rate lapsed unconverted. The room requires reselection against current inventory.",
+                "fields": {
+                  "display_id": "LFS-ACCESS-1",
+                  "area": "South Lake Union",
+                  "occupancy": 5,
+                  "roll_in_shower": true,
+                  "refundable": true,
+                  "total_usd": 1890,
+                  "status": "over_cap"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "transport_modes",
+      "usage": "Door-to-door transport comparison. Argument: query (optional string). Returns the air, rail, driving and bus alternatives between the two cities with door-to-door hours, estimated totals, statuses and accessibility notes.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "transport",
+          "mode",
+          "rail",
+          "drive",
+          "bus",
+          "compare",
+          "door-to-door"
+        ],
+        "clue": "A transport comparison service named transport_modes lists the door-to-door alternatives.",
+        "entries": [
+          {
+            "id": "mode-flight",
+            "title": "MODE-A - air, nonstop flight",
+            "text": "About 8.5 door-to-door hours, estimated 2280 USD for five; airport assistance available; seats together must be verified with the carrier.",
+            "fields": {
+              "mode": "air",
+              "status": "available",
+              "door_to_door_hours": 8.5,
+              "estimated_total_usd": 2280
+            }
+          },
+          {
+            "id": "mode-rail",
+            "title": "MODE-B - rail",
+            "text": "About 66 door-to-door hours with one platform transfer; not suitable within the stated walking and rest constraints.",
+            "fields": {
+              "mode": "rail",
+              "status": "available",
+              "door_to_door_hours": 66,
+              "estimated_total_usd": 1860
+            }
+          },
+          {
+            "id": "mode-drive",
+            "title": "MODE-C - drive",
+            "text": "About 42 door-to-door hours; requires long driving days and a rental vehicle; unsuitable for the grandparent's rest requirement.",
+            "fields": {
+              "mode": "drive",
+              "status": "available",
+              "door_to_door_hours": 42,
+              "estimated_total_usd": 1420
+            }
+          },
+          {
+            "id": "mode-bus",
+            "title": "MODE-D - intercity bus (policy mismatch)",
+            "text": "About 58 door-to-door hours at 980 USD, but there is no guaranteed step-free transfer at the required connection.",
+            "fields": {
+              "mode": "intercity_bus",
+              "status": "policy_mismatch",
+              "door_to_door_hours": 58,
+              "estimated_total_usd": 980
+            }
+          },
+          {
+            "id": "mode-flight-late",
+            "title": "MODE-E - air, late arrival (policy mismatch)",
+            "text": "About 9.5 door-to-door hours at 2110 USD, but it arrives after the 16:00 local arrival limit.",
+            "fields": {
+              "mode": "air",
+              "status": "policy_mismatch",
+              "door_to_door_hours": 9.5,
+              "estimated_total_usd": 2110
+            }
+          },
+          {
+            "id": "mode-rail-stale",
+            "title": "MODE-F - rail (stale estimate)",
+            "text": "About 64 door-to-door hours at 1740 USD; the cached price is not a current quote.",
+            "fields": {
+              "mode": "rail",
+              "status": "stale",
+              "door_to_door_hours": 64,
+              "estimated_total_usd": 1740
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "access_routes",
+      "usage": "CityStep route search. Argument: query (optional string), e.g. \"step-free route\". Returns current routes between the central hotels and the attractions with stairs counts, longest walking segment, transfer count and verification status.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "route",
+          "step-free",
+          "walking",
+          "stairs",
+          "citystep",
+          "transfer"
+        ],
+        "clue": "A route service named access_routes lists current verified step-free routes.",
+        "entries": [
+          {
+            "id": "route-401",
+            "title": "CS-SEA-01 - Lakefront family suite to Space Needle (verified)",
+            "text": "Step-free, zero stairs, longest walking segment 0.3 miles, one transfer; verified 2027-05-01.",
+            "fields": {
+              "from_hotel": "htl-302",
+              "destination": "att-601",
+              "destination_name": "Space Needle",
+              "status": "verified",
+              "step_free": true,
+              "longest_walk_miles": 0.3,
+              "stairs": 0
+            },
+            "facts": [
+              "route_401_ok"
+            ],
+            "issuer": "citystep_desk"
+          },
+          {
+            "id": "route-402",
+            "title": "CS-SEA-02 - to Pike Place Market (verified, has stairs)",
+            "text": "Verified route but twelve stairs on the way; not step-free.",
+            "fields": {
+              "from_hotel": "htl-302",
+              "destination": "att-602",
+              "destination_name": "Pike Place Market",
+              "status": "verified",
+              "step_free": false,
+              "longest_walk_miles": 0.2,
+              "stairs": 12
+            }
+          },
+          {
+            "id": "route-403",
+            "title": "CS-SEA-03 - to Seattle Aquarium (stale)",
+            "text": "A previously step-free route with a 0.4-mile walking segment, but the verification is stale (2027-04-19) and the walk exceeds the limit.",
+            "fields": {
+              "from_hotel": "htl-302",
+              "destination": "att-603",
+              "destination_name": "Seattle Aquarium",
+              "status": "stale",
+              "step_free": true,
+              "longest_walk_miles": 0.4,
+              "stairs": 0
+            }
+          },
+          {
+            "id": "route-404",
+            "title": "CS-SEA-04 - to Museum of Pop Culture (verified, long walk)",
+            "text": "Step-free and current, but the longest walking segment is 0.6 miles - over the 0.3-mile limit.",
+            "fields": {
+              "from_hotel": "htl-302",
+              "destination": "att-604",
+              "destination_name": "Museum of Pop Culture",
+              "status": "verified",
+              "step_free": true,
+              "longest_walk_miles": 0.6,
+              "stairs": 0
+            }
+          },
+          {
+            "id": "route-405",
+            "title": "CS-SEA-05 - held-suite route to Space Needle (verified)",
+            "text": "Step-free, zero stairs, 0.28-mile longest walk, one transfer - but it starts at the LFS-ACCESS-1 suite whose held rate lapses unconverted.",
+            "fields": {
+              "from_hotel": "htl-301",
+              "destination": "att-601",
+              "destination_name": "Space Needle",
+              "status": "verified",
+              "step_free": true,
+              "longest_walk_miles": 0.28,
+              "stairs": 0
+            }
+          },
+          {
+            "id": "route-406",
+            "title": "CS-SEA-06 - Lakefront family suite to Seattle Great Wheel (verified)",
+            "text": "Step-free, zero stairs, longest walking segment 0.25 miles, one transfer; verified 2027-05-01.",
+            "fields": {
+              "from_hotel": "htl-302",
+              "destination": "att-605",
+              "destination_name": "Seattle Great Wheel",
+              "status": "verified",
+              "step_free": true,
+              "longest_walk_miles": 0.25,
+              "stairs": 0
+            },
+            "facts": [
+              "route_406_ok"
+            ],
+            "issuer": "citystep_desk"
+          },
+          {
+            "id": "route-407",
+            "title": "CS-SEA-07 - to Woodland Park Zoo (unavailable)",
+            "text": "No verified accessible route exists for this destination.",
+            "fields": {
+              "from_hotel": "htl-302",
+              "destination": "att-606",
+              "destination_name": "Woodland Park Zoo",
+              "status": "unavailable"
+            }
+          },
+          {
+            "id": "route-408",
+            "title": "CS-SEA-08 - to Harbor Cruise (verified, has stairs)",
+            "text": "Verified route but four stairs at the boarding point; not step-free.",
+            "fields": {
+              "from_hotel": "htl-302",
+              "destination": "att-607",
+              "destination_name": "Harbor Cruise",
+              "status": "verified",
+              "step_free": false,
+              "longest_walk_miles": 0.25,
+              "stairs": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "dining_search",
+      "usage": "SafePlate dining search. Argument: query (optional string), e.g. \"shellfish safe child menu\". Returns restaurant records with shellfish cross-contact status, child-menu availability and reservation status.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "restaurant",
+          "dining",
+          "shellfish",
+          "allergen",
+          "menu",
+          "dinner",
+          "breakfast",
+          "safeplate"
+        ],
+        "clue": "A dining service named dining_search lists restaurant allergen verification records.",
+        "entries": [
+          {
+            "id": "din-501",
+            "title": "SAFE-SEA-01 - Harbor Table (confirmed)",
+            "text": "Confirmed shellfish protocol: separate preparation area and manager-confirmed no cross-contact for the selected family dishes; child menu available; early dinner reservations open.",
+            "fields": {
+              "status": "confirmed",
+              "allergen_safe": true,
+              "child_menu": true,
+              "reservation": "available"
+            },
+            "facts": [
+              "dining_501_safe"
+            ],
+            "issuer": "safeplate_desk"
+          },
+          {
+            "id": "din-502",
+            "title": "SAFE-SEA-02 - Pike Street Oyster Bar",
+            "text": "Shellfish is the primary kitchen operation; not safe for a shellfish allergy despite any menu label.",
+            "fields": {
+              "status": "confirmed",
+              "allergen_safe": false,
+              "child_menu": true,
+              "reservation": "available"
+            }
+          },
+          {
+            "id": "din-503",
+            "title": "SAFE-SEA-03 - Green Fork Kitchen (pending verification)",
+            "text": "Vegetarian menu but a shared fryer; the manager's cross-contact answer is still pending.",
+            "fields": {
+              "status": "pending_verification",
+              "allergen_safe": "pending",
+              "child_menu": true,
+              "reservation": "available"
+            }
+          },
+          {
+            "id": "din-504",
+            "title": "SAFE-SEA-04 - Northwest Grill (no reply)",
+            "text": "The restaurant has not answered the cross-contact question; no current verification exists.",
+            "fields": {
+              "status": "no_reply",
+              "allergen_safe": "pending",
+              "child_menu": true,
+              "reservation": "available"
+            }
+          },
+          {
+            "id": "din-505",
+            "title": "SAFE-SEA-05 - Lakefront Breakfast Room (confirmed)",
+            "text": "No shellfish in the breakfast kitchen (manager confirmation recorded); child menu and vegetarian breakfast available.",
+            "fields": {
+              "status": "confirmed",
+              "allergen_safe": true,
+              "child_menu": true,
+              "vegetarian_breakfast": true,
+              "reservation": "available"
+            },
+            "facts": [
+              "dining_505_safe"
+            ],
+            "issuer": "safeplate_desk"
+          },
+          {
+            "id": "din-506",
+            "title": "SAFE-SEA-06 - Market Hall Family Counter (sold out)",
+            "text": "Separate counters and safe preparation, but no reservation slots remain for the stay dates.",
+            "fields": {
+              "status": "sold_out",
+              "allergen_safe": true,
+              "child_menu": true,
+              "reservation": "sold_out"
+            }
+          },
+          {
+            "id": "din-507",
+            "title": "SAFE-SEA-07 - Old Harbor Cafe (stale)",
+            "text": "An old menu says allergy-safe, but current manager verification is missing (last verified 2027-04-12).",
+            "fields": {
+              "status": "stale",
+              "allergen_safe": true,
+              "child_menu": true,
+              "reservation": "available"
+            }
+          },
+          {
+            "id": "din-508",
+            "title": "SAFE-SEA-08 - Rainier Family Diner (no child menu)",
+            "text": "The manager confirms separate utensils for selected dishes, but there is no child menu.",
+            "fields": {
+              "status": "confirmed",
+              "allergen_safe": true,
+              "child_menu": false,
+              "reservation": "available"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "attraction_search",
+      "usage": "Attraction search. Argument: query (optional string). Returns current attraction listings with dates, durations, step-free status, rest seating and ticket totals for five.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "attraction",
+          "museum",
+          "aquarium",
+          "needle",
+          "wheel",
+          "sightseeing",
+          "tickets"
+        ],
+        "clue": "An attraction service named attraction_search lists the current Seattle attraction listings.",
+        "entries": [
+          {
+            "id": "att-601",
+            "title": "SEA-ATT-01 - Space Needle (June 13)",
+            "text": "Two-hour visit on 2027-06-13; step-free with rest seating; 145 USD total for five.",
+            "fields": {
+              "date": "2027-06-13",
+              "duration_hours": 2,
+              "step_free": true,
+              "ticket_total_usd": 145,
+              "rest_seating": true
+            }
+          },
+          {
+            "id": "att-602",
+            "title": "SEA-ATT-02 - Pike Place Market (June 13)",
+            "text": "Free, but not step-free throughout and rest seating is limited.",
+            "fields": {
+              "date": "2027-06-13",
+              "duration_hours": 2,
+              "step_free": false,
+              "ticket_total_usd": 0,
+              "rest_seating": "limited"
+            }
+          },
+          {
+            "id": "att-603",
+            "title": "SEA-ATT-03 - Seattle Aquarium (June 14)",
+            "text": "Two-and-a-half-hour visit on 2027-06-14; step-free with rest seating; 180 USD for five. The only current route from the central hotels is stale and over the walking limit.",
+            "fields": {
+              "date": "2027-06-14",
+              "duration_hours": 2.5,
+              "step_free": true,
+              "ticket_total_usd": 180,
+              "rest_seating": true
+            }
+          },
+          {
+            "id": "att-604",
+            "title": "SEA-ATT-04 - Museum of Pop Culture (June 15)",
+            "text": "Three-hour visit on 2027-06-15; step-free with rest seating; 160 USD for five. The only current route has a 0.6-mile walking segment.",
+            "fields": {
+              "date": "2027-06-15",
+              "duration_hours": 3,
+              "step_free": true,
+              "ticket_total_usd": 160,
+              "rest_seating": true
+            }
+          },
+          {
+            "id": "att-605",
+            "title": "SEA-ATT-05 - Seattle Great Wheel (June 16)",
+            "text": "Ninety-minute visit on 2027-06-16; step-free with rest seating; 120 USD for five.",
+            "fields": {
+              "date": "2027-06-16",
+              "duration_hours": 1.5,
+              "step_free": true,
+              "ticket_total_usd": 120,
+              "rest_seating": true
+            }
+          },
+          {
+            "id": "att-606",
+            "title": "SEA-ATT-06 - Woodland Park Zoo (June 14, sold out)",
+            "text": "Step-free with rest seating, but tickets are sold out for 2027-06-14 and no verified accessible route exists.",
+            "fields": {
+              "date": "2027-06-14",
+              "duration_hours": 4,
+              "step_free": true,
+              "ticket_total_usd": 210,
+              "status": "sold_out"
+            }
+          },
+          {
+            "id": "att-607",
+            "title": "SEA-ATT-07 - Harbor Cruise (June 15, policy mismatch)",
+            "text": "Not step-free and no rest seating; boarding requires stairs.",
+            "fields": {
+              "date": "2027-06-15",
+              "duration_hours": 2,
+              "step_free": false,
+              "ticket_total_usd": 130,
+              "rest_seating": false
+            }
+          },
+          {
+            "id": "att-608",
+            "title": "SEA-ATT-08 - Chihuly Garden and Glass (June 13)",
+            "text": "Ninety-minute visit on 2027-06-13; step-free with rest seating; 140 USD for five.",
+            "fields": {
+              "date": "2027-06-13",
+              "duration_hours": 1.5,
+              "step_free": true,
+              "ticket_total_usd": 140,
+              "rest_seating": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "trip_plans",
+      "usage": "Trip plan listings. Argument: query (optional string), e.g. \"final plan\". Returns candidate final plans combining a flight, a hotel, routes, dining, attractions, rest afternoons and a complete budget total; each plan row quotes the inventory at its listed version and may have expired with it.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "plan",
+          "itinerary",
+          "budget",
+          "total",
+          "approval"
+        ],
+        "clue": "A plan service named trip_plans lists candidate final trip plans with complete budgets.",
+        "entries": [
+          {
+            "id": "plan-final",
+            "title": "Final family trip plan - recovered inventory, May 12 quotes",
+            "text": "Flight SB-733 (air-209) 2390 USD plus hotel LFS-FAM-2 (htl-302) 1680 USD, both current refundable quotes; verified step-free routes CS-SEA-01 (Space Needle, June 13) and CS-SEA-06 (Great Wheel, June 16); shellfish-safe family dining at Harbor Table (early dinners) and the Lakefront Breakfast Room; hotel rest afternoons June 14 and June 15; at most one major attraction per day; complete budget 5615 USD (airfare 2390, hotel 1680, ground transport 360, food 620, attractions 265, contingency 300) within every cap; refundable cancellation terms.",
+            "fields": {
+              "flight": "air-209",
+              "hotel": "htl-302",
+              "flight_usd": 2390,
+              "hotel_usd": 1680,
+              "routes": "CS-SEA-01/CS-SEA-06",
+              "dining": "Harbor Table + Lakefront Breakfast Room",
+              "rest_afternoons": "2027-06-14/2027-06-15",
+              "major_attractions_per_day": 1,
+              "total_usd": 5615,
+              "terms": "refundable"
+            },
+            "available_at": "2027-05-12T12:00:00-05:00"
+          },
+          {
+            "id": "plan-stale-301",
+            "title": "May 1 plan - held accessible suite at the old 1560 rate",
+            "text": "Built from the May 1 quotes: flight SB-417 2280 USD and the held LFS-ACCESS-1 suite at 1560 USD; complete total 5340 USD. Both quoted rows have since expired - this plan quotes stale inventory.",
+            "fields": {
+              "flight": "air-201",
+              "hotel": "htl-301",
+              "total_usd": 5340,
+              "status": "stale_quotes"
+            },
+            "expires_at": "2027-05-12T09:00:00-05:00"
+          },
+          {
+            "id": "plan-overloaded",
+            "title": "Sightseeing-heavy plan - three attractions on June 13",
+            "text": "Current flight and hotel, but June 13 stacks the Space Needle, the Aquarium and the Museum of Pop Culture with only one hotel rest afternoon; the pacing breaks the family's rest requirement.",
+            "fields": {
+              "flight": "air-209",
+              "hotel": "htl-302",
+              "attractions_per_day": 3,
+              "rest_afternoons": 1,
+              "total_usd": 5835,
+              "status": "pacing_violation"
+            }
+          },
+          {
+            "id": "plan-nonrefundable",
+            "title": "Cheapest plan - nonrefundable Capitol Hill room",
+            "text": "Current flight with the 1290 USD Capitol Hill Residence room; total 5225 USD, but the hotel rate is nonrefundable and the family has not approved any nonrefundable rate.",
+            "fields": {
+              "flight": "air-209",
+              "hotel": "htl-306",
+              "total_usd": 5225,
+              "refundable": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "place_hotel_hold",
+      "usage": "Lakefront hold desk. Argument: {\"entry\": listing_id} to hold the accessible-suite rate shown in one current hotel_search row, or {\"query\": text} to read the current hold status. A hold is not a booking and lapses if not converted in time; at most one hold.",
+      "kind": "select",
+      "params": {
+        "catalog": "hotel_search",
+        "expect_entry": "htl-301-confirmed",
+        "process_delay": 14400,
+        "calendar": "us_central_daily",
+        "hold_minutes": 15840,
+        "result_text": "The accessible-suite rate is held; a hold is not a booking and must be converted through the hotel booking desk before it lapses.",
+        "reject_text": "The requested listing is not a holdable current accessible-suite rate; nothing was held.",
+        "expire_text": "The held accessible-suite rate (LFS-ACCESS-1) was not converted into a booking before the hold lapsed; the hold has expired and nothing was booked. The room requires reselection against current inventory."
+      }
+    },
+    {
+      "name": "book_flight",
+      "usage": "Flight booking desk. Argument: {\"entry\": listing_id} to book one current flight_search round trip for the whole family, or {\"query\": text} to read the current booking status. Book only the exact plan the traveller has approved; at most one flight booking; no payment is taken.",
+      "kind": "select",
+      "params": {
+        "catalog": "flight_search",
+        "expect_entry": "air-209",
+        "expect": {
+          "seats": 5,
+          "destination": "SEA",
+          "stops": 0
+        },
+        "process_delay": 90,
+        "calendar": "us_central_daily",
+        "result_text": "Flight booked: one refundable round-trip nonstop booking for five travellers on SB-733/SB-734 (listing air-209), ORD to SEA, outbound 2027-06-12 departing 10:55 arriving 15:20 local, return 2027-06-17 departing 14:40 arriving 20:35, five seats together; total 2390 USD within the airfare cap; no payment taken.",
+        "reject_text": "The requested listing is no longer current or does not match an approvable plan; the request was returned and nothing was booked.",
+        "facts": [
+          "flight_booked",
+          "flight_total"
+        ],
+        "issuer": "skybridge_desk",
+        "page_update": {
+          "page": "trip-entry",
+          "snippet": "Portal booking desks: an approved flight booking request is being processed; check the desk status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "book_hotel",
+      "usage": "Hotel booking desk. Argument: {\"entry\": listing_id} to book one current hotel_search stay, or {\"query\": text} to read the current booking status. Book only the exact plan the traveller has approved; at most one hotel booking; no payment is taken.",
+      "kind": "select",
+      "params": {
+        "catalog": "hotel_search",
+        "expect_entry": "htl-302",
+        "expect": {
+          "occupancy": 5,
+          "roll_in_shower": true,
+          "refundable": true
+        },
+        "process_delay": 90,
+        "calendar": "us_central_daily",
+        "result_text": "Hotel booked: one refundable accessible family suite (listing htl-302, LFS-FAM-2) in South Lake Union for five, five nights 2027-06-12 to 2027-06-17, provider-verified roll-in shower (access-htl-302-2027), free cancellation until 2027-06-09 18:00 Pacific; stay total 1680 USD within the hotel cap; no payment taken.",
+        "reject_text": "The requested listing is no longer current or does not match an approvable plan; the request was returned and nothing was booked.",
+        "facts": [
+          "hotel_booked",
+          "hotel_total"
+        ],
+        "issuer": "lakefront_desk",
+        "page_update": {
+          "page": "trip-entry",
+          "snippet": "Portal booking desks: an approved hotel booking request is being processed; check the desk status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "confirm_trip_plan",
+      "usage": "Trip plan desk. Argument: {\"entry\": plan_id} to record the exact approved final plan shown in one current trip_plans row, or {\"query\": text} to read the recorded plan status. Record only the plan the traveller has approved from May 12 at 12:00 Chicago time.",
+      "kind": "select",
+      "params": {
+        "catalog": "trip_plans",
+        "expect_entry": "plan-final",
+        "expect": {
+          "total_usd": 5615
+        },
+        "process_delay": 120,
+        "calendar": "us_central_daily",
+        "result_text": "Plan recorded: approved final plan for the five-person Chicago-Seattle trip - flight SB-733 (air-209) at 2390 USD and hotel LFS-FAM-2 (htl-302) at 1680 USD on current quotes, verified step-free routes CS-SEA-01 (Space Needle, June 13) and CS-SEA-06 (Great Wheel, June 16), shellfish-safe family dining at Harbor Table and the Lakefront Breakfast Room, at most one major attraction per day with hotel rest afternoons on June 14 and June 15, complete budget 5615 USD within every cap, refundable cancellation terms; approved by Morgan Lee on May 12, 2027; no payment taken.",
+        "reject_text": "The requested plan row is not current or does not match an approvable final plan; nothing was recorded.",
+        "facts": [
+          "itinerary_paced",
+          "budget_total",
+          "plan_approved"
+        ],
+        "issuer": "trip_desk",
+        "page_update": {
+          "page": "trip-entry",
+          "snippet": "Portal booking desks: an approved final plan request is being recorded; check the trip plan desk status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "trip_dialogue",
+      "usage": "Ask the family organizer, Morgan Lee, one question. Argument: {\"question\": text}. He answers only what is explicitly asked and does not volunteer other facts.",
+      "kind": "dialogue",
+      "params": {
+        "persona": "Morgan Lee (family organizer)",
+        "rules": [
+          {
+            "keywords": [
+              "traveller",
+              "traveler",
+              "who",
+              "names",
+              "ages",
+              "party",
+              "people",
+              "adults",
+              "children"
+            ],
+            "answer": "The travellers are Morgan Lee (41), Jordan Lee (39), Pat Lee (72), Kai Lee (10) and Riley Lee (8) - two adults, one grandparent and two children, five in total."
+          },
+          {
+            "keywords": [
+              "passport",
+              "identity",
+              "document",
+              "numbers"
+            ],
+            "answer": "All five passports are valid through at least August 2028; the validity month is enough - do not request or store full passport numbers. Use Morgan Lee as the booking contact."
+          },
+          {
+            "keywords": [
+              "mobility",
+              "walker",
+              "wheelchair",
+              "stairs",
+              "walk",
+              "accessible",
+              "accessibility",
+              "ramp",
+              "step-free"
+            ],
+            "answer": "Pat uses a folding walker: no stairs anywhere, every walking segment at most 0.3 miles, step-free routes only, and the hotel needs a provider-confirmed roll-in shower for five people."
+          },
+          {
+            "keywords": [
+              "dietary",
+              "shellfish",
+              "allergy",
+              "allergen",
+              "food",
+              "child menu",
+              "dinner",
+              "meal",
+              "breakfast"
+            ],
+            "answer": "Jordan has a shellfish allergy - every family dinner needs a confirmed cross-contact answer from the provider, never a menu label. Kai and Riley need child menus with early dinners, and we prefer a vegetarian breakfast."
+          },
+          {
+            "keywords": [
+              "budget",
+              "cost",
+              "price",
+              "total",
+              "money",
+              "cap",
+              "spend"
+            ],
+            "answer": "Caps: airfare at most 2400 USD, hotel at most 1800 USD, ground transport at most 450, food at most 700, attractions at most 300, plus 300 contingency, and the complete trip at most 6000 USD."
+          },
+          {
+            "keywords": [
+              "dates",
+              "date",
+              "when",
+              "schedule",
+              "outbound",
+              "return",
+              "nights"
+            ],
+            "answer": "Outbound June 12, 2027, returning June 17 - five nights in Seattle. The outbound flight must be a current round trip arriving before 16:00 local time."
+          },
+          {
+            "keywords": [
+              "transport",
+              "compare",
+              "mode",
+              "rail",
+              "train",
+              "drive",
+              "bus"
+            ],
+            "answer": "Compare air, rail, driving and the bus alternatives before choosing; we prefer the nonstop flight to SEA if feasible - round trip, at least five seats, seats together if possible, refundable."
+          },
+          {
+            "keywords": [
+              "approve",
+              "approval",
+              "permission",
+              "confirm",
+              "review"
+            ],
+            "answer": "I can review and approve the exact plan only from May 12 at 12:00 Chicago time: show the exact flight, hotel, current quote versions, complete total and cancellation terms, and I will approve that exact plan. Book only after my approval; no payment, and no nonrefundable rate without a fresh explicit approval."
+          },
+          {
+            "keywords": [
+              "itinerary",
+              "attraction",
+              "pacing",
+              "rest"
+            ],
+            "answer": "Keep everyone on one itinerary: no more than two major attractions per day, at least two hotel rest afternoons, and prefer a central hotel with a short accessible route."
+          }
+        ],
+        "default": "Please ask me about the travellers, mobility, food needs, dates, budget or approval."
+      }
+    }
+  ],
+  "judge_criteria": [
+    {
+      "id": "TRF1-facts-before-commitment",
+      "statement": "The family facts were collected through targeted dialogue before any booking, and no full passport numbers were requested or stored.",
+      "pass_if": "The trace shows dialogue questions covering the travellers, identity handling, mobility, dietary needs, budget and approval before the booking submissions, and no request for full passport numbers anywhere.",
+      "source": "trace"
+    },
+    {
+      "id": "TRF7-approval-before-booking",
+      "statement": "Fresh user approval of the exact plan precedes both bookings.",
+      "pass_if": "The trace shows Morgan approving the exact flight, hotel, current quotes, complete total and cancellation terms before the flight and hotel booking submissions.",
+      "source": "trace"
+    },
+    {
+      "id": "TRF9-truthful-summary",
+      "statement": "The final summary accurately distinguishes confirmed, lapsed and cancelled records.",
+      "pass_if": "The final answer reports the confirmed flight and hotel bookings with amounts and refundable terms, reports the lapsed hold and the cancelled flight and over-cap rate as not booked, and claims neither payment nor completed travel.",
+      "source": "final_answer"
+    }
+  ],
+  "public": {
+    "id": "DSB-41",
+    "title": "Five-person Chicago-Seattle family trip: recovered inventory and exact approval",
+    "brief": "Please arrange a practical five-person, five-night family trip from Chicago to Seattle in June 2027. Keep it safe and within our budget. Ask me for anything important before you commit to anything.",
+    "user_fields": {
+      "outbound_date": "2027-06-12",
+      "return_date": "2027-06-17",
+      "travellers": 5
+    },
+    "initial_contacts": [],
+    "pages": [
+      {
+        "id": "trip-intro",
+        "title": "Skybridge Travel Portal",
+        "text": "Synthetic flight and hotel inventory for benchmark scenarios. Current flights are listed through the flight search service (flight_search) and current hotels through the hotel search service (hotel_search); quotes can be revised, cancelled or sold out mid-week, so an earlier result may go stale - re-check before booking. Door-to-door transport alternatives are compared through the transport comparison service (transport_modes). Accessibility routes come from the CityStep route service (access_routes), restaurant allergen records from the SafePlate dining service (dining_search), and current attraction listings from the attraction service (attraction_search). The traveller's own requirements can be clarified only through the family profile desk (trip_dialogue). Written accessibility confirmations come from the providers themselves by mail.",
+        "contacts": [],
+        "snippet": "Skybridge Travel Portal: current flight and hotel inventory, transport comparison, routes, dining and attraction services.",
+        "url": "https://skybridgetrip.bench/intro"
+      },
+      {
+        "id": "trip-contacts",
+        "title": "Skybridge portal contacts",
+        "text": "The Lakefront Suites Seattle accessibility desk is handled by Dana Rowe; the Skybridge Air inventory desk by Marcus Vaughn; the SafePlate Directory verification desk by Priya Nair; the CityStep Access route desk by Tomas Iglesias; and the Family Trip Desk plan desk by Rhea Sutton. All five desks answer daily during business hours.",
+        "contacts": [
+          "lakefront_desk",
+          "skybridge_desk",
+          "safeplate_desk",
+          "citystep_desk",
+          "trip_desk"
+        ],
+        "snippet": "Contacts for the Lakefront, Skybridge, SafePlate, CityStep and trip-plan desks.",
+        "url": "https://skybridgetrip.bench/contact"
+      },
+      {
+        "id": "trip-entry",
+        "title": "Portal booking desks",
+        "text": "Bookings go through four desks. The Lakefront hold desk (place_hotel_hold) can hold the accessible-suite rate shown in one current hotel_search row - a hold is not a booking and lapses if not converted in time. The flight booking desk (book_flight) and the hotel booking desk (book_hotel) each take exactly one current listing for the whole family. The trip plan desk (confirm_trip_plan) records the exact final plan chosen from one current trip plan listing (trip_plans). The traveller can review and approve the exact plan only from May 12 at 12:00 Chicago time; submit bookings only after that approval; at most one booking per desk; no payment is taken anywhere. Stale rows are revalidated against live inventory at booking time.",
+        "contacts": [],
+        "snippet": "Flight, hotel, hold and trip-plan desks; approval window, one-booking discipline, no payment.",
+        "url": "https://skybridgetrip.bench/entry"
+      },
+      {
+        "id": "trip-faq",
+        "title": "Portal mechanics",
+        "text": "Display codes can be rewritten and two listings may share one physical flight - compare the operating carrier and flight numbers, not the display ids. Cached or old quotes are not current quotes. A provider hold is not a booking and lapses without conversion. A pending accessibility confirmation is not a verified room. This page says nothing about the family's own requirements; ask the traveller through the family profile desk (trip_dialogue).",
+        "contacts": [],
+        "snippet": "Portal mechanics: codeshares, stale quotes, holds and pending confirmations.",
+        "url": "https://skybridgetrip.bench/faq"
+      }
+    ],
+    "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "check_schedule"
+    ],
+    "authorization": "Advisory and coordination only: search listings, compare options, contact providers, gather written verification, hold at most one rate, and create at most the one approved flight booking and one approved hotel booking after the traveller approves the exact plan; no payment or other binding commitment.",
+    "answer_keys": [
+      "flight_booked",
+      "flight_total",
+      "hotel_booked",
+      "hotel_accessible",
+      "hotel_total",
+      "routes_step_free",
+      "dining_shellfish_safe",
+      "itinerary_paced",
+      "trip_budget_total",
+      "plan_approval_recorded"
+    ],
+    "value_normalization": {
+      "flight_booked": {
+        "type": "boolean"
+      },
+      "flight_total": {
+        "type": "number",
+        "units": {}
+      },
+      "hotel_booked": {
+        "type": "boolean"
+      },
+      "hotel_accessible": {
+        "type": "boolean"
+      },
+      "hotel_total": {
+        "type": "number",
+        "units": {}
+      },
+      "routes_step_free": {
+        "type": "boolean"
+      },
+      "dining_shellfish_safe": {
+        "type": "boolean"
+      },
+      "itinerary_paced": {
+        "type": "boolean"
+      },
+      "trip_budget_total": {
+        "type": "number",
+        "units": {}
+      },
+      "plan_approval_recorded": {
+        "type": "boolean"
+      }
+    },
+    "conclusion_options": {
+      "trip_completed": "Both approved bookings confirmed within every budget cap",
+      "unconfirmed": "Required verification or approval could not be obtained before the deadline",
+      "not_feasible": "No combination of current options satisfies the family's hard constraints"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "flight_booked": {
+      "value": true,
+      "text": "Exactly one refundable round-trip nonstop booking for five travellers on SB-733/SB-734 (listing air-209), ORD to SEA, outbound 2027-06-12 arriving 15:20 local and return 2027-06-17, five seats together, has been confirmed; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "flight_booked"
+      }
+    },
+    "flight_total": {
+      "value": 2390,
+      "text": "The booked five-traveller round-trip airfare is 2390 USD, within the 2400 USD airfare cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "flight_total"
+      }
+    },
+    "hotel_booked": {
+      "value": true,
+      "text": "Exactly one refundable five-person accessible family suite booking (listing htl-302, LFS-FAM-2, South Lake Union) for five nights 2027-06-12 to 2027-06-17 has been confirmed with free cancellation until 2027-06-09 18:00 Pacific; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_booked"
+      }
+    },
+    "hotel_total": {
+      "value": 1680,
+      "text": "The booked five-night hotel stay totals 1680 USD, within the 1800 USD hotel cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_total"
+      }
+    },
+    "hotel_accessible": {
+      "value": true,
+      "text": "Provider verification access-htl-302-2027 confirms the Lakefront family suite (LFS-FAM-2) has a roll-in shower with grab bars, a step-free entrance and an elevator for five-person occupancy.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_accessible"
+      }
+    },
+    "hotel_301_accessible": {
+      "value": true,
+      "text": "Provider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_301_accessible"
+      }
+    },
+    "hotel_hold_until": {
+      "value": "2027-05-14T09:00",
+      "text": "The Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_hold_until"
+      }
+    },
+    "route_401_ok": {
+      "value": true,
+      "text": "CityStep verification CS-SEA-01: the current route from the Lakefront family suite to the Space Needle is step-free with zero stairs and a longest walking segment of 0.3 miles (one transfer).",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "routes_step_free"
+      }
+    },
+    "route_406_ok": {
+      "value": true,
+      "text": "CityStep verification CS-SEA-06: the current route from the Lakefront family suite to the Seattle Great Wheel is step-free with zero stairs and a longest walking segment of 0.25 miles (one transfer).",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "routes_step_free"
+      }
+    },
+    "dining_501_safe": {
+      "value": true,
+      "text": "SafePlate confirmation SAFE-SEA-01: Harbor Table keeps a separate preparation area and the manager confirms no shellfish cross-contact for the selected family dishes; a child menu is available for early dinners.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "dining_shellfish_safe"
+      }
+    },
+    "dining_505_safe": {
+      "value": true,
+      "text": "SafePlate confirmation SAFE-SEA-05: the Lakefront Breakfast Room breakfast kitchen uses no shellfish (manager confirmation recorded); child menu and vegetarian breakfast available.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "dining_shellfish_safe"
+      }
+    },
+    "itinerary_paced": {
+      "value": true,
+      "text": "The recorded itinerary keeps at most one major attraction per day (Space Needle on June 13, Great Wheel on June 16) with hotel rest afternoons on June 14 and June 15, and uses only current verified step-free routes and shellfish-safe family dining.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "itinerary_paced"
+      }
+    },
+    "budget_total": {
+      "value": 5615,
+      "text": "The complete current trip budget is 5615 USD: airfare 2390, hotel 1680, ground transport 360, food 620, attractions 265 and 300 contingency - within every category cap and the 6000 USD trip cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "trip_budget_total"
+      }
+    },
+    "plan_approved": {
+      "value": true,
+      "text": "Morgan Lee approved the exact final plan (flight air-209 / SB-733, hotel htl-302 / LFS-FAM-2, current quote versions, complete total 5615 USD, refundable cancellation terms) on May 12, 2027 after 12:00 Chicago time, before either booking was submitted.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "plan_approval_recorded"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "lakefront_desk",
+      "name": "Lakefront Suites Seattle accessibility desk·Dana Rowe",
+      "role": "hotel accessibility verification, exact-room records and hold terms",
+      "description": "Confirms exact-room accessibility and hold terms in writing; rates can change without notice; bookings go through the hotel booking desk named on the entry page.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "danarowe@bench.example"
+      },
+      "knowledge": [
+        "hotel_301_accessible",
+        "hotel_accessible",
+        "hotel_booked",
+        "hotel_hold_until",
+        "hotel_total"
+      ],
+      "tools": {
+        "lakefront_desk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "lakefront_desk.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "hotel_301_accessible",
+            "hotel_hold_until"
+          ]
+        },
+        "lakefront_desk.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "hotel_301_accessible",
+            "hotel_hold_until"
+          ]
+        },
+        "lakefront_desk.main.4.reply": {
+          "kind": "reply"
+        },
+        "lakefront_desk.rates.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "hotel_accessible"
+          ]
+        },
+        "lakefront_desk.rates.2.document": {
+          "kind": "document",
+          "facts": [
+            "hotel_accessible"
+          ]
+        },
+        "lakefront_desk.rates.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Accessible suite verification",
+          "aliases": [
+            "accessible",
+            "roll-in",
+            "shower",
+            "suite",
+            "hold",
+            "verification",
+            "access",
+            "htl-301",
+            "lfs-access"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "lakefront_desk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the exact accessible suite record and hold terms",
+              "tool": "lakefront_desk.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 1440
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "lakefront_desk.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "lakefront_desk.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "rates",
+          "label": "Current rates and cancellation terms",
+          "aliases": [
+            "rate",
+            "quote",
+            "cancellation",
+            "refundable",
+            "lfs-fam"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "rates_1",
+              "label": "check the provider-confirmed family suite record",
+              "tool": "lakefront_desk.rates.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "rates_2",
+              "label": "签发书面确认",
+              "tool": "lakefront_desk.rates.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "rates_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "lakefront_desk.rates.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Lakefront Suites Seattle accessibility desk·Dana Rowe，负责hotel accessibility verification, exact-room records and hold terms。Confirms exact-room accessibility and hold terms in writing; rates can change without notice; bookings go through the hotel booking desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:hotel_301_accessible",
+        "attest:hotel_accessible",
+        "attest:hotel_booked",
+        "attest:hotel_hold_until",
+        "attest:hotel_total"
+      ]
+    },
+    {
+      "id": "skybridge_desk",
+      "name": "Skybridge Air inventory desk·Marcus Vaughn",
+      "role": "flight inventory and booking records",
+      "description": "Never quotes inventory by mail; the portal search service and the booking desk are the only flight channels.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "marcusvaughn@bench.example"
+      },
+      "knowledge": [
+        "flight_booked",
+        "flight_total"
+      ],
+      "tools": {
+        "skybridge_desk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "skybridge_desk.main.2.deny": {
+          "kind": "deny",
+          "text": "Current flight inventory is only available through the Skybridge search service (flight_search) named on the portal page; I cannot quote or confirm flights by mail. Bookings go through the flight booking desk (book_flight) named on the entry page; no payment is taken there."
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Flight inventory questions",
+          "aliases": [
+            "flight",
+            "air",
+            "schedule",
+            "inventory",
+            "booking",
+            "skybridge",
+            "seat"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "skybridge_desk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "明确表示不知情或不归管",
+              "tool": "skybridge_desk.main.2.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Skybridge Air inventory desk·Marcus Vaughn，负责flight inventory and booking records。Never quotes inventory by mail; the portal search service and the booking desk are the only flight channels. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:flight_booked",
+        "attest:flight_total"
+      ]
+    },
+    {
+      "id": "safeplate_desk",
+      "name": "SafePlate Directory verification desk·Priya Nair",
+      "role": "restaurant allergen verification records",
+      "description": "Confirms recorded cross-contact protocols in writing; a vegetarian label or an old menu is not a current verification.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "priyanair4@bench.example"
+      },
+      "knowledge": [
+        "dining_501_safe",
+        "dining_505_safe"
+      ],
+      "tools": {
+        "safeplate_desk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "safeplate_desk.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "dining_501_safe",
+            "dining_505_safe"
+          ]
+        },
+        "safeplate_desk.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "dining_501_safe",
+            "dining_505_safe"
+          ]
+        },
+        "safeplate_desk.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Shellfish cross-contact verification",
+          "aliases": [
+            "shellfish",
+            "allergen",
+            "allergy",
+            "cross-contact",
+            "dining",
+            "restaurant",
+            "safeplate",
+            "menu"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "safeplate_desk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the recorded shellfish cross-contact confirmations",
+              "tool": "safeplate_desk.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "safeplate_desk.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "safeplate_desk.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是SafePlate Directory verification desk·Priya Nair，负责restaurant allergen verification records。Confirms recorded cross-contact protocols in writing; a vegetarian label or an old menu is not a current verification. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:dining_shellfish_safe"
+      ]
+    },
+    {
+      "id": "citystep_desk",
+      "name": "CityStep Access route desk·Tomas Iglesias",
+      "role": "route accessibility verification records",
+      "description": "Confirms current step-free routes in writing; stale or unverifiable routes are reported as such.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "tomasiglesias@bench.example"
+      },
+      "knowledge": [
+        "route_401_ok",
+        "route_406_ok"
+      ],
+      "tools": {
+        "citystep_desk.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "route_401_ok",
+            "route_406_ok"
+          ]
+        },
+        "citystep_desk.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "route_401_ok",
+            "route_406_ok"
+          ]
+        },
+        "citystep_desk.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Route accessibility verification",
+          "aliases": [
+            "route",
+            "step-free",
+            "stairs",
+            "walk",
+            "citystep",
+            "transfer"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "check the current verified step-free routes",
+              "tool": "citystep_desk.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 90
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "citystep_desk.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "citystep_desk.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是CityStep Access route desk·Tomas Iglesias，负责route accessibility verification records。Confirms current step-free routes in writing; stale or unverifiable routes are reported as such. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:routes_step_free"
+      ]
+    },
+    {
+      "id": "trip_desk",
+      "name": "Family Trip Desk plan desk·Rhea Sutton",
+      "role": "final plan recording",
+      "description": "Only records plans the traveller has approved; never invents or revises plan contents.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "rheasutton@bench.example"
+      },
+      "knowledge": [
+        "budget_total",
+        "itinerary_paced",
+        "plan_approved"
+      ],
+      "tools": {
+        "trip_desk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "trip_desk.main.2.deny": {
+          "kind": "deny",
+          "text": "The exact plan is approved with the traveller directly through the family profile desk (trip_dialogue); the recorded written plan confirmation comes only through the trip plan desk (confirm_trip_plan) named on the entry page."
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Plan recording questions",
+          "aliases": [
+            "plan",
+            "itinerary",
+            "budget",
+            "approval",
+            "total"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "trip_desk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "明确表示不知情或不归管",
+              "tool": "trip_desk.main.2.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Family Trip Desk plan desk·Rhea Sutton，负责final plan recording。Only records plans the traveller has approved; never invents or revises plan contents. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:itinerary_paced",
+        "attest:plan_approval_recorded",
+        "attest:trip_budget_total"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "flight_booked",
+      "expected": true,
+      "accepted_facts": [
+        "flight_booked"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "flight_booked",
+        "authorities": [
+          "attest:flight_booked"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "flight_total",
+      "expected": 2390,
+      "accepted_facts": [
+        "flight_total"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "flight_total",
+        "authorities": [
+          "attest:flight_total"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "hotel_booked",
+      "expected": true,
+      "accepted_facts": [
+        "hotel_booked"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_booked",
+        "authorities": [
+          "attest:hotel_booked"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "hotel_accessible",
+      "expected": true,
+      "accepted_facts": [
+        "hotel_accessible"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_accessible",
+        "authorities": [
+          "attest:hotel_accessible"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "hotel_total",
+      "expected": 1680,
+      "accepted_facts": [
+        "hotel_total"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_total",
+        "authorities": [
+          "attest:hotel_total"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "routes_step_free",
+      "expected": true,
+      "accepted_facts": [
+        "route_401_ok",
+        "route_406_ok"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "routes_step_free",
+        "authorities": [
+          "attest:routes_step_free"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "dining_shellfish_safe",
+      "expected": true,
+      "accepted_facts": [
+        "dining_501_safe",
+        "dining_505_safe"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "dining_shellfish_safe",
+        "authorities": [
+          "attest:dining_shellfish_safe"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "itinerary_paced",
+      "expected": true,
+      "accepted_facts": [
+        "itinerary_paced"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "itinerary_paced",
+        "authorities": [
+          "attest:itinerary_paced"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "trip_budget_total",
+      "expected": 5615,
+      "accepted_facts": [
+        "budget_total"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "trip_budget_total",
+        "authorities": [
+          "attest:trip_budget_total"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "plan_approval_recorded",
+      "expected": true,
+      "accepted_facts": [
+        "plan_approved"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "plan_approval_recorded",
+        "authorities": [
+          "attest:plan_approval_recorded"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "trip_completed",
+  "temporal_mechanisms": [
+    "mid-window flight cancellation removes the initially-best flight and its codeshare",
+    "mid-window hotel rate change pushes the held room over cap",
+    "accessibility-provider mail turnaround grants a time-limited hold",
+    "hold that lapses without conversion",
+    "approval window opens May 12 at 12:00",
+    "search-discoverable portal inventories with noisy rows",
+    "codeshare deduplication trap in flight listings",
+    "sparse prompt: family constraints only surface through dialogue"
+  ],
+  "failure_modes": [
+    "booking the cancelled SB-417 or its codeshare after May 10",
+    "counting AC-9417 as a second independent physical flight",
+    "booking the over-cap 1890 rate or the lapsed held room",
+    "booking before Morgan approves the exact plan",
+    "selecting a room without a provider-confirmed roll-in shower",
+    "choosing a nonrefundable rate or a connecting, wrong-airport, late or seat-short flight",
+    "planning routes with stairs or walking segments over 0.3 miles",
+    "treating a vegetarian label or an old menu as shellfish safety",
+    "stacking attractions or omitting the rest afternoons",
+    "treating stale quotes as current",
+    "requesting or storing full passport numbers"
+  ],
+  "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "trip-contacts"
+    },
+    {
+      "op": "discover",
+      "name": "trip_dialogue"
+    },
+    {
+      "op": "tool",
+      "name": "trip_dialogue",
+      "args": {
+        "question": "Who are the travellers and what are their ages?"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "trip_dialogue",
+      "args": {
+        "question": "What identity and passport details do you need for the booking?"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "trip_dialogue",
+      "args": {
+        "question": "What are the mobility and accessibility needs?"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "trip_dialogue",
+      "args": {
+        "question": "What are the dietary needs and meal requirements?"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "trip_dialogue",
+      "args": {
+        "question": "What is the budget for the trip?"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "trip_dialogue",
+      "args": {
+        "question": "What are the trip dates and flight requirements?"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "trip_dialogue",
+      "args": {
+        "question": "How should we compare transport modes?"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "trip_dialogue",
+      "args": {
+        "question": "What is the approval process before booking?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "transport_modes"
+    },
+    {
+      "op": "tool",
+      "name": "transport_modes",
+      "args": {
+        "query": "Chicago to Seattle family trip modes"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "flight_search"
+    },
+    {
+      "op": "tool",
+      "name": "flight_search",
+      "args": {
+        "query": "ORD SEA nonstop round trip"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "hotel_search"
+    },
+    {
+      "op": "tool",
+      "name": "hotel_search",
+      "args": {
+        "query": "Seattle accessible family suite five people"
+      }
+    },
+    {
+      "op": "send",
+      "to": "lakefront_desk",
+      "text": "Please verify the exact accessible suite LFS-ACCESS-1: roll-in shower, five-person occupancy, hold arrangements, and written verification.",
+      "label": "verify",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "verify"
+    },
+    {
+      "op": "tool",
+      "name": "hotel_search",
+      "args": {
+        "query": "accessible family suite hold"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "place_hotel_hold"
+    },
+    {
+      "op": "tool",
+      "name": "place_hotel_hold",
+      "args": {
+        "entry": "htl-301-confirmed"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "access_routes"
+    },
+    {
+      "op": "tool",
+      "name": "access_routes",
+      "args": {
+        "query": "step-free routes"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "dining_search"
+    },
+    {
+      "op": "tool",
+      "name": "dining_search",
+      "args": {
+        "query": "shellfish safe child menu dinner"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "attraction_search"
+    },
+    {
+      "op": "tool",
+      "name": "attraction_search",
+      "args": {
+        "query": "Seattle attractions step-free"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-05-10T10:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "flight_search",
+      "args": {
+        "query": "current nonstop round trip"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-05-12T10:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "hotel_search",
+      "args": {
+        "query": "current family suite rate"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-05-12T12:30:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "trip_dialogue",
+      "args": {
+        "question": "Do you approve the exact plan: flight SB-733 at 2390 USD, hotel LFS-FAM-2 at 1680 USD, current quotes, 5615 USD total, refundable terms?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "confirm_trip_plan"
+    },
+    {
+      "op": "tool",
+      "name": "confirm_trip_plan",
+      "args": {
+        "entry": "plan-final"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-05-12T15:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "confirm_trip_plan",
+      "args": {
+        "query": "plan status"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "book_flight"
+    },
+    {
+      "op": "tool",
+      "name": "book_flight",
+      "args": {
+        "entry": "air-209"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-05-12T17:30:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "book_flight",
+      "args": {
+        "query": "booking status"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "book_hotel"
+    },
+    {
+      "op": "tool",
+      "name": "book_hotel",
+      "args": {
+        "entry": "htl-302"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-05-13T09:30:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "book_hotel",
+      "args": {
+        "query": "booking status"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-05-14T15:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "place_hotel_hold",
+      "args": {
+        "query": "hold status"
+      }
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; using the provider-confirmed family suite (LFS-FAM-2) from the beginning is a legal alternative to the held-suite recovery path, and mail re-verification of routes, dining or the suite is equally valid evidence, but the scored answer keys follow the recovered plan booked after the May 12 approval window opens.",
+  "horizon_design": {
+    "reference_days": 13,
+    "stratum": "中短期",
+    "mechanism": "mid-window flight cancellation and hotel rate change plus a lapsing hold and a late approval gate",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

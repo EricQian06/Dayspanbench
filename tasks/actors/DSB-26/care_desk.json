@@ -1,0 +1,284 @@
+{
+  "private": true,
+  "task_id": "DSB-26",
+  "actor": {
+    "id": "care_desk",
+    "name": "Vetted care coordination desk·Nadia Ochoa",
+    "role": "caregiver vetting, staffing reviews and care reservations",
+    "description": "Runs vetting and the final staffing review, and reserves named caregivers only under the parent's individual approval; a withdrawn caregiver's bookings and approvals are cancelled and a replacement must be reapproved before travel is booked.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "nadiaochoa@bench.example"
+    },
+    "knowledge": [
+      "care_a_withdrawn",
+      "care_reserved",
+      "caregivers_vetted",
+      "staffing_final"
+    ],
+    "tools": {
+      "care_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "care_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "caregivers_vetted"
+        ]
+      },
+      "care_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "caregivers_vetted"
+        ]
+      },
+      "care_desk.main.4.reply": {
+        "kind": "reply"
+      },
+      "care_desk.staffing.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "care_desk.staffing.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "staffing_final",
+          "care_a_withdrawn"
+        ]
+      },
+      "care_desk.staffing.3.document": {
+        "kind": "document",
+        "facts": [
+          "staffing_final",
+          "care_a_withdrawn"
+        ]
+      },
+      "care_desk.staffing.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Caregiver vetting",
+        "aliases": [
+          "vet",
+          "vetting",
+          "verify",
+          "care-a",
+          "care-b",
+          "dana",
+          "rosa",
+          "background",
+          "candidate"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "care_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "complete the vetting review for the requested caregivers",
+            "tool": "care_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 780
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "care_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "care_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "staffing",
+        "label": "Staffing review status",
+        "aliases": [
+          "staffing",
+          "final",
+          "review",
+          "withdraw",
+          "withdrew",
+          "cancelled",
+          "replacement",
+          "status"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "staffing_1",
+            "label": "发出受理回执",
+            "tool": "care_desk.staffing.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "staffing_2",
+            "label": "check the final staffing review outcome and any withdrawal",
+            "tool": "care_desk.staffing.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 600
+            }
+          },
+          {
+            "id": "staffing_3",
+            "label": "签发书面确认",
+            "tool": "care_desk.staffing.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "staffing_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "care_desk.staffing.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Vetted care coordination desk·Nadia Ochoa，负责caregiver vetting, staffing reviews and care reservations。Runs vetting and the final staffing review, and reserves named caregivers only under the parent's individual approval; a withdrawn caregiver's bookings and approvals are cancelled and a replacement must be reapproved before travel is booked. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:care_reserved",
+      "attest:caregiver_withdrawal_handled",
+      "attest:caregivers_vetted",
+      "attest:staffing_review_final"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "care_a_withdrawn": {
+      "value": true,
+      "text": "Dana Whitfield (care-A) withdrew on September 3; any linked care booking and approval were cancelled at no fee, and Rosa Ibarra (care-B) remained available.",
+      "available_at": "2027-09-03T09:00:00-05:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-26",
+          "case": {
+            "city": "Chicago",
+            "trip_start": "2027-09-07",
+            "trip_end": "2027-09-09"
+          }
+        },
+        "predicate": "caregiver_withdrawal_handled"
+      }
+    },
+    "care_reserved": {
+      "value": true,
+      "text": "Care booking care-booking-XTF2 reserves vetted caregiver Rosa Ibarra (care-B) for 2027-09-08 09:00-14:00 under Priya Shah's named replacement approval, covering the full gap grandmother cannot.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-26",
+          "case": {
+            "city": "Chicago",
+            "trip_start": "2027-09-07",
+            "trip_end": "2027-09-09"
+          }
+        },
+        "predicate": "care_reserved"
+      }
+    },
+    "caregivers_vetted": {
+      "value": true,
+      "text": "The care agency's vetting review (September 2, 10:00 Central) cleared caregivers Dana Whitfield (care-A) and Rosa Ibarra (care-B) for the 2027-09-08 09:00-14:00 gap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-26",
+          "case": {
+            "city": "Chicago",
+            "trip_start": "2027-09-07",
+            "trip_end": "2027-09-09"
+          }
+        },
+        "predicate": "caregivers_vetted"
+      }
+    },
+    "staffing_final": {
+      "value": true,
+      "text": "The care agency's final staffing review completed on 2027-09-03 at 09:00 Central time.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-26",
+          "case": {
+            "city": "Chicago",
+            "trip_start": "2027-09-07",
+            "trip_end": "2027-09-09"
+          }
+        },
+        "predicate": "staffing_review_final"
+      }
+    }
+  },
+  "start_at": "2027-09-01T09:00:00-05:00",
+  "deadline_at": "2027-09-03T17:00:00-05:00"
+}

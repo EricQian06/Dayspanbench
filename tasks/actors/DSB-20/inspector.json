@@ -1,0 +1,114 @@
+{
+  "private": true,
+  "task_id": "DSB-20",
+  "actor": {
+    "id": "inspector",
+    "name": "ClearDry independent inspector·Marcus Webb",
+    "role": "independent post-remediation retesting",
+    "description": "Runs the independent retest after drying; written results only through the records desk.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "marcuswebb@bench.example"
+    },
+    "knowledge": [
+      "retest_passed"
+    ],
+    "tools": {
+      "inspector.main.1.deny": {
+        "kind": "deny",
+        "text": "Written retest outcomes are issued only through the remediation records desk (remediation_records_desk) on the entry page once the registered job's reports exist, in order: inspection, repair, drying, then my independent retest. I cannot pre-report or mail a result, and a photo, a draft or another unit's passing test is never clearance evidence."
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Retest protocol inquiry",
+        "aliases": [
+          "retest",
+          "protocol",
+          "independent",
+          "lab",
+          "clearance"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "inspector.main.1.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是ClearDry independent inspector·Marcus Webb，负责independent post-remediation retesting。Runs the independent retest after drying; written results only through the records desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:retest_independent_pass"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "retest_passed": {
+      "value": true,
+      "text": "Signed independent retest retest-A (August 23, 2027, after drying): pass for unitA under the specified protocol. This is not a universal health guarantee.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-20",
+          "case": {
+            "move_in_date": "2027-09-01",
+            "max_rent_usd": 2200,
+            "bedrooms": 2,
+            "preferred_unit": "unitA"
+          }
+        },
+        "predicate": "retest_independent_pass"
+      }
+    }
+  },
+  "start_at": "2027-08-18T09:00:00-05:00",
+  "deadline_at": "2027-08-24T17:00:00-05:00"
+}

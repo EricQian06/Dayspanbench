@@ -1,0 +1,200 @@
+{
+  "private": true,
+  "task_id": "DSB-33",
+  "actor": {
+    "id": "dispatch",
+    "name": "Metro Plumbing dispatch desk·Sam Ortiz",
+    "role": "the slot board and inspection bookings",
+    "description": "Runs the slot board; appointments are booked only through the booking desk.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "samortiz@bench.example"
+    },
+    "knowledge": [
+      "fee_usd",
+      "inspection_confirmed",
+      "provider",
+      "slot_date",
+      "slot_start",
+      "tenant_present"
+    ],
+    "tools": {
+      "dispatch.main.1.deny": {
+        "kind": "deny",
+        "text": "Bookings go only through the dispatch board's booking desk (inspection_booking_desk) on the entry page, using a current slot board row - I cannot confirm or hold an appointment by mail. The tenant must approve the exact slot, provider, window and scope first; entry is tenant-present only, and repairs are never part of a booking."
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Booking desk referral",
+        "aliases": [
+          "book",
+          "slot",
+          "appointment",
+          "dispatch",
+          "confirm",
+          "plumbing",
+          "schedule"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "dispatch.main.1.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Metro Plumbing dispatch desk·Sam Ortiz，负责the slot board and inspection bookings。Runs the slot board; appointments are booked only through the booking desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:fee_usd",
+      "attest:inspection_confirmed",
+      "attest:provider",
+      "attest:slot_date",
+      "attest:slot_start",
+      "attest:tenant_present_only"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "fee_usd": {
+      "value": 40,
+      "text": "The inspection fee is 40 USD including fees, within the 45 USD cap, paid by the landlord.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-33",
+          "case": {
+            "unit": "unit-H",
+            "availability_date": "2027-06-12",
+            "fee_cap_usd": 45
+          }
+        },
+        "predicate": "fee_usd"
+      }
+    },
+    "inspection_confirmed": {
+      "value": true,
+      "text": "One attended inspection is confirmed (appointment-HOM1) with Pipe-B Plumbing at unit-H on 2027-06-12 from 11:00 to 12:00.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-33",
+          "case": {
+            "unit": "unit-H",
+            "availability_date": "2027-06-12",
+            "fee_cap_usd": 45
+          }
+        },
+        "predicate": "inspection_confirmed"
+      }
+    },
+    "provider": {
+      "value": "pipe-B",
+      "text": "The confirmed provider is Pipe-B Plumbing (provider id pipe-B), a landlord-approved, verified inspection provider.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-33",
+          "case": {
+            "unit": "unit-H",
+            "availability_date": "2027-06-12",
+            "fee_cap_usd": 45
+          }
+        },
+        "predicate": "provider"
+      }
+    },
+    "slot_date": {
+      "value": "2027-06-12",
+      "text": "The confirmed inspection takes place on Saturday, June 12, 2027.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-33",
+          "case": {
+            "unit": "unit-H",
+            "availability_date": "2027-06-12",
+            "fee_cap_usd": 45
+          }
+        },
+        "predicate": "slot_date"
+      }
+    },
+    "slot_start": {
+      "value": "11:00",
+      "text": "The confirmed inspection slot runs 11:00-12:00 Central time, entirely inside the tenant's 09:00-12:00 home window.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-33",
+          "case": {
+            "unit": "unit-H",
+            "availability_date": "2027-06-12",
+            "fee_cap_usd": 45
+          }
+        },
+        "predicate": "slot_start"
+      }
+    },
+    "tenant_present": {
+      "value": true,
+      "text": "The provider acknowledged tenant-present entry only - no unattended entry, no key sharing, and the cat stays inside.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-33",
+          "case": {
+            "unit": "unit-H",
+            "availability_date": "2027-06-12",
+            "fee_cap_usd": 45
+          }
+        },
+        "predicate": "tenant_present_only"
+      }
+    }
+  },
+  "start_at": "2027-06-10T09:00:00-05:00",
+  "deadline_at": "2027-06-12T12:00:00-05:00"
+}

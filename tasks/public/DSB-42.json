@@ -1,0 +1,86 @@
+{
+  "id": "DSB-42",
+  "title": "Interview rescheduling: two separate recruiters, rotated link, no cross-employer disclosure",
+  "brief": "Both my final interviews conflict on Wednesday. Keep both opportunities; ask me about my availability, privacy and approval rules first. Check the interview board, confirm each recruiter's replacement separately using only a generic prior-commitment message - never mentioning the other employer or any family details - and after I approve both exact new slots and their current links, reschedule each interview through its own desk, confirming each replacement before its old invitation is superseded. No withdrawal.",
+  "user_fields": {
+    "protected_date": "2027-09-15",
+    "deadline_date": "2027-09-15",
+    "interviews": 2
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "interviews-intro",
+      "title": "Meridian interview scheduling board",
+      "text": "Synthetic interview scheduling records for the Meridian test district. The current interviews and replacement slots are found through the interview board service (interview_board); replacement offers appear once each recruiter confirms them, and meeting links can rotate without notice, so re-check a slot before relying on its link. Each employer's reschedule is confirmed separately through its own desk (stripe_reschedule, shopify_reschedule). Availability, privacy and approval rules can be clarified through the candidate profile desk (candidate_dialogue).",
+      "contacts": [],
+      "snippet": "Meridian interview board, replacement slots, rotated links, and the two per-employer reschedule desks.",
+      "url": "https://interviewdesk.bench/intro"
+    },
+    {
+      "id": "interviews-contacts",
+      "title": "Meridian recruiter contacts",
+      "text": "The Stripe final panel is handled by recruiter Jordan Blake and the Shopify final panel by recruiter Sam Ortiz; each desk answers daily during business hours and handles only its own interview. Messages must use a generic prior commitment and never mention the other employer or family details.",
+      "contacts": [
+        "stripe_recruiter",
+        "shopify_recruiter"
+      ],
+      "snippet": "Contacts for the separate Stripe and Shopify recruiter desks.",
+      "url": "https://interviewdesk.bench/contact"
+    },
+    {
+      "id": "interviews-entry",
+      "title": "Per-employer reschedule desks",
+      "text": "Each interview is rescheduled through its own desk: the Stripe desk (stripe_reschedule) accepts the current Stripe slot row and the Shopify desk (shopify_reschedule) the current Shopify slot row - after the candidate approves both exact new slots and their current links. Each desk confirms its own replacement and supersedes only that employer's old invitation, after the replacement is confirmed; the other employer's interview stays untouched, nothing is withdrawn, and each outcome is read back through its own desk.",
+      "contacts": [],
+      "snippet": "Two separate reschedule desks: exact approved slots, current links, per-employer confirmation, no withdrawal.",
+      "url": "https://interviewdesk.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Contact each recruiter desk separately with a generic prior-commitment message only: never mention the other employer or any family medical details, show the candidate both exact new slots and current links for approval before either change, confirm each replacement before its old invitation is superseded, and withdraw nothing.",
+  "answer_keys": [
+    "stripe_offer_confirmed",
+    "shopify_offer_confirmed",
+    "stripe_rescheduled",
+    "shopify_rescheduled"
+  ],
+  "value_normalization": {
+    "stripe_offer_confirmed": {
+      "type": "boolean"
+    },
+    "shopify_offer_confirmed": {
+      "type": "boolean"
+    },
+    "stripe_rescheduled": {
+      "type": "boolean"
+    },
+    "shopify_rescheduled": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "both_rescheduled": "Both interviews confirmed at their replacements with current links and no disclosure",
+    "unconfirmed": "Recruiter offers, approval or the rotated link could not be obtained in time",
+    "not_feasible": "No slot pair fits the availability and duration constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-09-13T09:00:00-05:00",
+  "deadline_at": "2027-09-15T17:00:00-05:00"
+}

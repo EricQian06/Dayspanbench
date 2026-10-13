@@ -1,0 +1,175 @@
+{
+  "private": true,
+  "task_id": "DSB-41",
+  "actor": {
+    "id": "safeplate_desk",
+    "name": "SafePlate Directory verification desk·Priya Nair",
+    "role": "restaurant allergen verification records",
+    "description": "Confirms recorded cross-contact protocols in writing; a vegetarian label or an old menu is not a current verification.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "priyanair4@bench.example"
+    },
+    "knowledge": [
+      "dining_501_safe",
+      "dining_505_safe"
+    ],
+    "tools": {
+      "safeplate_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "safeplate_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "dining_501_safe",
+          "dining_505_safe"
+        ]
+      },
+      "safeplate_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "dining_501_safe",
+          "dining_505_safe"
+        ]
+      },
+      "safeplate_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Shellfish cross-contact verification",
+        "aliases": [
+          "shellfish",
+          "allergen",
+          "allergy",
+          "cross-contact",
+          "dining",
+          "restaurant",
+          "safeplate",
+          "menu"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "safeplate_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the recorded shellfish cross-contact confirmations",
+            "tool": "safeplate_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "safeplate_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "safeplate_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是SafePlate Directory verification desk·Priya Nair，负责restaurant allergen verification records。Confirms recorded cross-contact protocols in writing; a vegetarian label or an old menu is not a current verification. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:dining_shellfish_safe"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "dining_501_safe": {
+      "value": true,
+      "text": "SafePlate confirmation SAFE-SEA-01: Harbor Table keeps a separate preparation area and the manager confirms no shellfish cross-contact for the selected family dishes; a child menu is available for early dinners.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "dining_shellfish_safe"
+      }
+    },
+    "dining_505_safe": {
+      "value": true,
+      "text": "SafePlate confirmation SAFE-SEA-05: the Lakefront Breakfast Room breakfast kitchen uses no shellfish (manager confirmation recorded); child menu and vegetarian breakfast available.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "dining_shellfish_safe"
+      }
+    }
+  },
+  "start_at": "2027-05-01T09:00:00-05:00",
+  "deadline_at": "2027-05-20T18:00:00-05:00"
+}

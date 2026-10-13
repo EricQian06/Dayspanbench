@@ -1,0 +1,1684 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.4.0",
+  "id": "DSB-23",
+  "title": "Lyon pet stay: delayed late arrival, written pet acceptance and supervision",
+  "domain": "pets_animals",
+  "start_at": "2027-04-16T18:00:00+02:00",
+  "deadline_at": "2027-04-18T18:00:00+02:00",
+  "display_timezone": "Europe/Paris",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
+    }
+  },
+  "reply_delay": [
+    20,
+    45
+  ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "page_updates": [
+    {
+      "page": "lyon-intro",
+      "at": "2027-04-16T20:30:00+02:00",
+      "text": "Lyon pet travel board (April 16, 20:30 update): train train-XPT is delayed to a 23:40 arrival - with the 25-minute transfer, check-in lands at 00:05 on April 17, past the Villa des Roses' written 23:50 limit. Any plan whose transfer ends after the hotel's written check-in deadline is invalid: obtain an explicit written extension and rebind supervision to the updated itinerary before approval. Current hotel terms and the rail record are found through the trip records service (trip_records); re-check before booking.",
+      "snippet": "April 16 20:30 update: train delayed to 23:40; the 23:50 check-in limit no longer fits without a written extension."
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "trip_records",
+      "usage": "Lyon pet-trip records. Argument: query (optional string), e.g. \"Lyon\", \"villa\", \"train\" or \"pet\". Returns the current hotel terms (pet limits, parking, late check-in, totals) and the current rail arrival record; rows can change or disappear as the train slips and the hotel reissues terms, so re-check before booking.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "hotel",
+          "lyon",
+          "pet",
+          "dog",
+          "stay",
+          "train",
+          "arrival",
+          "trip",
+          "travel",
+          "parking",
+          "late"
+        ],
+        "clue": "A trip records service named trip_records lists the current Lyon pet-friendly hotel terms and the rail arrival record.",
+        "entries": [
+          {
+            "id": "villa-v1",
+            "title": "Villa des Roses - two nights, pets considered (awaiting verification)",
+            "text": "Two nights April 16-18; room 310 EUR, pet fee 20 EUR, open-air parking 24 EUR per night, total 378 EUR; late check-in until 23:50; dog acceptance pending written verification. Parking height unrestricted (open air).",
+            "fields": {
+              "hotel": "Villa des Roses",
+              "nights": 2,
+              "room_eur": 310,
+              "pet_eur": 20,
+              "parking_eur_per_night": 24,
+              "total_eur": 378,
+              "late_until": "2027-04-16T23:50:00+02:00",
+              "version": 1,
+              "status": "awaiting_verification"
+            },
+            "expires_at": "2027-04-16T19:00:00+02:00"
+          },
+          {
+            "id": "small-pets",
+            "title": "Small-Pets Hotel - 15 kg dog limit",
+            "text": "Cheapest listing at 300 EUR, but only accepts dogs up to 15 kg; Nino weighs 28 kg.",
+            "fields": {
+              "hotel": "Small-Pets Hotel",
+              "dog_limit_kg": 15,
+              "total_eur": 300,
+              "status": "available"
+            }
+          },
+          {
+            "id": "early-desk",
+            "title": "Early-Desk Inn - late check-in only until 22:00",
+            "text": "Accepts dogs up to 35 kg, 350 EUR, but the desk closes at 22:00 - before even the original 23:10 arrival.",
+            "fields": {
+              "hotel": "Early-Desk Inn",
+              "dog_limit_kg": 35,
+              "late_until": "2027-04-16T22:00:00+02:00",
+              "total_eur": 350,
+              "status": "available"
+            }
+          },
+          {
+            "id": "low-garage",
+            "title": "Low-Garage Hotel - 1.9 m covered garage",
+            "text": "Accepts dogs up to 35 kg, 360 EUR, but its covered garage is limited to 1.9 m; the car is 2.05 m tall.",
+            "fields": {
+              "hotel": "Low-Garage Hotel",
+              "dog_limit_kg": 35,
+              "parking_height_m": 1.9,
+              "total_eur": 360,
+              "status": "available"
+            }
+          },
+          {
+            "id": "afternoon-only",
+            "title": "Afternoon-Only Guesthouse - check-in until 15:00",
+            "text": "280 EUR, but check-in is possible only until 15:00; useless for a late-evening arrival.",
+            "fields": {
+              "hotel": "Afternoon-Only Guesthouse",
+              "checkin_only": "15:00",
+              "total_eur": 280,
+              "status": "available"
+            }
+          },
+          {
+            "id": "premium",
+            "title": "Premium Palace - 500 EUR",
+            "text": "Accepts dogs up to 35 kg with late check-in, but at 500 EUR it exceeds the 420 EUR budget.",
+            "fields": {
+              "hotel": "Premium Palace",
+              "dog_limit_kg": 35,
+              "total_eur": 500,
+              "status": "available"
+            }
+          },
+          {
+            "id": "train-v1",
+            "title": "train-XPT - arrival 23:10 (version 1)",
+            "text": "Current rail record: train-XPT arrives 2027-04-16 at 23:10; station-to-hotel transfer takes 25 minutes.",
+            "fields": {
+              "kind": "train",
+              "train": "train-XPT",
+              "version": 1,
+              "arrival": "2027-04-16T23:10:00+02:00"
+            },
+            "expires_at": "2027-04-16T20:30:00+02:00"
+          }
+        ],
+        "updates": [
+          {
+            "at": "2027-04-16T19:00:00+02:00",
+            "remove": [
+              "villa-v1"
+            ],
+            "add": [
+              {
+                "id": "villa-verified",
+                "title": "Villa des Roses - written 28 kg pet acceptance (late check-in until 23:50)",
+                "text": "Written permission pet-accept-XPT: Nino (pet-XPT, 28 kg, current vet letter) accepted for 2027-04-16 and 2027-04-17; no unattended periods; open-air parking fits the 2.05 m car. Room 310 EUR, pet fee 20 EUR, parking 48 EUR, total 378 EUR. Late check-in until 23:50 - the transfer must end by then.",
+                "fields": {
+                  "hotel": "Villa des Roses",
+                  "nights": 2,
+                  "total_eur": 378,
+                  "late_until": "2027-04-16T23:50:00+02:00",
+                  "version": 1,
+                  "pet_accepted": true,
+                  "parking": "open_air",
+                  "car_height_m": 2.05,
+                  "status": "available"
+                },
+                "expires_at": "2027-04-17T08:30:00+02:00"
+              }
+            ]
+          },
+          {
+            "at": "2027-04-16T20:30:00+02:00",
+            "remove": [
+              "train-v1"
+            ],
+            "add": [
+              {
+                "id": "train-v2",
+                "title": "train-XPT - DELAYED, arrival 23:40 (version 2)",
+                "text": "Updated rail record: train-XPT now arrives 2027-04-16 at 23:40; with the 25-minute transfer, check-in lands at 00:05 on 2027-04-17 - past the hotel's 23:50 limit unless a written extension is obtained.",
+                "fields": {
+                  "kind": "train",
+                  "train": "train-XPT",
+                  "version": 2,
+                  "arrival": "2027-04-16T23:40:00+02:00",
+                  "delayed": true
+                },
+                "facts": [
+                  "train_arrival"
+                ],
+                "issuer": "rail_desk"
+              }
+            ]
+          },
+          {
+            "at": "2027-04-17T08:30:00+02:00",
+            "remove": [
+              "villa-verified"
+            ],
+            "add": [
+              {
+                "id": "villa-extended",
+                "title": "Villa des Roses - written extension, late check-in until 00:30",
+                "text": "Written confirmation late-XPT2: late check-in extended to 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits. Written pet acceptance pet-accept-XPT, open-air parking and the 378 EUR total unchanged. This is a live listing, not a confirmed booking.",
+                "fields": {
+                  "hotel": "Villa des Roses",
+                  "nights": 2,
+                  "total_eur": 378,
+                  "late_until": "2027-04-17T00:30:00+02:00",
+                  "version": 2,
+                  "pet_accepted": true,
+                  "parking": "open_air",
+                  "car_height_m": 2.05,
+                  "extension": "late-XPT2",
+                  "status": "available"
+                },
+                "facts": [
+                  "late_extension"
+                ],
+                "issuer": "hotel_desk"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "stay_book",
+      "usage": "Pet stay booking service. Argument: {\"entry\": listing_id} to request the stay shown in one current trip_records row, or {\"query\": text} to read back the current booking status. Book only the plan the traveler has approved: written exact-dog acceptance, a late-check-in limit that covers the current arrival plus the 25-minute transfer, a companion supervision acknowledgement for that same itinerary, and the total within budget. At most one booking; the dog is never left unattended; no payment is taken.",
+      "kind": "select",
+      "params": {
+        "catalog": "trip_records",
+        "expect_entry": "villa-extended",
+        "expect": {
+          "total_eur": 378,
+          "pet_accepted": true
+        },
+        "process_at": "2027-04-17T09:30:00+02:00",
+        "calendar": "paris_daily",
+        "result_text": "Stay confirmed: reservation stay-XPT1, Villa des Roses, two nights 2027-04-16 to 2027-04-18, for Camille Moreau and Nino - written 28 kg pet acceptance (pet-accept-XPT), late check-in extended to 00:30 (late-XPT2) for the delayed 23:40 arrival, open-air parking for the 2.05 m car, Lea Bernard's supervision linked; total 378 EUR; no payment taken. Arrival and the stay itself remain in the future.",
+        "reject_text": "The booking was returned: the listing is stale or does not match an approvable plan - the written pet acceptance, the current arrival fit, the companion acknowledgement and the traveler's approval must all hold; nothing was booked.",
+        "facts": [
+          "stay_confirmed",
+          "total_cost"
+        ],
+        "issuer": "hotel_desk",
+        "page_update": {
+          "page": "lyon-entry",
+          "snippet": "Booking service: an approved stay request is being processed; check the service status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "camille_dialogue",
+      "usage": "Ask the traveler, Camille Moreau, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
+      "kind": "dialogue",
+      "params": {
+        "persona": "Camille Moreau (traveler with dog Nino)",
+        "rules": [
+          {
+            "keywords": [
+              "pet",
+              "dog",
+              "nino",
+              "weight",
+              "chip",
+              "vet",
+              "letter",
+              "accept",
+              "alone",
+              "unattended"
+            ],
+            "answer": "Nino weighs 28 kg, has existing chip pet-XPT and a current vet letter. The hotel must accept this exact dog in writing, and he must never be left alone - not even during parking or check-in."
+          },
+          {
+            "keywords": [
+              "logistics",
+              "car",
+              "parking",
+              "height",
+              "transfer",
+              "station",
+              "minutes",
+              "checkout",
+              "return",
+              "train",
+              "arrival"
+            ],
+            "answer": "The car is 2.05 m tall and needs confirmed parking. The station-to-hotel transfer takes 25 minutes; my return train leaves Sunday at 10:38 after a 09:00 checkout. Re-check the current arrival time before booking - if the train slips, the old plan no longer fits."
+          },
+          {
+            "keywords": [
+              "companion",
+              "lea",
+              "supervision",
+              "supervise",
+              "who",
+              "watch",
+              "cover"
+            ],
+            "answer": "My companion Lea may stay with Nino and must explicitly confirm it herself - for the itinerary as it actually stands, not an outdated one."
+          },
+          {
+            "keywords": [
+              "approve",
+              "approval",
+              "permission",
+              "confirm",
+              "plan",
+              "book"
+            ],
+            "answer": "Show me the exact hotel, its pet policy, the current arrival deadline, the supervision arrangement and the full total, and I will approve that one plan. If the arrival time or the supervision changes, ask me again. No payment and no pet-policy workaround."
+          },
+          {
+            "keywords": [
+              "request",
+              "budget",
+              "cost",
+              "total",
+              "eur",
+              "nights",
+              "book",
+              "lyon"
+            ],
+            "answer": "Book two nights in Lyon for April 16-18 for me and Nino, total within 420 EUR including pet fees and parking."
+          }
+        ],
+        "default": "Please ask me about Nino, the travel logistics, supervision, budget or approval."
+      }
+    }
+  ],
+  "judge_criteria": [
+    {
+      "id": "XPT-R3-arrival-matched-to-current-train",
+      "statement": "The booking plan matched the current delayed arrival, not the withdrawn schedule.",
+      "pass_if": "The trace shows the plan validated against the 23:40 arrival plus the 25-minute transfer with the written 00:30 extension, with no commitment relying on the 23:50 limit or on a supervision acknowledgement made before the delay.",
+      "source": "trace"
+    },
+    {
+      "id": "XPT-R6-no-future-stay-invented",
+      "statement": "The final summary reports the reservation without inventing performance.",
+      "pass_if": "The final answer states the confirmed reservation with its written conditions, the revised check-in and the linked supervision, and claims neither arrival, stay performance nor payment.",
+      "source": "final_answer"
+    }
+  ],
+  "public": {
+    "id": "DSB-23",
+    "title": "Lyon pet stay: delayed late arrival, written pet acceptance and supervision",
+    "brief": "Book two nights in Lyon for April 16-18 for me and my dog Nino, within 420 EUR including pet fees and parking; my train arrives 23:10 on Friday and I return Sunday at 10:38. Ask me for the missing constraints and authorization first; the hotel must accept this exact dog in writing, someone must stay with him the whole time, and watch the arrival time - if the train slips, re-check before booking. No payment, no pet-policy workaround.",
+    "user_fields": {
+      "city": "Lyon",
+      "checkin": "2027-04-16",
+      "checkout": "2027-04-18",
+      "budget_eur": 420
+    },
+    "initial_contacts": [],
+    "pages": [
+      {
+        "id": "lyon-intro",
+        "title": "Lyon pet travel board",
+        "text": "Synthetic hotel and rail listings for a Lyon stay with a dog; listing claims alone do not establish pet acceptance. Current hotel terms and the rail arrival record are found through the trip records service (trip_records), and both can change - the train may slip and the hotel's terms with it, so re-check before booking. Personal constraints and authorization can be clarified through the traveler desk (camille_dialogue). Written pet and parking acceptance comes from the hotel desk by mail; supervision is acknowledged by the companion herself by mail.",
+        "contacts": [],
+        "snippet": "Lyon hotel listings, the rail arrival record and the traveler requirements desk.",
+        "url": "https://lyonpetstay.bench/intro"
+      },
+      {
+        "id": "lyon-contacts",
+        "title": "Hotel, companion and rail contacts",
+        "text": "The Villa des Roses hotel desk (Marc Aubert) issues written pet acceptances and late-check-in extensions; travel companion Lea Bernard acknowledges animal supervision; the rail service desk (Julien Fabre) reports the current train arrival. All answer daily during business hours.",
+        "contacts": [
+          "hotel_desk",
+          "companion_lea",
+          "rail_desk"
+        ],
+        "snippet": "Contacts for the hotel desk, the travel companion and the rail service desk.",
+        "url": "https://lyonpetstay.bench/contact"
+      },
+      {
+        "id": "lyon-entry",
+        "title": "Pet stay booking service",
+        "text": "Stays are booked through the booking service (stay_book): pick one current trip_records listing whose written terms accept the exact dog and parking and whose late-check-in limit covers the current arrival plus the 25-minute transfer; obtain the companion's supervision acknowledgement for that same itinerary and the traveler's approval of the exact plan (hotel, pet policy, current arrival deadline, supervision, total); then request that one stay. At most one booking; the dog is never left unattended and the driver or desk is never a supervision substitute; no payment.",
+        "contacts": [],
+        "snippet": "Pet stay booking service: written exact-dog acceptance, current arrival fit, named supervision, one booking, no payment.",
+        "url": "https://lyonpetstay.bench/entry"
+      }
+    ],
+    "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "check_schedule"
+    ],
+    "authorization": "Advisory and coordination only: search listings, contact the hotel, companion and rail desk, gather written acceptance and acknowledgements, and place at most the one booking the traveler has approved; no payment, no unattended dog, no pet-policy workaround.",
+    "answer_keys": [
+      "pet_acceptance_written",
+      "train_arrival_current",
+      "late_checkin_deadline",
+      "companion_supervision_acknowledged",
+      "stay_confirmed",
+      "total_cost"
+    ],
+    "value_normalization": {
+      "pet_acceptance_written": {
+        "type": "boolean"
+      },
+      "train_arrival_current": {
+        "type": "text"
+      },
+      "late_checkin_deadline": {
+        "type": "text"
+      },
+      "companion_supervision_acknowledged": {
+        "type": "boolean"
+      },
+      "stay_confirmed": {
+        "type": "boolean"
+      },
+      "total_cost": {
+        "type": "number",
+        "units": {}
+      }
+    },
+    "conclusion_options": {
+      "stay_booked": "One approved pet stay with written acceptance, a fitting late-arrival extension and named supervision within budget",
+      "unconfirmed": "Pet acceptance, the arrival fit or supervision could not be confirmed in time",
+      "not_feasible": "No hotel satisfies the exact-dog, parking, arrival and budget constraints"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "pet_accepted": {
+      "value": true,
+      "text": "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "pet_acceptance_written"
+      }
+    },
+    "train_arrival": {
+      "value": "23:40",
+      "text": "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "train_arrival_current"
+      }
+    },
+    "late_extension": {
+      "value": "00:30",
+      "text": "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
+      "available_at": "2027-04-17T08:30:00+02:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "late_checkin_deadline"
+      }
+    },
+    "companion_ack": {
+      "value": true,
+      "text": "Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.",
+      "available_at": "2027-04-16T20:30:00+02:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "companion_supervision_acknowledged"
+      }
+    },
+    "stay_confirmed": {
+      "value": true,
+      "text": "Reservation stay-XPT1 confirms two nights at the Villa des Roses, 2027-04-16 to 2027-04-18, for Camille Moreau and Nino: written 28 kg pet acceptance, the extended 00:30 late check-in, open-air parking for the 2.05 m car and Lea's supervision linked; total 378 EUR; no payment taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "stay_confirmed"
+      }
+    },
+    "total_cost": {
+      "value": 378,
+      "text": "The stay total is 378 EUR - 310 EUR room for two nights, 20 EUR pet fee and 48 EUR open-air parking for two nights - within the 420 EUR budget.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "total_cost"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "hotel_desk",
+      "name": "Villa des Roses hotel desk·Marc Aubert",
+      "role": "written pet acceptance, parking terms and late check-in extensions",
+      "description": "Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission.",
+      "calendar": "paris_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "marcaubert@bench.example"
+      },
+      "knowledge": [
+        "late_extension",
+        "pet_accepted",
+        "stay_confirmed",
+        "total_cost"
+      ],
+      "tools": {
+        "hotel_desk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "hotel_desk.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "pet_accepted"
+          ]
+        },
+        "hotel_desk.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "pet_accepted"
+          ]
+        },
+        "hotel_desk.main.4.reply": {
+          "kind": "reply"
+        },
+        "hotel_desk.extension.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "hotel_desk.extension.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "late_extension"
+          ]
+        },
+        "hotel_desk.extension.3.document": {
+          "kind": "document",
+          "facts": [
+            "late_extension"
+          ]
+        },
+        "hotel_desk.extension.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Pet and parking verification",
+          "aliases": [
+            "pet",
+            "dog",
+            "nino",
+            "28",
+            "weight",
+            "parking",
+            "verify",
+            "acceptance",
+            "vet",
+            "letter"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "hotel_desk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 10
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the written pet acceptance and parking terms",
+              "tool": "hotel_desk.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 40
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "hotel_desk.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 10
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "hotel_desk.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "extension",
+          "label": "Late check-in extension",
+          "aliases": [
+            "extension",
+            "extend",
+            "midnight",
+            "00:05",
+            "past the",
+            "later than"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "extension_1",
+              "label": "发出受理回执",
+              "tool": "hotel_desk.extension.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 10
+              }
+            },
+            {
+              "id": "extension_2",
+              "label": "issue the written late check-in extension for the delayed itinerary",
+              "tool": "hotel_desk.extension.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 40
+              }
+            },
+            {
+              "id": "extension_3",
+              "label": "签发书面确认",
+              "tool": "hotel_desk.extension.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 10
+              }
+            },
+            {
+              "id": "extension_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "hotel_desk.extension.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Villa des Roses hotel desk·Marc Aubert，负责written pet acceptance, parking terms and late check-in extensions。Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:late_checkin_deadline",
+        "attest:pet_acceptance_written",
+        "attest:stay_confirmed",
+        "attest:total_cost"
+      ]
+    },
+    {
+      "id": "companion_lea",
+      "name": "Travel companion·Lea Bernard",
+      "role": "animal supervision during the trip",
+      "description": "May stay with Nino and acknowledges supervision only for the itinerary shown to her; an acknowledgement for an older arrival time does not carry over after a delay.",
+      "calendar": "paris_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "leabernard@bench.example"
+      },
+      "knowledge": [
+        "companion_ack"
+      ],
+      "tools": {
+        "companion_lea.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "companion_lea.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "companion_ack"
+          ]
+        },
+        "companion_lea.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "companion_ack"
+          ]
+        },
+        "companion_lea.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Supervision acknowledgement",
+          "aliases": [
+            "lea",
+            "companion",
+            "supervise",
+            "supervision",
+            "nino",
+            "dog",
+            "stay",
+            "handoff",
+            "cover",
+            "watch"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "companion_lea.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 10
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "confirm her supervision acknowledgement for the current itinerary",
+              "tool": "companion_lea.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "companion_lea.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 10
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "companion_lea.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Travel companion·Lea Bernard，负责animal supervision during the trip。May stay with Nino and acknowledges supervision only for the itinerary shown to her; an acknowledgement for an older arrival time does not carry over after a delay. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:companion_supervision_acknowledged"
+      ]
+    },
+    {
+      "id": "rail_desk",
+      "name": "Rail service desk·Julien Fabre",
+      "role": "current train arrival and delay status",
+      "description": "Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit.",
+      "calendar": "paris_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "julienfabre@bench.example"
+      },
+      "knowledge": [
+        "train_arrival"
+      ],
+      "tools": {
+        "rail_desk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "rail_desk.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "train_arrival"
+          ]
+        },
+        "rail_desk.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "train_arrival"
+          ]
+        },
+        "rail_desk.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Train arrival status",
+          "aliases": [
+            "train",
+            "rail",
+            "arrival",
+            "delay",
+            "delayed",
+            "station",
+            "transfer",
+            "schedule"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "rail_desk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 10
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the current arrival time of train train-XPT",
+              "tool": "rail_desk.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "rail_desk.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 10
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "rail_desk.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Rail service desk·Julien Fabre，负责current train arrival and delay status。Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:train_arrival_current"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "pet_acceptance_written",
+      "expected": true,
+      "accepted_facts": [
+        "pet_accepted"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "pet_acceptance_written",
+        "authorities": [
+          "attest:pet_acceptance_written"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "train_arrival_current",
+      "expected": "23:40",
+      "accepted_facts": [
+        "train_arrival"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "train_arrival_current",
+        "authorities": [
+          "attest:train_arrival_current"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "23:40": [
+              "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.",
+              "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "23:40": [
+            "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.",
+            "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "late_checkin_deadline",
+      "expected": "00:30",
+      "accepted_facts": [
+        "late_extension"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "late_checkin_deadline",
+        "authorities": [
+          "attest:late_checkin_deadline"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "00:30": [
+              "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
+              "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "00:30": [
+            "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
+            "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "companion_supervision_acknowledged",
+      "expected": true,
+      "accepted_facts": [
+        "companion_ack"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "companion_supervision_acknowledged",
+        "authorities": [
+          "attest:companion_supervision_acknowledged"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "stay_confirmed",
+      "expected": true,
+      "accepted_facts": [
+        "stay_confirmed"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "stay_confirmed",
+        "authorities": [
+          "attest:stay_confirmed"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "total_cost",
+      "expected": 378,
+      "accepted_facts": [
+        "total_cost"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-23",
+          "case": {
+            "city": "Lyon",
+            "checkin": "2027-04-16",
+            "checkout": "2027-04-18",
+            "budget_eur": 420
+          }
+        },
+        "predicate": "total_cost",
+        "authorities": [
+          "attest:total_cost"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "stay_booked",
+  "temporal_mechanisms": [
+    "evening train delay rewrites the arrival record and breaks the 23:50 check-in fit",
+    "written hotel extension lands the next morning and gates the booking",
+    "companion acknowledgement exists only for the current delayed itinerary",
+    "search-discoverable listings with five ineligible hotels",
+    "hidden booking service revalidates the live listing at booking time",
+    "sparse prompt: pet, logistics and authorization facts only surface through dialogue"
+  ],
+  "failure_modes": [
+    "booking against the withdrawn 23:50 limit after the delay",
+    "choosing an ineligible hotel (15 kg limit, 22:00 desk, 1.9 m garage, 15:00 check-in, 500 EUR)",
+    "reusing a supervision acknowledgement made for the old 23:10 itinerary",
+    "accepting pets-welcome marketing instead of the written exact-dog acceptance",
+    "leaving Nino unattended during parking or check-in",
+    "booking before the traveler approves the exact plan after the delay"
+  ],
+  "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "lyon-contacts"
+    },
+    {
+      "op": "discover",
+      "name": "camille_dialogue"
+    },
+    {
+      "op": "tool",
+      "name": "camille_dialogue",
+      "args": {
+        "question": "What are Nino's details, your travel logistics and your approval conditions for the hotel booking?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "trip_records"
+    },
+    {
+      "op": "tool",
+      "name": "trip_records",
+      "args": {
+        "query": "Lyon"
+      }
+    },
+    {
+      "op": "send",
+      "to": "hotel_desk",
+      "text": "Please issue the written pet acceptance for Nino (28 kg, current vet letter), the parking terms and the late check-in limit for April 16-18",
+      "label": "pet",
+      "fields": "$user"
+    },
+    {
+      "op": "advance",
+      "at": "2027-04-16T20:35:00+02:00"
+    },
+    {
+      "op": "tool",
+      "name": "trip_records",
+      "args": {
+        "query": "train"
+      }
+    },
+    {
+      "op": "wait_for",
+      "label": "pet"
+    },
+    {
+      "op": "send",
+      "to": "companion_lea",
+      "text": "The train is now delayed to 23:40 with check-in around 00:05; please confirm you will stay with Nino during parking, check-in and the whole stay on this itinerary",
+      "label": "lea",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "lea"
+    },
+    {
+      "op": "tool",
+      "name": "trip_records",
+      "args": {
+        "query": "villa"
+      }
+    },
+    {
+      "op": "send",
+      "to": "hotel_desk",
+      "text": "The delayed 23:40 arrival plus the 25-minute transfer lands at 00:05, past the 23:50 limit; please issue a written late check-in extension for this itinerary",
+      "label": "extension",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "extension"
+    },
+    {
+      "op": "tool",
+      "name": "camille_dialogue",
+      "args": {
+        "question": "Do you approve the exact plan: Villa des Roses two nights, written 28 kg pet acceptance, extension to 00:30, Lea supervising Nino throughout, total 378 EUR?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "stay_book"
+    },
+    {
+      "op": "tool",
+      "name": "stay_book",
+      "args": {
+        "entry": "villa-extended"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-04-17T15:00:00+02:00"
+    },
+    {
+      "op": "tool",
+      "name": "stay_book",
+      "args": {
+        "query": "stay"
+      }
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the reference path re-verifies after the 20:30 delay, obtains the written extension and Lea's rebound acknowledgement, then books. Booking on the pre-delay 23:50 terms is not a legal path.",
+  "horizon_design": {
+    "reference_days": 2,
+    "stratum": "短期",
+    "mechanism": "evening train delay, overnight written extension and supervision rebound before booking",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "private": true,
+  "task_id": "DSB-38",
+  "actor": {
+    "id": "clinic",
+    "name": "Riverside vet clinic·Dr. Maya Osei",
+    "role": "noninvasive microchip scans and chip verification",
+    "description": "Performs noninvasive scans of existing chips only; never implants a second chip and never identifies an animal by name alone.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "dr.mayaosei@bench.example"
+    },
+    "knowledge": [
+      "scan_verified"
+    ],
+    "tools": {
+      "clinic.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "clinic.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "scan_verified"
+        ]
+      },
+      "clinic.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "scan_verified"
+        ]
+      },
+      "clinic.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Chip scan verification",
+        "aliases": [
+          "scan",
+          "chip",
+          "microchip",
+          "clinic",
+          "verify",
+          "luna",
+          "intake",
+          "animal",
+          "read"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "clinic.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "perform the noninvasive scan of intake APA-88421's existing chip",
+            "tool": "clinic.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 90
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "clinic.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "clinic.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Riverside vet clinic·Dr. Maya Osei，负责noninvasive microchip scans and chip verification。Performs noninvasive scans of existing chips only; never implants a second chip and never identifies an animal by name alone. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:chip_scan_verified"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "scan_verified": {
+      "value": true,
+      "text": "Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-38",
+          "case": {
+            "intake": "APA-88421",
+            "pet": "Luna",
+            "deadline": "2027-03-24"
+          }
+        },
+        "predicate": "chip_scan_verified"
+      }
+    }
+  },
+  "start_at": "2027-03-22T09:00:00-05:00",
+  "deadline_at": "2027-03-24T17:00:00-05:00"
+}

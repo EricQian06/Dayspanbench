@@ -1,0 +1,285 @@
+{
+  "private": true,
+  "task_id": "DSB-41",
+  "actor": {
+    "id": "lakefront_desk",
+    "name": "Lakefront Suites Seattle accessibility desk·Dana Rowe",
+    "role": "hotel accessibility verification, exact-room records and hold terms",
+    "description": "Confirms exact-room accessibility and hold terms in writing; rates can change without notice; bookings go through the hotel booking desk named on the entry page.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "danarowe@bench.example"
+    },
+    "knowledge": [
+      "hotel_301_accessible",
+      "hotel_accessible",
+      "hotel_booked",
+      "hotel_hold_until",
+      "hotel_total"
+    ],
+    "tools": {
+      "lakefront_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "lakefront_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "hotel_301_accessible",
+          "hotel_hold_until"
+        ]
+      },
+      "lakefront_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "hotel_301_accessible",
+          "hotel_hold_until"
+        ]
+      },
+      "lakefront_desk.main.4.reply": {
+        "kind": "reply"
+      },
+      "lakefront_desk.rates.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "hotel_accessible"
+        ]
+      },
+      "lakefront_desk.rates.2.document": {
+        "kind": "document",
+        "facts": [
+          "hotel_accessible"
+        ]
+      },
+      "lakefront_desk.rates.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Accessible suite verification",
+        "aliases": [
+          "accessible",
+          "roll-in",
+          "shower",
+          "suite",
+          "hold",
+          "verification",
+          "access",
+          "htl-301",
+          "lfs-access"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "lakefront_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the exact accessible suite record and hold terms",
+            "tool": "lakefront_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 1440
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "lakefront_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "lakefront_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "rates",
+        "label": "Current rates and cancellation terms",
+        "aliases": [
+          "rate",
+          "quote",
+          "cancellation",
+          "refundable",
+          "lfs-fam"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "rates_1",
+            "label": "check the provider-confirmed family suite record",
+            "tool": "lakefront_desk.rates.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "rates_2",
+            "label": "签发书面确认",
+            "tool": "lakefront_desk.rates.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "rates_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "lakefront_desk.rates.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Lakefront Suites Seattle accessibility desk·Dana Rowe，负责hotel accessibility verification, exact-room records and hold terms。Confirms exact-room accessibility and hold terms in writing; rates can change without notice; bookings go through the hotel booking desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:hotel_301_accessible",
+      "attest:hotel_accessible",
+      "attest:hotel_booked",
+      "attest:hotel_hold_until",
+      "attest:hotel_total"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "hotel_301_accessible": {
+      "value": true,
+      "text": "Provider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_301_accessible"
+      }
+    },
+    "hotel_accessible": {
+      "value": true,
+      "text": "Provider verification access-htl-302-2027 confirms the Lakefront family suite (LFS-FAM-2) has a roll-in shower with grab bars, a step-free entrance and an elevator for five-person occupancy.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_accessible"
+      }
+    },
+    "hotel_booked": {
+      "value": true,
+      "text": "Exactly one refundable five-person accessible family suite booking (listing htl-302, LFS-FAM-2, South Lake Union) for five nights 2027-06-12 to 2027-06-17 has been confirmed with free cancellation until 2027-06-09 18:00 Pacific; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_booked"
+      }
+    },
+    "hotel_hold_until": {
+      "value": "2027-05-14T09:00",
+      "text": "The Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_hold_until"
+      }
+    },
+    "hotel_total": {
+      "value": 1680,
+      "text": "The booked five-night hotel stay totals 1680 USD, within the 1800 USD hotel cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "hotel_total"
+      }
+    }
+  },
+  "start_at": "2027-05-01T09:00:00-05:00",
+  "deadline_at": "2027-05-20T18:00:00-05:00"
+}

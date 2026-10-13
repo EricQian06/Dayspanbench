@@ -1,0 +1,144 @@
+{
+  "private": true,
+  "task_id": "DSB-41",
+  "actor": {
+    "id": "skybridge_desk",
+    "name": "Skybridge Air inventory desk·Marcus Vaughn",
+    "role": "flight inventory and booking records",
+    "description": "Never quotes inventory by mail; the portal search service and the booking desk are the only flight channels.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "marcusvaughn@bench.example"
+    },
+    "knowledge": [
+      "flight_booked",
+      "flight_total"
+    ],
+    "tools": {
+      "skybridge_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "skybridge_desk.main.2.deny": {
+        "kind": "deny",
+        "text": "Current flight inventory is only available through the Skybridge search service (flight_search) named on the portal page; I cannot quote or confirm flights by mail. Bookings go through the flight booking desk (book_flight) named on the entry page; no payment is taken there."
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Flight inventory questions",
+        "aliases": [
+          "flight",
+          "air",
+          "schedule",
+          "inventory",
+          "booking",
+          "skybridge",
+          "seat"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "skybridge_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "明确表示不知情或不归管",
+            "tool": "skybridge_desk.main.2.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Skybridge Air inventory desk·Marcus Vaughn，负责flight inventory and booking records。Never quotes inventory by mail; the portal search service and the booking desk are the only flight channels. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:flight_booked",
+      "attest:flight_total"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "flight_booked": {
+      "value": true,
+      "text": "Exactly one refundable round-trip nonstop booking for five travellers on SB-733/SB-734 (listing air-209), ORD to SEA, outbound 2027-06-12 arriving 15:20 local and return 2027-06-17, five seats together, has been confirmed; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "flight_booked"
+      }
+    },
+    "flight_total": {
+      "value": 2390,
+      "text": "The booked five-traveller round-trip airfare is 2390 USD, within the 2400 USD airfare cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-41",
+          "case": {
+            "outbound_date": "2027-06-12",
+            "return_date": "2027-06-17",
+            "travellers": 5
+          }
+        },
+        "predicate": "flight_total"
+      }
+    }
+  },
+  "start_at": "2027-05-01T09:00:00-05:00",
+  "deadline_at": "2027-05-20T18:00:00-05:00"
+}

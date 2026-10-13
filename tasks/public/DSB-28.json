@@ -1,0 +1,77 @@
+{
+  "id": "DSB-28",
+  "title": "Analytics pathway: verified prerequisites and one first-stage reservation",
+  "brief": "Help me plan an analytics certificate starting September 6, 2027, within six months, at most eight study hours weekly and 2500 USD all-in. Ask about my schedule, background and permission first; verify prerequisites and the whole-path cost with the program adviser, watch for mid-case schedule changes, and reserve only the first stage after I approve the exact plan. No payment and no later-stage enrollment.",
+  "user_fields": {
+    "start_date": "2027-09-06",
+    "weekly_hours": 8,
+    "budget_usd": 2500
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "pathway-intro",
+      "title": "Lakeview Analytics Program board",
+      "text": "Synthetic course catalog for the Lakeview analytics certificate program. The six course listings and the cert-E certificate fee are found through the program catalog service (course_catalog); listings can be revised mid-case - a live-session day can change and make an earlier reading stale. Written pathway verification (prerequisites, sequencing and total cost) is issued by the program adviser and appears on the program board service once completed. The first-stage seat reservation goes through the reservation desk (reserve_first_stage). Study availability, background and approval rules can be clarified through the learner profile desk (learner_dialogue).",
+      "contacts": [],
+      "snippet": "Lakeview course catalog, certificate fee, adviser verification and the first-stage reservation desk.",
+      "url": "https://analyticspath.bench/intro"
+    },
+    {
+      "id": "pathway-contacts",
+      "title": "Lakeview program contacts",
+      "text": "The certificate program adviser Rosa Kim verifies pathway prerequisites, sequencing and total cost in writing, and answers daily during business hours.",
+      "contacts": [
+        "pathway_adviser"
+      ],
+      "snippet": "Contact for the Lakeview certificate program adviser.",
+      "url": "https://analyticspath.bench/contact"
+    },
+    {
+      "id": "pathway-entry",
+      "title": "First-stage reservation desk",
+      "text": "The first stage of cert-E is reserved through the reservation desk (reserve_first_stage): obtain the adviser's written pathway verification, show the learner the whole-path cost, sequencing and weekly study slots for approval, then request the one c02 row from the current catalog. At most one first-stage reservation; no payment is taken; later stages stay conditional and unreserved. The outcome is read back through the desk.",
+      "contacts": [],
+      "snippet": "First-stage reservation desk: verified path, exact approval, one c02 seat, no payment.",
+      "url": "https://analyticspath.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: read the catalog, request written pathway verification from the adviser, and reserve only the first stage the learner has approved after seeing the whole-path cost and sequencing; no payment, subscription, later-stage enrollment or fabricated credential.",
+  "answer_keys": [
+    "pathway_verified_by_adviser",
+    "first_stage_reserved"
+  ],
+  "value_normalization": {
+    "pathway_verified_by_adviser": {
+      "type": "boolean"
+    },
+    "first_stage_reserved": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "first_stage_reserved": "Verified conditional pathway with one approved first-stage reservation",
+    "unconfirmed": "Adviser verification or approval could not be obtained in time",
+    "not_feasible": "No current pathway satisfies the availability, hours and budget constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-08-23T09:00:00-05:00",
+  "deadline_at": "2027-08-25T17:00:00-05:00"
+}

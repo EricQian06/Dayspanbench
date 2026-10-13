@@ -1,0 +1,497 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-42",
+  "answer": {
+    "conclusion": "both_rescheduled",
+    "claims": [
+      {
+        "key": "stripe_offer_confirmed",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0003"
+        ]
+      },
+      {
+        "key": "shopify_offer_confirmed",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "stripe_rescheduled",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0005"
+        ]
+      },
+      {
+        "key": "shopify_rescheduled",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0006"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-42",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "stripe_offer_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "shopify_offer_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "stripe_rescheduled",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "shopify_rescheduled",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 51.5,
+    "calendar_days": 2.145833,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-09-15T17:30:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-09-14T17:50:00+00:00",
+      "from": "jordanblake2@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Stripe recruiter desk·Jordan Blake。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-09-14T18:05:00+00:00",
+      "from": "jordanblake2@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Stripe recruiter desk·Jordan Blake。您咨询的事项已经按流程处理完毕。如有其他问题，欢迎随时来信。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2027-09-14T19:09:00+00:00",
+      "from": "samortiz2@bench.example",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Shopify recruiter desk·Sam Ortiz。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2027-09-14T19:24:00+00:00",
+      "from": "samortiz2@bench.example",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Shopify recruiter desk·Sam Ortiz。您咨询的事项已经按流程处理完毕。如有其他问题，欢迎随时来信。",
+      "evidence": []
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "candidate_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "candidate_dialogue",
+      "question": "What is your availability, privacy rule and approval requirement for rescheduling the two interviews?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "interview_board",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "interview_board",
+      "query": "interview slots",
+      "entries": [
+        "int-stripe",
+        "int-shopify"
+      ]
+    },
+    {
+      "at": "2027-09-14T16:30:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "interview_board",
+      "query": "replacement slots",
+      "entries": [
+        "w01",
+        "w02-v1"
+      ]
+    },
+    {
+      "at": "2027-09-14T16:30:00+00:00",
+      "kind": "agent_send",
+      "recipient": "jordanblake2@bench.example",
+      "text": "I have a prior commitment. Please confirm the alternative time discussed for your interview.",
+      "fields": {
+        "protected_date": "2027-09-15",
+        "deadline_date": "2027-09-15",
+        "interviews": 2
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-09-14T16:30:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "stripe_recruiter",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-09-14T17:02:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "stripe_recruiter",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-14T17:02:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "stripe_recruiter",
+      "step": "main_1",
+      "start_at": "2027-09-14T17:02:00+00:00",
+      "due_at": "2027-09-14T17:50:00+00:00",
+      "tool": "stripe_recruiter.main.1.acknowledge"
+    },
+    {
+      "at": "2027-09-14T17:02:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "stripe_recruiter",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-14T17:50:00+00:00",
+      "kind": "tool_call",
+      "actor": "stripe_recruiter",
+      "case_id": "CASE-0001",
+      "tool": "stripe_recruiter.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-09-14T17:50:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-09-14T17:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "stripe_recruiter",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-14T17:50:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "stripe_recruiter",
+      "step": "main_2",
+      "start_at": "2027-09-14T17:50:00+00:00",
+      "due_at": "2027-09-14T18:05:00+00:00",
+      "tool": "stripe_recruiter.main.2.reply"
+    },
+    {
+      "at": "2027-09-14T17:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "stripe_recruiter",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-14T18:05:00+00:00",
+      "kind": "tool_call",
+      "actor": "stripe_recruiter",
+      "case_id": "CASE-0001",
+      "tool": "stripe_recruiter.main.2.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-09-14T18:05:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "stripe_recruiter",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-09-14T18:05:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-09-14T18:05:00+00:00",
+      "kind": "agent_send",
+      "recipient": "samortiz2@bench.example",
+      "text": "I have a prior commitment. Please confirm the alternative time discussed for your interview.",
+      "fields": {
+        "protected_date": "2027-09-15",
+        "deadline_date": "2027-09-15",
+        "interviews": 2
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-09-14T18:05:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0002",
+      "actor": "shopify_recruiter",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-09-14T18:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "shopify_recruiter",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-14T18:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "shopify_recruiter",
+      "step": "main_1",
+      "start_at": "2027-09-14T18:26:00+00:00",
+      "due_at": "2027-09-14T19:09:00+00:00",
+      "tool": "shopify_recruiter.main.1.acknowledge"
+    },
+    {
+      "at": "2027-09-14T18:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "shopify_recruiter",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-14T19:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "shopify_recruiter",
+      "case_id": "CASE-0002",
+      "tool": "shopify_recruiter.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-09-14T19:09:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-09-14T19:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "shopify_recruiter",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-14T19:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "shopify_recruiter",
+      "step": "main_2",
+      "start_at": "2027-09-14T19:09:00+00:00",
+      "due_at": "2027-09-14T19:24:00+00:00",
+      "tool": "shopify_recruiter.main.2.reply"
+    },
+    {
+      "at": "2027-09-14T19:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "shopify_recruiter",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-14T19:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "shopify_recruiter",
+      "case_id": "CASE-0002",
+      "tool": "shopify_recruiter.main.2.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-09-14T19:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "shopify_recruiter",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-09-14T19:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0004",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    },
+    {
+      "at": "2027-09-15T14:30:00+00:00",
+      "kind": "page_updated",
+      "page": "interviews-intro",
+      "url": "https://interviewdesk.bench/intro"
+    },
+    {
+      "at": "2027-09-15T14:30:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "interview_board",
+      "removed": [
+        "w02-v1"
+      ],
+      "added": [
+        "w02-v2"
+      ]
+    },
+    {
+      "at": "2027-09-15T15:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "interview_board",
+      "query": "shopify slot link",
+      "entries": [
+        "int-stripe",
+        "int-shopify",
+        "w01",
+        "w03",
+        "w04",
+        "w05",
+        "w06",
+        "w02-v2"
+      ]
+    },
+    {
+      "at": "2027-09-15T15:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "candidate_dialogue",
+      "question": "Stripe is Thursday September 16 10:00-12:00 Central at link-stripe-current, and Shopify is Friday September 17 09:00-10:30 Central at link-shopify-new. Do you approve rescheduling both to these exact slots?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-15T15:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "stripe_reschedule",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-09-15T15:00:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "stripe_reschedule",
+      "entry": "w01",
+      "accepted": true
+    },
+    {
+      "at": "2027-09-15T16:00:00+00:00",
+      "kind": "page_updated",
+      "page": "interviews-entry",
+      "url": "https://interviewdesk.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-09-15T16:00:00+00:00",
+      "kind": "selection_processed",
+      "tool": "stripe_reschedule",
+      "accepted": true,
+      "result": "Confirmed: the Stripe final interview is Thursday September 16, 2027 10:00-12:00 Central time (08:00-10:00 UTC-07:00), two hours, at meeting link link-stripe-current. The old Wednesday invitation is superseded now that the replacement is confirmed; nothing was withdrawn."
+    },
+    {
+      "at": "2027-09-15T16:30:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "stripe_reschedule",
+      "query": "stripe status"
+    },
+    {
+      "at": "2027-09-15T16:30:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "shopify_reschedule",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-09-15T16:30:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "shopify_reschedule",
+      "entry": "w02-v2",
+      "accepted": true
+    },
+    {
+      "at": "2027-09-15T17:30:00+00:00",
+      "kind": "page_updated",
+      "page": "interviews-entry",
+      "url": "https://interviewdesk.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-09-15T17:30:00+00:00",
+      "kind": "selection_processed",
+      "tool": "shopify_reschedule",
+      "accepted": true,
+      "result": "Confirmed: the Shopify final interview is Friday September 17, 2027 09:00-10:30 Central time (10:00-11:30 UTC-04:00), ninety minutes, at the current meeting link link-shopify-new (slot version 2 after the September 15 rotation). The old Wednesday invitation is superseded now that the replacement is confirmed; nothing was withdrawn."
+    },
+    {
+      "at": "2027-09-15T17:30:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "shopify_reschedule",
+      "query": "shopify status"
+    }
+  ],
+  "pending_cases": []
+}

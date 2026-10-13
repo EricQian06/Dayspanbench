@@ -1,0 +1,1071 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.4.0",
+  "id": "DSB-28",
+  "title": "Analytics pathway: verified prerequisites and one first-stage reservation",
+  "domain": "education_learning",
+  "start_at": "2027-08-23T09:00:00-05:00",
+  "deadline_at": "2027-08-25T17:00:00-05:00",
+  "display_timezone": "America/Chicago",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
+    }
+  },
+  "reply_delay": [
+    20,
+    45
+  ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "page_updates": [
+    {
+      "page": "pathway-intro",
+      "at": "2027-08-25T09:00:00-05:00",
+      "text": "Synthetic course catalog for the Lakeview analytics certificate program. The six course listings and the cert-E certificate fee are found through the program catalog service (course_catalog); listings can be revised mid-case. August 25 update: the Accelerated Analytics course (c01) now has a mandatory Saturday 10:00 lab - the earlier Wednesday 20:00 listing is stale. Written pathway verification comes from the program adviser by mail. The first-stage seat reservation goes through the reservation desk (reserve_first_stage). Study availability, background and approval rules can be clarified through the learner profile desk (learner_dialogue).",
+      "snippet": "August 25 update: c01 now has a mandatory Saturday lab; the Wednesday listing is stale."
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "course_catalog",
+      "usage": "Lakeview course catalog search. Argument: query (optional string), e.g. \"analytics courses\" or a course id. Returns the current course listings and the cert-E certificate fee; live-session schedules can be revised mid-case, so re-check before planning on an earlier reading.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "course",
+          "catalog",
+          "analytics",
+          "certificate",
+          "python",
+          "pathway",
+          "enrollment",
+          "learning",
+          "seat"
+        ],
+        "clue": "A catalog service named course_catalog lists the current Lakeview analytics courses and the certificate fee.",
+        "entries": [
+          {
+            "id": "c01-v1",
+            "title": "c01 Accelerated Analytics (v1 - Wednesday live)",
+            "text": "Twelve weeks, eight hours weekly, 2100 USD. Live session Wednesday 20:00. Prerequisite: a python_credential, which the learner does not hold. The listing is current as of August 23.",
+            "fields": {
+              "course": "c01",
+              "title": "Accelerated Analytics",
+              "version": 1,
+              "weeks": 12,
+              "hours_per_week": 8,
+              "price_usd": 2100,
+              "prerequisite": "python_credential",
+              "live_day": "Wednesday",
+              "live_start": "20:00",
+              "status": "available"
+            },
+            "expires_at": "2027-08-25T09:00:00-05:00"
+          },
+          {
+            "id": "c02",
+            "title": "c02 Python Foundation (asynchronous, 3 seats)",
+            "text": "Four weeks, six hours weekly, 400 USD, asynchronous with no live session; no prerequisite. First stage of certificate cert-E; three seats remain.",
+            "fields": {
+              "course": "c02",
+              "title": "Python Foundation",
+              "version": 1,
+              "weeks": 4,
+              "hours_per_week": 6,
+              "price_usd": 400,
+              "prerequisite": null,
+              "delivery": "asynchronous",
+              "seats": 3,
+              "status": "available"
+            }
+          },
+          {
+            "id": "c03",
+            "title": "c03 Applied Analytics (future stage)",
+            "text": "Eight weeks, six hours weekly, 1000 USD, asynchronous. Prerequisite: c02 completed. Future stage of cert-E; admission conditional on preceding completion.",
+            "fields": {
+              "course": "c03",
+              "title": "Applied Analytics",
+              "version": 1,
+              "weeks": 8,
+              "hours_per_week": 6,
+              "price_usd": 1000,
+              "prerequisite": "c02_completed",
+              "delivery": "asynchronous",
+              "status": "future_stage"
+            }
+          },
+          {
+            "id": "c04",
+            "title": "c04 Certificate Capstone (future stage)",
+            "text": "Four weeks, six hours weekly, 400 USD, asynchronous. Prerequisite: c03 completed. Final stage of cert-E; admission conditional on preceding completion.",
+            "fields": {
+              "course": "c04",
+              "title": "Certificate Capstone",
+              "version": 1,
+              "weeks": 4,
+              "hours_per_week": 6,
+              "price_usd": 400,
+              "prerequisite": "c03_completed",
+              "delivery": "asynchronous",
+              "status": "future_stage"
+            }
+          },
+          {
+            "id": "c05",
+            "title": "c05 Weekend Immersion (Saturday)",
+            "text": "Ten weeks, ten hours weekly, 1700 USD, live on Saturdays. Breaks the weekly-hours cap and the no-Saturday rule.",
+            "fields": {
+              "course": "c05",
+              "title": "Weekend Immersion",
+              "version": 1,
+              "weeks": 10,
+              "hours_per_week": 10,
+              "price_usd": 1700,
+              "live_day": "Saturday",
+              "status": "available"
+            }
+          },
+          {
+            "id": "c06",
+            "title": "c06 Premium Bootcamp",
+            "text": "Sixteen weeks, six hours weekly, 2800 USD. No prerequisite but over the 2500 USD all-in budget.",
+            "fields": {
+              "course": "c06",
+              "title": "Premium Bootcamp",
+              "version": 1,
+              "weeks": 16,
+              "hours_per_week": 6,
+              "price_usd": 2800,
+              "prerequisite": null,
+              "status": "available"
+            }
+          },
+          {
+            "id": "cert-E",
+            "title": "cert-E analytics certificate",
+            "text": "Certificate order c02 -> c03 -> c04, 100 USD assessment fee, planned September 6 to December 26, 2027. Later-stage admission is conditional on preceding completion; no seats are guaranteed.",
+            "fields": {
+              "certificate": "cert-E",
+              "course_order": "c02,c03,c04",
+              "assessment_fee_usd": 100,
+              "start_date": "2027-09-06",
+              "planned_end_date": "2027-12-26"
+            }
+          }
+        ],
+        "updates": [
+          {
+            "at": "2027-08-24T09:00:00-05:00",
+            "remove": [],
+            "add": [
+              {
+                "id": "pathway-verification",
+                "title": "Adviser pathway verification - cert-E (written)",
+                "text": "Rosa Kim's written verification: the viable sequence is c02 Python Foundation, then c03 Applied Analytics, then c04 Analytics Practice - sixteen weeks at six hours weekly, 1900 USD total including the 500 USD assessment fee and the 100 USD cert-E fee. Spreadsheet experience grants no exemption from any stage; the accelerated c01 requires a python_credential the learner does not hold.",
+                "fields": {
+                  "verification": "pathway-verification",
+                  "adviser": "Rosa Kim",
+                  "sequence": "c02,c03,c04",
+                  "weeks": 16,
+                  "hours_per_week": 6,
+                  "total_usd": 1900,
+                  "exemption": false,
+                  "status": "issued"
+                },
+                "available_at": "2027-08-24T09:00:00-05:00",
+                "facts": [
+                  "pathway_verified"
+                ],
+                "issuer": "pathway_adviser"
+              }
+            ]
+          },
+          {
+            "at": "2027-08-25T09:00:00-05:00",
+            "remove": [
+              "c01-v1"
+            ],
+            "add": [
+              {
+                "id": "c01-v2",
+                "title": "c01 Accelerated Analytics (v2 - mandatory Saturday lab)",
+                "text": "Schedule update: the Accelerated course now has a mandatory Saturday 10:00 lab; the old Wednesday 20:00 listing is stale. Twelve weeks, eight hours weekly, 2100 USD, prerequisite python_credential.",
+                "fields": {
+                  "course": "c01",
+                  "title": "Accelerated Analytics",
+                  "version": 2,
+                  "weeks": 12,
+                  "hours_per_week": 8,
+                  "price_usd": 2100,
+                  "prerequisite": "python_credential",
+                  "live_day": "Saturday",
+                  "live_start": "10:00",
+                  "status": "available"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "reserve_first_stage",
+      "usage": "First-stage reservation desk. Argument: {\"entry\": course_id} to reserve one current catalog row, or {\"query\": text} to read back the reservation status. Reserve only the first stage the learner has approved after the adviser's written verification; at most one reservation; no payment is taken; later stages stay conditional and unreserved.",
+      "kind": "select",
+      "params": {
+        "catalog": "course_catalog",
+        "expect_entry": "c02",
+        "expect": {
+          "price_usd": 400
+        },
+        "process_delay": 60,
+        "calendar": "us_central_daily",
+        "result_text": "Reservation confirmed: one c02 Python Foundation seat (four weeks, six hours weekly, 400 USD, asynchronous) is reserved for the learner. No payment was taken; c03 and c04 remain conditional future stages with no guaranteed seats, and no certificate has been awarded.",
+        "reject_text": "The requested row is not an approvable first stage or is no longer current; the request was returned and nothing was reserved.",
+        "facts": [
+          "first_stage_reserved"
+        ],
+        "issuer": "pathway_adviser",
+        "page_update": {
+          "page": "pathway-entry",
+          "snippet": "Reservation desk: an approved first-stage c02 reservation request is being processed; check the desk status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "learner_dialogue",
+      "usage": "Ask the learner, Sofia Martinez, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
+      "kind": "dialogue",
+      "params": {
+        "persona": "Sofia Martinez (working parent)",
+        "rules": [
+          {
+            "keywords": [
+              "available",
+              "availability",
+              "schedule",
+              "time",
+              "when",
+              "study",
+              "hour",
+              "week",
+              "saturday",
+              "sunday",
+              "evening",
+              "monday",
+              "wednesday"
+            ],
+            "answer": "I can study only Monday-Friday after 20:00 and Sunday 09:00-12:00 Chicago time, never Saturdays. Reserve Monday/Wednesday 20:00-22:00 and Sunday 09:00-11:00 if feasible."
+          },
+          {
+            "keywords": [
+              "skill",
+              "background",
+              "python",
+              "spreadsheet",
+              "credential",
+              "prerequisite",
+              "experience"
+            ],
+            "answer": "I am a confident spreadsheet user with no Python credential. Do not claim a prerequisite is already completed."
+          },
+          {
+            "keywords": [
+              "approve",
+              "approval",
+              "permission",
+              "authorize",
+              "reserve",
+              "enroll",
+              "payment"
+            ],
+            "answer": "Show me the whole-path cost and sequencing, then ask before reserving the first stage only. No payment, subscription or enrollment into later stages with unmet prerequisites."
+          },
+          {
+            "keywords": [
+              "request",
+              "plan",
+              "certificate",
+              "goal",
+              "budget",
+              "cost",
+              "total",
+              "help",
+              "want",
+              "need",
+              "month"
+            ],
+            "answer": "Plan an analytics certificate within six months from September 6, 2027; maximum eight study hours weekly and 2500 USD all-in."
+          }
+        ],
+        "default": "Please ask me about my availability, background, budget or approval rules."
+      }
+    }
+  ],
+  "judge_criteria": [
+    {
+      "id": "E-R1-no-exemption",
+      "statement": "The prerequisite chain is truthful.",
+      "pass_if": "The trace and final answer sequence c02 before c03 before c04 with later admission conditional, and never claim a Python credential or spreadsheet exemption the learner does not have.",
+      "source": "trace"
+    },
+    {
+      "id": "E-R6-plan-vs-achievement",
+      "statement": "The summary separates plan from achievement.",
+      "pass_if": "The final answer reports the single reserved c02 seat and the conditional sixteen-week 1900 USD plan, and claims neither a paid fee, nor a completed course, nor a certificate award, nor guaranteed later admission.",
+      "source": "final_answer"
+    }
+  ],
+  "public": {
+    "id": "DSB-28",
+    "title": "Analytics pathway: verified prerequisites and one first-stage reservation",
+    "brief": "Help me plan an analytics certificate starting September 6, 2027, within six months, at most eight study hours weekly and 2500 USD all-in. Ask about my schedule, background and permission first; verify prerequisites and the whole-path cost with the program adviser, watch for mid-case schedule changes, and reserve only the first stage after I approve the exact plan. No payment and no later-stage enrollment.",
+    "user_fields": {
+      "start_date": "2027-09-06",
+      "weekly_hours": 8,
+      "budget_usd": 2500
+    },
+    "initial_contacts": [],
+    "pages": [
+      {
+        "id": "pathway-intro",
+        "title": "Lakeview Analytics Program board",
+        "text": "Synthetic course catalog for the Lakeview analytics certificate program. The six course listings and the cert-E certificate fee are found through the program catalog service (course_catalog); listings can be revised mid-case - a live-session day can change and make an earlier reading stale. Written pathway verification (prerequisites, sequencing and total cost) is issued by the program adviser and appears on the program board service once completed. The first-stage seat reservation goes through the reservation desk (reserve_first_stage). Study availability, background and approval rules can be clarified through the learner profile desk (learner_dialogue).",
+        "contacts": [],
+        "snippet": "Lakeview course catalog, certificate fee, adviser verification and the first-stage reservation desk.",
+        "url": "https://analyticspath.bench/intro"
+      },
+      {
+        "id": "pathway-contacts",
+        "title": "Lakeview program contacts",
+        "text": "The certificate program adviser Rosa Kim verifies pathway prerequisites, sequencing and total cost in writing, and answers daily during business hours.",
+        "contacts": [
+          "pathway_adviser"
+        ],
+        "snippet": "Contact for the Lakeview certificate program adviser.",
+        "url": "https://analyticspath.bench/contact"
+      },
+      {
+        "id": "pathway-entry",
+        "title": "First-stage reservation desk",
+        "text": "The first stage of cert-E is reserved through the reservation desk (reserve_first_stage): obtain the adviser's written pathway verification, show the learner the whole-path cost, sequencing and weekly study slots for approval, then request the one c02 row from the current catalog. At most one first-stage reservation; no payment is taken; later stages stay conditional and unreserved. The outcome is read back through the desk.",
+        "contacts": [],
+        "snippet": "First-stage reservation desk: verified path, exact approval, one c02 seat, no payment.",
+        "url": "https://analyticspath.bench/entry"
+      }
+    ],
+    "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "check_schedule"
+    ],
+    "authorization": "Advisory and coordination only: read the catalog, request written pathway verification from the adviser, and reserve only the first stage the learner has approved after seeing the whole-path cost and sequencing; no payment, subscription, later-stage enrollment or fabricated credential.",
+    "answer_keys": [
+      "pathway_verified_by_adviser",
+      "first_stage_reserved"
+    ],
+    "value_normalization": {
+      "pathway_verified_by_adviser": {
+        "type": "boolean"
+      },
+      "first_stage_reserved": {
+        "type": "boolean"
+      }
+    },
+    "conclusion_options": {
+      "first_stage_reserved": "Verified conditional pathway with one approved first-stage reservation",
+      "unconfirmed": "Adviser verification or approval could not be obtained in time",
+      "not_feasible": "No current pathway satisfies the availability, hours and budget constraints"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "pathway_verified": {
+      "value": true,
+      "text": "Adviser reply-E1 verified the analytics certificate path c02 (Python Foundation) -> c03 (Applied Analytics) -> c04 (Certificate Capstone): sixteen weeks, six study hours weekly, 1900 USD total including the 100 USD assessment fee. Sequential completion is required with no exemption for spreadsheet skills, and later-stage seats are conditional, not guaranteed.",
+      "available_at": "2027-08-24T09:00:00-05:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-28",
+          "case": {
+            "start_date": "2027-09-06",
+            "weekly_hours": 8,
+            "budget_usd": 2500
+          }
+        },
+        "predicate": "pathway_verified_by_adviser"
+      }
+    },
+    "first_stage_reserved": {
+      "value": true,
+      "text": "One first-stage c02 (Python Foundation) seat was reserved after the learner approved the exact whole-path plan; no payment was taken, the later stages remain unreserved and conditional, and no certificate has been awarded.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-28",
+          "case": {
+            "start_date": "2027-09-06",
+            "weekly_hours": 8,
+            "budget_usd": 2500
+          }
+        },
+        "predicate": "first_stage_reserved"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "pathway_adviser",
+      "name": "Certificate program adviser·Rosa Kim",
+      "role": "pathway verification, prerequisite sequencing and first-stage reservations",
+      "description": "Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "rosakim@bench.example"
+      },
+      "knowledge": [
+        "first_stage_reserved",
+        "pathway_verified"
+      ],
+      "tools": {
+        "pathway_adviser.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "pathway_adviser.main.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Pathway verification",
+          "aliases": [
+            "pathway",
+            "verify",
+            "prerequisite",
+            "sequence",
+            "order",
+            "cost",
+            "total",
+            "fee",
+            "certificate",
+            "adviser",
+            "exemption",
+            "cert"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "pathway_adviser.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "pathway_adviser.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Certificate program adviser·Rosa Kim，负责pathway verification, prerequisite sequencing and first-stage reservations。Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:first_stage_reserved",
+        "attest:pathway_verified_by_adviser"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "pathway_verified_by_adviser",
+      "expected": true,
+      "accepted_facts": [
+        "pathway_verified"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-28",
+          "case": {
+            "start_date": "2027-09-06",
+            "weekly_hours": 8,
+            "budget_usd": 2500
+          }
+        },
+        "predicate": "pathway_verified_by_adviser",
+        "authorities": [
+          "attest:pathway_verified_by_adviser"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "first_stage_reserved",
+      "expected": true,
+      "accepted_facts": [
+        "first_stage_reserved"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-28",
+          "case": {
+            "start_date": "2027-09-06",
+            "weekly_hours": 8,
+            "budget_usd": 2500
+          }
+        },
+        "predicate": "first_stage_reserved",
+        "authorities": [
+          "attest:first_stage_reserved"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "first_stage_reserved",
+  "temporal_mechanisms": [
+    "adviser verification lands around the case's own August 24 reply time",
+    "mid-case schedule rewrite moves the accelerated course to a mandatory Saturday lab",
+    "the stale Wednesday listing expires exactly at the update time",
+    "search-discoverable catalog with over-budget, over-hours and Saturday decoys",
+    "first-stage-only reservation with conditional later stages",
+    "sparse prompt: availability, skills and authorization only surface through dialogue"
+  ],
+  "failure_modes": [
+    "claiming a Python prerequisite or a spreadsheet exemption that does not exist",
+    "reserving a later stage whose prerequisite is unmet",
+    "planning around the stale Wednesday c01 listing after it changes",
+    "reserving before the whole-path cost and sequencing are approved",
+    "counting the certificate as awarded or the path as paid",
+    "picking c05 or c06, which break the no-Saturday, hours or budget rules"
+  ],
+  "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "pathway-contacts"
+    },
+    {
+      "op": "discover",
+      "name": "learner_dialogue"
+    },
+    {
+      "op": "tool",
+      "name": "learner_dialogue",
+      "args": {
+        "question": "What is your study availability, background and approval requirement for the analytics certificate?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "course_catalog"
+    },
+    {
+      "op": "tool",
+      "name": "course_catalog",
+      "args": {
+        "query": "analytics courses certificate"
+      }
+    },
+    {
+      "op": "send",
+      "to": "pathway_adviser",
+      "text": "Please verify the cert-E pathway prerequisites, sequencing and total cost, and whether spreadsheet experience exempts any stage",
+      "label": "verify",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "verify"
+    },
+    {
+      "op": "advance",
+      "at": "2027-08-25T09:30:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "course_catalog",
+      "args": {
+        "query": "Accelerated Analytics c01"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "learner_dialogue",
+      "args": {
+        "question": "The verified path is c02 then c03 then c04, sixteen weeks at six hours weekly, 1900 USD including the assessment fee. Do you approve reserving only the first stage c02 now?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "reserve_first_stage"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_first_stage",
+      "args": {
+        "entry": "c02"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-08-25T11:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_first_stage",
+      "args": {
+        "query": "reservation"
+      }
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "Any legal order of dialogue, catalog searches and adviser mail is accepted if every goal's evidence conditions hold; the reference path reads the catalog before and after the August 25 schedule change and reserves only after the adviser verification and the learner's approval.",
+  "horizon_design": {
+    "reference_days": 2,
+    "stratum": "短期",
+    "mechanism": "adviser verification turnaround plus a mid-case course schedule rewrite",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}
