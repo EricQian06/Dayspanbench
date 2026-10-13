@@ -1,11 +1,11 @@
 {
   "schema_version": "0.2",
-  "task_set_version": "0.3.0",
+  "task_set_version": "0.4.0",
   "id": "DSB-11",
   "title": "开源兼容性：补丁验证后按窗口复核发布状态",
   "domain": "开源协作",
   "start_at": "2026-11-07T20:30:00+08:00",
-  "deadline_at": "2027-03-03T23:00:00+08:00",
+  "deadline_at": "2027-03-10T23:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
   "synthetic": true,
   "completion_class": "resolved",
@@ -215,16 +215,260 @@
           "23:59"
         ]
       ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
     }
   },
   "reply_delay": [
     10,
     30
   ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "query_case_status",
+    "leave_note",
+    "fetch_document",
+    "request_callback"
+  ],
+  "page_updates": [
+    {
+      "page": "repo-faq",
+      "at": "2027-01-15T20:00:00+08:00",
+      "text": "季度发布核对须通过维护者转交办理；核实发布状态需关联已验证的补丁。本季发布核对受理窗口确定为2027年1月26日20点至2月23日22点，窗口外来信仅登记不受理；上游兼容窗口仍为2027年2月9日20点。发布状态的书面结论须通过星舟发布状态登记渠道（xingzhou_release_register）提交登记后取得，办理进度可经星舟发布进度查询（xingzhou_release_status）复核。本页仅作流程说明，不能在线合并或发布。"
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "xingzhou_release_register",
+      "usage": "星舟发布状态登记渠道。调用参数：fields为对象，键为表单字段名（version、verified_commit），verified_commit须填已验证补丁的提交号。",
+      "kind": "form",
+      "params": {
+        "form": "release_form",
+        "expect": {
+          "version": "1.4.1",
+          "verified_commit": "commit-7bc2"
+        },
+        "process_at": "2027-02-09T20:00:00+08:00",
+        "result_text": "发布状态登记已办结：正式稳定版没有承诺发布日期；候选版不能标为稳定版。办理进度可经星舟发布进度查询（xingzhou_release_status）复核。",
+        "reject_text": "登记的版本或补丁提交号与已验证记录不符，已退回；请核对后重新提交。",
+        "facts": [
+          "stable"
+        ],
+        "issuer": "upstream",
+        "page_update": {
+          "page": "repo-entry",
+          "snippet": "星舟项目问题反馈入口：已提交的发布状态登记以表单状态为准。"
+        }
+      }
+    },
+    {
+      "name": "xingzhou_release_status",
+      "usage": "星舟发布进度查询。调用参数：query为事项关键词（可省略）。",
+      "kind": "status",
+      "params": {
+        "records": [
+          {
+            "key": "release",
+            "label": "发布状态登记",
+            "initial": "尚未查询到发布状态登记记录。",
+            "timeline": [
+              {
+                "at": "2027-01-26T20:00:00+08:00",
+                "text": "本季发布核对受理窗口（1月26日20点至2月23日22点）已开启，发布状态登记开始受理。"
+              },
+              {
+                "at": "2027-02-09T20:00:00+08:00",
+                "text": "上游兼容窗口已核对，登记办结结论以上游归档为准。"
+              }
+            ],
+            "form": "release_form"
+          }
+        ]
+      }
+    }
+  ],
+  "judge_criteria": [],
   "public": {
     "id": "DSB-11",
     "title": "开源兼容性：补丁验证后按窗口复核发布状态",
-    "brief": "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期。中间补丁可用不代表本任务完成。不要合并或发布。",
+    "brief": "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期，稳定版书面结论按项目说明的登记渠道取得。中间补丁可用不代表本任务完成。不要合并或发布。",
     "user_fields": {
       "version": "1.4.1",
       "compiler": "C19",
@@ -235,9 +479,21 @@
       {
         "id": "repo-intro",
         "title": "星舟项目贡献说明",
-        "text": "维护者周一三五20—22点处理来信，CI连续运行48小时。项目按季度发布，每季度上游兼容窗口统一核对候选版与稳定版状态；补丁或候选版都不能当作稳定版。",
+        "text": "维护者周一三五20—22点处理来信，CI连续运行48小时。项目按季度发布，每季度上游兼容窗口统一核对候选版与稳定版状态；补丁或候选版都不能当作稳定版。本页另挂有星舟项目近期发布计划等文件。",
         "contacts": [],
         "snippet": "开源项目维护安排与发布节奏说明。",
+        "documents": [
+          {
+            "id": "repo-stable-rumor",
+            "title": "星舟项目近期发布计划.pdf",
+            "text": "星舟项目近期发布计划：稳定版预计2027年3月15日发布。（留存方整理）",
+            "facts": [
+              "stable_ref"
+            ],
+            "issuer": "maintainer",
+            "url": "https://xingzhou.bench/files/repo-stable-rumor.pdf"
+          }
+        ],
         "url": "https://xingzhou.bench/intro"
       },
       {
@@ -261,13 +517,48 @@
       {
         "id": "repo-entry",
         "title": "星舟项目问题反馈入口",
-        "text": "提交兼容性问题需提供版本、编译器与日志编号；补丁验证与发布状态分别在不同阶段核实。本页面仅说明材料，不能在线合并或发布。",
+        "text": "提交兼容性问题需提供版本、编译器与日志编号；补丁验证与发布状态分别在不同阶段核实；发布状态的书面结论通过本页登记表单申请后取得。本页面仅说明材料，不能在线合并或发布。",
         "contacts": [],
-        "snippet": "星舟项目问题提交材料说明；不支持在线合并。",
+        "snippet": "星舟项目问题提交材料说明与发布状态登记表单；不支持在线合并。",
+        "form": {
+          "id": "release_form",
+          "title": "发布状态登记申请",
+          "fields": [
+            {
+              "name": "version",
+              "label": "项目版本",
+              "required": true,
+              "hidden": false
+            },
+            {
+              "name": "verified_commit",
+              "label": "已验证补丁提交号",
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "submit_instructions": "本表单不能在线直接提交：须通过星舟发布状态登记渠道办理；渠道名称与受理安排以项目发布流程说明页最新公告为准。"
+        },
         "url": "https://xingzhou.bench/entry"
       }
     ],
     "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "query_case_status",
+      "leave_note",
+      "fetch_document",
+      "request_callback"
+    ],
     "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
     "answer_keys": [
       "reproduced",
@@ -362,6 +653,22 @@
         },
         "predicate": "stable_release_date"
       }
+    },
+    "stable_ref": {
+      "value": "2027-03-15",
+      "text": "星舟项目近期发布计划：稳定版预计2027年3月15日发布（留存方整理）。",
+      "unauthorized_attestation": true,
+      "attributes": {
+        "subject": {
+          "task": "DSB-11",
+          "case": {
+            "version": "1.4.1",
+            "compiler": "C19",
+            "logs": "LOG-771"
+          }
+        },
+        "predicate": "stable_release_date"
+      }
     }
   },
   "actors": [
@@ -416,6 +723,10 @@
         },
         "maintainer.release_check.3.reply": {
           "kind": "reply"
+        },
+        "maintainer.stable_gossip.1.deny": {
+          "kind": "deny",
+          "text": "稳定版的日期我印象里2027年3月15日就能发布，错不了——不过维护者不掌握上游的发布承诺，这只是口头印象，没有书面依据；稳定版的书面结论须通过星舟发布状态登记渠道（xingzhou_release_register）申请后以办结结论为准。"
         }
       },
       "workflows": [
@@ -515,7 +826,12 @@
               ],
               "normalization": {
                 "type": "text",
-                "aliases": {}
+                "aliases": {
+                  "commit-7bc2": [
+                    "CI在commit-7bc2上验证该兼容问题已修复。",
+                    "CI在commit-7bc2上验证该兼容问题已修复"
+                  ]
+                }
               }
             }
           },
@@ -548,6 +864,27 @@
               }
             }
           ]
+        },
+        {
+          "id": "stable_gossip",
+          "label": "稳定版日期口头印象",
+          "aliases": [
+            "稳定版时间",
+            "何时发布"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "stable_gossip_1",
+              "label": "明确表示不知情或不归管",
+              "tool": "maintainer.stable_gossip.1.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
         }
       ],
       "process_engine": {
@@ -787,7 +1124,7 @@
       "id": "upstream",
       "name": "上游发布委员会·秘书处",
       "role": "稳定版状态归档",
-      "description": "每周四20—22点集中查证归档；不对项目外部直接受理。",
+      "description": "每周四20—22点集中查证归档；不对项目外部直接受理；稳定版的书面结论须经登记渠道取得。",
       "calendar": "upstream",
       "channels": [
         "email"
@@ -801,9 +1138,7 @@
       "tools": {
         "upstream.main.1.lookup": {
           "kind": "lookup",
-          "facts": [
-            "stable"
-          ]
+          "facts": []
         },
         "upstream.main.2.reply": {
           "kind": "reply"
@@ -822,7 +1157,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "集中查证稳定版归档状态（仅口头说明）",
               "tool": "upstream.main.1.lookup",
               "delay": {
                 "mode": "weekly",
@@ -863,7 +1198,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是上游发布委员会·秘书处，负责稳定版状态归档。每周四20—22点集中查证归档；不对项目外部直接受理。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是上游发布委员会·秘书处，负责稳定版状态归档。每周四20—22点集中查证归档；不对项目外部直接受理；稳定版的书面结论须经登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:stable_release_date"
@@ -920,12 +1255,22 @@
         ],
         "normalization": {
           "type": "text",
-          "aliases": {}
+          "aliases": {
+            "commit-7bc2": [
+              "CI在commit-7bc2上验证该兼容问题已修复。",
+              "CI在commit-7bc2上验证该兼容问题已修复"
+            ]
+          }
         }
       },
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "commit-7bc2": [
+            "CI在commit-7bc2上验证该兼容问题已修复。",
+            "CI在commit-7bc2上验证该兼容问题已修复"
+          ]
+        }
       },
       "match": "expected"
     },
@@ -950,12 +1295,22 @@
         ],
         "normalization": {
           "type": "text",
-          "aliases": {}
+          "aliases": {
+            "1.4.2-rc1": [
+              "发布负责人确认当前仅有候选版1.4.2-rc1。",
+              "发布负责人确认当前仅有候选版1.4.2-rc1"
+            ]
+          }
         }
       },
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "1.4.2-rc1": [
+            "发布负责人确认当前仅有候选版1.4.2-rc1。",
+            "发布负责人确认当前仅有候选版1.4.2-rc1"
+          ]
+        }
       },
       "match": "expected"
     },
@@ -986,7 +1341,9 @@
               "未承诺发布日期",
               "暂无确定的发布日期",
               "not_committed",
-              "暂无承诺日期"
+              "暂无承诺日期",
+              "正式稳定版没有承诺发布日期；候选版不能标为稳定版。",
+              "正式稳定版没有承诺发布日期；候选版不能标为稳定版"
             ]
           }
         }
@@ -999,7 +1356,9 @@
             "未承诺发布日期",
             "暂无确定的发布日期",
             "not_committed",
-            "暂无承诺日期"
+            "暂无承诺日期",
+            "正式稳定版没有承诺发布日期；候选版不能标为稳定版。",
+            "正式稳定版没有承诺发布日期；候选版不能标为稳定版"
           ]
         }
       },
@@ -1012,14 +1371,23 @@
     "48小时自动构建",
     "受理窗口外的来信仅登记不受理",
     "带ETA回执的多级批次等待",
-    "候选版与稳定版分岗核实"
+    "候选版与稳定版分岗核实",
+    "发布流程页中途更新受理窗口信息",
+    "隐藏发布状态登记表单与分阶段办结",
+    "稳定版书面结论仅经登记渠道签发",
+    "发布登记受理的隐藏时间线",
+    "页面发布计划与稳定版日期口头误述"
   ],
   "failure_modes": [
     "初步补丁可用就提前结束",
     "把登记回执当作已受理",
     "错过受理窗口",
     "把候选版证据当作稳定版结论",
-    "杜撰稳定版承诺日期"
+    "杜撰稳定版承诺日期",
+    "不复查发布流程页错过窗口信息",
+    "不发现登记渠道即认定稳定版无书面结论",
+    "引用页面发布计划当作稳定版承诺",
+    "把维护者日期印象当书面结论"
   ],
   "reference_actions": [
     {
@@ -1042,6 +1410,20 @@
       "at": "2027-01-27T20:30:00+08:00"
     },
     {
+      "op": "discover",
+      "name": "xingzhou_release_register"
+    },
+    {
+      "op": "tool",
+      "name": "xingzhou_release_register",
+      "args": {
+        "fields": {
+          "version": "1.4.1",
+          "verified_commit": "$fact:workaround"
+        }
+      }
+    },
+    {
       "op": "send",
       "to": "maintainer",
       "text": "请转交核实季度发布的候选版与稳定版状态",
@@ -1054,6 +1436,21 @@
     {
       "op": "wait_for",
       "label": "release"
+    },
+    {
+      "op": "advance",
+      "at": "2027-02-26T20:30:00+08:00"
+    },
+    {
+      "op": "discover",
+      "name": "xingzhou_release_status"
+    },
+    {
+      "op": "tool",
+      "name": "xingzhou_release_status",
+      "args": {
+        "query": "发布"
+      }
     }
   ],
   "reference_is_privileged": true,

@@ -1,7 +1,7 @@
 [
   {
     "name": "observe",
-    "description": "工具名称：observe。\n调用方法：{\"tool\":\"observe\",\"arguments\":{}}，本工具无参数。\n用途：获取环境当前状态快照，包括当前虚拟时间（now）、可用工具名称列表（tools）和收件箱未读消息数（unread_messages）。任务详情请用recall_task获取，本工具不返回任务内容或联系人。",
+    "description": "工具名称：observe。\n调用方法：{\"tool\":\"observe\",\"arguments\":{}}，本工具无参数。\n用途：获取环境当前状态快照，包括当前虚拟时间（now）、本题可用工具名称列表（tools，每题不同：通用工具之外可能启用若干可选工具）和收件箱未读消息数（unread_messages）。任务详情请用recall_task获取，本工具不返回任务内容或联系人。",
     "parameters": {
       "type": "object",
       "properties": {},
@@ -19,7 +19,7 @@
   },
   {
     "name": "web_search",
-    "description": "工具名称：web_search。\n调用方法：{\"tool\":\"web_search\",\"arguments\":{\"query\":\"检索词\"}}。\n参数字段：query（必填）为检索词，仅当词项与网页的标题或摘要相关时才返回对应链接，无关查询不返回任何结果。\n用途：搜索合成公开网络。返回字段：results为结果链接列表，每项含url（网址）、title（标题）和snippet（摘要，不含正文）；hint.total_pages为公开网页总数；hint.undiscovered_pages为尚未发现的网页数量（从未出现在搜索结果且从未访问），为0表示没有更多可发现的网站，不必继续换词搜索。正文和联系人须通过visit_page访问。",
+    "description": "工具名称：web_search。\n调用方法：{\"tool\":\"web_search\",\"arguments\":{\"query\":\"检索词\"}}。\n参数字段：query（必填）为检索词，仅当词项与网页的标题或摘要相关时才返回对应链接，无关查询不返回任何结果。\n用途：搜索合成公开网络。网页内容会随时间更新，摘要反映页面当前版本，此前读过的信息可能已过时。返回字段：results为结果链接列表，每项含url（网址）、title（标题）和snippet（摘要，不含正文）；hint.total_pages为公开网页总数；hint.undiscovered_pages为尚未发现的网页数量（从未出现在搜索结果且从未访问），为0表示没有更多可发现的网站，不必继续换词搜索。正文和联系人须通过visit_page访问。",
     "parameters": {
       "type": "object",
       "properties": {
@@ -35,7 +35,7 @@
   },
   {
     "name": "visit_page",
-    "description": "工具名称：visit_page。\n调用方法：{\"tool\":\"visit_page\",\"arguments\":{\"url\":\"https://组织名.bench/页面\"}}。\n参数字段：url（必填）为要访问的网页地址，仅接受web_search返回过的网址。\n用途：访问网页，取得该页正文及页面上联系人的具体联络方式，并把这些人登记为已发现联系人。返回该页公开内容（网址url、标题title、正文text），以及contact_details为此页所列联系人的名片列表。",
+    "description": "工具名称：visit_page。\n调用方法：{\"tool\":\"visit_page\",\"arguments\":{\"url\":\"https://组织名.bench/页面\"}}。\n参数字段：url（必填）为要访问的网页地址，仅接受web_search返回过的网址。\n用途：访问网页，取得该页正文及页面上联系人的具体联络方式，并把这些人登记为已发现联系人。返回该页公开内容（网址url、标题title、正文text、最后更新时间last_updated——网页可能在任务期间更新，早前读到的信息可能已被修订，对时间敏感的结论应在提交前重访核对），以及contact_details为此页所列联系人的名片列表；若该页挂有文件，documents为文件链接列表（每项含url、title、text说明），文件内容须在启用fetch_document的题目里另行下载。",
     "parameters": {
       "type": "object",
       "properties": {
@@ -135,6 +135,133 @@
       },
       "required": [
         "until"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "discover_tools",
+    "description": "工具名称：discover_tools。\n调用方法：{\"tool\":\"discover_tools\",\"arguments\":{\"name\":\"工具名\"}}。\n参数字段：name（必填）为工具名称字符串，通常来自对接方回复或网页正文中提到的渠道/系统名称原文。\n用途：部分任务存在初始工具列表之外的隐藏工具，其名称只会出现在对接方回复或网页正文中。用本工具按名称查询：命中时返回该工具的用法说明（usage）并解锁——此后它出现在observe()的tools列表中，可按说明调用；未命中时返回found为false的提示，不消耗消息预算，也不会泄露还有哪些隐藏工具。隐藏工具的调用参数以其usage说明为准。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "工具名称，以往来信件或网页正文中提到的名称原文为准"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "query_case_status",
+    "description": "工具名称：query_case_status（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"query_case_status\",\"arguments\":{\"case_id\":\"CASE-0001\"}}。\n参数字段：case_id（必填）为自己的事项编号。\n用途：查询某一在办或已完结事项的当前状态：state（状态）、subject（办理主题）、due_at（当前阶段预计完成时间）、promised_eta（受理回执承诺的最早办结时间）、waiting_on（内部转交中正在等待的对接人）。不产生新证据，也不影响办理进度。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "case_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "fetch_document",
+    "description": "工具名称：fetch_document（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"fetch_document\",\"arguments\":{\"url\":\"https://组织名.bench/files/文件.pdf\"}}。\n参数字段：url（必填）为文件地址，来自visit_page返回的documents列表。\n用途：下载页面挂出的文件，返回url、title、text（文件内容）与at（时间）。部分官方文件（如价目、公告）随下载签发结构化书面证据（evidence列表，含id、issuer、issued_at、text、value、valid_until、kind）；也有些文件只是普通说明。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "check_schedule",
+    "description": "工具名称：check_schedule（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"check_schedule\",\"arguments\":{\"contact\":\"联系人id\",\"date\":\"2026-11-10\",\"days\":7}}，date与days可选。\n参数字段：contact（必填）为已发现联系人的id；date（可选，YYYY-MM-DD）为起始日期，默认今天；days（可选，1—31，默认7）为查询天数。\n用途：列出该联系人未来若干天的开门/接听时段，按对方当地时间返回（contact、name、timezone、open_hours列表，每项含date、start、end）。只反映日历安排，不反映队列与办理进度。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "days": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "contact"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "lookup_directory",
+    "description": "工具名称：lookup_directory（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"lookup_directory\",\"arguments\":{\"query\":\"姓名或职务关键词\"}}。\n参数字段：query（必填）为检索词。\n用途：按姓名或职务关键词检索公开通讯录，命中即登记为已发现联系人并返回名片（results列表）；未命中不代表对方不存在，可更换关键词重试。并非所有人物都出现在网页上，通讯录是与网页不同的另一条发现渠道。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "request_callback",
+    "description": "工具名称：request_callback（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"request_callback\",\"arguments\":{\"contact\":\"联系人id\",\"topic\":\"事项说明\"}}，topic可选。\n参数字段：contact（必填）为已发现联系人的id；topic（可选）为事项说明。\n用途：登记回拨请求（status恒为registered）。计入消息预算。不承诺具体回电时间，不产生回复，也不影响任何在办事项的进度。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact": {
+          "type": "string"
+        },
+        "topic": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "leave_note",
+    "description": "工具名称：leave_note（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"leave_note\",\"arguments\":{\"contact\":\"联系人id\",\"text\":\"留言内容\"}}。\n参数字段：contact（必填）为已发现联系人的id；text（必填）为留言内容。\n用途：给联系人留言（status恒为recorded）。计入消息预算。留言仅被记录，不作为正式来件处理，不会获得单独回复，也不影响任何在办事项的进度。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact",
+        "text"
       ],
       "additionalProperties": false
     }

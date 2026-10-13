@@ -1,0 +1,172 @@
+{
+  "private": true,
+  "task_id": "DSB-19",
+  "actor": {
+    "id": "clinic_coordinator",
+    "name": "Cedar Rehabilitation Clinic coordinator·Marcus Lee",
+    "role": "appointment logistics and release records",
+    "description": "Confirms appointment times and logistics only; the visit ends only when the clinic records an actual release, and clinical questions stay with clinicians.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "marcuslee@bench.example"
+    },
+    "knowledge": [
+      "appointment_time",
+      "clinic_release"
+    ],
+    "tools": {
+      "clinic_coordinator.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "clinic_coordinator.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "appointment_time"
+        ]
+      },
+      "clinic_coordinator.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "appointment_time"
+        ]
+      },
+      "clinic_coordinator.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Appointment logistics",
+        "aliases": [
+          "appointment",
+          "time",
+          "arrival",
+          "logistics",
+          "clinic",
+          "release"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "clinic_coordinator.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the appointment record",
+            "tool": "clinic_coordinator.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 40
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "clinic_coordinator.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "clinic_coordinator.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Cedar Rehabilitation Clinic coordinator·Marcus Lee，负责appointment logistics and release records。Confirms appointment times and logistics only; the visit ends only when the clinic records an actual release, and clinical questions stay with clinicians. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:appointment_time",
+      "attest:clinic_release"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "appointment_time": {
+      "value": "2027-09-03T10:00:00-05:00",
+      "text": "The rehabilitation appointment starts September 3, 2027 at 10:00 with arrival required by 09:30.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-19",
+          "case": {
+            "date": "2027-09-03",
+            "city": "Chicago test district",
+            "appointment": "10:00"
+          }
+        },
+        "predicate": "appointment_time"
+      }
+    },
+    "clinic_release": {
+      "value": "11:20",
+      "text": "The clinic's actual release (release-XHM) records the patient ready at 11:20 on September 3; the 11:00 estimate was never release evidence.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-19",
+          "case": {
+            "date": "2027-09-03",
+            "city": "Chicago test district",
+            "appointment": "10:00"
+          }
+        },
+        "predicate": "clinic_release"
+      }
+    }
+  },
+  "start_at": "2027-09-02T08:00:00-05:00",
+  "deadline_at": "2027-09-04T12:00:00-05:00"
+}

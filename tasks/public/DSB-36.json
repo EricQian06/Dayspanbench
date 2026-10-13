@@ -1,0 +1,103 @@
+{
+  "id": "DSB-36",
+  "title": "Accessible festival evening: the correct 21:00 set with step-free travel",
+  "brief": "Plan our three-person family visit to Pancho Libre's 21:00 set on July 31, 2027, in the Halifax test district, total at most 360 CAD. Ask me about access needs, travel and approval; confirm the current official show and step-free seating with the festival, watch for route changes, and reserve only the approved free access places. No purchases or payments.",
+  "user_fields": {
+    "date": "2027-07-31",
+    "city": "Halifax test district",
+    "party_size": 3
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "festival-intro",
+      "title": "Harbour Festival Programme",
+      "text": "Synthetic festival listings for the Halifax test district: shows, routes and the access desk. Current shows, routes and access offers are found through the festival search service (festival_search); listings and route status can change, so re-check before reserving. The family's constraints can be clarified through the family profile desk (family_dialogue). Official show confirmation and free seated access come from the festival access desk.",
+      "contacts": [],
+      "snippet": "Halifax festival show listings, step-free routes and the access desk.",
+      "url": "https://harbourfestival.bench/intro"
+    },
+    {
+      "id": "festival-contacts",
+      "title": "Festival access contacts",
+      "text": "The Harbour Festival access desk is handled by Priya Nair, who answers daily during business hours.",
+      "contacts": [
+        "access_desk"
+      ],
+      "snippet": "Contact for the Harbour Festival access desk.",
+      "url": "https://harbourfestival.bench/contact"
+    },
+    {
+      "id": "festival-entry",
+      "title": "Festival access reservation desk",
+      "text": "Free seated access places are reserved through the festival access desk (reserve_access): confirm the current official show through festival_search, agree the stage, step-free route, seats and budget with the family, then request the three places. At most one reservation; festival admission is free; no purchases, payments or alcohol packages.",
+      "contacts": [],
+      "snippet": "Festival access desk: current show, step-free route, organizer approval, three free places.",
+      "url": "https://harbourfestival.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: search listings, verify the current show and step-free routes, and reserve at most the approved free access places; no purchases, payments or alcohol packages.",
+  "answer_keys": [
+    "show_start",
+    "stage",
+    "show_end",
+    "route_step_free",
+    "home_arrival",
+    "total_cost",
+    "access_reserved",
+    "seats"
+  ],
+  "value_normalization": {
+    "show_start": {
+      "type": "text"
+    },
+    "stage": {
+      "type": "text"
+    },
+    "show_end": {
+      "type": "text"
+    },
+    "route_step_free": {
+      "type": "boolean"
+    },
+    "home_arrival": {
+      "type": "text"
+    },
+    "total_cost": {
+      "type": "number",
+      "units": {}
+    },
+    "access_reserved": {
+      "type": "boolean"
+    },
+    "seats": {
+      "type": "number",
+      "units": {}
+    }
+  },
+  "conclusion_options": {
+    "access_confirmed": "Three free seated step-free places confirmed with a feasible step-free return",
+    "unconfirmed": "The current show or step-free route could not be verified in time",
+    "not_feasible": "No current show, seating or step-free route satisfies the constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-07-31T10:00:00-03:00",
+  "deadline_at": "2027-08-02T17:00:00-03:00"
+}

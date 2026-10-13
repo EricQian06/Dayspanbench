@@ -26,7 +26,7 @@
         "status": "confirmed",
         "value": "1.4.2-rc1",
         "evidence_ids": [
-          "EV-0004"
+          "EV-0005"
         ]
       },
       {
@@ -34,7 +34,7 @@
         "status": "confirmed",
         "value": "尚无承诺日期",
         "evidence_ids": [
-          "EV-0005"
+          "EV-0004"
         ]
       }
     ]
@@ -73,11 +73,11 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 2616.27,
-    "calendar_days": 109.011111,
+    "calendar_hours": 2664.0,
+    "calendar_days": 111.0,
     "agent_messages": 2,
     "contacted_actors": 1,
-    "as_of": "2027-02-24T12:46:00+00:00"
+    "as_of": "2027-02-26T12:30:00+00:00"
   },
   "agent_messages": [
     {
@@ -97,7 +97,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：提交的日志可重现在编译器C19下的兼容问题。CI在commit-7bc2上验证该兼容问题已修复。CI在commit-7bc2上验证该兼容问题已修复。如有其他问题，欢迎随时来信。",
+      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：提交的日志可重现在编译器C19下的兼容问题。CI在commit-7bc2上验证该兼容问题已修复。CI在commit-7bc2上验证该兼容问题已修复。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0001",
@@ -145,23 +145,14 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：发布负责人确认当前仅有候选版1.4.2-rc1。正式稳定版没有承诺发布日期；候选版不能标为稳定版。如有其他问题，欢迎随时来信。",
+      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：发布负责人确认当前仅有候选版1.4.2-rc1。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
-          "id": "EV-0004",
+          "id": "EV-0005",
           "issuer": "release",
           "issued_at": "2027-02-09T14:00:00+00:00",
           "text": "发布负责人确认当前仅有候选版1.4.2-rc1。",
           "value": "1.4.2-rc1",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0005",
-          "issuer": "upstream",
-          "issued_at": "2027-02-18T14:00:00+00:00",
-          "text": "正式稳定版没有承诺发布日期；候选版不能标为稳定版。",
-          "value": "尚无承诺日期",
           "valid_until": null,
           "kind": "fact"
         }
@@ -514,6 +505,26 @@
       "status": "reply"
     },
     {
+      "at": "2027-01-15T12:00:00+00:00",
+      "kind": "page_updated",
+      "page": "repo-faq",
+      "url": "https://xingzhou.bench/faq"
+    },
+    {
+      "at": "2027-01-27T12:30:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "xingzhou_release_register",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-01-27T12:30:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "xingzhou_release_register",
+      "form": "release_form",
+      "accepted": true
+    },
+    {
       "at": "2027-01-27T12:30:00+00:00",
       "kind": "agent_send",
       "recipient": "jianchuan@bench.example",
@@ -650,6 +661,20 @@
       "start_at": "2027-02-09T12:00:00+00:00",
       "due_at": "2027-02-09T14:00:00+00:00",
       "tool": "release.main.1.lookup"
+    },
+    {
+      "at": "2027-02-09T12:00:00+00:00",
+      "kind": "page_updated",
+      "page": "repo-entry",
+      "url": "https://xingzhou.bench/entry",
+      "cause": "form"
+    },
+    {
+      "at": "2027-02-09T12:00:00+00:00",
+      "kind": "form_processed",
+      "form": "release_form",
+      "accepted": true,
+      "result": "发布状态登记已办结：正式稳定版没有承诺发布日期；候选版不能标为稳定版。办理进度可经星舟发布进度查询（xingzhou_release_status）复核。"
     },
     {
       "at": "2027-02-09T12:00:00+00:00",
@@ -895,6 +920,22 @@
       "message_id": "MSG-0004",
       "case_id": "CASE-0003",
       "status": "reply"
+    },
+    {
+      "at": "2027-02-26T12:30:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "xingzhou_release_status",
+      "found": true,
+      "tool_kind": "status"
+    },
+    {
+      "at": "2027-02-26T12:30:00+00:00",
+      "kind": "agent_hidden_status",
+      "tool": "xingzhou_release_status",
+      "query": "发布",
+      "keys": [
+        "release"
+      ]
     }
   ],
   "pending_cases": []

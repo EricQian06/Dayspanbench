@@ -9,8 +9,7 @@
         "status": "confirmed",
         "value": "SAFE-NOV06-482",
         "evidence_ids": [
-          "EV-0001",
-          "EV-0002"
+          "EV-0001"
         ]
       },
       {
@@ -18,7 +17,7 @@
         "status": "confirmed",
         "value": "F-26B",
         "evidence_ids": [
-          "EV-0003"
+          "EV-0002"
         ]
       },
       {
@@ -26,8 +25,8 @@
         "status": "confirmed",
         "value": "2026-11-25T13:00:00+08:00",
         "evidence_ids": [
-          "EV-0004",
-          "EV-0006"
+          "EV-0003",
+          "EV-0005"
         ]
       },
       {
@@ -35,8 +34,8 @@
         "status": "confirmed",
         "value": 1800,
         "evidence_ids": [
-          "EV-0005",
-          "EV-0007"
+          "EV-0004",
+          "EV-0006"
         ]
       }
     ]
@@ -84,7 +83,17 @@
   "agent_messages": [
     {
       "id": "MSG-0001",
-      "at": "2026-11-04T03:05:00+00:00",
+      "at": "2026-11-04T02:50:00+00:00",
+      "from": "yeqing@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "培训记录归谁管我说不准：可能是安全员温遥，也可能仪器管理员杜和那边留了登记，或者耗材库宋野能查到；建议您分别去信确认。另外我印象里这批进口滤芯11月10日就到库了，错不了，供您参考，到货情况请以耗材库核实为准。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2026-11-04T03:41:00+00:00",
       "from": "yeqing@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
@@ -93,37 +102,18 @@
       "evidence": []
     },
     {
-      "id": "MSG-0002",
-      "at": "2026-11-09T01:28:00+00:00",
+      "id": "MSG-0003",
+      "at": "2026-11-13T08:15:00+00:00",
       "from": "wenyao@bench.example",
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是南屿实验室安全员·温遥。您咨询的事项已经核实，具体情况如下：人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。如有其他问题，欢迎随时来信。",
-      "evidence": [
-        {
-          "id": "EV-0001",
-          "issuer": "safety",
-          "issued_at": "2026-11-06T08:00:00+00:00",
-          "text": "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
-          "value": "SAFE-NOV06-482",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0002",
-          "issuer": "safety",
-          "issued_at": "2026-11-09T01:13:00+00:00",
-          "text": "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
-          "value": "SAFE-NOV06-482",
-          "valid_until": null,
-          "kind": "document"
-        }
-      ]
+      "text": "您好，我是南屿实验室安全员·温遥。本期批次培训已结束，合格记录不随邮件发放：请通过南屿培训记录系统（nanyu_training_record）提交记录申请，批次安排与申请说明见官网安全培训安排细则文件。",
+      "evidence": []
     },
     {
-      "id": "MSG-0003",
-      "at": "2026-11-09T02:54:00+00:00",
+      "id": "MSG-0004",
+      "at": "2026-11-16T01:56:00+00:00",
       "from": "duhe@bench.example",
       "case_id": "CASE-0003",
       "status": "acknowledgement",
@@ -132,16 +122,16 @@
       "evidence": []
     },
     {
-      "id": "MSG-0004",
+      "id": "MSG-0005",
       "at": "2026-11-25T02:50:00+00:00",
       "from": "duhe@bench.example",
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是仪器管理员·杜和。您咨询的事项已经核实，具体情况如下：本次测量所需F-26B滤芯已到库。完成7天稳定性校准后，最早可用测量时段为11月25日13点。该样品批次测量报价1800元，尚未预约或扣费。完成7天稳定性校准后，最早可用测量时段为11月25日13点。该样品批次测量报价1800元，尚未预约或扣费。如有其他问题，欢迎随时来信。",
+      "text": "您好，我是仪器管理员·杜和。您咨询的事项已经核实，具体情况如下：本次测量所需F-26B滤芯已到库。完成7天稳定性校准后，最早可用测量时段为11月25日13点。该样品批次测量报价1800元，尚未预约或扣费。完成7天稳定性校准后，最早可用测量时段为11月25日13点。该样品批次测量报价1800元，尚未预约或扣费。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
-          "id": "EV-0003",
+          "id": "EV-0002",
           "issuer": "stores",
           "issued_at": "2026-11-17T05:14:00+00:00",
           "text": "本次测量所需F-26B滤芯已到库。",
@@ -150,7 +140,7 @@
           "kind": "fact"
         },
         {
-          "id": "EV-0004",
+          "id": "EV-0003",
           "issuer": "instrument",
           "issued_at": "2026-11-25T01:49:00+00:00",
           "text": "完成7天稳定性校准后，最早可用测量时段为11月25日13点。",
@@ -159,7 +149,7 @@
           "kind": "fact"
         },
         {
-          "id": "EV-0005",
+          "id": "EV-0004",
           "issuer": "instrument",
           "issued_at": "2026-11-25T01:49:00+00:00",
           "text": "该样品批次测量报价1800元，尚未预约或扣费。",
@@ -168,7 +158,7 @@
           "kind": "fact"
         },
         {
-          "id": "EV-0006",
+          "id": "EV-0005",
           "issuer": "instrument",
           "issued_at": "2026-11-25T02:35:00+00:00",
           "text": "完成7天稳定性校准后，最早可用测量时段为11月25日13点。",
@@ -177,7 +167,7 @@
           "kind": "document"
         },
         {
-          "id": "EV-0007",
+          "id": "EV-0006",
           "issuer": "instrument",
           "issued_at": "2026-11-25T02:35:00+00:00",
           "text": "该样品批次测量报价1800元，尚未预约或扣费。",
@@ -224,7 +214,7 @@
       "step": "main_1",
       "start_at": "2026-11-04T02:02:00+00:00",
       "due_at": "2026-11-04T02:50:00+00:00",
-      "tool": "labdesk.main.1.refer"
+      "tool": "labdesk.main.1.suggest"
     },
     {
       "at": "2026-11-04T02:02:00+00:00",
@@ -239,8 +229,15 @@
       "kind": "tool_call",
       "actor": "labdesk",
       "case_id": "CASE-0001",
-      "tool": "labdesk.main.1.refer",
-      "tool_kind": "refer"
+      "tool": "labdesk.main.1.suggest",
+      "tool_kind": "suggest"
+    },
+    {
+      "at": "2026-11-04T02:50:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "reply"
     },
     {
       "at": "2026-11-04T02:50:00+00:00",
@@ -257,8 +254,8 @@
       "actor": "labdesk",
       "step": "main_2",
       "start_at": "2026-11-04T02:50:00+00:00",
-      "due_at": "2026-11-04T03:05:00+00:00",
-      "tool": "labdesk.main.2.reply"
+      "due_at": "2026-11-04T03:26:00+00:00",
+      "tool": "labdesk.main.2.refer"
     },
     {
       "at": "2026-11-04T02:50:00+00:00",
@@ -269,15 +266,49 @@
       "new": "working"
     },
     {
-      "at": "2026-11-04T03:05:00+00:00",
+      "at": "2026-11-04T03:26:00+00:00",
       "kind": "tool_call",
       "actor": "labdesk",
       "case_id": "CASE-0001",
-      "tool": "labdesk.main.2.reply",
+      "tool": "labdesk.main.2.refer",
+      "tool_kind": "refer"
+    },
+    {
+      "at": "2026-11-04T03:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "labdesk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-04T03:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "labdesk",
+      "step": "main_3",
+      "start_at": "2026-11-04T03:26:00+00:00",
+      "due_at": "2026-11-04T03:41:00+00:00",
+      "tool": "labdesk.main.3.reply"
+    },
+    {
+      "at": "2026-11-04T03:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "labdesk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-04T03:41:00+00:00",
+      "kind": "tool_call",
+      "actor": "labdesk",
+      "case_id": "CASE-0001",
+      "tool": "labdesk.main.3.reply",
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-04T03:05:00+00:00",
+      "at": "2026-11-04T03:41:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "labdesk",
@@ -285,17 +316,17 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-04T03:05:00+00:00",
+      "at": "2026-11-04T03:41:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0001",
+      "message_id": "MSG-0002",
       "case_id": "CASE-0001",
       "status": "reply"
     },
     {
-      "at": "2026-11-04T03:05:00+00:00",
+      "at": "2026-11-04T03:41:00+00:00",
       "kind": "agent_send",
       "recipient": "wenyao@bench.example",
-      "text": "请求完成培训并取得安全记录",
+      "text": "请确认培训批次与记录领取方式",
       "fields": {
         "sample_id": "S-482",
         "person_name": "顾晓"
@@ -303,7 +334,7 @@
       "channel": "email"
     },
     {
-      "at": "2026-11-04T03:05:00+00:00",
+      "at": "2026-11-04T03:41:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0002",
       "actor": "safety",
@@ -311,7 +342,21 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-04T03:26:00+00:00",
+      "at": "2026-11-04T03:41:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "nanyu_training_record",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2026-11-04T03:41:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "nanyu_training_record",
+      "form": "lab_training_form",
+      "accepted": true
+    },
+    {
+      "at": "2026-11-04T05:09:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "safety",
@@ -319,17 +364,23 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-04T03:26:00+00:00",
+      "at": "2026-11-04T05:09:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "safety",
       "step": "main_1",
-      "start_at": "2026-11-06T06:00:00+00:00",
-      "due_at": "2026-11-06T08:00:00+00:00",
+      "start_at": "2026-11-13T06:00:00+00:00",
+      "due_at": "2026-11-13T08:00:00+00:00",
       "tool": "safety.main.1.lookup"
     },
     {
-      "at": "2026-11-06T06:00:00+00:00",
+      "at": "2026-11-05T01:00:00+00:00",
+      "kind": "page_updated",
+      "page": "lab-intro",
+      "url": "https://nanyu.bench/intro"
+    },
+    {
+      "at": "2026-11-13T06:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "safety",
@@ -337,7 +388,21 @@
       "new": "working"
     },
     {
-      "at": "2026-11-06T08:00:00+00:00",
+      "at": "2026-11-13T08:00:00+00:00",
+      "kind": "page_updated",
+      "page": "lab-entry",
+      "url": "https://nanyu.bench/entry",
+      "cause": "form"
+    },
+    {
+      "at": "2026-11-13T08:00:00+00:00",
+      "kind": "form_processed",
+      "form": "lab_training_form",
+      "accepted": true,
+      "result": "培训记录申请已办结：顾晓已完成11月13日批次安全培训，合格记录号SAFE-NOV06-482；办理进度可经南屿培训状态查询（nanyu_training_status）复核。"
+    },
+    {
+      "at": "2026-11-13T08:00:00+00:00",
       "kind": "tool_call",
       "actor": "safety",
       "case_id": "CASE-0002",
@@ -345,7 +410,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-06T08:00:00+00:00",
+      "at": "2026-11-13T08:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "safety",
@@ -353,17 +418,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-06T08:00:00+00:00",
+      "at": "2026-11-13T08:00:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "safety",
       "step": "main_2",
-      "start_at": "2026-11-06T08:00:00+00:00",
-      "due_at": "2026-11-09T01:13:00+00:00",
-      "tool": "safety.main.2.document"
+      "start_at": "2026-11-13T08:00:00+00:00",
+      "due_at": "2026-11-13T08:15:00+00:00",
+      "tool": "safety.main.2.deny"
     },
     {
-      "at": "2026-11-06T08:00:00+00:00",
+      "at": "2026-11-13T08:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "safety",
@@ -371,49 +436,15 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T01:13:00+00:00",
+      "at": "2026-11-13T08:15:00+00:00",
       "kind": "tool_call",
       "actor": "safety",
       "case_id": "CASE-0002",
-      "tool": "safety.main.2.document",
-      "tool_kind": "document"
+      "tool": "safety.main.2.deny",
+      "tool_kind": "deny"
     },
     {
-      "at": "2026-11-09T01:13:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "safety",
-      "old": "working",
-      "new": "queued"
-    },
-    {
-      "at": "2026-11-09T01:13:00+00:00",
-      "kind": "scheduled",
-      "case_id": "CASE-0002",
-      "actor": "safety",
-      "step": "main_3",
-      "start_at": "2026-11-09T01:13:00+00:00",
-      "due_at": "2026-11-09T01:28:00+00:00",
-      "tool": "safety.main.3.reply"
-    },
-    {
-      "at": "2026-11-09T01:13:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "safety",
-      "old": "queued",
-      "new": "working"
-    },
-    {
-      "at": "2026-11-09T01:28:00+00:00",
-      "kind": "tool_call",
-      "actor": "safety",
-      "case_id": "CASE-0002",
-      "tool": "safety.main.3.reply",
-      "tool_kind": "reply"
-    },
-    {
-      "at": "2026-11-09T01:28:00+00:00",
+      "at": "2026-11-13T08:15:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "safety",
@@ -421,14 +452,14 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-09T01:28:00+00:00",
+      "at": "2026-11-13T08:15:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0002",
+      "message_id": "MSG-0003",
       "case_id": "CASE-0002",
       "status": "reply"
     },
     {
-      "at": "2026-11-09T01:28:00+00:00",
+      "at": "2026-11-13T08:30:00+00:00",
       "kind": "agent_send",
       "recipient": "duhe@bench.example",
       "text": "核实测量时间、校准和费用",
@@ -439,7 +470,7 @@
       "channel": "email"
     },
     {
-      "at": "2026-11-09T01:28:00+00:00",
+      "at": "2026-11-13T08:30:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0003",
       "actor": "instrument",
@@ -447,17 +478,16 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-09T02:04:00+00:00",
+      "at": "2026-11-16T01:06:00+00:00",
       "kind": "material_understood",
       "case_id": "CASE-0003",
       "field": "safety_certificate",
       "evidence": [
-        "EV-0001",
-        "EV-0002"
+        "EV-0001"
       ]
     },
     {
-      "at": "2026-11-09T02:04:00+00:00",
+      "at": "2026-11-16T01:06:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "instrument",
@@ -465,17 +495,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T02:04:00+00:00",
+      "at": "2026-11-16T01:06:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "instrument",
       "step": "main_1",
-      "start_at": "2026-11-09T02:04:00+00:00",
-      "due_at": "2026-11-09T02:54:00+00:00",
+      "start_at": "2026-11-16T01:06:00+00:00",
+      "due_at": "2026-11-16T01:56:00+00:00",
       "tool": "instrument.main.1.acknowledge"
     },
     {
-      "at": "2026-11-09T02:04:00+00:00",
+      "at": "2026-11-16T01:06:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "instrument",
@@ -483,7 +513,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T02:54:00+00:00",
+      "at": "2026-11-16T01:56:00+00:00",
       "kind": "tool_call",
       "actor": "instrument",
       "case_id": "CASE-0003",
@@ -491,14 +521,14 @@
       "tool_kind": "acknowledge"
     },
     {
-      "at": "2026-11-09T02:54:00+00:00",
+      "at": "2026-11-16T01:56:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0003",
+      "message_id": "MSG-0004",
       "case_id": "CASE-0003",
       "status": "acknowledgement"
     },
     {
-      "at": "2026-11-09T02:54:00+00:00",
+      "at": "2026-11-16T01:56:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "instrument",
@@ -506,17 +536,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T02:54:00+00:00",
+      "at": "2026-11-16T01:56:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "instrument",
       "step": "main_2",
-      "start_at": "2026-11-09T02:54:00+00:00",
-      "due_at": "2026-11-09T05:11:00+00:00",
+      "start_at": "2026-11-16T01:56:00+00:00",
+      "due_at": "2026-11-16T03:13:00+00:00",
       "tool": "instrument.main.2.delegate"
     },
     {
-      "at": "2026-11-09T02:54:00+00:00",
+      "at": "2026-11-16T01:56:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "instrument",
@@ -524,7 +554,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T05:11:00+00:00",
+      "at": "2026-11-16T03:13:00+00:00",
       "kind": "tool_call",
       "actor": "instrument",
       "case_id": "CASE-0003",
@@ -532,7 +562,7 @@
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-09T05:11:00+00:00",
+      "at": "2026-11-16T03:13:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "instrument",
@@ -540,7 +570,7 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-09T05:11:00+00:00",
+      "at": "2026-11-16T03:13:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0004",
       "actor": "stores",
@@ -548,7 +578,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-09T05:11:00+00:00",
+      "at": "2026-11-16T03:13:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "stores",
@@ -556,7 +586,7 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T05:11:00+00:00",
+      "at": "2026-11-16T03:13:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0004",
       "actor": "stores",
@@ -776,7 +806,7 @@
     {
       "at": "2026-11-25T02:50:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0004",
+      "message_id": "MSG-0005",
       "case_id": "CASE-0003",
       "status": "reply"
     }

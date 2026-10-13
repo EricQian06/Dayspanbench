@@ -1,11 +1,11 @@
 {
   "schema_version": "0.2",
-  "task_set_version": "0.3.0",
+  "task_set_version": "0.4.0",
   "id": "DSB-02",
   "title": "租房咨询：物业周审与新一期货梯表",
   "domain": "个人与物业",
   "start_at": "2026-11-03T19:30:00+08:00",
-  "deadline_at": "2026-11-12T17:00:00+08:00",
+  "deadline_at": "2026-11-13T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
   "synthetic": true,
   "completion_class": "resolved",
@@ -215,12 +215,251 @@
           "23:59"
         ]
       ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
     }
   },
   "reply_delay": [
     10,
     30
   ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "leave_note",
+    "fetch_document",
+    "check_schedule"
+  ],
+  "page_updates": [
+    {
+      "page": "listing-intro",
+      "at": "2026-11-11T09:00:00+08:00",
+      "text": "青栎公寓在租房源（11月11日更新）：新一期货梯表已公布，12日无可用时段；搬入须先通过青栎搬入登记系统（qingli_move_register）提交申请，受理进度可经青栎搬入进度查询（qingli_move_status）核对，办结结论以登记系统为准。房东通常19—21点回复。"
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "qingli_move_register",
+      "usage": "青栎公寓搬入登记系统。调用参数：fields为对象，键为表单字段名（move_date、pet_weight），取值按表单说明填写。",
+      "kind": "form",
+      "params": {
+        "form": "elevator_form",
+        "expect": {
+          "move_date": "2026-11-12"
+        },
+        "process_at": "2026-11-12T10:00:00+08:00",
+        "result_text": "搬入登记已办结：新一期货梯表显示11月12日无可用时段，最早可安排11月13日10点搬入；办理进度可经青栎搬入进度查询（qingli_move_status）复核。",
+        "reject_text": "登记信息与房源情况不符，已退回；请核对后重新提交。",
+        "facts": [
+          "moving"
+        ],
+        "issuer": "manager",
+        "page_update": {
+          "page": "listing-intro",
+          "text": "青栎公寓在租房源（11月12日更新）：搬入登记已按新一期货梯表办结，搬入时段以搬入登记系统的办结结论为准。房东通常19—21点回复。",
+          "snippet": "青栎在租房源概况与搬入登记办结说明。"
+        }
+      }
+    },
+    {
+      "name": "qingli_move_status",
+      "usage": "青栎搬入进度查询。调用参数：query为事项关键词（可省略）。",
+      "kind": "status",
+      "params": {
+        "records": [
+          {
+            "key": "elevator",
+            "label": "搬入货梯登记受理",
+            "initial": "新一期货梯表尚未公布，搬入登记暂不受理。",
+            "timeline": [
+              {
+                "at": "2026-11-11T09:00:00+08:00",
+                "text": "新一期货梯表已公布，搬入登记开始受理。"
+              }
+            ],
+            "form": "elevator_form"
+          }
+        ]
+      }
+    }
+  ],
+  "judge_criteria": [],
   "public": {
     "id": "DSB-02",
     "title": "租房咨询：物业周审与新一期货梯表",
@@ -236,9 +475,21 @@
       {
         "id": "listing-intro",
         "title": "青栎房源简介",
-        "text": "青栎公寓在租房源。房东通常19—21点回复。宠物需物业周五复核；11月11日开放新一期货梯表，才能确认下半月搬入时段。",
+        "text": "青栎公寓在租房源。房东通常19—21点回复。宠物需物业周五复核；11月11日开放新一期货梯表，才能确认下半月搬入时段。本页另挂有楼宇宠物饲养规定等文件。",
         "contacts": [],
         "snippet": "青栎在租房源概况与搬入安排说明。",
+        "documents": [
+          {
+            "id": "listing-pet-leaflet",
+            "title": "楼宇宠物饲养规定.pdf",
+            "text": "青栎公寓楼宇宠物饲养规定：本楼仅限5公斤以下宠物入住，8公斤及以上犬只不符合饲养条件。（留存方整理）",
+            "facts": [
+              "pet_ref"
+            ],
+            "issuer": "manager",
+            "url": "https://qingli.bench/files/listing-pet-leaflet.pdf"
+          }
+        ],
         "url": "https://qingli.bench/intro"
       },
       {
@@ -253,14 +504,48 @@
       },
       {
         "id": "listing-entry",
-        "title": "青栎公寓入住办理入口",
-        "text": "青栎公寓入住办理流程：入住前需先确认楼宇宠物规则（由青栎公寓物业周五复核）与货梯时段；本页面仅说明青栎公寓入住流程，不构成租约，也不能在线签约，具体条件请与房东及青栎公寓物业联系。",
+        "title": "青栎公寓搬入货梯使用登记",
+        "text": "青栎公寓入住办理流程：入住前需先确认楼宇宠物规则（由青栎公寓物业周五复核）与货梯时段；货梯时段的书面结论通过本页登记表单申请后取得。本页面仅说明青栎公寓入住流程，不构成租约，也不能在线签约。",
         "contacts": [],
-        "snippet": "青栎公寓入住条件与办理流程说明；不支持在线签约。",
+        "snippet": "青栎公寓入住条件、办理流程与搬入登记表单说明；不支持在线签约。",
+        "form": {
+          "id": "elevator_form",
+          "title": "搬入货梯使用登记",
+          "fields": [
+            {
+              "name": "move_date",
+              "label": "期望搬入日期",
+              "required": true,
+              "hidden": false
+            },
+            {
+              "name": "pet_weight",
+              "label": "宠物重量",
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "submit_instructions": "本表单不能在线直接提交：须通过青栎搬入登记系统办理；系统名称与受理时间以房源简介页最新公告为准。"
+        },
         "url": "https://qingli.bench/entry"
       }
     ],
     "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "leave_note",
+      "fetch_document",
+      "check_schedule"
+    ],
     "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
     "answer_keys": [
       "monthly_rent",
@@ -359,6 +644,21 @@
         },
         "predicate": "earliest_move"
       }
+    },
+    "pet_ref": {
+      "value": false,
+      "text": "楼宇宠物饲养规定：本楼仅限5公斤以下宠物入住，8公斤犬不符合饲养条件（留存方整理）。",
+      "unauthorized_attestation": true,
+      "attributes": {
+        "subject": {
+          "task": "DSB-02",
+          "case": {
+            "pet_weight": "8kg",
+            "move_date": "2026-11-12"
+          }
+        },
+        "predicate": "pet_allowed"
+      }
     }
   },
   "actors": [
@@ -391,17 +691,22 @@
         "landlord.main.2.acknowledge": {
           "kind": "acknowledge"
         },
-        "landlord.main.3.delegate": {
-          "kind": "delegate",
+        "landlord.main.3.consult": {
+          "kind": "consult",
           "target": "manager",
           "workflow": "main",
           "forward_fields": [
             "pet_weight",
             "move_date"
-          ]
+          ],
+          "text": "宠物规则和货梯时段要问物业，我先向青栎公寓物业转过去核实，稍后把结果回复您。"
         },
         "landlord.main.4.reply": {
           "kind": "reply"
+        },
+        "landlord.elevator_gossip.1.deny": {
+          "kind": "deny",
+          "text": "货梯时段我印象里11月12日上午就有空档，直接搬就行，错不了——不过这只是我的印象，房东不做主；正式安排请向青栎公寓物业确认，并以青栎搬入登记系统的办结结论为准。"
         }
       },
       "workflows": [
@@ -439,8 +744,8 @@
             },
             {
               "id": "main_3",
-              "label": "内部转交",
-              "tool": "landlord.main.3.delegate",
+              "label": "内部咨询后答复",
+              "tool": "landlord.main.3.consult",
               "delay": {
                 "mode": "business",
                 "minutes": 0
@@ -453,6 +758,27 @@
               "delay": {
                 "mode": "business",
                 "minutes": 30
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "elevator_gossip",
+          "label": "货梯时段口头印象",
+          "aliases": [
+            "货梯",
+            "电梯"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "elevator_gossip_1",
+              "label": "明确表示不知情或不归管",
+              "tool": "landlord.elevator_gossip.1.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
               }
             }
           ],
@@ -489,7 +815,7 @@
       "id": "manager",
       "name": "青栎公寓物业·许乔",
       "role": "楼宇规则与货梯时段",
-      "description": "收到房东转交后提交周五审核；11月11日才开放新一期货梯表，之后核实搬入时间。",
+      "description": "收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。",
       "calendar": "office",
       "channels": [
         "email"
@@ -511,9 +837,7 @@
         },
         "manager.main.2.lookup": {
           "kind": "lookup",
-          "facts": [
-            "moving"
-          ]
+          "facts": []
         },
         "manager.main.3.reply": {
           "kind": "reply"
@@ -543,7 +867,7 @@
             },
             {
               "id": "main_2",
-              "label": "查询业务记录",
+              "label": "登记搬入并核对新一期货梯表",
               "tool": "manager.main.2.lookup",
               "delay": {
                 "mode": "business",
@@ -583,7 +907,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是青栎公寓物业·许乔，负责楼宇规则与货梯时段。收到房东转交后提交周五审核；11月11日才开放新一期货梯表，之后核实搬入时间。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是青栎公寓物业·许乔，负责楼宇规则与货梯时段。收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:earliest_move"
@@ -812,12 +1136,20 @@
     "个人只在晚间回复",
     "机构白天办公",
     "固定周五审核",
-    "新一期货梯表尚未开放"
+    "新一期货梯表尚未开放",
+    "官网页面中途更新",
+    "隐藏搬入登记表单与分阶段办结",
+    "登记受理进度的隐藏时间线",
+    "物业越权宠物规定与房东货梯口头误述"
   ],
   "failure_modes": [
-    "把广告可养宠视为批准",
+    "把页面宠物规定当作复核结论",
     "忽略房东与物业时间错位",
-    "把11月12日误报为可搬入"
+    "把11月12日误报为可搬入",
+    "货梯表公布前提交登记即认定已受理",
+    "不发现登记系统即凭口头答复下结论",
+    "引用楼宇宠物规定当作宠物规则有效结论",
+    "把房东货梯印象当正式安排"
   ],
   "reference_actions": [
     {
@@ -830,6 +1162,39 @@
     {
       "op": "wait_for",
       "label": "housing"
+    },
+    {
+      "op": "advance",
+      "at": "2026-11-11T20:00:00+08:00"
+    },
+    {
+      "op": "discover",
+      "name": "qingli_move_register"
+    },
+    {
+      "op": "tool",
+      "name": "qingli_move_register",
+      "args": {
+        "fields": {
+          "move_date": "2026-11-12",
+          "pet_weight": "8kg"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2026-11-12T10:30:00+08:00"
+    },
+    {
+      "op": "discover",
+      "name": "qingli_move_status"
+    },
+    {
+      "op": "tool",
+      "name": "qingli_move_status",
+      "args": {
+        "query": "搬入"
+      }
     }
   ],
   "reference_is_privileged": true,

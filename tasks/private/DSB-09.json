@@ -1,11 +1,11 @@
 {
   "schema_version": "0.2",
-  "task_set_version": "0.3.0",
+  "task_set_version": "0.4.0",
   "id": "DSB-09",
   "title": "公共活动咨询：意见征集与年末联合复核",
   "domain": "公共服务",
   "start_at": "2026-11-03T15:00:00+08:00",
-  "deadline_at": "2026-12-29T17:00:00+08:00",
+  "deadline_at": "2027-01-05T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
   "synthetic": true,
   "completion_class": "resolved",
@@ -215,16 +215,260 @@
           "23:59"
         ]
       ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
     }
   },
   "reply_delay": [
     20,
     45
   ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "request_callback",
+    "fetch_document",
+    "lookup_directory"
+  ],
+  "page_updates": [
+    {
+      "page": "service-intro",
+      "at": "2026-12-03T09:00:00+08:00",
+      "text": "晴港公共活动咨询（12月3日更新）：本轮30天跨部门意见征集已汇总结束。回执可向活动环境咨询员申请取得；取得回执后须于12月28日申请联合分类复核，复核书面结论须经登记渠道取得。正式办理窗口另行确认。"
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "qinggang_review_register",
+      "usage": "晴港联合复核登记渠道。调用参数：fields为对象，键为表单字段名（location、sound_equipment、consultation_receipt），consultation_receipt须填本轮意见征集的回执编号。",
+      "kind": "form",
+      "params": {
+        "form": "review_form",
+        "expect": {
+          "consultation_receipt": "CONSULT-DEC03-19"
+        },
+        "process_at": "2026-12-28T15:00:00+08:00",
+        "result_text": "联合复核登记已办结：拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请；需准备平面图、时段说明和声设备清单；按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日。办理进度可经晴港复核进度查询（qinggang_review_status）复核。",
+        "reject_text": "登记信息与意见征集记录不符，已退回；请核对回执编号后重新提交。",
+        "facts": [
+          "category",
+          "documents",
+          "earliest"
+        ],
+        "issuer": "sound",
+        "page_update": {
+          "page": "service-entry",
+          "snippet": "晴港活动预咨询入口：已提交的联合复核登记以表单状态为准。"
+        }
+      }
+    },
+    {
+      "name": "qinggang_review_status",
+      "usage": "晴港复核进度查询。调用参数：query为事项关键词（可省略）。",
+      "kind": "status",
+      "params": {
+        "records": [
+          {
+            "key": "review",
+            "label": "联合分类复核登记",
+            "initial": "尚未查询到联合复核登记记录。",
+            "timeline": [
+              {
+                "at": "2026-12-03T09:00:00+08:00",
+                "text": "本轮30天跨部门意见征集已汇总结束，联合复核登记开始受理。"
+              },
+              {
+                "at": "2026-12-28T10:00:00+08:00",
+                "text": "12月28日联合分类复核批次已办理，复核结论以登记办结状态为准。"
+              }
+            ],
+            "form": "review_form"
+          }
+        ]
+      }
+    }
+  ],
+  "judge_criteria": [],
   "public": {
     "id": "DSB-09",
     "title": "公共活动咨询：意见征集与年末联合复核",
-    "brief": "为2027年1月晴港北广场的小型扩声活动询问主管机构、事项分类、应备材料和最早办理窗口。跟进意见征集并携回执再次申请联合复核。只做预咨询，不能写成已获许可；场景规则均为合成。",
+    "brief": "为2027年1月晴港北广场的小型扩声活动询问主管机构、事项分类、应备材料和最早办理窗口。跟进意见征集并携回执再次申请联合复核，书面复核结论按对方说明的渠道取得。只做预咨询，不能写成已获许可；场景规则均为合成。",
     "user_fields": {
       "location": "晴港北广场",
       "sound_equipment": "使用两只扩声音箱"
@@ -234,9 +478,21 @@
       {
         "id": "service-intro",
         "title": "晴港公共活动咨询简介",
-        "text": "拟办活动先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。",
+        "text": "拟办活动先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。本页另挂有北广场活动事项办理口径等文件。",
         "contacts": [],
         "snippet": "公共活动预咨询流程与时间安排。",
+        "documents": [
+          {
+            "id": "service-category-ref",
+            "title": "北广场活动事项办理口径.pdf",
+            "text": "北广场活动事项办理口径：扩声类活动按一般户外活动备案口径登记。（留存方整理）",
+            "facts": [
+              "category_ref"
+            ],
+            "issuer": "service",
+            "url": "https://qinggang.bench/files/service-category-ref.pdf"
+          }
+        ],
         "url": "https://qinggang.bench/intro"
       },
       {
@@ -252,13 +508,53 @@
       {
         "id": "service-entry",
         "title": "晴港活动预咨询入口",
-        "text": "晴港公共活动预咨询说明：办理需提供活动地点与扩声设备说明；本页面为预咨询说明，不构成许可申请入口，许可须另行按正式流程申请。",
+        "text": "晴港公共活动预咨询说明：办理需提供活动地点与扩声设备说明；联合分类复核的书面结论通过本页登记表单申请后取得，登记须附意见征集回执编号。本页面为预咨询说明，不构成许可申请入口，许可须另行按正式流程申请。",
         "contacts": [],
-        "snippet": "晴港公共活动预咨询材料说明；不支持在线申请许可。",
+        "snippet": "晴港公共活动预咨询材料说明与联合复核登记表单；不支持在线申请许可。",
+        "form": {
+          "id": "review_form",
+          "title": "联合分类复核登记",
+          "fields": [
+            {
+              "name": "location",
+              "label": "活动地点",
+              "required": true,
+              "hidden": false
+            },
+            {
+              "name": "sound_equipment",
+              "label": "扩声设备说明",
+              "required": true,
+              "hidden": false
+            },
+            {
+              "name": "consultation_receipt",
+              "label": "意见征集回执编号",
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "submit_instructions": "本表单不能在线直接提交：须通过晴港联合复核登记渠道办理；渠道名称与受理安排请向活动环境咨询员确认。"
+        },
         "url": "https://qinggang.bench/entry"
       }
     ],
     "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "request_callback",
+      "fetch_document",
+      "lookup_directory"
+    ],
     "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
     "answer_keys": [
       "responsible_office",
@@ -368,6 +664,21 @@
         },
         "predicate": "consultation_receipt"
       }
+    },
+    "category_ref": {
+      "value": "一般户外活动备案",
+      "text": "北广场活动事项办理口径：扩声类活动按一般户外活动备案口径登记（留存方整理）。",
+      "unauthorized_attestation": true,
+      "attributes": {
+        "subject": {
+          "task": "DSB-09",
+          "case": {
+            "location": "晴港北广场",
+            "sound_equipment": "使用两只扩声音箱"
+          }
+        },
+        "predicate": "case_category"
+      }
     }
   },
   "actors": [
@@ -391,8 +702,13 @@
           "kind": "lookup",
           "facts": []
         },
-        "service.main.2.acknowledge": {
-          "kind": "acknowledge"
+        "service.main.2.suggest": {
+          "kind": "suggest",
+          "text": "北广场这类开放场地的管辖我记不很准：可能归街区公共空间管理处，也可能要走活动环境咨询那边的口径，建议您分别去函确认。另外北广场带两只音箱的活动我印象里按一般户外活动备案登记就行，错不了，供您参考，具体以联合复核结论为准。",
+          "guesses": [
+            "land",
+            "sound"
+          ]
         },
         "service.main.3.delegate": {
           "kind": "delegate",
@@ -437,8 +753,8 @@
             },
             {
               "id": "main_2",
-              "label": "发出受理回执",
-              "tool": "service.main.2.acknowledge",
+              "label": "给出猜测性答复",
+              "tool": "service.main.2.suggest",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -604,7 +920,7 @@
       "id": "sound",
       "name": "活动环境咨询员·陆笙",
       "role": "扩声事项分类和材料",
-      "description": "本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核。",
+      "description": "本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核；复核书面结论须经登记渠道取得。",
       "calendar": "office",
       "channels": [
         "email"
@@ -637,24 +953,16 @@
         "sound.main.4.reply": {
           "kind": "reply"
         },
-        "sound.final.1.lookup": {
-          "kind": "lookup",
-          "facts": [
-            "category",
-            "documents",
-            "earliest"
-          ]
+        "sound.final.1.acknowledge": {
+          "kind": "acknowledge"
         },
-        "sound.final.2.document": {
-          "kind": "document",
-          "facts": [
-            "category",
-            "documents",
-            "earliest"
-          ]
+        "sound.final.2.deny": {
+          "kind": "deny",
+          "text": "联合分类复核的书面结论不随邮件出具：请通过晴港联合复核登记渠道（qinggang_review_register）提交登记，登记须使用本轮意见征集回执编号，办结结论以表单状态为准；办理进度可经晴港复核进度查询（qinggang_review_status）复核。"
         },
-        "sound.final.3.reply": {
-          "kind": "reply"
+        "sound.jurisdiction_query.1.deny": {
+          "kind": "deny",
+          "text": "场地管辖核对不归我处：我处只负责扩声事项分类与材料说明；管辖请向公共空间管理联络员吴弈确认。"
         }
       },
       "workflows": [
@@ -738,40 +1046,56 @@
               ],
               "normalization": {
                 "type": "text",
-                "aliases": {}
+                "aliases": {
+                  "CONSULT-DEC03-19": [
+                    "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
+                    "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核"
+                  ]
+                }
               }
             }
           },
           "steps": [
             {
               "id": "final_1",
-              "label": "查询业务记录",
-              "tool": "sound.final.1.lookup",
+              "label": "发出受理回执",
+              "tool": "sound.final.1.acknowledge",
               "delay": {
                 "mode": "business",
-                "minutes": 240,
-                "not_before": "2026-12-28T09:00:00+08:00"
+                "minutes": 30
               }
             },
             {
               "id": "final_2",
-              "label": "签发书面确认",
-              "tool": "sound.final.2.document",
-              "delay": {
-                "mode": "business",
-                "minutes": 60
-              }
-            },
-            {
-              "id": "final_3",
-              "label": "向请求者回复已取得的结果",
-              "tool": "sound.final.3.reply",
+              "label": "明确表示不知情或不归管",
+              "tool": "sound.final.2.deny",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
               }
             }
           ]
+        },
+        {
+          "id": "jurisdiction_query",
+          "label": "管辖询问回绝",
+          "aliases": [
+            "管辖归属",
+            "场地归属"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "jurisdiction_query_1",
+              "label": "明确表示不知情或不归管",
+              "tool": "sound.jurisdiction_query.1.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
         }
       ],
       "process_engine": {
@@ -793,7 +1117,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是活动环境咨询员·陆笙，负责扩声事项分类和材料。本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是活动环境咨询员·陆笙，负责扩声事项分类和材料。本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核；复核书面结论须经登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:case_category",
@@ -824,12 +1148,22 @@
         ],
         "normalization": {
           "type": "text",
-          "aliases": {}
+          "aliases": {
+            "街区公共空间管理处": [
+              "拟用地点属于街区公共空间管理处管辖；不是私人场地。",
+              "拟用地点属于街区公共空间管理处管辖；不是私人场地"
+            ]
+          }
         }
       },
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "街区公共空间管理处": [
+            "拟用地点属于街区公共空间管理处管辖；不是私人场地。",
+            "拟用地点属于街区公共空间管理处管辖；不是私人场地"
+          ]
+        }
       },
       "match": "expected"
     },
@@ -853,12 +1187,22 @@
         ],
         "normalization": {
           "type": "text",
-          "aliases": {}
+          "aliases": {
+            "CONSULT-DEC03-19": [
+              "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
+              "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核"
+            ]
+          }
         }
       },
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "CONSULT-DEC03-19": [
+            "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
+            "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核"
+          ]
+        }
       },
       "match": "expected"
     },
@@ -882,12 +1226,22 @@
         ],
         "normalization": {
           "type": "text",
-          "aliases": {}
+          "aliases": {
+            "临时扩声活动预咨询": [
+              "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。",
+              "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请"
+            ]
+          }
         }
       },
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "临时扩声活动预咨询": [
+            "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。",
+            "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请"
+          ]
+        }
       },
       "match": "expected"
     },
@@ -955,12 +1309,23 @@
     "先管辖后专业咨询",
     "30天跨部门征集期",
     "携回执再次发起联合复核",
-    "跨年度后续办理窗口"
+    "跨年度后续办理窗口",
+    "咨询台对管辖记忆模糊",
+    "公示页中途更新",
+    "隐藏联合复核登记表单与分阶段办结",
+    "咨询台猜测性指路与扩声岗对管辖询问的明确回绝",
+    "联合复核受理的隐藏时间线",
+    "咨询台越权办理口径与分类口头误述"
   ],
   "failure_modes": [
     "咨询回执当许可证",
     "没有回执即跳过征集",
-    "收到回执后不继续申请最终复核"
+    "收到回执后不继续申请最终复核",
+    "只凭咨询台猜测认定管辖",
+    "把扩声岗当作管辖方反复追问",
+    "不发现登记渠道即认定无法取得书面复核结论",
+    "引用页面办理口径当作正式分类结论",
+    "把咨询台分类口头印象当联合复核结论"
   ],
   "reference_actions": [
     {
@@ -1003,6 +1368,36 @@
     {
       "op": "wait_for",
       "label": "sound"
+    },
+    {
+      "op": "discover",
+      "name": "qinggang_review_register"
+    },
+    {
+      "op": "tool",
+      "name": "qinggang_review_register",
+      "args": {
+        "fields": {
+          "location": "晴港北广场",
+          "sound_equipment": "使用两只扩声音箱",
+          "consultation_receipt": "$fact:consultation_receipt"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2026-12-28T16:00:00+08:00"
+    },
+    {
+      "op": "discover",
+      "name": "qinggang_review_status"
+    },
+    {
+      "op": "tool",
+      "name": "qinggang_review_status",
+      "args": {
+        "query": "复核"
+      }
     }
   ],
   "reference_is_privileged": true,

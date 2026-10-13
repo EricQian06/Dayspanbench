@@ -1,0 +1,298 @@
+{
+  "private": true,
+  "task_id": "DSB-36",
+  "actor": {
+    "id": "access_desk",
+    "name": "Harbour Festival access desk·Priya Nair",
+    "role": "festival accessibility, seated viewing and step-free route records",
+    "description": "Confirms seated step-free viewing capacity and the step-free bus route in writing; festival admission is free and prior-year paid ticket listings are stale; access places are reserved through the desk named on the entry page.",
+    "calendar": "halifax_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "priyanair2@bench.example"
+    },
+    "knowledge": [
+      "access_reserved",
+      "bus_fare",
+      "home_arrival",
+      "route_step_free",
+      "seats",
+      "show_end",
+      "show_start",
+      "stage",
+      "total_cost"
+    ],
+    "tools": {
+      "access_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "access_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "seats",
+          "route_step_free",
+          "bus_fare"
+        ]
+      },
+      "access_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "seats",
+          "route_step_free",
+          "bus_fare"
+        ]
+      },
+      "access_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Seated access and step-free route status",
+        "aliases": [
+          "access",
+          "seats",
+          "seated",
+          "step-free",
+          "wheelchair",
+          "bus",
+          "route",
+          "accessibility",
+          "festival"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "access_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check seated viewing capacity and step-free route status",
+            "tool": "access_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "access_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "access_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Harbour Festival access desk·Priya Nair，负责festival accessibility, seated viewing and step-free route records。Confirms seated step-free viewing capacity and the step-free bus route in writing; festival admission is free and prior-year paid ticket listings are stale; access places are reserved through the desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:access_reserved",
+      "attest:bus_fare",
+      "attest:home_arrival",
+      "attest:route_step_free",
+      "attest:seats",
+      "attest:show_end",
+      "attest:show_start",
+      "attest:stage",
+      "attest:total_cost"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Halifax",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "09:00",
+        "21:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "access_reserved": {
+      "value": true,
+      "text": "Three free seated step-free access places for the 21:00 set have been confirmed with check-in from 20:30 to 20:45; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "access_reserved"
+      }
+    },
+    "bus_fare": {
+      "value": 18,
+      "text": "The step-free bus-L round trip costs 18 CAD for the three-person family.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "bus_fare"
+      }
+    },
+    "home_arrival": {
+      "value": "22:15",
+      "text": "The bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "home_arrival"
+      }
+    },
+    "route_step_free": {
+      "value": true,
+      "text": "The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "route_step_free"
+      }
+    },
+    "seats": {
+      "value": 3,
+      "text": "Three seated access places are confirmed for the family (Wei, Mei and Lila).",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "seats"
+      }
+    },
+    "show_end": {
+      "value": "21:35",
+      "text": "The current official set ends at 21:35, leaving the 21:50 return bus feasible.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "show_end"
+      }
+    },
+    "show_start": {
+      "value": "21:00",
+      "text": "The current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "show_start"
+      }
+    },
+    "stage": {
+      "value": "Maritime Museum",
+      "text": "The current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "stage"
+      }
+    },
+    "total_cost": {
+      "value": 108,
+      "text": "The full family plan is 108 CAD: admission 0 (free) + transport 18 + food 60 + contingency 30, within the 360 CAD cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "total_cost"
+      }
+    }
+  },
+  "start_at": "2027-07-31T10:00:00-03:00",
+  "deadline_at": "2027-08-02T17:00:00-03:00"
+}

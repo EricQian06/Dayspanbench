@@ -33,6 +33,11 @@
 - 制造档案恢复后的第二轮补件
 - 纽约夏令时切换
 - 300天截止仍早于技术复核窗口
+- 客服对单证去向记忆模糊
+- 公告页中途更新
+- 隐藏长期复核登记表单与分阶段受理
+- 长期复核登记的隐藏时间线
+- 客服越权登记记录与仓库放行口头误述
 
 ## 人物、流程、接收者与工具
 
@@ -55,9 +60,10 @@
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
 | 发出受理回执<br>`forwarder.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 内部转交<br>`forwarder.main.2.delegate` | 60工作分钟 | 内部转交并等待返回：warehouse/main、仅传递字段：tracking |
-| 查询联系人目录并转介<br>`forwarder.main.3.refer` | 30工作分钟 | 公开转介联系人：exporter、customsdesk |
-| 向请求者回复已取得的结果<br>`forwarder.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| 给出猜测性答复<br>`forwarder.main.2.suggest` | 30工作分钟 | 给出猜测性答复： |
+| 内部转交<br>`forwarder.main.3.delegate` | 60工作分钟 | 内部转交并等待返回：warehouse/main、仅传递字段：tracking |
+| 查询联系人目录并转介<br>`forwarder.main.4.refer` | 30工作分钟 | 公开转介联系人：exporter、customsdesk |
+| 向请求者回复已取得的结果<br>`forwarder.main.5.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### 始发仓查件员·施瑾 (`warehouse`)
 
@@ -78,6 +84,14 @@
 | 查询业务记录<br>`warehouse.main.1.lookup` | 120工作分钟 | 读取本地事实：warehouse |
 | 签发书面确认<br>`warehouse.main.2.document` | 60工作分钟 | 签发文本证据：warehouse |
 | 向请求者回复已取得的结果<br>`warehouse.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+
+**流程：放行状态口头印象** (`release_gossip`)
+
+必须提供：无额外字段
+
+| 步骤/工具 | 等待规则 | 可见结果或内部动作 |
+|---|---|---|
+| 明确表示不知情或不归管<br>`warehouse.release_gossip.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
 ### 出口方单证员·贺悠 (`exporter`)
 
@@ -104,7 +118,7 @@
 
 必须提供：tracking、review_reference
 
-证据门槛：{"review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {}}}}；仅猜对值不算取得凭证。
+证据门槛：{"review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。", "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
@@ -127,7 +141,7 @@
 
 必须提供：tracking、declaration_version
 
-证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration", "authorities": ["attest:declaration"], "normalization": {"type": "text", "aliases": {}}}}；仅猜对值不算取得凭证。
+证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration", "authorities": ["attest:declaration"], "normalization": {"type": "text", "aliases": {"DEC-608-v2": ["已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。", "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
@@ -139,7 +153,7 @@
 
 必须提供：tracking、declaration_version、review_reference、batch_trace
 
-证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {}}}}；仅猜对值不算取得凭证。
+证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {"DEC-608-v3": ["2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。", "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"]}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。", "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"]}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {"TRACE-M608-2027": ["制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。", "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
@@ -151,7 +165,7 @@
 
 必须提供：tracking、declaration_version、review_reference、batch_trace
 
-证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {}}}}；仅猜对值不算取得凭证。
+证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {"DEC-608-v3": ["2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。", "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"]}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。", "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"]}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {"TRACE-M608-2027": ["制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。", "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
@@ -182,7 +196,7 @@
 
 必须提供：tracking、declaration_version、review_reference、batch_trace
 
-证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {}}}}；仅猜对值不算取得凭证。
+证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {"DEC-608-v3": ["2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。", "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"]}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。", "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"]}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {"TRACE-M608-2027": ["制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。", "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
@@ -200,6 +214,7 @@
 | `declaration_latest` | `"DEC-608-v3"` | 2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。 有效至2027-09-30 Thu 17:00。 |
 | `batch_trace` | `"TRACE-M608-2027"` | 制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。 |
 | `release` | `"技术复核结果已返回，实际放行仍需另行确认"` | 2027年9月中旬技术复核窗口处理完成后，仅返回技术意见；该未来结果在本题截止前不可见。 |
+| `review_case_ref` | `"HOLD-608-9"` | 口岸归类留置件登记记录：留置件归类初审登记号HOLD-608-9（留存方整理）。 |
 
 目标结论：`release_unconfirmed_at_deadline`。
 
@@ -224,12 +239,22 @@
       ],
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "2026年11月已完成始发仓入库扫描": [
+            "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
+            "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行"
+          ]
+        }
       }
     },
     "normalization": {
       "type": "text",
-      "aliases": {}
+      "aliases": {
+        "2026年11月已完成始发仓入库扫描": [
+          "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
+          "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行"
+        ]
+      }
     },
     "match": "expected"
   },
@@ -252,12 +277,22 @@
       ],
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "HOLD-608-9": [
+            "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
+            "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+          ]
+        }
       }
     },
     "normalization": {
       "type": "text",
-      "aliases": {}
+      "aliases": {
+        "HOLD-608-9": [
+          "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
+          "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+        ]
+      }
     },
     "match": "evidence"
   },
@@ -280,12 +315,22 @@
       ],
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "DEC-608-v3": [
+            "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
+            "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+          ]
+        }
       }
     },
     "normalization": {
       "type": "text",
-      "aliases": {}
+      "aliases": {
+        "DEC-608-v3": [
+          "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
+          "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+        ]
+      }
     },
     "match": "evidence"
   },
@@ -308,12 +353,22 @@
       ],
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "TRACE-M608-2027": [
+            "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
+            "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+          ]
+        }
       }
     },
     "normalization": {
       "type": "text",
-      "aliases": {}
+      "aliases": {
+        "TRACE-M608-2027": [
+          "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
+          "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+        ]
+      }
     },
     "match": "evidence"
   },
@@ -339,7 +394,12 @@
           ],
           "normalization": {
             "type": "text",
-            "aliases": {}
+            "aliases": {
+              "DEC-608-v3": [
+                "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
+                "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+              ]
+            }
           }
         },
         {
@@ -355,7 +415,12 @@
           ],
           "normalization": {
             "type": "text",
-            "aliases": {}
+            "aliases": {
+              "HOLD-608-9": [
+                "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
+                "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+              ]
+            }
           }
         },
         {
@@ -371,7 +436,12 @@
           ],
           "normalization": {
             "type": "text",
-            "aliases": {}
+            "aliases": {
+              "TRACE-M608-2027": [
+                "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
+                "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+              ]
+            }
           }
         }
       ]
@@ -387,13 +457,14 @@
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
 | 2026-11-06 Fri 15:32 | 2026-11-06 Fri 16:20 | 远澄货运客服·白榆 | 发出受理回执 |
-| 2026-11-06 Fri 16:20 | 2026-11-09 Mon 09:26 | 远澄货运客服·白榆 | 内部转交 |
-| 2026-11-09 Mon 09:26 | 2026-11-09 Mon 11:39 | 始发仓查件员·施瑾 | 查询业务记录 |
-| 2026-11-09 Mon 11:39 | 2026-11-09 Mon 14:00 | 始发仓查件员·施瑾 | 签发书面确认 |
-| 2026-11-09 Mon 14:00 | 2026-11-09 Mon 14:15 | 始发仓查件员·施瑾 | 向请求者回复已取得的结果 |
-| 2026-11-09 Mon 14:15 | 2026-11-09 Mon 15:05 | 远澄货运客服·白榆 | 查询联系人目录并转介 |
-| 2026-11-09 Mon 15:05 | 2026-11-09 Mon 15:20 | 远澄货运客服·白榆 | 向请求者回复已取得的结果 |
-| 2026-11-25 Wed 10:02 | 2026-11-25 Wed 10:46 | 出口方单证员·贺悠 | 发出受理回执 |
+| 2026-11-06 Fri 16:20 | 2026-11-06 Fri 16:56 | 远澄货运客服·白榆 | 给出猜测性答复 |
+| 2026-11-06 Fri 16:56 | 2026-11-09 Mon 10:09 | 远澄货运客服·白榆 | 内部转交 |
+| 2026-11-09 Mon 10:09 | 2026-11-09 Mon 13:30 | 始发仓查件员·施瑾 | 查询业务记录 |
+| 2026-11-09 Mon 13:30 | 2026-11-09 Mon 14:50 | 始发仓查件员·施瑾 | 签发书面确认 |
+| 2026-11-09 Mon 14:50 | 2026-11-09 Mon 15:05 | 始发仓查件员·施瑾 | 向请求者回复已取得的结果 |
+| 2026-11-09 Mon 15:05 | 2026-11-09 Mon 15:52 | 远澄货运客服·白榆 | 查询联系人目录并转介 |
+| 2026-11-09 Mon 15:52 | 2026-11-09 Mon 16:07 | 远澄货运客服·白榆 | 向请求者回复已取得的结果 |
+| 2026-11-25 Wed 10:15 | 2026-11-25 Wed 10:59 | 出口方单证员·贺悠 | 发出受理回执 |
 | 2026-12-07 Mon 10:00 | 2026-12-07 Mon 13:20 | 出口方单证员·贺悠 | 查询业务记录 |
 | 2026-12-07 Mon 13:20 | 2026-12-07 Mon 14:36 | 出口方单证员·贺悠 | 签发书面确认 |
 | 2026-12-07 Mon 14:36 | 2026-12-07 Mon 14:51 | 出口方单证员·贺悠 | 向请求者回复已取得的结果 |
@@ -414,8 +485,9 @@
 Agent收到的实质回复：
 
 - 2026-11-06 Fri 16:20：远澄货运客服·白榆，`acknowledgement`，0条文本证据。
-- 2026-11-09 Mon 15:20：远澄货运客服·白榆，`reply`，2条文本证据。
-- 2026-11-25 Wed 10:46：出口方单证员·贺悠，`acknowledgement`，0条文本证据。
+- 2026-11-06 Fri 16:56：远澄货运客服·白榆，`reply`，0条文本证据。
+- 2026-11-09 Mon 16:07：远澄货运客服·白榆，`reply`，2条文本证据。
+- 2026-11-25 Wed 10:59：出口方单证员·贺悠，`acknowledgement`，0条文本证据。
 - 2026-12-07 Mon 14:51：出口方单证员·贺悠，`reply`，2条文本证据。
 - 2027-01-22 Fri 10:49：远澄单证联络·戴筠，`acknowledgement`，0条文本证据。
 - 2027-02-05 Fri 09:44：远澄单证联络·戴筠，`reply`，2条文本证据。
@@ -436,6 +508,10 @@ Agent收到的实质回复：
 - 把历史仓库记录当当前货位
 - 受理回执或未来技术意见当放行证明
 - 在截止时点前就'截止时状态'下结论
+- 只凭客服猜测认定单证去向
+- 把长期复核登记的'已提交待处理'当作复核已办结
+- 引用页面登记记录当初审登记号来源
+- 把查件员放行印象当放行结论
 
 ## 机器可读文件
 

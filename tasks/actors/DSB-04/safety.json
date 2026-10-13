@@ -5,7 +5,7 @@
     "id": "safety",
     "name": "南屿实验室安全员·温遥",
     "role": "安全培训与合格记录",
-    "description": "每周五14点培训，结束后签发记录。",
+    "description": "每周五14点培训；合格记录须经培训记录系统申请，不随邮件发放。",
     "calendar": "office",
     "channels": [
       "email"
@@ -14,23 +14,17 @@
       "email": "wenyao@bench.example"
     },
     "knowledge": [
+      "cert_ref",
       "certificate"
     ],
     "tools": {
       "safety.main.1.lookup": {
         "kind": "lookup",
-        "facts": [
-          "certificate"
-        ]
+        "facts": []
       },
-      "safety.main.2.document": {
-        "kind": "document",
-        "facts": [
-          "certificate"
-        ]
-      },
-      "safety.main.3.reply": {
-        "kind": "reply"
+      "safety.main.2.deny": {
+        "kind": "deny",
+        "text": "本期批次培训已结束，合格记录不随邮件发放：请通过南屿培训记录系统（nanyu_training_record）提交记录申请，批次安排与申请说明见官网安全培训安排细则文件。"
       }
     },
     "workflows": [
@@ -48,28 +42,20 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "完成培训批次",
             "tool": "safety.main.1.lookup",
             "delay": {
               "mode": "weekly",
               "weekday": 4,
               "time": "14:00",
-              "minutes": 120
+              "minutes": 120,
+              "not_before": "2026-11-13T14:00:00+08:00"
             }
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
-            "tool": "safety.main.2.document",
-            "delay": {
-              "mode": "business",
-              "minutes": 60
-            }
-          },
-          {
-            "id": "main_3",
-            "label": "向请求者回复已取得的结果",
-            "tool": "safety.main.3.reply",
+            "label": "明确表示不知情或不归管",
+            "tool": "safety.main.2.deny",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -98,7 +84,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是南屿实验室安全员·温遥，负责安全培训与合格记录。每周五14点培训，结束后签发记录。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是南屿实验室安全员·温遥，负责安全培训与合格记录。每周五14点培训；合格记录须经培训记录系统申请，不随邮件发放。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:safety_certificate"
@@ -125,6 +111,21 @@
     ]
   },
   "local_facts": {
+    "cert_ref": {
+      "value": "SAFE-OCT30-215",
+      "text": "上月（10月30日批次）安全培训合格记录SAFE-OCT30-215，有效期至2026年11月3日。",
+      "valid_until": "2026-11-03T23:59:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "safety_certificate"
+      }
+    },
     "certificate": {
       "value": "SAFE-NOV06-482",
       "text": "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
@@ -141,5 +142,5 @@
     }
   },
   "start_at": "2026-11-04T09:30:00+08:00",
-  "deadline_at": "2026-11-25T17:00:00+08:00"
+  "deadline_at": "2026-11-27T17:00:00+08:00"
 }

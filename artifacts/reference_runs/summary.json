@@ -33,14 +33,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 77.23,
-    "calendar_days": 3.218056,
+    "calendar_hours": 103.5,
+    "calendar_days": 4.3125,
     "agent_messages": 3,
     "contacted_actors": 3,
-    "as_of": "2026-11-09T07:14:00+00:00",
+    "as_of": "2026-11-10T09:30:00+00:00",
     "title": "活动场地：跨周末确认设备与报价",
     "actors": 4,
-    "deadline": "2026-11-10T18:00:00+08:00",
+    "deadline": "2026-11-11T18:00:00+08:00",
     "horizon_design": {
       "reference_days": 3,
       "stratum": "短期",
@@ -82,14 +82,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 192.23,
-    "calendar_days": 8.009722,
+    "calendar_hours": 207.0,
+    "calendar_days": 8.625,
     "agent_messages": 1,
     "contacted_actors": 1,
-    "as_of": "2026-11-11T11:44:00+00:00",
+    "as_of": "2026-11-12T02:30:00+00:00",
     "title": "租房咨询：物业周审与新一期货梯表",
     "actors": 3,
-    "deadline": "2026-11-12T17:00:00+08:00",
+    "deadline": "2026-11-13T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 8,
       "stratum": "中短期",
@@ -131,14 +131,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 2137.07,
-    "calendar_days": 89.044444,
-    "agent_messages": 3,
-    "contacted_actors": 2,
-    "as_of": "2027-02-02T07:04:00+00:00",
+    "calendar_hours": 2155.5,
+    "calendar_days": 89.8125,
+    "agent_messages": 5,
+    "contacted_actors": 3,
+    "as_of": "2027-02-03T01:30:00+00:00",
     "title": "学分转换：秋季补件与春季集中审议",
-    "actors": 3,
-    "deadline": "2027-02-03T17:00:00+08:00",
+    "actors": 4,
+    "deadline": "2027-02-09T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 89,
       "stratum": "中长期",
@@ -187,7 +187,7 @@
     "as_of": "2026-11-25T02:50:00+00:00",
     "title": "共享仪器：培训、进口耗材与七天稳定性校准",
     "actors": 4,
-    "deadline": "2026-11-25T17:00:00+08:00",
+    "deadline": "2026-11-27T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 21,
       "stratum": "中短期",
@@ -229,14 +229,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 835.27,
-    "calendar_days": 34.802778,
+    "calendar_hours": 836.5,
+    "calendar_days": 34.854167,
     "agent_messages": 3,
     "contacted_actors": 2,
-    "as_of": "2026-12-08T01:16:00+00:00",
+    "as_of": "2026-12-08T02:30:00+00:00",
     "title": "制造采购：28天耐久测试后重新询价",
     "actors": 3,
-    "deadline": "2026-12-08T15:00:00+08:00",
+    "deadline": "2026-12-09T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 34,
       "stratum": "中长期",
@@ -278,14 +278,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 312.87,
-    "calendar_days": 13.036111,
+    "calendar_hours": 328.5,
+    "calendar_days": 13.6875,
     "agent_messages": 2,
     "contacted_actors": 1,
-    "as_of": "2026-11-17T08:52:00+00:00",
+    "as_of": "2026-11-18T00:30:00+00:00",
     "title": "家电保修：等待原厂补货与工程师轮值",
     "actors": 3,
-    "deadline": "2026-11-18T09:00:00+08:00",
+    "deadline": "2026-11-18T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 13,
       "stratum": "中短期",
@@ -327,14 +327,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 5131.0,
-    "calendar_days": 213.791667,
+    "calendar_hours": 5155.5,
+    "calendar_days": 214.8125,
     "agent_messages": 3,
     "contacted_actors": 2,
-    "as_of": "2027-06-07T02:00:00+00:00",
+    "as_of": "2027-06-08T02:30:00+00:00",
     "title": "档案使用：权利继受核验后重新启动数字化",
     "actors": 3,
-    "deadline": "2027-06-07T17:00:00+08:00",
+    "deadline": "2027-06-11T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 210,
       "stratum": "长期",
@@ -386,14 +386,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 121.42,
-    "calendar_days": 5.059028,
-    "agent_messages": 3,
+    "calendar_hours": 144.18,
+    "calendar_days": 6.007639,
+    "agent_messages": 2,
     "contacted_actors": 2,
-    "as_of": "2026-11-11T06:55:00+00:00",
+    "as_of": "2026-11-12T05:41:00+00:00",
     "title": "无障碍住宿：两家机构比较与延后的现场测量",
     "actors": 4,
-    "deadline": "2026-11-12T18:00:00+08:00",
+    "deadline": "2026-11-13T18:00:00+08:00",
     "horizon_design": {
       "reference_days": 5,
       "stratum": "短期",
@@ -440,14 +440,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 1320.82,
-    "calendar_days": 55.034028,
+    "calendar_hours": 1321.0,
+    "calendar_days": 55.041667,
     "agent_messages": 3,
     "contacted_actors": 2,
-    "as_of": "2026-12-28T07:49:00+00:00",
+    "as_of": "2026-12-28T08:00:00+00:00",
     "title": "公共活动咨询：意见征集与年末联合复核",
     "actors": 3,
-    "deadline": "2026-12-29T17:00:00+08:00",
+    "deadline": "2027-01-05T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 55,
       "stratum": "中长期",
@@ -494,14 +494,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 48.9,
-    "calendar_days": 2.0375,
-    "agent_messages": 2,
-    "contacted_actors": 2,
-    "as_of": "2026-11-08T02:54:00+00:00",
+    "calendar_hours": 73.05,
+    "calendar_days": 3.04375,
+    "agent_messages": 3,
+    "contacted_actors": 3,
+    "as_of": "2026-11-09T03:03:00+00:00",
     "title": "二手相机：夜间联系、周末实测与取件咨询",
     "actors": 3,
-    "deadline": "2026-11-09T22:00:00+08:00",
+    "deadline": "2026-11-10T22:00:00+08:00",
     "horizon_design": {
       "reference_days": 2,
       "stratum": "短期",
@@ -543,14 +543,14 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 2616.27,
-    "calendar_days": 109.011111,
+    "calendar_hours": 2664.0,
+    "calendar_days": 111.0,
     "agent_messages": 2,
     "contacted_actors": 1,
-    "as_of": "2027-02-24T12:46:00+00:00",
+    "as_of": "2027-02-26T12:30:00+00:00",
     "title": "开源兼容性：补丁验证后按窗口复核发布状态",
     "actors": 4,
-    "deadline": "2027-03-03T23:00:00+08:00",
+    "deadline": "2027-03-10T23:00:00+08:00",
     "horizon_design": {
       "reference_days": 109,
       "stratum": "长期",
@@ -609,6 +609,1034 @@
       "reference_days": 300,
       "stratum": "长期",
       "mechanism": "原型设备归类争议、第二轮补件和未决技术复核",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-13",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "restaurant_address",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "table_time",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "access_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "sesame_controls_written",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "child_meals_fish_free",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "reservation_confirmed",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 29.0,
+    "calendar_days": 1.208333,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-07-10T18:00:00+00:00",
+    "title": "Family lunch: verified access, sesame controls and a changed offer",
+    "actors": 2,
+    "deadline": "2027-07-11T12:00:00-04:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "mid-episode offer rewrite plus organizer approval window",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-14",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "audience",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "bilingual",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "retracted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "halted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "dispatched",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 1.42,
+    "calendar_days": 0.059028,
+    "agent_messages": 0,
+    "contacted_actors": 0,
+    "as_of": "2027-06-11T10:05:00+00:00",
+    "title": "Outage correction: halt, retract, dispatch the right run",
+    "actors": 2,
+    "deadline": "2027-06-13T06:05:00-04:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "mid-short",
+      "mechanism": "85-minute correction window inside a case-native two-day horizon",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-15",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "token_revoked",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "no_reversal",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "dispute_filed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "disputed_amount",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "card_active",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "rent_unchanged",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 47.97,
+    "calendar_days": 1.998611,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-04-05T14:58:00+00:00",
+    "title": "Unauthorized app charge: scoped token revocation and a deadline-gated dispute",
+    "actors": 2,
+    "deadline": "2027-04-05T09:00:00-06:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "no-reversal deadline gate plus scoped token containment",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-17",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "meal_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "delivery_time",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "sesame_controls_written",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "child_meals_fish_free",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "helper_window",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "helper_acknowledged",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 32.0,
+    "calendar_days": 1.333333,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-07-10T21:00:00+00:00",
+    "title": "Home family lunch: helper-covered meal after a delivery-time change",
+    "actors": 3,
+    "deadline": "2027-07-11T12:00:00-04:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "mid-week delivery-time rewrite invalidating helper coverage plus mail verification turnaround",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-18",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "permit_expires",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "portal_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "initial_submitted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "notice_delivered",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "supplement_submitted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "followup_complete",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 193.0,
+    "calendar_days": 8.041667,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-09-21T15:00:00+00:00",
+    "title": "Permit renewal: portal supplement notice relayed in time",
+    "actors": 1,
+    "deadline": "2027-09-22T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 9,
+      "stratum": "mid-short",
+      "mechanism": "portal verification turnaround plus a mid-review supplement deadline",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-19",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "outbound_booked",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "outbound_arrival",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "lift_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "clinic_release",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "return_pickup",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "return_booked",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_fare",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 28.67,
+    "calendar_days": 1.194444,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-09-03T17:40:00+00:00",
+    "title": "Clinic-gated accessible rehabilitation transport",
+    "actors": 2,
+    "deadline": "2027-09-04T12:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "fleet verification rewrite plus clinic release gating the return leg",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-21",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "demand_amount",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "recipient_address",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "first_returned",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "delivered",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "fees_total",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "attachment_only",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 73.5,
+    "calendar_days": 3.0625,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-03-22T15:30:00+00:00",
+    "title": "Verified delivery: demand returned once, correctly re-sent",
+    "actors": 1,
+    "deadline": "2027-03-23T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 4,
+      "stratum": "mid-short",
+      "mechanism": "returned-dispatch correction cycle inside a four-day window",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-22",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "film_start",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "film_end",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "jazz_start",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "return_depart",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "home_arrival",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "transport_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "film_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "jazz_reserved",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 19.0,
+    "calendar_days": 0.791667,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-10-02T15:00:00+00:00",
+    "title": "Film and jazz evening with a current feasible return",
+    "actors": 1,
+    "deadline": "2027-10-03T17:30:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "mid-evening return-route cancellation plus transport-before-shows gate",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-25",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "ordered_sku",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "order_total",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "installment_amount",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "delivery_date",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "fit_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "recycling_confirmed",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 30.0,
+    "calendar_days": 1.25,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-06-08T20:00:00+00:00",
+    "title": "Fridge replacement: installment-gated order with a promo expiry",
+    "actors": 2,
+    "deadline": "2027-06-09T12:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "mid-episode promo expiry plus installment approval gate",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-29",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "clinician_plan_current",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "old_share_revoked",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "five_assignments_accepted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "driver_packets_logistics_only",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "other_evenings_unchanged",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 27.5,
+    "calendar_days": 1.145833,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-09-17T19:30:00+00:00",
+    "title": "Weekend care handoff: scoped packets, revoked driver link, five acknowledgements",
+    "actors": 2,
+    "deadline": "2027-09-18T12:00:00-07:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "clinician plan release, access revocation and fixed-time caregiver acknowledgements across days",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-30",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "duplicate_transaction",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "duplicate_amount",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "reversal_posted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "dispute_filed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "required_payment",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "autopay_covers",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 99.47,
+    "calendar_days": 4.144444,
+    "agent_messages": 3,
+    "contacted_actors": 2,
+    "as_of": "2027-07-14T17:28:00+00:00",
+    "title": "Duplicate hotel charge: one approved dispute and a corrected statement",
+    "actors": 2,
+    "deadline": "2027-07-14T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 4,
+      "stratum": "中短期",
+      "mechanism": "merchant finding turnaround plus statement correction",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-31",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "occupied_until",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "shelter_since",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "mailing_address",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "reconsideration_submitted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "docs_limited",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 76.0,
+    "calendar_days": 3.166667,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-11-04T19:00:00+00:00",
+    "title": "Relief appeal: correct address history, autofill refused",
+    "actors": 2,
+    "deadline": "2027-11-05T21:00:00-06:00",
+    "horizon_design": {
+      "reference_days": 4,
+      "stratum": "mid-short",
+      "mechanism": "shelter-letter turnaround plus a mid-case portal revision",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-32",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "referral_approved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "appointment_date",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "appointment_time",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "estimate",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "intake_shared",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "appointment_confirmed",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 50.5,
+    "calendar_days": 2.104167,
+    "agent_messages": 0,
+    "contacted_actors": 0,
+    "as_of": "2027-05-12T16:30:00+00:00",
+    "title": "Specialist follow-up after referral review and a lost slot",
+    "actors": 1,
+    "deadline": "2027-05-12T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "referral review window plus midday slot inventory change",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-35",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "demand_amount",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "verified_recipient",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "return_address",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "dispatched_once",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "dispatch_fee",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "attachments_limited",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 30.0,
+    "calendar_days": 1.25,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-03-19T20:00:00+00:00",
+    "title": "Deposit demand: verified recipient, private address kept out",
+    "actors": 1,
+    "deadline": "2027-03-23T17:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 5,
+      "stratum": "mid-short",
+      "mechanism": "clinic verification turnaround plus an exact-approval dispatch gate",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-36",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "show_start",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "stage",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "show_end",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "route_step_free",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "home_arrival",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "access_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "seats",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 5.0,
+    "calendar_days": 0.208333,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-07-31T18:00:00+00:00",
+    "title": "Accessible festival evening: the correct 21:00 set with step-free travel",
+    "actors": 1,
+    "deadline": "2027-08-02T17:00:00-03:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "official show confirmation plus midday ferry lift outage",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-37",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "replacement_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "arrival",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "extra_cost",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "bike_accompanied",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "transfer_depart",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "return_preserved",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 4.5,
+    "calendar_days": 0.1875,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-10-07T18:00:00+00:00",
+    "title": "Rail cancellation recovery with an accompanied folding bicycle",
+    "actors": 1,
+    "deadline": "2027-10-09T15:20:00+01:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "live rail delay plus accompanied-bike evidence window",
+      "distribution": "manually stratified approximately logarithmic"
+    }
+  },
+  {
+    "task_id": "DSB-40",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "ordered_sku",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "order_total",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "delivery_window",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "payment_terms",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "fit_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "recycling_confirmed",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 33.0,
+    "calendar_days": 1.375,
+    "agent_messages": 2,
+    "contacted_actors": 1,
+    "as_of": "2027-06-08T23:00:00+00:00",
+    "title": "Fridge replacement: verified access and a changed delivery slot",
+    "actors": 2,
+    "deadline": "2027-06-09T12:00:00-05:00",
+    "horizon_design": {
+      "reference_days": 2,
+      "stratum": "短期",
+      "mechanism": "mid-episode delivery-slot rewrite plus approval window",
       "distribution": "manually stratified approximately logarithmic"
     }
   }

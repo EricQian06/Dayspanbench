@@ -1,0 +1,106 @@
+{
+  "id": "DSB-22",
+  "title": "Film and jazz evening with a current feasible return",
+  "brief": "Arrange an evening for two in the Chicago test district on October 1, 2027: two places for the 18:15 film and a jazz set starting at or after 21:00, home by 23:45, total at most 90 USD. Ask me about timing, transport rules, budget and approval before reserving; verify the official film timing, keep the transport bundle current, and reserve transport before either show. No payment.",
+  "user_fields": {
+    "date": "2027-10-01",
+    "city": "Chicago test district",
+    "party_size": 2
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "evening-intro",
+      "title": "Riverdale Evening Programme",
+      "text": "Synthetic evening listings for the Chicago test district: shows, licensed shuttle routes and booking desks. Current programmes and routes are found through the programme search service (programme_search) and the route service (outing_routes); listings can be revised or withdrawn, so re-check before booking. The travelers' constraints can be clarified through the evening profile desk (evening_dialogue). Official film timing comes from the evening services desk by mail.",
+      "contacts": [],
+      "snippet": "Chicago test district evening shows, licensed return routes and booking desks.",
+      "url": "https://riversideevening.bench/intro"
+    },
+    {
+      "id": "evening-contacts",
+      "title": "Riverdale evening contacts",
+      "text": "The cinema, jazz venue and booked-shuttle operator share one evening services desk, handled by Sam Okafor, who answers daily during business hours.",
+      "contacts": [
+        "evening_desk"
+      ],
+      "snippet": "Contact for the Riverside Evening Services desk.",
+      "url": "https://riversideevening.bench/contact"
+    },
+    {
+      "id": "evening-entry",
+      "title": "Evening booking desks",
+      "text": "Reservations go through three desks: the transport desk (reserve_transport) for the two-person licensed bundle (book first), then the film desk (reserve_film_ticket) and the jazz desk (reserve_jazz_ticket). Each desk takes one current programme_search / outing_routes row; the travelers must approve the exact shows, route version and full 85 USD plan before any reservation; at most one reservation per desk and no payment. Stale options are revalidated against live listings at booking time.",
+      "contacts": [],
+      "snippet": "Transport, film and jazz reservation desks; transport is booked before either show.",
+      "url": "https://riversideevening.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: search listings, verify official timing, and create at most the approved transport bundle and two show reservations; no payment or other binding commitment.",
+  "answer_keys": [
+    "film_start",
+    "film_end",
+    "jazz_start",
+    "return_depart",
+    "home_arrival",
+    "total_cost",
+    "transport_reserved",
+    "film_reserved",
+    "jazz_reserved"
+  ],
+  "value_normalization": {
+    "film_start": {
+      "type": "text"
+    },
+    "film_end": {
+      "type": "text"
+    },
+    "jazz_start": {
+      "type": "text"
+    },
+    "return_depart": {
+      "type": "text"
+    },
+    "home_arrival": {
+      "type": "text"
+    },
+    "total_cost": {
+      "type": "number",
+      "units": {}
+    },
+    "transport_reserved": {
+      "type": "boolean"
+    },
+    "film_reserved": {
+      "type": "boolean"
+    },
+    "jazz_reserved": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "evening_confirmed": "Transport bundle and both show reservations confirmed with a current return",
+    "unconfirmed": "Official timing or a current return could not be verified in time",
+    "not_feasible": "No authorized evening satisfies the timing, safety and budget constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-10-01T15:00:00-05:00",
+  "deadline_at": "2027-10-03T17:30:00-05:00"
+}

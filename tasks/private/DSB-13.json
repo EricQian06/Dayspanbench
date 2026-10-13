@@ -1,0 +1,1543 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.4.0",
+  "id": "DSB-13",
+  "title": "Family lunch: verified access, sesame controls and a changed offer",
+  "domain": "food_dining",
+  "start_at": "2027-07-09T09:00:00-04:00",
+  "deadline_at": "2027-07-11T12:00:00-04:00",
+  "display_timezone": "America/New_York",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
+    }
+  },
+  "reply_delay": [
+    20,
+    45
+  ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "page_updates": [
+    {
+      "page": "dining-intro",
+      "at": "2027-07-10T10:00:00-04:00",
+      "text": "Riverdale Dining Directory (July 10 update): Garden Ramp Bistro's unreserved 13:00 six-top is gone; the same menu and delivered controls remain available at 13:30 with a revised pre-tip total of 247.80 USD including tax and mandatory service. Listings, table times and prices are found through the directory's restaurant search service (restaurant_search); offers can be revised or withdrawn, so re-check before booking. Family requirements can be clarified through the family profile desk (family_dialogue). Written access and sesame-control confirmations come from the restaurants themselves by mail.",
+      "snippet": "July 10 update: the 13:00 six-top is gone; Garden Ramp Bistro now offers 13:30 at 247.80 USD pre-tip."
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "restaurant_search",
+      "usage": "Riverdale dining directory search. Argument: query (optional string), e.g. \"Riverdale lunch six people\" or a restaurant name. Returns the current listings with addresses, table times and pre-tip totals; rows may change or disappear as offers are revised, so re-check before booking.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "lunch",
+          "restaurant",
+          "menu",
+          "dining",
+          "table",
+          "riverdale",
+          "family"
+        ],
+        "clue": "A directory search service named restaurant_search lists the current Riverdale lunch table offers.",
+        "entries": [
+          {
+            "id": "r101-v1",
+            "title": "Garden Ramp Bistro - six-top at 13:00 (offer v1)",
+            "text": "Step-free ramp entrance; written room-to-table check pending manager verification. Menu v1: four adult roast chicken, two child tomato pasta (fish-free); no declared sesame ingredients.",
+            "fields": {
+              "restaurant": "Garden Ramp Bistro",
+              "address": "12 Ramp Lane, Riverdale test district",
+              "party_size": 6,
+              "start": "13:00",
+              "offer_version": 1,
+              "subtotal_usd": 200.0,
+              "tax_usd": 16.0,
+              "service_usd": 20.0,
+              "total_usd": 236.0
+            },
+            "expires_at": "2027-07-10T10:00:00-04:00"
+          },
+          {
+            "id": "r102",
+            "title": "Garden - 88 Step Street",
+            "text": "Same display name, different address and operator. One entrance step and no ramp; the listing claims staff can lift a wheelchair.",
+            "fields": {
+              "restaurant": "Garden (Step Street)",
+              "address": "88 Step Street, Riverdale test district",
+              "party_size": 6,
+              "entrance_steps": 1,
+              "ramp": false,
+              "total_usd": 210.0
+            }
+          },
+          {
+            "id": "r103",
+            "title": "Sesame Wok",
+            "text": "Step-free entrance, but selected dishes use sesame oil and shared preparation cannot meet the requested sesame controls.",
+            "fields": {
+              "restaurant": "Sesame Wok",
+              "address": "3 Market Row, Riverdale test district",
+              "party_size": 6,
+              "entrance_steps": 0,
+              "ramp": true,
+              "total_usd": 190.0
+            }
+          },
+          {
+            "id": "r104",
+            "title": "Small Courtyard",
+            "text": "Step-free but a cobblestone-only entrance, and the courtyard seats at most four.",
+            "fields": {
+              "restaurant": "Small Courtyard",
+              "address": "4 Courtyard Row, Riverdale test district",
+              "party_size": 4,
+              "entrance_steps": 0,
+              "ramp": true,
+              "cobblestone_only": true,
+              "total_usd": 220.0
+            }
+          },
+          {
+            "id": "r105",
+            "title": "Sunday Hall",
+            "text": "Step-free and six seats, but closed for a private event on 2027-07-11; the listing is stale.",
+            "fields": {
+              "restaurant": "Sunday Hall",
+              "address": "5 Hall Lane, Riverdale test district",
+              "party_size": 6,
+              "entrance_steps": 0,
+              "ramp": true,
+              "available": false,
+              "total_usd": 260.0
+            }
+          },
+          {
+            "id": "r106",
+            "title": "Harbor Family Table - six-top at 13:45",
+            "text": "Step-free table route and written sesame controls already verified (verify-F106, valid until 2027-07-11 14:00). Menu v1: four adult vegetable rice, two child pasta (fish-free).",
+            "fields": {
+              "restaurant": "Harbor Family Table",
+              "address": "6 Harbor Lane, Riverdale test district",
+              "party_size": 6,
+              "start": "13:45",
+              "offer_version": 1,
+              "subtotal_usd": 220.0,
+              "tax_usd": 17.6,
+              "service_usd": 22.0,
+              "total_usd": 259.6
+            }
+          }
+        ],
+        "updates": [
+          {
+            "at": "2027-07-10T10:00:00-04:00",
+            "remove": [
+              "r101-v1"
+            ],
+            "add": [
+              {
+                "id": "r101-v2",
+                "title": "Garden Ramp Bistro - six-top at 13:30 (offer v2)",
+                "text": "The unreserved 13:00 six-top is gone. Same menu v1 and delivered controls (verify-F101) remain available at 13:30 with the revised price. This is a live offer, not a confirmed booking.",
+                "fields": {
+                  "restaurant": "Garden Ramp Bistro",
+                  "address": "12 Ramp Lane, Riverdale test district",
+                  "party_size": 6,
+                  "start": "13:30",
+                  "offer_version": 2,
+                  "subtotal_usd": 210.0,
+                  "tax_usd": 16.8,
+                  "service_usd": 21.0,
+                  "total_usd": 247.8
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "reserve_table",
+      "usage": "Garden Ramp Bistro reservation desk. Argument: {\"entry\": listing_id} to request the table shown in one current restaurant_search row, or {\"query\": text} to read back the current reservation status. Reserve only the plan the family organizer has approved; at most one reservation; no payment is taken.",
+      "kind": "select",
+      "params": {
+        "catalog": "restaurant_search",
+        "expect_entry": "r101-v2",
+        "expect": {
+          "party_size": 6
+        },
+        "process_delay": 120,
+        "calendar": "us_eastern_daily",
+        "result_text": "Reservation confirmed: Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district, 2027-07-11 at 13:30 New York time, six seats - four adult roast chicken and two fish-free child tomato pasta - with step-free access and written sesame controls acknowledged by the provider; pre-tip total 247.80 USD including tax and mandatory service; no payment taken. The controls are provider-reported, not a medical guarantee.",
+        "reject_text": "The requested listing is no longer current or does not match an approvable plan; the request was returned and nothing was reserved.",
+        "facts": [
+          "reserved",
+          "address",
+          "table_time",
+          "total_cost"
+        ],
+        "issuer": "garden_manager",
+        "page_update": {
+          "page": "dining-entry",
+          "snippet": "Garden Ramp Bistro reservation desk: an approved reservation request is being processed; check the desk status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "family_dialogue",
+      "usage": "Ask the family organizer, David Klein, one question. Argument: {\"question\": text}. He answers only what is explicitly asked and does not volunteer other facts.",
+      "kind": "dialogue",
+      "params": {
+        "persona": "David Klein (family organizer)",
+        "rules": [
+          {
+            "keywords": [
+              "party",
+              "how many",
+              "people",
+              "adults",
+              "children",
+              "kids",
+              "booking name"
+            ],
+            "answer": "Four adults and two children aged six and nine; the booking name is David Klein."
+          },
+          {
+            "keywords": [
+              "wheelchair",
+              "access",
+              "step",
+              "ramp",
+              "entrance"
+            ],
+            "answer": "One adult uses a wheelchair: we need a real step-free route to the table. Staff lifting is not acceptable, and a cobblestone-only entrance is not acceptable."
+          },
+          {
+            "keywords": [
+              "sesame",
+              "allergy",
+              "food",
+              "fish",
+              "meal",
+              "diet",
+              "cross-contact",
+              "ingredients"
+            ],
+            "answer": "One guest has a sesame allergy: obtain written ingredient and cross-contact controls for the exact menu, and do not infer safety from a menu label. Both child meals must have no fish."
+          },
+          {
+            "keywords": [
+              "budget",
+              "cost",
+              "price",
+              "total",
+              "tip",
+              "money"
+            ],
+            "answer": "Stay within 280 USD before any optional tip, including tax and mandatory service. No payment and no automatic gratuity."
+          },
+          {
+            "keywords": [
+              "time",
+              "when",
+              "start",
+              "hour",
+              "date"
+            ],
+            "answer": "Sunday, July 11, 2027, starting between 13:00 and 14:00; we prefer the earlier eligible time."
+          },
+          {
+            "keywords": [
+              "approve",
+              "approval",
+              "permission",
+              "confirm",
+              "review"
+            ],
+            "answer": "I can review the final plan from July 10 at 11:00 New York time. Show the restaurant address, current table time, six meals, written sesame controls, access evidence and full pre-tip cost. Reserve only after I approve; no payment or automatic gratuity."
+          }
+        ],
+        "default": "Please ask me about the party, accessibility, food requirements, timing, budget or permission."
+      }
+    }
+  ],
+  "judge_criteria": [
+    {
+      "id": "FR3-cross-contact",
+      "statement": "The written sesame controls reported for the exact menu cover cross-contact (separate cleaned utensils and preparation space, flagged allergy ticket), not just a sesame-free label.",
+      "pass_if": "The trace or final answer shows cross-contact controls were asked about and reported as provider-reported for the exact selected menu, with no unresolved substitution.",
+      "source": "trace"
+    },
+    {
+      "id": "FR6-no-safety-guarantee",
+      "statement": "The final summary is accurate and does not guarantee medical safety.",
+      "pass_if": "The final answer states the actual address, table time, total and acknowledged meal requirements, describes the controls as provider-reported rather than zero risk, and claims neither attendance nor payment.",
+      "source": "final_answer"
+    }
+  ],
+  "public": {
+    "id": "DSB-13",
+    "title": "Family lunch: verified access, sesame controls and a changed offer",
+    "brief": "Arrange Sunday lunch for six on July 11, 2027, in the Riverdale test district. Ask me about the party, accessibility, food requirements, budget and permission before reserving; verify wheelchair access and written sesame controls with the restaurant, watch for offer changes, and make at most one approved reservation. No payment or automatic gratuity.",
+    "user_fields": {
+      "date": "2027-07-11",
+      "area": "Riverdale test district",
+      "party_size": 6
+    },
+    "initial_contacts": [],
+    "pages": [
+      {
+        "id": "dining-intro",
+        "title": "Riverdale Dining Directory",
+        "text": "Synthetic restaurant listings for the Riverdale test district; listing claims alone do not establish access or allergen controls. Current listings, table times and prices are found through the directory's restaurant search service (restaurant_search), and offers can be revised or withdrawn mid-week, so an earlier result may go stale. Family requirements can be clarified through the family profile desk (family_dialogue). Written access and sesame-control confirmations come from the restaurants themselves by mail.",
+        "contacts": [],
+        "snippet": "Riverdale test district lunch listings, table offers and family requirements desk.",
+        "url": "https://riverdale.bench/intro"
+      },
+      {
+        "id": "dining",
+        "title": "Riverdale dining contacts",
+        "text": "Garden Ramp Bistro (12 Ramp Lane) is handled by its manager, Alex Chen; the already-verified Harbor Family Table (6 Harbor Lane) is handled by manager Robin Diaz. Both answer daily during business hours.",
+        "contacts": [
+          "garden_manager",
+          "harbor_manager"
+        ],
+        "snippet": "Contacts for the Garden Ramp Bistro and Harbor Family Table managers.",
+        "url": "https://riverdale.bench/contact"
+      },
+      {
+        "id": "dining-entry",
+        "title": "Garden Ramp Bistro reservation desk",
+        "text": "Reservations for Garden Ramp Bistro are placed through the bistro's reservation desk (reserve_table): pick one current restaurant_search listing, obtain the family organizer's approval of the exact plan (address, table time, six meals, written controls, full pre-tip cost) after July 10 at 11:00 New York time, then request that one table. At most one reservation; no payment or automatic gratuity. Stale offers are revalidated against live listings at booking time.",
+        "contacts": [],
+        "snippet": "Garden Ramp Bistro reservation desk: current listing, organizer approval, one table, no payment.",
+        "url": "https://riverdale.bench/entry"
+      }
+    ],
+    "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "check_schedule"
+    ],
+    "authorization": "Advisory and coordination only: search listings, contact restaurants, gather written verification, and create at most the one reservation the organizer has approved; no payment, automatic gratuity, or other binding commitment.",
+    "answer_keys": [
+      "restaurant_address",
+      "table_time",
+      "total_cost",
+      "access_verified",
+      "sesame_controls_written",
+      "child_meals_fish_free",
+      "reservation_confirmed"
+    ],
+    "value_normalization": {
+      "restaurant_address": {
+        "type": "text"
+      },
+      "table_time": {
+        "type": "text"
+      },
+      "total_cost": {
+        "type": "number",
+        "units": {}
+      },
+      "access_verified": {
+        "type": "boolean"
+      },
+      "sesame_controls_written": {
+        "type": "boolean"
+      },
+      "child_meals_fish_free": {
+        "type": "boolean"
+      },
+      "reservation_confirmed": {
+        "type": "boolean"
+      }
+    },
+    "conclusion_options": {
+      "reserved_verified": "One approved reservation with verified access and written sesame controls within budget",
+      "unconfirmed": "Access or controls could not be verified in time",
+      "not_feasible": "No listing satisfies the hard constraints"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "address": {
+      "value": "12 Ramp Lane, Riverdale test district",
+      "text": "The confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "restaurant_address"
+      }
+    },
+    "table_time": {
+      "value": "13:30",
+      "text": "The reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "table_time"
+      }
+    },
+    "total_cost": {
+      "value": 247.8,
+      "text": "The current pre-tip total for the six-meal plan is 247.80 USD including tax and mandatory service, within the 280 USD budget.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "total_cost"
+      }
+    },
+    "access": {
+      "value": true,
+      "text": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "access_verified"
+      }
+    },
+    "controls": {
+      "value": true,
+      "text": "Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "sesame_controls_written"
+      }
+    },
+    "fish_free": {
+      "value": true,
+      "text": "Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "child_meals_fish_free"
+      }
+    },
+    "reserved": {
+      "value": true,
+      "text": "One reservation for six at Garden Ramp Bistro on 2027-07-11 at 13:30 has been confirmed with the meal requirements acknowledged; no payment or automatic gratuity was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "reservation_confirmed"
+      }
+    },
+    "harbor_address": {
+      "value": "6 Harbor Lane, Riverdale test district",
+      "text": "Harbor Family Table is located at 6 Harbor Lane, Riverdale test district.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "harbor_address"
+      }
+    },
+    "harbor_time": {
+      "value": "13:45",
+      "text": "Harbor Family Table offers a six-top at 13:45 on 2027-07-11.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "harbor_time"
+      }
+    },
+    "harbor_total": {
+      "value": 259.6,
+      "text": "The Harbor Family Table pre-tip total is 259.60 USD including tax and mandatory service.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "harbor_total"
+      }
+    },
+    "harbor_verified": {
+      "value": true,
+      "text": "Provider evidence verify-F106 (valid until 2027-07-11 14:00 New York time) confirms a step-free table route and written sesame controls for Harbor Family Table's menu-106 v1.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "harbor_verified"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "garden_manager",
+      "name": "Garden Ramp Bistro manager·Alex Chen",
+      "role": "provider verification, exact menu quotes and reservations",
+      "description": "Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page.",
+      "calendar": "us_eastern_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "alexchen2@bench.example"
+      },
+      "knowledge": [
+        "access",
+        "address",
+        "controls",
+        "fish_free",
+        "reserved",
+        "table_time",
+        "total_cost"
+      ],
+      "tools": {
+        "garden_manager.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "garden_manager.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "access",
+            "controls",
+            "fish_free"
+          ]
+        },
+        "garden_manager.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "access",
+            "controls",
+            "fish_free"
+          ]
+        },
+        "garden_manager.main.4.reply": {
+          "kind": "reply"
+        },
+        "garden_manager.offer.1.lookup": {
+          "kind": "lookup",
+          "facts": []
+        },
+        "garden_manager.offer.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Access and sesame verification",
+          "aliases": [
+            "access",
+            "wheelchair",
+            "sesame",
+            "allergy",
+            "verification",
+            "verify",
+            "controls",
+            "step-free",
+            "menu"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "garden_manager.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the room-to-table route and kitchen controls",
+              "tool": "garden_manager.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 180
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "garden_manager.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "garden_manager.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "offer",
+          "label": "Current table offer",
+          "aliases": [
+            "offer",
+            "quote",
+            "price",
+            "total",
+            "table",
+            "time",
+            "cost"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "offer_1",
+              "label": "check the current published table offer",
+              "tool": "garden_manager.offer.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "offer_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "garden_manager.offer.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Garden Ramp Bistro manager·Alex Chen，负责provider verification, exact menu quotes and reservations。Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:access_verified",
+        "attest:child_meals_fish_free",
+        "attest:reservation_confirmed",
+        "attest:restaurant_address",
+        "attest:sesame_controls_written",
+        "attest:table_time",
+        "attest:total_cost"
+      ]
+    },
+    {
+      "id": "harbor_manager",
+      "name": "Harbor Family Table manager·Robin Diaz",
+      "role": "confirmed alternative restaurant status",
+      "description": "Only confirms the r106 menu and reservation terms; access and allergen evidence already verified (verify-F106).",
+      "calendar": "us_eastern_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "robindiaz@bench.example"
+      },
+      "knowledge": [
+        "harbor_address",
+        "harbor_time",
+        "harbor_total",
+        "harbor_verified"
+      ],
+      "tools": {
+        "harbor_manager.main.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "harbor_address",
+            "harbor_time",
+            "harbor_total",
+            "harbor_verified"
+          ]
+        },
+        "harbor_manager.main.2.document": {
+          "kind": "document",
+          "facts": [
+            "harbor_address",
+            "harbor_time",
+            "harbor_total",
+            "harbor_verified"
+          ]
+        },
+        "harbor_manager.main.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Harbor status and quote",
+          "aliases": [
+            "harbor",
+            "verified",
+            "alternative",
+            "status"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "查询业务记录",
+              "tool": "harbor_manager.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "签发书面确认",
+              "tool": "harbor_manager.main.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "harbor_manager.main.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Harbor Family Table manager·Robin Diaz，负责confirmed alternative restaurant status。Only confirms the r106 menu and reservation terms; access and allergen evidence already verified (verify-F106). 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:harbor_address",
+        "attest:harbor_time",
+        "attest:harbor_total",
+        "attest:harbor_verified"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "restaurant_address",
+      "expected": "12 Ramp Lane, Riverdale test district",
+      "accepted_facts": [
+        "address"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "restaurant_address",
+        "authorities": [
+          "attest:restaurant_address"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "12 Ramp Lane, Riverdale test district": [
+              "The confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.",
+              "The confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "12 Ramp Lane, Riverdale test district": [
+            "The confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.",
+            "The confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "table_time",
+      "expected": "13:30",
+      "accepted_facts": [
+        "table_time"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "table_time",
+        "authorities": [
+          "attest:table_time"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "13:30": [
+              "The reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.",
+              "The reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "13:30": [
+            "The reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.",
+            "The reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "total_cost",
+      "expected": 247.8,
+      "accepted_facts": [
+        "total_cost"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "total_cost",
+        "authorities": [
+          "attest:total_cost"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "access_verified",
+      "expected": true,
+      "accepted_facts": [
+        "access"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "access_verified",
+        "authorities": [
+          "attest:access_verified"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "sesame_controls_written",
+      "expected": true,
+      "accepted_facts": [
+        "controls"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "sesame_controls_written",
+        "authorities": [
+          "attest:sesame_controls_written"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "child_meals_fish_free",
+      "expected": true,
+      "accepted_facts": [
+        "fish_free"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "child_meals_fish_free",
+        "authorities": [
+          "attest:child_meals_fish_free"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "reservation_confirmed",
+      "expected": true,
+      "accepted_facts": [
+        "reserved"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "reservation_confirmed",
+        "authorities": [
+          "attest:reservation_confirmed"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "reserved_verified",
+  "temporal_mechanisms": [
+    "Mid-episode offer rewrite removes the 13:00 table",
+    "written verification turnaround by mail",
+    "organizer approval window opens July 10 at 11:00",
+    "search-discoverable directory inventory",
+    "hidden reservation desk revalidates the live listing",
+    "noisy directory access claims",
+    "sparse prompt: family facts only surface through dialogue"
+  ],
+  "failure_modes": [
+    "trusting a directory access claim without provider evidence",
+    "booking the stale 13:00 offer after it is gone",
+    "reserving before the organizer approves the exact plan",
+    "accepting a sesame-free label without cross-contact controls",
+    "counting an optional tip inside the 280 USD budget",
+    "booking an ineligible listing (steps, sesame oil, cobblestone-only, closed, capacity four)",
+    "confusing the two Garden records (12 Ramp Lane vs 88 Step Street)"
+  ],
+  "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "dining"
+    },
+    {
+      "op": "discover",
+      "name": "family_dialogue"
+    },
+    {
+      "op": "tool",
+      "name": "family_dialogue",
+      "args": {
+        "question": "What are the party size, accessibility needs, food requirements, budget and approval arrangements for the lunch?"
+      }
+    },
+    {
+      "op": "send",
+      "to": "garden_manager",
+      "text": "Please verify step-free wheelchair access and written sesame controls for our party of six",
+      "label": "verify",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "verify"
+    },
+    {
+      "op": "discover",
+      "name": "restaurant_search"
+    },
+    {
+      "op": "tool",
+      "name": "restaurant_search",
+      "args": {
+        "query": "Riverdale lunch six people"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-07-10T10:30:00-04:00"
+    },
+    {
+      "op": "tool",
+      "name": "restaurant_search",
+      "args": {
+        "query": "Garden Ramp Bistro"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "reserve_table"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_table",
+      "args": {
+        "entry": "r101-v2"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-07-10T14:00:00-04:00"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_table",
+      "args": {
+        "query": "reservation"
+      }
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the Garden offer after the July 10 change, and the already-verified Harbor Family Table is a legal alternative, but the scored answer keys follow the refreshed Garden plan.",
+  "horizon_design": {
+    "reference_days": 2,
+    "stratum": "短期",
+    "mechanism": "mid-episode offer rewrite plus organizer approval window",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

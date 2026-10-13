@@ -17,7 +17,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from dayspanbench.engine import Environment, PUBLIC_TOOLS
+from dayspanbench.engine import Environment, PUBLIC_TOOLS, EXTRA_TOOLS
 from dayspanbench.llm import LLMConfig, StructuredClient, SimulatorError
 from dayspanbench.simulator import LLMSimulator
 
@@ -27,12 +27,12 @@ for _stream in (sys.stdin, sys.stdout, sys.stderr):
     if _stream is not None and hasattr(_stream, "reconfigure"):
         _stream.reconfigure(encoding="utf-8")
 
-ALLOWED = set(PUBLIC_TOOLS)
+ALLOWED = set(PUBLIC_TOOLS) | set(EXTRA_TOOLS)
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("--task", required=True, choices=[f"DSB-{n:02d}" for n in range(1, 13)])
+    parser.add_argument("--task", required=True, choices=[f"DSB-{n:02d}" for n in range(1, 43)])
     parser.add_argument("--simulator", choices=["rule", "llm"], default="rule")
     parser.add_argument("--simulator-model", default=os.getenv("DSB_SIMULATOR_MODEL"))
     parser.add_argument("--simulator-base-url", default=os.getenv("DSB_SIMULATOR_BASE_URL", "https://az.gptplus5.com/v1"))
@@ -48,6 +48,13 @@ def main(argv=None):
     args = parser.parse_args(argv)
     task_path = ROOT / "tasks/private" / f"{args.task}.json"
     task = json.loads(task_path.read_text(encoding="utf-8"))
+    # The per-task tool surface declared by the task itself (common tools plus
+    # whichever optional tools it enables); the static registry is just a cap.
+    ALLOWED = set(task["public"].get("tools") or PUBLIC_TOOLS)
+    assert ALLOWED <= set(PUBLIC_TOOLS) | set(EXTRA_TOOLS)
+    # Hidden per-task tools pass the allowlist by name; the engine still gates
+    # them on discover_tools unlock (a locked name fails with "not available").
+    HIDDEN = {tool["name"] for tool in task.get("hidden_tools", [])}
     client, recipients = None, None
     if args.simulator == "llm":
         try:
@@ -98,7 +105,7 @@ def main(argv=None):
                 request = {}
                 raise ValueError("Request must be a JSON object")
             tool = request["tool"]
-            if tool not in ALLOWED:
+            if tool not in ALLOWED and tool not in HIDDEN:
                 raise PermissionError("Tool not exposed to evaluated agents")
             if not args.quiet and args.simulator == "llm" and tool in {"send_email", "call", "wait_until"}:
                 print(f"[DaySpanBench] 正在处理 {tool}；如触发人物交互，将等待模拟器API返回。", file=sys.stderr, flush=True)

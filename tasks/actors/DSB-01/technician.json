@@ -5,7 +5,7 @@
     "id": "technician",
     "name": "禾岸会馆设备主管·周敏",
     "role": "设备维修计划",
-    "description": "只有本岗位知道维修窗口；内部收到转交后进入自己的队列。",
+    "description": "只有本岗位知道维修窗口；书面结论须经登记渠道申请，不随邮件发放。",
     "calendar": "office",
     "channels": [
       "email"
@@ -19,18 +19,11 @@
     "tools": {
       "technician.main.1.lookup": {
         "kind": "lookup",
-        "facts": [
-          "projector"
-        ]
+        "facts": []
       },
-      "technician.main.2.document": {
-        "kind": "document",
-        "facts": [
-          "projector"
-        ]
-      },
-      "technician.main.3.reply": {
-        "kind": "reply"
+      "technician.main.2.deny": {
+        "kind": "deny",
+        "text": "投影设备的检修安排我只能口头说明：11月13日全天安排检修。书面结论不随邮件出具，须通过会馆设备保障登记渠道（hean_equip_apply）申请，受理说明见官网简介页最新公告。"
       }
     },
     "workflows": [
@@ -47,7 +40,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "核对检修计划窗口（仅口头说明）",
             "tool": "technician.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -56,17 +49,8 @@
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
-            "tool": "technician.main.2.document",
-            "delay": {
-              "mode": "business",
-              "minutes": 0
-            }
-          },
-          {
-            "id": "main_3",
-            "label": "向请求者回复已取得的结果",
-            "tool": "technician.main.3.reply",
+            "label": "明确表示不知情或不归管",
+            "tool": "technician.main.2.deny",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -95,7 +79,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是禾岸会馆设备主管·周敏，负责设备维修计划。只有本岗位知道维修窗口；内部收到转交后进入自己的队列。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是禾岸会馆设备主管·周敏，负责设备维修计划。只有本岗位知道维修窗口；书面结论须经登记渠道申请，不随邮件发放。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:projector_available"
@@ -139,5 +123,5 @@
     }
   },
   "start_at": "2026-11-06T10:00:00+08:00",
-  "deadline_at": "2026-11-10T18:00:00+08:00"
+  "deadline_at": "2026-11-11T18:00:00+08:00"
 }

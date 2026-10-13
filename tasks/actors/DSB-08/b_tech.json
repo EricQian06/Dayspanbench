@@ -34,6 +34,10 @@
       },
       "b_tech.main.3.reply": {
         "kind": "reply"
+      },
+      "b_tech.a_query.1.deny": {
+        "kind": "deny",
+        "text": "我这里只有B酒店指定房间的量测记录，A旅舍的尺寸不归我管；请向A旅舍前台确认。"
       }
     },
     "workflows": [
@@ -54,7 +58,7 @@
             "tool": "b_tech.main.1.lookup",
             "delay": {
               "mode": "business",
-              "minutes": 120,
+              "minutes": 480,
               "not_before": "2026-11-11T10:00:00+08:00"
             }
           },
@@ -71,6 +75,26 @@
             "id": "main_3",
             "label": "向请求者回复已取得的结果",
             "tool": "b_tech.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "a_query",
+        "label": "A旅舍询问回绝",
+        "aliases": [
+          "A旅舍"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "a_query_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "b_tech.a_query.1.deny",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -157,5 +181,5 @@
     }
   },
   "start_at": "2026-11-06T13:30:00+08:00",
-  "deadline_at": "2026-11-12T18:00:00+08:00"
+  "deadline_at": "2026-11-13T18:00:00+08:00"
 }

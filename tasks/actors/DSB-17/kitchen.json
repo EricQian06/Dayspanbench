@@ -1,0 +1,270 @@
+{
+  "private": true,
+  "task_id": "DSB-17",
+  "actor": {
+    "id": "kitchen",
+    "name": "Home Meal Kitchen supervisor·Sam Reyes",
+    "role": "exact-menu allergen controls, delivery windows and meal orders",
+    "description": "Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page.",
+    "calendar": "us_eastern_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "samreyes@bench.example"
+    },
+    "knowledge": [
+      "controls",
+      "delivery_time",
+      "fish_free",
+      "meal_ordered",
+      "total_cost"
+    ],
+    "tools": {
+      "kitchen.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "kitchen.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "controls",
+          "fish_free"
+        ]
+      },
+      "kitchen.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "controls",
+          "fish_free"
+        ]
+      },
+      "kitchen.main.4.reply": {
+        "kind": "reply"
+      },
+      "kitchen.status.1.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "kitchen.status.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Sesame controls verification",
+        "aliases": [
+          "sesame",
+          "allergy",
+          "controls",
+          "cross-contact",
+          "verification",
+          "verify",
+          "ingredients",
+          "fish-free",
+          "fish",
+          "safe"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "kitchen.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the exact-menu sesame cross-contact controls and child meal preparation",
+            "tool": "kitchen.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 180
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "kitchen.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "kitchen.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "status",
+        "label": "Delivery and order status",
+        "aliases": [
+          "delivery",
+          "order",
+          "status",
+          "time",
+          "offer",
+          "quote"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "status_1",
+            "label": "check the current delivery windows and published menus",
+            "tool": "kitchen.status.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "status_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "kitchen.status.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Home Meal Kitchen supervisor·Sam Reyes，负责exact-menu allergen controls, delivery windows and meal orders。Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:child_meals_fish_free",
+      "attest:delivery_time",
+      "attest:meal_confirmed",
+      "attest:sesame_controls_written",
+      "attest:total_cost"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "controls": {
+      "value": true,
+      "text": "Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "sesame_controls_written"
+      }
+    },
+    "delivery_time": {
+      "value": "13:30",
+      "text": "The confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "delivery_time"
+      }
+    },
+    "fish_free": {
+      "value": true,
+      "text": "Both child portions on menu ff1 are prepared without fish.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "child_meals_fish_free"
+      }
+    },
+    "meal_ordered": {
+      "value": true,
+      "text": "One order for menu ff1 version 2, six portions delivered at 13:30 on 2027-07-11 with written sesame controls and linked helper coverage acknowledged, has been confirmed; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "meal_confirmed"
+      }
+    },
+    "total_cost": {
+      "value": 236.0,
+      "text": "The current total for menu ff1 version 2 is 236.00 USD including tax and delivery, within the 280 USD budget.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "total_cost"
+      }
+    }
+  },
+  "start_at": "2027-07-09T09:00:00-04:00",
+  "deadline_at": "2027-07-11T12:00:00-04:00"
+}

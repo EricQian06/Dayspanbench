@@ -1,0 +1,176 @@
+{
+  "private": true,
+  "task_id": "DSB-14",
+  "actor": {
+    "id": "crew_foreman",
+    "name": "Water isolation crew foreman·Sam Ortega",
+    "role": "on-the-ground valve isolation lists",
+    "description": "Confirms valve isolation lists from the field; the 2019 GIS layer is stale and only the crew's confirmed list counts. The crew is on site around the clock during shutdown week.",
+    "calendar": "always",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "samortega@bench.example"
+    },
+    "knowledge": [
+      "affected_list",
+      "bilingual_1400"
+    ],
+    "tools": {
+      "crew_foreman.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "crew_foreman.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "affected_list",
+          "bilingual_1400"
+        ]
+      },
+      "crew_foreman.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "affected_list",
+          "bilingual_1400"
+        ]
+      },
+      "crew_foreman.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Valve isolation confirmation",
+        "aliases": [
+          "crew",
+          "valve",
+          "isolation",
+          "confirm",
+          "list",
+          "affected",
+          "buildings",
+          "shutdown"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "crew_foreman.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "radio the isolation crew for the confirmed building list",
+            "tool": "crew_foreman.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 5
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "crew_foreman.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 5
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "crew_foreman.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Water isolation crew foreman·Sam Ortega，负责on-the-ground valve isolation lists。Confirms valve isolation lists from the field; the 2019 GIS layer is stale and only the crew's confirmed list counts. The crew is on site around the clock during shutdown week. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:audience",
+      "attest:bilingual"
+    ]
+  },
+  "calendar": {
+    "timezone": "UTC",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "00:00",
+        "23:59"
+      ]
+    ]
+  },
+  "local_facts": {
+    "affected_list": {
+      "value": "1400, 1408, 1410, 1418 14th Street",
+      "text": "The crew confirmed on the ground that the June 12 09:00-15:00 shutdown affects exactly 1400, 1408, 1410 and 1418 14th Street; 1501 U Street is on a different valve and must not receive the notice (the 2019 GIS layer that includes it is stale).",
+      "attributes": {
+        "subject": {
+          "task": "DSB-14",
+          "case": {
+            "role": "communications lead",
+            "wrong_delivery": "1501 U Street",
+            "print_day": "2027-06-11"
+          }
+        },
+        "predicate": "audience"
+      }
+    },
+    "bilingual_1400": {
+      "value": true,
+      "text": "1400 14th Street houses Spanish-speaking households and needs English and Spanish notices from the approved bilingual template outage-C; the Spanish reviewer is unavailable until 08:30, after the print deadline, so the approved template is used without waiting.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-14",
+          "case": {
+            "role": "communications lead",
+            "wrong_delivery": "1501 U Street",
+            "print_day": "2027-06-11"
+          }
+        },
+        "predicate": "bilingual"
+      }
+    }
+  },
+  "start_at": "2027-06-11T04:40:00-04:00",
+  "deadline_at": "2027-06-13T06:05:00-04:00"
+}

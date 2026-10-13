@@ -29,9 +29,24 @@ TRANSITIONS = {
     "replied": set(), "failed": set(),
 }
 
-# The complete agent-facing tool surface; serve.py allowlists the same names.
+# The agent-facing tool surface every task starts from; serve.py allowlists
+# per-task tool lists built from this plus EXTRA_TOOLS below. discover_tools
+# is always available: per-task hidden tools are unlocked through it.
 PUBLIC_TOOLS = ("observe", "recall_task", "web_search", "visit_page",
-                "send_email", "call", "read_inbox", "wait_until", "submit_answer")
+                "send_email", "call", "read_inbox", "wait_until",
+                "discover_tools", "submit_answer")
+
+# Optional task-specific tools. A task's public["tools"] may add any of these;
+# they are sometimes useful and sometimes pure decoys, and the agent must decide
+# from the tool descriptions and its own probing which ones carry information.
+EXTRA_TOOLS = ("query_case_status", "fetch_document", "check_schedule",
+               "lookup_directory", "request_callback", "leave_note")
+
+# Per-task hidden tools (task["hidden_tools"]) are NOT part of public["tools"]:
+# their names surface only inside authored NPC replies or page text, and the
+# agent must call discover_tools(name) to learn their usage and unlock them.
+# An unlocked tool's behavior is fully parameterized by its authored params.
+HIDDEN_TOOL_KINDS = ("form", "status", "record", "catalog", "select", "dialogue")
 
 # Unit synonyms for scenario field values: a value written with a different but
 # equivalent unit ("8公斤") still describes the user's actual case, so admission
@@ -153,6 +168,45 @@ class Environment:
         self.finished = False
         self.agent_sends = 0
         self.simulator_failure = None
+        # Web pages are not static: scheduled page_update events rewrite page
+        # content at authored virtual times, so information the agent already
+        # read can go stale and must be re-checked. The update schedule itself
+        # is private; the page only carries its own last-updated timestamp.
+        self.page_updated_at = {}
+        for index, update in enumerate(task.get("page_updates", [])):
+            self.enqueue(parse(update["at"]), "page_update", index)
+        # Hidden tools: authored per task, never listed in public["tools"]. A
+        # tool becomes callable only after discover_tools(name) unlocks it;
+        # guessing the exact name is not enough.
+        self.hidden_tools = {tool["name"]: deepcopy(tool) for tool in task.get("hidden_tools", [])}
+        self.unlocked_tools = set()
+        # Web forms declared on public pages, keyed by form id, with the page
+        # carrying them and the hidden form tool (if any) that submits them.
+        self.forms = {}
+        self.form_specs = {}
+        for tool in self.hidden_tools.values():
+            if tool["kind"] == "form":
+                self.form_specs[tool["params"]["form"]] = tool["params"]
+        for page in task["public"]["pages"]:
+            if "form" in page:
+                self.forms[page["form"]["id"]] = (page, page["form"])
+        # Form submission records: pending -> processed/rejected at the
+        # authored virtual time via a form_processed event. No push channel:
+        # the agent must re-visit the page or query the status tool.
+        self.form_submissions = {}
+        # Catalog inventories (kind="catalog") can be revised during the episode
+        # at authored virtual times: rows are added/removed like LATCH's
+        # inventory_changed events, so stale quotes a search once showed may
+        # no longer be selectable.
+        self.catalog_updates = {}
+        for tool in self.hidden_tools.values():
+            if tool["kind"] == "catalog":
+                for index, update in enumerate(tool["params"].get("updates", [])):
+                    self.enqueue(parse(update["at"]), "catalog_update", (tool["name"], index))
+        # Selections made through kind="select" tools: pending -> processed /
+        # rejected at an authored virtual time; an optional hold expiry can
+        # cancel an unprocessed selection first.
+        self.selections = {}
         # Inbox read high-water mark: everything above it counts as unread.
         self.inbox_read = 0
 
@@ -177,8 +231,8 @@ class Environment:
         self.serial += 1
         heapq.heappush(self.events, (at, self.serial, kind, case_id))
 
-    def emit(self, case, text, evidence_ids=None, contacts=None, status="reply"):
-        if case.get("parent"):
+    def emit(self, case, text, evidence_ids=None, contacts=None, status="reply", internal_ok=False):
+        if case.get("parent") and not internal_ok:
             raise ValueError("Internal cases must complete through handoff return")
         contacts = contacts or []
         actor = self.actors[case["actor"]]
@@ -321,6 +375,93 @@ class Environment:
 
 
 
+    def process_form(self, form_id):
+        """Flip a submitted web form to its processed/rejected outcome at the
+        authored virtual time: publish the result text, optionally issue
+        evidence facts and rewrite the carrying page. The agent is never
+        notified; it must re-visit the page or query the status tool."""
+        submission = self.form_submissions.get(form_id)
+        params = self.form_specs.get(form_id)
+        if submission is None or params is None or submission["status"] != "pending":
+            return
+        if submission["accepted"]:
+            submission["status"] = "processed"
+            submission["result_text"] = params.get("result_text") or "您提交的申请已受理办结。"
+            for fact_id in params.get("facts", []):
+                fact = self.task["facts"][fact_id]
+                # A fact gated behind a later availability simply is not
+                # published yet; the outcome text still lands.
+                if fact.get("available_at") and self.now < parse(fact["available_at"]):
+                    self.record("form_fact_pending", form=form_id, fact=fact_id)
+                    continue
+                submission["evidence"].append(self.issue_public(fact_id, params["issuer"]))
+        else:
+            submission["status"] = "rejected"
+            submission["result_text"] = params.get("reject_text") or "您提交的信息与登记情况不符，已退回；请核对后重新提交。"
+        update = params.get("page_update")
+        if update:
+            page = next((p for p in self.task["public"]["pages"] if p["id"] == update["page"]), None)
+            if page is not None:
+                for key in ("title", "text", "snippet", "contacts", "documents"):
+                    if key in update:
+                        page[key] = deepcopy(update[key])
+                self.page_updated_at[page["url"]] = self.now
+                self.record("page_updated", page=update["page"], url=page["url"], cause="form")
+        self.record("form_processed", form=form_id, accepted=submission["accepted"],
+                    result=submission["result_text"])
+
+    def apply_catalog_update(self, payload):
+        """Swap catalog inventory at an authored virtual time (stale quotes,
+        sold-out options, refreshed schedules). The update schedule stays
+        private; the agent only sees that a previously returned row is gone."""
+        tool_name, index = payload
+        spec = self.hidden_tools[tool_name]
+        update = spec["params"]["updates"][index]
+        entries = spec["params"]["entries"]
+        removed = set(update.get("remove", []))
+        spec["params"]["entries"] = [e for e in entries if e["id"] not in removed] \
+            + [deepcopy(e) for e in update.get("add", [])]
+        self.record("catalog_updated", tool=tool_name, removed=sorted(removed),
+                    added=[e["id"] for e in update.get("add", [])])
+
+    def process_selection(self, tool_name):
+        """Complete a pending selection: accepted only if the picked entry
+        still satisfies the authored expectations; acceptance issues written
+        evidence exactly like a processed form."""
+        selection = self.selections.get(tool_name)
+        if not selection or selection["status"] != "pending":
+            return
+        params = selection["params"]
+        entry = self._catalog_entry(selection["catalog"], selection["entry"])
+        if selection["accepted"] and (entry is None or not self._entry_current(entry)):
+            # The option disappeared from inventory between selection and
+            # processing: the booking cannot be honored.
+            selection["accepted"] = False
+        if selection["accepted"]:
+            selection["status"] = "processed"
+            selection["result_text"] = params.get("result_text") or "Your selection has been confirmed."
+            for fact_id in params.get("facts", []):
+                fact = self.task["facts"][fact_id]
+                if fact.get("available_at") and self.now < parse(fact["available_at"]):
+                    self.record("selection_fact_pending", tool=tool_name, fact=fact_id)
+                    continue
+                selection["evidence"].append(self.issue_public(fact_id, params["issuer"]))
+        else:
+            selection["status"] = "rejected"
+            selection["result_text"] = params.get("reject_text") or \
+                "The submitted details do not match the current listing; the request was returned."
+        update = params.get("page_update")
+        if update:
+            page = next((p for p in self.task["public"]["pages"] if p["id"] == update["page"]), None)
+            if page is not None:
+                for key in ("title", "text", "snippet", "contacts", "documents"):
+                    if key in update:
+                        page[key] = deepcopy(update[key])
+                self.page_updated_at[page["url"]] = self.now
+                self.record("page_updated", page=update["page"], url=page["url"], cause="selection")
+        self.record("selection_processed", tool=tool_name, accepted=selection["accepted"],
+                    result=selection["result_text"])
+
     def start(self, case):
         workflow = case["workflow"]
         # An acceptance window's opening edge only gates the agent's own mail:
@@ -395,6 +536,11 @@ class Environment:
     # genuinely long; short-turnaround receipts stay terse.
     ETA_THRESHOLD = timedelta(hours=24)
 
+    # A promised earliest-completion slipping past the promise by more than
+    # this (later queue contention pushing the chain's projection out) triggers
+    # a revision email, so the agent never plans around a stale promise.
+    ETA_REVISION_THRESHOLD = timedelta(hours=12)
+
     # Upper bound of the randomized surcharge jittered_delay adds to each
     # business step of an agent-initiated case.
     JITTER_CEILING = 25
@@ -426,7 +572,7 @@ class Environment:
         for i in range(from_step, len(workflow["steps"])):
             step = workflow["steps"][i]
             tool = actor.spec["tools"][step["tool"]]
-            if tool["kind"] == "delegate":
+            if tool["kind"] in {"delegate", "consult"}:
                 _, t, free = actor.calendar.schedule(t, self.projected_delay(step["delay"], origin), free)
                 target_wf = next(w for w in self.actors[tool["target"]].spec["workflows"]
                                  if w["id"] == tool["workflow"])
@@ -459,6 +605,8 @@ class Environment:
         elif case["state"] == "waiting_internal":
             step = workflow["steps"][step_index]
             tool = actor.spec["tools"][step["tool"]]
+            if tool["kind"] not in {"delegate", "consult"}:
+                raise ValueError("waiting_internal step must delegate or consult")
             child = self.active_child(case, tool.get("workflow", "main"))
             if child is not None:
                 t = self.case_completion(child)
@@ -483,10 +631,49 @@ class Environment:
         eta = self.case_completion(case)
         if eta - self.now <= self.ETA_THRESHOLD:
             return ""
+        # A promise never shrinks: a later re-projection may look earlier
+        # (a child finished, the remaining chain shortened), but the requester
+        # already holds the earlier written promise, and the revision logic
+        # must still watch the schedule against the tightest promise made.
+        previous = case.get("promised_eta")
+        if previous and parse(previous) > eta:
+            eta = parse(previous)
         actor = self.actors[case["actor"]]
         local = eta.astimezone(actor.calendar.zone)
+        # Every promise is remembered so a later schedule slip (queue
+        # contention inserting work ahead of this chain) can be retracted.
+        case["promised_eta"] = stamp(eta)
+        case["eta_slip_notified"] = False
         return (f"预计最早将于{local.strftime('%Y-%m-%d %H:%M')}（当地时间）办结并书面回复您；"
                 "该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。")
+
+    def notify_eta_slip(self, case):
+        """Retract promises the schedule has outgrown.
+
+        The acknowledgement promised an earliest completion as a projection;
+        later cases joining the same actor's queue can push the chain past it.
+        The requester then deserves a revision instead of silently waiting on
+        a broken promise (a DSB-10 agent waited to the deadline on a promise
+        the queue had already pushed a week out)."""
+        chain, current = [], case
+        while current is not None:
+            chain.append(current)
+            current = self.cases.get(current.get("parent"))
+        for member in chain:
+            if not member.get("promised_eta") or member.get("eta_slip_notified") \
+                    or member["state"] in {"replied", "failed"}:
+                continue
+            completion = self.case_completion(member)
+            if completion - parse(member["promised_eta"]) <= self.ETA_REVISION_THRESHOLD:
+                continue
+            member["eta_slip_notified"] = True
+            actor = self.actors[member["actor"]]
+            local = completion.astimezone(actor.calendar.zone)
+            self.record("eta_revised", case_id=member["id"], actor=member["actor"],
+                        promised=member["promised_eta"], revised=stamp(completion))
+            self.emit(member, f"您好，我是{actor.spec['name']}。您此前已受理事项的办理进度更新：因受理安排调整，"
+                              f"预计最早办结时间调整为{local.strftime('%Y-%m-%d %H:%M')}（当地时间）。"
+                              "处理顺序不因催办提前，可待回复送达后再联系。", status="acknowledgement")
 
     def jittered_delay(self, case, delay):
         """Agent-initiated email never gets instant handling: business delays get a
@@ -511,6 +698,7 @@ class Environment:
                     start_at=stamp(start), due_at=stamp(end), tool=step["tool"])
         self.enqueue(start, "start", case["id"])
         self.enqueue(end, "complete", case["id"])
+        self.notify_eta_slip(case)
 
     def issue(self, case, fact_id, kind="fact"):
         fact = self.task["facts"][fact_id]
@@ -523,6 +711,33 @@ class Environment:
             "attributes": deepcopy(fact["attributes"]),
             "authorities": deepcopy(self.actors[case["actor"]].spec["evidence_authorities"])}
         case["evidence"].append(ev_id)
+        return ev_id
+
+    def _catalog_entry(self, catalog_name, entry_id):
+        """The current inventory row for an id, or None if it is gone."""
+        spec = self.hidden_tools[catalog_name]
+        return next((e for e in spec["params"]["entries"] if e["id"] == entry_id), None)
+
+    def _entry_current(self, entry):
+        if entry.get("available_at") and self.now < parse(entry["available_at"]):
+            return False
+        if entry.get("expires_at") and self.now >= parse(entry["expires_at"]):
+            return False
+        return True
+
+    def issue_public(self, fact_id, issuer_id, kind="document"):
+        """Issue engine attestation for a fact the agent retrieved itself by
+        fetching a published document, outside any recipient case. The issuer's
+        attestation authority still applies; availability is still gated."""
+        fact = self.task["facts"][fact_id]
+        if fact.get("available_at") and self.now < parse(fact["available_at"]):
+            raise ValueError(f"Fact {fact_id} not yet published")
+        ev_id = f"EV-{len(self.evidence)+1:04d}"
+        self.evidence[ev_id] = {"id": ev_id, "fact_id": fact_id, "value": deepcopy(fact["value"]),
+            "text": fact["text"], "issuer": issuer_id, "issued_at": stamp(self.now),
+            "valid_until": fact.get("valid_until"), "kind": kind, "agent_visible": True,
+            "attributes": deepcopy(fact["attributes"]),
+            "authorities": deepcopy(self.actors[issuer_id].spec["evidence_authorities"])}
         return ev_id
 
     def execute_tool(self, case, tool_id):
@@ -553,12 +768,48 @@ class Environment:
             eta = self.eta_clause(case)
             self.emit(case, f"您好，我是{actor.spec['name']}。您提交的材料已核验齐全，本事项已受理并按流程转办。{eta or '办结后会书面回复您。'}",
                       status="acknowledgement")
+        elif tool["kind"] == "suggest":
+            # A vague or guess-laden reply: the recipient answers from memory,
+            # naming people or places that are only guesses. The case continues
+            # (the real answer may still arrive later); the guesses are spoken
+            # of in prose, which is how their mailboxes become discoverable.
+            self.emit(case, tool["text"], contacts=tool.get("guesses", []), status="reply")
         elif tool["kind"] == "delegate":
             self.transition(case, "waiting_internal")
             self.new_case(tool["target"], tool["workflow"],
                           {k: case["fields"][k] for k in tool["forward_fields"] if k in case["fields"]},
                           parent=case["id"], origin=case.get("origin"))
             return "waiting"
+        elif tool["kind"] == "consult":
+            # A visible internal transfer: unlike the silent delegate, the
+            # recipient first sends an interim reply saying they will ask a
+            # colleague, then the real answer arrives later as a second letter.
+            # The interim letter may come from an internal (delegated) case
+            # too: its requester still deserves to see the transfer happening.
+            target = self.actors[tool["target"]]
+            self.transition(case, "waiting_internal")
+            self.new_case(tool["target"], tool["workflow"],
+                          {k: case["fields"][k] for k in tool["forward_fields"] if k in case["fields"]},
+                          parent=case["id"], origin=case.get("origin"))
+            text = tool.get("text") or f"我先向{target.spec['name']}核实相关情况，核实后再书面回复您。"
+            eta = self.eta_clause(case)
+            self.emit(case, f"您好，我是{actor.spec['name']}。{text}{eta}", status="acknowledgement", internal_ok=True)
+            return "waiting"
+        elif tool["kind"] == "deny":
+            # A dead-end "不知道/不归我管" reply: the recipient plainly states
+            # they cannot help, names no contacts, and the case closes as
+            # replied. This is how a guess chain (suggest -> suggest -> deny)
+            # terminates without a referral.
+            self.transition(case, "replied")
+            text = tool["text"]
+            if case.get("parent"):
+                parent = self.cases[case["parent"]]
+                self.record("handoff_return", case_id=case["id"], parent=parent["id"])
+                parent["step"] += 1
+                self.schedule_step(parent)
+            else:
+                self.emit(case, f"您好，我是{actor.spec['name']}。{text}")
+            return "done"
         elif tool["kind"] == "reply":
             self.transition(case, "replied")
             if case.get("parent"):
@@ -575,6 +826,9 @@ class Environment:
                 if texts:
                     parts.append("您咨询的事项已经核实，具体情况如下：")
                     parts.extend(texts)
+                    # Positive confirmation: cited conclusions are backed by the
+                    # structured written evidence attached to this letter.
+                    parts.append("以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。")
                 else:
                     parts.append("您咨询的事项已经按流程处理完毕。")
                 if case["contacts"]:
@@ -597,6 +851,32 @@ class Environment:
     def process_event(self, event):
         at, _, kind, case_id = event
         self.now = at
+        if kind == "page_update":
+            update = self.task["page_updates"][case_id]
+            page = next(p for p in self.task["public"]["pages"] if p["id"] == update["page"])
+            for key in ("title", "text", "snippet", "contacts", "documents"):
+                if key in update:
+                    page[key] = deepcopy(update[key])
+            self.page_updated_at[page["url"]] = at
+            self.record("page_updated", page=update["page"], url=page["url"])
+            return
+        if kind == "form_processed":
+            self.process_form(case_id)
+            return
+        if kind == "catalog_update":
+            self.apply_catalog_update(case_id)
+            return
+        if kind == "selection_processed":
+            self.process_selection(case_id)
+            return
+        if kind == "selection_expired":
+            selection = self.selections.get(case_id)
+            if selection and selection["status"] == "pending":
+                selection["status"] = "expired"
+                selection["result_text"] = selection["params"].get("expire_text") or \
+                    "The selected option was held but not confirmed before it expired; the hold has lapsed and nothing was booked."
+                self.record("selection_expired", tool=case_id)
+            return
         case = self.cases[case_id]
         if case["state"] in {"failed", "replied"}:
             return
@@ -654,9 +934,49 @@ class AgentTools:
     def recall_task(self):
         return deepcopy(self._brief)
 
+    def tool_list(self):
+        """The per-task agent tool surface: the common tools plus whichever
+        optional tools this task declares (they may or may not be useful),
+        plus any hidden tools the agent has unlocked via discover_tools."""
+        tools = self._env.task["public"].get("tools")
+        tools = list(tools) if tools else list(PUBLIC_TOOLS)
+        return tools + [name for name in sorted(self._env.unlocked_tools) if name not in tools]
+
+    def __getattr__(self, name):
+        # Hidden per-task tools: callable only after discover_tools unlocked
+        # them; a guessed-but-locked name still fails with "not available".
+        if name.startswith("_"):
+            raise AttributeError(name)
+        env = self.__dict__.get("_env")
+        if env is not None and name in env.hidden_tools:
+            if name not in env.unlocked_tools:
+                raise PermissionError(f"Tool {name} is not available in this task")
+            def hidden_call(**kwargs):
+                return self._call_hidden_tool(name, **kwargs)
+            return hidden_call
+        raise AttributeError(name)
+
+    def discover_tools(self, name):
+        """Look up a tool name mentioned in an NPC reply, page text, or a web
+        search service mention. A hit returns the handwritten usage
+        instructions and unlocks the tool; a miss never leaks the hidden tool
+        list. Costs no message budget."""
+        env = self._env
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("name must be a non-empty string")
+        tool = env.hidden_tools.get(name.strip())
+        if tool is None:
+            env.record("agent_discover_tools", name=name, found=False)
+            return {"found": False,
+                    "text": "未找到该工具。工具名称以往来信件或网页正文中的原文为准，可核对后重试。"}
+        env.unlocked_tools.add(tool["name"])
+        env.record("agent_discover_tools", name=tool["name"], found=True, tool_kind=tool["kind"])
+        return {"found": True, "name": tool["name"], "usage": tool["usage"],
+                "note": "该工具已解锁：现在出现在observe()返回的工具列表中，可按上述用法调用。"}
+
     def observe(self):
         env = self._env
-        return {"now": stamp(env.now), "tools": list(PUBLIC_TOOLS),
+        return {"now": stamp(env.now), "tools": self.tool_list(),
                 "unread_messages": max(0, len(env.messages) - env.inbox_read)}
 
     def web_search(self, query):
@@ -683,7 +1003,29 @@ class AgentTools:
                        if any(u in (p["title"] + p.get("snippet", "")).casefold() for u in units)]
         self._seen_pages.update(r["url"] for r in results)
         total = len(self._env.task["public"]["pages"])
+        env = self._env
+        # Some hidden tools are discoverable through search: authored keywords
+        # embed a service mention in the results. The clue names the service
+        # but says nothing about how to use it — the agent must still call
+        # discover_tools to read the usage instructions and unlock it.
+        mentions = []
+        for name in sorted(env.hidden_tools):
+            tool = env.hidden_tools[name]
+            if name in env.unlocked_tools:
+                continue
+            keywords = tool.get("params", {}).get("keywords") or []
+            if not keywords:
+                continue
+            haystack = " ".join(keywords).casefold()
+            if any(u in haystack for u in units):
+                mentions.append({"service": name,
+                                 "text": tool["params"].get("clue") or
+                                         f"A service named {name} is available for this kind of request.",
+                                 "note": "A mentioned service can be looked up by name via discover_tools."})
+        if mentions:
+            env.record("agent_search_clue", query=query, services=[m["service"] for m in mentions])
         return {"results": results,
+                "service_mentions": mentions,
                 "hint": {"total_pages": total,
                          "undiscovered_pages": total - len(self._seen_pages)}}
 
@@ -701,6 +1043,38 @@ class AgentTools:
         env.known_contacts.update(page.get("contacts", []))
         visible = {k: deepcopy(v) for k, v in page.items() if k != "id"}
         visible["contact_details"] = [env.contact(c) for c in page.get("contacts", [])]
+        if "form" in page:
+            # The page shows the form (fields, labels, instructions) plus its
+            # current submission status; hidden fields exist for validation
+            # only and are never rendered.
+            form = deepcopy(page["form"])
+            form["fields"] = [deepcopy(f) for f in page["form"]["fields"] if not f.get("hidden")]
+            submission = env.form_submissions.get(page["form"]["id"])
+            if submission is not None:
+                form["submitted_at"] = submission["submitted_at"]
+                if submission["status"] == "pending":
+                    form["status"] = "已提交，待处理"
+                else:
+                    form["status"] = "已办结" if submission["status"] == "processed" else "已退回"
+                    form["result_text"] = submission["result_text"]
+                    if submission["evidence"]:
+                        form["evidence"] = [{k: deepcopy(env.evidence[ev][k]) for k in
+                            ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")}
+                            for ev in submission["evidence"]]
+                        # Positive confirmation: the processed form is an official
+                        # conclusion channel and the receipt carries written evidence.
+                        form["evidence_note"] = ("本表单办结结论为正式书面凭证，已随页面送达"
+                                                 "（evidence，含编号、签发人与内容），其证据编号可在最终提交中引用。")
+            visible["form"] = form
+        # Pages can be revised during the episode; this is when the returned
+        # content last changed (the task start for never-updated pages).
+        visible["last_updated"] = stamp(env.page_updated_at.get(url)) if url in env.page_updated_at \
+            else page.get("published_at", stamp(env.now))
+        # Published documents linked from the page are listed but their content
+        # only arrives through fetch_document.
+        for document in visible.get("documents", []):
+            document.pop("facts", None)
+            document.pop("issuer", None)
         return visible
 
     def send_email(self, recipient, text, fields=None, case_id=None):
@@ -905,6 +1279,432 @@ class AgentTools:
         before = len(self._env.messages)
         self._env.advance(until, wake_on_message)
         return self.read_inbox(before)
+
+    # ---- Optional per-task tools ------------------------------------------------    # Enabled by listing them in the task's public["tools"]. Some carry real
+    # information for their task, others are decoys that only consume budget
+    # or return nothing of value; the agent must decide which to rely on.
+
+    def _check_optional(self, name):
+        if name not in self.tool_list():
+            raise PermissionError(f"Tool {name} is not available in this task")
+
+    def _budgeted(self):
+        """Communication-style optional tools consume the message budget."""
+        env = self._env
+        if env.agent_sends >= env.task["public"]["message_budget"]:
+            raise ValueError("Message budget exhausted")
+        env.agent_sends += 1
+
+    def query_case_status(self, case_id):
+        """Look up the current state of one of the agent's own cases."""
+        self._check_optional("query_case_status")
+        env = self._env
+        if not isinstance(case_id, str):
+            raise ValueError("case_id must be a string")
+        case = env.cases.get(case_id)
+        if case is None:
+            raise ValueError("Unknown case id")
+        actor = env.actors[case["actor"]]
+        result = {"case_id": case_id, "state": case["state"], "recipient": actor.spec["name"],
+                  "now": stamp(env.now)}
+        if case.get("workflow"):
+            result["subject"] = case["workflow"]["label"]
+        if case.get("due_at"):
+            result["due_at"] = case["due_at"]
+        if case.get("promised_eta"):
+            result["promised_eta"] = case["promised_eta"]
+        if case["state"] == "waiting_internal" and case.get("workflow"):
+            tool = actor.spec["tools"][case["workflow"]["steps"][case["step"]]["tool"]]
+            if tool["kind"] in {"delegate", "consult"}:
+                result["waiting_on"] = env.actors[tool["target"]].spec["name"]
+        env.record("agent_query_case_status", case_id=case_id)
+        return result
+
+    def fetch_document(self, url):
+        """Download a document file linked from a page. Page bodies only list
+        the document; its content arrives through this tool. Some documents
+        carry official figures and constitute written evidence."""
+        self._check_optional("fetch_document")
+        env = self._env
+        if (not isinstance(url, str) or not url.startswith("https://")
+                or ".bench/" not in url or " " in url):
+            raise ValueError("url must be a https://*.bench/files/* document address")
+        document = None
+        for page in env.task["public"]["pages"]:
+            for candidate in page.get("documents", []):
+                if candidate["url"] == url:
+                    document = candidate
+        if document is None:
+            raise ValueError("Unknown document address")
+        result = {"url": url, "title": document["title"], "text": document["text"],
+                  "at": stamp(env.now), "evidence": []}
+        for fact_id in document.get("facts", []):
+            ev_id = env.issue_public(fact_id, document["issuer"])
+            ev = env.evidence[ev_id]
+            result["evidence"].append({key: deepcopy(ev[key]) for key in
+                ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")})
+        if result["evidence"]:
+            # Written material with attached records. The note deliberately
+            # stays neutral and identical for formal and reference documents:
+            # the environment never labels attestation authority per file —
+            # the agent must check issuers itself (contract section on oral /
+            # uncertain information states the general rule).
+            result["note"] = ("书面材料已下载，随附本文件载明的记录与对应证据编号"
+                              "（evidence，含编号、签发人与内容），其证据编号可在最终提交中引用。")
+        else:
+            result["note"] = "本文件为普通说明材料，不随下载签发书面凭证。"
+        env.record("agent_fetch_document", url=url, facts=document.get("facts", []))
+        return result
+
+    def check_schedule(self, contact, date=None, days=7):
+        """List a discovered contact's upcoming open hours in their local time."""
+        self._check_optional("check_schedule")
+        env = self._env
+        if contact not in env.known_contacts:
+            raise PermissionError("Contact has not been discovered")
+        if days < 1 or days > 31:
+            raise ValueError("days must be between 1 and 31")
+        actor = env.actors[contact]
+        if isinstance(date, str):
+            from datetime import date as DateClass
+            try:
+                day = DateClass.fromisoformat(date)
+            except ValueError:
+                raise ValueError("date must be YYYY-MM-DD") from None
+            if len(date) != 10:
+                raise ValueError("date must be YYYY-MM-DD")
+        else:
+            day = env.now.astimezone(actor.calendar.zone).date()
+        windows = []
+        for _ in range(days):
+            for start, end in actor.calendar.intervals(day):
+                windows.append({"date": day.isoformat(),
+                                "start": start.astimezone(actor.calendar.zone).strftime("%H:%M"),
+                                "end": end.astimezone(actor.calendar.zone).strftime("%H:%M")})
+            day += timedelta(days=1)
+        env.record("agent_check_schedule", contact=contact, date=date, days=days)
+        return {"contact": contact, "name": actor.spec["name"],
+                "timezone": actor.calendar.spec["timezone"], "open_hours": windows}
+
+    def lookup_directory(self, query):
+        """Search the public organizational directory by name or role. Not
+        everyone is listed on web pages; the directory is a separate channel."""
+        self._check_optional("lookup_directory")
+        env = self._env
+        if not isinstance(query, str) or not query.strip():
+            raise ValueError("query must be a non-empty string")
+        needle = query.strip().casefold()
+        results = []
+        for actor in env.task["actors"]:
+            if needle in actor["name"].casefold() or needle in actor["role"].casefold():
+                env.known_contacts.add(actor["id"])
+                results.append(env.contact(actor["id"]))
+        env.record("agent_lookup_directory", query=query, matches=[r["id"] for r in results])
+        return {"results": results,
+                "note": "机构公开通讯录检索结果；未命中时不代表对方不存在，可更换关键词再试。"}
+
+    def request_callback(self, contact, topic=None):
+        """Register a callback request. No callback time is promised and the
+        request does not advance any pending matter."""
+        self._check_optional("request_callback")
+        env = self._env
+        if contact not in env.known_contacts:
+            raise PermissionError("Contact has not been discovered")
+        self._budgeted()
+        env.record("agent_request_callback", contact=contact, topic=topic)
+        return {"status": "registered", "at": stamp(env.now),
+                "text": "回拨请求已登记，工作人员将在方便时与您联系；本渠道不承诺具体回电时间，也不影响邮件事项的办理进度。"}
+
+    def leave_note(self, contact, text):
+        """Leave a note for a contact. Notes are recorded but are not answered
+        and do not advance any pending matter."""
+        self._check_optional("leave_note")
+        env = self._env
+        if not isinstance(text, str):
+            raise ValueError("text must be a string")
+        if contact not in env.known_contacts:
+            raise PermissionError("Contact has not been discovered")
+        self._budgeted()
+        env.record("agent_leave_note", contact=contact, text=text)
+        return {"status": "recorded", "at": stamp(env.now),
+                "text": "留言已记录；留言不作为正式来件处理，也不会获得单独回复。"}
+
+    # ---- Hidden per-task tools ---------------------------------------------------
+    # Unlocked through discover_tools; behavior is parameterized entirely by
+    # the authored params. The engine validates arguments per kind.
+
+    def _call_hidden_tool(self, name, **kwargs):
+        env = self._env
+        spec = env.hidden_tools[name]
+        if spec["kind"] == "form":
+            return self._hidden_form(name, spec, kwargs)
+        if spec["kind"] == "status":
+            return self._hidden_status(name, spec, kwargs)
+        if spec["kind"] == "catalog":
+            return self._hidden_catalog(name, spec, kwargs)
+        if spec["kind"] == "select":
+            return self._hidden_select(name, spec, kwargs)
+        if spec["kind"] == "dialogue":
+            return self._hidden_dialogue(name, spec, kwargs)
+        return self._hidden_record(name, spec, kwargs)
+
+    def _hidden_form(self, name, spec, kwargs):
+        """Submit a web form: required fields are validated against the form's
+        own field list; an authored `expect` mapping decides accept/reject (any
+        value passes for keys it omits). Processing completes later at an
+        authored virtual time; until then the page shows 已提交，待处理."""
+        env = self._env
+        if set(kwargs) != {"fields"} or not isinstance(kwargs.get("fields"), dict):
+            raise ValueError("hidden form tool takes a single object argument: fields")
+        params = spec["params"]
+        form_id = params["form"]
+        _, form = env.forms[form_id]
+        submission = env.form_submissions.get(form_id)
+        if submission and submission["status"] in {"pending", "processed"}:
+            raise ValueError("该表单此前已提交，不能重复提交；处理结果请重访页面或查询状态确认。")
+        values = kwargs["fields"]
+        missing = [f["label"] for f in form["fields"]
+                   if f.get("required") and values.get(f["name"]) in (None, "")]
+        if missing:
+            raise ValueError("表单必填字段缺失：" + "、".join(missing))
+        expect = params.get("expect") or {}
+        accepted = all(field_value_equivalent(values.get(key), expected)
+                       for key, expected in expect.items())
+        if params.get("process_at"):
+            at = max(env.now, parse(params["process_at"]))
+        else:
+            calendar = Calendar(env.task["calendars"][params.get("calendar", "office")])
+            at = calendar.add_business(env.now, params.get("process_delay", 60))
+        env.form_submissions[form_id] = {"status": "pending", "submitted_at": stamp(env.now),
+                                         "values": deepcopy(values), "accepted": accepted,
+                                         "result_text": None, "evidence": []}
+        env.record("agent_form_submitted", tool=name, form=form_id, accepted=accepted)
+        env.enqueue(at, "form_processed", form_id)
+        return {"status": "submitted", "form": form_id, "at": stamp(env.now),
+                "text": "表单已提交，等待处理；处理结果不会主动推送。办结后重访相关页面或查询状态，均可取得办结结论与书面凭证。"}
+
+    def _hidden_status(self, name, spec, kwargs):
+        """Query an authored external status record (permit/parcel/registration
+        style): staged states keyed by virtual times, optionally superseded by
+        a linked form submission's pending/processed/rejected outcome."""
+        env = self._env
+        query = kwargs.get("query")
+        if set(kwargs) - {"query"} or (query is not None and not isinstance(query, str)):
+            raise ValueError("hidden status tool takes a single optional string argument: query")
+        needle = (query or "").strip().casefold()
+        records = [r for r in spec["params"]["records"]
+                   if not needle or needle in (r["key"] + " " + r.get("label", "")).casefold()]
+        env.record("agent_hidden_status", tool=name, query=query,
+                   keys=[r["key"] for r in records])
+        if not records:
+            return {"records": [], "now": stamp(env.now),
+                    "note": "未查询到相关记录；可核对事项编号或关键词后重试。"}
+        results = []
+        for record in records:
+            state = record.get("initial") or "暂无记录。"
+            for entry in record.get("timeline", []):
+                if parse(entry["at"]) <= env.now:
+                    state = entry["text"]
+            submission = env.form_submissions.get(record["form"]) if record.get("form") else None
+            outcome = {"key": record["key"], "label": record.get("label", ""),
+                       "state": state, "now": stamp(env.now)}
+            if submission is not None:
+                if submission["status"] == "pending":
+                    outcome["state"] = f"该事项已提交，待处理（提交时间{submission['submitted_at']}）。"
+                else:
+                    outcome["state"] = submission["result_text"]
+                    # A processed status query is an official confirmation channel
+                    # and carries the issued written evidence, just like the
+                    # carrying page does after a revisit (same field projection).
+                    if submission["status"] == "processed" and submission["evidence"]:
+                        outcome["evidence"] = [{k: deepcopy(env.evidence[ev][k]) for k in
+                            ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")}
+                            for ev in submission["evidence"]]
+                        # Positive confirmation: the processed status query is an
+                        # official channel and the written evidence is delivered.
+                        outcome["evidence_note"] = ("本查询为正式办结渠道，书面凭证已随本查询送达"
+                                                    "（evidence，含编号、签发人与内容），其证据编号可在最终提交中引用。")
+            results.append(outcome)
+        return {"records": results, "now": stamp(env.now)}
+
+    def _hidden_record(self, name, spec, kwargs):
+        """Retrieve an authored record that exists only after its precondition
+        (a virtual time and/or a form having been processed); a hit issues
+        evidence like fetch_document does, a miss explains why not."""
+        env = self._env
+        key = kwargs.get("key")
+        if set(kwargs) - {"key"} or (key is not None and not isinstance(key, str)):
+            raise ValueError("hidden record tool takes a single optional string argument: key")
+        records = spec["params"]["records"]
+        needle = (key or "").strip().casefold()
+        matches = [r for r in records if not needle or needle in r["key"].casefold()] \
+            if needle else (records if len(records) == 1 else [])
+        if not matches:
+            env.record("agent_hidden_record", tool=name, key=key, found=False)
+            return {"found": False, "records": [], "note": "未查询到该记录；可核对记录编号后重试。"}
+        results = []
+        for record in matches:
+            if record.get("available_at") and env.now < parse(record["available_at"]):
+                results.append({"key": record["key"], "found": False,
+                                "text": "该记录尚未生成，请稍后再查。"})
+                continue
+            submission = env.form_submissions.get(record["requires_form"]) if record.get("requires_form") else None
+            if submission is None or submission["status"] != "processed":
+                results.append({"key": record["key"], "found": False,
+                                "text": "该记录尚未生成或暂不可查询，请稍后再查。"})
+                continue
+            entry = {"key": record["key"], "found": True, "title": record["title"],
+                     "text": record["text"], "at": stamp(env.now), "evidence": []}
+            for fact_id in record.get("facts", []):
+                ev_id = env.issue_public(fact_id, record["issuer"])
+                ev = env.evidence[ev_id]
+                entry["evidence"].append({k: deepcopy(ev[k]) for k in
+                    ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")})
+            results.append(entry)
+        env.record("agent_hidden_record", tool=name, key=key,
+                   found=[r["key"] for r in results if r["found"]])
+        return {"records": results, "now": stamp(env.now)}
+
+    def _hidden_catalog(self, name, spec, kwargs):
+        """Search an authored inventory (flights, menus, products, schedules):
+        rows filtered by query terms, honoring per-row availability windows.
+        A row may carry facts issued on retrieval (official listing evidence)."""
+        env = self._env
+        query = kwargs.get("query")
+        if set(kwargs) - {"query"} or (query is not None and not isinstance(query, str)):
+            raise ValueError("hidden catalog tool takes a single optional string argument: query")
+        needle = (query or "").strip().casefold()
+        rows = []
+        for entry in spec["params"]["entries"]:
+            if not env._entry_current(entry):
+                continue
+            if needle and not any(u in (entry["id"] + " " + entry["title"] + " "
+                    + entry.get("text", "") + " " + " ".join(f"{k}:{v}" for k, v in entry.get("fields", {}).items())).casefold()
+                    for u in self._query_units(needle)):
+                continue
+            row = {"id": entry["id"], "title": entry["title"], "text": entry.get("text", ""),
+                   "fields": deepcopy(entry.get("fields", {}))}
+            evidence = []
+            for fact_id in entry.get("facts", []):
+                fact = env.task["facts"][fact_id]
+                if fact.get("available_at") and env.now < parse(fact["available_at"]):
+                    continue
+                ev_id = env.issue_public(fact_id, entry["issuer"])
+                ev = env.evidence[ev_id]
+                evidence.append({k: deepcopy(ev[k]) for k in
+                    ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")})
+            if evidence:
+                row["evidence"] = evidence
+                row["evidence_note"] = ("This listing is an official channel; the written evidence above "
+                                        "has been delivered and its ids may be cited in the final submission.")
+            rows.append(row)
+        env.record("agent_hidden_catalog", tool=name, query=query,
+                   entries=[r["id"] for r in rows])
+        if not rows:
+            return {"results": [], "now": stamp(env.now),
+                    "note": "No matching listings right now; adjust the query or check back later."}
+        return {"results": rows, "now": stamp(env.now)}
+
+    def _query_units(self, needle):
+        units = set()
+        for term in needle.split():
+            for run in re.findall(r"[a-z0-9]+|[一-鿿]+", term):
+                if run[0].isascii() or len(run) == 1:
+                    units.add(run)
+                else:
+                    units.update(run[i:i + 2] for i in range(len(run) - 1))
+        return units
+
+    def _hidden_select(self, name, spec, kwargs):
+        """Pick one option out of a linked catalog tool and commit it: the
+        entry must still be listed when the booking is processed; an authored
+        hold can lapse first. Processing completes later at an authored virtual
+        time and accepted selections issue written evidence, like a form."""
+        env = self._env
+        params = spec["params"]
+        # Calling the select tool with {"query": ...} reads back the current
+        # selection state (the agent's only channel for the processed outcome);
+        # calling it with {"entry": ...} submits a new selection.
+        if set(kwargs) == {"query"} and (kwargs["query"] is None or isinstance(kwargs["query"], str)):
+            selection = env.selections.get(name)
+            env.record("agent_selection_status", tool=name, query=kwargs["query"])
+            if selection is None:
+                return {"status": "no_selection", "now": stamp(env.now),
+                        "note": "No selection has been made through this service yet."}
+            outcome = {"status": selection["status"], "entry": selection["entry"],
+                       "submitted_at": selection["submitted_at"], "now": stamp(env.now),
+                       "state": selection["result_text"] or "The selection is being processed."}
+            if selection["status"] == "processed" and selection["evidence"]:
+                outcome["evidence"] = [{k: deepcopy(env.evidence[ev][k]) for k in
+                    ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")}
+                    for ev in selection["evidence"]]
+                outcome["evidence_note"] = ("This query is an official confirmation channel; the written "
+                                            "evidence above has been delivered and its ids may be cited "
+                                            "in the final submission.")
+            return outcome
+        if set(kwargs) != {"entry"} or not isinstance(kwargs.get("entry"), str):
+            raise ValueError("hidden select tool takes either {\"entry\": option_id} to select, "
+                             "or {\"query\": text} to check the current selection status")
+        selection = env.selections.get(name)
+        if selection and selection["status"] in {"pending", "processed"}:
+            raise ValueError("This service already has an active or completed selection; "
+                             "check its status instead of selecting again.")
+        entry = env._catalog_entry(params["catalog"], kwargs["entry"].strip())
+        accepted = entry is not None and env._entry_current(entry)
+        if accepted:
+            expect_entry = params.get("expect_entry")
+            if expect_entry is not None and entry["id"] != expect_entry:
+                accepted = False
+            for key, expected in (params.get("expect") or {}).items():
+                if not field_value_equivalent(entry.get("fields", {}).get(key), expected):
+                    accepted = False
+        if params.get("process_at"):
+            at = max(env.now, parse(params["process_at"]))
+        else:
+            calendar = Calendar(env.task["calendars"][params.get("calendar", "office")])
+            at = calendar.add_business(env.now, params.get("process_delay", 60))
+        env.selections[name] = {"entry": kwargs["entry"].strip(), "catalog": params["catalog"],
+                                "status": "pending", "submitted_at": stamp(env.now),
+                                "accepted": accepted, "result_text": None, "evidence": [],
+                                "params": params}
+        env.record("agent_selection_submitted", tool=name, entry=kwargs["entry"], accepted=accepted)
+        env.enqueue(at, "selection_processed", name)
+        if params.get("hold_minutes"):
+            env.enqueue(env.now + timedelta(minutes=params["hold_minutes"]),
+                        "selection_expired", name)
+        hold_note = ""
+        if params.get("hold_minutes"):
+            hold_note = (f" The option is held until {stamp(env.now + timedelta(minutes=params['hold_minutes']))} "
+                         "and lapses if not confirmed by then.")
+        return {"status": "submitted", "service": name, "at": stamp(env.now),
+                "text": "The selection has been submitted and is being processed; "
+                        "the outcome will not be pushed. Query the service status or re-check later to "
+                        "obtain the conclusion and any written confirmation." + hold_note}
+
+    def _hidden_dialogue(self, name, spec, kwargs):
+        """Ask the task's principal (the user being assisted) a question.
+        Replies are authored canned answers matched by keyword: the agent must
+        ask the right question to surface a fact that was never in any page.
+        User statements are information, not attested evidence."""
+        env = self._env
+        question = kwargs.get("question")
+        if set(kwargs) != {"question"} or not isinstance(question, str) or not question.strip():
+            raise ValueError("hidden dialogue tool takes a single string argument: question")
+        params = spec["params"]
+        needle = question.casefold()
+        matched = None
+        for rule in params.get("rules", []):
+            if any(k.casefold() in needle for k in rule.get("keywords", [])):
+                matched = rule
+                break
+        if matched is None:
+            answer = params.get("default") or \
+                "I don't have anything more to say about that; please work from what you already have."
+        else:
+            answer = matched["answer"]
+        env.record("agent_dialogue", tool=name, question=question,
+                   matched=matched is not None)
+        return {"speaker": params.get("persona", "the user"), "answer": answer, "at": stamp(env.now)}
 
     def submit_answer(self, answer):
         if self._env.finished:

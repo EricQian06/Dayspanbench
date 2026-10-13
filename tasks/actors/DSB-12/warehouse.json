@@ -31,6 +31,10 @@
       },
       "warehouse.main.3.reply": {
         "kind": "reply"
+      },
+      "warehouse.release_gossip.1.deny": {
+        "kind": "deny",
+        "text": "放行的事我印象里这批货今年年初就放行了，早都提走了，错不了——不过查件员不掌握放行状态，这只是口头印象，没有书面依据；放行状态须由单证联络按流程发起长期复核后确认，任何回执也不是放行证明。"
       }
     },
     "workflows": [
@@ -67,6 +71,27 @@
             "id": "main_3",
             "label": "向请求者回复已取得的结果",
             "tool": "warehouse.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "release_gossip",
+        "label": "放行状态口头印象",
+        "aliases": [
+          "放行",
+          "提货"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "release_gossip_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "warehouse.release_gossip.1.deny",
             "delay": {
               "mode": "elapsed",
               "minutes": 0

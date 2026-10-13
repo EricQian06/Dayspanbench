@@ -5,7 +5,7 @@
     "id": "board",
     "name": "澄川学院学分委员会秘书·程昕",
     "role": "春季跨校学分审议",
-    "description": "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审。",
+    "description": "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审；生效学期以正式登记结论为准。",
     "calendar": "office",
     "channels": [
       "email"
@@ -15,7 +15,6 @@
     },
     "knowledge": [
       "credits",
-      "effective",
       "scope"
     ],
     "tools": {
@@ -23,16 +22,14 @@
         "kind": "lookup",
         "facts": [
           "credits",
-          "scope",
-          "effective"
+          "scope"
         ]
       },
       "board.main.2.document": {
         "kind": "document",
         "facts": [
           "credits",
-          "scope",
-          "effective"
+          "scope"
         ]
       },
       "board.main.3.reply": {
@@ -105,12 +102,11 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是澄川学院学分委员会秘书·程昕，负责春季跨校学分审议。跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是澄川学院学分委员会秘书·程昕，负责春季跨校学分审议。跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审；生效学期以正式登记结论为准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:credit_scope",
-      "attest:credits",
-      "attest:effective_term"
+      "attest:credits"
     ]
   },
   "calendar": {
@@ -147,19 +143,6 @@
         "predicate": "credits"
       }
     },
-    "effective": {
-      "value": "2027春季",
-      "text": "该转换结论从2027春季学期开始适用。",
-      "attributes": {
-        "subject": {
-          "task": "DSB-03",
-          "case": {
-            "course_code": "CS204"
-          }
-        },
-        "predicate": "effective_term"
-      }
-    },
     "scope": {
       "value": "专业选修",
       "text": "这3学分仅计入专业选修，不能替代必修课。",
@@ -175,5 +158,5 @@
     }
   },
   "start_at": "2026-11-05T14:00:00+08:00",
-  "deadline_at": "2027-02-03T17:00:00+08:00"
+  "deadline_at": "2027-02-09T17:00:00+08:00"
 }

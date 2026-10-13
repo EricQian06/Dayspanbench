@@ -5,7 +5,7 @@
     "id": "factory",
     "name": "棱川制造排产员·苏渝",
     "role": "原料与排产核对",
-    "description": "工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时。",
+    "description": "工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。",
     "calendar": "factory",
     "channels": [
       "email"
@@ -21,12 +21,15 @@
       "factory.main.1.lookup": {
         "kind": "lookup",
         "facts": [
-          "moq",
-          "dispatch"
+          "moq"
         ]
       },
       "factory.main.2.reply": {
         "kind": "reply"
+      },
+      "factory.dispatch_channel.1.deny": {
+        "kind": "deny",
+        "text": "出库的书面预核结论不随邮件出具：请通过棱川出库预核登记渠道（lengchuan_dispatch_apply）提交登记，办结结论以表单状态为准；办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。"
       }
     },
     "workflows": [
@@ -34,8 +37,7 @@
         "id": "main",
         "label": "排产可行性",
         "aliases": [
-          "排产",
-          "出库"
+          "排产"
         ],
         "required_fields": [
           "quantity",
@@ -55,6 +57,27 @@
             "id": "main_2",
             "label": "向请求者回复已取得的结果",
             "tool": "factory.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "dispatch_channel",
+        "label": "出库结论渠道",
+        "aliases": [
+          "出库",
+          "预核"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "dispatch_channel_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "factory.dispatch_channel.1.deny",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -83,7 +106,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是棱川制造排产员·苏渝，负责原料与排产核对。工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是棱川制造排产员·苏渝，负责原料与排产核对。工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:earliest_dispatch",
@@ -142,5 +165,5 @@
     }
   },
   "start_at": "2026-11-03T14:00:00+08:00",
-  "deadline_at": "2026-12-08T15:00:00+08:00"
+  "deadline_at": "2026-12-09T17:00:00+08:00"
 }

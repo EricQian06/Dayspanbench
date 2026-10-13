@@ -26,6 +26,10 @@
       },
       "reception.main.2.reply": {
         "kind": "reply"
+      },
+      "reception.projector_gossip.1.deny": {
+        "kind": "deny",
+        "text": "投影检修的事我印象里13号上午就检修完毕，下午肯定能正常使用，错不了——不过前台不掌握检修计划，这只是口头印象，没有书面依据；设备可用性的书面结论请按官网简介页最新公告说明的设备保障登记渠道申请，以办结结论为准。"
       }
     },
     "workflows": [
@@ -52,6 +56,26 @@
             "id": "main_2",
             "label": "向请求者回复已取得的结果",
             "tool": "reception.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "projector_gossip",
+        "label": "投影检修口头说明",
+        "aliases": [
+          "投影"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "projector_gossip_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "reception.projector_gossip.1.deny",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -106,5 +130,5 @@
   },
   "local_facts": {},
   "start_at": "2026-11-06T10:00:00+08:00",
-  "deadline_at": "2026-11-10T18:00:00+08:00"
+  "deadline_at": "2026-11-11T18:00:00+08:00"
 }

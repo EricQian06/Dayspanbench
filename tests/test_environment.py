@@ -1,6 +1,7 @@
 from copy import deepcopy
 from datetime import timedelta
 import json
+import re
 from pathlib import Path
 import unittest
 import subprocess
@@ -74,17 +75,17 @@ class EnvironmentTests(unittest.TestCase):
                 self.assertLessEqual(result["calendar_hours"], window)
                 self.assertEqual({c["actor"] for c in env.cases.values()}, {a["id"] for a in task["actors"]})
                 actors += len(task["actors"])
-        self.assertEqual(actors, 42)
+        self.assertEqual(actors, 43)
 
     def test_golden_calendar_completion_times(self):
         # Deterministic under the default latency seed; guards against unintended
         # drift in admission/jitter behavior.
-        expected = {1: "2026-11-09T07:14:00+00:00", 2: "2026-11-11T11:44:00+00:00",
-                    3: "2027-02-02T07:04:00+00:00", 4: "2026-11-25T02:50:00+00:00",
-                    5: "2026-12-08T01:16:00+00:00", 6: "2026-11-17T08:52:00+00:00",
-                    7: "2027-06-07T02:00:00+00:00", 8: "2026-11-11T06:55:00+00:00",
-                    9: "2026-12-28T07:49:00+00:00", 10: "2026-11-08T02:54:00+00:00",
-                    11: "2027-02-24T12:46:00+00:00", 12: "2027-09-02T07:00:00+00:00"}
+        expected = {1: "2026-11-10T09:30:00+00:00", 2: "2026-11-12T02:30:00+00:00",
+                    3: "2027-02-03T01:30:00+00:00", 4: "2026-11-25T02:50:00+00:00",
+                    5: "2026-12-08T02:30:00+00:00", 6: "2026-11-18T00:30:00+00:00",
+                    7: "2027-06-08T02:30:00+00:00", 8: "2026-11-12T05:41:00+00:00",
+                    9: "2026-12-28T08:00:00+00:00", 10: "2026-11-09T03:03:00+00:00",
+                    11: "2027-02-26T12:30:00+00:00", 12: "2027-09-02T07:00:00+00:00"}
         for n, time in expected.items():
             with self.subTest(task=n):
                 env, _, _ = run_reference(load(n))
@@ -98,11 +99,18 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://chengchuan.bench/contact")
+        # The contact page only vaguely guesses where the signed syllabus
+        # lives; the dean's office first suggests (making the lecturer
+        # discoverable), then plainly denies, closing the archive request.
+        dean = api.send_email(mailbox(task, "dean_office"), "请查询CS204课程签章大纲存档", {})
+        while env.cases[dean["case_id"]]["state"] != "replied" and env.events:
+            env.advance(env.events[0][0])
         # Legitimate material: the syllabus version must come from the
         # lecturer's attested reply, not out of thin air.
         api.send_email(mailbox(task, "lecturer"), "请补发正式签章大纲", {"course_code": "CS204"})
         api.wait_until("2026-11-10T15:00:00+08:00")  # lecturer has replied after the trip
-        syllabus = next(m for m in env.messages if m["status"] == "reply")["evidence"][0]["value"]
+        syllabus = next(m for m in env.messages if m["status"] == "reply"
+                        and m["from"] == mailbox(task, "lecturer"))["evidence"][0]["value"]
         first = api.send_email(mailbox(task, "records"), "咨询CS204学分转换",
                                {"course_code": "CS204", "syllabus_version": syllabus})
         # A mid-workflow acceptance receipt reaches the inbox before the
@@ -751,6 +759,12 @@ class EnvironmentTests(unittest.TestCase):
             while not any(m["status"] == "reply" and m["from"] == mailbox(task, "safety")
                           for m in env.messages):
                 env.advance(env.events[0][0] if env.events else parse(task["deadline_at"]))
+            # The safety officer no longer mails the record: the deny reply names
+            # the training-record system, which issues the certificate only after
+            # the batch has been processed.
+            api.discover_tools("nanyu_training_record")
+            api.nanyu_training_record(fields={"person_name": "顾晓", "training_date": "2026-11-13"})
+            api.wait_until("2026-11-13T16:30:00+08:00", wake_on_message=False)
             api.send_email(mailbox(task, "instrument"), "核实测量校准费用",
                            {"sample_id": "S-482", "safety_certificate": "SAFE-NOV06-482"})
             api.wait_until(task["deadline_at"], wake_on_message=False)
@@ -760,6 +774,50 @@ class EnvironmentTests(unittest.TestCase):
             promised = re.search(r"预计最早将于(.+?)（当地时间）办结", ack["text"]).group(1)
             self.assertGreaterEqual(parse(promised + "+08:00"), parse(reply["at"]),
                                     f"seed {seed}: promise {promised} beaten by {reply['at']}")
+
+    def test_queue_contention_retracts_a_stale_eta_promise(self):
+        # A promised earliest completion can be outgrown by later queue
+        # contention: the agent's duplicate phone inquiry delegated a second
+        # case onto the weekend-only tester, pushing the written-record step
+        # past the Sunday close and the whole chain to the next Saturday. The
+        # requester must get a revision email instead of planning around a
+        # broken promise. DSB-10's authored friend now reports the read-out
+        # verbally and routes the written record through the hidden inspection
+        # form (a short chain that contention cannot push a week out), so this
+        # engine-level check restores the old long document step on a local
+        # copy; the authored task itself is untouched.
+        task = deepcopy(load(10))
+        friend = next(a for a in task["actors"] if a["id"] == "friend")
+        friend["tools"].pop("friend.main.2.deny")
+        friend["tools"]["friend.main.2.document"] = {
+            "kind": "document", "facts": ["actual", "hotshoe"],
+            "delay": {"mode": "business", "minutes": 30}}
+        friend["workflows"][0]["steps"][1] = {
+            "id": "main_2", "label": "出具书面验机记录",
+            "tool": "friend.main.2.document", "delay": {"mode": "business", "minutes": 30}}
+        env = Environment(task, seed=0)
+        api = env.tools()
+        filed = api.send_email(mailbox(task, "seller"), "咨询CAM-402：实测快门数、热靴、价格、退货条件、取件。",
+                               {"serial": "CAM-402", "pickup_area": "桥溪东区"})
+        api.wait_until("2026-11-06T21:00:00+08:00", wake_on_message=False)
+        api.call("seller", "再次咨询CAM-402：实测快门数、热靴、价格、退货条件。",
+                 {"serial": "CAM-402", "pickup_area": "桥溪东区"})
+        api.wait_until(task["deadline_at"], wake_on_message=False)
+        revisions = [m for m in env.messages if m["case_id"] == filed["case_id"]
+                     and "办理进度更新" in m["text"]]
+        self.assertEqual(len(revisions), 1)
+        promised = next(m for m in env.messages if m["case_id"] == filed["case_id"]
+                        and "预计最早将于" in m["text"])
+        promised_at = parse(re.search(r"预计最早将于(.+?)（当地时间）办结", promised["text"]).group(1) + "+08:00")
+        revised_at = parse(re.search(r"办结时间调整为(.+?)（当地时间）", revisions[0]["text"]).group(1) + "+08:00")
+        self.assertGreater(revised_at, promised_at + timedelta(days=1))
+        # The revision stays conservative versus the raw engine projection:
+        # directly past the deadline, the document step already sits a week
+        # past the original promise.
+        env.advance("2026-11-14T23:00:00+08:00")
+        document = next(e for e in env.audit if e["kind"] == "scheduled"
+                        and e["case_id"] in {"CASE-0003", "CASE-0004"} and e["step"] == "main_2")
+        self.assertGreater(parse(document["due_at"]), promised_at + timedelta(days=5))
 
     def test_phone_call_semantics(self):
         task = load(1)
@@ -785,6 +843,105 @@ class EnvironmentTests(unittest.TestCase):
         message = next(m for m in env.messages if m["case_id"] == result["case_id"])
         self.assertEqual(message["channel"], "phone")
         self.assertEqual(message["evidence"], [])
+
+
+class ComplexityMechanismTests(unittest.TestCase):
+    """Page updates, vague suggestions, visible consults, optional tools."""
+
+    def test_page_updates_rewrite_content_over_time(self):
+        task = load(1)
+        env = Environment(task)
+        api = env.tools()
+        url = "https://heanhuiguan.bench/intro"
+        before = api.visit_page(url)
+        self.assertIn("旧版简介", before["text"])
+        # The update lands at its authored virtual time; nothing changes before.
+        api.wait_until("2026-11-07T09:59:00+08:00", wake_on_message=False)
+        self.assertIn("旧版简介", api.visit_page(url)["text"])
+        api.wait_until("2026-11-07T10:01:00+08:00", wake_on_message=False)
+        after = api.visit_page(url)
+        self.assertNotIn("旧版简介", after["text"])
+        self.assertIn("已停用作废", after["text"])
+        self.assertGreaterEqual(parse(after["last_updated"]), parse("2026-11-07T10:00:00+08:00"))
+        self.assertTrue(any(e["kind"] == "page_updated" for e in env.audit))
+        # The stale snippet also stops matching the way it used to.
+        self.assertIn("最新价目", api.web_search("价目")["results"][0]["snippet"])
+
+    def test_suggest_emits_vague_reply_and_exposes_guesses(self):
+        task = load(9)
+        env = Environment(task)
+        api = env.tools()
+        api.visit_page("https://qinggang.bench/contact")
+        api.send_email(mailbox(task, "service"), "请核实活动办理管辖",
+                       {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"})
+        api.wait_until("2026-11-04T17:00:00+08:00", wake_on_message=False)
+        vague = next((m for m in env.messages if "记不很准" in m["text"]), None)
+        self.assertIsNotNone(vague, "expected the service desk's vague guess reply")
+        # The guessed colleagues become addressable even though the reply is vague.
+        self.assertIn("land", env.known_contacts)
+        self.assertIn("sound", env.known_contacts)
+
+    def test_consult_sends_interim_letter_then_real_reply(self):
+        task = load(2)
+        env = Environment(task)
+        api = env.tools()
+        api.send_email(mailbox(task, "landlord"), "咨询租房、宠物及搬入条件",
+                       task["public"]["user_fields"])
+        # The evening window is short; the transfer letter may land the next
+        # evening. Drain events until the case is waiting on the manager.
+        while env.cases and not any(c.get("state") == "waiting_internal" for c in env.cases.values()) and env.events:
+            env.advance(env.events[0][0])
+        interim = [m for m in env.messages if "物业" in m["text"] and m["status"] == "acknowledgement"]
+        self.assertTrue(interim, "expected the landlord's interim consult letter")
+        api.wait_until(task["deadline_at"], wake_on_message=False)
+        final = [m for m in env.messages if m["status"] == "reply"]
+        self.assertTrue(final)
+
+    def test_per_task_optional_tools_and_fetch_document_evidence(self):
+        task = load(5)
+        env = Environment(task)
+        api = env.tools()
+        tools = api.observe()["tools"]
+        self.assertIn("fetch_document", tools)
+        self.assertNotIn("lookup_directory", tools)
+        # A batch price file hangs on the intro page from the start (an
+        # early unauthorized-issuer decoy), while the December quote
+        # document only exists after the page update publishes it.
+        url = "https://lengchuan.bench/intro"
+        initial = api.visit_page(url).get("documents", [])
+        self.assertEqual([d["title"] for d in initial], ["500件M26批次价目.pdf"])
+        with self.assertRaises(ValueError):
+            api.fetch_document("https://lengchuan.bench/files/supplier-quote-2026-12.pdf")
+        api.wait_until("2026-12-07T10:01:00+08:00", wake_on_message=False)
+        documents = api.visit_page(url)["documents"]
+        self.assertEqual(documents[0]["title"], "12月批次价目文件.pdf")
+        fetched = api.fetch_document(documents[0]["url"])
+        self.assertEqual(fetched["evidence"][0]["value"], 18600)
+        # The fetched price file is agent-visible engine evidence.
+        evidence = env.evidence[fetched["evidence"][0]["id"]]
+        self.assertTrue(evidence["agent_visible"])
+        # A task that does not declare the tool rejects it (every task now
+        # ships fetch_document for its published files, so strip it manually).
+        stripped = load(3)
+        stripped["tools"] = [t for t in stripped["tools"] if t != "fetch_document"]
+        stripped["public"]["tools"] = list(stripped["tools"])
+        other = Environment(stripped).tools()
+        with self.assertRaises(PermissionError):
+            other.fetch_document(documents[0]["url"])
+
+    def test_decoy_tools_answer_but_do_nothing(self):
+        task = load(1)
+        api = Environment(task).tools()
+        api.visit_page("https://heanhuiguan.bench/contact")
+        result = api.request_callback("reception", "报价")
+        self.assertEqual(result["status"], "registered")
+        with self.assertRaises(PermissionError):
+            api.request_callback("technician", "还未发现的联系人")
+        # DSB-03 offers no leave_note (DSB-01 gained it as an added decoy).
+        other = Environment(load(3)).tools()
+        other.visit_page("https://chengchuan.bench/contact")
+        with self.assertRaises(PermissionError):
+            other.leave_note("records", "本任务未提供留言工具")
 
 
 if __name__ == "__main__":

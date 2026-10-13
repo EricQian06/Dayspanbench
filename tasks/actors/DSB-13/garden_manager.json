@@ -1,0 +1,306 @@
+{
+  "private": true,
+  "task_id": "DSB-13",
+  "actor": {
+    "id": "garden_manager",
+    "name": "Garden Ramp Bistro manager·Alex Chen",
+    "role": "provider verification, exact menu quotes and reservations",
+    "description": "Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page.",
+    "calendar": "us_eastern_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "alexchen2@bench.example"
+    },
+    "knowledge": [
+      "access",
+      "address",
+      "controls",
+      "fish_free",
+      "reserved",
+      "table_time",
+      "total_cost"
+    ],
+    "tools": {
+      "garden_manager.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "garden_manager.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "access",
+          "controls",
+          "fish_free"
+        ]
+      },
+      "garden_manager.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "access",
+          "controls",
+          "fish_free"
+        ]
+      },
+      "garden_manager.main.4.reply": {
+        "kind": "reply"
+      },
+      "garden_manager.offer.1.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "garden_manager.offer.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Access and sesame verification",
+        "aliases": [
+          "access",
+          "wheelchair",
+          "sesame",
+          "allergy",
+          "verification",
+          "verify",
+          "controls",
+          "step-free",
+          "menu"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "garden_manager.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the room-to-table route and kitchen controls",
+            "tool": "garden_manager.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 180
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "garden_manager.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "garden_manager.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "offer",
+        "label": "Current table offer",
+        "aliases": [
+          "offer",
+          "quote",
+          "price",
+          "total",
+          "table",
+          "time",
+          "cost"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "offer_1",
+            "label": "check the current published table offer",
+            "tool": "garden_manager.offer.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "offer_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "garden_manager.offer.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Garden Ramp Bistro manager·Alex Chen，负责provider verification, exact menu quotes and reservations。Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:access_verified",
+      "attest:child_meals_fish_free",
+      "attest:reservation_confirmed",
+      "attest:restaurant_address",
+      "attest:sesame_controls_written",
+      "attest:table_time",
+      "attest:total_cost"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "access": {
+      "value": true,
+      "text": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "access_verified"
+      }
+    },
+    "address": {
+      "value": "12 Ramp Lane, Riverdale test district",
+      "text": "The confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "restaurant_address"
+      }
+    },
+    "controls": {
+      "value": true,
+      "text": "Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "sesame_controls_written"
+      }
+    },
+    "fish_free": {
+      "value": true,
+      "text": "Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "child_meals_fish_free"
+      }
+    },
+    "reserved": {
+      "value": true,
+      "text": "One reservation for six at Garden Ramp Bistro on 2027-07-11 at 13:30 has been confirmed with the meal requirements acknowledged; no payment or automatic gratuity was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "reservation_confirmed"
+      }
+    },
+    "table_time": {
+      "value": "13:30",
+      "text": "The reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "table_time"
+      }
+    },
+    "total_cost": {
+      "value": 247.8,
+      "text": "The current pre-tip total for the six-meal plan is 247.80 USD including tax and mandatory service, within the 280 USD budget.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "total_cost"
+      }
+    }
+  },
+  "start_at": "2027-07-09T09:00:00-04:00",
+  "deadline_at": "2027-07-11T12:00:00-04:00"
+}

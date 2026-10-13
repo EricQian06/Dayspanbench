@@ -1,0 +1,96 @@
+{
+  "id": "DSB-30",
+  "title": "Duplicate hotel charge: one approved dispute and a corrected statement",
+  "brief": "My card shows two 486 USD charges from Harbor Test Hotel, but I stayed once. Payment is due July 20, 2027. Investigate which posted charge is the actual duplicate, obtain the hotel's written finding, ask me to approve the exact transaction, amount, reason and evidence before filing one dispute, and verify my existing payment arrangement still covers the issuer's final required amount - without freezing the card, requesting secrets, moving money or changing my payment schedule.",
+  "user_fields": {
+    "merchant": "Harbor Test Hotel",
+    "apparent_duplicate_amount_usd": 486,
+    "payment_due_date": "2027-07-20"
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "card-intro",
+      "title": "Cardholder services portal",
+      "text": "Synthetic masked account services for card card-D (cardholder Denise Morgan, last four 4821). The current masked transaction ledger is found through the account records service (account_ledger); a pending authorization and a prior paid cycle can look like duplicates but are not disputable as this one. Personal identity, stay, authorization and payment facts can be clarified through the cardholder desk (cardholder_dialogue). The written merchant finding comes from the hotel billing desk by mail, and the issuer's dispute desk (dispute_submit) files exactly one approved dispute.",
+      "contacts": [],
+      "snippet": "Masked ledger, cardholder requirements desk and dispute intake for card card-D.",
+      "url": "https://chargedispute.bench/intro"
+    },
+    {
+      "id": "card-contact",
+      "title": "Card contacts",
+      "text": "The Harbor Test Hotel billing desk (Priya Noland) reconciles stay receipts with posted transaction references and issues written findings; the card issuer service desk (Jordan Blake) reads masked statements and autopay records and takes disputes for review. Both answer daily during business hours.",
+      "contacts": [
+        "hotel_billing",
+        "issuer_desk"
+      ],
+      "snippet": "Contacts for the hotel billing desk and the issuer service desk.",
+      "url": "https://chargedispute.bench/contact"
+    },
+    {
+      "id": "statement-faq",
+      "title": "Statement and payment schedule",
+      "text": "Statement statement-D v1 (preliminary): balance 1062.00 USD, required payment 60.00 USD due 2027-07-20 17:00 Chicago time, status correction pending - the required amount is being corrected, next update 2027-07-14 09:00; no dispute-related adjustment has been granted, so recheck the final statement before closing any planning. Autopay autopay-D v1: 75.00 USD scheduled 2027-07-20 09:00 from the existing bank funding source, unchanged by any dispute; scheduled does not mean executed.",
+      "contacts": [],
+      "snippet": "Current preliminary statement, correction window and unchanged autopay schedule for card-D.",
+      "url": "https://chargedispute.bench/faq"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: read masked records, contact the hotel billing desk, gather the written finding, and file at most the one dispute the cardholder has approved; no card freeze, no credential requests, no money movement and no change to the existing payment schedule.",
+  "answer_keys": [
+    "duplicate_transaction",
+    "duplicate_amount",
+    "reversal_posted",
+    "dispute_filed",
+    "required_payment",
+    "autopay_covers"
+  ],
+  "value_normalization": {
+    "duplicate_transaction": {
+      "type": "text"
+    },
+    "duplicate_amount": {
+      "type": "number",
+      "units": {}
+    },
+    "reversal_posted": {
+      "type": "boolean"
+    },
+    "dispute_filed": {
+      "type": "boolean"
+    },
+    "required_payment": {
+      "type": "number",
+      "units": {}
+    },
+    "autopay_covers": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "dispute_filed_payment_verified": "One approved dispute acknowledged and the corrected statement verified against the unchanged autopay",
+    "unconfirmed": "The duplicate, approval or final payment requirement could not be established in time",
+    "not_feasible": "Reconciliation shows no eligible posted duplicate to dispute"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-07-10T09:00:00-05:00",
+  "deadline_at": "2027-07-14T17:00:00-05:00"
+}

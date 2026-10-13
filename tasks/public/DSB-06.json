@@ -12,9 +12,21 @@
     {
       "id": "service-intro",
       "title": "霁光电器售后简介",
-      "text": "霁光电器售后保修咨询需提供设备序列号和购机凭证；是否在保修范围以受理核实为准。工程师仅周二、周四处理远程诊断，维修窗口由工程师另行排期。",
+      "text": "霁光电器售后保修咨询需提供设备序列号和购机凭证；是否在保修范围以受理核实为准。工程师仅周二、周四处理远程诊断，维修窗口由工程师另行排期。本页另挂有维修收费标准等文件。",
       "contacts": [],
       "snippet": "霁光电器保修受理条件与工程师轮值说明。",
+      "documents": [
+        {
+          "id": "service-fee-table",
+          "title": "维修收费标准.pdf",
+          "text": "霁光电器维修收费标准：G-42密封圈工本费260元，适用于保修范围外的送修结算。（留存方整理）",
+          "facts": [
+            "cost_ref"
+          ],
+          "issuer": "support",
+          "url": "https://jiguang.bench/files/service-fee-table.pdf"
+        }
+      ],
       "url": "https://jiguang.bench/intro"
     },
     {
@@ -30,13 +42,48 @@
     {
       "id": "service-entry",
       "title": "霁光电器报修入口",
-      "text": "霁光电器报修说明：报修需提供设备序列号、购机凭证与故障描述；是否在保修范围以受理核实为准，维修由工程师另行排期。本页面仅说明材料要求，不能在线预约维修。",
+      "text": "霁光电器报修说明：报修需提供设备序列号、购机凭证与故障描述；是否在保修范围以受理核实为准，维修由工程师另行排期；上门时段的书面结论通过本页登记表单申请后取得。本页面仅说明材料要求，不能在线预约维修。",
       "contacts": [],
       "snippet": "霁光电器报修材料说明；不支持在线预约。",
+      "form": {
+        "id": "visit_form",
+        "title": "上门维修时段预核登记",
+        "fields": [
+          {
+            "name": "serial",
+            "label": "设备序列号",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "symptom",
+            "label": "故障描述",
+            "required": false,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "本表单不能在线直接提交：须通过霁光上门时段登记渠道办理；渠道名称与受理安排以官网简介页最新公告为准。"
+      },
       "url": "https://jiguang.bench/entry"
     }
   ],
   "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "query_case_status",
+    "leave_note",
+    "fetch_document",
+    "check_schedule"
+  ],
   "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
   "answer_keys": [
     "covered",
@@ -73,5 +120,5 @@
     "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
   },
   "start_at": "2026-11-04T16:00:00+08:00",
-  "deadline_at": "2026-11-18T09:00:00+08:00"
+  "deadline_at": "2026-11-18T17:00:00+08:00"
 }

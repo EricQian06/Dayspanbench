@@ -1,0 +1,240 @@
+{
+  "private": true,
+  "task_id": "DSB-37",
+  "actor": {
+    "id": "rail_desk",
+    "name": "Rail recovery desk·Tom Ashby",
+    "role": "disruption records, bike policy and replacement reservations",
+    "description": "Confirms accompanied folded-bike acceptance in writing; live journey inventory and reservations go through the search service and booking desk named on the entry page.",
+    "calendar": "london_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "tomashby@bench.example"
+    },
+    "knowledge": [
+      "arrival",
+      "bike_accompanied",
+      "extra_cost",
+      "replacement_reserved",
+      "return_preserved",
+      "transfer_depart"
+    ],
+    "tools": {
+      "rail_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "rail_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "bike_accompanied"
+        ]
+      },
+      "rail_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "bike_accompanied"
+        ]
+      },
+      "rail_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Bike policy confirmation",
+        "aliases": [
+          "bike",
+          "brompton",
+          "folded",
+          "bicycle",
+          "policy",
+          "accompan"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "rail_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check accompanied folded-bike acceptance for the transfer and coach",
+            "tool": "rail_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "rail_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "rail_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Rail recovery desk·Tom Ashby，负责disruption records, bike policy and replacement reservations。Confirms accompanied folded-bike acceptance in writing; live journey inventory and reservations go through the search service and booking desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:arrival",
+      "attest:bike_accompanied",
+      "attest:extra_cost",
+      "attest:replacement_reserved",
+      "attest:return_preserved",
+      "attest:transfer_depart"
+    ]
+  },
+  "calendar": {
+    "timezone": "Europe/London",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "07:00",
+        "21:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "arrival": {
+      "value": "19:00",
+      "text": "The reserved replacement (m02 coach) departs Mereoak 15:30 and arrives Bristol Temple Meads 19:00, inside the 19:30 deadline.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-37",
+          "case": {
+            "date": "2027-10-07",
+            "origin": "Reading",
+            "destination": "Bristol Temple Meads"
+          }
+        },
+        "predicate": "arrival"
+      }
+    },
+    "bike_accompanied": {
+      "value": true,
+      "text": "Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-37",
+          "case": {
+            "date": "2027-10-07",
+            "origin": "Reading",
+            "destination": "Bristol Temple Meads"
+          }
+        },
+        "predicate": "bike_accompanied"
+      }
+    },
+    "extra_cost": {
+      "value": 18,
+      "text": "The complete replacement bundle costs 18 GBP extra: coach fare 14 + local transfer 4 + bicycle fee 0, at the maximum allowed outlay.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-37",
+          "case": {
+            "date": "2027-10-07",
+            "origin": "Reading",
+            "destination": "Bristol Temple Meads"
+          }
+        },
+        "predicate": "extra_cost"
+      }
+    },
+    "replacement_reserved": {
+      "value": true,
+      "text": "One replacement bundle (coach plus local transfer entitlement, accompanied folded bike accepted) has been confirmed; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-37",
+          "case": {
+            "date": "2027-10-07",
+            "origin": "Reading",
+            "destination": "Bristol Temple Meads"
+          }
+        },
+        "predicate": "replacement_reserved"
+      }
+    },
+    "return_preserved": {
+      "value": true,
+      "text": "The original return leg of ticket T-MOB is preserved unchanged; no compensation claim was made and no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-37",
+          "case": {
+            "date": "2027-10-07",
+            "origin": "Reading",
+            "destination": "Bristol Temple Meads"
+          }
+        },
+        "predicate": "return_preserved"
+      }
+    },
+    "transfer_depart": {
+      "value": "15:10",
+      "text": "The local transfer departs Reading 15:10 and reaches Mereoak 15:20, giving a ten-minute boarding buffer before the 15:30 coach.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-37",
+          "case": {
+            "date": "2027-10-07",
+            "origin": "Reading",
+            "destination": "Bristol Temple Meads"
+          }
+        },
+        "predicate": "transfer_depart"
+      }
+    }
+  },
+  "start_at": "2027-10-07T14:30:00+01:00",
+  "deadline_at": "2027-10-09T15:20:00+01:00"
+}

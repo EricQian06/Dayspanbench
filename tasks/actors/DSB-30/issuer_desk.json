@@ -1,0 +1,182 @@
+{
+  "private": true,
+  "task_id": "DSB-30",
+  "actor": {
+    "id": "issuer_desk",
+    "name": "Card issuer service desk·Jordan Blake",
+    "role": "masked statements, autopay records and dispute intake",
+    "description": "Reads masked account records and accepts disputes for review without promising an outcome; filing changes neither this account's required payment nor its scheduled autopay.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "jordanblake@bench.example"
+    },
+    "knowledge": [
+      "autopay_covers",
+      "dispute_filed",
+      "required_payment"
+    ],
+    "tools": {
+      "issuer_desk.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "required_payment",
+          "autopay_covers"
+        ]
+      },
+      "issuer_desk.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "required_payment",
+          "autopay_covers"
+        ]
+      },
+      "issuer_desk.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Statement and autopay check",
+        "aliases": [
+          "statement",
+          "autopay",
+          "payment",
+          "required",
+          "due",
+          "schedule",
+          "check"
+        ],
+        "required_fields": [],
+        "accept_after": "2027-07-14T09:00:00-05:00",
+        "early_reply": "The corrected final statement publishes July 14 at 09:00 Chicago time; please check back after that for the payment comparison.",
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "compare the final required payment with the scheduled autopay",
+            "tool": "issuer_desk.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "issuer_desk.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "issuer_desk.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Card issuer service desk·Jordan Blake，负责masked statements, autopay records and dispute intake。Reads masked account records and accepts disputes for review without promising an outcome; filing changes neither this account's required payment nor its scheduled autopay. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:autopay_covers",
+      "attest:dispute_filed",
+      "attest:required_payment"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "autopay_covers": {
+      "value": true,
+      "text": "The unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-30",
+          "case": {
+            "merchant": "Harbor Test Hotel",
+            "apparent_duplicate_amount_usd": 486,
+            "payment_due_date": "2027-07-20"
+          }
+        },
+        "predicate": "autopay_covers"
+      }
+    },
+    "dispute_filed": {
+      "value": true,
+      "text": "The issuer acknowledged dispute dispute-D1 for tx302, 486.00 USD, reason duplicate_charge, supported by stay-441 v1 and finding-D1 v1; the dispute is under review and filing changed neither the required payment nor the scheduled autopay.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-30",
+          "case": {
+            "merchant": "Harbor Test Hotel",
+            "apparent_duplicate_amount_usd": 486,
+            "payment_due_date": "2027-07-20"
+          }
+        },
+        "predicate": "dispute_filed"
+      }
+    },
+    "required_payment": {
+      "value": 75.0,
+      "text": "The corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-30",
+          "case": {
+            "merchant": "Harbor Test Hotel",
+            "apparent_duplicate_amount_usd": 486,
+            "payment_due_date": "2027-07-20"
+          }
+        },
+        "predicate": "required_payment"
+      }
+    }
+  },
+  "start_at": "2027-07-10T09:00:00-05:00",
+  "deadline_at": "2027-07-14T17:00:00-05:00"
+}

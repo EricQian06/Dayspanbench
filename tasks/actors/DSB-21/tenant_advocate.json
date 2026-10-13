@@ -1,0 +1,243 @@
+{
+  "private": true,
+  "task_id": "DSB-21",
+  "actor": {
+    "id": "tenant_advocate",
+    "name": "Tenant advocacy office caseworker·Priya Nair",
+    "role": "registered-agent address verification and the tracked-mail case file",
+    "description": "Verifies the current registered-agent correspondence address in writing; after a returned mailing the address must be re-verified before any re-dispatch. Dispatches go through the tenant post desks.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "priyanair@bench.example"
+    },
+    "knowledge": [
+      "agent_address_v2",
+      "attachment_only",
+      "delivered",
+      "demand_amount",
+      "fees_total",
+      "first_returned"
+    ],
+    "tools": {
+      "tenant_advocate.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "tenant_advocate.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "agent_address_v2"
+        ]
+      },
+      "tenant_advocate.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "agent_address_v2"
+        ]
+      },
+      "tenant_advocate.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Agent address verification",
+        "aliases": [
+          "verify",
+          "agent",
+          "registered",
+          "address",
+          "suite",
+          "parkview",
+          "814",
+          "900",
+          "current"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "tenant_advocate.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the current registered-agent address on file",
+            "tool": "tenant_advocate.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 240
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "tenant_advocate.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "tenant_advocate.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Tenant advocacy office caseworker·Priya Nair，负责registered-agent address verification and the tracked-mail case file。Verifies the current registered-agent correspondence address in writing; after a returned mailing the address must be re-verified before any re-dispatch. Dispatches go through the tenant post desks. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:attachment_only",
+      "attest:delivered",
+      "attest:demand_amount",
+      "attest:fees_total",
+      "attest:first_returned",
+      "attest:recipient_address"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "agent_address_v2": {
+      "value": "208 Test Street, Suite 900, Test City",
+      "text": "After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-21",
+          "case": {
+            "unit": "old-unit-XLC",
+            "deposit_usd": 1850,
+            "prior_negotiation": "900 USD offer withdrawn"
+          }
+        },
+        "predicate": "recipient_address"
+      }
+    },
+    "attachment_only": {
+      "value": true,
+      "text": "Both dispatches attached only the redacted deposit receipt; the private home and the hallway photos were excluded from every outgoing field.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-21",
+          "case": {
+            "unit": "old-unit-XLC",
+            "deposit_usd": 1850,
+            "prior_negotiation": "900 USD offer withdrawn"
+          }
+        },
+        "predicate": "attachment_only"
+      }
+    },
+    "delivered": {
+      "value": true,
+      "text": "The corrected tracked dispatch (dispatch-XLC-2, addressed to Suite 900) was delivered on March 22 before the March 23 deadline.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-21",
+          "case": {
+            "unit": "old-unit-XLC",
+            "deposit_usd": 1850,
+            "prior_negotiation": "900 USD offer withdrawn"
+          }
+        },
+        "predicate": "delivered"
+      }
+    },
+    "demand_amount": {
+      "value": 1850,
+      "text": "Sofia Alvarez's security deposit for old-unit-XLC with Parkview-test was 1850 USD; the demand requests the full 1850 USD.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-21",
+          "case": {
+            "unit": "old-unit-XLC",
+            "deposit_usd": 1850,
+            "prior_negotiation": "900 USD offer withdrawn"
+          }
+        },
+        "predicate": "demand_amount"
+      }
+    },
+    "fees_total": {
+      "value": 8.0,
+      "text": "The two tracked dispatches cost 4 USD each, 8 USD total, within the 12 USD mailing limit.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-21",
+          "case": {
+            "unit": "old-unit-XLC",
+            "deposit_usd": 1850,
+            "prior_negotiation": "900 USD offer withdrawn"
+          }
+        },
+        "predicate": "fees_total"
+      }
+    },
+    "first_returned": {
+      "value": true,
+      "text": "The first tracked dispatch (dispatch-XLC-1, addressed to Suite 814) was returned undelivered because the registered-agent address changed; that attempt is retained on file, not deleted or replaced.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-21",
+          "case": {
+            "unit": "old-unit-XLC",
+            "deposit_usd": 1850,
+            "prior_negotiation": "900 USD offer withdrawn"
+          }
+        },
+        "predicate": "first_returned"
+      }
+    }
+  },
+  "start_at": "2027-03-19T09:00:00-05:00",
+  "deadline_at": "2027-03-23T17:00:00-05:00"
+}

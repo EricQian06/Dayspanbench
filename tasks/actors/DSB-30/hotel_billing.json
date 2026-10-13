@@ -1,0 +1,198 @@
+{
+  "private": true,
+  "task_id": "DSB-30",
+  "actor": {
+    "id": "hotel_billing",
+    "name": "Harbor Test Hotel billing·Priya Noland",
+    "role": "stay receipts and duplicate-charge investigation",
+    "description": "Confirms in writing which posted reference belongs to the stay and whether any reversal was posted; equal amounts alone do not identify the duplicate.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "priyanoland@bench.example"
+    },
+    "knowledge": [
+      "duplicate_amount",
+      "duplicate_transaction",
+      "reversal_posted"
+    ],
+    "tools": {
+      "hotel_billing.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "hotel_billing.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "duplicate_transaction",
+          "duplicate_amount",
+          "reversal_posted"
+        ]
+      },
+      "hotel_billing.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "duplicate_transaction",
+          "duplicate_amount",
+          "reversal_posted"
+        ]
+      },
+      "hotel_billing.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Duplicate charge investigation",
+        "aliases": [
+          "hotel",
+          "billing",
+          "charge",
+          "duplicate",
+          "receipt",
+          "stay",
+          "reversal",
+          "transaction",
+          "invoice"
+        ],
+        "required_fields": [],
+        "accept_after": "2027-07-12T10:00:00-05:00",
+        "early_reply": "Billing findings for July stays publish from Monday July 12 at 10:00 Chicago time; please resend your stay receipt and transaction references after that.",
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "hotel_billing.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "reconcile the stay receipt with the posted transaction references",
+            "tool": "hotel_billing.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "hotel_billing.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "hotel_billing.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Harbor Test Hotel billing·Priya Noland，负责stay receipts and duplicate-charge investigation。Confirms in writing which posted reference belongs to the stay and whether any reversal was posted; equal amounts alone do not identify the duplicate. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:duplicate_amount",
+      "attest:duplicate_transaction",
+      "attest:reversal_posted"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "duplicate_amount": {
+      "value": 486.0,
+      "text": "The disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-30",
+          "case": {
+            "merchant": "Harbor Test Hotel",
+            "apparent_duplicate_amount_usd": 486,
+            "payment_due_date": "2027-07-20"
+          }
+        },
+        "predicate": "duplicate_amount"
+      }
+    },
+    "duplicate_transaction": {
+      "value": "tx302",
+      "text": "Merchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-30",
+          "case": {
+            "merchant": "Harbor Test Hotel",
+            "apparent_duplicate_amount_usd": 486,
+            "payment_due_date": "2027-07-20"
+          }
+        },
+        "predicate": "duplicate_transaction"
+      }
+    },
+    "reversal_posted": {
+      "value": false,
+      "text": "No reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-30",
+          "case": {
+            "merchant": "Harbor Test Hotel",
+            "apparent_duplicate_amount_usd": 486,
+            "payment_due_date": "2027-07-20"
+          }
+        },
+        "predicate": "reversal_posted"
+      }
+    }
+  },
+  "start_at": "2027-07-10T09:00:00-05:00",
+  "deadline_at": "2027-07-14T17:00:00-05:00"
+}

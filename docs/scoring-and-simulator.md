@@ -102,7 +102,7 @@ Chat模式使用标准库发送HTTP请求，与`OpenAI(base_url=...).chat.comple
 python3 scripts/serve.py --task DSB-12 --simulator rule
 ```
 
-七个Agent工具不变；新增的是可信环境端人物模拟器，不是被测模型的自动运行器。
+通用Agent工具不变（v0.4起每题另有可选工具与隐藏工具，以`observe()`为准）；新增的是可信环境端人物模拟器，不是被测模型的自动运行器。
 
 ## 日志与无效episode
 

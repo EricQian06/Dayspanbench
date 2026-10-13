@@ -5,7 +5,7 @@
     "id": "manager",
     "name": "青栎公寓物业·许乔",
     "role": "楼宇规则与货梯时段",
-    "description": "收到房东转交后提交周五审核；11月11日才开放新一期货梯表，之后核实搬入时间。",
+    "description": "收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。",
     "calendar": "office",
     "channels": [
       "email"
@@ -27,9 +27,7 @@
       },
       "manager.main.2.lookup": {
         "kind": "lookup",
-        "facts": [
-          "moving"
-        ]
+        "facts": []
       },
       "manager.main.3.reply": {
         "kind": "reply"
@@ -59,7 +57,7 @@
           },
           {
             "id": "main_2",
-            "label": "查询业务记录",
+            "label": "登记搬入并核对新一期货梯表",
             "tool": "manager.main.2.lookup",
             "delay": {
               "mode": "business",
@@ -99,7 +97,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是青栎公寓物业·许乔，负责楼宇规则与货梯时段。收到房东转交后提交周五审核；11月11日才开放新一期货梯表，之后核实搬入时间。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是青栎公寓物业·许乔，负责楼宇规则与货梯时段。收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:earliest_move"
@@ -142,5 +140,5 @@
     }
   },
   "start_at": "2026-11-03T19:30:00+08:00",
-  "deadline_at": "2026-11-12T17:00:00+08:00"
+  "deadline_at": "2026-11-13T17:00:00+08:00"
 }

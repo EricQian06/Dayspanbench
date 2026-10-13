@@ -442,6 +442,20 @@ class ServerIntegrationTests(unittest.TestCase):
                 requests.append({"tool": "send_email", "arguments": {"recipient": mailbox(task, action["to"]), "text": action["text"], "fields": task["public"]["user_fields"]}})
             elif action["op"] == "wait_for":
                 requests.append({"tool": "wait_until", "arguments": {"until": task["deadline_at"]}})
+            elif action["op"] == "advance":
+                requests.append({"tool": "wait_until", "arguments": {"until": action["at"]}})
+            elif action["op"] == "discover":
+                requests.append({"tool": "discover_tools", "arguments": {"name": action["name"]}})
+            elif action["op"] == "tool":
+                # $fact placeholders quote material the privileged witness
+                # already holds; the replayed agent substitutes the fact value.
+                def resolve(value):
+                    if isinstance(value, str) and value.startswith("$fact:"):
+                        return task["facts"][value.split(":", 1)[1]]["value"]
+                    if isinstance(value, dict):
+                        return {key: resolve(item) for key, item in value.items()}
+                    return value
+                requests.append({"tool": action["name"], "arguments": resolve(action.get("args", {}))})
         # Extra waits absorb the mid-workflow acknowledgement receipts so the
         # submission happens after the final reply, not after an early ack.
         for _ in range(4):
@@ -473,6 +487,40 @@ class ServerIntegrationTests(unittest.TestCase):
             self.assertFalse(result["valid_episode"])
             self.assertNotIn("complete", result)
             self.assertNotIn("test-secret", (Path(folder) / "manifest.json").read_text(encoding="utf-8"))
+
+
+    def test_null_route_with_alias_mention_is_retried_then_trusted(self):
+        # A null route while the message literally names a declared workflow
+        # alias is usually a misread (DSB-01: "请确认投影设备是否可用" routed to
+        # null): re-ask with feedback; if the model keeps declining, accept it.
+        view = {"actor_id": "test", "message": "请书面确认2026-11-13 18:00-21:00投影设备是否可用",
+                "fields": {}, "history": [],
+                "workflows": [{"id": "main", "label": "档期与投影确认", "aliases": ["档期", "投影"],
+                               "required_fields": ["event_date", "event_time"]}]}
+        attempts = []
+        def route(view):
+            attempts.append(deepcopy(view))
+            return {"workflow_id": "main", "fields": [
+                {"key": "event_date", "value_json": '"2026-11-13"', "source_quote": "2026-11-13"},
+                {"key": "event_time", "value_json": '"18:00-21:00"', "source_quote": "18:00-21:00"}]} \
+                if len(attempts) > 1 else {"workflow_id": None, "fields": []}
+        client = FixtureClient(route=route)
+        result = LLMSimulator(client, "test", validation_retries=2).route(view)
+        self.assertEqual(result["workflow_id"], "main")
+        self.assertEqual(result["fields"], {"event_date": "2026-11-13", "event_time": "18:00-21:00"})
+        self.assertEqual(len(attempts), 2)
+        self.assertIn("workflow_id", json.dumps(attempts[1]["validation_feedback"], ensure_ascii=False))
+        # A model that keeps declining despite the alias is believed, not failed.
+        stubborn = FixtureClient(route=lambda _: {"workflow_id": None, "fields": []})
+        self.assertEqual(LLMSimulator(stubborn, "test", validation_retries=2).route(view),
+                         {"workflow_id": None, "fields": {}})
+        # An alias mentioned only in history must not force a retry.
+        history_view = {**view, "message": "已收到，请问费用找谁确认？",
+                        "history": [{"role": "agent", "text": "请确认投影是否可用", "fields": {}}]}
+        seen = []
+        LLMSimulator(FixtureClient(route=lambda v: (seen.append(v), {"workflow_id": None, "fields": {}})[1]),
+                     "test", validation_retries=2).route(history_view)
+        self.assertEqual(len(seen), 1)
 
 
 if __name__ == "__main__":

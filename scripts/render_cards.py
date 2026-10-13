@@ -62,9 +62,9 @@ def render():
                 lines += ["| 步骤/工具 | 等待规则 | 可见结果或内部动作 |", "|---|---|---|"]
                 for step in workflow["steps"]:
                     tool = actor["tools"][step["tool"]]
-                    action = {"lookup": "读取本地事实", "document": "签发文本证据", "refer": "公开转介联系人", "delegate": "内部转交并等待返回", "acknowledge": "发出受理回执", "reply": "向父事项/Agent回复"}[tool["kind"]]
+                    action = {"lookup": "读取本地事实", "document": "签发文本证据", "refer": "公开转介联系人", "delegate": "内部转交并等待返回", "consult": "先告知转办再内部咨询", "suggest": "给出猜测性答复", "deny": "明确表示不知情/不归管（关闭事项）", "acknowledge": "发出受理回执", "reply": "向父事项/Agent回复"}[tool["kind"]]
                     details = tool.get("facts", tool.get("contacts", []))
-                    if tool["kind"] == "delegate":
+                    if tool["kind"] in {"delegate", "consult"}:
                         details = [tool["target"] + "/" + tool["workflow"], "仅传递字段：" + ", ".join(tool["forward_fields"])]
                     lines.append(f"| {step['label']}<br>`{step['tool']}` | {delay_text(step['delay'])} | {action}：{'、'.join(details)} |")
                 lines.append("")

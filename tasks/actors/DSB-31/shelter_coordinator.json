@@ -1,0 +1,155 @@
+{
+  "private": true,
+  "task_id": "DSB-31",
+  "actor": {
+    "id": "shelter_coordinator",
+    "name": "Ceylon Street Shelter intake coordinator·Marcus Bell",
+    "role": "residence verification letters for shelter guests",
+    "description": "Issues signed residence letters only in response to a written request naming the guest; unsigned drafts and verbal statements are not letters.",
+    "calendar": "us_mountain_office",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "marcusbell@bench.example"
+    },
+    "knowledge": [
+      "shelter_residence"
+    ],
+    "tools": {
+      "shelter_coordinator.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "shelter_coordinator.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "shelter_residence"
+        ]
+      },
+      "shelter_coordinator.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "shelter_residence"
+        ]
+      },
+      "shelter_coordinator.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Signed residence letter",
+        "aliases": [
+          "shelter",
+          "letter",
+          "residence",
+          "sleep",
+          "stay",
+          "ceylon",
+          "signed",
+          "confirm"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "shelter_coordinator.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the intake record for Rosa Delgado's stay dates and print the signed letter",
+            "tool": "shelter_coordinator.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 240
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "shelter_coordinator.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "shelter_coordinator.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Ceylon Street Shelter intake coordinator·Marcus Bell，负责residence verification letters for shelter guests。Issues signed residence letters only in response to a written request naming the guest; unsigned drafts and verbal statements are not letters. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:shelter_since"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Denver",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "shelter_residence": {
+      "value": "2027-10-21",
+      "text": "The signed shelter letter (v2, 2027-11-02) confirms Rosa Delgado has slept at 615 Ceylon Street Shelter since 2027-10-21 while her mailing address is unchanged.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-31",
+          "case": {
+            "mailing_address": "214 Sage Street Apt 2",
+            "case_id": "RELIEF-11822",
+            "shelter": "615 Ceylon Street Shelter"
+          }
+        },
+        "predicate": "shelter_since"
+      }
+    }
+  },
+  "start_at": "2027-11-01T09:00:00-06:00",
+  "deadline_at": "2027-11-05T21:00:00-06:00"
+}

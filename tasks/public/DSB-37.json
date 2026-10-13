@@ -1,0 +1,93 @@
+{
+  "id": "DSB-37",
+  "title": "Rail cancellation recovery with an accompanied folding bicycle",
+  "brief": "I am stranded at Reading after the 1C27 cancellation; reach Bristol Temple Meads by 19:30 today. Ask me about the bicycle, ticket and budget before reserving; check the current disruption record (not the superseded all-clear), keep the folded bike with me on every leg, and reserve only the exact plan I approve. No payment, compensation claim or change to the original return leg.",
+  "user_fields": {
+    "date": "2027-10-07",
+    "origin": "Reading",
+    "destination": "Bristol Temple Meads"
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "rail-intro",
+      "title": "Reading Rail Recovery Portal",
+      "text": "Synthetic disruption and recovery records for the Reading test corridor: alerts, candidate journeys and the booking desk. Current alerts and live inventory are found through the journey search service (journey_search); an earlier all-clear has been superseded, so re-check before committing. The passenger's constraints can be clarified through the traveler desk (traveler_dialogue). Written bike-policy confirmation comes from the rail recovery desk by mail.",
+      "contacts": [],
+      "snippet": "Reading corridor disruption alerts, recovery journeys and the booking desk.",
+      "url": "https://readingrecovery.bench/intro"
+    },
+    {
+      "id": "rail-contacts",
+      "title": "Rail recovery contacts",
+      "text": "The rail recovery desk (disruption records, bike policy and coach dispatch) is handled by Tom Ashby, who answers daily during business hours.",
+      "contacts": [
+        "rail_desk"
+      ],
+      "snippet": "Contact for the rail recovery desk.",
+      "url": "https://readingrecovery.bench/contact"
+    },
+    {
+      "id": "rail-entry",
+      "title": "Replacement booking desk",
+      "text": "Replacement journeys are reserved through the booking desk (reserve_replacement): pick one current journey_search row, obtain the passenger's approval of the exact journey, transfer buffer, accompanied folded-bike acceptance and total extra outlay, then request that one bundle. At most one reservation; no payment, no compensation claim, and no change to the original return leg. Stale options are revalidated against live inventory at booking time.",
+      "contacts": [],
+      "snippet": "Replacement booking desk: current journey, transfer buffer, bike acceptance, one bundle, no payment.",
+      "url": "https://readingrecovery.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer"
+  ],
+  "authorization": "Advisory and coordination only: search live inventory, confirm bike policy, and create at most the one approved replacement bundle; no payment, compensation claim, or change to the original return leg.",
+  "answer_keys": [
+    "replacement_reserved",
+    "arrival",
+    "extra_cost",
+    "bike_accompanied",
+    "transfer_depart",
+    "return_preserved"
+  ],
+  "value_normalization": {
+    "replacement_reserved": {
+      "type": "boolean"
+    },
+    "arrival": {
+      "type": "text"
+    },
+    "extra_cost": {
+      "type": "number",
+      "units": {}
+    },
+    "bike_accompanied": {
+      "type": "boolean"
+    },
+    "transfer_depart": {
+      "type": "text"
+    },
+    "return_preserved": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "recovery_confirmed": "One approved replacement bundle with accompanied-bike evidence confirmed",
+    "unconfirmed": "Bike acceptance or a current journey could not be verified in time",
+    "not_feasible": "No reachable journey meets the deadline, bike and budget constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-10-07T14:30:00+01:00",
+  "deadline_at": "2027-10-09T15:20:00+01:00"
+}

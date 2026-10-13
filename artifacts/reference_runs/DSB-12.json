@@ -99,22 +99,32 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是远澄货运客服·白榆。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-09 16:00（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "您好，我是远澄货运客服·白榆。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-09 16:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
       "evidence": []
     },
     {
       "id": "MSG-0002",
-      "at": "2026-11-09T07:20:00+00:00",
+      "at": "2026-11-06T08:56:00+00:00",
       "from": "baiyu@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是远澄货运客服·白榆。您咨询的事项已经核实，具体情况如下：PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。此外，相关事项建议您联系出口方单证员·贺悠（heyou@bench.example）、远澄单证联络·戴筠（daijun@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
+      "text": "归类留置涉及的单证问题，我印象里要找出口方单证员；也可能仓库那边的扫描记录就能对上，建议您分别确认。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2026-11-09T08:07:00+00:00",
+      "from": "baiyu@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是远澄货运客服·白榆。您咨询的事项已经核实，具体情况如下：PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。此外，相关事项建议您联系出口方单证员·贺悠（heyou@bench.example）、远澄单证联络·戴筠（daijun@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0001",
           "issuer": "warehouse",
-          "issued_at": "2026-11-09T03:39:00+00:00",
+          "issued_at": "2026-11-09T05:30:00+00:00",
           "text": "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
           "value": "2026年11月已完成始发仓入库扫描",
           "valid_until": null,
@@ -123,7 +133,7 @@
         {
           "id": "EV-0002",
           "issuer": "warehouse",
-          "issued_at": "2026-11-09T06:00:00+00:00",
+          "issued_at": "2026-11-09T06:50:00+00:00",
           "text": "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
           "value": "2026年11月已完成始发仓入库扫描",
           "valid_until": null,
@@ -132,8 +142,8 @@
       ]
     },
     {
-      "id": "MSG-0003",
-      "at": "2026-11-25T02:46:00+00:00",
+      "id": "MSG-0004",
+      "at": "2026-11-25T02:59:00+00:00",
       "from": "heyou@bench.example",
       "case_id": "CASE-0003",
       "status": "acknowledgement",
@@ -142,13 +152,13 @@
       "evidence": []
     },
     {
-      "id": "MSG-0004",
+      "id": "MSG-0005",
       "at": "2026-12-07T06:51:00+00:00",
       "from": "heyou@bench.example",
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是出口方单证员·贺悠。您咨询的事项已经核实，具体情况如下：已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。如有其他问题，欢迎随时来信。",
+      "text": "您好，我是出口方单证员·贺悠。您咨询的事项已经核实，具体情况如下：已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0003",
@@ -171,7 +181,7 @@
       ]
     },
     {
-      "id": "MSG-0005",
+      "id": "MSG-0006",
       "at": "2027-01-22T02:49:00+00:00",
       "from": "daijun@bench.example",
       "case_id": "CASE-0004",
@@ -181,13 +191,13 @@
       "evidence": []
     },
     {
-      "id": "MSG-0006",
+      "id": "MSG-0007",
       "at": "2027-02-05T01:44:00+00:00",
       "from": "daijun@bench.example",
       "case_id": "CASE-0004",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是远澄单证联络·戴筠。您咨询的事项已经核实，具体情况如下：境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。如有其他问题，欢迎随时来信。",
+      "text": "您好，我是远澄单证联络·戴筠。您咨询的事项已经核实，具体情况如下：境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0005",
@@ -210,7 +220,7 @@
       ]
     },
     {
-      "id": "MSG-0007",
+      "id": "MSG-0008",
       "at": "2027-03-24T02:32:00+00:00",
       "from": "heyou@bench.example",
       "case_id": "CASE-0006",
@@ -220,13 +230,13 @@
       "evidence": []
     },
     {
-      "id": "MSG-0008",
+      "id": "MSG-0009",
       "at": "2027-04-06T06:52:00+00:00",
       "from": "heyou@bench.example",
       "case_id": "CASE-0006",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是出口方单证员·贺悠。您咨询的事项已经核实，具体情况如下：2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。如有其他问题，欢迎随时来信。",
+      "text": "您好，我是出口方单证员·贺悠。您咨询的事项已经核实，具体情况如下：2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0007",
@@ -267,7 +277,7 @@
       ]
     },
     {
-      "id": "MSG-0009",
+      "id": "MSG-0010",
       "at": "2027-04-06T08:23:00+00:00",
       "from": "daijun@bench.example",
       "case_id": "CASE-0007",
@@ -352,8 +362,8 @@
       "actor": "forwarder",
       "step": "main_2",
       "start_at": "2026-11-06T08:20:00+00:00",
-      "due_at": "2026-11-09T01:26:00+00:00",
-      "tool": "forwarder.main.2.delegate"
+      "due_at": "2026-11-06T08:56:00+00:00",
+      "tool": "forwarder.main.2.suggest"
     },
     {
       "at": "2026-11-06T08:20:00+00:00",
@@ -364,15 +374,56 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T01:26:00+00:00",
+      "at": "2026-11-06T08:56:00+00:00",
       "kind": "tool_call",
       "actor": "forwarder",
       "case_id": "CASE-0001",
-      "tool": "forwarder.main.2.delegate",
+      "tool": "forwarder.main.2.suggest",
+      "tool_kind": "suggest"
+    },
+    {
+      "at": "2026-11-06T08:56:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2026-11-06T08:56:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "forwarder",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-06T08:56:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "forwarder",
+      "step": "main_3",
+      "start_at": "2026-11-06T08:56:00+00:00",
+      "due_at": "2026-11-09T02:09:00+00:00",
+      "tool": "forwarder.main.3.delegate"
+    },
+    {
+      "at": "2026-11-06T08:56:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "forwarder",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-09T02:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "forwarder",
+      "case_id": "CASE-0001",
+      "tool": "forwarder.main.3.delegate",
       "tool_kind": "delegate"
     },
     {
-      "at": "2026-11-09T01:26:00+00:00",
+      "at": "2026-11-09T02:09:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "forwarder",
@@ -380,7 +431,7 @@
       "new": "waiting_internal"
     },
     {
-      "at": "2026-11-09T01:26:00+00:00",
+      "at": "2026-11-09T02:09:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0002",
       "actor": "warehouse",
@@ -388,7 +439,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-09T01:26:00+00:00",
+      "at": "2026-11-09T02:09:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "warehouse",
@@ -396,17 +447,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T01:26:00+00:00",
+      "at": "2026-11-09T02:09:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "warehouse",
       "step": "main_1",
-      "start_at": "2026-11-09T01:26:00+00:00",
-      "due_at": "2026-11-09T03:39:00+00:00",
+      "start_at": "2026-11-09T02:09:00+00:00",
+      "due_at": "2026-11-09T05:30:00+00:00",
       "tool": "warehouse.main.1.lookup"
     },
     {
-      "at": "2026-11-09T01:26:00+00:00",
+      "at": "2026-11-09T02:09:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "warehouse",
@@ -414,7 +465,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T03:39:00+00:00",
+      "at": "2026-11-09T05:30:00+00:00",
       "kind": "tool_call",
       "actor": "warehouse",
       "case_id": "CASE-0002",
@@ -422,7 +473,7 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2026-11-09T03:39:00+00:00",
+      "at": "2026-11-09T05:30:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "warehouse",
@@ -430,17 +481,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T03:39:00+00:00",
+      "at": "2026-11-09T05:30:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "warehouse",
       "step": "main_2",
-      "start_at": "2026-11-09T03:39:00+00:00",
-      "due_at": "2026-11-09T06:00:00+00:00",
+      "start_at": "2026-11-09T05:30:00+00:00",
+      "due_at": "2026-11-09T06:50:00+00:00",
       "tool": "warehouse.main.2.document"
     },
     {
-      "at": "2026-11-09T03:39:00+00:00",
+      "at": "2026-11-09T05:30:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "warehouse",
@@ -448,7 +499,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T06:00:00+00:00",
+      "at": "2026-11-09T06:50:00+00:00",
       "kind": "tool_call",
       "actor": "warehouse",
       "case_id": "CASE-0002",
@@ -456,7 +507,7 @@
       "tool_kind": "document"
     },
     {
-      "at": "2026-11-09T06:00:00+00:00",
+      "at": "2026-11-09T06:50:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "warehouse",
@@ -464,17 +515,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-09T06:00:00+00:00",
+      "at": "2026-11-09T06:50:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0002",
       "actor": "warehouse",
       "step": "main_3",
-      "start_at": "2026-11-09T06:00:00+00:00",
-      "due_at": "2026-11-09T06:15:00+00:00",
+      "start_at": "2026-11-09T06:50:00+00:00",
+      "due_at": "2026-11-09T07:05:00+00:00",
       "tool": "warehouse.main.3.reply"
     },
     {
-      "at": "2026-11-09T06:00:00+00:00",
+      "at": "2026-11-09T06:50:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "warehouse",
@@ -482,7 +533,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T06:15:00+00:00",
+      "at": "2026-11-09T07:05:00+00:00",
       "kind": "tool_call",
       "actor": "warehouse",
       "case_id": "CASE-0002",
@@ -490,7 +541,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-09T06:15:00+00:00",
+      "at": "2026-11-09T07:05:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "warehouse",
@@ -498,51 +549,17 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-09T06:15:00+00:00",
+      "at": "2026-11-09T07:05:00+00:00",
       "kind": "handoff_return",
       "case_id": "CASE-0002",
       "parent": "CASE-0001"
     },
     {
-      "at": "2026-11-09T06:15:00+00:00",
+      "at": "2026-11-09T07:05:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "forwarder",
       "old": "waiting_internal",
-      "new": "queued"
-    },
-    {
-      "at": "2026-11-09T06:15:00+00:00",
-      "kind": "scheduled",
-      "case_id": "CASE-0001",
-      "actor": "forwarder",
-      "step": "main_3",
-      "start_at": "2026-11-09T06:15:00+00:00",
-      "due_at": "2026-11-09T07:05:00+00:00",
-      "tool": "forwarder.main.3.refer"
-    },
-    {
-      "at": "2026-11-09T06:15:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0001",
-      "actor": "forwarder",
-      "old": "queued",
-      "new": "working"
-    },
-    {
-      "at": "2026-11-09T07:05:00+00:00",
-      "kind": "tool_call",
-      "actor": "forwarder",
-      "case_id": "CASE-0001",
-      "tool": "forwarder.main.3.refer",
-      "tool_kind": "refer"
-    },
-    {
-      "at": "2026-11-09T07:05:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0001",
-      "actor": "forwarder",
-      "old": "working",
       "new": "queued"
     },
     {
@@ -552,8 +569,8 @@
       "actor": "forwarder",
       "step": "main_4",
       "start_at": "2026-11-09T07:05:00+00:00",
-      "due_at": "2026-11-09T07:20:00+00:00",
-      "tool": "forwarder.main.4.reply"
+      "due_at": "2026-11-09T07:52:00+00:00",
+      "tool": "forwarder.main.4.refer"
     },
     {
       "at": "2026-11-09T07:05:00+00:00",
@@ -564,15 +581,49 @@
       "new": "working"
     },
     {
-      "at": "2026-11-09T07:20:00+00:00",
+      "at": "2026-11-09T07:52:00+00:00",
       "kind": "tool_call",
       "actor": "forwarder",
       "case_id": "CASE-0001",
-      "tool": "forwarder.main.4.reply",
+      "tool": "forwarder.main.4.refer",
+      "tool_kind": "refer"
+    },
+    {
+      "at": "2026-11-09T07:52:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "forwarder",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2026-11-09T07:52:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "forwarder",
+      "step": "main_5",
+      "start_at": "2026-11-09T07:52:00+00:00",
+      "due_at": "2026-11-09T08:07:00+00:00",
+      "tool": "forwarder.main.5.reply"
+    },
+    {
+      "at": "2026-11-09T07:52:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "forwarder",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-11-09T08:07:00+00:00",
+      "kind": "tool_call",
+      "actor": "forwarder",
+      "case_id": "CASE-0001",
+      "tool": "forwarder.main.5.reply",
       "tool_kind": "reply"
     },
     {
-      "at": "2026-11-09T07:20:00+00:00",
+      "at": "2026-11-09T08:07:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "forwarder",
@@ -580,9 +631,9 @@
       "new": "replied"
     },
     {
-      "at": "2026-11-09T07:20:00+00:00",
+      "at": "2026-11-09T08:07:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0002",
+      "message_id": "MSG-0003",
       "case_id": "CASE-0001",
       "status": "reply"
     },
@@ -605,7 +656,7 @@
       "origin": "agent"
     },
     {
-      "at": "2026-11-25T02:02:00+00:00",
+      "at": "2026-11-25T02:15:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "exporter",
@@ -613,17 +664,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-25T02:02:00+00:00",
+      "at": "2026-11-25T02:15:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "exporter",
       "step": "main_1",
-      "start_at": "2026-11-25T02:02:00+00:00",
-      "due_at": "2026-11-25T02:46:00+00:00",
+      "start_at": "2026-11-25T02:15:00+00:00",
+      "due_at": "2026-11-25T02:59:00+00:00",
       "tool": "exporter.main.1.acknowledge"
     },
     {
-      "at": "2026-11-25T02:02:00+00:00",
+      "at": "2026-11-25T02:15:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "exporter",
@@ -631,7 +682,7 @@
       "new": "working"
     },
     {
-      "at": "2026-11-25T02:46:00+00:00",
+      "at": "2026-11-25T02:59:00+00:00",
       "kind": "tool_call",
       "actor": "exporter",
       "case_id": "CASE-0003",
@@ -639,14 +690,14 @@
       "tool_kind": "acknowledge"
     },
     {
-      "at": "2026-11-25T02:46:00+00:00",
+      "at": "2026-11-25T02:59:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0003",
+      "message_id": "MSG-0004",
       "case_id": "CASE-0003",
       "status": "acknowledgement"
     },
     {
-      "at": "2026-11-25T02:46:00+00:00",
+      "at": "2026-11-25T02:59:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "exporter",
@@ -654,7 +705,7 @@
       "new": "queued"
     },
     {
-      "at": "2026-11-25T02:46:00+00:00",
+      "at": "2026-11-25T02:59:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "exporter",
@@ -758,7 +809,7 @@
     {
       "at": "2026-12-07T06:51:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0004",
+      "message_id": "MSG-0005",
       "case_id": "CASE-0003",
       "status": "reply"
     },
@@ -828,7 +879,7 @@
     {
       "at": "2027-01-22T02:49:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0005",
+      "message_id": "MSG-0006",
       "case_id": "CASE-0004",
       "status": "acknowledgement"
     },
@@ -1043,9 +1094,15 @@
     {
       "at": "2027-02-05T01:44:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0006",
+      "message_id": "MSG-0007",
       "case_id": "CASE-0004",
       "status": "reply"
+    },
+    {
+      "at": "2027-03-20T01:00:00+00:00",
+      "kind": "page_updated",
+      "page": "logistics-faq",
+      "url": "https://yuancheng.bench/faq"
     },
     {
       "at": "2027-03-24T01:30:00+00:00",
@@ -1113,7 +1170,7 @@
     {
       "at": "2027-03-24T02:32:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0007",
+      "message_id": "MSG-0008",
       "case_id": "CASE-0006",
       "status": "acknowledgement"
     },
@@ -1230,9 +1287,39 @@
     {
       "at": "2027-04-06T06:52:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0008",
+      "message_id": "MSG-0009",
       "case_id": "CASE-0006",
       "status": "reply"
+    },
+    {
+      "at": "2027-04-06T06:52:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "yuancheng_review_register",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-04-06T06:52:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "yuancheng_review_register",
+      "form": "review_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-04-06T06:52:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "yuancheng_review_status",
+      "found": true,
+      "tool_kind": "status"
+    },
+    {
+      "at": "2027-04-06T06:52:00+00:00",
+      "kind": "agent_hidden_status",
+      "tool": "yuancheng_review_status",
+      "query": "复核",
+      "keys": [
+        "review-608"
+      ]
     },
     {
       "at": "2027-04-06T06:52:00+00:00",
@@ -1322,7 +1409,7 @@
     {
       "at": "2027-04-06T08:23:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0009",
+      "message_id": "MSG-0010",
       "case_id": "CASE-0007",
       "status": "acknowledgement"
     },

@@ -1,0 +1,158 @@
+{
+  "private": true,
+  "task_id": "DSB-17",
+  "actor": {
+    "id": "ana",
+    "name": "Family helper·Ana Ruiz",
+    "role": "authorized midday helper, 12:00-13:00 only",
+    "description": "Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers.",
+    "calendar": "us_eastern_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "anaruiz@bench.example"
+    },
+    "knowledge": [
+      "ana_window"
+    ],
+    "tools": {
+      "ana.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "ana.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "ana_window"
+        ]
+      },
+      "ana.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "ana_window"
+        ]
+      },
+      "ana.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Availability confirmation",
+        "aliases": [
+          "ana",
+          "availability",
+          "coverage",
+          "help",
+          "assist",
+          "supervise",
+          "wheelchair",
+          "midday",
+          "morning"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "ana.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check her authorized coverage window",
+            "tool": "ana.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "ana.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "ana.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Family helper·Ana Ruiz，负责authorized midday helper, 12:00-13:00 only。Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:ana_window"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "ana_window": {
+      "value": "12:00-13:00",
+      "text": "Ana is authorized for wheelchair assistance, child supervision and meal handoff from 12:00 to 13:00 only on 2027-07-11.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "ana_window"
+      }
+    }
+  },
+  "start_at": "2027-07-09T09:00:00-04:00",
+  "deadline_at": "2027-07-11T12:00:00-04:00"
+}

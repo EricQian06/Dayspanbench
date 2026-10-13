@@ -1,11 +1,11 @@
 {
   "schema_version": "0.2",
-  "task_set_version": "0.3.0",
+  "task_set_version": "0.4.0",
   "id": "DSB-05",
   "title": "制造采购：28天耐久测试后重新询价",
   "domain": "制造供应链",
   "start_at": "2026-11-03T14:00:00+08:00",
-  "deadline_at": "2026-12-08T15:00:00+08:00",
+  "deadline_at": "2026-12-09T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
   "synthetic": true,
   "completion_class": "resolved",
@@ -215,12 +215,273 @@
           "23:59"
         ]
       ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
     }
   },
   "reply_delay": [
     20,
     45
   ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "fetch_document",
+    "request_callback",
+    "leave_note"
+  ],
+  "page_updates": [
+    {
+      "page": "supplier-intro",
+      "at": "2026-12-07T10:00:00+08:00",
+      "text": "棱川制造（12月7日更新）：旧批次报价已于11月10日过期。最新500件M26批次价目见本页价目文件。报价有效期与质检复核节奏不变。批次出库的书面预核结论须通过棱川出库预核登记渠道（lengchuan_dispatch_apply）提交登记后取得，办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。",
+      "documents": [
+        {
+          "id": "supplier-quote-2026-12",
+          "title": "12月批次价目文件.pdf",
+          "text": "500件M26-Q7规格批次总报价18600元，本价目自发布之日起有效至12月11日16点；此前批次报价均已过有效期。",
+          "facts": [
+            "quote_new"
+          ],
+          "issuer": "sales",
+          "url": "https://lengchuan.bench/files/supplier-quote-2026-12.pdf"
+        },
+        {
+          "id": "supplier-promo-ref",
+          "title": "500件M26批次价目.pdf",
+          "text": "棱川制造500件M26-Q7规格批次价目：促销总价17900元。（留存方整理）",
+          "facts": [
+            "quote_promo"
+          ],
+          "issuer": "factory",
+          "url": "https://lengchuan.bench/files/supplier-promo-ref.pdf"
+        }
+      ]
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "lengchuan_dispatch_apply",
+      "usage": "棱川制造出库预核登记渠道。调用参数：fields为对象，键为表单字段名（quantity、spec），取值按表单说明填写。",
+      "kind": "form",
+      "params": {
+        "form": "dispatch_form",
+        "expect": {
+          "quantity": 500,
+          "spec": "M26-Q7"
+        },
+        "process_at": "2026-12-08T10:00:00+08:00",
+        "result_text": "出库预核登记已办结：如按有效报价下单，最早可于12月9日出库；本次尚未下单。办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。",
+        "reject_text": "登记信息与批次需求不符，已退回；请核对后重新提交。",
+        "facts": [
+          "dispatch"
+        ],
+        "issuer": "factory",
+        "page_update": {
+          "page": "supplier-entry",
+          "snippet": "棱川制造采购询价入口：已提交的出库预核登记以表单状态为准。"
+        }
+      }
+    },
+    {
+      "name": "lengchuan_dispatch_status",
+      "usage": "棱川出库进度查询。调用参数：query为事项关键词（可省略）。",
+      "kind": "status",
+      "params": {
+        "records": [
+          {
+            "key": "dispatch",
+            "label": "批次出库预核登记",
+            "initial": "尚未查询到出库预核登记记录。",
+            "timeline": [
+              {
+                "at": "2026-11-24T09:00:00+08:00",
+                "text": "12月排产批次已排定，出库预核登记开始受理。"
+              }
+            ],
+            "form": "dispatch_form"
+          }
+        ]
+      }
+    }
+  ],
+  "judge_criteria": [],
   "public": {
     "id": "DSB-05",
     "title": "制造采购：28天耐久测试后重新询价",
@@ -234,9 +495,21 @@
       {
         "id": "supplier-intro",
         "title": "棱川制造简介",
-        "text": "棱川制造承接批次制造。报价有效期短于28天耐久性测试；测试结束后的周一10点复核报告。销售与质检可并行咨询，报告完成后应重新确认报价。",
+        "text": "棱川制造承接批次制造。报价有效期短于28天耐久性测试；测试结束后的周一10点复核报告。销售与质检可并行咨询，报告完成后应重新确认报价。本页另挂有批次价目等文件。",
         "contacts": [],
         "snippet": "批次制造、耐久测试与报价有效期说明。",
+        "documents": [
+          {
+            "id": "supplier-promo-ref",
+            "title": "500件M26批次价目.pdf",
+            "text": "棱川制造500件M26-Q7规格批次价目：促销总价17900元。（留存方整理）",
+            "facts": [
+              "quote_promo"
+            ],
+            "issuer": "factory",
+            "url": "https://lengchuan.bench/files/supplier-promo-ref.pdf"
+          }
+        ],
         "url": "https://lengchuan.bench/intro"
       },
       {
@@ -253,13 +526,47 @@
       {
         "id": "supplier-entry",
         "title": "棱川制造采购询价入口",
-        "text": "棱川制造采购询价说明：询价需提供数量与规格；质检确认需材料批次规格；报价有有效期，过期后需重新确认。本页面仅说明材料要求，不能在线下单。",
+        "text": "棱川制造采购询价说明：询价需提供数量与规格；质检确认需材料批次规格；报价有有效期，过期后需重新确认；批次出库的书面预核结论通过本页登记表单申请后取得。本页面仅说明材料要求，不能在线下单。",
         "contacts": [],
         "snippet": "棱川制造询价与质检材料说明；不支持在线下单。",
+        "form": {
+          "id": "dispatch_form",
+          "title": "批次出库预核登记",
+          "fields": [
+            {
+              "name": "quantity",
+              "label": "数量（件）",
+              "required": true,
+              "hidden": false
+            },
+            {
+              "name": "spec",
+              "label": "规格",
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "submit_instructions": "本表单不能在线直接提交：须通过棱川出库预核登记渠道办理；渠道名称与受理安排以官网简介页最新公告为准。"
+        },
         "url": "https://lengchuan.bench/entry"
       }
     ],
     "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "fetch_document",
+      "request_callback",
+      "leave_note"
+    ],
     "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
     "answer_keys": [
       "current_total",
@@ -317,9 +624,24 @@
     },
     "quote_new": {
       "value": 18600,
-      "text": "500件批次重新确认的总报价18600元，有效至12月8日16点。",
+      "text": "500件批次重新确认的总报价18600元，有效至12月11日16点。",
       "available_at": "2026-12-07T10:00:00+08:00",
-      "valid_until": "2026-12-08T16:00:00+08:00",
+      "valid_until": "2026-12-11T16:00:00+08:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-05",
+          "case": {
+            "quantity": 500,
+            "spec": "M26-Q7"
+          }
+        },
+        "predicate": "current_total"
+      }
+    },
+    "quote_promo": {
+      "value": 17900,
+      "text": "500件M26-Q7规格批次价目：促销总价17900元（留存方整理）。",
+      "unauthorized_attestation": true,
       "attributes": {
         "subject": {
           "task": "DSB-05",
@@ -392,14 +714,22 @@
         "quote_old"
       ],
       "tools": {
-        "sales.main.1.lookup": {
+        "sales.main.1.suggest": {
+          "kind": "suggest",
+          "text": "出库和排产的事我不直接管：排产核对归排产员苏渝。出库的书面预核结论走哪个渠道我记不准，可能要问排产员，也可能质检傅黎那边留了登记渠道，建议您分别去信确认。另外这个规格我记得300件就能起订，错不了，供您参考，起订量请以排产核对为准。",
+          "guesses": [
+            "factory",
+            "qa"
+          ]
+        },
+        "sales.main.2.lookup": {
           "kind": "lookup",
           "facts": []
         },
-        "sales.main.2.acknowledge": {
+        "sales.main.3.acknowledge": {
           "kind": "acknowledge"
         },
-        "sales.main.3.delegate": {
+        "sales.main.4.delegate": {
           "kind": "delegate",
           "target": "factory",
           "workflow": "main",
@@ -408,19 +738,19 @@
             "spec"
           ]
         },
-        "sales.main.4.lookup": {
+        "sales.main.5.lookup": {
           "kind": "lookup",
           "facts": [
             "quote_old"
           ]
         },
-        "sales.main.5.document": {
+        "sales.main.6.document": {
           "kind": "document",
           "facts": [
             "quote_old"
           ]
         },
-        "sales.main.6.reply": {
+        "sales.main.7.reply": {
           "kind": "reply"
         },
         "sales.refresh.1.acknowledge": {
@@ -458,53 +788,62 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "整理批次需求",
-              "tool": "sales.main.1.lookup",
-              "delay": {
-                "mode": "business",
-                "minutes": 60
-              }
-            },
-            {
-              "id": "main_2",
-              "label": "发出受理回执",
-              "tool": "sales.main.2.acknowledge",
+              "label": "给出猜测性答复",
+              "tool": "sales.main.1.suggest",
               "delay": {
                 "mode": "business",
                 "minutes": 30
               }
             },
             {
-              "id": "main_3",
-              "label": "内部转交",
-              "tool": "sales.main.3.delegate",
+              "id": "main_2",
+              "label": "整理批次需求",
+              "tool": "sales.main.2.lookup",
               "delay": {
                 "mode": "business",
                 "minutes": 60
               }
             },
             {
+              "id": "main_3",
+              "label": "发出受理回执",
+              "tool": "sales.main.3.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
               "id": "main_4",
+              "label": "内部转交",
+              "tool": "sales.main.4.delegate",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_5",
               "label": "查询业务记录",
-              "tool": "sales.main.4.lookup",
+              "tool": "sales.main.5.lookup",
               "delay": {
                 "mode": "business",
                 "minutes": 120
               }
             },
             {
-              "id": "main_5",
+              "id": "main_6",
               "label": "签发书面确认",
-              "tool": "sales.main.5.document",
+              "tool": "sales.main.6.document",
               "delay": {
                 "mode": "business",
                 "minutes": 60
               }
             },
             {
-              "id": "main_6",
+              "id": "main_7",
               "label": "向请求者回复已取得的结果",
-              "tool": "sales.main.6.reply",
+              "tool": "sales.main.7.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -604,7 +943,7 @@
       "id": "factory",
       "name": "棱川制造排产员·苏渝",
       "role": "原料与排产核对",
-      "description": "工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时。",
+      "description": "工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。",
       "calendar": "factory",
       "channels": [
         "email"
@@ -620,12 +959,15 @@
         "factory.main.1.lookup": {
           "kind": "lookup",
           "facts": [
-            "moq",
-            "dispatch"
+            "moq"
           ]
         },
         "factory.main.2.reply": {
           "kind": "reply"
+        },
+        "factory.dispatch_channel.1.deny": {
+          "kind": "deny",
+          "text": "出库的书面预核结论不随邮件出具：请通过棱川出库预核登记渠道（lengchuan_dispatch_apply）提交登记，办结结论以表单状态为准；办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。"
         }
       },
       "workflows": [
@@ -633,8 +975,7 @@
           "id": "main",
           "label": "排产可行性",
           "aliases": [
-            "排产",
-            "出库"
+            "排产"
           ],
           "required_fields": [
             "quantity",
@@ -654,6 +995,27 @@
               "id": "main_2",
               "label": "向请求者回复已取得的结果",
               "tool": "factory.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "dispatch_channel",
+          "label": "出库结论渠道",
+          "aliases": [
+            "出库",
+            "预核"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "dispatch_channel_1",
+              "label": "明确表示不知情或不归管",
+              "tool": "factory.dispatch_channel.1.deny",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -682,7 +1044,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是棱川制造排产员·苏渝，负责原料与排产核对。工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是棱川制造排产员·苏渝，负责原料与排产核对。工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:earliest_dispatch",
@@ -726,6 +1088,10 @@
         },
         "qa.main.5.reply": {
           "kind": "reply"
+        },
+        "qa.dispatch_query.1.deny": {
+          "kind": "deny",
+          "text": "出库与排产安排不归质检管，我处只出具材料检测报告；出库预核请向排产员苏渝确认，或通过棱川出库预核登记渠道（lengchuan_dispatch_apply）申请。"
         }
       },
       "workflows": [
@@ -783,6 +1149,27 @@
               "id": "main_5",
               "label": "向请求者回复已取得的结果",
               "tool": "qa.main.5.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "dispatch_query",
+          "label": "出库询问",
+          "aliases": [
+            "出库",
+            "预核"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "dispatch_query_1",
+              "label": "明确表示不知情或不归管",
+              "tool": "qa.dispatch_query.1.deny",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -949,12 +1336,21 @@
     "六天工厂日历与五天销售日历",
     "28天耐久测试与周一批次",
     "报价过期",
-    "并行查询后再次联系"
+    "并行查询后再次联系",
+    "新价目以官网页面文件形式发布",
+    "隐藏出库预核表单与分阶段办结",
+    "销售猜测性指路与质检明确回绝",
+    "出库预核受理的隐藏时间线",
+    "开局页面批次价目与销售起订量口头误述"
   ],
   "failure_modes": [
     "用18000元旧报价给结论",
     "等待质检期间不追踪有效期",
-    "误以为查询等于下单"
+    "误以为查询等于下单",
+    "不复查官网错过新价目文件",
+    "不发现出库预核渠道即下结论",
+    "引用开局页面批次价目当作有效报价",
+    "把销售起订量印象当排产结论"
   ],
   "reference_actions": [
     {
@@ -993,6 +1389,35 @@
     {
       "op": "wait_for",
       "label": "new"
+    },
+    {
+      "op": "discover",
+      "name": "lengchuan_dispatch_apply"
+    },
+    {
+      "op": "tool",
+      "name": "lengchuan_dispatch_apply",
+      "args": {
+        "fields": {
+          "quantity": 500,
+          "spec": "M26-Q7"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2026-12-08T10:30:00+08:00"
+    },
+    {
+      "op": "discover",
+      "name": "lengchuan_dispatch_status"
+    },
+    {
+      "op": "tool",
+      "name": "lengchuan_dispatch_status",
+      "args": {
+        "query": "出库"
+      }
     }
   ],
   "reference_is_privileged": true,

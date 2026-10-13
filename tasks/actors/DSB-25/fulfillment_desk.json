@@ -1,0 +1,204 @@
+{
+  "private": true,
+  "task_id": "DSB-25",
+  "actor": {
+    "id": "fulfillment_desk",
+    "name": "Test Appliance Cooperative fulfillment desk·Sam Rivers",
+    "role": "measured fit, doorway route and delivery verification",
+    "description": "Confirms measured installation fit, unpack-at-door handling, recycling and the current delivery date in writing; financing and orders go through the order desk.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "samrivers@bench.example"
+    },
+    "knowledge": [
+      "delivery_date",
+      "fit_verified",
+      "recycling_confirmed"
+    ],
+    "tools": {
+      "fulfillment_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "fulfillment_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "fit_verified",
+          "recycling_confirmed",
+          "delivery_date"
+        ]
+      },
+      "fulfillment_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "fit_verified",
+          "recycling_confirmed",
+          "delivery_date"
+        ]
+      },
+      "fulfillment_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Fit and delivery verification",
+        "aliases": [
+          "fit",
+          "verify",
+          "fitting",
+          "doorway",
+          "opening",
+          "unpack",
+          "recycling",
+          "route",
+          "access",
+          "dimensions",
+          "verification"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "fulfillment_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the installation opening, doorway route, unpack-at-door procedure and recycling",
+            "tool": "fulfillment_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 180
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "fulfillment_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "fulfillment_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Test Appliance Cooperative fulfillment desk·Sam Rivers，负责measured fit, doorway route and delivery verification。Confirms measured installation fit, unpack-at-door handling, recycling and the current delivery date in writing; financing and orders go through the order desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:delivery_date",
+      "attest:fit_verified",
+      "attest:recycling_confirmed"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "delivery_date": {
+      "value": "2027-06-09",
+      "text": "The ordered refrigerator is scheduled for delivery on 2027-06-09, before the June 10 deadline.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-25",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "delivery_date"
+      }
+    },
+    "fit_verified": {
+      "value": true,
+      "text": "The fulfillment desk confirms in writing that sf-B fits the 33 in installation opening and 33 in ground-floor doorway with a verified unpack-at-door procedure.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-25",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "fit_verified"
+      }
+    },
+    "recycling_confirmed": {
+      "value": true,
+      "text": "Old-unit removal and recycling are included in the confirmed delivery service for the ordered refrigerator.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-25",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "recycling_confirmed"
+      }
+    }
+  },
+  "start_at": "2027-06-07T09:00:00-05:00",
+  "deadline_at": "2027-06-09T12:00:00-05:00"
+}

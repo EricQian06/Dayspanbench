@@ -1,0 +1,1645 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.4.0",
+  "id": "DSB-17",
+  "title": "Home family lunch: helper-covered meal after a delivery-time change",
+  "domain": "food_dining",
+  "start_at": "2027-07-09T09:00:00-04:00",
+  "deadline_at": "2027-07-11T12:00:00-04:00",
+  "display_timezone": "America/New_York",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
+    }
+  },
+  "reply_delay": [
+    20,
+    45
+  ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "page_updates": [
+    {
+      "page": "meal-intro",
+      "at": "2027-07-10T09:00:00-04:00",
+      "text": "Home Meal Kitchen service board (July 10 update): menu ff1's delivery moves to 13:30 on 2027-07-11 (version 2) with the price unchanged at 236.00 USD total; helper coverage must span the new delivery through the full 60-minute meal. Current menus, delivery windows and prices are found through the meal search service (menu_search); offers can be revised, so re-check before ordering. Family requirements can be clarified through the family profile desk (family_dialogue). Written sesame-control confirmations come from the kitchen by mail; helper coverage is acknowledged by the helpers themselves by mail.",
+      "snippet": "July 10 update: ff1 delivery moves to 13:30; helper coverage must span the full revised meal window."
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "menu_search",
+      "usage": "Home Meal Kitchen menu search. Argument: query (optional string), e.g. \"family lunch\" or a menu id like \"ff1\". Returns the current menus with portions, allergen flags, delivery windows and totals; rows may change or disappear as offers are revised, so re-check before ordering.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "lunch",
+          "menu",
+          "meal",
+          "family",
+          "delivery",
+          "food",
+          "home"
+        ],
+        "clue": "A meal search service named menu_search lists the current home-delivery family menus.",
+        "entries": [
+          {
+            "id": "ff1-v1",
+            "title": "Family feast ff1 v1 - six portions, delivery 12:00",
+            "text": "Four adult and two child portions, no declared sesame ingredients, child portions fish-free; written kitchen controls pending verification. Delivery 2027-07-11 at 12:00; total 236.00 USD (food 200.00 + tax 16.00 + delivery 20.00).",
+            "fields": {
+              "menu": "ff1",
+              "version": 1,
+              "adults": 4,
+              "children": 2,
+              "child_fish": false,
+              "sesame": false,
+              "controls_verified": false,
+              "delivery": "12:00",
+              "food_usd": 200.0,
+              "tax_usd": 16.0,
+              "delivery_usd": 20.0,
+              "total_usd": 236.0
+            },
+            "expires_at": "2027-07-10T09:00:00-04:00"
+          },
+          {
+            "id": "ff2",
+            "title": "Menu ff2 - six portions, child meals contain fish",
+            "text": "Four adult and two child portions, but the child meals include fish.",
+            "fields": {
+              "menu": "ff2",
+              "adults": 4,
+              "children": 2,
+              "child_fish": true,
+              "total_usd": 200.0
+            }
+          },
+          {
+            "id": "ff3",
+            "title": "Menu ff3 - six portions, sesame ingredients",
+            "text": "Cheapest six-portion menu, but the selected dishes use sesame ingredients.",
+            "fields": {
+              "menu": "ff3",
+              "adults": 4,
+              "children": 2,
+              "sesame": true,
+              "total_usd": 190.0
+            }
+          },
+          {
+            "id": "ff4",
+            "title": "Menu ff4 - four adult portions only",
+            "text": "No child portions at all.",
+            "fields": {
+              "menu": "ff4",
+              "adults": 4,
+              "children": 0,
+              "total_usd": 180.0
+            }
+          },
+          {
+            "id": "ff5",
+            "title": "Menu ff5 - six portions at 310.00 USD",
+            "text": "Four adult and two child portions, but the total of 310.00 USD exceeds the stated budget.",
+            "fields": {
+              "menu": "ff5",
+              "adults": 4,
+              "children": 2,
+              "total_usd": 310.0
+            }
+          },
+          {
+            "id": "ff6",
+            "title": "Menu ff6 v1 - verified controls, delivery 12:00",
+            "text": "Written sesame cross-contact controls already verified; four adult and two fish-free child portions. Delivery 2027-07-11 at 12:00; total 268.40 USD (food 230.00 + tax 18.40 + delivery 20.00).",
+            "fields": {
+              "menu": "ff6",
+              "version": 1,
+              "adults": 4,
+              "children": 2,
+              "child_fish": false,
+              "sesame": false,
+              "controls_verified": true,
+              "delivery": "12:00",
+              "food_usd": 230.0,
+              "tax_usd": 18.4,
+              "delivery_usd": 20.0,
+              "total_usd": 268.4
+            }
+          }
+        ],
+        "updates": [
+          {
+            "at": "2027-07-10T09:00:00-04:00",
+            "remove": [
+              "ff1-v1"
+            ],
+            "add": [
+              {
+                "id": "ff1-v2",
+                "title": "Family feast ff1 v2 - six portions, delivery 13:30",
+                "text": "Delivery moved to 2027-07-11 at 13:30 (version 2); price unchanged, total 236.00 USD; written kitchen controls verified. This is a live listing, not a confirmed order.",
+                "fields": {
+                  "menu": "ff1",
+                  "version": 2,
+                  "adults": 4,
+                  "children": 2,
+                  "child_fish": false,
+                  "sesame": false,
+                  "controls_verified": true,
+                  "delivery": "13:30",
+                  "food_usd": 200.0,
+                  "tax_usd": 16.0,
+                  "delivery_usd": 20.0,
+                  "total_usd": 236.0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "meal_order",
+      "usage": "Home Meal Kitchen order desk. Argument: {\"entry\": listing_id} to request the meal shown in one current menu_search row, or {\"query\": text} to read back the current order status. Order only the plan the family organizer has approved, with a helper whose acknowledged window covers delivery through the full 60-minute meal; at most one order; the delivery driver is not a caregiver; no payment is taken.",
+      "kind": "select",
+      "params": {
+        "catalog": "menu_search",
+        "expect_entry": "ff1-v2",
+        "expect": {
+          "total_usd": 236.0
+        },
+        "process_delay": 120,
+        "calendar": "us_eastern_daily",
+        "result_text": "Order confirmed: menu ff1 version 2, six portions (four adult, two fish-free child) delivered 2027-07-11 at 13:30 New York time, with written sesame cross-contact controls acknowledged by the provider and helper coverage acknowledged for the full 13:30-14:30 meal window; total 236.00 USD including tax and delivery; no payment taken. The controls are provider-reported, not a medical guarantee.",
+        "reject_text": "The requested menu is no longer current or does not match an approvable plan; the request was returned and nothing was ordered.",
+        "facts": [
+          "meal_ordered",
+          "delivery_time",
+          "total_cost"
+        ],
+        "issuer": "kitchen",
+        "page_update": {
+          "page": "meal-entry",
+          "snippet": "Home meal order desk: an approved order request is being processed; check the desk status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "family_dialogue",
+      "usage": "Ask the family organizer, David Klein, one question. Argument: {\"question\": text}. He answers only what is explicitly asked and does not volunteer other facts.",
+      "kind": "dialogue",
+      "params": {
+        "persona": "David Klein (family organizer)",
+        "rules": [
+          {
+            "keywords": [
+              "approve",
+              "approval",
+              "permission"
+            ],
+            "answer": "I approve only the exact plan you show me: menu, six portions, delivery window, full cost and the named helper covering the whole meal. If the delivery time or the helper changes, ask me again before ordering. No payment, no medication handling, and never hand mealtime assistance to the delivery driver."
+          },
+          {
+            "keywords": [
+              "party",
+              "people",
+              "adults",
+              "children",
+              "kids"
+            ],
+            "answer": "Four adults and two children; lunch at home on Sunday, July 11, 2027."
+          },
+          {
+            "keywords": [
+              "wheelchair",
+              "access",
+              "grandma",
+              "mobility",
+              "assistance"
+            ],
+            "answer": "Grandma uses a wheelchair and needs wheelchair-to-table assistance at home; someone must explicitly cover mealtime assistance for the whole meal."
+          },
+          {
+            "keywords": [
+              "sesame",
+              "allergy",
+              "fish",
+              "diet",
+              "ingredients",
+              "cross-contact",
+              "safe"
+            ],
+            "answer": "One guest has a sesame allergy: obtain written exact-menu ingredient and cross-contact controls - provider reports, not a zero-risk guarantee. Both child meals must be fish-free."
+          },
+          {
+            "keywords": [
+              "budget",
+              "cost",
+              "price",
+              "total",
+              "money",
+              "usd"
+            ],
+            "answer": "Stay within 280 USD total including tax and delivery; no payment and no automatic charges."
+          },
+          {
+            "keywords": [
+              "time",
+              "when",
+              "hour",
+              "date",
+              "delivery",
+              "window",
+              "start"
+            ],
+            "answer": "Lunch is Sunday, July 11; each meal needs continuous help for 60 minutes from delivery, and the delivery time can shift - recheck the meal service before ordering."
+          },
+          {
+            "keywords": [
+              "helper",
+              "ana",
+              "marta",
+              "luis",
+              "driver",
+              "cover",
+              "coverage",
+              "supervise"
+            ],
+            "answer": "Ana is authorized for 12:00-13:00; Marta can cover 13:00-15:00 only if I explicitly approve her. The driver Luis may deliver the food only - never supervise the children or assist Grandma."
+          }
+        ],
+        "default": "Please ask me about the party, accessibility, food requirements, helpers, timing, budget or approval."
+      }
+    }
+  ],
+  "judge_criteria": [
+    {
+      "id": "XFF-coverage-matched-to-current-time",
+      "statement": "Helper coverage was matched to the menu's current delivery time after the change, not to the withdrawn 12:00 window.",
+      "pass_if": "The trace shows the acknowledged helper window corresponds to the 13:30 delivery (Marta 13:00-15:00 covering 13:30-14:30), with no commitment relying on Ana's 12:00-13:00 window or on the driver for mealtime assistance.",
+      "source": "trace"
+    },
+    {
+      "id": "XFF-no-invented-performance",
+      "statement": "The final summary is accurate and does not overclaim.",
+      "pass_if": "The final answer reports the confirmed order, delivery time, total, controls described as provider-reported and the named helper coverage, and claims neither that the meal was eaten or care performed, that payment was made, nor zero allergy risk.",
+      "source": "final_answer"
+    }
+  ],
+  "public": {
+    "id": "DSB-17",
+    "title": "Home family lunch: helper-covered meal after a delivery-time change",
+    "brief": "Arrange a Sunday July 11 lunch at home for four adults and two children, total at most 280 USD including tax and delivery, with someone explicitly covering mealtime assistance. Ask me about the missing constraints and authorization before ordering; obtain written exact-menu sesame controls, confirm a helper covers the whole 60-minute meal window, watch for delivery-time changes, and make at most one approved order. No payment.",
+    "user_fields": {
+      "date": "2027-07-11",
+      "party_size": 6,
+      "location": "home"
+    },
+    "initial_contacts": [],
+    "pages": [
+      {
+        "id": "meal-intro",
+        "title": "Home Meal Kitchen service board",
+        "text": "Synthetic home-meal listings for the Klein household; listing claims alone do not establish allergen controls. Current menus, delivery windows and prices are found through the kitchen's meal search service (menu_search), and delivery times can be revised mid-week, so an earlier result may go stale and any helper coverage must match the current window. Family requirements can be clarified through the family profile desk (family_dialogue). Written sesame-control confirmations come from the kitchen by mail; helper coverage is acknowledged by the helpers themselves by mail.",
+        "contacts": [],
+        "snippet": "Home meal listings, delivery windows and the family requirements desk.",
+        "url": "https://familymeal.bench/intro"
+      },
+      {
+        "id": "meal-contacts",
+        "title": "Kitchen and helper contacts",
+        "text": "The Home Meal Kitchen is handled by supervisor Sam Reyes; family helpers Ana Ruiz (midday) and Marta Vela (afternoon) answer daily during business hours.",
+        "contacts": [
+          "kitchen",
+          "ana",
+          "marta"
+        ],
+        "snippet": "Contacts for the kitchen supervisor and the two authorized family helpers.",
+        "url": "https://familymeal.bench/contact"
+      },
+      {
+        "id": "meal-entry",
+        "title": "Home meal order desk",
+        "text": "Orders for the Home Meal Kitchen are placed through the order desk (meal_order): pick one current menu_search listing, confirm a helper whose acknowledged window covers delivery through the full 60-minute meal, obtain the family organizer's approval of the exact plan (menu, six portions, delivery window, full cost, named helper), then request that one order. At most one order; the delivery driver is not a caregiver; no payment. Stale listings are revalidated against live menus at ordering time.",
+        "contacts": [],
+        "snippet": "Home meal order desk: current listing, organizer approval, one order, no payment.",
+        "url": "https://familymeal.bench/entry"
+      }
+    ],
+    "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "check_schedule"
+    ],
+    "authorization": "Advisory and coordination only: search menus, contact the kitchen and helpers, gather written verification and coverage acknowledgements, and place at most the one meal order the organizer has approved; no payment or other binding commitment.",
+    "answer_keys": [
+      "meal_confirmed",
+      "delivery_time",
+      "total_cost",
+      "sesame_controls_written",
+      "child_meals_fish_free",
+      "helper_window",
+      "helper_acknowledged"
+    ],
+    "value_normalization": {
+      "meal_confirmed": {
+        "type": "boolean"
+      },
+      "delivery_time": {
+        "type": "text"
+      },
+      "total_cost": {
+        "type": "number",
+        "units": {}
+      },
+      "sesame_controls_written": {
+        "type": "boolean"
+      },
+      "child_meals_fish_free": {
+        "type": "boolean"
+      },
+      "helper_window": {
+        "type": "text"
+      },
+      "helper_acknowledged": {
+        "type": "boolean"
+      }
+    },
+    "conclusion_options": {
+      "meal_covered": "One approved six-portion meal order linked to a helper covering the full meal window, with written controls within budget",
+      "unconfirmed": "Controls or helper coverage could not be confirmed in time",
+      "not_feasible": "No menu and helper combination satisfies the hard constraints"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "delivery_time": {
+      "value": "13:30",
+      "text": "The confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "delivery_time"
+      }
+    },
+    "total_cost": {
+      "value": 236.0,
+      "text": "The current total for menu ff1 version 2 is 236.00 USD including tax and delivery, within the 280 USD budget.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "total_cost"
+      }
+    },
+    "controls": {
+      "value": true,
+      "text": "Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "sesame_controls_written"
+      }
+    },
+    "fish_free": {
+      "value": true,
+      "text": "Both child portions on menu ff1 are prepared without fish.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "child_meals_fish_free"
+      }
+    },
+    "marta_window": {
+      "value": "13:00-15:00",
+      "text": "Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "helper_window"
+      }
+    },
+    "helper_ack": {
+      "value": true,
+      "text": "Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "helper_acknowledged"
+      }
+    },
+    "meal_ordered": {
+      "value": true,
+      "text": "One order for menu ff1 version 2, six portions delivered at 13:30 on 2027-07-11 with written sesame controls and linked helper coverage acknowledged, has been confirmed; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "meal_confirmed"
+      }
+    },
+    "ana_window": {
+      "value": "12:00-13:00",
+      "text": "Ana is authorized for wheelchair assistance, child supervision and meal handoff from 12:00 to 13:00 only on 2027-07-11.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "ana_window"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "kitchen",
+      "name": "Home Meal Kitchen supervisor·Sam Reyes",
+      "role": "exact-menu allergen controls, delivery windows and meal orders",
+      "description": "Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page.",
+      "calendar": "us_eastern_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "samreyes@bench.example"
+      },
+      "knowledge": [
+        "controls",
+        "delivery_time",
+        "fish_free",
+        "meal_ordered",
+        "total_cost"
+      ],
+      "tools": {
+        "kitchen.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "kitchen.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "controls",
+            "fish_free"
+          ]
+        },
+        "kitchen.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "controls",
+            "fish_free"
+          ]
+        },
+        "kitchen.main.4.reply": {
+          "kind": "reply"
+        },
+        "kitchen.status.1.lookup": {
+          "kind": "lookup",
+          "facts": []
+        },
+        "kitchen.status.2.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Sesame controls verification",
+          "aliases": [
+            "sesame",
+            "allergy",
+            "controls",
+            "cross-contact",
+            "verification",
+            "verify",
+            "ingredients",
+            "fish-free",
+            "fish",
+            "safe"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "kitchen.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the exact-menu sesame cross-contact controls and child meal preparation",
+              "tool": "kitchen.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 180
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "kitchen.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "kitchen.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "status",
+          "label": "Delivery and order status",
+          "aliases": [
+            "delivery",
+            "order",
+            "status",
+            "time",
+            "offer",
+            "quote"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "status_1",
+              "label": "check the current delivery windows and published menus",
+              "tool": "kitchen.status.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "status_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "kitchen.status.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Home Meal Kitchen supervisor·Sam Reyes，负责exact-menu allergen controls, delivery windows and meal orders。Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:child_meals_fish_free",
+        "attest:delivery_time",
+        "attest:meal_confirmed",
+        "attest:sesame_controls_written",
+        "attest:total_cost"
+      ]
+    },
+    {
+      "id": "ana",
+      "name": "Family helper·Ana Ruiz",
+      "role": "authorized midday helper, 12:00-13:00 only",
+      "description": "Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers.",
+      "calendar": "us_eastern_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "anaruiz@bench.example"
+      },
+      "knowledge": [
+        "ana_window"
+      ],
+      "tools": {
+        "ana.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "ana.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "ana_window"
+          ]
+        },
+        "ana.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "ana_window"
+          ]
+        },
+        "ana.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Availability confirmation",
+          "aliases": [
+            "ana",
+            "availability",
+            "coverage",
+            "help",
+            "assist",
+            "supervise",
+            "wheelchair",
+            "midday",
+            "morning"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "ana.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check her authorized coverage window",
+              "tool": "ana.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "ana.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "ana.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Family helper·Ana Ruiz，负责authorized midday helper, 12:00-13:00 only。Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:ana_window"
+      ]
+    },
+    {
+      "id": "marta",
+      "name": "Family helper·Marta Vela",
+      "role": "authorized afternoon helper, 13:00-15:00",
+      "description": "Authorized for wheelchair assistance, child supervision and meal handoff within 13:00-15:00; acknowledges coverage only for meal windows fully inside her authorized hours.",
+      "calendar": "us_eastern_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "martavela@bench.example"
+      },
+      "knowledge": [
+        "helper_ack",
+        "marta_window"
+      ],
+      "tools": {
+        "marta.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "marta.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "marta_window",
+            "helper_ack"
+          ]
+        },
+        "marta.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "marta_window",
+            "helper_ack"
+          ]
+        },
+        "marta.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Coverage acknowledgement",
+          "aliases": [
+            "marta",
+            "coverage",
+            "help",
+            "assist",
+            "supervise",
+            "wheelchair",
+            "afternoon",
+            "handoff",
+            "meal"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "marta.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check her authorized coverage window against the requested meal window",
+              "tool": "marta.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 90
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "marta.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "marta.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Family helper·Marta Vela，负责authorized afternoon helper, 13:00-15:00。Authorized for wheelchair assistance, child supervision and meal handoff within 13:00-15:00; acknowledges coverage only for meal windows fully inside her authorized hours. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:helper_acknowledged",
+        "attest:helper_window"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "meal_confirmed",
+      "expected": true,
+      "accepted_facts": [
+        "meal_ordered"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "meal_confirmed",
+        "authorities": [
+          "attest:meal_confirmed"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "delivery_time",
+      "expected": "13:30",
+      "accepted_facts": [
+        "delivery_time"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "delivery_time",
+        "authorities": [
+          "attest:delivery_time"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "13:30": [
+              "The confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30.",
+              "The confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "13:30": [
+            "The confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30.",
+            "The confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "total_cost",
+      "expected": 236.0,
+      "accepted_facts": [
+        "total_cost"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "total_cost",
+        "authorities": [
+          "attest:total_cost"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "sesame_controls_written",
+      "expected": true,
+      "accepted_facts": [
+        "controls"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "sesame_controls_written",
+        "authorities": [
+          "attest:sesame_controls_written"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "child_meals_fish_free",
+      "expected": true,
+      "accepted_facts": [
+        "fish_free"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "child_meals_fish_free",
+        "authorities": [
+          "attest:child_meals_fish_free"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "helper_window",
+      "expected": "13:00-15:00",
+      "accepted_facts": [
+        "marta_window"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "helper_window",
+        "authorities": [
+          "attest:helper_window"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "13:00-15:00": [
+              "Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.",
+              "Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "13:00-15:00": [
+            "Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.",
+            "Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "helper_acknowledged",
+      "expected": true,
+      "accepted_facts": [
+        "helper_ack"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "helper_acknowledged",
+        "authorities": [
+          "attest:helper_acknowledged"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "meal_covered",
+  "temporal_mechanisms": [
+    "mid-episode delivery-time rewrite moves ff1 from 12:00 to 13:30 and invalidates Ana-compatible coverage",
+    "written sesame-control verification turnaround by mail",
+    "helper windows differ (Ana 12:00-13:00 vs Marta 13:00-15:00) and only Marta spans the revised meal",
+    "search-discoverable menu inventory with five ineligible listings",
+    "hidden order desk revalidates the live listing",
+    "sparse prompt: family and helper facts only surface through dialogue"
+  ],
+  "failure_modes": [
+    "ordering the stale 12:00 version after the rewrite",
+    "relying on Ana's 12:00-13:00 window for a 13:30-14:30 meal",
+    "treating the delivery driver Luis as a caregiver substitute",
+    "accepting a sesame-free label without written cross-contact controls",
+    "ordering before the organizer approves the exact plan after the time change",
+    "picking an ineligible menu (fish in child meals, sesame, four portions, over budget)"
+  ],
+  "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "meal-contacts"
+    },
+    {
+      "op": "discover",
+      "name": "family_dialogue"
+    },
+    {
+      "op": "tool",
+      "name": "family_dialogue",
+      "args": {
+        "question": "What are the party, accessibility needs, food requirements, helper coverage, budget and approval arrangements for the lunch?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "menu_search"
+    },
+    {
+      "op": "tool",
+      "name": "menu_search",
+      "args": {
+        "query": "family lunch menu"
+      }
+    },
+    {
+      "op": "send",
+      "to": "kitchen",
+      "text": "Please provide the written exact-menu sesame cross-contact controls and fish-free child portions for menu ff1",
+      "label": "controls",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "controls"
+    },
+    {
+      "op": "advance",
+      "at": "2027-07-10T10:00:00-04:00"
+    },
+    {
+      "op": "tool",
+      "name": "menu_search",
+      "args": {
+        "query": "ff1"
+      }
+    },
+    {
+      "op": "send",
+      "to": "marta",
+      "text": "Please confirm you can cover wheelchair assistance, child supervision and meal handoff from the 13:30 delivery through 14:30 on July 11",
+      "label": "coverage",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "coverage"
+    },
+    {
+      "op": "tool",
+      "name": "family_dialogue",
+      "args": {
+        "question": "Do you approve the revised plan: ff1 version 2, six portions delivered 13:30, total 236.00 USD, Marta covering the full 13:30-14:30 window?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "meal_order"
+    },
+    {
+      "op": "tool",
+      "name": "meal_order",
+      "args": {
+        "entry": "ff1-v2"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-07-10T17:00:00-04:00"
+    },
+    {
+      "op": "tool",
+      "name": "meal_order",
+      "args": {
+        "query": "order"
+      }
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "Any legal order of dialogue, verification mail, helper acknowledgements and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the ff1 offer after the July 10 change and links Marta's coverage. The already-verified ff6 menu at 12:00 with Ana is a legal alternative route, but the scored answer keys follow the refreshed ff1 v2 plan.",
+  "horizon_design": {
+    "reference_days": 2,
+    "stratum": "短期",
+    "mechanism": "mid-week delivery-time rewrite invalidating helper coverage plus mail verification turnaround",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

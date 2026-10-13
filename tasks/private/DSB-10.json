@@ -1,11 +1,11 @@
 {
   "schema_version": "0.2",
-  "task_set_version": "0.3.0",
+  "task_set_version": "0.4.0",
   "id": "DSB-10",
   "title": "二手相机：夜间联系、周末实测与取件咨询",
   "domain": "个人交易咨询",
   "start_at": "2026-11-06T10:00:00+08:00",
-  "deadline_at": "2026-11-09T22:00:00+08:00",
+  "deadline_at": "2026-11-10T22:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
   "synthetic": true,
   "completion_class": "resolved",
@@ -215,16 +215,254 @@
           "23:59"
         ]
       ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
     }
   },
   "reply_delay": [
     10,
     30
   ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule",
+    "request_callback",
+    "fetch_document",
+    "leave_note"
+  ],
+  "page_updates": [],
+  "hidden_tools": [
+    {
+      "name": "ershoushangji_inspection_apply",
+      "usage": "二手相机验机登记渠道。调用参数：fields为对象，键为表单字段名（serial），serial须填在售相机的序列号。",
+      "kind": "form",
+      "params": {
+        "form": "inspection_form",
+        "expect": {
+          "serial": "CAM-402"
+        },
+        "process_at": "2026-11-08T10:00:00+08:00",
+        "result_text": "验机登记已办结：对序列号CAM-402读取的实际快门次数为42731；热靴触发测试失败，当前不能正常使用外置闪光灯。办理进度可经二手验机进度查询（ershoushangji_inspection_status）复核。",
+        "reject_text": "登记的序列号与在售相机不符，已退回；请核对后重新提交。",
+        "facts": [
+          "actual",
+          "hotshoe"
+        ],
+        "issuer": "friend",
+        "page_update": {
+          "page": "camera-entry",
+          "snippet": "二手相机交易咨询入口：已提交的验机登记以表单状态为准。"
+        }
+      }
+    },
+    {
+      "name": "ershoushangji_inspection_status",
+      "usage": "二手验机进度查询。调用参数：query为事项关键词（可省略）。",
+      "kind": "status",
+      "params": {
+        "records": [
+          {
+            "key": "inspection",
+            "label": "验机结果登记",
+            "initial": "尚未查询到验机登记记录。",
+            "timeline": [
+              {
+                "at": "2026-11-07T10:00:00+08:00",
+                "text": "周末读取与热靴测试已开始，验机登记可提交。"
+              },
+              {
+                "at": "2026-11-08T10:00:00+08:00",
+                "text": "本轮周末验机已完成，登记结论以办结状态为准。"
+              }
+            ],
+            "form": "inspection_form"
+          }
+        ]
+      }
+    }
+  ],
+  "judge_criteria": [],
   "public": {
     "id": "DSB-10",
     "title": "二手相机：夜间联系、周末实测与取件咨询",
-    "brief": "考虑购买CAM-402，要求快门少于30000次、热靴正常。请取得实测快门数和热靴结果，问清价格、退货条件和最早取件时段。不能付款或让卖方保留商品。",
+    "brief": "考虑购买CAM-402，要求快门少于30000次、热靴正常。请取得实测快门数和热靴结果（书面结果按对方说明的渠道取得），问清价格、退货条件和最早取件时段。不能付款或让卖方保留商品。",
     "user_fields": {
       "serial": "CAM-402",
       "pickup_area": "桥溪东区"
@@ -236,9 +474,21 @@
       {
         "id": "camera-intro",
         "title": "CAM-402二手信息简介",
-        "text": "二手相机CAM-402出售：卖家自述快门约一万次，仅为回忆估计，实测情况待核；快门次数与热靴功能需实际读取和测试确认。卖家只在晚间处理消息。",
+        "text": "二手相机CAM-402出售：卖家自述快门约一万次，仅为回忆估计，实测情况待核；快门次数与热靴功能需实际读取和测试确认。卖家只在晚间处理消息。本页另挂有同批次机型快门流通记录等文件。",
         "contacts": [],
         "snippet": "二手相机出售信息与实测安排。",
+        "documents": [
+          {
+            "id": "camera-shutter-ref",
+            "title": "同批次机型快门流通记录.pdf",
+            "text": "同批次机型快门流通记录：快门次数约9800次。（留存方整理）",
+            "facts": [
+              "actual_ref"
+            ],
+            "issuer": "seller",
+            "url": "https://ershoushangji.bench/files/camera-shutter-ref.pdf"
+          }
+        ],
         "url": "https://ershoushangji.bench/intro"
       },
       {
@@ -254,13 +504,42 @@
       {
         "id": "camera-entry",
         "title": "二手相机交易咨询入口",
-        "text": "二手相机交易咨询说明：核实快门次数与热靴等实测情况需提供相机序列号，实测数据以读取结果为准。本页面仅说明信息要求，不能在线下单或付款。",
+        "text": "二手相机交易咨询说明：核实快门次数与热靴等实测情况需提供相机序列号，实测数据以读取结果为准，书面验机结论通过本页登记表单申请后取得。本页面仅说明信息要求，不能在线下单或付款。",
         "contacts": [],
-        "snippet": "二手相机交易咨询材料说明；不支持在线交易。",
+        "snippet": "二手相机交易咨询材料说明与验机登记表单；不支持在线交易。",
+        "form": {
+          "id": "inspection_form",
+          "title": "验机结果登记申请",
+          "fields": [
+            {
+              "name": "serial",
+              "label": "相机序列号",
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "submit_instructions": "本表单不能在线直接提交：须通过二手相机验机登记渠道办理；渠道名称与受理安排请向卖家朋友确认。"
+        },
         "url": "https://ershoushangji.bench/entry"
       }
     ],
     "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "check_schedule",
+      "request_callback",
+      "fetch_document",
+      "leave_note"
+    ],
     "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
     "answer_keys": [
       "asking_price",
@@ -386,6 +665,21 @@
         },
         "predicate": "earliest_pickup"
       }
+    },
+    "actual_ref": {
+      "value": 9800,
+      "text": "同批次机型快门流通记录：快门次数约9800次（留存方整理）。",
+      "unauthorized_attestation": true,
+      "attributes": {
+        "subject": {
+          "task": "DSB-10",
+          "case": {
+            "serial": "CAM-402",
+            "pickup_area": "桥溪东区"
+          }
+        },
+        "predicate": "measured_shutter"
+      }
     }
   },
   "actors": [
@@ -393,7 +687,7 @@
       "id": "seller",
       "name": "相机卖家·沈栖",
       "role": "二手相机信息",
-      "description": "只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测。",
+      "description": "只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测；书面验机结果须经登记渠道取得。",
       "calendar": "evening",
       "channels": [
         "email",
@@ -409,7 +703,15 @@
         "returns"
       ],
       "tools": {
-        "seller.main.1.lookup": {
+        "seller.main.1.suggest": {
+          "kind": "suggest",
+          "text": "验机的书面结果我不直接掌握：朋友柯闻周末有读取器，测完可能直接答复；书面结论走哪个渠道我记不准，也可能桥溪快运取件咨询台能代查登记，建议您分别去信确认。另外这台机器我印象里快门也就一万次上下，错不了，供您参考，实测以验机办结为准。",
+          "guesses": [
+            "friend",
+            "courier"
+          ]
+        },
+        "seller.main.2.lookup": {
           "kind": "lookup",
           "facts": [
             "asking",
@@ -417,24 +719,25 @@
             "returns"
           ]
         },
-        "seller.main.2.acknowledge": {
+        "seller.main.3.acknowledge": {
           "kind": "acknowledge"
         },
-        "seller.main.3.delegate": {
-          "kind": "delegate",
+        "seller.main.4.consult": {
+          "kind": "consult",
           "target": "friend",
           "workflow": "main",
           "forward_fields": [
             "serial"
-          ]
+          ],
+          "text": "我自己没有读取器，快门和热靴要先转给周末有设备的朋友实测，测完我把结果告诉您。"
         },
-        "seller.main.4.refer": {
+        "seller.main.5.refer": {
           "kind": "refer",
           "contacts": [
             "courier"
           ]
         },
-        "seller.main.5.reply": {
+        "seller.main.6.reply": {
           "kind": "reply"
         }
       },
@@ -454,8 +757,8 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
-              "tool": "seller.main.1.lookup",
+              "label": "给出猜测性答复",
+              "tool": "seller.main.1.suggest",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -463,8 +766,8 @@
             },
             {
               "id": "main_2",
-              "label": "发出受理回执",
-              "tool": "seller.main.2.acknowledge",
+              "label": "查询业务记录",
+              "tool": "seller.main.2.lookup",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -472,26 +775,35 @@
             },
             {
               "id": "main_3",
-              "label": "内部转交",
-              "tool": "seller.main.3.delegate",
+              "label": "发出受理回执",
+              "tool": "seller.main.3.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "内部咨询后答复",
+              "tool": "seller.main.4.consult",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
               }
             },
             {
-              "id": "main_4",
+              "id": "main_5",
               "label": "查询联系人目录并转介",
-              "tool": "seller.main.4.refer",
+              "tool": "seller.main.5.refer",
               "delay": {
                 "mode": "business",
                 "minutes": 0
               }
             },
             {
-              "id": "main_5",
+              "id": "main_6",
               "label": "向请求者回复已取得的结果",
-              "tool": "seller.main.5.reply",
+              "tool": "seller.main.6.reply",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -520,7 +832,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是相机卖家·沈栖，负责二手相机信息。只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是相机卖家·沈栖，负责二手相机信息。只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测；书面验机结果须经登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:asking_price",
@@ -532,7 +844,7 @@
       "id": "friend",
       "name": "卖家朋友·柯闻",
       "role": "相机读取与热靴测试",
-      "description": "周末才能接触读取器；测试只对CAM-402有效。",
+      "description": "周末才能接触读取器；测试只对CAM-402有效；书面结果须经验机登记渠道取得。",
       "calendar": "weekend",
       "channels": [
         "email"
@@ -547,20 +859,11 @@
       "tools": {
         "friend.main.1.lookup": {
           "kind": "lookup",
-          "facts": [
-            "actual",
-            "hotshoe"
-          ]
+          "facts": []
         },
-        "friend.main.2.document": {
-          "kind": "document",
-          "facts": [
-            "actual",
-            "hotshoe"
-          ]
-        },
-        "friend.main.3.reply": {
-          "kind": "reply"
+        "friend.main.2.deny": {
+          "kind": "deny",
+          "text": "实测数据不随邮件出具：请通过二手相机验机登记渠道（ershoushangji_inspection_apply）提交申请，办结结论以表单状态为准；办理进度可经二手验机进度查询（ershoushangji_inspection_status）复核。"
         }
       },
       "workflows": [
@@ -577,7 +880,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "周末读取相机与热靴测试（仅口头说明）",
               "tool": "friend.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -587,17 +890,8 @@
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
-              "tool": "friend.main.2.document",
-              "delay": {
-                "mode": "business",
-                "minutes": 30
-              }
-            },
-            {
-              "id": "main_3",
-              "label": "向请求者回复已取得的结果",
-              "tool": "friend.main.3.reply",
+              "label": "明确表示不知情或不归管",
+              "tool": "friend.main.2.deny",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -626,7 +920,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是卖家朋友·柯闻，负责相机读取与热靴测试。周末才能接触读取器；测试只对CAM-402有效。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是卖家朋友·柯闻，负责相机读取与热靴测试。周末才能接触读取器；测试只对CAM-402有效；书面结果须经验机登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:hotshoe_works",
@@ -637,7 +931,7 @@
       "id": "courier",
       "name": "桥溪快运取件咨询·曾澜",
       "role": "取件时段查询",
-      "description": "咨询台周末照常工作，只查询取件时段，不创建运单。",
+      "description": "咨询台周末照常工作，只查询取件时段，不创建运单；验机报告不在受理范围。",
       "calendar": "daily",
       "channels": [
         "email",
@@ -659,6 +953,10 @@
         },
         "courier.main.2.reply": {
           "kind": "reply"
+        },
+        "courier.inspection_query.1.deny": {
+          "kind": "deny",
+          "text": "我这里只查询取件时段，验机书面报告不归咨询台管；请向卖家沈栖或其朋友确认，或按官网说明的验机登记渠道申请。"
         }
       },
       "workflows": [
@@ -693,6 +991,27 @@
             }
           ],
           "evidence_fields": {}
+        },
+        {
+          "id": "inspection_query",
+          "label": "验机报告询问回绝",
+          "aliases": [
+            "验机",
+            "报告"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "inspection_query_1",
+              "label": "明确表示不知情或不归管",
+              "tool": "courier.inspection_query.1.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
         }
       ],
       "process_engine": {
@@ -714,7 +1033,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是桥溪快运取件咨询·曾澜，负责取件时段查询。咨询台周末照常工作，只查询取件时段，不创建运单。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是桥溪快运取件咨询·曾澜，负责取件时段查询。咨询台周末照常工作，只查询取件时段，不创建运单；验机报告不在受理范围。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:earliest_pickup"
@@ -838,7 +1157,9 @@
           "aliases": {
             "不支持退货": [
               "不可退货",
-              "不接受退货"
+              "不接受退货",
+              "卖方说明按现状转让，不支持退货。",
+              "卖方说明按现状转让，不支持退货"
             ]
           }
         }
@@ -848,7 +1169,9 @@
         "aliases": {
           "不支持退货": [
             "不可退货",
-            "不接受退货"
+            "不接受退货",
+            "卖方说明按现状转让，不支持退货。",
+            "卖方说明按现状转让，不支持退货"
           ]
         }
       },
@@ -887,12 +1210,21 @@
     "晚间个人可达性",
     "朋友周末才能测试",
     "周末快递咨询",
-    "主观回忆与实测证据冲突"
+    "主观回忆与实测证据冲突",
+    "内部转测的显式等待",
+    "隐藏验机登记表单与分阶段办结",
+    "卖家猜测性指路与取件咨询台明确回绝",
+    "验机受理的隐藏时间线",
+    "同批次机型流通记录与本机实测冲突"
   ],
   "failure_modes": [
     "接受卖方估计为实测",
     "朋友回复即认为卖家已承诺",
-    "替用户作购买决定"
+    "替用户作购买决定",
+    "把朋友口头说明当书面实测结论",
+    "不发现验机登记渠道即下结论",
+    "把同批次机型流通记录当本机实测",
+    "把卖家快门口头印象当实测结论"
   ],
   "reference_actions": [
     {
@@ -903,8 +1235,49 @@
       "fields": "$user"
     },
     {
+      "op": "advance",
+      "at": "2026-11-07T10:00:00+08:00"
+    },
+    {
+      "op": "send",
+      "to": "friend",
+      "text": "请提供相机CAM-402的实测结果",
+      "label": "friend",
+      "fields": {
+        "serial": "CAM-402"
+      }
+    },
+    {
       "op": "wait_for",
-      "label": "camera"
+      "label": "friend"
+    },
+    {
+      "op": "discover",
+      "name": "ershoushangji_inspection_apply"
+    },
+    {
+      "op": "tool",
+      "name": "ershoushangji_inspection_apply",
+      "args": {
+        "fields": {
+          "serial": "CAM-402"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2026-11-08T20:00:00+08:00"
+    },
+    {
+      "op": "discover",
+      "name": "ershoushangji_inspection_status"
+    },
+    {
+      "op": "tool",
+      "name": "ershoushangji_inspection_status",
+      "args": {
+        "query": "验机"
+      }
     },
     {
       "op": "send",
@@ -916,6 +1289,10 @@
     {
       "op": "wait_for",
       "label": "courier"
+    },
+    {
+      "op": "wait_for",
+      "label": "camera"
     }
   ],
   "reference_is_privileged": true,

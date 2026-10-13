@@ -18,14 +18,22 @@
       "quote_old"
     ],
     "tools": {
-      "sales.main.1.lookup": {
+      "sales.main.1.suggest": {
+        "kind": "suggest",
+        "text": "出库和排产的事我不直接管：排产核对归排产员苏渝。出库的书面预核结论走哪个渠道我记不准，可能要问排产员，也可能质检傅黎那边留了登记渠道，建议您分别去信确认。另外这个规格我记得300件就能起订，错不了，供您参考，起订量请以排产核对为准。",
+        "guesses": [
+          "factory",
+          "qa"
+        ]
+      },
+      "sales.main.2.lookup": {
         "kind": "lookup",
         "facts": []
       },
-      "sales.main.2.acknowledge": {
+      "sales.main.3.acknowledge": {
         "kind": "acknowledge"
       },
-      "sales.main.3.delegate": {
+      "sales.main.4.delegate": {
         "kind": "delegate",
         "target": "factory",
         "workflow": "main",
@@ -34,19 +42,19 @@
           "spec"
         ]
       },
-      "sales.main.4.lookup": {
+      "sales.main.5.lookup": {
         "kind": "lookup",
         "facts": [
           "quote_old"
         ]
       },
-      "sales.main.5.document": {
+      "sales.main.6.document": {
         "kind": "document",
         "facts": [
           "quote_old"
         ]
       },
-      "sales.main.6.reply": {
+      "sales.main.7.reply": {
         "kind": "reply"
       },
       "sales.refresh.1.acknowledge": {
@@ -84,53 +92,62 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "整理批次需求",
-            "tool": "sales.main.1.lookup",
-            "delay": {
-              "mode": "business",
-              "minutes": 60
-            }
-          },
-          {
-            "id": "main_2",
-            "label": "发出受理回执",
-            "tool": "sales.main.2.acknowledge",
+            "label": "给出猜测性答复",
+            "tool": "sales.main.1.suggest",
             "delay": {
               "mode": "business",
               "minutes": 30
             }
           },
           {
-            "id": "main_3",
-            "label": "内部转交",
-            "tool": "sales.main.3.delegate",
+            "id": "main_2",
+            "label": "整理批次需求",
+            "tool": "sales.main.2.lookup",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
+            "id": "main_3",
+            "label": "发出受理回执",
+            "tool": "sales.main.3.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
             "id": "main_4",
+            "label": "内部转交",
+            "tool": "sales.main.4.delegate",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_5",
             "label": "查询业务记录",
-            "tool": "sales.main.4.lookup",
+            "tool": "sales.main.5.lookup",
             "delay": {
               "mode": "business",
               "minutes": 120
             }
           },
           {
-            "id": "main_5",
+            "id": "main_6",
             "label": "签发书面确认",
-            "tool": "sales.main.5.document",
+            "tool": "sales.main.6.document",
             "delay": {
               "mode": "business",
               "minutes": 60
             }
           },
           {
-            "id": "main_6",
+            "id": "main_7",
             "label": "向请求者回复已取得的结果",
-            "tool": "sales.main.6.reply",
+            "tool": "sales.main.7.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -249,9 +266,9 @@
   "local_facts": {
     "quote_new": {
       "value": 18600,
-      "text": "500件批次重新确认的总报价18600元，有效至12月8日16点。",
+      "text": "500件批次重新确认的总报价18600元，有效至12月11日16点。",
       "available_at": "2026-12-07T10:00:00+08:00",
-      "valid_until": "2026-12-08T16:00:00+08:00",
+      "valid_until": "2026-12-11T16:00:00+08:00",
       "attributes": {
         "subject": {
           "task": "DSB-05",
@@ -280,5 +297,5 @@
     }
   },
   "start_at": "2026-11-03T14:00:00+08:00",
-  "deadline_at": "2026-12-08T15:00:00+08:00"
+  "deadline_at": "2026-12-09T17:00:00+08:00"
 }

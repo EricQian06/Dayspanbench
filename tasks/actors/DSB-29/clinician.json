@@ -1,0 +1,155 @@
+{
+  "private": true,
+  "task_id": "DSB-29",
+  "actor": {
+    "id": "clinician",
+    "name": "Care clinician·Dr. Lena Park",
+    "role": "clinical plan versions and scoped instruction packets",
+    "description": "Releases only the clinician-confirmed plan and its scoped instruction packets exactly as issued; never interprets doses and does not accept agent-authored clinical content.",
+    "calendar": "us_pacific_office",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "dr.lenapark@bench.example"
+    },
+    "knowledge": [
+      "plan_v2"
+    ],
+    "tools": {
+      "clinician.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "clinician.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "plan_v2"
+        ]
+      },
+      "clinician.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "plan_v2"
+        ]
+      },
+      "clinician.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Current plan release",
+        "aliases": [
+          "plan",
+          "instructions",
+          "clinician",
+          "packet",
+          "version",
+          "current",
+          "release",
+          "v2"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "clinician.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the current confirmed clinical plan and its scoped packets",
+            "tool": "clinician.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "clinician.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "clinician.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Care clinician·Dr. Lena Park，负责clinical plan versions and scoped instruction packets。Releases only the clinician-confirmed plan and its scoped instruction packets exactly as issued; never interprets doses and does not accept agent-authored clinical content. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:clinician_plan_current"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Los_Angeles",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "plan_v2": {
+      "value": true,
+      "text": "The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-29",
+          "case": {
+            "dates": "2027-09-17",
+            "end_date": "2027-09-19",
+            "pickup": "home-FAM"
+          }
+        },
+        "predicate": "clinician_plan_current"
+      }
+    }
+  },
+  "start_at": "2027-09-16T09:00:00-07:00",
+  "deadline_at": "2027-09-18T12:00:00-07:00"
+}

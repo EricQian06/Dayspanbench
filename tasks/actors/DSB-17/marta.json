@@ -1,0 +1,177 @@
+{
+  "private": true,
+  "task_id": "DSB-17",
+  "actor": {
+    "id": "marta",
+    "name": "Family helper·Marta Vela",
+    "role": "authorized afternoon helper, 13:00-15:00",
+    "description": "Authorized for wheelchair assistance, child supervision and meal handoff within 13:00-15:00; acknowledges coverage only for meal windows fully inside her authorized hours.",
+    "calendar": "us_eastern_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "martavela@bench.example"
+    },
+    "knowledge": [
+      "helper_ack",
+      "marta_window"
+    ],
+    "tools": {
+      "marta.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "marta.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "marta_window",
+          "helper_ack"
+        ]
+      },
+      "marta.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "marta_window",
+          "helper_ack"
+        ]
+      },
+      "marta.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Coverage acknowledgement",
+        "aliases": [
+          "marta",
+          "coverage",
+          "help",
+          "assist",
+          "supervise",
+          "wheelchair",
+          "afternoon",
+          "handoff",
+          "meal"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "marta.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check her authorized coverage window against the requested meal window",
+            "tool": "marta.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 90
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "marta.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "marta.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Family helper·Marta Vela，负责authorized afternoon helper, 13:00-15:00。Authorized for wheelchair assistance, child supervision and meal handoff within 13:00-15:00; acknowledges coverage only for meal windows fully inside her authorized hours. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:helper_acknowledged",
+      "attest:helper_window"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "helper_ack": {
+      "value": true,
+      "text": "Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "helper_acknowledged"
+      }
+    },
+    "marta_window": {
+      "value": "13:00-15:00",
+      "text": "Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-17",
+          "case": {
+            "date": "2027-07-11",
+            "party_size": 6,
+            "location": "home"
+          }
+        },
+        "predicate": "helper_window"
+      }
+    }
+  },
+  "start_at": "2027-07-09T09:00:00-04:00",
+  "deadline_at": "2027-07-11T12:00:00-04:00"
+}

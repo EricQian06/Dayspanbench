@@ -1,0 +1,242 @@
+{
+  "private": true,
+  "task_id": "DSB-19",
+  "actor": {
+    "id": "dispatch_desk",
+    "name": "Access Ride dispatch·Dana Whitfield",
+    "role": "lift-equipped vehicle fleet, securement verification and ride bookings",
+    "description": "Confirms live lift, securement and companion capacity in writing; vehicle inventory changes without notice; bookings go through the desks named on the entry page. Only pickup and access needs are shared - never a diagnosis.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "danawhitfield@bench.example"
+    },
+    "knowledge": [
+      "lift_verified",
+      "outbound_arrival",
+      "outbound_booked",
+      "return_booked",
+      "return_pickup",
+      "total_fare"
+    ],
+    "tools": {
+      "dispatch_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "dispatch_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "lift_verified"
+        ]
+      },
+      "dispatch_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "lift_verified"
+        ]
+      },
+      "dispatch_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Fleet access verification",
+        "aliases": [
+          "lift",
+          "securement",
+          "companion",
+          "wheelchair",
+          "vehicle",
+          "access",
+          "verification",
+          "fleet"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "dispatch_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check live lift, securement and companion-seat verification",
+            "tool": "dispatch_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "dispatch_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "dispatch_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Access Ride dispatch·Dana Whitfield，负责lift-equipped vehicle fleet, securement verification and ride bookings。Confirms live lift, securement and companion capacity in writing; vehicle inventory changes without notice; bookings go through the desks named on the entry page. Only pickup and access needs are shared - never a diagnosis. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:lift_verified",
+      "attest:outbound_arrival",
+      "attest:outbound_booked",
+      "attest:return_booked",
+      "attest:return_pickup",
+      "attest:total_fare"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "lift_verified": {
+      "value": true,
+      "text": "Provider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-19",
+          "case": {
+            "date": "2027-09-03",
+            "city": "Chicago test district",
+            "appointment": "10:00"
+          }
+        },
+        "predicate": "lift_verified"
+      }
+    },
+    "outbound_arrival": {
+      "value": "09:25",
+      "text": "The booked outbound vehicle (out-B) picks up 09:00 and arrives at the clinic 09:25, inside the 09:30 arrival deadline for the 10:00 appointment.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-19",
+          "case": {
+            "date": "2027-09-03",
+            "city": "Chicago test district",
+            "appointment": "10:00"
+          }
+        },
+        "predicate": "outbound_arrival"
+      }
+    },
+    "outbound_booked": {
+      "value": true,
+      "text": "One approved accessible outbound leg has been booked with written pickup and access instructions; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-19",
+          "case": {
+            "date": "2027-09-03",
+            "city": "Chicago test district",
+            "appointment": "10:00"
+          }
+        },
+        "predicate": "outbound_booked"
+      }
+    },
+    "return_booked": {
+      "value": true,
+      "text": "One approved accessible return leg has been booked after the actual clinic release, with written pickup instructions; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-19",
+          "case": {
+            "date": "2027-09-03",
+            "city": "Chicago test district",
+            "appointment": "10:00"
+          }
+        },
+        "predicate": "return_booked"
+      }
+    },
+    "return_pickup": {
+      "value": "11:40",
+      "text": "The booked return vehicle (return-B) picks up 11:40, after the 11:20 clinic release, arriving home 12:10.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-19",
+          "case": {
+            "date": "2027-09-03",
+            "city": "Chicago test district",
+            "appointment": "10:00"
+          }
+        },
+        "predicate": "return_pickup"
+      }
+    },
+    "total_fare": {
+      "value": 85,
+      "text": "The combined fare for both booked legs is 85 USD (outbound 40 + return 45), within the 100 USD roundtrip cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-19",
+          "case": {
+            "date": "2027-09-03",
+            "city": "Chicago test district",
+            "appointment": "10:00"
+          }
+        },
+        "predicate": "total_fare"
+      }
+    }
+  },
+  "start_at": "2027-09-02T08:00:00-05:00",
+  "deadline_at": "2027-09-04T12:00:00-05:00"
+}

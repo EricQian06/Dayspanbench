@@ -1,0 +1,701 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-17",
+  "answer": {
+    "conclusion": "meal_covered",
+    "claims": [
+      {
+        "key": "meal_confirmed",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0009"
+        ]
+      },
+      {
+        "key": "delivery_time",
+        "status": "confirmed",
+        "value": "13:30",
+        "evidence_ids": [
+          "EV-0010"
+        ]
+      },
+      {
+        "key": "total_cost",
+        "status": "confirmed",
+        "value": 236.0,
+        "evidence_ids": [
+          "EV-0011"
+        ]
+      },
+      {
+        "key": "sesame_controls_written",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0003"
+        ]
+      },
+      {
+        "key": "child_meals_fish_free",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "helper_window",
+        "status": "confirmed",
+        "value": "13:00-15:00",
+        "evidence_ids": [
+          "EV-0005",
+          "EV-0007"
+        ]
+      },
+      {
+        "key": "helper_acknowledged",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0006",
+          "EV-0008"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-17",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "meal_confirmed",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "delivery_time",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "sesame_controls_written",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "child_meals_fish_free",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "helper_window",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "helper_acknowledged",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 32.0,
+    "calendar_days": 1.333333,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-07-10T21:00:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-07-09T14:20:00+00:00",
+      "from": "samreyes@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Home Meal Kitchen supervisor·Sam Reyes。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-07-09T18:24:00+00:00",
+      "from": "samreyes@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Home Meal Kitchen supervisor·Sam Reyes。您咨询的事项已经核实，具体情况如下：Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child portions on menu ff1 are prepared without fish.Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child portions on menu ff1 are prepared without fish.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0001",
+          "issuer": "kitchen",
+          "issued_at": "2027-07-09T17:26:00+00:00",
+          "text": "Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0002",
+          "issuer": "kitchen",
+          "issued_at": "2027-07-09T17:26:00+00:00",
+          "text": "Both child portions on menu ff1 are prepared without fish.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0003",
+          "issuer": "kitchen",
+          "issued_at": "2027-07-09T18:09:00+00:00",
+          "text": "Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0004",
+          "issuer": "kitchen",
+          "issued_at": "2027-07-09T18:09:00+00:00",
+          "text": "Both child portions on menu ff1 are prepared without fish.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2027-07-10T15:16:00+00:00",
+      "from": "martavela@bench.example",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Family helper·Marta Vela。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2027-07-10T17:52:00+00:00",
+      "from": "martavela@bench.example",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Family helper·Marta Vela。您咨询的事项已经核实，具体情况如下：Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0005",
+          "issuer": "marta",
+          "issued_at": "2027-07-10T17:03:00+00:00",
+          "text": "Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.",
+          "value": "13:00-15:00",
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0006",
+          "issuer": "marta",
+          "issued_at": "2027-07-10T17:03:00+00:00",
+          "text": "Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0007",
+          "issuer": "marta",
+          "issued_at": "2027-07-10T17:37:00+00:00",
+          "text": "Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.",
+          "value": "13:00-15:00",
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0008",
+          "issuer": "marta",
+          "issued_at": "2027-07-10T17:37:00+00:00",
+          "text": "Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "family_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "family_dialogue",
+      "question": "What are the party, accessibility needs, food requirements, helper coverage, budget and approval arrangements for the lunch?",
+      "matched": true
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "menu_search",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "menu_search",
+      "query": "family lunch menu",
+      "entries": [
+        "ff1-v1",
+        "ff2",
+        "ff3",
+        "ff4",
+        "ff5",
+        "ff6"
+      ]
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "samreyes@bench.example",
+      "text": "Please provide the written exact-menu sesame cross-contact controls and fish-free child portions for menu ff1",
+      "fields": {
+        "date": "2027-07-11",
+        "party_size": 6,
+        "location": "home"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-07-09T13:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-09T13:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "step": "main_1",
+      "start_at": "2027-07-09T13:32:00+00:00",
+      "due_at": "2027-07-09T14:20:00+00:00",
+      "tool": "kitchen.main.1.acknowledge"
+    },
+    {
+      "at": "2027-07-09T13:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "kitchen",
+      "case_id": "CASE-0001",
+      "tool": "kitchen.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "step": "main_2",
+      "start_at": "2027-07-09T14:20:00+00:00",
+      "due_at": "2027-07-09T17:26:00+00:00",
+      "tool": "kitchen.main.2.lookup"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "kitchen",
+      "case_id": "CASE-0001",
+      "tool": "kitchen.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "step": "main_3",
+      "start_at": "2027-07-09T17:26:00+00:00",
+      "due_at": "2027-07-09T18:09:00+00:00",
+      "tool": "kitchen.main.3.document"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "kitchen",
+      "case_id": "CASE-0001",
+      "tool": "kitchen.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "step": "main_4",
+      "start_at": "2027-07-09T18:09:00+00:00",
+      "due_at": "2027-07-09T18:24:00+00:00",
+      "tool": "kitchen.main.4.reply"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-09T18:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "kitchen",
+      "case_id": "CASE-0001",
+      "tool": "kitchen.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-07-09T18:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "kitchen",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-07-09T18:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-07-10T13:00:00+00:00",
+      "kind": "page_updated",
+      "page": "meal-intro",
+      "url": "https://familymeal.bench/intro"
+    },
+    {
+      "at": "2027-07-10T13:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "menu_search",
+      "removed": [
+        "ff1-v1"
+      ],
+      "added": [
+        "ff1-v2"
+      ]
+    },
+    {
+      "at": "2027-07-10T14:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "menu_search",
+      "query": "ff1",
+      "entries": [
+        "ff1-v2"
+      ]
+    },
+    {
+      "at": "2027-07-10T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "martavela@bench.example",
+      "text": "Please confirm you can cover wheelchair assistance, child supervision and meal handoff from the 13:30 delivery through 14:30 on July 11",
+      "fields": {
+        "date": "2027-07-11",
+        "party_size": 6,
+        "location": "home"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-07-10T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-07-10T14:36:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-10T14:36:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "step": "main_1",
+      "start_at": "2027-07-10T14:36:00+00:00",
+      "due_at": "2027-07-10T15:16:00+00:00",
+      "tool": "marta.main.1.acknowledge"
+    },
+    {
+      "at": "2027-07-10T14:36:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-10T15:16:00+00:00",
+      "kind": "tool_call",
+      "actor": "marta",
+      "case_id": "CASE-0002",
+      "tool": "marta.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-07-10T15:16:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-07-10T15:16:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-10T15:16:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "step": "main_2",
+      "start_at": "2027-07-10T15:16:00+00:00",
+      "due_at": "2027-07-10T17:03:00+00:00",
+      "tool": "marta.main.2.lookup"
+    },
+    {
+      "at": "2027-07-10T15:16:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-10T17:03:00+00:00",
+      "kind": "tool_call",
+      "actor": "marta",
+      "case_id": "CASE-0002",
+      "tool": "marta.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-07-10T17:03:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-10T17:03:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "step": "main_3",
+      "start_at": "2027-07-10T17:03:00+00:00",
+      "due_at": "2027-07-10T17:37:00+00:00",
+      "tool": "marta.main.3.document"
+    },
+    {
+      "at": "2027-07-10T17:03:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-10T17:37:00+00:00",
+      "kind": "tool_call",
+      "actor": "marta",
+      "case_id": "CASE-0002",
+      "tool": "marta.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-07-10T17:37:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-10T17:37:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "step": "main_4",
+      "start_at": "2027-07-10T17:37:00+00:00",
+      "due_at": "2027-07-10T17:52:00+00:00",
+      "tool": "marta.main.4.reply"
+    },
+    {
+      "at": "2027-07-10T17:37:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-10T17:52:00+00:00",
+      "kind": "tool_call",
+      "actor": "marta",
+      "case_id": "CASE-0002",
+      "tool": "marta.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-07-10T17:52:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "marta",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-07-10T17:52:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0004",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    },
+    {
+      "at": "2027-07-10T17:52:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "family_dialogue",
+      "question": "Do you approve the revised plan: ff1 version 2, six portions delivered 13:30, total 236.00 USD, Marta covering the full 13:30-14:30 window?",
+      "matched": true
+    },
+    {
+      "at": "2027-07-10T17:52:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "meal_order",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-07-10T17:52:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "meal_order",
+      "entry": "ff1-v2",
+      "accepted": true
+    },
+    {
+      "at": "2027-07-10T19:52:00+00:00",
+      "kind": "page_updated",
+      "page": "meal-entry",
+      "url": "https://familymeal.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-07-10T19:52:00+00:00",
+      "kind": "selection_processed",
+      "tool": "meal_order",
+      "accepted": true,
+      "result": "Order confirmed: menu ff1 version 2, six portions (four adult, two fish-free child) delivered 2027-07-11 at 13:30 New York time, with written sesame cross-contact controls acknowledged by the provider and helper coverage acknowledged for the full 13:30-14:30 meal window; total 236.00 USD including tax and delivery; no payment taken. The controls are provider-reported, not a medical guarantee."
+    },
+    {
+      "at": "2027-07-10T21:00:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "meal_order",
+      "query": "order"
+    }
+  ],
+  "pending_cases": []
+}

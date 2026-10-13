@@ -1,0 +1,480 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-13",
+  "answer": {
+    "conclusion": "reserved_verified",
+    "claims": [
+      {
+        "key": "restaurant_address",
+        "status": "confirmed",
+        "value": "12 Ramp Lane, Riverdale test district",
+        "evidence_ids": [
+          "EV-0008"
+        ]
+      },
+      {
+        "key": "table_time",
+        "status": "confirmed",
+        "value": "13:30",
+        "evidence_ids": [
+          "EV-0009"
+        ]
+      },
+      {
+        "key": "total_cost",
+        "status": "confirmed",
+        "value": 247.8,
+        "evidence_ids": [
+          "EV-0010"
+        ]
+      },
+      {
+        "key": "access_verified",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "sesame_controls_written",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0005"
+        ]
+      },
+      {
+        "key": "child_meals_fish_free",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0003",
+          "EV-0006"
+        ]
+      },
+      {
+        "key": "reservation_confirmed",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0007"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-13",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "restaurant_address",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "table_time",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "access_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "sesame_controls_written",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "child_meals_fish_free",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "reservation_confirmed",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 29.0,
+    "calendar_days": 1.208333,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-07-10T18:00:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-07-09T14:20:00+00:00",
+      "from": "alexchen2@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Garden Ramp Bistro manager·Alex Chen。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-07-09T18:24:00+00:00",
+      "from": "alexchen2@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Garden Ramp Bistro manager·Alex Chen。您咨询的事项已经核实，具体情况如下：Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0001",
+          "issuer": "garden_manager",
+          "issued_at": "2027-07-09T17:26:00+00:00",
+          "text": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0002",
+          "issuer": "garden_manager",
+          "issued_at": "2027-07-09T17:26:00+00:00",
+          "text": "Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0003",
+          "issuer": "garden_manager",
+          "issued_at": "2027-07-09T17:26:00+00:00",
+          "text": "Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0004",
+          "issuer": "garden_manager",
+          "issued_at": "2027-07-09T18:09:00+00:00",
+          "text": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0005",
+          "issuer": "garden_manager",
+          "issued_at": "2027-07-09T18:09:00+00:00",
+          "text": "Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0006",
+          "issuer": "garden_manager",
+          "issued_at": "2027-07-09T18:09:00+00:00",
+          "text": "Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "family_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "family_dialogue",
+      "question": "What are the party size, accessibility needs, food requirements, budget and approval arrangements for the lunch?",
+      "matched": true
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "alexchen2@bench.example",
+      "text": "Please verify step-free wheelchair access and written sesame controls for our party of six",
+      "fields": {
+        "date": "2027-07-11",
+        "area": "Riverdale test district",
+        "party_size": 6
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-07-09T13:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-09T13:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "step": "main_1",
+      "start_at": "2027-07-09T13:32:00+00:00",
+      "due_at": "2027-07-09T14:20:00+00:00",
+      "tool": "garden_manager.main.1.acknowledge"
+    },
+    {
+      "at": "2027-07-09T13:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "garden_manager",
+      "case_id": "CASE-0001",
+      "tool": "garden_manager.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "step": "main_2",
+      "start_at": "2027-07-09T14:20:00+00:00",
+      "due_at": "2027-07-09T17:26:00+00:00",
+      "tool": "garden_manager.main.2.lookup"
+    },
+    {
+      "at": "2027-07-09T14:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "garden_manager",
+      "case_id": "CASE-0001",
+      "tool": "garden_manager.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "step": "main_3",
+      "start_at": "2027-07-09T17:26:00+00:00",
+      "due_at": "2027-07-09T18:09:00+00:00",
+      "tool": "garden_manager.main.3.document"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "garden_manager",
+      "case_id": "CASE-0001",
+      "tool": "garden_manager.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "step": "main_4",
+      "start_at": "2027-07-09T18:09:00+00:00",
+      "due_at": "2027-07-09T18:24:00+00:00",
+      "tool": "garden_manager.main.4.reply"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-09T18:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "garden_manager",
+      "case_id": "CASE-0001",
+      "tool": "garden_manager.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-07-09T18:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "garden_manager",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-07-09T18:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-07-09T18:24:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "restaurant_search",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-07-09T18:24:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "restaurant_search",
+      "query": "Riverdale lunch six people",
+      "entries": [
+        "r101-v1",
+        "r102",
+        "r103",
+        "r104",
+        "r105",
+        "r106"
+      ]
+    },
+    {
+      "at": "2027-07-10T14:00:00+00:00",
+      "kind": "page_updated",
+      "page": "dining-intro",
+      "url": "https://riverdale.bench/intro"
+    },
+    {
+      "at": "2027-07-10T14:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "restaurant_search",
+      "removed": [
+        "r101-v1"
+      ],
+      "added": [
+        "r101-v2"
+      ]
+    },
+    {
+      "at": "2027-07-10T14:30:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "restaurant_search",
+      "query": "Garden Ramp Bistro",
+      "entries": [
+        "r102",
+        "r103",
+        "r104",
+        "r105",
+        "r101-v2"
+      ]
+    },
+    {
+      "at": "2027-07-10T14:30:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "reserve_table",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-07-10T14:30:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "reserve_table",
+      "entry": "r101-v2",
+      "accepted": true
+    },
+    {
+      "at": "2027-07-10T16:30:00+00:00",
+      "kind": "page_updated",
+      "page": "dining-entry",
+      "url": "https://riverdale.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-07-10T16:30:00+00:00",
+      "kind": "selection_processed",
+      "tool": "reserve_table",
+      "accepted": true,
+      "result": "Reservation confirmed: Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district, 2027-07-11 at 13:30 New York time, six seats - four adult roast chicken and two fish-free child tomato pasta - with step-free access and written sesame controls acknowledged by the provider; pre-tip total 247.80 USD including tax and mandatory service; no payment taken. The controls are provider-reported, not a medical guarantee."
+    },
+    {
+      "at": "2027-07-10T18:00:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "reserve_table",
+      "query": "reservation"
+    }
+  ],
+  "pending_cases": []
+}

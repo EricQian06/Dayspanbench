@@ -1,0 +1,193 @@
+{
+  "private": true,
+  "task_id": "DSB-14",
+  "actor": {
+    "id": "print_manager",
+    "name": "Print yard operations manager·Dana Cole",
+    "role": "print runs JOB441/JOB442, halts and manifest changes",
+    "description": "Runs the door-hanger print yard: halts and manifest changes go through the desks on the yard and correction pages; the 06:00 run is the last truck before the weekend crew change.",
+    "calendar": "always",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "danacole@bench.example"
+    },
+    "knowledge": [
+      "halted_before_dispatch",
+      "replacement_dispatched",
+      "retracted_b1501u"
+    ],
+    "tools": {
+      "print_manager.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "print_manager.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "halted_before_dispatch",
+          "replacement_dispatched"
+        ]
+      },
+      "print_manager.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "halted_before_dispatch",
+          "replacement_dispatched"
+        ]
+      },
+      "print_manager.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Print run questions",
+        "aliases": [
+          "print",
+          "yard",
+          "job441",
+          "job442",
+          "run",
+          "manifest",
+          "hangers",
+          "stock"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "print_manager.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 10
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the run log for JOB441 and JOB442",
+            "tool": "print_manager.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 5
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "print_manager.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 5
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "print_manager.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Print yard operations manager·Dana Cole，负责print runs JOB441/JOB442, halts and manifest changes。Runs the door-hanger print yard: halts and manifest changes go through the desks on the yard and correction pages; the 06:00 run is the last truck before the weekend crew change. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:dispatched",
+      "attest:halted",
+      "attest:retracted"
+    ]
+  },
+  "calendar": {
+    "timezone": "UTC",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "00:00",
+        "23:59"
+      ]
+    ]
+  },
+  "local_facts": {
+    "halted_before_dispatch": {
+      "value": true,
+      "text": "JOB441 was halted and its remaining stock quarantined before the 06:00 print run, so the wrong route could not repeat.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-14",
+          "case": {
+            "role": "communications lead",
+            "wrong_delivery": "1501 U Street",
+            "print_day": "2027-06-11"
+          }
+        },
+        "predicate": "halted"
+      }
+    },
+    "replacement_dispatched": {
+      "value": true,
+      "text": "JOB442, the corrected manifest for the crew-verified audience with bilingual notices for 1400 14th Street, left the print yard with the 06:00 run. Dispatch means the hangers left the yard - doorstep delivery is a separate matter.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-14",
+          "case": {
+            "role": "communications lead",
+            "wrong_delivery": "1501 U Street",
+            "print_day": "2027-06-11"
+          }
+        },
+        "predicate": "dispatched"
+      }
+    },
+    "retracted_b1501u": {
+      "value": true,
+      "text": "A targeted retraction of the wrong shutdown notice was sent to 1501 U Street only - no building outside the misdelivery was contacted.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-14",
+          "case": {
+            "role": "communications lead",
+            "wrong_delivery": "1501 U Street",
+            "print_day": "2027-06-11"
+          }
+        },
+        "predicate": "retracted"
+      }
+    }
+  },
+  "start_at": "2027-06-11T04:40:00-04:00",
+  "deadline_at": "2027-06-13T06:05:00-04:00"
+}

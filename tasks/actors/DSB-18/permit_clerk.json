@@ -1,0 +1,239 @@
+{
+  "private": true,
+  "task_id": "DSB-18",
+  "actor": {
+    "id": "permit_clerk",
+    "name": "City permit office caseworker·Alan Ford",
+    "role": "PERMIT-7 renewals and portal identity verification",
+    "description": "Verifies portal identities for permit renewals in writing. Identity and clinical documents are accepted only through the verified portal - never by ordinary email, SMS or social messages. Supplement notices are appended to applications mid-review and must be answered before the office deadline.",
+    "calendar": "us_central_office",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "alanford@bench.example"
+    },
+    "knowledge": [
+      "followup_complete",
+      "initial_submitted",
+      "notice_delivered",
+      "permit_expires",
+      "portal_verified",
+      "supplement_submitted"
+    ],
+    "tools": {
+      "permit_clerk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "permit_clerk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "portal_verified"
+        ]
+      },
+      "permit_clerk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "portal_verified"
+        ]
+      },
+      "permit_clerk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Portal identity verification",
+        "aliases": [
+          "verify",
+          "portal",
+          "identity",
+          "verification",
+          "linda",
+          "token",
+          "renewal"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "permit_clerk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "verify the masked identity token against the permit-holder record",
+            "tool": "permit_clerk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 480
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "permit_clerk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "permit_clerk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是City permit office caseworker·Alan Ford，负责PERMIT-7 renewals and portal identity verification。Verifies portal identities for permit renewals in writing. Identity and clinical documents are accepted only through the verified portal - never by ordinary email, SMS or social messages. Supplement notices are appended to applications mid-review and must be answered before the office deadline. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:followup_complete",
+      "attest:initial_submitted",
+      "attest:notice_delivered",
+      "attest:permit_expires",
+      "attest:portal_verified",
+      "attest:supplement_submitted"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "followup_complete": {
+      "value": true,
+      "text": "Permit PERMIT-7's renewal follow-up is complete: the initial application and the address-proof supplement were both accepted, and no further documents are outstanding.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-18",
+          "case": {
+            "permit_id": "PERMIT-7",
+            "expires": "2027-10-01",
+            "saved_contact": "linda-contact"
+          }
+        },
+        "predicate": "followup_complete"
+      }
+    },
+    "initial_submitted": {
+      "value": true,
+      "text": "The initial renewal application (application app-XGC1) was submitted through the verified portal with only the masked identity token and the clinician certificate; no raw identity document was uploaded or emailed.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-18",
+          "case": {
+            "permit_id": "PERMIT-7",
+            "expires": "2027-10-01",
+            "saved_contact": "linda-contact"
+          }
+        },
+        "predicate": "initial_submitted"
+      }
+    },
+    "notice_delivered": {
+      "value": true,
+      "text": "Notice notice-XGC1 was delivered to Linda's saved verified contact (linda-contact) as a short plain-text message plus a scheduled phone callback, carrying the required action and deadline but no sensitive documents, and she acknowledged it.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-18",
+          "case": {
+            "permit_id": "PERMIT-7",
+            "expires": "2027-10-01",
+            "saved_contact": "linda-contact"
+          }
+        },
+        "predicate": "notice_delivered"
+      }
+    },
+    "permit_expires": {
+      "value": "2027-10-01",
+      "text": "Permit PERMIT-7, held by Linda Harris, expires 2027-10-01; the renewal must be completed before the office deadline of 2027-09-22 17:00.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-18",
+          "case": {
+            "permit_id": "PERMIT-7",
+            "expires": "2027-10-01",
+            "saved_contact": "linda-contact"
+          }
+        },
+        "predicate": "permit_expires"
+      }
+    },
+    "portal_verified": {
+      "value": true,
+      "text": "The permit office verified Linda Harris's portal identity (masked token) on September 14 after her written verification request; identity and clinical documents are accepted only through this verified portal.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-18",
+          "case": {
+            "permit_id": "PERMIT-7",
+            "expires": "2027-10-01",
+            "saved_contact": "linda-contact"
+          }
+        },
+        "predicate": "portal_verified"
+      }
+    },
+    "supplement_submitted": {
+      "value": true,
+      "text": "The supplement (address proof v2) was filed against notice-XGC1 through the verified portal before the 2027-09-22 17:00 deadline.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-18",
+          "case": {
+            "permit_id": "PERMIT-7",
+            "expires": "2027-10-01",
+            "saved_contact": "linda-contact"
+          }
+        },
+        "predicate": "supplement_submitted"
+      }
+    }
+  },
+  "start_at": "2027-09-13T09:00:00-05:00",
+  "deadline_at": "2027-09-22T17:00:00-05:00"
+}

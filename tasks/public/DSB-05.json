@@ -11,9 +11,21 @@
     {
       "id": "supplier-intro",
       "title": "棱川制造简介",
-      "text": "棱川制造承接批次制造。报价有效期短于28天耐久性测试；测试结束后的周一10点复核报告。销售与质检可并行咨询，报告完成后应重新确认报价。",
+      "text": "棱川制造承接批次制造。报价有效期短于28天耐久性测试；测试结束后的周一10点复核报告。销售与质检可并行咨询，报告完成后应重新确认报价。本页另挂有批次价目等文件。",
       "contacts": [],
       "snippet": "批次制造、耐久测试与报价有效期说明。",
+      "documents": [
+        {
+          "id": "supplier-promo-ref",
+          "title": "500件M26批次价目.pdf",
+          "text": "棱川制造500件M26-Q7规格批次价目：促销总价17900元。（留存方整理）",
+          "facts": [
+            "quote_promo"
+          ],
+          "issuer": "factory",
+          "url": "https://lengchuan.bench/files/supplier-promo-ref.pdf"
+        }
+      ],
       "url": "https://lengchuan.bench/intro"
     },
     {
@@ -30,13 +42,47 @@
     {
       "id": "supplier-entry",
       "title": "棱川制造采购询价入口",
-      "text": "棱川制造采购询价说明：询价需提供数量与规格；质检确认需材料批次规格；报价有有效期，过期后需重新确认。本页面仅说明材料要求，不能在线下单。",
+      "text": "棱川制造采购询价说明：询价需提供数量与规格；质检确认需材料批次规格；报价有有效期，过期后需重新确认；批次出库的书面预核结论通过本页登记表单申请后取得。本页面仅说明材料要求，不能在线下单。",
       "contacts": [],
       "snippet": "棱川制造询价与质检材料说明；不支持在线下单。",
+      "form": {
+        "id": "dispatch_form",
+        "title": "批次出库预核登记",
+        "fields": [
+          {
+            "name": "quantity",
+            "label": "数量（件）",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "spec",
+            "label": "规格",
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "本表单不能在线直接提交：须通过棱川出库预核登记渠道办理；渠道名称与受理安排以官网简介页最新公告为准。"
+      },
       "url": "https://lengchuan.bench/entry"
     }
   ],
   "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "fetch_document",
+    "request_callback",
+    "leave_note"
+  ],
   "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
   "answer_keys": [
     "current_total",
@@ -76,5 +122,5 @@
     "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
   },
   "start_at": "2026-11-03T14:00:00+08:00",
-  "deadline_at": "2026-12-08T15:00:00+08:00"
+  "deadline_at": "2026-12-09T17:00:00+08:00"
 }

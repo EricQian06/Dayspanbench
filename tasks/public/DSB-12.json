@@ -10,9 +10,21 @@
     {
       "id": "logistics-intro",
       "title": "远澄货运简介与归类留置核查流程",
-      "text": "本合成场景有多阶段归类争议核查：留置货件先经客服核实历史入库交接；出口方分批次补发更正单证；归类初审登记与长期技术复核按既定窗口集中办理；补齐新版单证和制造批次溯源资料后方可发起长期复核。各阶段办理节奏与时间窗口见常见问题页。",
+      "text": "本合成场景有多阶段归类争议核查：留置货件先经客服核实历史入库交接；出口方分批次补发更正单证；归类初审登记与长期技术复核按既定窗口集中办理；补齐新版单证和制造批次溯源资料后方可发起长期复核。各阶段办理节奏与时间窗口见常见问题页。本页另挂有口岸归类留置件登记记录等文件。",
       "contacts": [],
       "snippet": "归类留置核查流程、初审登记与长期复核办理节奏说明。",
+      "documents": [
+        {
+          "id": "logistics-case-ref",
+          "title": "口岸归类留置件登记记录.pdf",
+          "text": "口岸归类留置件登记记录：留置件归类初审登记号HOLD-608-9。（留存方整理）",
+          "facts": [
+            "review_case_ref"
+          ],
+          "issuer": "forwarder",
+          "url": "https://yuancheng.bench/files/logistics-case-ref.pdf"
+        }
+      ],
       "url": "https://yuancheng.bench/intro"
     },
     {
@@ -28,9 +40,40 @@
     {
       "id": "logistics-entry",
       "title": "远澄货运留置核查办理入口与材料说明",
-      "text": "远澄货运留置核查办理说明：办理需提供运单号与有效申报单证版本；初审登记、长期复核与放行状态须由单证联络岗位发起，本页面仅说明材料，不能在线发起复核或支付费用。",
+      "text": "远澄货运留置核查办理说明：办理需提供运单号与有效申报单证版本；长期复核的登记受理通过本页登记表单提交；初审登记、长期复核与放行状态须由单证联络岗位发起，本页面仅说明材料，不能在线发起复核或支付费用。",
       "contacts": [],
-      "snippet": "远澄货运留置核查材料与单证版本要求说明；不支持在线发起复核或状态查询。",
+      "snippet": "远澄货运留置核查材料、单证版本要求与长期复核登记表单说明；不支持在线发起复核或状态查询。",
+      "form": {
+        "id": "review_form",
+        "title": "长期复核登记申请",
+        "fields": [
+          {
+            "name": "tracking",
+            "label": "运单号",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "declaration_version",
+            "label": "有效申报单证版本",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "review_reference",
+            "label": "归类初审登记号",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "batch_trace",
+            "label": "制造批次溯源资料号",
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "本表单不能在线直接提交：须通过远澄长期复核登记渠道办理；渠道名称与受理安排以常见问题页最新公告为准。"
+      },
       "url": "https://yuancheng.bench/entry"
     },
     {
@@ -43,6 +86,22 @@
     }
   ],
   "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "lookup_directory",
+    "query_case_status",
+    "fetch_document",
+    "request_callback"
+  ],
   "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
   "answer_keys": [
     "initial_warehouse_record",

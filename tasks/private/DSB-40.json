@@ -1,0 +1,1442 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.4.0",
+  "id": "DSB-40",
+  "title": "Fridge replacement: verified access and a changed delivery slot",
+  "domain": "shopping_commerce",
+  "start_at": "2027-06-07T09:00:00-05:00",
+  "deadline_at": "2027-06-09T12:00:00-05:00",
+  "display_timezone": "America/Chicago",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
+    }
+  },
+  "reply_delay": [
+    20,
+    45
+  ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "page_updates": [
+    {
+      "page": "store-intro",
+      "at": "2027-06-08T12:00:00-05:00",
+      "text": "Test Appliance Cooperative storefront (June 8 update): the uncommitted early delivery route for COOL-17-A is no longer available - its offer v2 delivery window is June 11 14:00-16:00, past the June 10 09:00 deadline, and earlier p201 quotes and approvals are invalid. COOL-16-B retains its separate June 9 10:00-12:00 slot. Listings are found through product_search; re-check the live slot before ordering. Household facts come from the household desk (householder_dialogue); written fit and recycling confirmations come from the delivery specialist by mail.",
+      "snippet": "June 8 update: COOL-17-A delivery moved to June 11; COOL-16-B keeps its June 9 slot."
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "product_search",
+      "usage": "Test Appliance Cooperative product search. Argument: query (optional string), e.g. \"refrigerator\" or a SKU. Returns the current listings with capacity, width, line-item prices, all-in totals and delivery windows; uncommitted delivery routes can change, so re-check the live slot before ordering.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "fridge",
+          "refrigerator",
+          "appliance",
+          "freezer",
+          "kitchen",
+          "shopping",
+          "delivery"
+        ],
+        "clue": "A store search service named product_search lists the current refrigerator offers.",
+        "entries": [
+          {
+            "id": "p201",
+            "title": "COOL-17-A - 17 cu ft (headline 960 USD)",
+            "text": "17 cu ft, Energy Star, 32 in wide, stock 2. Headline item price 960 USD; all-in 1121.80 USD (tax 76.80, delivery 60, recycling 25). Delivery 2027-06-09 10:00-12:00, pay on delivery; fit verification pending.",
+            "fields": {
+              "sku": "COOL-17-A",
+              "capacity_cuft": 17,
+              "width_in": 32,
+              "energy_star": true,
+              "item_usd": 960,
+              "tax_usd": 76.8,
+              "delivery_usd": 60,
+              "recycling_usd": 25,
+              "total_usd": 1121.8,
+              "delivery_start": "2027-06-09T10:00:00-05:00",
+              "delivery_end": "2027-06-09T12:00:00-05:00",
+              "payment_method": "pay_on_delivery",
+              "offer_version": 1,
+              "verification": "pending"
+            }
+          },
+          {
+            "id": "p202",
+            "title": "CREDIT-17 - 17 cu ft (990 USD, store credit required)",
+            "text": "17 cu ft, Energy Star, 32 in wide. The advertised 990 USD total requires opening a new store-credit account.",
+            "fields": {
+              "sku": "CREDIT-17",
+              "capacity_cuft": 17,
+              "width_in": 32,
+              "energy_star": true,
+              "total_usd": 990,
+              "payment_method": "new_store_credit",
+              "requires_new_credit": true
+            }
+          },
+          {
+            "id": "p203",
+            "title": "WIDE-20 - 20 cu ft (too wide)",
+            "text": "20 cu ft, Energy Star, but 34 in wide - exceeds the 32.5 in limit.",
+            "fields": {
+              "sku": "WIDE-20",
+              "capacity_cuft": 20,
+              "width_in": 34,
+              "energy_star": true,
+              "total_usd": 1200,
+              "requires_new_credit": false
+            }
+          },
+          {
+            "id": "p204",
+            "title": "BACKORDER-18 - 18 cu ft (backordered)",
+            "text": "18 cu ft, Energy Star, 31 in wide, but out of stock; delivery 2027-06-14 misses the deadline.",
+            "fields": {
+              "sku": "BACKORDER-18",
+              "capacity_cuft": 18,
+              "width_in": 31,
+              "energy_star": true,
+              "stock": 0,
+              "total_usd": 1100,
+              "delivery_start": "2027-06-14T10:00:00-05:00",
+              "requires_new_credit": false
+            }
+          },
+          {
+            "id": "p205",
+            "title": "PREMIUM-17 - 17 cu ft (headline fits, all-in does not)",
+            "text": "17 cu ft, Energy Star, 32 in wide, stock 1. Headline item price 1250 USD; all-in 1420.00 USD (tax 100, delivery 50, recycling 20).",
+            "fields": {
+              "sku": "PREMIUM-17",
+              "capacity_cuft": 17,
+              "width_in": 32,
+              "energy_star": true,
+              "item_usd": 1250,
+              "tax_usd": 100,
+              "delivery_usd": 50,
+              "recycling_usd": 20,
+              "total_usd": 1420,
+              "requires_new_credit": false
+            }
+          },
+          {
+            "id": "p206",
+            "title": "COOL-16-B - 16.5 cu ft (all-in 1181.60 USD)",
+            "text": "16.5 cu ft, Energy Star, 31.5 in wide, stock 2. All-in 1181.60 USD (item 1020.00, tax 81.60, delivery 50, recycling 30). Delivery 2027-06-09 10:00-12:00, pay on delivery; fit verification pending.",
+            "fields": {
+              "sku": "COOL-16-B",
+              "capacity_cuft": 16.5,
+              "width_in": 31.5,
+              "energy_star": true,
+              "item_usd": 1020,
+              "tax_usd": 81.6,
+              "delivery_usd": 50,
+              "recycling_usd": 30,
+              "total_usd": 1181.6,
+              "delivery_start": "2027-06-09T10:00:00-05:00",
+              "delivery_end": "2027-06-09T12:00:00-05:00",
+              "payment_method": "pay_on_delivery",
+              "offer_version": 1,
+              "verification": "pending"
+            }
+          }
+        ],
+        "updates": [
+          {
+            "at": "2027-06-08T12:00:00-05:00",
+            "remove": [
+              "p201"
+            ],
+            "add": [
+              {
+                "id": "p201",
+                "title": "COOL-17-A - 17 cu ft (offer v2: delivery moved to June 11)",
+                "text": "The uncommitted early delivery route for COOL-17-A is no longer available. Offer v2 delivery is 2027-06-11 14:00-16:00 - past the June 10 09:00 deadline. Earlier p201 quotes and approvals are invalid; COOL-16-B retains its separate June 9 slot.",
+                "fields": {
+                  "sku": "COOL-17-A",
+                  "capacity_cuft": 17,
+                  "width_in": 32,
+                  "energy_star": true,
+                  "total_usd": 1121.8,
+                  "delivery_start": "2027-06-11T14:00:00-05:00",
+                  "delivery_end": "2027-06-11T16:00:00-05:00",
+                  "payment_method": "pay_on_delivery",
+                  "offer_version": 2,
+                  "verification": "confirmed"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "order_create",
+      "usage": "Test Appliance Cooperative order desk. Argument: {\"entry\": listing_id} to order the plan shown in one current product_search row, or {\"query\": text} to read back the current order status. Order only the plan the householder has approved; at most one order; pay on delivery only - the desk takes no payment and opens no credit.",
+      "kind": "select",
+      "params": {
+        "catalog": "product_search",
+        "expect_entry": "p206",
+        "expect": {
+          "total_usd": 1181.6,
+          "payment_method": "pay_on_delivery"
+        },
+        "process_delay": 120,
+        "calendar": "us_central_daily",
+        "result_text": "Order confirmed: COOL-16-B (16.5 cu ft, Energy Star, 31.5 in wide) from the test appliance store for Angela Davis at home-A, 18 Example Court - all-in 1181.60 USD (item 1020.00, tax 81.60, delivery 50.00, recycling 30.00), assigned delivery 2027-06-09 10:00-12:00 Chicago time with verified unpack-at-door fit (fit-S206) and old-fridge recycling included. Pay on delivery by the customer; no payment taken, no credit opened, and delivery has not occurred.",
+        "reject_text": "The submitted listing is not a current approvable plan (the listing is ineligible, stale, or its delivery slot no longer meets the deadline); the request was returned and nothing was ordered.",
+        "facts": [
+          "ordered_sku",
+          "order_total",
+          "delivery_window",
+          "payment_terms"
+        ],
+        "issuer": "store_operations",
+        "page_update": {
+          "page": "store-entry",
+          "snippet": "Order desk: an approved order request is being processed; check the desk status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "householder_dialogue",
+      "usage": "Ask the householder, Angela Davis, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
+      "kind": "dialogue",
+      "params": {
+        "persona": "Angela Davis (householder)",
+        "rules": [
+          {
+            "keywords": [
+              "request",
+              "need",
+              "size",
+              "capacity",
+              "cuft",
+              "width",
+              "energy",
+              "budget",
+              "deadline",
+              "when"
+            ],
+            "answer": "At least 16 cubic feet, Energy Star, no wider than 32.5 inches, at most 1300 USD all-in including tax, delivery and old-fridge recycling, with delivery completed by June 10, 2027, 09:00 Chicago time."
+          },
+          {
+            "keywords": [
+              "installation",
+              "opening",
+              "space",
+              "measure",
+              "fit"
+            ],
+            "answer": "The installation opening is 33 in wide, 70 in high, 35 in deep."
+          },
+          {
+            "keywords": [
+              "access",
+              "doorway",
+              "stairs",
+              "unpack",
+              "route"
+            ],
+            "answer": "The narrowest doorway is 33 in and there are no stairs. Unpacking at the door is allowed if the provider confirms the procedure in writing."
+          },
+          {
+            "keywords": [
+              "address",
+              "delivery",
+              "recipient",
+              "zone",
+              "hours",
+              "recycling",
+              "recycle"
+            ],
+            "answer": "Deliver to Angela Davis at home-A, 18 Example Court, Test City, zone-A; I am available 08:00-18:00 daily, and the old fridge should be recycled."
+          },
+          {
+            "keywords": [
+              "approve",
+              "approval",
+              "permission",
+              "confirm",
+              "review",
+              "authorize",
+              "pay",
+              "payment",
+              "credit"
+            ],
+            "answer": "Use pay-on-delivery; I will handle payment myself. No new credit account, subscription or deposit. I can review from June 8 at 13:00 Chicago time - show the exact SKU, fit evidence, delivery interval, recycling and full price, and order only after I approve."
+          }
+        ],
+        "default": "Please ask me about the requirements, the space, the access, the delivery details or the ordering permission."
+      }
+    }
+  ],
+  "judge_criteria": [
+    {
+      "id": "S-R6-accurate-comparison",
+      "statement": "The final explanation is accurate about tradeoffs and remaining work.",
+      "pass_if": "The final answer reports the exact product, full all-in price and confirmed delivery interval, explains the rejection of the new-credit, late-delivery, backordered or over-budget offers (including the headline-vs-all-in price trap), and states that payment and delivery remain pending rather than completed.",
+      "source": "final_answer"
+    }
+  ],
+  "public": {
+    "id": "DSB-40",
+    "title": "Fridge replacement: verified access and a changed delivery slot",
+    "brief": "Our refrigerator failed. Find one with at least 16 cu ft, Energy Star, no wider than 32.5 in, at most 1300 USD all-in including tax, delivery and old-fridge recycling, delivered by 2027-06-10 09:00 Chicago time. Ask me about the space, access, address and ordering permission before ordering; the seller must verify unpack-at-door fit and recycling in writing, watch for delivery-slot changes, and make at most one approved order. Pay on delivery only - no new credit, subscription, deposit or agent payment.",
+    "user_fields": {
+      "need": "refrigerator replacement",
+      "delivery_deadline": "2027-06-10",
+      "min_capacity_cuft": 16,
+      "max_width_in": 32.5,
+      "budget_usd": 1300
+    },
+    "initial_contacts": [],
+    "pages": [
+      {
+        "id": "store-intro",
+        "title": "Test Appliance Cooperative storefront",
+        "text": "Synthetic appliance listings for the test district; listing claims alone do not establish fit, eligibility or a confirmed delivery slot. Current listings are found through the store's product search service (product_search), and uncommitted delivery routes can change without notice, so re-check the live slot before ordering. Household space, access, address and approval facts can be clarified through the household desk (householder_dialogue). Measured fit, unpack-at-door and recycling confirmations come from the delivery specialist by mail.",
+        "contacts": [],
+        "snippet": "Test Appliance Cooperative: refrigerator listings and household requirements desk.",
+        "url": "https://fridgedelivery.bench/intro"
+      },
+      {
+        "id": "store-contact",
+        "title": "Store contacts",
+        "text": "The delivery specialist (Morgan Hale) verifies measured installation fit, the doorway route, unpack-at-door handling and recycling; the inventory desk (Riley Carter) quotes current all-in totals and delivery slots. Both answer daily during business hours.",
+        "contacts": [
+          "fulfillment_agent",
+          "store_operations"
+        ],
+        "snippet": "Contacts for the delivery specialist and the inventory desk.",
+        "url": "https://fridgedelivery.bench/contact"
+      },
+      {
+        "id": "store-entry",
+        "title": "Order desk",
+        "text": "Orders are placed through the store's order desk (order_create): pick one current product_search listing whose all-in total, payment terms and live delivery slot still satisfy the requirements, obtain the householder's approval of the exact SKU, fit evidence, delivery interval, recycling and full price (review available from June 8 at 13:00 Chicago time), then submit that one plan. At most one order; pay on delivery only - no new credit, subscription, deposit or agent payment. Stale offers are revalidated against live listings at order time.",
+        "contacts": [],
+        "snippet": "Order desk: one approved pay-on-delivery order, live slot only, no agent payment.",
+        "url": "https://fridgedelivery.bench/entry"
+      }
+    ],
+    "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "check_schedule"
+    ],
+    "authorization": "Advisory and coordination only: search listings, contact the store, gather written fit verification, and place at most the one pay-on-delivery order the householder has approved; no payment, new credit account, subscription, deposit or other binding commitment.",
+    "answer_keys": [
+      "ordered_sku",
+      "order_total",
+      "delivery_window",
+      "payment_terms",
+      "fit_verified",
+      "recycling_confirmed"
+    ],
+    "value_normalization": {
+      "ordered_sku": {
+        "type": "text"
+      },
+      "order_total": {
+        "type": "number",
+        "units": {}
+      },
+      "delivery_window": {
+        "type": "text"
+      },
+      "payment_terms": {
+        "type": "text"
+      },
+      "fit_verified": {
+        "type": "boolean"
+      },
+      "recycling_confirmed": {
+        "type": "boolean"
+      }
+    },
+    "conclusion_options": {
+      "order_confirmed": "One approved pay-on-delivery order with verified fit and a deadline-meeting slot",
+      "unconfirmed": "Fit, slot or approval could not be verified in time",
+      "not_feasible": "No current listing satisfies the hard constraints"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "ordered_sku": {
+      "value": "COOL-16-B",
+      "text": "The confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "ordered_sku"
+      }
+    },
+    "order_total": {
+      "value": 1181.6,
+      "text": "The ordered total is 1181.60 USD all-in - item 1020.00, tax 81.60, delivery 50.00 and old-fridge recycling 30.00 - within the 1300 USD budget.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "order_total"
+      }
+    },
+    "delivery_window": {
+      "value": "2027-06-09 10:00-12:00",
+      "text": "The assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "delivery_window"
+      }
+    },
+    "payment_terms": {
+      "value": "pay_on_delivery",
+      "text": "The order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "payment_terms"
+      }
+    },
+    "fit_verified": {
+      "value": true,
+      "text": "The delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "fit_verified"
+      }
+    },
+    "recycling_confirmed": {
+      "value": true,
+      "text": "Old-appliance recycling at the ground-floor address is included in the confirmed delivery service.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "recycling_confirmed"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "fulfillment_agent",
+      "name": "Test Appliance Cooperative delivery specialist·Morgan Hale",
+      "role": "measured dimensions, access verification and delivery slots",
+      "description": "Confirms measured installation fit, the unpack-at-door route and recycling in writing; verified dimensions do not guarantee the current delivery slot still meets the deadline.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "morganhale@bench.example"
+      },
+      "knowledge": [
+        "fit_verified",
+        "recycling_confirmed"
+      ],
+      "tools": {
+        "fulfillment_agent.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "fulfillment_agent.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "fit_verified",
+            "recycling_confirmed"
+          ]
+        },
+        "fulfillment_agent.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "fit_verified",
+            "recycling_confirmed"
+          ]
+        },
+        "fulfillment_agent.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Fit and delivery verification",
+          "aliases": [
+            "fit",
+            "verify",
+            "doorway",
+            "unpack",
+            "recycling",
+            "access",
+            "dimensions",
+            "verification",
+            "route",
+            "opening"
+          ],
+          "required_fields": [],
+          "accept_after": "2027-06-08T09:00:00-05:00",
+          "early_reply": "Measured fit and delivery verification for this week's orders publishes from June 8 at 09:00 Chicago time; please resend your product and address details after that.",
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "fulfillment_agent.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the measured opening, doorway route, unpack-at-door procedure and recycling",
+              "tool": "fulfillment_agent.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 120
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "fulfillment_agent.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "fulfillment_agent.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Test Appliance Cooperative delivery specialist·Morgan Hale，负责measured dimensions, access verification and delivery slots。Confirms measured installation fit, the unpack-at-door route and recycling in writing; verified dimensions do not guarantee the current delivery slot still meets the deadline. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:fit_verified",
+        "attest:recycling_confirmed"
+      ]
+    },
+    {
+      "id": "store_operations",
+      "name": "Test Appliance Cooperative inventory desk·Riley Carter",
+      "role": "listings, delivery slots and orders",
+      "description": "Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "rileycarter@bench.example"
+      },
+      "knowledge": [
+        "delivery_window",
+        "order_total",
+        "ordered_sku",
+        "payment_terms"
+      ],
+      "tools": {
+        "store_operations.slot.1.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "order_total",
+            "delivery_window"
+          ]
+        },
+        "store_operations.slot.2.document": {
+          "kind": "document",
+          "facts": [
+            "order_total",
+            "delivery_window"
+          ]
+        },
+        "store_operations.slot.3.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "slot",
+          "label": "Listing and delivery slot status",
+          "aliases": [
+            "listing",
+            "slot",
+            "delivery",
+            "stock",
+            "offer",
+            "price",
+            "quote",
+            "order"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "slot_1",
+              "label": "check the current listing, all-in total and delivery slot",
+              "tool": "store_operations.slot.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "slot_2",
+              "label": "签发书面确认",
+              "tool": "store_operations.slot.2.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "slot_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "store_operations.slot.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Test Appliance Cooperative inventory desk·Riley Carter，负责listings, delivery slots and orders。Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:delivery_window",
+        "attest:order_total",
+        "attest:ordered_sku",
+        "attest:payment_terms"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "ordered_sku",
+      "expected": "COOL-16-B",
+      "accepted_facts": [
+        "ordered_sku"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "ordered_sku",
+        "authorities": [
+          "attest:ordered_sku"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "COOL-16-B": [
+              "The confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store.",
+              "The confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "COOL-16-B": [
+            "The confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store.",
+            "The confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "order_total",
+      "expected": 1181.6,
+      "accepted_facts": [
+        "order_total"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "order_total",
+        "authorities": [
+          "attest:order_total"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "delivery_window",
+      "expected": "2027-06-09 10:00-12:00",
+      "accepted_facts": [
+        "delivery_window"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "delivery_window",
+        "authorities": [
+          "attest:delivery_window"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "2027-06-09 10:00-12:00": [
+              "The assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline.",
+              "The assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "2027-06-09 10:00-12:00": [
+            "The assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline.",
+            "The assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "payment_terms",
+      "expected": "pay_on_delivery",
+      "accepted_facts": [
+        "payment_terms"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "payment_terms",
+        "authorities": [
+          "attest:payment_terms"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "pay_on_delivery": [
+              "The order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit.",
+              "The order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "pay_on_delivery": [
+            "The order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit.",
+            "The order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "fit_verified",
+      "expected": true,
+      "accepted_facts": [
+        "fit_verified"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "fit_verified",
+        "authorities": [
+          "attest:fit_verified"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "recycling_confirmed",
+      "expected": true,
+      "accepted_facts": [
+        "recycling_confirmed"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "recycling_confirmed",
+        "authorities": [
+          "attest:recycling_confirmed"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "order_confirmed",
+  "temporal_mechanisms": [
+    "Mid-episode delivery-slot rewrite removes COOL-17-A's June 9 route",
+    "written fit verification publishes from June 8 09:00",
+    "approval window opens June 8 at 13:00",
+    "search-discoverable listing inventory",
+    "hidden order desk revalidates the live listing and slot",
+    "noisy listings (new credit, too wide, backordered, headline-vs-all-in price)",
+    "sparse prompt: household facts only surface through dialogue"
+  ],
+  "failure_modes": [
+    "ordering on the headline item price instead of the all-in total",
+    "reusing COOL-17-A's stale June 9 delivery promise after the slot change",
+    "ordering before the householder approves the exact plan",
+    "opening the new-credit 990 USD offer",
+    "treating a dispatch estimate or fit verification as a confirmed slot",
+    "booking the too-wide, backordered or over-budget listings"
+  ],
+  "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "store-contact"
+    },
+    {
+      "op": "discover",
+      "name": "householder_dialogue"
+    },
+    {
+      "op": "tool",
+      "name": "householder_dialogue",
+      "args": {
+        "question": "What are the installation opening, doorway access, delivery details and ordering permission for the fridge replacement?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "product_search"
+    },
+    {
+      "op": "tool",
+      "name": "product_search",
+      "args": {
+        "query": "refrigerator"
+      }
+    },
+    {
+      "op": "send",
+      "to": "fulfillment_agent",
+      "text": "Please verify measured fit, unpack-at-door handling and recycling for the candidate refrigerators at home-A",
+      "label": "fit_early",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "fit_early"
+    },
+    {
+      "op": "advance",
+      "at": "2027-06-08T09:30:00-05:00"
+    },
+    {
+      "op": "send",
+      "to": "fulfillment_agent",
+      "text": "Please verify measured fit, unpack-at-door handling and recycling for the candidate refrigerators at home-A",
+      "label": "fit",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "fit"
+    },
+    {
+      "op": "advance",
+      "at": "2027-06-08T15:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "product_search",
+      "args": {
+        "query": "refrigerator"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "order_create"
+    },
+    {
+      "op": "tool",
+      "name": "order_create",
+      "args": {
+        "entry": "p206"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-06-08T18:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "order_create",
+      "args": {
+        "query": "order"
+      }
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; ordering COOL-17-A was legal only before the June 8 12:00 slot change, but the scored answer keys follow the COOL-16-B plan.",
+  "horizon_design": {
+    "reference_days": 2,
+    "stratum": "短期",
+    "mechanism": "mid-episode delivery-slot rewrite plus approval window",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

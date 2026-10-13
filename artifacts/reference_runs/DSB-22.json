@@ -1,0 +1,552 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-22",
+  "answer": {
+    "conclusion": "evening_confirmed",
+    "claims": [
+      {
+        "key": "film_start",
+        "status": "confirmed",
+        "value": "18:15",
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "film_end",
+        "status": "confirmed",
+        "value": "20:09",
+        "evidence_ids": [
+          "EV-0003",
+          "EV-0005"
+        ]
+      },
+      {
+        "key": "jazz_start",
+        "status": "confirmed",
+        "value": "21:00",
+        "evidence_ids": [
+          "EV-0001"
+        ]
+      },
+      {
+        "key": "return_depart",
+        "status": "confirmed",
+        "value": "22:40",
+        "evidence_ids": [
+          "EV-0006"
+        ]
+      },
+      {
+        "key": "home_arrival",
+        "status": "confirmed",
+        "value": "23:23",
+        "evidence_ids": [
+          "EV-0007"
+        ]
+      },
+      {
+        "key": "total_cost",
+        "status": "confirmed",
+        "value": 85,
+        "evidence_ids": [
+          "EV-0010"
+        ]
+      },
+      {
+        "key": "transport_reserved",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0009"
+        ]
+      },
+      {
+        "key": "film_reserved",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0011"
+        ]
+      },
+      {
+        "key": "jazz_reserved",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0012"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-22",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "film_start",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "film_end",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "jazz_start",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "return_depart",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "home_arrival",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "total_cost",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "transport_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "film_reserved",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "jazz_reserved",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 19.0,
+    "calendar_days": 0.791667,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-10-02T15:00:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-10-01T21:10:00+00:00",
+      "from": "samokafor@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Riverside Evening Services desk·Sam Okafor。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-10-01T23:34:00+00:00",
+      "from": "samokafor@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Riverside Evening Services desk·Sam Okafor。您咨询的事项已经核实，具体情况如下：The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0002",
+          "issuer": "evening_desk",
+          "issued_at": "2027-10-01T22:46:00+00:00",
+          "text": "The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.",
+          "value": "18:15",
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0003",
+          "issuer": "evening_desk",
+          "issued_at": "2027-10-01T22:46:00+00:00",
+          "text": "The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.",
+          "value": "20:09",
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0004",
+          "issuer": "evening_desk",
+          "issued_at": "2027-10-01T23:19:00+00:00",
+          "text": "The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.",
+          "value": "18:15",
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0005",
+          "issuer": "evening_desk",
+          "issued_at": "2027-10-01T23:19:00+00:00",
+          "text": "The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.",
+          "value": "20:09",
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-10-01T20:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "evening_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-10-01T20:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "evening_dialogue",
+      "question": "What are the timing, transport, budget and approval constraints for the evening?",
+      "matched": true
+    },
+    {
+      "at": "2027-10-01T20:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "programme_search",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-10-01T20:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "programme_search",
+      "query": "film jazz evening",
+      "entries": [
+        "film1815",
+        "film1945",
+        "aggregator1815",
+        "jazz2100",
+        "jazz2030",
+        "jazz2245"
+      ]
+    },
+    {
+      "at": "2027-10-01T20:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "samokafor@bench.example",
+      "text": "Please confirm the official start and end time of the 18:15 Night Bridge film",
+      "fields": {
+        "date": "2027-10-01",
+        "city": "Chicago test district",
+        "party_size": 2
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-10-01T20:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-10-01T20:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-01T20:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "step": "main_1",
+      "start_at": "2027-10-01T20:32:00+00:00",
+      "due_at": "2027-10-01T21:10:00+00:00",
+      "tool": "evening_desk.main.1.acknowledge"
+    },
+    {
+      "at": "2027-10-01T20:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-01T21:10:00+00:00",
+      "kind": "tool_call",
+      "actor": "evening_desk",
+      "case_id": "CASE-0001",
+      "tool": "evening_desk.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-10-01T21:10:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-10-01T21:10:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-01T21:10:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "step": "main_2",
+      "start_at": "2027-10-01T21:10:00+00:00",
+      "due_at": "2027-10-01T22:46:00+00:00",
+      "tool": "evening_desk.main.2.lookup"
+    },
+    {
+      "at": "2027-10-01T21:10:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-01T22:00:00+00:00",
+      "kind": "page_updated",
+      "page": "evening-intro",
+      "url": "https://riversideevening.bench/intro"
+    },
+    {
+      "at": "2027-10-01T22:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "outing_routes",
+      "removed": [
+        "route-A"
+      ],
+      "added": [
+        "route-A-cancelled"
+      ]
+    },
+    {
+      "at": "2027-10-01T22:46:00+00:00",
+      "kind": "tool_call",
+      "actor": "evening_desk",
+      "case_id": "CASE-0001",
+      "tool": "evening_desk.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-10-01T22:46:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-01T22:46:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "step": "main_3",
+      "start_at": "2027-10-01T22:46:00+00:00",
+      "due_at": "2027-10-01T23:19:00+00:00",
+      "tool": "evening_desk.main.3.document"
+    },
+    {
+      "at": "2027-10-01T22:46:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-01T23:19:00+00:00",
+      "kind": "tool_call",
+      "actor": "evening_desk",
+      "case_id": "CASE-0001",
+      "tool": "evening_desk.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-10-01T23:19:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-10-01T23:19:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "step": "main_4",
+      "start_at": "2027-10-01T23:19:00+00:00",
+      "due_at": "2027-10-01T23:34:00+00:00",
+      "tool": "evening_desk.main.4.reply"
+    },
+    {
+      "at": "2027-10-01T23:19:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-10-01T23:34:00+00:00",
+      "kind": "tool_call",
+      "actor": "evening_desk",
+      "case_id": "CASE-0001",
+      "tool": "evening_desk.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-10-01T23:34:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "evening_desk",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-10-01T23:34:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-10-01T23:34:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "outing_routes",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-10-01T23:34:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "outing_routes",
+      "query": "return route",
+      "entries": [
+        "route-B",
+        "route-A-cancelled"
+      ]
+    },
+    {
+      "at": "2027-10-01T23:34:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "evening_dialogue",
+      "question": "Do you approve the exact plan: 18:15 film, 21:00 jazz, route-B 22:40 return, 85 USD total?",
+      "matched": true
+    },
+    {
+      "at": "2027-10-01T23:34:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "reserve_transport",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-10-01T23:34:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "reserve_transport",
+      "entry": "route-B",
+      "accepted": true
+    },
+    {
+      "at": "2027-10-02T00:00:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "reserve_transport",
+      "query": "status"
+    },
+    {
+      "at": "2027-10-02T00:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "reserve_film_ticket",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-10-02T00:00:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "reserve_film_ticket",
+      "entry": "film1815",
+      "accepted": true
+    },
+    {
+      "at": "2027-10-02T00:19:00+00:00",
+      "kind": "page_updated",
+      "page": "evening-entry",
+      "url": "https://riversideevening.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-10-02T00:19:00+00:00",
+      "kind": "selection_processed",
+      "tool": "reserve_transport",
+      "accepted": true,
+      "result": "Transport confirmed: two-person licensed bundle covering the 17:30 outbound, the 20:25 inter-venue shuttle and the current 22:40 route-B return arriving 23:15 with an eight-minute walk home (home by 23:23). Party fare 12 USD; full approved plan 85 USD including 15 contingency. No payment taken."
+    },
+    {
+      "at": "2027-10-02T00:45:00+00:00",
+      "kind": "selection_processed",
+      "tool": "reserve_film_ticket",
+      "accepted": true,
+      "result": "Film confirmed: two seats for the full 114-minute 18:15 Night Bridge showing (ends 20:09), referenced to the reserved transport bundle. Party price 28 USD; no payment taken."
+    },
+    {
+      "at": "2027-10-02T01:00:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "reserve_film_ticket",
+      "query": "status"
+    },
+    {
+      "at": "2027-10-02T01:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "reserve_jazz_ticket",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-10-02T01:00:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "reserve_jazz_ticket",
+      "entry": "jazz2100",
+      "accepted": true
+    },
+    {
+      "at": "2027-10-02T13:45:00+00:00",
+      "kind": "selection_processed",
+      "tool": "reserve_jazz_ticket",
+      "accepted": true,
+      "result": "Jazz confirmed: two seats for the 21:00 quartet set (entry by 20:50, ends 22:20), referenced to the reserved transport bundle. Party price 30 USD; no payment taken."
+    },
+    {
+      "at": "2027-10-02T15:00:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "reserve_jazz_ticket",
+      "query": "status"
+    }
+  ],
+  "pending_cases": []
+}

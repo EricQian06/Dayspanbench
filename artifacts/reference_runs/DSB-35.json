@@ -1,0 +1,443 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-35",
+  "answer": {
+    "conclusion": "dispatched",
+    "claims": [
+      {
+        "key": "demand_amount",
+        "status": "confirmed",
+        "value": 1850,
+        "evidence_ids": [
+          "EV-0002"
+        ]
+      },
+      {
+        "key": "verified_recipient",
+        "status": "confirmed",
+        "value": "208 Example Plaza, Suite 814, Test City",
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0004",
+          "EV-0006"
+        ]
+      },
+      {
+        "key": "return_address",
+        "status": "confirmed",
+        "value": "90 Clinic Lane, Test City",
+        "evidence_ids": [
+          "EV-0005",
+          "EV-0007"
+        ]
+      },
+      {
+        "key": "dispatched_once",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0008"
+        ]
+      },
+      {
+        "key": "dispatch_fee",
+        "status": "confirmed",
+        "value": 8.5,
+        "evidence_ids": [
+          "EV-0009"
+        ]
+      },
+      {
+        "key": "attachments_limited",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0011"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-35",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "demand_amount",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "verified_recipient",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "return_address",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "dispatched_once",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "dispatch_fee",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "attachments_limited",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 30.0,
+    "calendar_days": 1.25,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-03-19T20:00:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-03-18T17:50:00+00:00",
+      "from": "jordanreyes@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Tenant Support Test Clinic caseworker·Jordan Reyes。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-03-18T21:54:00+00:00",
+      "from": "jordanreyes@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Tenant Support Test Clinic caseworker·Jordan Reyes。您咨询的事项已经核实，具体情况如下：Per lease-service v1 and the clinic's verification, correspondence for Parkview Test LLC goes to Registered Office Services, 208 Example Plaza, Suite 814, Test City; the building website address is not the designated correspondence address.The authorized return address is Tenant Support Test Clinic, attention Sofia Alvarez, 90 Clinic Lane, Test City.Per lease-service v1 and the clinic's verification, correspondence for Parkview Test LLC goes to Registered Office Services, 208 Example Plaza, Suite 814, Test City; the building website address is not the designated correspondence address.The authorized return address is Tenant Support Test Clinic, attention Sofia Alvarez, 90 Clinic Lane, Test City.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0004",
+          "issuer": "clinic_coordinator",
+          "issued_at": "2027-03-18T20:56:00+00:00",
+          "text": "Per lease-service v1 and the clinic's verification, correspondence for Parkview Test LLC goes to Registered Office Services, 208 Example Plaza, Suite 814, Test City; the building website address is not the designated correspondence address.",
+          "value": "208 Example Plaza, Suite 814, Test City",
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0005",
+          "issuer": "clinic_coordinator",
+          "issued_at": "2027-03-18T20:56:00+00:00",
+          "text": "The authorized return address is Tenant Support Test Clinic, attention Sofia Alvarez, 90 Clinic Lane, Test City.",
+          "value": "90 Clinic Lane, Test City",
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0006",
+          "issuer": "clinic_coordinator",
+          "issued_at": "2027-03-18T21:39:00+00:00",
+          "text": "Per lease-service v1 and the clinic's verification, correspondence for Parkview Test LLC goes to Registered Office Services, 208 Example Plaza, Suite 814, Test City; the building website address is not the designated correspondence address.",
+          "value": "208 Example Plaza, Suite 814, Test City",
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0007",
+          "issuer": "clinic_coordinator",
+          "issued_at": "2027-03-18T21:39:00+00:00",
+          "text": "The authorized return address is Tenant Support Test Clinic, attention Sofia Alvarez, 90 Clinic Lane, Test City.",
+          "value": "90 Clinic Lane, Test City",
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-03-18T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "sofia_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-03-18T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "sofia_dialogue",
+      "question": "What are your current instructions for the deposit demand amount and any settlement?",
+      "matched": true
+    },
+    {
+      "at": "2027-03-18T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "sofia_dialogue",
+      "question": "What privacy rules apply to the letter, return address and attachments?",
+      "matched": true
+    },
+    {
+      "at": "2027-03-18T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "sofia_dialogue",
+      "question": "What mailing method, fee limit, attachment and approval arrangements apply?",
+      "matched": true
+    },
+    {
+      "at": "2027-03-18T14:00:00+00:00",
+      "kind": "agent_fetch_document",
+      "url": "https://tenantsupport.bench/files/lease-service.pdf",
+      "facts": [
+        "registered_office"
+      ]
+    },
+    {
+      "at": "2027-03-18T14:00:00+00:00",
+      "kind": "agent_fetch_document",
+      "url": "https://tenantsupport.bench/files/deposit-receipt-redacted.pdf",
+      "facts": [
+        "demand_amount"
+      ]
+    },
+    {
+      "at": "2027-03-18T14:00:00+00:00",
+      "kind": "agent_fetch_document",
+      "url": "https://tenantsupport.bench/files/key-return.pdf",
+      "facts": [
+        "move_out"
+      ]
+    },
+    {
+      "at": "2027-03-18T16:00:00+00:00",
+      "kind": "page_updated",
+      "page": "case-intro",
+      "url": "https://tenantsupport.bench/intro"
+    },
+    {
+      "at": "2027-03-18T16:30:00+00:00",
+      "kind": "agent_send",
+      "recipient": "jordanreyes@bench.example",
+      "text": "Please verify the lease-designated correspondence recipient and the authorized return address for the Parkview Test LLC deposit demand (lease-service).",
+      "fields": {
+        "unit": "27 Example Lane, Unit 2F",
+        "deposit_usd": 1850,
+        "move_out": "2027-03-12"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-03-18T16:30:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-03-18T17:02:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-18T17:02:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "step": "main_1",
+      "start_at": "2027-03-18T17:02:00+00:00",
+      "due_at": "2027-03-18T17:50:00+00:00",
+      "tool": "clinic_coordinator.main.1.acknowledge"
+    },
+    {
+      "at": "2027-03-18T17:02:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-18T17:50:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinic_coordinator",
+      "case_id": "CASE-0001",
+      "tool": "clinic_coordinator.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-03-18T17:50:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-03-18T17:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-18T17:50:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "step": "main_2",
+      "start_at": "2027-03-18T17:50:00+00:00",
+      "due_at": "2027-03-18T20:56:00+00:00",
+      "tool": "clinic_coordinator.main.2.lookup"
+    },
+    {
+      "at": "2027-03-18T17:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-18T20:56:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinic_coordinator",
+      "case_id": "CASE-0001",
+      "tool": "clinic_coordinator.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-03-18T20:56:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-18T20:56:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "step": "main_3",
+      "start_at": "2027-03-18T20:56:00+00:00",
+      "due_at": "2027-03-18T21:39:00+00:00",
+      "tool": "clinic_coordinator.main.3.document"
+    },
+    {
+      "at": "2027-03-18T20:56:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-18T21:39:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinic_coordinator",
+      "case_id": "CASE-0001",
+      "tool": "clinic_coordinator.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-03-18T21:39:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-18T21:39:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "step": "main_4",
+      "start_at": "2027-03-18T21:39:00+00:00",
+      "due_at": "2027-03-18T21:54:00+00:00",
+      "tool": "clinic_coordinator.main.4.reply"
+    },
+    {
+      "at": "2027-03-18T21:39:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-18T21:54:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinic_coordinator",
+      "case_id": "CASE-0001",
+      "tool": "clinic_coordinator.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-03-18T21:54:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "clinic_coordinator",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-03-18T21:54:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-03-18T21:54:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "clinic_dispatch_desk",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-03-18T21:54:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "sofia_dialogue",
+      "question": "Do you approve the exact packet: registered office recipient, clinic return address, 1850 USD demand, redacted deposit receipt attached, 8.50 USD tracked fee?",
+      "matched": true
+    },
+    {
+      "at": "2027-03-18T21:54:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "clinic_dispatch_desk",
+      "form": "demand_dispatch_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-03-19T15:54:00+00:00",
+      "kind": "page_updated",
+      "page": "clinic-entry",
+      "url": "https://tenantsupport.bench/entry",
+      "cause": "form"
+    },
+    {
+      "at": "2027-03-19T15:54:00+00:00",
+      "kind": "form_processed",
+      "form": "demand_dispatch_form",
+      "accepted": true,
+      "result": "Dispatch receipt dispatch-L1: one tracked letter (fee 8.50 USD, tracking TRACK-L1) carrying the approved 1850 USD demand with only the redacted deposit receipt attached, return address 90 Clinic Lane, addressed to Registered Office Services for Parkview Test LLC, 208 Example Plaza, Suite 814, Test City. The private residence and the hallway photos were excluded. Dispatch is confirmed; delivery and recovery of the deposit are not."
+    }
+  ],
+  "pending_cases": []
+}

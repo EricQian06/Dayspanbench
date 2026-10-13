@@ -1,0 +1,207 @@
+{
+  "private": true,
+  "task_id": "DSB-25",
+  "actor": {
+    "id": "store_desk",
+    "name": "Test Appliance Cooperative order desk·Dana Fields",
+    "role": "merchandise offers, financing terms and orders",
+    "description": "Quotes current financed totals and installment schedules; promo terms can expire and be replaced with fee-bearing versions, so quotes are revalidated at order time.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "danafields@bench.example"
+    },
+    "knowledge": [
+      "delivery_date",
+      "installment_amount",
+      "order_total",
+      "ordered_sku"
+    ],
+    "tools": {
+      "store_desk.quote.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "order_total",
+          "installment_amount"
+        ]
+      },
+      "store_desk.quote.2.document": {
+        "kind": "document",
+        "facts": [
+          "order_total",
+          "installment_amount"
+        ]
+      },
+      "store_desk.quote.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "quote",
+        "label": "Current offer and financing quote",
+        "aliases": [
+          "offer",
+          "quote",
+          "price",
+          "total",
+          "financing",
+          "installment",
+          "terms",
+          "payment",
+          "order"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "quote_1",
+            "label": "check the current financed total and installment schedule",
+            "tool": "store_desk.quote.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "quote_2",
+            "label": "签发书面确认",
+            "tool": "store_desk.quote.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "quote_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "store_desk.quote.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Test Appliance Cooperative order desk·Dana Fields，负责merchandise offers, financing terms and orders。Quotes current financed totals and installment schedules; promo terms can expire and be replaced with fee-bearing versions, so quotes are revalidated at order time. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:delivery_date",
+      "attest:installment_amount",
+      "attest:order_total",
+      "attest:ordered_sku"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "delivery_date": {
+      "value": "2027-06-09",
+      "text": "The ordered refrigerator is scheduled for delivery on 2027-06-09, before the June 10 deadline.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-25",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "delivery_date"
+      }
+    },
+    "installment_amount": {
+      "value": 380.0,
+      "text": "The linked existing-card installment plan charges three zero-interest payments of 380.00 USD, each within the 400 USD residual cash after protected obligations.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-25",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "installment_amount"
+      }
+    },
+    "order_total": {
+      "value": 1140.0,
+      "text": "The ordered plan totals 1140.00 USD all-in on the existing card, within the 1300 USD budget.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-25",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "order_total"
+      }
+    },
+    "ordered_sku": {
+      "value": "sf-B",
+      "text": "The confirmed order is for sf-B (16.5 cu ft, 31.5 in wide) from the test appliance store.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-25",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "ordered_sku"
+      }
+    }
+  },
+  "start_at": "2027-06-07T09:00:00-05:00",
+  "deadline_at": "2027-06-09T12:00:00-05:00"
+}

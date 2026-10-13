@@ -1,0 +1,205 @@
+{
+  "private": true,
+  "task_id": "DSB-31",
+  "actor": {
+    "id": "county_clerk",
+    "name": "Denver County Relief Office caseworker·Dana Whitfield",
+    "role": "the RELIEF-11822 case file and the appeal portal",
+    "description": "Guides reconsideration requests for RELIEF-11822: exactly the current utility bill, the signed shelter letter and the denial letter go to the verified portal; the mailing address stays as recorded, and raw identity documents are never uploaded.",
+    "calendar": "us_mountain_office",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "danawhitfield2@bench.example"
+    },
+    "knowledge": [
+      "docs_only_required",
+      "mailing_preserved",
+      "occupancy_214",
+      "submitted_once"
+    ],
+    "tools": {
+      "county_clerk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "county_clerk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "occupancy_214"
+        ]
+      },
+      "county_clerk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "occupancy_214"
+        ]
+      },
+      "county_clerk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Appeal guidance",
+        "aliases": [
+          "appeal",
+          "reconsideration",
+          "relief-11822",
+          "denial",
+          "required",
+          "documents",
+          "portal"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "county_clerk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the address-history record for RELIEF-11822",
+            "tool": "county_clerk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 180
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "county_clerk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "county_clerk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Denver County Relief Office caseworker·Dana Whitfield，负责the RELIEF-11822 case file and the appeal portal。Guides reconsideration requests for RELIEF-11822: exactly the current utility bill, the signed shelter letter and the denial letter go to the verified portal; the mailing address stays as recorded, and raw identity documents are never uploaded. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:docs_limited",
+      "attest:mailing_address",
+      "attest:occupied_until",
+      "attest:reconsideration_submitted"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Denver",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "docs_only_required": {
+      "value": true,
+      "text": "Only the three required documents were uploaded to the verified portal: the current utility bill, the signed shelter letter and the denial letter; no raw identity document and no sister affidavit.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-31",
+          "case": {
+            "mailing_address": "214 Sage Street Apt 2",
+            "case_id": "RELIEF-11822",
+            "shelter": "615 Ceylon Street Shelter"
+          }
+        },
+        "predicate": "docs_limited"
+      }
+    },
+    "mailing_preserved": {
+      "value": "214 Sage Street Apt 2",
+      "text": "The accepted reconsideration request keeps the mailing address at 214 Sage Street Apt 2; the portal's shelter-address autofill suggestion was not applied.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-31",
+          "case": {
+            "mailing_address": "214 Sage Street Apt 2",
+            "case_id": "RELIEF-11822",
+            "shelter": "615 Ceylon Street Shelter"
+          }
+        },
+        "predicate": "mailing_address"
+      }
+    },
+    "occupancy_214": {
+      "value": "2027-10-20",
+      "text": "Utility records confirm Rosa Delgado occupied and received service at 214 Sage Street Apt 2 through 2027-10-20 (service_end 2027-10-20, flood-related move).",
+      "attributes": {
+        "subject": {
+          "task": "DSB-31",
+          "case": {
+            "mailing_address": "214 Sage Street Apt 2",
+            "case_id": "RELIEF-11822",
+            "shelter": "615 Ceylon Street Shelter"
+          }
+        },
+        "predicate": "occupied_until"
+      }
+    },
+    "submitted_once": {
+      "value": true,
+      "text": "One reconsideration request for RELIEF-11822 was accepted with an official receipt (RELIEF-11822-R1) before the November 5 deadline; the decision remains pending.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-31",
+          "case": {
+            "mailing_address": "214 Sage Street Apt 2",
+            "case_id": "RELIEF-11822",
+            "shelter": "615 Ceylon Street Shelter"
+          }
+        },
+        "predicate": "reconsideration_submitted"
+      }
+    }
+  },
+  "start_at": "2027-11-01T09:00:00-06:00",
+  "deadline_at": "2027-11-05T21:00:00-06:00"
+}

@@ -7,3 +7,5 @@ artifacts/evaluation_runs/
 CLAUDE.md
 .claude/
 notes.md
+.env2
+.env.paratera

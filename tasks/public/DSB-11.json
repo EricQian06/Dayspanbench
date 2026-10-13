@@ -1,7 +1,7 @@
 {
   "id": "DSB-11",
   "title": "开源兼容性：补丁验证后按窗口复核发布状态",
-  "brief": "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期。中间补丁可用不代表本任务完成。不要合并或发布。",
+  "brief": "星舟1.4.1在C19编译器上失败，日志LOG-771已备好。先确认复现和验证过的补丁；再于2027年第一季度发布窗口跟进候选版与稳定版日期，稳定版书面结论按项目说明的登记渠道取得。中间补丁可用不代表本任务完成。不要合并或发布。",
   "user_fields": {
     "version": "1.4.1",
     "compiler": "C19",
@@ -12,9 +12,21 @@
     {
       "id": "repo-intro",
       "title": "星舟项目贡献说明",
-      "text": "维护者周一三五20—22点处理来信，CI连续运行48小时。项目按季度发布，每季度上游兼容窗口统一核对候选版与稳定版状态；补丁或候选版都不能当作稳定版。",
+      "text": "维护者周一三五20—22点处理来信，CI连续运行48小时。项目按季度发布，每季度上游兼容窗口统一核对候选版与稳定版状态；补丁或候选版都不能当作稳定版。本页另挂有星舟项目近期发布计划等文件。",
       "contacts": [],
       "snippet": "开源项目维护安排与发布节奏说明。",
+      "documents": [
+        {
+          "id": "repo-stable-rumor",
+          "title": "星舟项目近期发布计划.pdf",
+          "text": "星舟项目近期发布计划：稳定版预计2027年3月15日发布。（留存方整理）",
+          "facts": [
+            "stable_ref"
+          ],
+          "issuer": "maintainer",
+          "url": "https://xingzhou.bench/files/repo-stable-rumor.pdf"
+        }
+      ],
       "url": "https://xingzhou.bench/intro"
     },
     {
@@ -38,13 +50,48 @@
     {
       "id": "repo-entry",
       "title": "星舟项目问题反馈入口",
-      "text": "提交兼容性问题需提供版本、编译器与日志编号；补丁验证与发布状态分别在不同阶段核实。本页面仅说明材料，不能在线合并或发布。",
+      "text": "提交兼容性问题需提供版本、编译器与日志编号；补丁验证与发布状态分别在不同阶段核实；发布状态的书面结论通过本页登记表单申请后取得。本页面仅说明材料，不能在线合并或发布。",
       "contacts": [],
-      "snippet": "星舟项目问题提交材料说明；不支持在线合并。",
+      "snippet": "星舟项目问题提交材料说明与发布状态登记表单；不支持在线合并。",
+      "form": {
+        "id": "release_form",
+        "title": "发布状态登记申请",
+        "fields": [
+          {
+            "name": "version",
+            "label": "项目版本",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "verified_commit",
+            "label": "已验证补丁提交号",
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "本表单不能在线直接提交：须通过星舟发布状态登记渠道办理；渠道名称与受理安排以项目发布流程说明页最新公告为准。"
+      },
       "url": "https://xingzhou.bench/entry"
     }
   ],
   "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "query_case_status",
+    "leave_note",
+    "fetch_document",
+    "request_callback"
+  ],
   "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
   "answer_keys": [
     "reproduced",
@@ -77,5 +124,5 @@
     "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
   },
   "start_at": "2026-11-07T20:30:00+08:00",
-  "deadline_at": "2027-03-03T23:00:00+08:00"
+  "deadline_at": "2027-03-10T23:00:00+08:00"
 }

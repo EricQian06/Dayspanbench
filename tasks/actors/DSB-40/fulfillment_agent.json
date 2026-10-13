@@ -1,0 +1,184 @@
+{
+  "private": true,
+  "task_id": "DSB-40",
+  "actor": {
+    "id": "fulfillment_agent",
+    "name": "Test Appliance Cooperative delivery specialist·Morgan Hale",
+    "role": "measured dimensions, access verification and delivery slots",
+    "description": "Confirms measured installation fit, the unpack-at-door route and recycling in writing; verified dimensions do not guarantee the current delivery slot still meets the deadline.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "morganhale@bench.example"
+    },
+    "knowledge": [
+      "fit_verified",
+      "recycling_confirmed"
+    ],
+    "tools": {
+      "fulfillment_agent.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "fulfillment_agent.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "fit_verified",
+          "recycling_confirmed"
+        ]
+      },
+      "fulfillment_agent.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "fit_verified",
+          "recycling_confirmed"
+        ]
+      },
+      "fulfillment_agent.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Fit and delivery verification",
+        "aliases": [
+          "fit",
+          "verify",
+          "doorway",
+          "unpack",
+          "recycling",
+          "access",
+          "dimensions",
+          "verification",
+          "route",
+          "opening"
+        ],
+        "required_fields": [],
+        "accept_after": "2027-06-08T09:00:00-05:00",
+        "early_reply": "Measured fit and delivery verification for this week's orders publishes from June 8 at 09:00 Chicago time; please resend your product and address details after that.",
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "fulfillment_agent.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the measured opening, doorway route, unpack-at-door procedure and recycling",
+            "tool": "fulfillment_agent.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 120
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "fulfillment_agent.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "fulfillment_agent.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Test Appliance Cooperative delivery specialist·Morgan Hale，负责measured dimensions, access verification and delivery slots。Confirms measured installation fit, the unpack-at-door route and recycling in writing; verified dimensions do not guarantee the current delivery slot still meets the deadline. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:fit_verified",
+      "attest:recycling_confirmed"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "fit_verified": {
+      "value": true,
+      "text": "The delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "fit_verified"
+      }
+    },
+    "recycling_confirmed": {
+      "value": true,
+      "text": "Old-appliance recycling at the ground-floor address is included in the confirmed delivery service.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "recycling_confirmed"
+      }
+    }
+  },
+  "start_at": "2027-06-07T09:00:00-05:00",
+  "deadline_at": "2027-06-09T12:00:00-05:00"
+}

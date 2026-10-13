@@ -5,7 +5,7 @@
     "id": "archive",
     "name": "北汀档案馆接待·关雨",
     "role": "档案使用咨询",
-    "description": "先提供费用和权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组。",
+    "description": "先提供权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组；费用核定须走登记渠道。",
     "calendar": "office",
     "channels": [
       "email"
@@ -19,9 +19,7 @@
     "tools": {
       "archive.main.1.lookup": {
         "kind": "lookup",
-        "facts": [
-          "fee"
-        ]
+        "facts": []
       },
       "archive.main.2.refer": {
         "kind": "refer",
@@ -35,16 +33,33 @@
       "archive.digitize.1.acknowledge": {
         "kind": "acknowledge"
       },
-      "archive.digitize.2.delegate": {
-        "kind": "delegate",
+      "archive.digitize.2.consult": {
+        "kind": "consult",
         "target": "digitizer",
         "workflow": "main",
         "forward_fields": [
           "archive_id"
-        ]
+        ],
+        "text": "数字化规格要由数字化组核对，我先转过去确认，稍后把扫描规格回复您。"
       },
       "archive.digitize.3.reply": {
         "kind": "reply"
+      },
+      "archive.fee_channel.1.suggest": {
+        "kind": "suggest",
+        "text": "费用核定的具体渠道我记不太清：可能由数字化组一并核定，也可能权利方联络员那边先出费用单，建议您分别去信确认。",
+        "guesses": [
+          "digitizer",
+          "rights"
+        ]
+      },
+      "archive.fee_channel.2.deny": {
+        "kind": "deny",
+        "text": "经核实，档案利用费用核定不随邮件逐案办理：请通过北汀档案馆费用核定登记渠道（beiting_fee_apply）提交申请，办结结论以表单状态为准；办理进度可经北汀费用进度查询（beiting_fee_status）复核。"
+      },
+      "archive.scan_gossip.1.deny": {
+        "kind": "deny",
+        "text": "分辨率我印象里现在的设备普遍都能出到1200dpi，历史交付也都是按1200dpi做的，错不了——不过接待不掌握数字化设备参数，这只是口头印象，没有书面依据；本次交付的扫描规格以数字化组的书面确认结论为准。"
       }
     },
     "workflows": [
@@ -63,7 +78,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "登记咨询上下文",
             "tool": "archive.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -135,8 +150,8 @@
           },
           {
             "id": "digitize_2",
-            "label": "内部转交",
-            "tool": "archive.digitize.2.delegate",
+            "label": "内部咨询后答复",
+            "tool": "archive.digitize.2.consult",
             "delay": {
               "mode": "business",
               "minutes": 120
@@ -152,6 +167,58 @@
             }
           }
         ]
+      },
+      {
+        "id": "fee_channel",
+        "label": "费用核定渠道说明",
+        "aliases": [
+          "费用核定",
+          "缴费",
+          "费用渠道"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "fee_channel_1",
+            "label": "给出猜测性答复",
+            "tool": "archive.fee_channel.1.suggest",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "fee_channel_2",
+            "label": "明确表示不知情或不归管",
+            "tool": "archive.fee_channel.2.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "scan_gossip",
+        "label": "扫描规格口头印象",
+        "aliases": [
+          "分辨率",
+          "dpi"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "scan_gossip_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "archive.scan_gossip.1.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
       }
     ],
     "process_engine": {
@@ -173,7 +240,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是北汀档案馆接待·关雨，负责档案使用咨询。先提供费用和权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是北汀档案馆接待·关雨，负责档案使用咨询。先提供权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组；费用核定须走登记渠道。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:total_fee"
@@ -216,5 +283,5 @@
     }
   },
   "start_at": "2026-11-05T15:00:00+08:00",
-  "deadline_at": "2027-06-07T17:00:00+08:00"
+  "deadline_at": "2027-06-11T17:00:00+08:00"
 }

@@ -27,8 +27,7 @@
         "status": "confirmed",
         "value": "临时扩声活动预咨询",
         "evidence_ids": [
-          "EV-0005",
-          "EV-0008"
+          "EV-0005"
         ]
       },
       {
@@ -40,8 +39,7 @@
           "声设备清单"
         ],
         "evidence_ids": [
-          "EV-0006",
-          "EV-0009"
+          "EV-0006"
         ]
       },
       {
@@ -49,8 +47,7 @@
         "status": "confirmed",
         "value": "2027-01-04",
         "evidence_ids": [
-          "EV-0007",
-          "EV-0010"
+          "EV-0007"
         ]
       }
     ]
@@ -94,11 +91,11 @@
     ],
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 1320.82,
-    "calendar_days": 55.034028,
+    "calendar_hours": 1321.0,
+    "calendar_days": 55.041667,
     "agent_messages": 3,
     "contacted_actors": 2,
-    "as_of": "2026-12-28T07:49:00+00:00"
+    "as_of": "2026-12-28T08:00:00+00:00"
   },
   "agent_messages": [
     {
@@ -106,9 +103,9 @@
       "at": "2026-11-04T01:26:00+00:00",
       "from": "xieyin@bench.example",
       "case_id": "CASE-0001",
-      "status": "acknowledgement",
+      "status": "reply",
       "channel": "email",
-      "text": "您好，我是晴港政务咨询台·谢茵。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-05 16:20（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "北广场这类开放场地的管辖我记不很准：可能归街区公共空间管理处，也可能要走活动环境咨询那边的口径，建议您分别去函确认。另外北广场带两只音箱的活动我印象里按一般户外活动备案登记就行，错不了，供您参考，具体以联合复核结论为准。",
       "evidence": []
     },
     {
@@ -118,7 +115,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是晴港政务咨询台·谢茵。您咨询的事项已经核实，具体情况如下：拟用地点属于街区公共空间管理处管辖；不是私人场地。拟用地点属于街区公共空间管理处管辖；不是私人场地。此外，相关事项建议您联系活动环境咨询员·陆笙（lusheng@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
+      "text": "您好，我是晴港政务咨询台·谢茵。您咨询的事项已经核实，具体情况如下：拟用地点属于街区公共空间管理处管辖；不是私人场地。拟用地点属于街区公共空间管理处管辖；不是私人场地。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。此外，相关事项建议您联系活动环境咨询员·陆笙（lusheng@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0001",
@@ -157,7 +154,7 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是活动环境咨询员·陆笙。您咨询的事项已经核实，具体情况如下：本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。如有其他问题，欢迎随时来信。",
+      "text": "您好，我是活动环境咨询员·陆笙。您咨询的事项已经核实，具体情况如下：本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
       "evidence": [
         {
           "id": "EV-0003",
@@ -181,76 +178,23 @@
     },
     {
       "id": "MSG-0005",
-      "at": "2026-12-28T07:49:00+00:00",
+      "at": "2026-12-03T05:14:00+00:00",
+      "from": "lusheng@bench.example",
+      "case_id": "CASE-0004",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是活动环境咨询员·陆笙。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0006",
+      "at": "2026-12-03T05:29:00+00:00",
       "from": "lusheng@bench.example",
       "case_id": "CASE-0004",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是活动环境咨询员·陆笙。您咨询的事项已经核实，具体情况如下：拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。需要准备平面图、时段说明和声设备清单。按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日；不是活动批准日期。拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。需要准备平面图、时段说明和声设备清单。按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日；不是活动批准日期。如有其他问题，欢迎随时来信。",
-      "evidence": [
-        {
-          "id": "EV-0005",
-          "issuer": "sound",
-          "issued_at": "2026-12-28T06:23:00+00:00",
-          "text": "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。",
-          "value": "临时扩声活动预咨询",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0006",
-          "issuer": "sound",
-          "issued_at": "2026-12-28T06:23:00+00:00",
-          "text": "需要准备平面图、时段说明和声设备清单。",
-          "value": [
-            "平面图",
-            "时段说明",
-            "声设备清单"
-          ],
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0007",
-          "issuer": "sound",
-          "issued_at": "2026-12-28T06:23:00+00:00",
-          "text": "按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日；不是活动批准日期。",
-          "value": "2027-01-04",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0008",
-          "issuer": "sound",
-          "issued_at": "2026-12-28T07:34:00+00:00",
-          "text": "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。",
-          "value": "临时扩声活动预咨询",
-          "valid_until": null,
-          "kind": "document"
-        },
-        {
-          "id": "EV-0009",
-          "issuer": "sound",
-          "issued_at": "2026-12-28T07:34:00+00:00",
-          "text": "需要准备平面图、时段说明和声设备清单。",
-          "value": [
-            "平面图",
-            "时段说明",
-            "声设备清单"
-          ],
-          "valid_until": null,
-          "kind": "document"
-        },
-        {
-          "id": "EV-0010",
-          "issuer": "sound",
-          "issued_at": "2026-12-28T07:34:00+00:00",
-          "text": "按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日；不是活动批准日期。",
-          "value": "2027-01-04",
-          "valid_until": null,
-          "kind": "document"
-        }
-      ]
+      "text": "您好，我是活动环境咨询员·陆笙。联合分类复核的书面结论不随邮件出具：请通过晴港联合复核登记渠道（qinggang_review_register）提交登记，登记须使用本轮意见征集回执编号，办结结论以表单状态为准；办理进度可经晴港复核进度查询（qinggang_review_status）复核。",
+      "evidence": []
     }
   ],
   "private_audit": [
@@ -323,7 +267,7 @@
       "step": "main_2",
       "start_at": "2026-11-03T08:50:00+00:00",
       "due_at": "2026-11-04T01:26:00+00:00",
-      "tool": "service.main.2.acknowledge"
+      "tool": "service.main.2.suggest"
     },
     {
       "at": "2026-11-03T08:50:00+00:00",
@@ -338,15 +282,15 @@
       "kind": "tool_call",
       "actor": "service",
       "case_id": "CASE-0001",
-      "tool": "service.main.2.acknowledge",
-      "tool_kind": "acknowledge"
+      "tool": "service.main.2.suggest",
+      "tool_kind": "suggest"
     },
     {
       "at": "2026-11-04T01:26:00+00:00",
       "kind": "delivery",
       "message_id": "MSG-0001",
       "case_id": "CASE-0001",
-      "status": "acknowledgement"
+      "status": "reply"
     },
     {
       "at": "2026-11-04T01:26:00+00:00",
@@ -677,6 +621,12 @@
     },
     {
       "at": "2026-12-03T01:00:00+00:00",
+      "kind": "page_updated",
+      "page": "service-intro",
+      "url": "https://qinggang.bench/intro"
+    },
+    {
+      "at": "2026-12-03T01:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "sound",
@@ -818,12 +768,12 @@
       "case_id": "CASE-0004",
       "actor": "sound",
       "step": "final_1",
-      "start_at": "2026-12-28T01:00:00+00:00",
-      "due_at": "2026-12-28T06:23:00+00:00",
-      "tool": "sound.final.1.lookup"
+      "start_at": "2026-12-03T03:21:00+00:00",
+      "due_at": "2026-12-03T05:14:00+00:00",
+      "tool": "sound.final.1.acknowledge"
     },
     {
-      "at": "2026-12-28T01:00:00+00:00",
+      "at": "2026-12-03T03:21:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "sound",
@@ -831,15 +781,22 @@
       "new": "working"
     },
     {
-      "at": "2026-12-28T06:23:00+00:00",
+      "at": "2026-12-03T05:14:00+00:00",
       "kind": "tool_call",
       "actor": "sound",
       "case_id": "CASE-0004",
-      "tool": "sound.final.1.lookup",
-      "tool_kind": "lookup"
+      "tool": "sound.final.1.acknowledge",
+      "tool_kind": "acknowledge"
     },
     {
-      "at": "2026-12-28T06:23:00+00:00",
+      "at": "2026-12-03T05:14:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0005",
+      "case_id": "CASE-0004",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2026-12-03T05:14:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "sound",
@@ -847,17 +804,17 @@
       "new": "queued"
     },
     {
-      "at": "2026-12-28T06:23:00+00:00",
+      "at": "2026-12-03T05:14:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0004",
       "actor": "sound",
       "step": "final_2",
-      "start_at": "2026-12-28T06:23:00+00:00",
-      "due_at": "2026-12-28T07:34:00+00:00",
-      "tool": "sound.final.2.document"
+      "start_at": "2026-12-03T05:14:00+00:00",
+      "due_at": "2026-12-03T05:29:00+00:00",
+      "tool": "sound.final.2.deny"
     },
     {
-      "at": "2026-12-28T06:23:00+00:00",
+      "at": "2026-12-03T05:14:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "sound",
@@ -865,49 +822,15 @@
       "new": "working"
     },
     {
-      "at": "2026-12-28T07:34:00+00:00",
+      "at": "2026-12-03T05:29:00+00:00",
       "kind": "tool_call",
       "actor": "sound",
       "case_id": "CASE-0004",
-      "tool": "sound.final.2.document",
-      "tool_kind": "document"
+      "tool": "sound.final.2.deny",
+      "tool_kind": "deny"
     },
     {
-      "at": "2026-12-28T07:34:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0004",
-      "actor": "sound",
-      "old": "working",
-      "new": "queued"
-    },
-    {
-      "at": "2026-12-28T07:34:00+00:00",
-      "kind": "scheduled",
-      "case_id": "CASE-0004",
-      "actor": "sound",
-      "step": "final_3",
-      "start_at": "2026-12-28T07:34:00+00:00",
-      "due_at": "2026-12-28T07:49:00+00:00",
-      "tool": "sound.final.3.reply"
-    },
-    {
-      "at": "2026-12-28T07:34:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0004",
-      "actor": "sound",
-      "old": "queued",
-      "new": "working"
-    },
-    {
-      "at": "2026-12-28T07:49:00+00:00",
-      "kind": "tool_call",
-      "actor": "sound",
-      "case_id": "CASE-0004",
-      "tool": "sound.final.3.reply",
-      "tool_kind": "reply"
-    },
-    {
-      "at": "2026-12-28T07:49:00+00:00",
+      "at": "2026-12-03T05:29:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "sound",
@@ -915,11 +838,55 @@
       "new": "replied"
     },
     {
-      "at": "2026-12-28T07:49:00+00:00",
+      "at": "2026-12-03T05:29:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0005",
+      "message_id": "MSG-0006",
       "case_id": "CASE-0004",
       "status": "reply"
+    },
+    {
+      "at": "2026-12-03T05:29:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "qinggang_review_register",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2026-12-03T05:29:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "qinggang_review_register",
+      "form": "review_form",
+      "accepted": true
+    },
+    {
+      "at": "2026-12-28T07:00:00+00:00",
+      "kind": "page_updated",
+      "page": "service-entry",
+      "url": "https://qinggang.bench/entry",
+      "cause": "form"
+    },
+    {
+      "at": "2026-12-28T07:00:00+00:00",
+      "kind": "form_processed",
+      "form": "review_form",
+      "accepted": true,
+      "result": "联合复核登记已办结：拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请；需准备平面图、时段说明和声设备清单；按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日。办理进度可经晴港复核进度查询（qinggang_review_status）复核。"
+    },
+    {
+      "at": "2026-12-28T08:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "qinggang_review_status",
+      "found": true,
+      "tool_kind": "status"
+    },
+    {
+      "at": "2026-12-28T08:00:00+00:00",
+      "kind": "agent_hidden_status",
+      "tool": "qinggang_review_status",
+      "query": "复核",
+      "keys": [
+        "review"
+      ]
     }
   ],
   "pending_cases": []

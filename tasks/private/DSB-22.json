@@ -1,0 +1,1604 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.4.0",
+  "id": "DSB-22",
+  "title": "Film and jazz evening with a current feasible return",
+  "domain": "leisure_entertainment",
+  "start_at": "2027-10-01T15:00:00-05:00",
+  "deadline_at": "2027-10-03T17:30:00-05:00",
+  "display_timezone": "America/Chicago",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
+    }
+  },
+  "reply_delay": [
+    20,
+    45
+  ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "page_updates": [
+    {
+      "page": "evening-intro",
+      "at": "2027-10-01T17:00:00-05:00",
+      "snippet": "October 1 update: the 22:50 route-A return has been cancelled; the 22:40 route-B return remains available. Revalidate the evening before booking."
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "programme_search",
+      "usage": "Riverdale evening programme search. Argument: query (optional string), e.g. \"film jazz evening\" or a venue name. Returns current show listings with times and party prices; rows can change, so re-check before booking.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "film",
+          "jazz",
+          "show",
+          "programme",
+          "evening",
+          "cinema",
+          "chicago"
+        ],
+        "clue": "A programme search service named programme_search lists the current evening shows.",
+        "entries": [
+          {
+            "id": "film1815",
+            "title": "Night Bridge - film 18:15 (official listing)",
+            "text": "Riverdale Loop Cinema. Start 18:15, official runtime 114 minutes; venue confirmation of the exact end time is available from the cinema through the evening services desk. Party price 28 USD.",
+            "fields": {
+              "venue": "Loop Cinema",
+              "type": "film",
+              "start": "18:15",
+              "duration_minutes": 114,
+              "party_price_usd": 28,
+              "seats": 2,
+              "status": "awaiting_confirmation"
+            }
+          },
+          {
+            "id": "film1945",
+            "title": "Night Bridge - film 19:45",
+            "text": "Same film, later showing: starts 19:45 and ends after 21:00, so the full film cannot be followed by the required jazz entry.",
+            "fields": {
+              "venue": "Loop Cinema",
+              "type": "film",
+              "start": "19:45",
+              "duration_minutes": 114,
+              "party_price_usd": 28,
+              "seats": 2
+            }
+          },
+          {
+            "id": "aggregator1815",
+            "title": "Night Bridge - aggregator listing (stale label)",
+            "text": "A third-party listing labels the evening film 18:30; the label is stale and the actual start differs. Aggregator labels are not official programme records.",
+            "fields": {
+              "type": "film_listing",
+              "labelled_start": "18:30",
+              "status": "stale_label"
+            }
+          },
+          {
+            "id": "jazz2100",
+            "title": "Quartet jazz set - 21:00",
+            "text": "Harbour Room. Starts 21:00, ends 22:20, entry by 20:50. Party price 30 USD.",
+            "fields": {
+              "venue": "Harbour Room",
+              "type": "jazz",
+              "start": "21:00",
+              "end": "22:20",
+              "entry_by": "20:50",
+              "party_price_usd": 30,
+              "seats": 2
+            },
+            "facts": [
+              "jazz_start"
+            ],
+            "issuer": "evening_desk"
+          },
+          {
+            "id": "jazz2030",
+            "title": "Quartet jazz set - 20:30",
+            "text": "Earlier set by the same quartet at 20:30: it starts before the film exit, transfer and walk can reach the venue, so attendance would be partial.",
+            "fields": {
+              "venue": "Harbour Room",
+              "type": "jazz",
+              "start": "20:30",
+              "party_price_usd": 30
+            }
+          },
+          {
+            "id": "jazz2245",
+            "title": "Quartet jazz set - 22:45",
+            "text": "Late set at 22:45 ending 00:00: no licensed return service reaches home by 23:45 after it.",
+            "fields": {
+              "venue": "Harbour Room",
+              "type": "jazz",
+              "start": "22:45",
+              "end": "00:00",
+              "party_price_usd": 30
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "outing_routes",
+      "usage": "Licensed evening route search. Argument: query (optional string), e.g. \"return route\". Returns current shuttle routes with departure and arrival times, walks and party fares; route status can change without notice.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "route",
+          "shuttle",
+          "transport",
+          "return",
+          "bus",
+          "licensed"
+        ],
+        "clue": "A route service named outing_routes lists the current licensed evening shuttle routes.",
+        "entries": [
+          {
+            "id": "route-A",
+            "title": "Return route-A v1 - 22:50",
+            "text": "Licensed shuttle return departing 22:50, arriving 23:20, eight-minute walk home. Current as of this morning; service status can change.",
+            "fields": {
+              "route": "route-A",
+              "version": 1,
+              "return_depart": "22:50",
+              "return_arrive": "23:20",
+              "party_fare_usd": 12,
+              "party_size": 2
+            }
+          },
+          {
+            "id": "route-B",
+            "title": "Return route-B v1 - 22:40",
+            "text": "Licensed shuttle return departing 22:40, arriving 23:15, eight-minute walk home (home by 23:23). Party fare 12 USD. Shared legs: outbound 17:30-17:55 with five-minute walks, inter-venue shuttle 20:25-20:37 with a six-minute venue walk.",
+            "fields": {
+              "route": "route-B",
+              "version": 1,
+              "return_depart": "22:40",
+              "return_arrive": "23:15",
+              "home_walk_minutes": 8,
+              "party_fare_usd": 12,
+              "party_size": 2,
+              "outbound_depart": "17:30",
+              "intervenue_depart": "20:25"
+            },
+            "facts": [
+              "return_depart",
+              "home_arrival",
+              "transport_fare"
+            ],
+            "issuer": "evening_desk"
+          },
+          {
+            "id": "scooter-row",
+            "title": "Scooter share (search result)",
+            "text": "E-scooters appear in search results but cannot be used: no self-operated transport after drinks, and they are not the listed licensed bundle.",
+            "fields": {
+              "mode": "scooter",
+              "licensed": false
+            }
+          }
+        ],
+        "updates": [
+          {
+            "at": "2027-10-01T17:00:00-05:00",
+            "remove": [
+              "route-A"
+            ],
+            "add": [
+              {
+                "id": "route-A-cancelled",
+                "title": "Return route-A v2 - cancelled",
+                "text": "The 22:50 return service (route-A v1) has been cancelled by the operator. The 22:40 route-B return remains available; revalidate the whole evening against current routes before committing show tickets.",
+                "fields": {
+                  "route": "route-A",
+                  "version": 2,
+                  "status": "cancelled"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "reserve_transport",
+      "usage": "Evening transport desk. Argument: {\"entry\": listing_id} to request the two-person licensed bundle shown in one current outing_routes row, or {\"query\": text} to read back the current reservation status. Reserve only the plan the travelers have approved; at most one bundle; no payment is taken.",
+      "kind": "select",
+      "params": {
+        "catalog": "outing_routes",
+        "expect_entry": "route-B",
+        "expect": {
+          "party_size": 2
+        },
+        "process_delay": 45,
+        "calendar": "us_central_daily",
+        "result_text": "Transport confirmed: two-person licensed bundle covering the 17:30 outbound, the 20:25 inter-venue shuttle and the current 22:40 route-B return arriving 23:15 with an eight-minute walk home (home by 23:23). Party fare 12 USD; full approved plan 85 USD including 15 contingency. No payment taken.",
+        "reject_text": "The requested route is no longer current or does not match an approvable plan; nothing was reserved.",
+        "facts": [
+          "transport_reserved",
+          "total_cost"
+        ],
+        "issuer": "evening_desk",
+        "page_update": {
+          "page": "evening-entry",
+          "snippet": "Evening booking desks: an approved transport request is being processed; check the desk status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "reserve_film_ticket",
+      "usage": "Film desk. Argument: {\"entry\": listing_id} to request two seats for one current programme_search film row, or {\"query\": text} to read the current status. Book only after the transport bundle is reserved.",
+      "kind": "select",
+      "params": {
+        "catalog": "programme_search",
+        "expect_entry": "film1815",
+        "expect": {
+          "seats": 2
+        },
+        "process_delay": 45,
+        "calendar": "us_central_daily",
+        "result_text": "Film confirmed: two seats for the full 114-minute 18:15 Night Bridge showing (ends 20:09), referenced to the reserved transport bundle. Party price 28 USD; no payment taken.",
+        "reject_text": "The requested show is not in the approved bundle or is no longer current; nothing was booked.",
+        "facts": [
+          "film_reserved"
+        ],
+        "issuer": "evening_desk"
+      }
+    },
+    {
+      "name": "reserve_jazz_ticket",
+      "usage": "Jazz desk. Argument: {\"entry\": listing_id} to request two seats for one current programme_search jazz row, or {\"query\": text} to read the current status. Book only after the transport bundle is reserved.",
+      "kind": "select",
+      "params": {
+        "catalog": "programme_search",
+        "expect_entry": "jazz2100",
+        "expect": {
+          "seats": 2
+        },
+        "process_delay": 45,
+        "calendar": "us_central_daily",
+        "result_text": "Jazz confirmed: two seats for the 21:00 quartet set (entry by 20:50, ends 22:20), referenced to the reserved transport bundle. Party price 30 USD; no payment taken.",
+        "reject_text": "The requested show is not in the approved bundle or is no longer current; nothing was booked.",
+        "facts": [
+          "jazz_reserved"
+        ],
+        "issuer": "evening_desk"
+      }
+    },
+    {
+      "name": "evening_dialogue",
+      "usage": "Ask the evening travelers, Yara Mansour and Nico Brennan, one question. Argument: {\"question\": text}. They answer only what is explicitly asked and do not volunteer other facts.",
+      "kind": "dialogue",
+      "params": {
+        "persona": "Yara Mansour and Nico Brennan (evening travelers)",
+        "rules": [
+          {
+            "keywords": [
+              "timing",
+              "buffer",
+              "exit",
+              "walk",
+              "transfer",
+              "connection",
+              "minutes"
+            ],
+            "answer": "See the full film (no shortened attendance), keep the six-minute cinema exit buffer, board each booked transport at least five minutes before departure, and keep every walking segment at most twelve minutes."
+          },
+          {
+            "keywords": [
+              "transport",
+              "mobility",
+              "scooter",
+              "drive",
+              "cycle",
+              "taxi",
+              "route",
+              "return",
+              "home"
+            ],
+            "answer": "Use the listed licensed transit/shuttle bundle: no driving, cycling or scooters after drinks. The return service must be current and explicitly reserved, never assumed available, and we must be home by 23:45."
+          },
+          {
+            "keywords": [
+              "budget",
+              "cost",
+              "price",
+              "total",
+              "money",
+              "contingency"
+            ],
+            "answer": "Total at most 90 USD. The full plan is 28 for the film, 30 for jazz, 12 transport and 15 contingency: 85 USD. No meal purchase is planned."
+          },
+          {
+            "keywords": [
+              "approve",
+              "approval",
+              "permission",
+              "confirm",
+              "review"
+            ],
+            "answer": "Approve the exact shows, route version and the full 85 USD plan with us before any reservation. No agent payment and no nonrefundable substitution."
+          },
+          {
+            "keywords": [
+              "time",
+              "when",
+              "start",
+              "date",
+              "film",
+              "jazz"
+            ],
+            "answer": "October 1, 2027: two places for the 18:15 film and a jazz set starting at or after 21:00."
+          }
+        ],
+        "default": "Please ask me about timing, transport rules, budget or approval."
+      }
+    }
+  ],
+  "judge_criteria": [
+    {
+      "id": "XLM-R2-connections",
+      "statement": "The reported itinerary keeps the authored buffers.",
+      "pass_if": "The trace or final answer reports the full 114-minute film, the six-minute exit buffer, the 20:25 inter-venue transfer with boarding buffer, and arrival at the jazz venue by 20:50, without shortening attendance.",
+      "source": "trace"
+    },
+    {
+      "id": "XLM-R6-truthfulness",
+      "statement": "The final summary is truthful about what is confirmed.",
+      "pass_if": "The final answer states the confirmed reservations (transport, film, jazz), the current 22:40 return with home arrival by 23:23, the 85 USD plan, and claims neither attendance, travel completed, nor payment.",
+      "source": "final_answer"
+    }
+  ],
+  "public": {
+    "id": "DSB-22",
+    "title": "Film and jazz evening with a current feasible return",
+    "brief": "Arrange an evening for two in the Chicago test district on October 1, 2027: two places for the 18:15 film and a jazz set starting at or after 21:00, home by 23:45, total at most 90 USD. Ask me about timing, transport rules, budget and approval before reserving; verify the official film timing, keep the transport bundle current, and reserve transport before either show. No payment.",
+    "user_fields": {
+      "date": "2027-10-01",
+      "city": "Chicago test district",
+      "party_size": 2
+    },
+    "initial_contacts": [],
+    "pages": [
+      {
+        "id": "evening-intro",
+        "title": "Riverdale Evening Programme",
+        "text": "Synthetic evening listings for the Chicago test district: shows, licensed shuttle routes and booking desks. Current programmes and routes are found through the programme search service (programme_search) and the route service (outing_routes); listings can be revised or withdrawn, so re-check before booking. The travelers' constraints can be clarified through the evening profile desk (evening_dialogue). Official film timing comes from the evening services desk by mail.",
+        "contacts": [],
+        "snippet": "Chicago test district evening shows, licensed return routes and booking desks.",
+        "url": "https://riversideevening.bench/intro"
+      },
+      {
+        "id": "evening-contacts",
+        "title": "Riverdale evening contacts",
+        "text": "The cinema, jazz venue and booked-shuttle operator share one evening services desk, handled by Sam Okafor, who answers daily during business hours.",
+        "contacts": [
+          "evening_desk"
+        ],
+        "snippet": "Contact for the Riverside Evening Services desk.",
+        "url": "https://riversideevening.bench/contact"
+      },
+      {
+        "id": "evening-entry",
+        "title": "Evening booking desks",
+        "text": "Reservations go through three desks: the transport desk (reserve_transport) for the two-person licensed bundle (book first), then the film desk (reserve_film_ticket) and the jazz desk (reserve_jazz_ticket). Each desk takes one current programme_search / outing_routes row; the travelers must approve the exact shows, route version and full 85 USD plan before any reservation; at most one reservation per desk and no payment. Stale options are revalidated against live listings at booking time.",
+        "contacts": [],
+        "snippet": "Transport, film and jazz reservation desks; transport is booked before either show.",
+        "url": "https://riversideevening.bench/entry"
+      }
+    ],
+    "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "check_schedule"
+    ],
+    "authorization": "Advisory and coordination only: search listings, verify official timing, and create at most the approved transport bundle and two show reservations; no payment or other binding commitment.",
+    "answer_keys": [
+      "film_start",
+      "film_end",
+      "jazz_start",
+      "return_depart",
+      "home_arrival",
+      "total_cost",
+      "transport_reserved",
+      "film_reserved",
+      "jazz_reserved"
+    ],
+    "value_normalization": {
+      "film_start": {
+        "type": "text"
+      },
+      "film_end": {
+        "type": "text"
+      },
+      "jazz_start": {
+        "type": "text"
+      },
+      "return_depart": {
+        "type": "text"
+      },
+      "home_arrival": {
+        "type": "text"
+      },
+      "total_cost": {
+        "type": "number",
+        "units": {}
+      },
+      "transport_reserved": {
+        "type": "boolean"
+      },
+      "film_reserved": {
+        "type": "boolean"
+      },
+      "jazz_reserved": {
+        "type": "boolean"
+      }
+    },
+    "conclusion_options": {
+      "evening_confirmed": "Transport bundle and both show reservations confirmed with a current return",
+      "unconfirmed": "Official timing or a current return could not be verified in time",
+      "not_feasible": "No authorized evening satisfies the timing, safety and budget constraints"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "film_start": {
+      "value": "18:15",
+      "text": "The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "film_start"
+      }
+    },
+    "film_end": {
+      "value": "20:09",
+      "text": "The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "film_end"
+      }
+    },
+    "jazz_start": {
+      "value": "21:00",
+      "text": "The jazz set starts at 21:00 (entry by 20:50) and ends at 22:20.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "jazz_start"
+      }
+    },
+    "return_depart": {
+      "value": "22:40",
+      "text": "The reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "return_depart"
+      }
+    },
+    "home_arrival": {
+      "value": "23:23",
+      "text": "The reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "home_arrival"
+      }
+    },
+    "transport_fare": {
+      "value": 12,
+      "text": "The two-person licensed transit/shuttle bundle (outbound, inter-venue and return) costs 12 USD for the party.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "transport_fare"
+      }
+    },
+    "total_cost": {
+      "value": 85,
+      "text": "The approved full plan is 85 USD: film 28 + jazz 30 + transport 12 + 15 contingency, within the 90 USD cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "total_cost"
+      }
+    },
+    "transport_reserved": {
+      "value": true,
+      "text": "One two-person transport bundle covering outbound, inter-venue and current return legs has been confirmed; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "transport_reserved"
+      }
+    },
+    "film_reserved": {
+      "value": true,
+      "text": "Two seats for the 18:15 film (full 114-minute showing) have been confirmed against the reserved transport.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "film_reserved"
+      }
+    },
+    "jazz_reserved": {
+      "value": true,
+      "text": "Two seats for the 21:00 jazz set have been confirmed against the reserved transport.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "jazz_reserved"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "evening_desk",
+      "name": "Riverside Evening Services desk·Sam Okafor",
+      "role": "cinema, jazz venue and booked-shuttle operator records",
+      "description": "Confirms official film start and end times in writing; programme listings can lag; tickets and the transport bundle go through the desks named on the entry page.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "samokafor@bench.example"
+      },
+      "knowledge": [
+        "film_end",
+        "film_reserved",
+        "film_start",
+        "home_arrival",
+        "jazz_reserved",
+        "jazz_start",
+        "return_depart",
+        "total_cost",
+        "transport_fare",
+        "transport_reserved"
+      ],
+      "tools": {
+        "evening_desk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "evening_desk.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "film_start",
+            "film_end"
+          ]
+        },
+        "evening_desk.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "film_start",
+            "film_end"
+          ]
+        },
+        "evening_desk.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Official film timing verification",
+          "aliases": [
+            "film",
+            "duration",
+            "runtime",
+            "end",
+            "night bridge",
+            "cinema",
+            "114"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "evening_desk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the official film record for start, duration and end",
+              "tool": "evening_desk.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 90
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "evening_desk.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "evening_desk.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Riverside Evening Services desk·Sam Okafor，负责cinema, jazz venue and booked-shuttle operator records。Confirms official film start and end times in writing; programme listings can lag; tickets and the transport bundle go through the desks named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:film_end",
+        "attest:film_reserved",
+        "attest:film_start",
+        "attest:home_arrival",
+        "attest:jazz_reserved",
+        "attest:jazz_start",
+        "attest:return_depart",
+        "attest:total_cost",
+        "attest:transport_fare",
+        "attest:transport_reserved"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "film_start",
+      "expected": "18:15",
+      "accepted_facts": [
+        "film_start"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "film_start",
+        "authorities": [
+          "attest:film_start"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "18:15": [
+              "The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.",
+              "The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "18:15": [
+            "The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.",
+            "The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "film_end",
+      "expected": "20:09",
+      "accepted_facts": [
+        "film_end"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "film_end",
+        "authorities": [
+          "attest:film_end"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "20:09": [
+              "The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.",
+              "The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "20:09": [
+            "The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.",
+            "The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "jazz_start",
+      "expected": "21:00",
+      "accepted_facts": [
+        "jazz_start"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "jazz_start",
+        "authorities": [
+          "attest:jazz_start"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "21:00": [
+              "The jazz set starts at 21:00 (entry by 20:50) and ends at 22:20.",
+              "The jazz set starts at 21:00 (entry by 20:50) and ends at 22:20"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "21:00": [
+            "The jazz set starts at 21:00 (entry by 20:50) and ends at 22:20.",
+            "The jazz set starts at 21:00 (entry by 20:50) and ends at 22:20"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "return_depart",
+      "expected": "22:40",
+      "accepted_facts": [
+        "return_depart"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "return_depart",
+        "authorities": [
+          "attest:return_depart"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "22:40": [
+              "The reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A.",
+              "The reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "22:40": [
+            "The reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A.",
+            "The reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "home_arrival",
+      "expected": "23:23",
+      "accepted_facts": [
+        "home_arrival"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "home_arrival",
+        "authorities": [
+          "attest:home_arrival"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "23:23": [
+              "The reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement.",
+              "The reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "23:23": [
+            "The reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement.",
+            "The reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "total_cost",
+      "expected": 85,
+      "accepted_facts": [
+        "total_cost"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "total_cost",
+        "authorities": [
+          "attest:total_cost"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "transport_reserved",
+      "expected": true,
+      "accepted_facts": [
+        "transport_reserved"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "transport_reserved",
+        "authorities": [
+          "attest:transport_reserved"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "film_reserved",
+      "expected": true,
+      "accepted_facts": [
+        "film_reserved"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "film_reserved",
+        "authorities": [
+          "attest:film_reserved"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "jazz_reserved",
+      "expected": true,
+      "accepted_facts": [
+        "jazz_reserved"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "jazz_reserved",
+        "authorities": [
+          "attest:jazz_reserved"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "evening_confirmed",
+  "temporal_mechanisms": [
+    "mid-evening return-route cancellation invalidates route-A",
+    "official film timing only from the provider, not the aggregator label",
+    "transport bundle reserved before either show ticket",
+    "search-discoverable programme and route inventories",
+    "sparse prompt: constraints only surface through dialogue",
+    "hidden booking desks revalidate live listings"
+  ],
+  "failure_modes": [
+    "booking the stale aggregator 18:30 label",
+    "choosing the 20:30 jazz set the transfer cannot reach",
+    "booking the 22:45 set with no compliant return",
+    "reserving shows before the transport bundle",
+    "using scooters or self-operated transport after drinks",
+    "counting a cancelled route-A return as available"
+  ],
+  "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "evening-contacts"
+    },
+    {
+      "op": "discover",
+      "name": "evening_dialogue"
+    },
+    {
+      "op": "tool",
+      "name": "evening_dialogue",
+      "args": {
+        "question": "What are the timing, transport, budget and approval constraints for the evening?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "programme_search"
+    },
+    {
+      "op": "tool",
+      "name": "programme_search",
+      "args": {
+        "query": "film jazz evening"
+      }
+    },
+    {
+      "op": "send",
+      "to": "evening_desk",
+      "text": "Please confirm the official start and end time of the 18:15 Night Bridge film",
+      "label": "verify",
+      "fields": "$user"
+    },
+    {
+      "op": "advance",
+      "at": "2027-10-01T17:05:00-05:00"
+    },
+    {
+      "op": "wait_for",
+      "label": "verify"
+    },
+    {
+      "op": "discover",
+      "name": "outing_routes"
+    },
+    {
+      "op": "tool",
+      "name": "outing_routes",
+      "args": {
+        "query": "return route"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "evening_dialogue",
+      "args": {
+        "question": "Do you approve the exact plan: 18:15 film, 21:00 jazz, route-B 22:40 return, 85 USD total?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "reserve_transport"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_transport",
+      "args": {
+        "entry": "route-B"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-10-01T19:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_transport",
+      "args": {
+        "query": "status"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "reserve_film_ticket"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_film_ticket",
+      "args": {
+        "entry": "film1815"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-10-01T20:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_film_ticket",
+      "args": {
+        "query": "status"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "reserve_jazz_ticket"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_jazz_ticket",
+      "args": {
+        "entry": "jazz2100"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-10-02T10:00:00-05:00"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_jazz_ticket",
+      "args": {
+        "query": "status"
+      }
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the routes after the 17:00 cancellation and reserves transport before both shows, but any order honoring those gates scores the same.",
+  "horizon_design": {
+    "reference_days": 2,
+    "stratum": "短期",
+    "mechanism": "mid-evening return-route cancellation plus transport-before-shows gate",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

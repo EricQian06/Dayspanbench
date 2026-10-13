@@ -38,6 +38,10 @@
       },
       "qa.main.5.reply": {
         "kind": "reply"
+      },
+      "qa.dispatch_query.1.deny": {
+        "kind": "deny",
+        "text": "出库与排产安排不归质检管，我处只出具材料检测报告；出库预核请向排产员苏渝确认，或通过棱川出库预核登记渠道（lengchuan_dispatch_apply）申请。"
       }
     },
     "workflows": [
@@ -95,6 +99,27 @@
             "id": "main_5",
             "label": "向请求者回复已取得的结果",
             "tool": "qa.main.5.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "dispatch_query",
+        "label": "出库询问",
+        "aliases": [
+          "出库",
+          "预核"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "dispatch_query_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "qa.dispatch_query.1.deny",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -166,5 +191,5 @@
     }
   },
   "start_at": "2026-11-03T14:00:00+08:00",
-  "deadline_at": "2026-12-08T15:00:00+08:00"
+  "deadline_at": "2026-12-09T17:00:00+08:00"
 }

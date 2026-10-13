@@ -1,0 +1,150 @@
+{
+  "private": true,
+  "task_id": "DSB-03",
+  "actor": {
+    "id": "dean_office",
+    "name": "澄川学院院办教务处·柳汀",
+    "role": "成绩与学籍材料、文件存档查询",
+    "description": "只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。",
+    "calendar": "office",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "liuting@bench.example"
+    },
+    "knowledge": [],
+    "tools": {
+      "dean_office.main.1.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "dean_office.main.2.reply": {
+        "kind": "reply"
+      },
+      "dean_office.archive_search.1.suggest": {
+        "kind": "suggest",
+        "text": "签章大纲的下落我记不准：可能在课程负责人梅芮处，也可能当时是教务唐宁经手送审的；建议您分别去信确认。另外我印象里CS204按认定口径能转4学分，错不了，供您参考，具体以委员会审议为准。",
+        "guesses": [
+          "lecturer",
+          "records"
+        ]
+      },
+      "dean_office.archive_search.2.deny": {
+        "kind": "deny",
+        "text": "经核实，院办存档范围只有成绩与学籍材料，课程大纲不在其中，我处无法出具；请以课程负责人或教务的答复为准。"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "成绩与学籍材料受理",
+        "aliases": [
+          "成绩单",
+          "学籍",
+          "成绩"
+        ],
+        "required_fields": [
+          "student_name"
+        ],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "登记材料请求",
+            "tool": "dean_office.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "向请求者回复已取得的结果",
+            "tool": "dean_office.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "archive_search",
+        "label": "文件存档查询",
+        "aliases": [
+          "文件",
+          "存档",
+          "大纲"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "archive_search_1",
+            "label": "给出猜测性答复",
+            "tool": "dean_office.archive_search.1.suggest",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "archive_search_2",
+            "label": "明确表示不知情或不归管",
+            "tool": "dean_office.archive_search.2.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是澄川学院院办教务处·柳汀，负责成绩与学籍材料、文件存档查询。只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": []
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "12:00"
+      ],
+      [
+        "13:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {},
+  "start_at": "2026-11-05T14:00:00+08:00",
+  "deadline_at": "2027-02-09T17:00:00+08:00"
+}

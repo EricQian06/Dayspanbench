@@ -1,0 +1,311 @@
+{
+  "private": true,
+  "task_id": "DSB-22",
+  "actor": {
+    "id": "evening_desk",
+    "name": "Riverside Evening Services desk·Sam Okafor",
+    "role": "cinema, jazz venue and booked-shuttle operator records",
+    "description": "Confirms official film start and end times in writing; programme listings can lag; tickets and the transport bundle go through the desks named on the entry page.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "samokafor@bench.example"
+    },
+    "knowledge": [
+      "film_end",
+      "film_reserved",
+      "film_start",
+      "home_arrival",
+      "jazz_reserved",
+      "jazz_start",
+      "return_depart",
+      "total_cost",
+      "transport_fare",
+      "transport_reserved"
+    ],
+    "tools": {
+      "evening_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "evening_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "film_start",
+          "film_end"
+        ]
+      },
+      "evening_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "film_start",
+          "film_end"
+        ]
+      },
+      "evening_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Official film timing verification",
+        "aliases": [
+          "film",
+          "duration",
+          "runtime",
+          "end",
+          "night bridge",
+          "cinema",
+          "114"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "evening_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the official film record for start, duration and end",
+            "tool": "evening_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 90
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "evening_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "evening_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Riverside Evening Services desk·Sam Okafor，负责cinema, jazz venue and booked-shuttle operator records。Confirms official film start and end times in writing; programme listings can lag; tickets and the transport bundle go through the desks named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:film_end",
+      "attest:film_reserved",
+      "attest:film_start",
+      "attest:home_arrival",
+      "attest:jazz_reserved",
+      "attest:jazz_start",
+      "attest:return_depart",
+      "attest:total_cost",
+      "attest:transport_fare",
+      "attest:transport_reserved"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "film_end": {
+      "value": "20:09",
+      "text": "The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "film_end"
+      }
+    },
+    "film_reserved": {
+      "value": true,
+      "text": "Two seats for the 18:15 film (full 114-minute showing) have been confirmed against the reserved transport.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "film_reserved"
+      }
+    },
+    "film_start": {
+      "value": "18:15",
+      "text": "The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "film_start"
+      }
+    },
+    "home_arrival": {
+      "value": "23:23",
+      "text": "The reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "home_arrival"
+      }
+    },
+    "jazz_reserved": {
+      "value": true,
+      "text": "Two seats for the 21:00 jazz set have been confirmed against the reserved transport.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "jazz_reserved"
+      }
+    },
+    "jazz_start": {
+      "value": "21:00",
+      "text": "The jazz set starts at 21:00 (entry by 20:50) and ends at 22:20.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "jazz_start"
+      }
+    },
+    "return_depart": {
+      "value": "22:40",
+      "text": "The reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "return_depart"
+      }
+    },
+    "total_cost": {
+      "value": 85,
+      "text": "The approved full plan is 85 USD: film 28 + jazz 30 + transport 12 + 15 contingency, within the 90 USD cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "total_cost"
+      }
+    },
+    "transport_fare": {
+      "value": 12,
+      "text": "The two-person licensed transit/shuttle bundle (outbound, inter-venue and return) costs 12 USD for the party.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "transport_fare"
+      }
+    },
+    "transport_reserved": {
+      "value": true,
+      "text": "One two-person transport bundle covering outbound, inter-venue and current return legs has been confirmed; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-22",
+          "case": {
+            "date": "2027-10-01",
+            "city": "Chicago test district",
+            "party_size": 2
+          }
+        },
+        "predicate": "transport_reserved"
+      }
+    }
+  },
+  "start_at": "2027-10-01T15:00:00-05:00",
+  "deadline_at": "2027-10-03T17:30:00-05:00"
+}

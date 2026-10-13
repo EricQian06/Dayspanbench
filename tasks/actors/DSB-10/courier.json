@@ -5,7 +5,7 @@
     "id": "courier",
     "name": "桥溪快运取件咨询·曾澜",
     "role": "取件时段查询",
-    "description": "咨询台周末照常工作，只查询取件时段，不创建运单。",
+    "description": "咨询台周末照常工作，只查询取件时段，不创建运单；验机报告不在受理范围。",
     "calendar": "daily",
     "channels": [
       "email",
@@ -27,6 +27,10 @@
       },
       "courier.main.2.reply": {
         "kind": "reply"
+      },
+      "courier.inspection_query.1.deny": {
+        "kind": "deny",
+        "text": "我这里只查询取件时段，验机书面报告不归咨询台管；请向卖家沈栖或其朋友确认，或按官网说明的验机登记渠道申请。"
       }
     },
     "workflows": [
@@ -61,6 +65,27 @@
           }
         ],
         "evidence_fields": {}
+      },
+      {
+        "id": "inspection_query",
+        "label": "验机报告询问回绝",
+        "aliases": [
+          "验机",
+          "报告"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "inspection_query_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "courier.inspection_query.1.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
       }
     ],
     "process_engine": {
@@ -82,7 +107,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是桥溪快运取件咨询·曾澜，负责取件时段查询。咨询台周末照常工作，只查询取件时段，不创建运单。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是桥溪快运取件咨询·曾澜，负责取件时段查询。咨询台周末照常工作，只查询取件时段，不创建运单；验机报告不在受理范围。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:earliest_pickup"
@@ -127,5 +152,5 @@
     }
   },
   "start_at": "2026-11-06T10:00:00+08:00",
-  "deadline_at": "2026-11-09T22:00:00+08:00"
+  "deadline_at": "2026-11-10T22:00:00+08:00"
 }

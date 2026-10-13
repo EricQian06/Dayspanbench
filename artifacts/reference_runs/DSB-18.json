@@ -1,0 +1,482 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-18",
+  "answer": {
+    "conclusion": "followup_complete",
+    "claims": [
+      {
+        "key": "permit_expires",
+        "status": "confirmed",
+        "value": "2027-10-01",
+        "evidence_ids": [
+          "EV-0001"
+        ]
+      },
+      {
+        "key": "portal_verified",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0003"
+        ]
+      },
+      {
+        "key": "initial_submitted",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "notice_delivered",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0005"
+        ]
+      },
+      {
+        "key": "supplement_submitted",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0006"
+        ]
+      },
+      {
+        "key": "followup_complete",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0007"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-18",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "permit_expires",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "portal_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "initial_submitted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "notice_delivered",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "supplement_submitted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "followup_complete",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 193.0,
+    "calendar_days": 8.041667,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-09-21T15:00:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-09-13T15:20:00+00:00",
+      "from": "alanford@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是City permit office caseworker·Alan Ford。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-09-14 11:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-09-14T16:24:00+00:00",
+      "from": "alanford@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是City permit office caseworker·Alan Ford。您咨询的事项已经核实，具体情况如下：The permit office verified Linda Harris's portal identity (masked token) on September 14 after her written verification request; identity and clinical documents are accepted only through this verified portal.The permit office verified Linda Harris's portal identity (masked token) on September 14 after her written verification request; identity and clinical documents are accepted only through this verified portal.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0002",
+          "issuer": "permit_clerk",
+          "issued_at": "2027-09-14T15:26:00+00:00",
+          "text": "The permit office verified Linda Harris's portal identity (masked token) on September 14 after her written verification request; identity and clinical documents are accepted only through this verified portal.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0003",
+          "issuer": "permit_clerk",
+          "issued_at": "2027-09-14T16:09:00+00:00",
+          "text": "The permit office verified Linda Harris's portal identity (masked token) on September 14 after her written verification request; identity and clinical documents are accepted only through this verified portal.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "linda_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "linda_dialogue",
+      "question": "How should I send you important messages, and what are your privacy rules for identity and clinician documents?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "agent_fetch_document",
+      "url": "https://citypermit.bench/files/permit-record.pdf",
+      "facts": [
+        "permit_expires"
+      ]
+    },
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "permit_records",
+      "found": true,
+      "tool_kind": "record"
+    },
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "alanford@bench.example",
+      "text": "Please verify Linda Harris's portal identity (masked token) for the PERMIT-7 renewal so the application can be filed through the verified portal.",
+      "fields": {
+        "permit_id": "PERMIT-7",
+        "expires": "2027-10-01",
+        "saved_contact": "linda-contact"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-09-13T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-09-13T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-13T14:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "step": "main_1",
+      "start_at": "2027-09-13T14:32:00+00:00",
+      "due_at": "2027-09-13T15:20:00+00:00",
+      "tool": "permit_clerk.main.1.acknowledge"
+    },
+    {
+      "at": "2027-09-13T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-13T15:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "permit_clerk",
+      "case_id": "CASE-0001",
+      "tool": "permit_clerk.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-09-13T15:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-09-13T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-13T15:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "step": "main_2",
+      "start_at": "2027-09-13T15:20:00+00:00",
+      "due_at": "2027-09-14T15:26:00+00:00",
+      "tool": "permit_clerk.main.2.lookup"
+    },
+    {
+      "at": "2027-09-13T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-14T15:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "permit_clerk",
+      "case_id": "CASE-0001",
+      "tool": "permit_clerk.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-09-14T15:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-14T15:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "step": "main_3",
+      "start_at": "2027-09-14T15:26:00+00:00",
+      "due_at": "2027-09-14T16:09:00+00:00",
+      "tool": "permit_clerk.main.3.document"
+    },
+    {
+      "at": "2027-09-14T15:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-14T16:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "permit_clerk",
+      "case_id": "CASE-0001",
+      "tool": "permit_clerk.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-09-14T16:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-14T16:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "step": "main_4",
+      "start_at": "2027-09-14T16:09:00+00:00",
+      "due_at": "2027-09-14T16:24:00+00:00",
+      "tool": "permit_clerk.main.4.reply"
+    },
+    {
+      "at": "2027-09-14T16:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-14T16:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "permit_clerk",
+      "case_id": "CASE-0001",
+      "tool": "permit_clerk.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-09-14T16:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "permit_clerk",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-09-14T16:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-09-14T16:24:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "permit_portal_initial",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-09-14T16:24:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "linda_dialogue",
+      "question": "Do you approve the exact application: PERMIT-7 renewal, uploading only the masked identity token and the clinician certificate through the verified portal, no raw identity document?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-14T16:24:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "permit_portal_initial",
+      "form": "permit_initial_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-09-14T18:24:00+00:00",
+      "kind": "page_updated",
+      "page": "clinic-entry",
+      "url": "https://citypermit.bench/entry",
+      "cause": "form"
+    },
+    {
+      "at": "2027-09-14T18:24:00+00:00",
+      "kind": "form_processed",
+      "form": "permit_initial_form",
+      "accepted": true,
+      "result": "Renewal application app-XGC1 accepted through the verified portal: masked identity token and clinician certificate on file; no raw identity document was requested or uploaded. Review has started; any supplement notice will appear in the permit records desk (permit_records) - nothing is pushed."
+    },
+    {
+      "at": "2027-09-20T15:00:00+00:00",
+      "kind": "agent_hidden_record",
+      "tool": "permit_records",
+      "key": "notice-XGC1",
+      "found": [
+        "notice-XGC1"
+      ]
+    },
+    {
+      "at": "2027-09-20T15:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "notice_delivery_desk",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-09-20T15:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "linda_dialogue",
+      "question": "The office appended a notice to your renewal: address proof v2 is due by September 22 at 17:00 through the verified portal. I am sending this as a short plain-text message to your saved verified contact with a phone callback, and nothing sensitive attached. Do you acknowledge this message?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-20T15:00:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "notice_delivery_desk",
+      "form": "notice_delivery_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-09-20T15:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "permit_portal_supplement",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-09-20T15:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "linda_dialogue",
+      "question": "Do you approve the exact supplement for notice-XGC1: uploading address proof v2 through the verified portal before September 22 at 17:00?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-20T15:00:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "permit_portal_supplement",
+      "form": "permit_supplement_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-09-20T15:30:00+00:00",
+      "kind": "page_updated",
+      "page": "notify-faq",
+      "url": "https://citypermit.bench/faq",
+      "cause": "form"
+    },
+    {
+      "at": "2027-09-20T15:30:00+00:00",
+      "kind": "form_processed",
+      "form": "notice_delivery_form",
+      "accepted": true,
+      "result": "Notice notice-XGC1 was delivered to Linda Harris's saved verified contact (linda-contact) as a short plain-text message with a scheduled phone callback: address proof v2 is due through the verified portal by 2027-09-22 17:00. No sensitive documents were attached, and Linda acknowledged the message and the deadline."
+    },
+    {
+      "at": "2027-09-20T17:00:00+00:00",
+      "kind": "page_updated",
+      "page": "portal-supplement-contact",
+      "url": "https://citypermit.bench/contact",
+      "cause": "form"
+    },
+    {
+      "at": "2027-09-20T17:00:00+00:00",
+      "kind": "form_processed",
+      "form": "permit_supplement_form",
+      "accepted": true,
+      "result": "Supplement accepted for application app-XGC1: address proof v2 filed against notice notice-XGC1 through the verified portal before the 2027-09-22 17:00 deadline. The renewal follow-up is complete - no further documents are outstanding; the permit decision itself remains pending."
+    },
+    {
+      "at": "2027-09-21T15:00:00+00:00",
+      "kind": "agent_hidden_record",
+      "tool": "permit_records",
+      "key": "app-XGC1",
+      "found": [
+        "app-XGC1"
+      ]
+    }
+  ],
+  "pending_cases": []
+}

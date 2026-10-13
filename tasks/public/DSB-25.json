@@ -1,0 +1,98 @@
+{
+  "id": "DSB-25",
+  "title": "Fridge replacement: installment-gated order with a promo expiry",
+  "brief": "Replace my refrigerator by 2027-06-10: at least 16 cu ft, width at most 32.5 in, total at most 1300 USD, delivered on time. Existing-card zero-interest installments only, no new credit. Ask me about the space, access, cash schedule and approval before reserving installments or ordering; seller must verify unpack-at-door handling and old-unit recycling, and watch for financing offer changes.",
+  "user_fields": {
+    "need": "refrigerator replacement",
+    "delivery_deadline": "2027-06-10",
+    "min_capacity_cuft": 16,
+    "max_width_in": 32.5,
+    "budget_usd": 1300
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "store-intro",
+      "title": "Test Appliance Cooperative storefront",
+      "text": "Synthetic appliance listings and financing offers for the test district; listing claims alone do not establish fit or current financing. Current merchandise is found through the store's appliance search service (appliance_search) and current installment terms through the financing reader (finance_read); offers can expire mid-week and be replaced with fee-bearing versions, so re-check terms before any commitment. Household space, cash and approval facts can be clarified through the household desk (household_dialogue). Measured fit, unpack-at-door and recycling confirmations come from the fulfillment desk by mail.",
+      "contacts": [],
+      "snippet": "Test Appliance Cooperative: refrigerator listings, installment offers and household requirements desk.",
+      "url": "https://installmentgate.bench/intro"
+    },
+    {
+      "id": "store-contact",
+      "title": "Store contacts",
+      "text": "The fulfillment desk (Sam Rivers) verifies measured installation fit, doorway route, unpack-at-door handling and recycling; the order desk (Dana Fields) quotes current financed totals and installment schedules. Both answer daily during business hours.",
+      "contacts": [
+        "fulfillment_desk",
+        "store_desk"
+      ],
+      "snippet": "Contacts for the fulfillment desk and the order desk.",
+      "url": "https://installmentgate.bench/contact"
+    },
+    {
+      "id": "store-entry",
+      "title": "Order and financing desk",
+      "text": "Orders are placed through the store's order desk (order_create): pick one current appliance_search listing whose financed total and payment schedule still satisfy the dated budget, obtain the household organizer's approval of the exact SKU, fees, payment dates and amounts, then submit that one plan. At most one order; no new credit account, interest, subscription, transfer from protected funds or payment outside the approved schedule. Stale offers and expired promo validations are revalidated against live terms at order time.",
+      "contacts": [],
+      "snippet": "Order desk: one approved plan, current financing only, no new credit.",
+      "url": "https://installmentgate.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: search listings, contact the store, gather written fit verification, and place at most the one order the organizer has approved on the current existing-card installment plan; no new credit account, no payment, and no commitment outside the approved schedule.",
+  "answer_keys": [
+    "ordered_sku",
+    "order_total",
+    "installment_amount",
+    "delivery_date",
+    "fit_verified",
+    "recycling_confirmed"
+  ],
+  "value_normalization": {
+    "ordered_sku": {
+      "type": "text"
+    },
+    "order_total": {
+      "type": "number",
+      "units": {}
+    },
+    "installment_amount": {
+      "type": "number",
+      "units": {}
+    },
+    "delivery_date": {
+      "type": "date"
+    },
+    "fit_verified": {
+      "type": "boolean"
+    },
+    "recycling_confirmed": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "order_financed": "One approved order on a current existing-card installment plan within the dated budget",
+    "unconfirmed": "Fit, financing or approval could not be verified in time",
+    "not_feasible": "No current listing and financing combination satisfies the hard constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-06-07T09:00:00-05:00",
+  "deadline_at": "2027-06-09T12:00:00-05:00"
+}

@@ -1,0 +1,275 @@
+{
+  "private": true,
+  "task_id": "DSB-35",
+  "actor": {
+    "id": "clinic_coordinator",
+    "name": "Tenant Support Test Clinic caseworker·Jordan Reyes",
+    "role": "correspondence-address verification and the tenant case file",
+    "description": "Verifies the lease-designated correspondence recipient and the authorized clinic return address in writing; website listings and drafts are not verification. Dispatch goes through the clinic dispatch desk named on the entry page.",
+    "calendar": "us_central_office",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "jordanreyes@bench.example"
+    },
+    "knowledge": [
+      "attachment_only",
+      "clinic_return",
+      "demand_amount",
+      "dispatch_fee",
+      "dispatched",
+      "move_out",
+      "registered_office",
+      "tracking"
+    ],
+    "tools": {
+      "clinic_coordinator.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "clinic_coordinator.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "registered_office",
+          "clinic_return"
+        ]
+      },
+      "clinic_coordinator.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "registered_office",
+          "clinic_return"
+        ]
+      },
+      "clinic_coordinator.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Correspondence address verification",
+        "aliases": [
+          "verify",
+          "lease",
+          "correspondence",
+          "address",
+          "recipient",
+          "registered",
+          "parkview"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "clinic_coordinator.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the lease-designated correspondence recipient and the authorized return address",
+            "tool": "clinic_coordinator.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 180
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "clinic_coordinator.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "clinic_coordinator.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Tenant Support Test Clinic caseworker·Jordan Reyes，负责correspondence-address verification and the tenant case file。Verifies the lease-designated correspondence recipient and the authorized clinic return address in writing; website listings and drafts are not verification. Dispatch goes through the clinic dispatch desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:attachments_limited",
+      "attest:demand_amount",
+      "attest:dispatch_fee",
+      "attest:dispatched_once",
+      "attest:move_out",
+      "attest:return_address",
+      "attest:tracking",
+      "attest:verified_recipient"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "attachment_only": {
+      "value": true,
+      "text": "Only the redacted deposit receipt was attached; the private-address note and the hallway photos were excluded from the packet.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-35",
+          "case": {
+            "unit": "27 Example Lane, Unit 2F",
+            "deposit_usd": 1850,
+            "move_out": "2027-03-12"
+          }
+        },
+        "predicate": "attachments_limited"
+      }
+    },
+    "clinic_return": {
+      "value": "90 Clinic Lane, Test City",
+      "text": "The authorized return address is Tenant Support Test Clinic, attention Sofia Alvarez, 90 Clinic Lane, Test City.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-35",
+          "case": {
+            "unit": "27 Example Lane, Unit 2F",
+            "deposit_usd": 1850,
+            "move_out": "2027-03-12"
+          }
+        },
+        "predicate": "return_address"
+      }
+    },
+    "demand_amount": {
+      "value": 1850,
+      "text": "The security deposit paid for 27 Example Lane, Unit 2F was 1850 USD; the demand requests the full 1850 USD.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-35",
+          "case": {
+            "unit": "27 Example Lane, Unit 2F",
+            "deposit_usd": 1850,
+            "move_out": "2027-03-12"
+          }
+        },
+        "predicate": "demand_amount"
+      }
+    },
+    "dispatch_fee": {
+      "value": 8.5,
+      "text": "The tracked-letter dispatch fee was 8.50 USD, within the 12 USD mailing limit.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-35",
+          "case": {
+            "unit": "27 Example Lane, Unit 2F",
+            "deposit_usd": 1850,
+            "move_out": "2027-03-12"
+          }
+        },
+        "predicate": "dispatch_fee"
+      }
+    },
+    "dispatched": {
+      "value": true,
+      "text": "One approved demand letter was dispatched as a tracked letter (receipt dispatch-L1) by the March 23 deadline.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-35",
+          "case": {
+            "unit": "27 Example Lane, Unit 2F",
+            "deposit_usd": 1850,
+            "move_out": "2027-03-12"
+          }
+        },
+        "predicate": "dispatched_once"
+      }
+    },
+    "move_out": {
+      "value": "2027-03-12",
+      "text": "Sofia Alvarez moved out of 27 Example Lane, Unit 2F and returned the keys on March 12, 2027.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-35",
+          "case": {
+            "unit": "27 Example Lane, Unit 2F",
+            "deposit_usd": 1850,
+            "move_out": "2027-03-12"
+          }
+        },
+        "predicate": "move_out"
+      }
+    },
+    "registered_office": {
+      "value": "208 Example Plaza, Suite 814, Test City",
+      "text": "Per lease-service v1 and the clinic's verification, correspondence for Parkview Test LLC goes to Registered Office Services, 208 Example Plaza, Suite 814, Test City; the building website address is not the designated correspondence address.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-35",
+          "case": {
+            "unit": "27 Example Lane, Unit 2F",
+            "deposit_usd": 1850,
+            "move_out": "2027-03-12"
+          }
+        },
+        "predicate": "verified_recipient"
+      }
+    },
+    "tracking": {
+      "value": "TRACK-L1",
+      "text": "The dispatched letter carries tracking id TRACK-L1; dispatch is confirmed, delivery is not.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-35",
+          "case": {
+            "unit": "27 Example Lane, Unit 2F",
+            "deposit_usd": 1850,
+            "move_out": "2027-03-12"
+          }
+        },
+        "predicate": "tracking"
+      }
+    }
+  },
+  "start_at": "2027-03-18T09:00:00-05:00",
+  "deadline_at": "2027-03-23T17:00:00-05:00"
+}

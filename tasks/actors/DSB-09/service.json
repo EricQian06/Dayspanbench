@@ -21,8 +21,13 @@
         "kind": "lookup",
         "facts": []
       },
-      "service.main.2.acknowledge": {
-        "kind": "acknowledge"
+      "service.main.2.suggest": {
+        "kind": "suggest",
+        "text": "北广场这类开放场地的管辖我记不很准：可能归街区公共空间管理处，也可能要走活动环境咨询那边的口径，建议您分别去函确认。另外北广场带两只音箱的活动我印象里按一般户外活动备案登记就行，错不了，供您参考，具体以联合复核结论为准。",
+        "guesses": [
+          "land",
+          "sound"
+        ]
       },
       "service.main.3.delegate": {
         "kind": "delegate",
@@ -67,8 +72,8 @@
           },
           {
             "id": "main_2",
-            "label": "发出受理回执",
-            "tool": "service.main.2.acknowledge",
+            "label": "给出猜测性答复",
+            "tool": "service.main.2.suggest",
             "delay": {
               "mode": "business",
               "minutes": 30
@@ -150,5 +155,5 @@
   },
   "local_facts": {},
   "start_at": "2026-11-03T15:00:00+08:00",
-  "deadline_at": "2026-12-29T17:00:00+08:00"
+  "deadline_at": "2027-01-05T17:00:00+08:00"
 }

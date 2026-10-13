@@ -1,0 +1,215 @@
+{
+  "private": true,
+  "task_id": "DSB-15",
+  "actor": {
+    "id": "issuer_desk",
+    "name": "Card issuer service desk·Avery Fox",
+    "role": "card status, tokens and dispute intake",
+    "description": "Verifies card status, payment schedules and service tokens; containment and dispute actions each need their own exact approval, and neither authorizes a card freeze.",
+    "calendar": "us_eastern_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "averyfox@bench.example"
+    },
+    "knowledge": [
+      "card_active",
+      "dispute_filed",
+      "disputed_amount",
+      "rent_unchanged",
+      "token_revoked"
+    ],
+    "tools": {
+      "issuer_desk.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "card_active",
+          "rent_unchanged"
+        ]
+      },
+      "issuer_desk.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "card_active",
+          "rent_unchanged"
+        ]
+      },
+      "issuer_desk.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Card and collateral status",
+        "aliases": [
+          "card",
+          "status",
+          "freeze",
+          "rent",
+          "cloud",
+          "music",
+          "protection",
+          "collateral"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "verify card status, the rent schedule and the family services",
+            "tool": "issuer_desk.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "issuer_desk.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "issuer_desk.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Card issuer service desk·Avery Fox，负责card status, tokens and dispute intake。Verifies card status, payment schedules and service tokens; containment and dispute actions each need their own exact approval, and neither authorizes a card freeze. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:card_active",
+      "attest:dispute_filed",
+      "attest:disputed_amount",
+      "attest:rent_unchanged",
+      "attest:token_revoked"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "card_active": {
+      "value": true,
+      "text": "The card remains active with no freeze; the family cloud (9.99 USD) and music (14.99 USD) services remain active.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-15",
+          "case": {
+            "merchant": "PHOTOAPP-PRO",
+            "amount_usd": 14.99,
+            "reversal_deadline": "2027-04-04"
+          }
+        },
+        "predicate": "card_active"
+      }
+    },
+    "dispute_filed": {
+      "value": true,
+      "text": "The issuer accepted dispute dispute-XDF1 for charge-photo after the April 4 18:00 no-reversal deadline passed and a current ledger check; the dispute is received and pending review with no refund posted.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-15",
+          "case": {
+            "merchant": "PHOTOAPP-PRO",
+            "amount_usd": 14.99,
+            "reversal_deadline": "2027-04-04"
+          }
+        },
+        "predicate": "dispute_filed"
+      }
+    },
+    "disputed_amount": {
+      "value": 14.99,
+      "text": "The disputed amount is exactly 14.99 USD for charge-photo (PHOTOAPP-PRO) - not the equal 14.99 USD music charge or the 29.99 USD photo print order.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-15",
+          "case": {
+            "merchant": "PHOTOAPP-PRO",
+            "amount_usd": 14.99,
+            "reversal_deadline": "2027-04-04"
+          }
+        },
+        "predicate": "disputed_amount"
+      }
+    },
+    "rent_unchanged": {
+      "value": true,
+      "text": "The 2410 USD rent payment stays scheduled for 2027-04-05 09:00 Denver time and has not executed; the agent changed no payment schedule.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-15",
+          "case": {
+            "merchant": "PHOTOAPP-PRO",
+            "amount_usd": 14.99,
+            "reversal_deadline": "2027-04-04"
+          }
+        },
+        "predicate": "rent_unchanged"
+      }
+    },
+    "token_revoked": {
+      "value": true,
+      "text": "Only token-photo, the payment token linked to the unauthorized 14.99 USD PHOTOAPP-PRO charge, has been revoked; the card itself and every other token remain active.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-15",
+          "case": {
+            "merchant": "PHOTOAPP-PRO",
+            "amount_usd": 14.99,
+            "reversal_deadline": "2027-04-04"
+          }
+        },
+        "predicate": "token_revoked"
+      }
+    }
+  },
+  "start_at": "2027-04-03T09:00:00-06:00",
+  "deadline_at": "2027-04-05T09:00:00-06:00"
+}

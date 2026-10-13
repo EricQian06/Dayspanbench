@@ -1,11 +1,11 @@
 {
   "schema_version": "0.2",
-  "task_set_version": "0.3.0",
+  "task_set_version": "0.4.0",
   "id": "DSB-04",
   "title": "共享仪器：培训、进口耗材与七天稳定性校准",
   "domain": "科研设施",
   "start_at": "2026-11-04T09:30:00+08:00",
-  "deadline_at": "2026-11-25T17:00:00+08:00",
+  "deadline_at": "2026-11-27T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
   "synthetic": true,
   "completion_class": "resolved",
@@ -215,16 +215,254 @@
           "23:59"
         ]
       ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
     }
   },
   "reply_delay": [
     20,
     45
   ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "fetch_document",
+    "leave_note",
+    "query_case_status"
+  ],
+  "page_updates": [
+    {
+      "page": "lab-intro",
+      "at": "2026-11-05T09:00:00+08:00",
+      "text": "南屿共享实验室（11月5日更新）：原定11月6日（周五）14点安全培训批次因场地调整取消，改至11月13日（周五）14点举行。进口耗材预计11月17日到库，之后需连续7天稳定性校准和人工复核。仪器使用须持有效安全培训记录。"
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "nanyu_training_record",
+      "usage": "南屿共享实验室培训记录系统。调用参数：fields为对象，键为表单字段名（person_name、training_date），training_date须填实际参训的培训批次日期。",
+      "kind": "form",
+      "params": {
+        "form": "lab_training_form",
+        "expect": {
+          "person_name": "顾晓",
+          "training_date": "2026-11-13"
+        },
+        "process_at": "2026-11-13T16:00:00+08:00",
+        "result_text": "培训记录申请已办结：顾晓已完成11月13日批次安全培训，合格记录号SAFE-NOV06-482；办理进度可经南屿培训状态查询（nanyu_training_status）复核。",
+        "reject_text": "该日期无对应培训批次（或批次已取消），记录申请已退回；请核对最新批次安排后重新提交。",
+        "facts": [
+          "certificate"
+        ],
+        "issuer": "safety",
+        "page_update": {
+          "page": "lab-entry",
+          "snippet": "南屿实验室培训记录申请：已提交的申请以表单状态为准。"
+        }
+      }
+    },
+    {
+      "name": "nanyu_training_status",
+      "usage": "南屿培训状态查询。调用参数：query为事项关键词（可省略）。",
+      "kind": "status",
+      "params": {
+        "records": [
+          {
+            "key": "batch",
+            "label": "安全培训批次安排",
+            "initial": "下一期安全培训批次：11月6日（周五）14点。",
+            "timeline": [
+              {
+                "at": "2026-11-05T09:00:00+08:00",
+                "text": "原定11月6日批次已取消，下一期改至11月13日（周五）14点。"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "judge_criteria": [],
   "public": {
     "id": "DSB-04",
     "title": "共享仪器：培训、进口耗材与七天稳定性校准",
-    "brief": "为样品S-482确认最早测量时间和费用。我已报名11月6日14点安全培训并会按时完成，但目前没有合格记录。请在培训完成后取得凭证，并核实耗材和校准后的可用窗口，暂不预约仪器。",
+    "brief": "为样品S-482确认最早测量时间和费用。我已报名11月6日14点安全培训并会按时完成，但目前没有合格记录。请在培训完成后按官网说明的记录渠道取得凭证，并核实耗材和校准后的可用窗口，暂不预约仪器。",
     "user_fields": {
       "sample_id": "S-482",
       "person_name": "顾晓"
@@ -234,9 +472,29 @@
       {
         "id": "lab-intro",
         "title": "南屿共享实验室简介",
-        "text": "仪器使用需安全培训记录，培训每周五14点。本批进口耗材预计11月17日到库，之后需要连续7天稳定性校准和人工复核。",
+        "text": "仪器使用需安全培训记录，培训每周五14点。本批进口耗材预计11月17日到库，之后需要连续7天稳定性校准和人工复核。本页另挂有安全培训安排细则与培训合格记录等文件。",
         "contacts": [],
         "snippet": "共享仪器使用条件、培训批次与校准安排。",
+        "documents": [
+          {
+            "id": "lab-training-notice",
+            "title": "安全培训安排细则.pdf",
+            "text": "安全培训每周五14点举行，每批次约2小时。批次时间如有调整，以官网简介页最新公告为准；已报名批次的参训人须自行留意调整公告。合格记录不随邮件发放：参训人须通过南屿培训记录系统（nanyu_training_record）提交记录申请，处理结果以表单状态为准；批次调整情况可经南屿培训状态查询（nanyu_training_status）核对。",
+            "facts": [],
+            "issuer": null,
+            "url": "https://nanyu.bench/files/lab-training-notice.pdf"
+          },
+          {
+            "id": "lab-record-oct30",
+            "title": "安全培训合格记录（10月30日批次）.pdf",
+            "text": "南屿共享实验室安全培训合格记录（10月30日批次）：参训合格者记录号SAFE-OCT30-215，该记录有效期至2026年11月3日。（留存方整理）",
+            "facts": [
+              "cert_ref"
+            ],
+            "issuer": "safety",
+            "url": "https://nanyu.bench/files/lab-record-oct30.pdf"
+          }
+        ],
         "url": "https://nanyu.bench/intro"
       },
       {
@@ -251,14 +509,48 @@
       },
       {
         "id": "lab-entry",
-        "title": "南屿实验室仪器使用申请入口",
-        "text": "南屿共享实验室仪器使用申请说明：申请需提供样品编号与安全培训记录号；耗材到库后还需完成连续稳定性校准方可安排测量。本页面仅说明受理条件，不能在线预约仪器。",
+        "title": "南屿实验室安全培训记录申请",
+        "text": "南屿共享实验室仪器使用申请说明：申请需提供样品编号与安全培训记录号；安全培训合格记录通过本页申请表单取得，耗材到库后还需完成连续稳定性校准方可安排测量。本页面仅说明受理条件，不能在线预约仪器。",
         "contacts": [],
-        "snippet": "南屿实验室仪器使用申请材料说明；不支持在线预约。",
+        "snippet": "南屿实验室仪器使用申请材料与培训记录表单说明；不支持在线预约。",
+        "form": {
+          "id": "lab_training_form",
+          "title": "安全培训记录申请",
+          "fields": [
+            {
+              "name": "person_name",
+              "label": "参训人姓名",
+              "required": true,
+              "hidden": false
+            },
+            {
+              "name": "training_date",
+              "label": "培训批次日期",
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "submit_instructions": "本表单不能在线直接提交：须通过实验室培训记录系统申请；系统名称与批次安排见官网安全培训安排细则文件。"
+        },
         "url": "https://nanyu.bench/entry"
       }
     ],
     "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "fetch_document",
+      "leave_note",
+      "query_case_status"
+    ],
     "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
     "answer_keys": [
       "safety_certificate",
@@ -300,6 +592,21 @@
     "certificate": {
       "value": "SAFE-NOV06-482",
       "text": "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-04",
+          "case": {
+            "sample_id": "S-482",
+            "person_name": "顾晓"
+          }
+        },
+        "predicate": "safety_certificate"
+      }
+    },
+    "cert_ref": {
+      "value": "SAFE-OCT30-215",
+      "text": "上月（10月30日批次）安全培训合格记录SAFE-OCT30-215，有效期至2026年11月3日。",
+      "valid_until": "2026-11-03T23:59:00+08:00",
       "attributes": {
         "subject": {
           "task": "DSB-04",
@@ -371,14 +678,23 @@
       },
       "knowledge": [],
       "tools": {
-        "labdesk.main.1.refer": {
+        "labdesk.main.1.suggest": {
+          "kind": "suggest",
+          "text": "培训记录归谁管我说不准：可能是安全员温遥，也可能仪器管理员杜和那边留了登记，或者耗材库宋野能查到；建议您分别去信确认。另外我印象里这批进口滤芯11月10日就到库了，错不了，供您参考，到货情况请以耗材库核实为准。",
+          "guesses": [
+            "safety",
+            "instrument",
+            "stores"
+          ]
+        },
+        "labdesk.main.2.refer": {
           "kind": "refer",
           "contacts": [
             "safety",
             "instrument"
           ]
         },
-        "labdesk.main.2.reply": {
+        "labdesk.main.3.reply": {
           "kind": "reply"
         }
       },
@@ -395,8 +711,8 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询联系人目录并转介",
-              "tool": "labdesk.main.1.refer",
+              "label": "给出猜测性答复",
+              "tool": "labdesk.main.1.suggest",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -404,8 +720,17 @@
             },
             {
               "id": "main_2",
+              "label": "查询联系人目录并转介",
+              "tool": "labdesk.main.2.refer",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_3",
               "label": "向请求者回复已取得的结果",
-              "tool": "labdesk.main.2.reply",
+              "tool": "labdesk.main.3.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -442,7 +767,7 @@
       "id": "safety",
       "name": "南屿实验室安全员·温遥",
       "role": "安全培训与合格记录",
-      "description": "每周五14点培训，结束后签发记录。",
+      "description": "每周五14点培训；合格记录须经培训记录系统申请，不随邮件发放。",
       "calendar": "office",
       "channels": [
         "email"
@@ -451,23 +776,17 @@
         "email": "wenyao@bench.example"
       },
       "knowledge": [
+        "cert_ref",
         "certificate"
       ],
       "tools": {
         "safety.main.1.lookup": {
           "kind": "lookup",
-          "facts": [
-            "certificate"
-          ]
+          "facts": []
         },
-        "safety.main.2.document": {
-          "kind": "document",
-          "facts": [
-            "certificate"
-          ]
-        },
-        "safety.main.3.reply": {
-          "kind": "reply"
+        "safety.main.2.deny": {
+          "kind": "deny",
+          "text": "本期批次培训已结束，合格记录不随邮件发放：请通过南屿培训记录系统（nanyu_training_record）提交记录申请，批次安排与申请说明见官网安全培训安排细则文件。"
         }
       },
       "workflows": [
@@ -485,28 +804,20 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "完成培训批次",
               "tool": "safety.main.1.lookup",
               "delay": {
                 "mode": "weekly",
                 "weekday": 4,
                 "time": "14:00",
-                "minutes": 120
+                "minutes": 120,
+                "not_before": "2026-11-13T14:00:00+08:00"
               }
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
-              "tool": "safety.main.2.document",
-              "delay": {
-                "mode": "business",
-                "minutes": 60
-              }
-            },
-            {
-              "id": "main_3",
-              "label": "向请求者回复已取得的结果",
-              "tool": "safety.main.3.reply",
+              "label": "明确表示不知情或不归管",
+              "tool": "safety.main.2.deny",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -535,7 +846,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是南屿实验室安全员·温遥，负责安全培训与合格记录。每周五14点培训，结束后签发记录。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是南屿实验室安全员·温遥，负责安全培训与合格记录。每周五14点培训；合格记录须经培训记录系统申请，不随邮件发放。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:safety_certificate"
@@ -676,7 +987,12 @@
               ],
               "normalization": {
                 "type": "text",
-                "aliases": {}
+                "aliases": {
+                  "SAFE-NOV06-482": [
+                    "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
+                    "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询"
+                  ]
+                }
               }
             }
           }
@@ -712,7 +1028,7 @@
       "id": "stores",
       "name": "耗材库管理员·宋野",
       "role": "滤芯收货检查",
-      "description": "本批供应商11月17日10点后送达，入库检查还需要2个工作小时。",
+      "description": "本批供应商11月17日10点后送达，入库检查还需要2个工作小时；培训记录不在耗材库业务范围。",
       "calendar": "office",
       "channels": [
         "email"
@@ -732,6 +1048,10 @@
         },
         "stores.main.2.reply": {
           "kind": "reply"
+        },
+        "stores.training_record.1.deny": {
+          "kind": "deny",
+          "text": "我这里只负责耗材入库与收货检查，培训合格记录不归我管，也无从查询；请向安全员温遥确认，或按官网说明的记录渠道申请。"
         }
       },
       "workflows": [
@@ -767,6 +1087,27 @@
             }
           ],
           "evidence_fields": {}
+        },
+        {
+          "id": "training_record",
+          "label": "培训记录查询",
+          "aliases": [
+            "培训记录",
+            "培训"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "training_record_1",
+              "label": "明确表示不知情或不归管",
+              "tool": "stores.training_record.1.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
         }
       ],
       "process_engine": {
@@ -788,7 +1129,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是耗材库管理员·宋野，负责滤芯收货检查。本批供应商11月17日10点后送达，入库检查还需要2个工作小时。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是耗材库管理员·宋野，负责滤芯收货检查。本批供应商11月17日10点后送达，入库检查还需要2个工作小时；培训记录不在耗材库业务范围。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:filter_batch"
@@ -816,12 +1157,22 @@
         ],
         "normalization": {
           "type": "text",
-          "aliases": {}
+          "aliases": {
+            "SAFE-NOV06-482": [
+              "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
+              "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询"
+            ]
+          }
         }
       },
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "SAFE-NOV06-482": [
+            "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
+            "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询"
+          ]
+        }
       },
       "match": "expected"
     },
@@ -845,12 +1196,22 @@
         ],
         "normalization": {
           "type": "text",
-          "aliases": {}
+          "aliases": {
+            "F-26B": [
+              "本次测量所需F-26B滤芯已到库。",
+              "本次测量所需F-26B滤芯已到库"
+            ]
+          }
         }
       },
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "F-26B": [
+            "本次测量所需F-26B滤芯已到库。",
+            "本次测量所需F-26B滤芯已到库"
+          ]
+        }
       },
       "match": "expected"
     },
@@ -924,12 +1285,21 @@
     "周五培训批次",
     "进口耗材批次到货",
     "连续7天设备过程",
-    "校准结束后仍等待人员复核"
+    "校准结束后仍等待人员复核",
+    "培训批次中途调整须复查页面",
+    "隐藏培训记录表单与分阶段办结",
+    "前台猜测性指路与耗材库明确回绝",
+    "培训批次状态的隐藏时间线",
+    "过期培训合格记录与前台到货口头误述"
   ],
   "failure_modes": [
     "7天连续运行误算为7个工作日",
     "有耗材就认为可测量",
-    "伪造安全培训记录"
+    "伪造安全培训记录",
+    "沿用已取消的11月6日批次安排",
+    "不发现记录系统即认定无法取得凭证",
+    "引用过期培训合格记录当作有效凭证",
+    "把前台到货印象当耗材到库结论"
   ],
   "reference_actions": [
     {
@@ -950,9 +1320,27 @@
     {
       "op": "send",
       "to": "safety",
-      "text": "请求完成培训并取得安全记录",
+      "text": "请确认培训批次与记录领取方式",
       "label": "safe",
       "fields": "$user"
+    },
+    {
+      "op": "discover",
+      "name": "nanyu_training_record"
+    },
+    {
+      "op": "tool",
+      "name": "nanyu_training_record",
+      "args": {
+        "fields": {
+          "person_name": "顾晓",
+          "training_date": "2026-11-13"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2026-11-13T16:30:00+08:00"
     },
     {
       "op": "wait_for",

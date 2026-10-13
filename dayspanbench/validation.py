@@ -3,7 +3,7 @@
 import re
 
 from .calendar import Calendar, parse
-from .engine import TRANSITIONS
+from .engine import TRANSITIONS, PUBLIC_TOOLS, EXTRA_TOOLS, HIDDEN_TOOL_KINDS
 from .scoring import equivalent
 
 # The agent protocol (AGENT_PROMPT in dayspanbench/evaluation.py and
@@ -69,7 +69,12 @@ def validate_task(task):
                 check(isinstance(delay["minutes"], int) and delay["minutes"] >= 0, f"{wid}: negative/non-integer duration")
                 if tool["kind"] in {"lookup", "document"}:
                     check(set(tool["facts"]) <= set(actor["knowledge"]), f"{wid}: undeclared local facts")
-                elif tool["kind"] == "delegate":
+                elif tool["kind"] == "suggest":
+                    check(bool(tool.get("text")), f"{wid}: vague reply without text")
+                    check(set(tool.get("guesses", [])) <= set(actors), f"{wid}: nonexistent guess")
+                    check(all("email" in actors[c]["contact_details"] for c in tool.get("guesses", [])),
+                          f"{aid}: guessed contact without a mailbox")
+                elif tool["kind"] in {"delegate", "consult"}:
                     check(tool["target"] in actors, f"{wid}: unknown delegate")
                     target = actors[tool["target"]]
                     child = next((w for w in target["workflows"] if w["id"] == tool["workflow"]), None)
@@ -79,11 +84,14 @@ def validate_task(task):
                     edges[wid].append((tool["target"], tool["workflow"]))
                 elif tool["kind"] == "refer":
                     check(set(tool["contacts"]) <= set(actors), f"{wid}: nonexistent referral")
+                elif tool["kind"] == "deny":
+                    check(bool(tool.get("text")), f"{wid}: deny reply without text")
                 elif tool["kind"] == "acknowledge":
                     pass  # mid-workflow acceptance receipt; no extra structure
                 else:
                     check(tool["kind"] == "reply", f"{wid}: unsupported tool")
-            check(actor["tools"][workflow["steps"][-1]["tool"]]["kind"] == "reply", f"{wid}: workflow must terminate in reply")
+            check(actor["tools"][workflow["steps"][-1]["tool"]]["kind"] in {"reply", "deny"},
+                  f"{wid}: workflow must terminate in reply or deny")
     for spec in task["calendars"].values():
         Calendar(spec).next_open(parse(task["start_at"]))
     check(set(task["public"]["initial_contacts"]) <= set(actors), "Unknown initial contact")
@@ -114,13 +122,202 @@ def validate_task(task):
     emails = [a["contact_details"]["email"] for a in task["actors"]]
     check(len(emails) == len(set(emails)), "Duplicate email addresses")
     urls = []
+    doc_urls = []
+    page_ids = set()
+    form_ids = set()
+    form_field_names = {}
     for page in task["public"]["pages"]:
+        page_ids.add(page["id"])
         check(set(page["contacts"]) <= set(actors), "Unknown directory contact")
         check(bool(page.get("snippet")), f"Page {page['id']}: missing search snippet")
         check(bool(page.get("url", "")) and page["url"].startswith("https://") and ".bench/" in page["url"],
               f"Page {page['id']}: missing or malformed URL")
         urls.append(page["url"])
+        if "form" in page:
+            form = page["form"]
+            check(form["id"] not in form_ids, f"Duplicate form id: {form['id']}")
+            form_ids.add(form["id"])
+            check(bool(form.get("title")) and bool(form.get("submit_instructions")),
+                  f"Form {form['id']}: missing title or submit_instructions")
+            check(bool(form.get("fields")), f"Form {form['id']}: no fields")
+            names = [f["name"] for f in form["fields"]]
+            check(len(names) == len(set(names)), f"Form {form['id']}: duplicate field names")
+            form_field_names[form["id"]] = set(names)
+            for field in form["fields"]:
+                check(bool(field.get("name")) and bool(field.get("label")),
+                      f"Form {form['id']}: field without name or label")
+                check(isinstance(field.get("required", True), bool) and isinstance(field.get("hidden", False), bool),
+                      f"Form {form['id']}: required/hidden must be booleans")
+        for document in page.get("documents", []):
+            check(bool(document.get("url", "").startswith("https://")) and ".bench/" in document["url"]
+                  and "/files/" in document["url"], f"Page {page['id']}: malformed document URL")
+            check(bool(document.get("title")) and bool(document.get("text")),
+                  f"Page {page['id']}: document without title or text")
+            doc_urls.append(document["url"])
+            issuer = actors.get(document.get("issuer"))
+            if document.get("facts"):
+                check(issuer is not None, f"Page {page['id']}: evidenced document without issuer")
+                if issuer is not None:
+                    for fid in document.get("facts", []):
+                        # Deliberate evidence-discrimination trap: a document may
+                        # publish a figure the issuer has no attestation authority
+                        # for. Scoring rejects the resulting evidence because the
+                        # issuer never gains the predicate authority; such facts
+                        # must stay outside every actor's knowledge.
+                        if facts.get(fid, {}).get("unauthorized_attestation"):
+                            continue
+                        check(fid in issuer["knowledge"],
+                              f"Page {page['id']}: document facts outside issuer knowledge")
     check(len(urls) == len(set(urls)), "Duplicate page URLs")
+    check(len(doc_urls) == len(set(doc_urls)), "Duplicate document URLs")
+    # Out-of-authority trap facts may only exist as published decoy documents:
+    # if any actor knew them, that actor would gain the predicate authority and
+    # the decoy would become valid evidence.
+    for fid, fact in facts.items():
+        if fact.get("unauthorized_attestation"):
+            check(not any(fid in actor["knowledge"] for actor in actors.values()),
+                  f"Fact {fid}: unauthorized-attestation trap must stay outside actor knowledge")
+    for index, update in enumerate(task.get("page_updates", [])):
+        check(update["page"] in page_ids, f"page_updates[{index}]: unknown page")
+        check(parse(task["start_at"]) <= parse(update["at"]) < parse(task["deadline_at"]),
+              f"page_updates[{index}]: update outside the episode window")
+        check(set(update) <= {"page", "at", "title", "text", "snippet", "contacts", "documents"},
+              f"page_updates[{index}]: unsupported field")
+        check(set(update.get("contacts", [])) <= set(actors), f"page_updates[{index}]: unknown contact")
+    if "page_updates" in task:
+        check("page_updates" not in task["public"], "The page update schedule must stay private")
+    # Hidden tools: private definitions. Their names/usage must never leak into
+    # the public export (they are revealed per-task inside NPC replies or page
+    # text and unlocked via discover_tools).
+    check("hidden_tools" not in task["public"], "Hidden tool definitions must stay private")
+    # Authored LLM-judge criteria: private review rubric, never exported.
+    check("judge_criteria" not in task["public"], "Judge criteria must stay private")
+    for index, criterion in enumerate(task.get("judge_criteria", [])):
+        cwhere = f"judge_criteria[{index}]"
+        check(set(criterion) == {"id", "statement", "pass_if", "source"}, f"{cwhere}: unsupported field")
+        check(bool(criterion["id"]) and bool(criterion["statement"]), f"{cwhere}: missing id or statement")
+        check(criterion["source"] in {"final_answer", "trace", "final_state"}, f"{cwhere}: unknown source")
+    check(len({c["id"] for c in task.get("judge_criteria", [])}) == len(task.get("judge_criteria", [])),
+          "Duplicate judge criterion id")
+    hidden_names = []
+    for index, tool in enumerate(task.get("hidden_tools", [])):
+        where = f"hidden_tools[{index}]"
+        check(set(tool) == {"name", "usage", "kind", "params"}, f"{where}: unsupported field")
+        check(bool(tool["name"]), f"{where}: missing name")
+        check(bool(tool["usage"]), f"{where}: missing usage instructions")
+        check(tool["kind"] in HIDDEN_TOOL_KINDS, f"{where}: unknown hidden tool kind")
+        check(tool["name"] not in hidden_names, f"{where}: duplicate hidden tool name")
+        hidden_names.append(tool["name"])
+        check(tool["name"] not in set(PUBLIC_TOOLS) | set(EXTRA_TOOLS), f"{where}: name collides with a common/optional tool")
+        params = tool.get("params", {})
+        if tool["kind"] == "form":
+            check(params.get("form") in form_ids, f"{where}: unknown form page target")
+            if params.get("form") in form_ids:
+                check(set(params.get("expect", {})) <= form_field_names[params["form"]],
+                      f"{where}: expect key outside the form's fields")
+            check(not (params.get("process_at") and "process_delay" in params),
+                  f"{where}: process_at and process_delay are mutually exclusive")
+            if "process_at" in params:
+                check(bool(params.get("process_at")) and parse(task["start_at"]) <= parse(params["process_at"]) < parse(task["deadline_at"]),
+                      f"{where}: process_at outside the episode window")
+            else:
+                check(isinstance(params.get("process_delay", 60), int) and params.get("process_delay", 60) >= 0,
+                      f"{where}: process_delay must be non-negative business minutes")
+            check(params.get("calendar", "office") in task["calendars"], f"{where}: unknown processing calendar")
+            if params.get("facts"):
+                check(set(params["facts"]) <= set(facts), f"{where}: unknown evidence fact")
+                check(params.get("issuer") in actors, f"{where}: evidenced form without issuer")
+                issuer = actors.get(params.get("issuer"))
+                if issuer is not None:
+                    check(set(params["facts"]) <= set(issuer["knowledge"]), f"{where}: form facts outside issuer knowledge")
+            if params.get("page_update"):
+                check(params["page_update"].get("page") in page_ids, f"{where}: page_update targets an unknown page")
+        elif tool["kind"] == "status":
+            records = params.get("records", [])
+            check(bool(records), f"{where}: status tool without records")
+            keys = [r.get("key") for r in records]
+            check(all(keys) and len(keys) == len(set(keys)), f"{where}: missing or duplicate record keys")
+            for record in records:
+                check(bool(record.get("initial")), f"{where}: record without initial text")
+                for entry in record.get("timeline", []):
+                    check(bool(entry.get("at")) and bool(entry.get("text")), f"{where}: incomplete timeline entry")
+                    check(parse(task["start_at"]) <= parse(entry["at"]) < parse(task["deadline_at"]),
+                          f"{where}: timeline entry outside the episode window")
+                if record.get("form"):
+                    check(record["form"] in form_ids, f"{where}: record linked to an unknown form")
+        elif tool["kind"] == "catalog":
+            entries = params.get("entries", [])
+            check(bool(entries), f"{where}: catalog tool without entries")
+            ids = [e.get("id") for e in entries]
+            check(all(ids) and len(ids) == len(set(ids)), f"{where}: missing or duplicate entry ids")
+            for entry in entries:
+                check(bool(entry.get("title")), f"{where}: entry without title")
+                for stamp_key in ("available_at", "expires_at"):
+                    if entry.get(stamp_key):
+                        check(parse(task["start_at"]) <= parse(entry[stamp_key]) < parse(task["deadline_at"]),
+                              f"{where}: entry {stamp_key} outside the episode window")
+                if entry.get("facts"):
+                    check(set(entry["facts"]) <= set(facts), f"{where}: unknown evidence fact")
+                    check(entry.get("issuer") in actors, f"{where}: entry facts without issuer")
+                    issuer = actors.get(entry["issuer"])
+                    if issuer is not None:
+                        check(set(entry["facts"]) <= set(issuer["knowledge"]),
+                              f"{where}: entry facts outside issuer knowledge")
+            for index, update in enumerate(params.get("updates", [])):
+                uwhere = f"{where}: updates[{index}]"
+                check(bool(update.get("at")), f"{uwhere}: missing at")
+                check(parse(task["start_at"]) <= parse(update["at"]) < parse(task["deadline_at"]),
+                      f"{uwhere}: outside the episode window")
+                check(bool(update.get("remove") or update.get("add")), f"{uwhere}: no add or remove")
+                for entry in update.get("add", []):
+                    check(bool(entry.get("id")) and bool(entry.get("title")), f"{uwhere}: entry without id or title")
+        elif tool["kind"] == "select":
+            catalog = params.get("catalog")
+            catalogs = {t["name"] for t in task.get("hidden_tools", []) if t["kind"] == "catalog"}
+            check(catalog in catalogs, f"{where}: select without a linked catalog tool")
+            check(not (params.get("process_at") and "process_delay" in params),
+                  f"{where}: process_at and process_delay are mutually exclusive")
+            if "process_at" in params:
+                check(bool(params.get("process_at")) and parse(task["start_at"]) <= parse(params["process_at"]) < parse(task["deadline_at"]),
+                      f"{where}: process_at outside the episode window")
+            else:
+                check(isinstance(params.get("process_delay", 60), int) and params.get("process_delay", 60) >= 0,
+                      f"{where}: process_delay must be non-negative business minutes")
+            check(params.get("calendar", "office") in task["calendars"], f"{where}: unknown processing calendar")
+            if params.get("facts"):
+                check(set(params["facts"]) <= set(facts), f"{where}: unknown evidence fact")
+                check(params.get("issuer") in actors, f"{where}: evidenced selection without issuer")
+                issuer = actors.get(params.get("issuer"))
+                if issuer is not None:
+                    check(set(params["facts"]) <= set(issuer["knowledge"]), f"{where}: select facts outside issuer knowledge")
+            if params.get("page_update"):
+                check(params["page_update"].get("page") in page_ids, f"{where}: page_update targets an unknown page")
+        elif tool["kind"] == "dialogue":
+            rules = params.get("rules", [])
+            check(bool(rules), f"{where}: dialogue tool without rules")
+            for index, rule in enumerate(rules):
+                check(bool(rule.get("keywords")) and bool(rule.get("answer")),
+                      f"{where}: rules[{index}] without keywords or answer")
+        else:  # record
+            records = params.get("records", [])
+            check(bool(records), f"{where}: record tool without records")
+            keys = [r.get("key") for r in records]
+            check(all(keys) and len(keys) == len(set(keys)), f"{where}: missing or duplicate record keys")
+            for record in records:
+                check(bool(record.get("title")) and bool(record.get("text")), f"{where}: record without title or text")
+                if record.get("requires_form"):
+                    check(record["requires_form"] in form_ids, f"{where}: record gated on an unknown form")
+                if record.get("facts"):
+                    check(set(record["facts"]) <= set(facts), f"{where}: unknown evidence fact")
+                    check(record.get("issuer") in actors, f"{where}: evidenced record without issuer")
+                    issuer = actors.get(record.get("issuer"))
+                    if issuer is not None:
+                        check(set(record["facts"]) <= set(issuer["knowledge"]), f"{where}: record facts outside issuer knowledge")
+    tools = task["public"].get("tools")
+    if tools is not None:
+        check(set(tools) <= set(PUBLIC_TOOLS) | set(EXTRA_TOOLS), "Unknown optional tool declared")
+        check(set(PUBLIC_TOOLS) <= set(tools), "Common tools cannot be removed")
+        check(len(tools) == len(set(tools)), "Duplicate tool entry")
     check(len(set(g["key"] for g in task["goals"])) == len(task["goals"]), "Duplicate goal keys")
     for goal in task["goals"]:
         if goal.get("status") == "unconfirmed":

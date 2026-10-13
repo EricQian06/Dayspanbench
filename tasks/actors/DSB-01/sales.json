@@ -18,21 +18,30 @@
       "price"
     ],
     "tools": {
-      "sales.main.1.lookup": {
+      "sales.main.1.suggest": {
+        "kind": "suggest",
+        "text": "设备可用性的事我不能确认：档期归运营赵航管；投影检修情况可能要问设备主管周敏，也可能前台陈芷那边留了登记渠道。建议您分别去信确认。",
+        "guesses": [
+          "operations",
+          "technician",
+          "reception"
+        ]
+      },
+      "sales.main.2.lookup": {
         "kind": "lookup",
         "facts": [
           "price",
           "cancel"
         ]
       },
-      "sales.main.2.document": {
+      "sales.main.3.document": {
         "kind": "document",
         "facts": [
           "price",
           "cancel"
         ]
       },
-      "sales.main.3.reply": {
+      "sales.main.4.reply": {
         "kind": "reply"
       }
     },
@@ -53,26 +62,35 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
-            "tool": "sales.main.1.lookup",
-            "delay": {
-              "mode": "business",
-              "minutes": 180
-            }
-          },
-          {
-            "id": "main_2",
-            "label": "签发书面确认",
-            "tool": "sales.main.2.document",
+            "label": "给出猜测性答复",
+            "tool": "sales.main.1.suggest",
             "delay": {
               "mode": "business",
               "minutes": 30
             }
           },
           {
+            "id": "main_2",
+            "label": "查询业务记录",
+            "tool": "sales.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 780
+            }
+          },
+          {
             "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "sales.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
             "label": "向请求者回复已取得的结果",
-            "tool": "sales.main.3.reply",
+            "tool": "sales.main.4.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -161,5 +179,5 @@
     }
   },
   "start_at": "2026-11-06T10:00:00+08:00",
-  "deadline_at": "2026-11-10T18:00:00+08:00"
+  "deadline_at": "2026-11-11T18:00:00+08:00"
 }

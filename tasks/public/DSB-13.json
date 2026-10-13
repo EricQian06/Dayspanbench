@@ -1,0 +1,99 @@
+{
+  "id": "DSB-13",
+  "title": "Family lunch: verified access, sesame controls and a changed offer",
+  "brief": "Arrange Sunday lunch for six on July 11, 2027, in the Riverdale test district. Ask me about the party, accessibility, food requirements, budget and permission before reserving; verify wheelchair access and written sesame controls with the restaurant, watch for offer changes, and make at most one approved reservation. No payment or automatic gratuity.",
+  "user_fields": {
+    "date": "2027-07-11",
+    "area": "Riverdale test district",
+    "party_size": 6
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "dining-intro",
+      "title": "Riverdale Dining Directory",
+      "text": "Synthetic restaurant listings for the Riverdale test district; listing claims alone do not establish access or allergen controls. Current listings, table times and prices are found through the directory's restaurant search service (restaurant_search), and offers can be revised or withdrawn mid-week, so an earlier result may go stale. Family requirements can be clarified through the family profile desk (family_dialogue). Written access and sesame-control confirmations come from the restaurants themselves by mail.",
+      "contacts": [],
+      "snippet": "Riverdale test district lunch listings, table offers and family requirements desk.",
+      "url": "https://riverdale.bench/intro"
+    },
+    {
+      "id": "dining",
+      "title": "Riverdale dining contacts",
+      "text": "Garden Ramp Bistro (12 Ramp Lane) is handled by its manager, Alex Chen; the already-verified Harbor Family Table (6 Harbor Lane) is handled by manager Robin Diaz. Both answer daily during business hours.",
+      "contacts": [
+        "garden_manager",
+        "harbor_manager"
+      ],
+      "snippet": "Contacts for the Garden Ramp Bistro and Harbor Family Table managers.",
+      "url": "https://riverdale.bench/contact"
+    },
+    {
+      "id": "dining-entry",
+      "title": "Garden Ramp Bistro reservation desk",
+      "text": "Reservations for Garden Ramp Bistro are placed through the bistro's reservation desk (reserve_table): pick one current restaurant_search listing, obtain the family organizer's approval of the exact plan (address, table time, six meals, written controls, full pre-tip cost) after July 10 at 11:00 New York time, then request that one table. At most one reservation; no payment or automatic gratuity. Stale offers are revalidated against live listings at booking time.",
+      "contacts": [],
+      "snippet": "Garden Ramp Bistro reservation desk: current listing, organizer approval, one table, no payment.",
+      "url": "https://riverdale.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: search listings, contact restaurants, gather written verification, and create at most the one reservation the organizer has approved; no payment, automatic gratuity, or other binding commitment.",
+  "answer_keys": [
+    "restaurant_address",
+    "table_time",
+    "total_cost",
+    "access_verified",
+    "sesame_controls_written",
+    "child_meals_fish_free",
+    "reservation_confirmed"
+  ],
+  "value_normalization": {
+    "restaurant_address": {
+      "type": "text"
+    },
+    "table_time": {
+      "type": "text"
+    },
+    "total_cost": {
+      "type": "number",
+      "units": {}
+    },
+    "access_verified": {
+      "type": "boolean"
+    },
+    "sesame_controls_written": {
+      "type": "boolean"
+    },
+    "child_meals_fish_free": {
+      "type": "boolean"
+    },
+    "reservation_confirmed": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "reserved_verified": "One approved reservation with verified access and written sesame controls within budget",
+    "unconfirmed": "Access or controls could not be verified in time",
+    "not_feasible": "No listing satisfies the hard constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-07-09T09:00:00-04:00",
+  "deadline_at": "2027-07-11T12:00:00-04:00"
+}

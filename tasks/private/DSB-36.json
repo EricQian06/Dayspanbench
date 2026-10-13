@@ -1,0 +1,1509 @@
+{
+  "schema_version": "0.2",
+  "task_set_version": "0.4.0",
+  "id": "DSB-36",
+  "title": "Accessible festival evening: the correct 21:00 set with step-free travel",
+  "domain": "leisure_entertainment",
+  "start_at": "2027-07-31T10:00:00-03:00",
+  "deadline_at": "2027-08-02T17:00:00-03:00",
+  "display_timezone": "America/Halifax",
+  "synthetic": true,
+  "completion_class": "resolved",
+  "calendars": {
+    "office": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:00"
+        ]
+      ]
+    },
+    "daily": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "18:00"
+        ]
+      ]
+    },
+    "factory": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "hours": [
+        [
+          "08:30",
+          "12:00"
+        ],
+        [
+          "13:00",
+          "17:30"
+        ]
+      ]
+    },
+    "evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "landlord": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "19:00",
+          "21:00"
+        ]
+      ]
+    },
+    "weekend": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "engineer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "10:00",
+          "12:00"
+        ],
+        [
+          "14:00",
+          "17:00"
+        ]
+      ]
+    },
+    "maintainer": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        2,
+        4
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "release": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        1,
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "upstream": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        3
+      ],
+      "hours": [
+        [
+          "20:00",
+          "22:00"
+        ]
+      ]
+    },
+    "new_york": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "always": {
+      "timezone": "UTC",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "00:00",
+          "23:59"
+        ]
+      ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
+    }
+  },
+  "reply_delay": [
+    20,
+    45
+  ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "page_updates": [
+    {
+      "page": "festival-intro",
+      "at": "2027-07-31T12:40:00-03:00",
+      "snippet": "July 31 midday update: the ferry-L lift is out of service; the ferry is not step-free until repaired. The step-free bus-L remains available."
+    }
+  ],
+  "hidden_tools": [
+    {
+      "name": "festival_search",
+      "usage": "Harbour Festival search. Argument: query (optional string), e.g. \"Pancho Libre\" or \"bus route\". Returns current show listings, routes and access offers; rows can appear, change or disappear, so re-check before reserving.",
+      "kind": "catalog",
+      "params": {
+        "keywords": [
+          "festival",
+          "show",
+          "concert",
+          "pancho",
+          "stage",
+          "access",
+          "halifax"
+        ],
+        "clue": "A festival search service named festival_search lists the current shows, routes and access offers.",
+        "entries": [
+          {
+            "id": "l01",
+            "title": "Pancho Libre - 20:00 Pier (prior year)",
+            "text": "A 2026 listing showing a 20:00 Pier set at 189 CAD for the party. Prior-year paid ticket listings are stale: this year's festival admission is free.",
+            "fields": {
+              "artist": "Pancho Libre",
+              "start": "20:00",
+              "stage": "Pier",
+              "year": 2026,
+              "ticket_cad": 189,
+              "status": "stale"
+            }
+          },
+          {
+            "id": "l02-v1",
+            "title": "Pancho Libre - 21:00 Maritime Museum (pending)",
+            "text": "This year's 21:00 set at the Maritime Museum, awaiting official confirmation from the festival access desk.",
+            "fields": {
+              "artist": "Pancho Libre",
+              "start": "21:00",
+              "stage": "Maritime Museum",
+              "year": 2027,
+              "version": 1,
+              "status": "awaiting_official_confirmation",
+              "ticket_cad": 0
+            }
+          },
+          {
+            "id": "l03",
+            "title": "Pancho Libre - 18:00 Maritime Museum",
+            "text": "Same artist and stage at 18:00: not the requested 21:00 set.",
+            "fields": {
+              "artist": "Pancho Libre",
+              "start": "18:00",
+              "stage": "Maritime Museum",
+              "year": 2027,
+              "ticket_cad": 0
+            }
+          },
+          {
+            "id": "l04",
+            "title": "Seb and Fritz - 20:00 Sackville",
+            "text": "A different artist at 20:00 on the Sackville stage.",
+            "fields": {
+              "artist": "Seb and Fritz",
+              "start": "20:00",
+              "stage": "Sackville",
+              "year": 2027,
+              "ticket_cad": 0
+            }
+          },
+          {
+            "id": "l05",
+            "title": "Family Act - 14:00 Seaport",
+            "text": "Free daytime family show at 14:00 on the Seaport stage; the walk from the headline stage is 18 minutes, beyond the family's limit.",
+            "fields": {
+              "artist": "Family Act",
+              "start": "14:00",
+              "stage": "Seaport",
+              "year": 2027,
+              "walk_from_headline_minutes": 18,
+              "ticket_cad": 0
+            }
+          },
+          {
+            "id": "l06",
+            "title": "Fireworks - 22:00 Harbour",
+            "text": "Harbour fireworks at 22:00: too late for the 22:15 home deadline.",
+            "fields": {
+              "artist": "Fireworks",
+              "start": "22:00",
+              "stage": "Harbour",
+              "year": 2027,
+              "ticket_cad": 0
+            }
+          },
+          {
+            "id": "bus-L",
+            "title": "Accessible bus-L round trip",
+            "text": "Step-free accessible bus: outbound 20:00-20:20 with an eight-minute step-free walk to the viewing area, standing stretches at most seven minutes; return walk 21:35-21:43, bus 21:50, arrive 22:10, five-minute walk home (home by 22:15). Roundtrip family fare 18 CAD. Platform opens 20:30; the 20:28 arrival waits two minutes.",
+            "fields": {
+              "route": "bus-L",
+              "version": 1,
+              "step_free": true,
+              "stairs": 0,
+              "outbound_depart": "20:00",
+              "walk_to_stage_minutes": 8,
+              "return_depart": "21:50",
+              "return_arrive": "22:10",
+              "home_walk_minutes": 5,
+              "max_standing_minutes": 7,
+              "roundtrip_party_fare_cad": 18
+            },
+            "facts": [
+              "route_step_free",
+              "home_arrival",
+              "bus_fare"
+            ],
+            "issuer": "access_desk"
+          },
+          {
+            "id": "ferry-L",
+            "title": "Ferry-L round trip",
+            "text": "Step-free ferry alternative, roundtrip family fare 15 CAD. Lift status can change without notice.",
+            "fields": {
+              "route": "ferry-L",
+              "version": 1,
+              "step_free": true,
+              "stairs": 0,
+              "roundtrip_party_fare_cad": 15
+            }
+          },
+          {
+            "id": "stairs-shortcut",
+            "title": "Stairs shortcut",
+            "text": "A 12-stair shortcut between the ferry terminal and the stage; not step-free.",
+            "fields": {
+              "route": "stairs-shortcut",
+              "version": 1,
+              "step_free": false,
+              "stairs": 12
+            }
+          }
+        ],
+        "updates": [
+          {
+            "at": "2027-07-31T10:20:00-03:00",
+            "remove": [
+              "l02-v1"
+            ],
+            "add": [
+              {
+                "id": "l02-v2",
+                "title": "Pancho Libre - 21:00 Maritime Museum (confirmed)",
+                "text": "Official confirmation: this year's Pancho Libre set starts 21:00 and ends 21:35 at the Maritime Museum stage. Admission is free; seated step-free viewing is reserved through the access desk.",
+                "fields": {
+                  "artist": "Pancho Libre",
+                  "start": "21:00",
+                  "end": "21:35",
+                  "stage": "Maritime Museum",
+                  "year": 2027,
+                  "version": 2,
+                  "status": "confirmed",
+                  "ticket_cad": 0
+                },
+                "facts": [
+                  "show_start",
+                  "stage",
+                  "show_end"
+                ],
+                "issuer": "access_desk"
+              },
+              {
+                "id": "offer-L1",
+                "title": "Access offer - three seated step-free places",
+                "text": "Free access offer for the confirmed 21:00 set: three seated step-free places, viewing platform opens 20:30, check-in deadline 20:45, fee 0 CAD. Reserve through the access desk.",
+                "fields": {
+                  "offer": "offer-L1",
+                  "show_id": "l02",
+                  "show_version": 2,
+                  "seats": 3,
+                  "seated": true,
+                  "step_free": true,
+                  "opens": "20:30",
+                  "check_in_deadline": "20:45",
+                  "fee_cad": 0
+                }
+              }
+            ]
+          },
+          {
+            "at": "2027-07-31T12:40:00-03:00",
+            "remove": [
+              "ferry-L"
+            ],
+            "add": [
+              {
+                "id": "ferry-L-outage",
+                "title": "Ferry-L v2 - lift outage",
+                "text": "The ferry-L lift is out of service; the route is not step-free until repaired. Step-free proposals and route reservations using the ferry are invalidated; the step-free bus-L remains available.",
+                "fields": {
+                  "route": "ferry-L",
+                  "version": 2,
+                  "step_free": false,
+                  "status": "lift_outage"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "reserve_access",
+      "usage": "Festival access reservation desk. Argument: {\"entry\": listing_id} to request the three free seated step-free places shown in one current festival_search row, or {\"query\": text} to read back the current reservation status. Reserve only the plan the organizer has approved; at most one reservation; no payment is taken.",
+      "kind": "select",
+      "params": {
+        "catalog": "festival_search",
+        "expect_entry": "offer-L1",
+        "expect": {
+          "seats": 3
+        },
+        "process_delay": 30,
+        "calendar": "halifax_daily",
+        "result_text": "Access confirmed: three free seated step-free places for the confirmed 21:00 Pancho Libre set at the Maritime Museum stage, viewing platform opens 20:30, check-in by 20:45, fee 0 CAD. Full plan 108 CAD (admission 0, transport 18, food 60, contingency 30). No payment taken.",
+        "reject_text": "The requested offer is no longer current or does not match an approvable plan; nothing was reserved.",
+        "facts": [
+          "access_reserved",
+          "total_cost"
+        ],
+        "issuer": "access_desk",
+        "page_update": {
+          "page": "festival-entry",
+          "snippet": "Festival access desk: an approved access request is being processed; check the desk status for the outcome."
+        }
+      }
+    },
+    {
+      "name": "family_dialogue",
+      "usage": "Ask the family organizer, Mei Chen, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
+      "kind": "dialogue",
+      "params": {
+        "persona": "Mei Chen (family organizer)",
+        "rules": [
+          {
+            "keywords": [
+              "access",
+              "wei",
+              "stairs",
+              "wheelchair",
+              "walk",
+              "standing",
+              "seats",
+              "seat"
+            ],
+            "answer": "Wei needs no stairs, walking segments at most twelve minutes and standing stretches at most twenty-five minutes, with confirmed seats. Lila is eight; no alcohol package."
+          },
+          {
+            "keywords": [
+              "travel",
+              "bus",
+              "ferry",
+              "route",
+              "home",
+              "return",
+              "when",
+              "leave"
+            ],
+            "answer": "We travel from home-L and must be back by 22:15. Prefer the accessible bus. Festival admission is free; paid prior-year ticket listings are stale."
+          },
+          {
+            "keywords": [
+              "budget",
+              "cost",
+              "price",
+              "total",
+              "money",
+              "food"
+            ],
+            "answer": "Total at most 360 CAD including travel, food and contingency. The current plan is 108 CAD: admission 0, transport 18, food 60, contingency 30."
+          },
+          {
+            "keywords": [
+              "approve",
+              "approval",
+              "permission",
+              "confirm",
+              "review"
+            ],
+            "answer": "Show me the current stage, route, seats and budget for approval before reserving the free access places. No purchases or payments."
+          },
+          {
+            "keywords": [
+              "show",
+              "time",
+              "artist",
+              "pancho",
+              "set",
+              "date"
+            ],
+            "answer": "The three-person family visit is for Pancho Libre's 21:00 set on July 31, 2027."
+          }
+        ],
+        "default": "Please ask me about access needs, travel, budget or approval."
+      }
+    }
+  ],
+  "judge_criteria": [
+    {
+      "id": "L-R2-accessible-journey",
+      "statement": "The reported journey is accessible end to end.",
+      "pass_if": "The trace or final answer reports step-free legs throughout, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats and a feasible 20:30-20:45 check-in, without relying on the ferry after the outage.",
+      "source": "trace"
+    },
+    {
+      "id": "L-R6-no-attendance-claim",
+      "statement": "The final summary claims no attendance or purchase.",
+      "pass_if": "The final answer states the confirmed three seated places, the current show and the step-free bus plan with home by 22:15, describes remaining travel as future, and claims neither attendance, purchase, nor payment.",
+      "source": "final_answer"
+    }
+  ],
+  "public": {
+    "id": "DSB-36",
+    "title": "Accessible festival evening: the correct 21:00 set with step-free travel",
+    "brief": "Plan our three-person family visit to Pancho Libre's 21:00 set on July 31, 2027, in the Halifax test district, total at most 360 CAD. Ask me about access needs, travel and approval; confirm the current official show and step-free seating with the festival, watch for route changes, and reserve only the approved free access places. No purchases or payments.",
+    "user_fields": {
+      "date": "2027-07-31",
+      "city": "Halifax test district",
+      "party_size": 3
+    },
+    "initial_contacts": [],
+    "pages": [
+      {
+        "id": "festival-intro",
+        "title": "Harbour Festival Programme",
+        "text": "Synthetic festival listings for the Halifax test district: shows, routes and the access desk. Current shows, routes and access offers are found through the festival search service (festival_search); listings and route status can change, so re-check before reserving. The family's constraints can be clarified through the family profile desk (family_dialogue). Official show confirmation and free seated access come from the festival access desk.",
+        "contacts": [],
+        "snippet": "Halifax festival show listings, step-free routes and the access desk.",
+        "url": "https://harbourfestival.bench/intro"
+      },
+      {
+        "id": "festival-contacts",
+        "title": "Festival access contacts",
+        "text": "The Harbour Festival access desk is handled by Priya Nair, who answers daily during business hours.",
+        "contacts": [
+          "access_desk"
+        ],
+        "snippet": "Contact for the Harbour Festival access desk.",
+        "url": "https://harbourfestival.bench/contact"
+      },
+      {
+        "id": "festival-entry",
+        "title": "Festival access reservation desk",
+        "text": "Free seated access places are reserved through the festival access desk (reserve_access): confirm the current official show through festival_search, agree the stage, step-free route, seats and budget with the family, then request the three places. At most one reservation; festival admission is free; no purchases, payments or alcohol packages.",
+        "contacts": [],
+        "snippet": "Festival access desk: current show, step-free route, organizer approval, three free places.",
+        "url": "https://harbourfestival.bench/entry"
+      }
+    ],
+    "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "check_schedule"
+    ],
+    "authorization": "Advisory and coordination only: search listings, verify the current show and step-free routes, and reserve at most the approved free access places; no purchases, payments or alcohol packages.",
+    "answer_keys": [
+      "show_start",
+      "stage",
+      "show_end",
+      "route_step_free",
+      "home_arrival",
+      "total_cost",
+      "access_reserved",
+      "seats"
+    ],
+    "value_normalization": {
+      "show_start": {
+        "type": "text"
+      },
+      "stage": {
+        "type": "text"
+      },
+      "show_end": {
+        "type": "text"
+      },
+      "route_step_free": {
+        "type": "boolean"
+      },
+      "home_arrival": {
+        "type": "text"
+      },
+      "total_cost": {
+        "type": "number",
+        "units": {}
+      },
+      "access_reserved": {
+        "type": "boolean"
+      },
+      "seats": {
+        "type": "number",
+        "units": {}
+      }
+    },
+    "conclusion_options": {
+      "access_confirmed": "Three free seated step-free places confirmed with a feasible step-free return",
+      "unconfirmed": "The current show or step-free route could not be verified in time",
+      "not_feasible": "No current show, seating or step-free route satisfies the constraints"
+    },
+    "answer_format": {
+      "conclusion": "选择conclusion_options中的一个键",
+      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    }
+  },
+  "facts": {
+    "show_start": {
+      "value": "21:00",
+      "text": "The current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "show_start"
+      }
+    },
+    "stage": {
+      "value": "Maritime Museum",
+      "text": "The current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "stage"
+      }
+    },
+    "show_end": {
+      "value": "21:35",
+      "text": "The current official set ends at 21:35, leaving the 21:50 return bus feasible.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "show_end"
+      }
+    },
+    "route_step_free": {
+      "value": true,
+      "text": "The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "route_step_free"
+      }
+    },
+    "home_arrival": {
+      "value": "22:15",
+      "text": "The bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "home_arrival"
+      }
+    },
+    "bus_fare": {
+      "value": 18,
+      "text": "The step-free bus-L round trip costs 18 CAD for the three-person family.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "bus_fare"
+      }
+    },
+    "total_cost": {
+      "value": 108,
+      "text": "The full family plan is 108 CAD: admission 0 (free) + transport 18 + food 60 + contingency 30, within the 360 CAD cap.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "total_cost"
+      }
+    },
+    "access_reserved": {
+      "value": true,
+      "text": "Three free seated step-free access places for the 21:00 set have been confirmed with check-in from 20:30 to 20:45; no payment was taken.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "access_reserved"
+      }
+    },
+    "seats": {
+      "value": 3,
+      "text": "Three seated access places are confirmed for the family (Wei, Mei and Lila).",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "seats"
+      }
+    }
+  },
+  "actors": [
+    {
+      "id": "access_desk",
+      "name": "Harbour Festival access desk·Priya Nair",
+      "role": "festival accessibility, seated viewing and step-free route records",
+      "description": "Confirms seated step-free viewing capacity and the step-free bus route in writing; festival admission is free and prior-year paid ticket listings are stale; access places are reserved through the desk named on the entry page.",
+      "calendar": "halifax_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "priyanair2@bench.example"
+      },
+      "knowledge": [
+        "access_reserved",
+        "bus_fare",
+        "home_arrival",
+        "route_step_free",
+        "seats",
+        "show_end",
+        "show_start",
+        "stage",
+        "total_cost"
+      ],
+      "tools": {
+        "access_desk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "access_desk.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "seats",
+            "route_step_free",
+            "bus_fare"
+          ]
+        },
+        "access_desk.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "seats",
+            "route_step_free",
+            "bus_fare"
+          ]
+        },
+        "access_desk.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Seated access and step-free route status",
+          "aliases": [
+            "access",
+            "seats",
+            "seated",
+            "step-free",
+            "wheelchair",
+            "bus",
+            "route",
+            "accessibility",
+            "festival"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "access_desk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check seated viewing capacity and step-free route status",
+              "tool": "access_desk.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "access_desk.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "access_desk.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Harbour Festival access desk·Priya Nair，负责festival accessibility, seated viewing and step-free route records。Confirms seated step-free viewing capacity and the step-free bus route in writing; festival admission is free and prior-year paid ticket listings are stale; access places are reserved through the desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:access_reserved",
+        "attest:bus_fare",
+        "attest:home_arrival",
+        "attest:route_step_free",
+        "attest:seats",
+        "attest:show_end",
+        "attest:show_start",
+        "attest:stage",
+        "attest:total_cost"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "key": "show_start",
+      "expected": "21:00",
+      "accepted_facts": [
+        "show_start"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "show_start",
+        "authorities": [
+          "attest:show_start"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "21:00": [
+              "The current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.",
+              "The current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "21:00": [
+            "The current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.",
+            "The current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "stage",
+      "expected": "Maritime Museum",
+      "accepted_facts": [
+        "stage"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "stage",
+        "authorities": [
+          "attest:stage"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "Maritime Museum": [
+              "The current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.",
+              "The current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "Maritime Museum": [
+            "The current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.",
+            "The current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "show_end",
+      "expected": "21:35",
+      "accepted_facts": [
+        "show_end"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "show_end",
+        "authorities": [
+          "attest:show_end"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "21:35": [
+              "The current official set ends at 21:35, leaving the 21:50 return bus feasible.",
+              "The current official set ends at 21:35, leaving the 21:50 return bus feasible"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "21:35": [
+            "The current official set ends at 21:35, leaving the 21:50 return bus feasible.",
+            "The current official set ends at 21:35, leaving the 21:50 return bus feasible"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "route_step_free",
+      "expected": true,
+      "accepted_facts": [
+        "route_step_free"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "route_step_free",
+        "authorities": [
+          "attest:route_step_free"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "home_arrival",
+      "expected": "22:15",
+      "accepted_facts": [
+        "home_arrival"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "home_arrival",
+        "authorities": [
+          "attest:home_arrival"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "22:15": [
+              "The bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.",
+              "The bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "22:15": [
+            "The bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.",
+            "The bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement"
+          ]
+        }
+      },
+      "match": "expected"
+    },
+    {
+      "key": "total_cost",
+      "expected": 108,
+      "accepted_facts": [
+        "total_cost"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "total_cost",
+        "authorities": [
+          "attest:total_cost"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    },
+    {
+      "key": "access_reserved",
+      "expected": true,
+      "accepted_facts": [
+        "access_reserved"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "access_reserved",
+        "authorities": [
+          "attest:access_reserved"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
+    },
+    {
+      "key": "seats",
+      "expected": 3,
+      "accepted_facts": [
+        "seats"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "seats",
+        "authorities": [
+          "attest:seats"
+        ],
+        "normalization": {
+          "type": "number",
+          "units": {}
+        }
+      },
+      "normalization": {
+        "type": "number",
+        "units": {}
+      },
+      "match": "expected"
+    }
+  ],
+  "expected_conclusion": "access_confirmed",
+  "temporal_mechanisms": [
+    "official show confirmation and access offer appear mid-morning",
+    "ferry lift outage at midday invalidates the step-free alternative",
+    "prior-year paid ticket listing is stale; admission is free",
+    "search-discoverable show and route inventory",
+    "sparse prompt: family constraints only surface through dialogue",
+    "hidden access desk revalidates the live offer"
+  ],
+  "failure_modes": [
+    "trusting the stale 2026 paid Pier listing",
+    "reserving the 18:00 wrong-time set or another artist",
+    "using the ferry after the lift outage or the 12-stair shortcut",
+    "booking the 22:00 fireworks with no feasible return",
+    "paying for admission or adding an alcohol package",
+    "reserving before the organizer approves the exact plan"
+  ],
+  "reference_actions": [
+    {
+      "op": "visit_page",
+      "page": "festival-contacts"
+    },
+    {
+      "op": "discover",
+      "name": "family_dialogue"
+    },
+    {
+      "op": "tool",
+      "name": "family_dialogue",
+      "args": {
+        "question": "What are the access needs, travel constraints, budget and approval arrangements for the festival visit?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "festival_search"
+    },
+    {
+      "op": "tool",
+      "name": "festival_search",
+      "args": {
+        "query": "Pancho Libre"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-07-31T10:25:00-03:00"
+    },
+    {
+      "op": "tool",
+      "name": "festival_search",
+      "args": {
+        "query": "Pancho Libre access"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "festival_search",
+      "args": {
+        "query": "bus route"
+      }
+    },
+    {
+      "op": "send",
+      "to": "access_desk",
+      "text": "Please confirm seated step-free viewing capacity and the step-free bus route for our family of three",
+      "label": "verify",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "verify"
+    },
+    {
+      "op": "advance",
+      "at": "2027-07-31T13:30:00-03:00"
+    },
+    {
+      "op": "tool",
+      "name": "festival_search",
+      "args": {
+        "query": "route"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "family_dialogue",
+      "args": {
+        "question": "Do you approve the exact plan: 21:00 Maritime Museum set, bus-L step-free round trip, three seated places, 108 CAD total?"
+      }
+    },
+    {
+      "op": "discover",
+      "name": "reserve_access"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_access",
+      "args": {
+        "entry": "offer-L1"
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-07-31T15:00:00-03:00"
+    },
+    {
+      "op": "tool",
+      "name": "reserve_access",
+      "args": {
+        "query": "status"
+      }
+    }
+  ],
+  "reference_is_privileged": true,
+  "alternate_paths": "Any legal order of dialogue, desk mail and searches is accepted if every goal's evidence conditions hold; choosing the ferry before the outage then switching to the bus after it is a legal alternative, but the scored answer keys follow the step-free bus plan.",
+  "horizon_design": {
+    "reference_days": 2,
+    "stratum": "短期",
+    "mechanism": "official show confirmation plus midday ferry lift outage",
+    "distribution": "manually stratified approximately logarithmic"
+  }
+}

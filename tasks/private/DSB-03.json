@@ -1,11 +1,11 @@
 {
   "schema_version": "0.2",
-  "task_set_version": "0.3.0",
+  "task_set_version": "0.4.0",
   "id": "DSB-03",
   "title": "学分转换：秋季补件与春季集中审议",
   "domain": "高校教务",
   "start_at": "2026-11-05T14:00:00+08:00",
-  "deadline_at": "2027-02-03T17:00:00+08:00",
+  "deadline_at": "2027-02-09T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
   "synthetic": true,
   "completion_class": "resolved",
@@ -215,16 +215,228 @@
           "23:59"
         ]
       ]
+    },
+    "us_eastern_office": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_eastern_daily": {
+      "timezone": "America/New_York",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_central_office": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_central_daily": {
+      "timezone": "America/Chicago",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "us_mountain_office": {
+      "timezone": "America/Denver",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "us_pacific_office": {
+      "timezone": "America/Los_Angeles",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:00",
+          "17:00"
+        ]
+      ]
+    },
+    "halifax_daily": {
+      "timezone": "America/Halifax",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "09:00",
+          "21:00"
+        ]
+      ]
+    },
+    "paris_daily": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ]
+      ]
+    },
+    "london_daily": {
+      "timezone": "Europe/London",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "07:00",
+          "21:00"
+        ]
+      ]
+    },
+    "kolkata_office": {
+      "timezone": "Asia/Kolkata",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "hours": [
+        [
+          "09:30",
+          "18:00"
+        ]
+      ]
     }
   },
   "reply_delay": [
     20,
     45
   ],
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "lookup_directory",
+    "fetch_document",
+    "request_callback"
+  ],
+  "page_updates": [],
+  "hidden_tools": [
+    {
+      "name": "chengchuan_credit_register",
+      "usage": "澄川学院学分转换登记系统。调用参数：fields为对象，键为表单字段名（course_code、syllabus_version），syllabus_version须填现行签章大纲版本。",
+      "kind": "form",
+      "params": {
+        "form": "credit_form",
+        "expect": {
+          "course_code": "CS204",
+          "syllabus_version": "CS204-2026-v2-signed"
+        },
+        "process_at": "2027-02-02T17:00:00+08:00",
+        "result_text": "学分转换登记已受理办结：该转换结论自2027春季学期开始适用；登记回执以本表单状态为准。",
+        "reject_text": "提交的课程代码或大纲版本与现行签章材料不符，已退回；请核对后重新提交。",
+        "facts": [
+          "effective"
+        ],
+        "issuer": "records",
+        "page_update": {
+          "page": "faculty-entry",
+          "snippet": "澄川学院学分转换登记：已提交的登记以表单状态为准。"
+        }
+      }
+    }
+  ],
+  "judge_criteria": [],
   "public": {
     "id": "DSB-03",
     "title": "学分转换：秋季补件与春季集中审议",
-    "brief": "确认CS204能转换多少学分、计入哪类课程、何时生效。我目前只有旧大纲，需要向课程负责人获取正式版本。请获得教务的书面结论，不提交正式选课变更。",
+    "brief": "确认CS204能转换多少学分、计入哪类课程、何时生效。我目前只有旧大纲，需要向课程负责人获取正式版本。请获得教务的书面结论，生效学期须取得登记办结的书面结论，不提交正式选课变更。",
     "user_fields": {
       "course_code": "CS204"
     },
@@ -241,24 +453,70 @@
       {
         "id": "faculty",
         "title": "澄川学院联系方式",
-        "text": "学分转换预审联系教务唐宁；CS204课程签章大纲联系课程负责人梅芮（11月6—9日出差）。",
+        "text": "学分转换预审联系教务唐宁。CS204课程签章大纲的下落各说不一：可能在课程负责人梅芮处，也可能在院办教务处存档，请分别确认后再办理。本页另挂有CS204学分认定情况等文件。",
         "contacts": [
           "records",
-          "lecturer"
+          "dean_office"
         ],
-        "snippet": "教务与课程负责人的对接说明。",
+        "snippet": "教务与院办的对接说明；大纲下落需分别确认。",
+        "documents": [
+          {
+            "id": "faculty-credit-estimate",
+            "title": "CS204学分认定情况.pdf",
+            "text": "澄川学院CS204学分认定情况：按现行认定口径，CS204可转换4学分。（留存方整理）",
+            "facts": [
+              "credits_ref"
+            ],
+            "issuer": "dean_office",
+            "url": "https://chengchuan.bench/files/faculty-credit-estimate.pdf"
+          }
+        ],
         "url": "https://chengchuan.bench/contact"
       },
       {
         "id": "faculty-entry",
-        "title": "澄川学院学分转换办理入口",
-        "text": "澄川学院学分转换办理说明：办理需提供课程代码与现行签章大纲版本；跨校转换须经预审并送春季委员会集中审议。本页面仅说明材料要求，不能在线提交选课变更。",
+        "title": "澄川学院学分转换登记",
+        "text": "澄川学院学分转换办理说明：办理需提供课程代码与现行签章大纲版本；跨校转换须经预审并送春季委员会集中审议，生效学期的书面结论通过本页登记表单申请后取得。本页面仅说明材料要求，不能在线提交选课变更。",
         "contacts": [],
-        "snippet": "澄川学院学分转换材料要求；不支持在线提交。",
+        "snippet": "澄川学院学分转换材料要求与登记表单说明；不支持在线提交选课变更。",
+        "form": {
+          "id": "credit_form",
+          "title": "跨校学分转换登记",
+          "fields": [
+            {
+              "name": "course_code",
+              "label": "课程代码",
+              "required": true,
+              "hidden": false
+            },
+            {
+              "name": "syllabus_version",
+              "label": "现行签章大纲版本",
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "submit_instructions": "本表单不能在线直接提交：须通过学院学分转换登记系统办理；系统名称与提交要求请向教务唐宁咨询。"
+        },
         "url": "https://chengchuan.bench/entry"
       }
     ],
     "message_budget": 16,
+    "tools": [
+      "observe",
+      "recall_task",
+      "web_search",
+      "visit_page",
+      "send_email",
+      "call",
+      "read_inbox",
+      "wait_until",
+      "discover_tools",
+      "submit_answer",
+      "lookup_directory",
+      "fetch_document",
+      "request_callback"
+    ],
     "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
     "answer_keys": [
       "syllabus_version",
@@ -346,6 +604,20 @@
         },
         "predicate": "effective_term"
       }
+    },
+    "credits_ref": {
+      "value": 4,
+      "text": "CS204学分认定情况：按现行认定口径，CS204可转换4学分（留存方整理）。",
+      "unauthorized_attestation": true,
+      "attributes": {
+        "subject": {
+          "task": "DSB-03",
+          "case": {
+            "course_code": "CS204"
+          }
+        },
+        "predicate": "credits"
+      }
     }
   },
   "actors": [
@@ -353,7 +625,7 @@
       "id": "records",
       "name": "澄川学院教务·唐宁",
       "role": "学分转换预审",
-      "description": "必须取得当前签章大纲；不能把旧大纲送交委员会。",
+      "description": "必须取得当前签章大纲；不能把旧大纲送交委员会；正式登记走登记系统。",
       "calendar": "office",
       "channels": [
         "email"
@@ -361,7 +633,9 @@
       "contact_details": {
         "email": "tangning@bench.example"
       },
-      "knowledge": [],
+      "knowledge": [
+        "effective"
+      ],
       "tools": {
         "records.main.1.lookup": {
           "kind": "lookup",
@@ -381,6 +655,14 @@
         },
         "records.main.4.reply": {
           "kind": "reply"
+        },
+        "records.register_channel.1.deny": {
+          "kind": "deny",
+          "text": "跨校学分转换的正式登记不在我处柜台办理：请通过澄川学院学分转换登记系统（chengchuan_credit_register）提交，登记须使用现行签章大纲版本，提交说明见办理入口页。"
+        },
+        "records.syllabus_archive.1.deny": {
+          "kind": "deny",
+          "text": "课程大纲不在教务存档范围，我处只做学分转换预审；签章大纲请向课程负责人索取。"
         }
       },
       "workflows": [
@@ -410,7 +692,12 @@
               ],
               "normalization": {
                 "type": "text",
-                "aliases": {}
+                "aliases": {
+                  "CS204-2026-v2-signed": [
+                    "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
+                    "CS204课程正式签章大纲版本为CS204-2026-v2-signed"
+                  ]
+                }
               }
             }
           },
@@ -452,6 +739,50 @@
               }
             }
           ]
+        },
+        {
+          "id": "register_channel",
+          "label": "正式登记渠道说明",
+          "aliases": [
+            "登记",
+            "登记系统",
+            "正式登记",
+            "系统"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "register_channel_1",
+              "label": "明确表示不知情或不归管",
+              "tool": "records.register_channel.1.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "syllabus_archive",
+          "label": "大纲存档查询",
+          "aliases": [
+            "存档",
+            "大纲存档"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "syllabus_archive_1",
+              "label": "明确表示不知情或不归管",
+              "tool": "records.syllabus_archive.1.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
         }
       ],
       "process_engine": {
@@ -473,9 +804,11 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是澄川学院教务·唐宁，负责学分转换预审。必须取得当前签章大纲；不能把旧大纲送交委员会。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是澄川学院教务·唐宁，负责学分转换预审。必须取得当前签章大纲；不能把旧大纲送交委员会；正式登记走登记系统。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
-      "evidence_authorities": []
+      "evidence_authorities": [
+        "attest:effective_term"
+      ]
     },
     {
       "id": "lecturer",
@@ -583,7 +916,7 @@
       "id": "board",
       "name": "澄川学院学分委员会秘书·程昕",
       "role": "春季跨校学分审议",
-      "description": "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审。",
+      "description": "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审；生效学期以正式登记结论为准。",
       "calendar": "office",
       "channels": [
         "email"
@@ -593,7 +926,6 @@
       },
       "knowledge": [
         "credits",
-        "effective",
         "scope"
       ],
       "tools": {
@@ -601,16 +933,14 @@
           "kind": "lookup",
           "facts": [
             "credits",
-            "scope",
-            "effective"
+            "scope"
           ]
         },
         "board.main.2.document": {
           "kind": "document",
           "facts": [
             "credits",
-            "scope",
-            "effective"
+            "scope"
           ]
         },
         "board.main.3.reply": {
@@ -683,13 +1013,135 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是澄川学院学分委员会秘书·程昕，负责春季跨校学分审议。跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是澄川学院学分委员会秘书·程昕，负责春季跨校学分审议。跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审；生效学期以正式登记结论为准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:credit_scope",
-        "attest:credits",
-        "attest:effective_term"
+        "attest:credits"
       ]
+    },
+    {
+      "id": "dean_office",
+      "name": "澄川学院院办教务处·柳汀",
+      "role": "成绩与学籍材料、文件存档查询",
+      "description": "只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。",
+      "calendar": "office",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "liuting@bench.example"
+      },
+      "knowledge": [],
+      "tools": {
+        "dean_office.main.1.lookup": {
+          "kind": "lookup",
+          "facts": []
+        },
+        "dean_office.main.2.reply": {
+          "kind": "reply"
+        },
+        "dean_office.archive_search.1.suggest": {
+          "kind": "suggest",
+          "text": "签章大纲的下落我记不准：可能在课程负责人梅芮处，也可能当时是教务唐宁经手送审的；建议您分别去信确认。另外我印象里CS204按认定口径能转4学分，错不了，供您参考，具体以委员会审议为准。",
+          "guesses": [
+            "lecturer",
+            "records"
+          ]
+        },
+        "dean_office.archive_search.2.deny": {
+          "kind": "deny",
+          "text": "经核实，院办存档范围只有成绩与学籍材料，课程大纲不在其中，我处无法出具；请以课程负责人或教务的答复为准。"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "成绩与学籍材料受理",
+          "aliases": [
+            "成绩单",
+            "学籍",
+            "成绩"
+          ],
+          "required_fields": [
+            "student_name"
+          ],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "登记材料请求",
+              "tool": "dean_office.main.1.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "向请求者回复已取得的结果",
+              "tool": "dean_office.main.2.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        },
+        {
+          "id": "archive_search",
+          "label": "文件存档查询",
+          "aliases": [
+            "文件",
+            "存档",
+            "大纲"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "archive_search_1",
+              "label": "给出猜测性答复",
+              "tool": "dean_office.archive_search.1.suggest",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "archive_search_2",
+              "label": "明确表示不知情或不归管",
+              "tool": "dean_office.archive_search.2.deny",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是澄川学院院办教务处·柳汀，负责成绩与学籍材料、文件存档查询。只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": []
     }
   ],
   "goals": [
@@ -712,12 +1164,22 @@
         ],
         "normalization": {
           "type": "text",
-          "aliases": {}
+          "aliases": {
+            "CS204-2026-v2-signed": [
+              "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
+              "CS204课程正式签章大纲版本为CS204-2026-v2-signed"
+            ]
+          }
         }
       },
       "normalization": {
         "type": "text",
-        "aliases": {}
+        "aliases": {
+          "CS204-2026-v2-signed": [
+            "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
+            "CS204课程正式签章大纲版本为CS204-2026-v2-signed"
+          ]
+        }
       },
       "match": "expected"
     },
@@ -774,7 +1236,9 @@
           "type": "text",
           "aliases": {
             "专业选修": [
-              "专业选修课"
+              "专业选修课",
+              "这3学分仅计入专业选修，不能替代必修课。",
+              "这3学分仅计入专业选修，不能替代必修课"
             ]
           }
         }
@@ -783,7 +1247,9 @@
         "type": "text",
         "aliases": {
           "专业选修": [
-            "专业选修课"
+            "专业选修课",
+            "这3学分仅计入专业选修，不能替代必修课。",
+            "这3学分仅计入专业选修，不能替代必修课"
           ]
         }
       },
@@ -811,7 +1277,9 @@
           "aliases": {
             "2027春季": [
               "2027年春季",
-              "2027年春季学期"
+              "2027年春季学期",
+              "该转换结论从2027春季学期开始适用。",
+              "该转换结论从2027春季学期开始适用"
             ]
           }
         }
@@ -821,7 +1289,9 @@
         "aliases": {
           "2027春季": [
             "2027年春季",
-            "2027年春季学期"
+            "2027年春季学期",
+            "该转换结论从2027春季学期开始适用。",
+            "该转换结论从2027春季学期开始适用"
           ]
         }
       },
@@ -833,12 +1303,21 @@
     "材料门槛",
     "角色出差不可用",
     "跨年度等待春季委员会",
-    "跨人物证据传递"
+    "跨人物证据传递",
+    "联系方式页对大纲下落说法模糊",
+    "院办猜测性指路与明确回绝",
+    "隐藏登记系统与分阶段办结",
+    "院办越权认定口径与口头误述"
   ],
   "failure_modes": [
     "猜测签章编号",
     "沿用2024年旧材料",
-    "把材料预审当作春季批准"
+    "把材料预审当作春季批准",
+    "只问一处就认定大纲下落",
+    "把委员会结论当作已登记生效",
+    "不发现登记渠道即认定无法登记",
+    "引用院办学分认定口径当作有效学分结论",
+    "把院办口头学分印象当结论"
   ],
   "reference_actions": [
     {
@@ -851,6 +1330,17 @@
       "text": "咨询CS204学分转换",
       "label": "credit",
       "fields": "$user"
+    },
+    {
+      "op": "send",
+      "to": "dean_office",
+      "text": "请查询CS204课程签章大纲存档",
+      "label": "dean",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "dean"
     },
     {
       "op": "send",
@@ -877,6 +1367,35 @@
     {
       "op": "wait_for",
       "label": "credit"
+    },
+    {
+      "op": "send",
+      "to": "records",
+      "text": "请告知正式登记渠道",
+      "label": "register",
+      "fields": "$user"
+    },
+    {
+      "op": "wait_for",
+      "label": "register"
+    },
+    {
+      "op": "discover",
+      "name": "chengchuan_credit_register"
+    },
+    {
+      "op": "tool",
+      "name": "chengchuan_credit_register",
+      "args": {
+        "fields": {
+          "course_code": "CS204",
+          "syllabus_version": "$fact:syllabus"
+        }
+      }
+    },
+    {
+      "op": "advance",
+      "at": "2027-02-03T09:30:00+08:00"
     }
   ],
   "reference_is_privileged": true,

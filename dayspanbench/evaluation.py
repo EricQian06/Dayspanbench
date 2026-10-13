@@ -12,6 +12,7 @@ from urllib.error import HTTPError, URLError
 from .engine import Environment
 from .llm import StructuredClient, SimulatorError
 from .simulator import LLMSimulator
+from .judge import LLMJudge
 
 
 AGENT_PROMPT = """你正在完成DaySpanBench的一项信息获取任务。你的目标是在任务截止时间（deadline）之前完成信息收集，并亲自提交submit_answer完成最终作答。
@@ -25,6 +26,10 @@ AGENT_PROMPT = """你正在完成DaySpanBench的一项信息获取任务。你�
 
 【行为规范】
 - 只联系已发现的联系人，不凭空猜测联系方式或网址；需要新联系人时先搜索并访问公开页面。
+- 每个任务可用的工具集不同（以下工具定义即本任务可用工具，observe()也会返回同一列表）；其中可能有对本任务无用的工具，请按需选用。
+- 部分任务存在初始工具列表之外的隐藏工具：其名称只会出现在对接方回复或网页正文中。用discover_tools(名称)查询：命中会返回该工具的用法说明并解锁（此后出现在observe()的工具列表中，可按说明调用）；未命中不消耗消息预算。
+- 网页内容可能在任务期间更新：对时间敏感的信息（价格、批次、时间窗口等）应在提交前重访相关页面核对最新版本。
+- 对接方的回复可能只是凭记忆的猜测（可能同时提到若干"可能的地方"），猜测可能错误，需逐一去函验证；收到"我先去问一下同事"这类中间回执时，正式答复尚未到达，应继续等待，催办不会加速。
 - 向对接方发邮件时，日期一律按委托信息原文的规范格式（YYYY-MM-DD）书写，不要改用其他写法。
 - 同一事项补件或催问时使用其case_id；不同的办理事项发起新消息。
 - 字段取值和凭证必须来自任务材料或已收到的信息，不得编造。
@@ -201,8 +206,9 @@ def usage_total(calls):
     return total
 
 
-def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, max_steps=80,
-                history_limit=24, simulator_validation_retries=0, seed=0, progress=lambda _: None):
+def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, judge_client=None,
+                max_steps=80, history_limit=24, simulator_validation_retries=0,
+                judge_validation_retries=1, seed=0, progress=lambda _: None):
     run_dir = Path(run_dir)
     run_dir.mkdir(parents=True, exist_ok=False)
     recipients = {a["id"]: LLMSimulator(simulator_client, a["id"], history_limit=history_limit,
@@ -210,7 +216,21 @@ def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, max_
                   for a in task["actors"]} if simulator_client else None
     env = Environment(task, recipients, seed=seed)
     api, trace = env.tools(), []
+    # The tool surface differs per task: only specs this task declares are
+    # shown to the evaluated model (observe() reports the same list at runtime).
+    allowed = set(api.tool_list())
+    tool_specs = [t for t in tool_specs if t["name"] in allowed]
     definitions = {t["name"]: t for t in tool_specs}
+
+    def sync_hidden_definitions():
+        # Hidden per-task tools unlock mid-episode via discover_tools and so
+        # have no static schema here; the harness only enforces a permissive
+        # object schema (calling convention = the usage text discover_tools
+        # returned) and the engine validates the actual arguments.
+        for name in sorted(env.unlocked_tools):
+            if name not in definitions:
+                definitions[name] = {"name": name, "description": env.hidden_tools[name]["usage"],
+                                     "parameters": {"type": "object", "properties": {}, "additionalProperties": True}}
     system_content = (AGENT_PROMPT + json.dumps(tool_specs, ensure_ascii=False)
                       + "\n初始任务信息如下（可随时用recall_task重新获取，内容保持不变）：\n"
                       + json.dumps(api.recall_task(), ensure_ascii=False))
@@ -235,6 +255,7 @@ def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, max_
     try:
         for steps in range(1, max_steps + 1):
             progress(f"{task['id']} agent step {steps}/{max_steps}")
+            sync_hidden_definitions()
             content = agent.next_action(messages)
             messages.append({"role": "assistant", "content": content})
             action = None
@@ -270,6 +291,18 @@ def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, max_
                   agent_usage=usage_total(agent.calls), simulator_usage=usage_total(simulator_client.calls if simulator_client else []))
     if answer is not None:
         write_json(run_dir / "final_answer.json", answer)
+    # Post-episode LLM review of the final response (authored language
+    # criteria only): runs after the episode and its deterministic score are
+    # final, and a judge failure never invalidates the episode. The judge runs
+    # whenever the task carries criteria and a client was supplied.
+    if result.get("valid_episode") and task.get("judge_criteria") and judge_client:
+        progress(f"{task['id']} llm judge")
+        review = LLMJudge(judge_client, validation_retries=judge_validation_retries).judge(task, env, answer)
+        result["llm_judge"] = review
+        write_jsonl(run_dir / "judge_calls.jsonl", judge_client.calls)
+        if review["status"] == "graded":
+            result["judge_passed"] = sum(1 for c in review["criteria"] if c["passed"])
+            result["judge_total"] = len(review["criteria"])
     write_json(run_dir / "result.json", result)
     return result
 

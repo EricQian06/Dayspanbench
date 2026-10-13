@@ -33,6 +33,11 @@ def main(argv=None):
     parser.add_argument("--simulator-format", choices=["json_schema", "json_object"], default="json_schema")
     parser.add_argument("--simulator-max-tokens", type=int, default=8192)
     parser.add_argument("--simulator-validation-retries", type=int, choices=range(4), default=2)
+    parser.add_argument("--judge", choices=["simulator", "off"], default="simulator",
+                        help="LLM judge for authored final-response criteria: reuse the simulator client "
+                             "config, or disable. Judge failures mark criteria pending and never "
+                             "invalidate an episode")
+    parser.add_argument("--judge-validation-retries", type=int, choices=range(4), default=1)
     parser.add_argument("--simulator-extra-body", default='{"thinking": {"type": "disabled"}}',
                         help="JSON object merged into simulator request payloads; pass '{}' to keep provider defaults")
     parser.add_argument("--timeout", type=float, default=180)
@@ -41,7 +46,7 @@ def main(argv=None):
     parser.add_argument("--seed", type=int, default=0, help="Seed for agent-side email handling-latency jitter; recorded in the manifest")
     parser.add_argument("--history-limit", type=int, default=24)
     parser.add_argument("--workers", type=int, default=3)
-    parser.add_argument("--tasks", nargs="+", choices=[f"DSB-{n:02}" for n in range(1, 13)])
+    parser.add_argument("--tasks", nargs="+", choices=[f"DSB-{n:02}" for n in range(1, 43)])
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--check-only", action="store_true", help="Check agent chat, simulator routing, missing fields and reply planning; no scored episode")
     args = parser.parse_args(argv)
@@ -111,7 +116,7 @@ def main(argv=None):
         write_json(args.run_dir / "preflight.json", result)
         print(json.dumps(result, ensure_ascii=False), flush=True)
         return 0 if result["ok"] else 2
-    task_ids = args.tasks or [f"DSB-{n:02}" for n in range(1, 13)]
+    task_ids = args.tasks or sorted(p.stem for p in (ROOT / "tasks/private").glob("DSB-*.json"))
     if len(task_ids) != len(set(task_ids)):
         parser.error("Duplicate task IDs are not permitted; use another run for repeats")
     source_files = [*sorted((ROOT / "dayspanbench").glob("*.py")), ROOT / "scripts/evaluate.py", ROOT / "docs/agent-tools.json"]
@@ -120,6 +125,7 @@ def main(argv=None):
                 "agent_protocol": "json_action_chat", "agent_token_parameter": args.agent_token_parameter,
                 "tasks": task_ids, "repeats": 1, "max_steps": args.max_steps, "history_limit": args.history_limit,
                 "workers": args.workers, "simulator_validation_retries": args.simulator_validation_retries, "seed": args.seed,
+                "judge": args.judge if args.judge == "simulator" else None,
                 "started_at": datetime.now(timezone.utc).isoformat(),
                 "code_sha256": {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in source_files}}
     write_json(args.run_dir / "manifest.json", manifest)
@@ -135,9 +141,13 @@ def main(argv=None):
         task = json.loads((ROOT / "tasks/private" / (task_id + ".json")).read_text(encoding="utf-8"))
         agent = ChatAgent(agent_config, token_parameter=args.agent_token_parameter)
         sim = StructuredClient(sim_config) if args.simulator == "llm" else None
+        # The LLM judge grades authored final-response language criteria after
+        # the episode; it shares the simulator's model/gateway by default.
+        judge = StructuredClient(sim_config) if (args.judge == "simulator" and sim) else None
         return run_episode(task, agent, tool_specs, args.run_dir / task_id, simulator_client=sim,
-                           max_steps=args.max_steps, history_limit=args.history_limit,
-                           simulator_validation_retries=args.simulator_validation_retries, seed=args.seed, progress=progress)
+                           judge_client=judge, max_steps=args.max_steps, history_limit=args.history_limit,
+                           simulator_validation_retries=args.simulator_validation_retries,
+                           judge_validation_retries=args.judge_validation_retries, seed=args.seed, progress=progress)
     results = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = {pool.submit(worker, task_id): task_id for task_id in task_ids}

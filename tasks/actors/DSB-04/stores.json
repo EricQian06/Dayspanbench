@@ -5,7 +5,7 @@
     "id": "stores",
     "name": "耗材库管理员·宋野",
     "role": "滤芯收货检查",
-    "description": "本批供应商11月17日10点后送达，入库检查还需要2个工作小时。",
+    "description": "本批供应商11月17日10点后送达，入库检查还需要2个工作小时；培训记录不在耗材库业务范围。",
     "calendar": "office",
     "channels": [
       "email"
@@ -25,6 +25,10 @@
       },
       "stores.main.2.reply": {
         "kind": "reply"
+      },
+      "stores.training_record.1.deny": {
+        "kind": "deny",
+        "text": "我这里只负责耗材入库与收货检查，培训合格记录不归我管，也无从查询；请向安全员温遥确认，或按官网说明的记录渠道申请。"
       }
     },
     "workflows": [
@@ -60,6 +64,27 @@
           }
         ],
         "evidence_fields": {}
+      },
+      {
+        "id": "training_record",
+        "label": "培训记录查询",
+        "aliases": [
+          "培训记录",
+          "培训"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "training_record_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "stores.training_record.1.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
       }
     ],
     "process_engine": {
@@ -81,7 +106,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是耗材库管理员·宋野，负责滤芯收货检查。本批供应商11月17日10点后送达，入库检查还需要2个工作小时。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是耗材库管理员·宋野，负责滤芯收货检查。本批供应商11月17日10点后送达，入库检查还需要2个工作小时；培训记录不在耗材库业务范围。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:filter_batch"
@@ -124,5 +149,5 @@
     }
   },
   "start_at": "2026-11-04T09:30:00+08:00",
-  "deadline_at": "2026-11-25T17:00:00+08:00"
+  "deadline_at": "2026-11-27T17:00:00+08:00"
 }

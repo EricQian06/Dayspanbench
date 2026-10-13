@@ -1,0 +1,461 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-21",
+  "answer": {
+    "conclusion": "delivered",
+    "claims": [
+      {
+        "key": "demand_amount",
+        "status": "confirmed",
+        "value": 1850,
+        "evidence_ids": [
+          "EV-0001"
+        ]
+      },
+      {
+        "key": "recipient_address",
+        "status": "confirmed",
+        "value": "208 Test Street, Suite 900, Test City",
+        "evidence_ids": [
+          "EV-0004",
+          "EV-0005",
+          "EV-0006"
+        ]
+      },
+      {
+        "key": "first_returned",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0003"
+        ]
+      },
+      {
+        "key": "delivered",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0007"
+        ]
+      },
+      {
+        "key": "fees_total",
+        "status": "confirmed",
+        "value": 8.0,
+        "evidence_ids": [
+          "EV-0008"
+        ]
+      },
+      {
+        "key": "attachment_only",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0009"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-21",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "demand_amount",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "recipient_address",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "first_returned",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "delivered",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "fees_total",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "attachment_only",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 73.5,
+    "calendar_days": 3.0625,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-03-22T15:30:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-03-20T16:50:00+00:00",
+      "from": "priyanair@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Tenant advocacy office caseworker·Priya Nair。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-03-20T21:54:00+00:00",
+      "from": "priyanair@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Tenant advocacy office caseworker·Priya Nair。您咨询的事项已经核实，具体情况如下：After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0005",
+          "issuer": "tenant_advocate",
+          "issued_at": "2027-03-20T20:56:00+00:00",
+          "text": "After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.",
+          "value": "208 Test Street, Suite 900, Test City",
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0006",
+          "issuer": "tenant_advocate",
+          "issued_at": "2027-03-20T21:39:00+00:00",
+          "text": "After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.",
+          "value": "208 Test Street, Suite 900, Test City",
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "sofia_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "sofia_dialogue",
+      "question": "What are your current instructions for the deposit demand, privacy and the tracked mailing?",
+      "matched": true
+    },
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "agent_fetch_document",
+      "url": "https://tenantadvocacy.bench/files/lease-XLC.pdf",
+      "facts": [
+        "demand_amount"
+      ]
+    },
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "agent_fetch_document",
+      "url": "https://tenantadvocacy.bench/files/deposit-receipt.pdf",
+      "facts": []
+    },
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "agent_fetch_document",
+      "url": "https://tenantadvocacy.bench/files/agent-record.pdf",
+      "facts": []
+    },
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "xlc_dispatch_desk",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "xlc_post_records",
+      "found": true,
+      "tool_kind": "record"
+    },
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "sofia_dialogue",
+      "question": "Do you approve the exact packet: Registered Agent Services, 208 Test Street, Suite 814, office return address, 1850 USD demand, redacted deposit receipt attached, 4 USD tracked fee?",
+      "matched": true
+    },
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "xlc_dispatch_desk",
+      "form": "demand_dispatch_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-03-19T16:00:00+00:00",
+      "kind": "page_updated",
+      "page": "clinic-entry",
+      "url": "https://tenantadvocacy.bench/entry",
+      "cause": "form"
+    },
+    {
+      "at": "2027-03-19T16:00:00+00:00",
+      "kind": "form_processed",
+      "form": "demand_dispatch_form",
+      "accepted": true,
+      "result": "Dispatch receipt dispatch-XLC-1: one tracked letter (4 USD, tracking TRACK-XLC-1) carrying the approved 1850 USD demand with only the redacted deposit receipt attached, addressed to Registered Agent Services for Parkview-test LLC, 208 Test Street, Suite 814, Test City, office return address. Dispatch is confirmed; delivery is not."
+    },
+    {
+      "at": "2027-03-20T15:30:00+00:00",
+      "kind": "agent_hidden_record",
+      "tool": "xlc_post_records",
+      "key": "dispatch-XLC-1",
+      "found": [
+        "dispatch-XLC-1"
+      ]
+    },
+    {
+      "at": "2027-03-20T15:30:00+00:00",
+      "kind": "agent_send",
+      "recipient": "priyanair@bench.example",
+      "text": "The first dispatch was returned undelivered. Please re-verify the current registered-agent address so I can correct the packet.",
+      "fields": {
+        "unit": "old-unit-XLC",
+        "deposit_usd": 1850,
+        "prior_negotiation": "900 USD offer withdrawn"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-03-20T15:30:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-03-20T16:02:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-20T16:02:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "step": "main_1",
+      "start_at": "2027-03-20T16:02:00+00:00",
+      "due_at": "2027-03-20T16:50:00+00:00",
+      "tool": "tenant_advocate.main.1.acknowledge"
+    },
+    {
+      "at": "2027-03-20T16:02:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-20T16:50:00+00:00",
+      "kind": "tool_call",
+      "actor": "tenant_advocate",
+      "case_id": "CASE-0001",
+      "tool": "tenant_advocate.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-03-20T16:50:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-03-20T16:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-20T16:50:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "step": "main_2",
+      "start_at": "2027-03-20T16:50:00+00:00",
+      "due_at": "2027-03-20T20:56:00+00:00",
+      "tool": "tenant_advocate.main.2.lookup"
+    },
+    {
+      "at": "2027-03-20T16:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-20T20:56:00+00:00",
+      "kind": "tool_call",
+      "actor": "tenant_advocate",
+      "case_id": "CASE-0001",
+      "tool": "tenant_advocate.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-03-20T20:56:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-20T20:56:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "step": "main_3",
+      "start_at": "2027-03-20T20:56:00+00:00",
+      "due_at": "2027-03-20T21:39:00+00:00",
+      "tool": "tenant_advocate.main.3.document"
+    },
+    {
+      "at": "2027-03-20T20:56:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-20T21:39:00+00:00",
+      "kind": "tool_call",
+      "actor": "tenant_advocate",
+      "case_id": "CASE-0001",
+      "tool": "tenant_advocate.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-03-20T21:39:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-03-20T21:39:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "step": "main_4",
+      "start_at": "2027-03-20T21:39:00+00:00",
+      "due_at": "2027-03-20T21:54:00+00:00",
+      "tool": "tenant_advocate.main.4.reply"
+    },
+    {
+      "at": "2027-03-20T21:39:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-03-20T21:54:00+00:00",
+      "kind": "tool_call",
+      "actor": "tenant_advocate",
+      "case_id": "CASE-0001",
+      "tool": "tenant_advocate.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-03-20T21:54:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "tenant_advocate",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-03-20T21:54:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-03-20T21:54:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "xlc_redispatch_desk",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-03-20T21:54:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "sofia_dialogue",
+      "question": "The first dispatch was returned because the registered agent moved to Suite 900. Do you approve a corrected dispatch: Registered Agent Services, 208 Test Street, Suite 900, same office return address, 1850 USD, receipt attached, 4 USD fee?",
+      "matched": true
+    },
+    {
+      "at": "2027-03-20T21:54:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "xlc_redispatch_desk",
+      "form": "demand_redispatch_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-03-20T23:54:00+00:00",
+      "kind": "page_updated",
+      "page": "post-followup-faq",
+      "url": "https://tenantadvocacy.bench/faq",
+      "cause": "form"
+    },
+    {
+      "at": "2027-03-20T23:54:00+00:00",
+      "kind": "form_processed",
+      "form": "demand_redispatch_form",
+      "accepted": true,
+      "result": "Dispatch receipt dispatch-XLC-2: one corrected tracked letter (4 USD, tracking TRACK-XLC-2) carrying the approved 1850 USD demand with only the redacted deposit receipt attached, addressed to Registered Agent Services for Parkview-test LLC, 208 Test Street, Suite 900, Test City, office return address. The returned first attempt (dispatch-XLC-1) remains on file. Dispatch is confirmed; delivery is not."
+    },
+    {
+      "at": "2027-03-22T15:30:00+00:00",
+      "kind": "agent_hidden_record",
+      "tool": "xlc_post_records",
+      "key": "dispatch-XLC-2",
+      "found": [
+        "dispatch-XLC-2"
+      ]
+    }
+  ],
+  "pending_cases": []
+}

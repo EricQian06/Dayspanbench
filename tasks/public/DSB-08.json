@@ -11,9 +11,21 @@
     {
       "id": "hotels-intro",
       "title": "候选住宿简介",
-      "text": "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段；B酒店指定房型的无障碍复测按临近入住统一排期。",
+      "text": "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段；B酒店指定房型的无障碍复测按临近入住统一排期。本页另挂有B酒店无障碍房型说明等文件。",
       "contacts": [],
       "snippet": "两家候选住宿概况与现场测量安排。",
+      "documents": [
+        {
+          "id": "hotels-b-door-ref",
+          "title": "B酒店无障碍房型说明.pdf",
+          "text": "B酒店无障碍房型说明：无障碍房净门宽96cm。（留存方整理）",
+          "facts": [
+            "b_door_ref"
+          ],
+          "issuer": "a_desk",
+          "url": "https://wuzhangzhusu.bench/files/hotels-b-door-ref.pdf"
+        }
+      ],
       "url": "https://wuzhangzhusu.bench/intro"
     },
     {
@@ -30,13 +42,47 @@
     {
       "id": "hotels-entry",
       "title": "无障碍住宿预订入口",
-      "text": "无障碍住宿预订说明：确认A旅舍或B酒店的无障碍房型需提供轮椅宽度与入住日期；通行尺寸以现场复测为准。本页面仅说明材料，不能在线预订。",
+      "text": "无障碍住宿预订说明：确认A旅舍或B酒店的无障碍房型需提供轮椅宽度与入住日期；通行尺寸以现场复测为准；B酒店指定日期的房态与总价通过本页登记表单申请后取得。本页面仅说明材料，不能在线预订。",
       "contacts": [],
       "snippet": "A旅舍与B酒店无障碍房确认材料说明；不支持在线预订。",
+      "form": {
+        "id": "rate_form",
+        "title": "指定日期房态与报价核对登记",
+        "fields": [
+          {
+            "name": "stay_dates",
+            "label": "入住日期",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "room_type",
+            "label": "房型",
+            "required": false,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "本表单不能在线直接提交：须通过酒店房态报价核对渠道办理；渠道名称与受理安排以官网简介页最新公告为准。"
+      },
       "url": "https://wuzhangzhusu.bench/entry"
     }
   ],
   "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule",
+    "fetch_document",
+    "leave_note"
+  ],
   "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
   "answer_keys": [
     "a_door_cm",
@@ -115,5 +161,5 @@
     "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
   },
   "start_at": "2026-11-06T13:30:00+08:00",
-  "deadline_at": "2026-11-12T18:00:00+08:00"
+  "deadline_at": "2026-11-13T18:00:00+08:00"
 }

@@ -14,7 +14,8 @@ def main():
     output = ROOT / "artifacts/reference_runs"
     output.mkdir(parents=True, exist_ok=True)
     summary = []
-    for path in sorted((ROOT / "tasks/private").glob("*.json")):
+    paths = sorted((ROOT / "tasks/private").glob("*.json"))
+    for path in paths:
         task = json.loads(path.read_text(encoding="utf-8"))
         env, answer, result = run_reference(task)
         # Agent-side email handling carries seeded random latency, so the witness
@@ -31,7 +32,7 @@ def main():
         summary.append({**result, "title": task["title"], "actors": len(task["actors"]), "deadline": task["deadline_at"], "horizon_design": task["horizon_design"]})
         print(f"{task['id']}: {'PASS' if result['complete'] else 'FAIL'} | {result['calendar_days']:g} days / {result['calendar_hours']} hours (designed {task['horizon_design']['reference_days']*24}h) | {len(task['actors'])} actors")
     (output / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    if len(summary) != 12 or not all(row["complete"] for row in summary):
+    if len(summary) != len(paths) or not all(row["complete"] for row in summary):
         raise SystemExit(1)
 
 

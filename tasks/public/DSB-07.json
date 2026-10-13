@@ -11,9 +11,21 @@
     {
       "id": "archive-intro",
       "title": "北汀档案馆简介",
-      "text": "档案馆提供档案数字化与授权服务。该图像处于权利继受核验期，境外联络方预计2027年5月28日集中核对文件。用途获确认后需申请人再次联系档案馆核实数字化交付，实体许可不自动包括网络用途。",
+      "text": "档案馆提供档案数字化与授权服务。该图像处于权利继受核验期，境外联络方预计2027年5月28日集中核对文件。用途获确认后需申请人再次联系档案馆核实数字化交付，实体许可不自动包括网络用途。本页另挂有同类档案历史交付记录等文件。",
       "contacts": [],
       "snippet": "档案使用授权与数字化交付流程说明。",
+      "documents": [
+        {
+          "id": "archive-scan-ref",
+          "title": "同类档案历史交付记录（扫描规格）.pdf",
+          "text": "北汀档案馆同类档案历史交付记录：扫描分辨率1200dpi。（留存方整理）",
+          "facts": [
+            "scan_ref"
+          ],
+          "issuer": "archive",
+          "url": "https://beiting.bench/files/archive-scan-ref.pdf"
+        }
+      ],
       "url": "https://beiting.bench/intro"
     },
     {
@@ -29,13 +41,48 @@
     {
       "id": "archive-entry",
       "title": "北汀档案馆档案使用申请入口",
-      "text": "北汀档案馆档案使用申请说明：申请需提供档案编号与用途说明；取得权利方确认后须再次联系档案馆申请数字化交付，并随信附上权利方的书面确认结论。本页面仅说明流程，不能在线取得许可。",
+      "text": "北汀档案馆档案使用申请说明：申请需提供档案编号与用途说明；取得权利方确认后须再次联系档案馆申请数字化交付，并随信附上权利方的书面确认结论；档案利用费用的核定结论通过本页登记表单申请后取得。本页面仅说明流程，不能在线取得许可。",
       "contacts": [],
       "snippet": "北汀档案馆档案使用申请材料说明；不支持在线取得许可。",
+      "form": {
+        "id": "fee_form",
+        "title": "档案利用费用核定登记",
+        "fields": [
+          {
+            "name": "archive_id",
+            "label": "档案编号",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "usage",
+            "label": "用途说明",
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "本表单不能在线直接提交：须通过北汀档案馆费用核定登记渠道办理；渠道名称与受理安排以官网简介页最新公告为准。"
+      },
       "url": "https://beiting.bench/entry"
     }
   ],
   "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "leave_note",
+    "query_case_status",
+    "fetch_document",
+    "request_callback"
+  ],
   "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
   "answer_keys": [
     "physical_exhibit_allowed",
@@ -76,5 +123,5 @@
     "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
   },
   "start_at": "2026-11-05T15:00:00+08:00",
-  "deadline_at": "2027-06-07T17:00:00+08:00"
+  "deadline_at": "2027-06-11T17:00:00+08:00"
 }

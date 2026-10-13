@@ -50,6 +50,20 @@ class EvaluationTests(unittest.TestCase):
                 actions.append({"tool": "send_email", "arguments": {"recipient": mailbox(spec, action["to"]), "text": action["text"], "fields": spec["public"]["user_fields"]}})
             elif action["op"] == "wait_for":
                 actions.append({"tool": "wait_until", "arguments": {"until": spec["deadline_at"]}})
+            elif action["op"] == "advance":
+                actions.append({"tool": "wait_until", "arguments": {"until": action["at"]}})
+            elif action["op"] == "discover":
+                actions.append({"tool": "discover_tools", "arguments": {"name": action["name"]}})
+            elif action["op"] == "tool":
+                # $fact placeholders quote material the privileged witness
+                # already holds; the scripted agent substitutes the fact value.
+                def resolve(value):
+                    if isinstance(value, str) and value.startswith("$fact:"):
+                        return spec["facts"][value.split(":", 1)[1]]["value"]
+                    if isinstance(value, dict):
+                        return {key: resolve(item) for key, item in value.items()}
+                    return value
+                actions.append({"tool": action["name"], "arguments": resolve(action.get("args", {}))})
         # Mid-workflow acknowledgement receipts now add extra inbox messages;
         # extra waits absorb them so submission happens after the final reply
         # (each wait_until wakes on the next message or on the deadline).

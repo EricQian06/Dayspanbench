@@ -1,7 +1,7 @@
 {
   "id": "DSB-09",
   "title": "公共活动咨询：意见征集与年末联合复核",
-  "brief": "为2027年1月晴港北广场的小型扩声活动询问主管机构、事项分类、应备材料和最早办理窗口。跟进意见征集并携回执再次申请联合复核。只做预咨询，不能写成已获许可；场景规则均为合成。",
+  "brief": "为2027年1月晴港北广场的小型扩声活动询问主管机构、事项分类、应备材料和最早办理窗口。跟进意见征集并携回执再次申请联合复核，书面复核结论按对方说明的渠道取得。只做预咨询，不能写成已获许可；场景规则均为合成。",
   "user_fields": {
     "location": "晴港北广场",
     "sound_equipment": "使用两只扩声音箱"
@@ -11,9 +11,21 @@
     {
       "id": "service-intro",
       "title": "晴港公共活动咨询简介",
-      "text": "拟办活动先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。",
+      "text": "拟办活动先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。本页另挂有北广场活动事项办理口径等文件。",
       "contacts": [],
       "snippet": "公共活动预咨询流程与时间安排。",
+      "documents": [
+        {
+          "id": "service-category-ref",
+          "title": "北广场活动事项办理口径.pdf",
+          "text": "北广场活动事项办理口径：扩声类活动按一般户外活动备案口径登记。（留存方整理）",
+          "facts": [
+            "category_ref"
+          ],
+          "issuer": "service",
+          "url": "https://qinggang.bench/files/service-category-ref.pdf"
+        }
+      ],
       "url": "https://qinggang.bench/intro"
     },
     {
@@ -29,13 +41,53 @@
     {
       "id": "service-entry",
       "title": "晴港活动预咨询入口",
-      "text": "晴港公共活动预咨询说明：办理需提供活动地点与扩声设备说明；本页面为预咨询说明，不构成许可申请入口，许可须另行按正式流程申请。",
+      "text": "晴港公共活动预咨询说明：办理需提供活动地点与扩声设备说明；联合分类复核的书面结论通过本页登记表单申请后取得，登记须附意见征集回执编号。本页面为预咨询说明，不构成许可申请入口，许可须另行按正式流程申请。",
       "contacts": [],
-      "snippet": "晴港公共活动预咨询材料说明；不支持在线申请许可。",
+      "snippet": "晴港公共活动预咨询材料说明与联合复核登记表单；不支持在线申请许可。",
+      "form": {
+        "id": "review_form",
+        "title": "联合分类复核登记",
+        "fields": [
+          {
+            "name": "location",
+            "label": "活动地点",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "sound_equipment",
+            "label": "扩声设备说明",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "consultation_receipt",
+            "label": "意见征集回执编号",
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "本表单不能在线直接提交：须通过晴港联合复核登记渠道办理；渠道名称与受理安排请向活动环境咨询员确认。"
+      },
       "url": "https://qinggang.bench/entry"
     }
   ],
   "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "request_callback",
+    "fetch_document",
+    "lookup_directory"
+  ],
   "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
   "answer_keys": [
     "responsible_office",
@@ -71,5 +123,5 @@
     "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
   },
   "start_at": "2026-11-03T15:00:00+08:00",
-  "deadline_at": "2026-12-29T17:00:00+08:00"
+  "deadline_at": "2027-01-05T17:00:00+08:00"
 }

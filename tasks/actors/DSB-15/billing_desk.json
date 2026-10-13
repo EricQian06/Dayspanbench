@@ -1,0 +1,158 @@
+{
+  "private": true,
+  "task_id": "DSB-15",
+  "actor": {
+    "id": "billing_desk",
+    "name": "PHOTOAPP-PRO billing desk·Casey Lin",
+    "role": "charge investigation and reversal status",
+    "description": "Confirms in writing whether the charge is under investigation and whether any reversal has been posted; a billing investigation is not a refund.",
+    "calendar": "us_eastern_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "caseylin@bench.example"
+    },
+    "knowledge": [
+      "no_reversal"
+    ],
+    "tools": {
+      "billing_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "billing_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "no_reversal"
+        ]
+      },
+      "billing_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "no_reversal"
+        ]
+      },
+      "billing_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Charge investigation",
+        "aliases": [
+          "photo",
+          "charge",
+          "investigation",
+          "reversal",
+          "merchant",
+          "billing",
+          "token",
+          "refund"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "billing_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the posted charge and whether any reversal exists",
+            "tool": "billing_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 150
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "billing_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "billing_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是PHOTOAPP-PRO billing desk·Casey Lin，负责charge investigation and reversal status。Confirms in writing whether the charge is under investigation and whether any reversal has been posted; a billing investigation is not a refund. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:no_reversal"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "no_reversal": {
+      "value": true,
+      "text": "The photo-app billing desk's written reply (reply-XDF1) confirms the charge investigation is open and no reversal had been posted for charge-photo.",
+      "available_at": "2027-04-03T12:00:00-06:00",
+      "attributes": {
+        "subject": {
+          "task": "DSB-15",
+          "case": {
+            "merchant": "PHOTOAPP-PRO",
+            "amount_usd": 14.99,
+            "reversal_deadline": "2027-04-04"
+          }
+        },
+        "predicate": "no_reversal"
+      }
+    }
+  },
+  "start_at": "2027-04-03T09:00:00-06:00",
+  "deadline_at": "2027-04-05T09:00:00-06:00"
+}

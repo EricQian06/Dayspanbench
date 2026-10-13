@@ -1,0 +1,499 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-25",
+  "answer": {
+    "conclusion": "order_financed",
+    "claims": [
+      {
+        "key": "ordered_sku",
+        "status": "confirmed",
+        "value": "sf-B",
+        "evidence_ids": [
+          "EV-0007"
+        ]
+      },
+      {
+        "key": "order_total",
+        "status": "confirmed",
+        "value": 1140.0,
+        "evidence_ids": [
+          "EV-0008"
+        ]
+      },
+      {
+        "key": "installment_amount",
+        "status": "confirmed",
+        "value": 380.0,
+        "evidence_ids": [
+          "EV-0009"
+        ]
+      },
+      {
+        "key": "delivery_date",
+        "status": "confirmed",
+        "value": "2027-06-09",
+        "evidence_ids": [
+          "EV-0003",
+          "EV-0006",
+          "EV-0010"
+        ]
+      },
+      {
+        "key": "fit_verified",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0001",
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "recycling_confirmed",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0005"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-25",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "ordered_sku",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "order_total",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "installment_amount",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "delivery_date",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "fit_verified",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "recycling_confirmed",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 30.0,
+    "calendar_days": 1.25,
+    "agent_messages": 1,
+    "contacted_actors": 1,
+    "as_of": "2027-06-08T20:00:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-06-07T15:20:00+00:00",
+      "from": "samrivers@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Test Appliance Cooperative fulfillment desk·Sam Rivers。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-06-07T19:24:00+00:00",
+      "from": "samrivers@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Test Appliance Cooperative fulfillment desk·Sam Rivers。您咨询的事项已经核实，具体情况如下：The fulfillment desk confirms in writing that sf-B fits the 33 in installation opening and 33 in ground-floor doorway with a verified unpack-at-door procedure.Old-unit removal and recycling are included in the confirmed delivery service for the ordered refrigerator.The ordered refrigerator is scheduled for delivery on 2027-06-09, before the June 10 deadline.The fulfillment desk confirms in writing that sf-B fits the 33 in installation opening and 33 in ground-floor doorway with a verified unpack-at-door procedure.Old-unit removal and recycling are included in the confirmed delivery service for the ordered refrigerator.The ordered refrigerator is scheduled for delivery on 2027-06-09, before the June 10 deadline.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0001",
+          "issuer": "fulfillment_desk",
+          "issued_at": "2027-06-07T18:26:00+00:00",
+          "text": "The fulfillment desk confirms in writing that sf-B fits the 33 in installation opening and 33 in ground-floor doorway with a verified unpack-at-door procedure.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0002",
+          "issuer": "fulfillment_desk",
+          "issued_at": "2027-06-07T18:26:00+00:00",
+          "text": "Old-unit removal and recycling are included in the confirmed delivery service for the ordered refrigerator.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0003",
+          "issuer": "fulfillment_desk",
+          "issued_at": "2027-06-07T18:26:00+00:00",
+          "text": "The ordered refrigerator is scheduled for delivery on 2027-06-09, before the June 10 deadline.",
+          "value": "2027-06-09",
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0004",
+          "issuer": "fulfillment_desk",
+          "issued_at": "2027-06-07T19:09:00+00:00",
+          "text": "The fulfillment desk confirms in writing that sf-B fits the 33 in installation opening and 33 in ground-floor doorway with a verified unpack-at-door procedure.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0005",
+          "issuer": "fulfillment_desk",
+          "issued_at": "2027-06-07T19:09:00+00:00",
+          "text": "Old-unit removal and recycling are included in the confirmed delivery service for the ordered refrigerator.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        },
+        {
+          "id": "EV-0006",
+          "issuer": "fulfillment_desk",
+          "issued_at": "2027-06-07T19:09:00+00:00",
+          "text": "The ordered refrigerator is scheduled for delivery on 2027-06-09, before the June 10 deadline.",
+          "value": "2027-06-09",
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-06-07T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "household_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-06-07T14:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "household_dialogue",
+      "question": "What are the installation opening, doorway, dated cash schedule and approval requirements for the fridge replacement?",
+      "matched": true
+    },
+    {
+      "at": "2027-06-07T14:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "appliance_search",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-06-07T14:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "appliance_search",
+      "query": "refrigerator",
+      "entries": [
+        "sf-A",
+        "sf-B",
+        "sf-C",
+        "sf-D",
+        "sf-E",
+        "sf-F"
+      ]
+    },
+    {
+      "at": "2027-06-07T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "samrivers@bench.example",
+      "text": "Please verify installation fit, unpack-at-door handling, recycling and the current delivery date for the candidate refrigerators",
+      "fields": {
+        "need": "refrigerator replacement",
+        "delivery_deadline": "2027-06-10",
+        "min_capacity_cuft": 16,
+        "max_width_in": 32.5,
+        "budget_usd": 1300
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-06-07T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-06-07T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-06-07T14:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "step": "main_1",
+      "start_at": "2027-06-07T14:32:00+00:00",
+      "due_at": "2027-06-07T15:20:00+00:00",
+      "tool": "fulfillment_desk.main.1.acknowledge"
+    },
+    {
+      "at": "2027-06-07T14:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-06-07T15:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "fulfillment_desk",
+      "case_id": "CASE-0001",
+      "tool": "fulfillment_desk.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-06-07T15:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-06-07T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-06-07T15:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "step": "main_2",
+      "start_at": "2027-06-07T15:20:00+00:00",
+      "due_at": "2027-06-07T18:26:00+00:00",
+      "tool": "fulfillment_desk.main.2.lookup"
+    },
+    {
+      "at": "2027-06-07T15:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-06-07T18:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "fulfillment_desk",
+      "case_id": "CASE-0001",
+      "tool": "fulfillment_desk.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-06-07T18:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-06-07T18:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "step": "main_3",
+      "start_at": "2027-06-07T18:26:00+00:00",
+      "due_at": "2027-06-07T19:09:00+00:00",
+      "tool": "fulfillment_desk.main.3.document"
+    },
+    {
+      "at": "2027-06-07T18:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-06-07T19:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "fulfillment_desk",
+      "case_id": "CASE-0001",
+      "tool": "fulfillment_desk.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-06-07T19:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-06-07T19:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "step": "main_4",
+      "start_at": "2027-06-07T19:09:00+00:00",
+      "due_at": "2027-06-07T19:24:00+00:00",
+      "tool": "fulfillment_desk.main.4.reply"
+    },
+    {
+      "at": "2027-06-07T19:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-06-07T19:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "fulfillment_desk",
+      "case_id": "CASE-0001",
+      "tool": "fulfillment_desk.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-06-07T19:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "fulfillment_desk",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-06-07T19:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-06-07T19:24:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "finance_read",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-06-08T14:00:00+00:00",
+      "kind": "page_updated",
+      "page": "store-intro",
+      "url": "https://installmentgate.bench/intro"
+    },
+    {
+      "at": "2027-06-08T14:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "appliance_search",
+      "removed": [
+        "sf-A"
+      ],
+      "added": [
+        "sf-A"
+      ]
+    },
+    {
+      "at": "2027-06-08T14:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "finance_read",
+      "removed": [
+        "terms-A-v1"
+      ],
+      "added": [
+        "terms-A-v2"
+      ]
+    },
+    {
+      "at": "2027-06-08T15:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "finance_read",
+      "query": "terms",
+      "entries": [
+        "terms-B",
+        "terms-A-v2"
+      ]
+    },
+    {
+      "at": "2027-06-08T15:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "appliance_search",
+      "query": "refrigerator",
+      "entries": [
+        "sf-B",
+        "sf-C",
+        "sf-D",
+        "sf-E",
+        "sf-F",
+        "sf-A"
+      ]
+    },
+    {
+      "at": "2027-06-08T15:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "order_create",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-06-08T15:00:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "order_create",
+      "entry": "sf-B",
+      "accepted": true
+    },
+    {
+      "at": "2027-06-08T17:00:00+00:00",
+      "kind": "page_updated",
+      "page": "store-entry",
+      "url": "https://installmentgate.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-06-08T17:00:00+00:00",
+      "kind": "selection_processed",
+      "tool": "order_create",
+      "accepted": true,
+      "result": "Order confirmed: sf-B (16.5 cu ft, 31.5 in wide) delivered 2027-06-09, all-in 1140.00 USD on the existing card, consuming installment reservation finance-XSF1 - three zero-interest payments of 380.00 USD due 2027-06-10, 2027-07-10 and 2027-08-10, each within the 400 USD dated residual cash after protected obligations. No new credit, no fees, no payment executed; delivery and future payments remain pending."
+    },
+    {
+      "at": "2027-06-08T20:00:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "order_create",
+      "query": "order"
+    }
+  ],
+  "pending_cases": []
+}

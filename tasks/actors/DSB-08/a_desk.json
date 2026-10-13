@@ -17,8 +17,14 @@
     },
     "knowledge": [],
     "tools": {
-      "a_desk.main.1.acknowledge": {
-        "kind": "acknowledge"
+      "a_desk.main.1.suggest": {
+        "kind": "suggest",
+        "text": "净宽具体多少我说不准，旧网页的88cm好像也包含门框；现场测量可能要问我们的设施员蒋延，也可能当时和B酒店那边一起复测过，或者B酒店设施主管郑砚那边留了记录，您可以直接去信问问。另外B酒店那个无障碍房我印象里净门宽有96cm，错不了，供您参考，具体以他们复测为准。",
+        "guesses": [
+          "a_tech",
+          "b_desk",
+          "b_tech"
+        ]
       },
       "a_desk.main.2.delegate": {
         "kind": "delegate",
@@ -48,8 +54,8 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
-            "tool": "a_desk.main.1.acknowledge",
+            "label": "给出猜测性答复",
+            "tool": "a_desk.main.1.suggest",
             "delay": {
               "mode": "business",
               "minutes": 30
@@ -124,5 +130,5 @@
   },
   "local_facts": {},
   "start_at": "2026-11-06T13:30:00+08:00",
-  "deadline_at": "2026-11-12T18:00:00+08:00"
+  "deadline_at": "2026-11-13T18:00:00+08:00"
 }

@@ -1,0 +1,230 @@
+{
+  "private": true,
+  "task_id": "DSB-32",
+  "actor": {
+    "id": "clinic_scheduler",
+    "name": "Cedar Endocrine Test Clinic scheduling·Rosa Kim",
+    "role": "specialist slot inventory, referral review status and intake acknowledgement",
+    "description": "Answers scheduling and intake questions; slots, referral review status and intake packets are handled through the portal services named on the entry page. Clinical questions stay with clinicians; the clinic never asks for unrelated notes or insurance cards.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "rosakim@bench.example"
+    },
+    "knowledge": [
+      "appointment_confirmed",
+      "appointment_date",
+      "appointment_time",
+      "estimate",
+      "intake_shared",
+      "referral_approved"
+    ],
+    "tools": {
+      "clinic_scheduler.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "clinic_scheduler.main.2.lookup": {
+        "kind": "lookup",
+        "facts": []
+      },
+      "clinic_scheduler.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Scheduling desk enquiry",
+        "aliases": [
+          "slot",
+          "schedule",
+          "appointment",
+          "referral",
+          "intake",
+          "availability",
+          "book"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "clinic_scheduler.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check current scheduling and intake records",
+            "tool": "clinic_scheduler.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "clinic_scheduler.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Cedar Endocrine Test Clinic scheduling·Rosa Kim，负责specialist slot inventory, referral review status and intake acknowledgement。Answers scheduling and intake questions; slots, referral review status and intake packets are handled through the portal services named on the entry page. Clinical questions stay with clinicians; the clinic never asks for unrelated notes or insurance cards. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:appointment_confirmed",
+      "attest:appointment_date",
+      "attest:appointment_time",
+      "attest:estimate",
+      "attest:intake_shared",
+      "attest:referral_approved"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "appointment_confirmed": {
+      "value": true,
+      "text": "Exactly one appointment is confirmed and read back (appointment-H1, slot-102 v1); no payment was taken and no second booking exists.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-32",
+          "case": {
+            "patient": "Nora Patel",
+            "specialty": "endocrinology",
+            "window_start": "2027-05-10",
+            "window_end": "2027-05-24"
+          }
+        },
+        "predicate": "appointment_confirmed"
+      }
+    },
+    "appointment_date": {
+      "value": "2027-05-13",
+      "text": "The confirmed appointment is on Thursday, May 13, 2027 - inside the May 10-24 window and the patient's Tuesday-Friday availability.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-32",
+          "case": {
+            "patient": "Nora Patel",
+            "specialty": "endocrinology",
+            "window_start": "2027-05-10",
+            "window_end": "2027-05-24"
+          }
+        },
+        "predicate": "appointment_date"
+      }
+    },
+    "appointment_time": {
+      "value": "10:00",
+      "text": "The confirmed appointment runs 10:00-10:30 America/Chicago, entirely inside the patient's 09:00-12:00 availability.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-32",
+          "case": {
+            "patient": "Nora Patel",
+            "specialty": "endocrinology",
+            "window_start": "2027-05-10",
+            "window_end": "2027-05-24"
+          }
+        },
+        "predicate": "appointment_time"
+      }
+    },
+    "estimate": {
+      "value": 245,
+      "text": "The estimated patient cost for the booked slot is 245 USD, within the 300 USD cap; an estimate is not a coverage guarantee.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-32",
+          "case": {
+            "patient": "Nora Patel",
+            "specialty": "endocrinology",
+            "window_start": "2027-05-10",
+            "window_end": "2027-05-24"
+          }
+        },
+        "predicate": "estimate"
+      }
+    },
+    "intake_shared": {
+      "value": true,
+      "text": "The verified cedar-intake recipient acknowledged receiving exactly the minimal intake packet: screening-report v1 and referral-summary v1 - no unrelated notes and no insurance card.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-32",
+          "case": {
+            "patient": "Nora Patel",
+            "specialty": "endocrinology",
+            "window_start": "2027-05-10",
+            "window_end": "2027-05-24"
+          }
+        },
+        "predicate": "intake_shared"
+      }
+    },
+    "referral_approved": {
+      "value": true,
+      "text": "Administrative review review-H1 approved referral referral-NP on May 12, 2027 at 09:00; current eligible slots could then be held and booked. This is not a clinical diagnosis.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-32",
+          "case": {
+            "patient": "Nora Patel",
+            "specialty": "endocrinology",
+            "window_start": "2027-05-10",
+            "window_end": "2027-05-24"
+          }
+        },
+        "predicate": "referral_approved"
+      }
+    }
+  },
+  "start_at": "2027-05-10T09:00:00-05:00",
+  "deadline_at": "2027-05-12T17:00:00-05:00"
+}

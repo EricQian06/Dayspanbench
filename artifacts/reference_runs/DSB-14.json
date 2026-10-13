@@ -1,0 +1,234 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-14",
+  "answer": {
+    "conclusion": "dispatched",
+    "claims": [
+      {
+        "key": "audience",
+        "status": "confirmed",
+        "value": "1400, 1408, 1410, 1418 14th Street",
+        "evidence_ids": [
+          "EV-0001"
+        ]
+      },
+      {
+        "key": "bilingual",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002"
+        ]
+      },
+      {
+        "key": "retracted",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0004"
+        ]
+      },
+      {
+        "key": "halted",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0003"
+        ]
+      },
+      {
+        "key": "dispatched",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0005"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-14",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "audience",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "bilingual",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "retracted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "halted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "dispatched",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 1.42,
+    "calendar_days": 0.059028,
+    "agent_messages": 0,
+    "contacted_actors": 0,
+    "as_of": "2027-06-11T10:05:00+00:00"
+  },
+  "agent_messages": [],
+  "private_audit": [
+    {
+      "at": "2027-06-11T08:40:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "keisha_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-06-11T08:40:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "keisha_dialogue",
+      "question": "What are the rules for halting JOB441, correcting the 1501 U Street misdelivery and dispatching the replacement run?",
+      "matched": true
+    },
+    {
+      "at": "2027-06-11T08:40:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "crew_listings",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "crew_listings",
+      "query": "valve isolation confirmed list",
+      "entries": [
+        "valve-isolation-confirmed"
+      ]
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "print_halt_desk",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "print_halt_desk",
+      "form": "print_halt_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "keisha_dialogue",
+      "question": "Do you approve the exact correction packet: a retraction to 1501 U Street only, and the replacement run JOB442 for 1400, 1408, 1410 and 1418 14th Street with English and Spanish notices for 1400 14th Street from the approved outage-C template?",
+      "matched": true
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "notice_correction_desk",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "notice_correction_desk",
+      "form": "notice_correction_form",
+      "accepted": true
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "print_options",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "print_options",
+      "query": "corrected manifest replacement",
+      "entries": [
+        "job442-corrected-manifest"
+      ]
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "print_replace_desk",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-06-11T08:55:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "print_replace_desk",
+      "entry": "job442-corrected-manifest",
+      "accepted": true
+    },
+    {
+      "at": "2027-06-11T09:05:00+00:00",
+      "kind": "page_updated",
+      "page": "yard-entry",
+      "url": "https://outagecomms.bench/entry",
+      "cause": "form"
+    },
+    {
+      "at": "2027-06-11T09:05:00+00:00",
+      "kind": "form_processed",
+      "form": "print_halt_form",
+      "accepted": true,
+      "result": "Halt confirmation: JOB441 halted and its remaining stock quarantined before the 06:00 run. The wrong route (1501 U Street among others from the stale GIS list) cannot repeat in tonight's run."
+    },
+    {
+      "at": "2027-06-11T09:10:00+00:00",
+      "kind": "page_updated",
+      "page": "correction-faq",
+      "url": "https://outagecomms.bench/faq",
+      "cause": "form"
+    },
+    {
+      "at": "2027-06-11T09:10:00+00:00",
+      "kind": "form_processed",
+      "form": "notice_correction_form",
+      "accepted": true,
+      "result": "Retraction confirmation: the wrong June 12 shutdown notice delivered to 1501 U Street by JOB441 was retracted with a targeted correction to that address only. No other building was contacted, and the all-Shaw blast draft was not used."
+    },
+    {
+      "at": "2027-06-11T09:59:00+00:00",
+      "kind": "selection_processed",
+      "tool": "print_replace_desk",
+      "accepted": true,
+      "result": "Dispatch confirmation: JOB442 left the print yard with the 06:00 run carrying the corrected manifest - audience exactly 1400, 1408, 1410 and 1418 14th Street, English throughout plus Spanish for 1400 14th Street from the approved outage-C template, 1501 U Street excluded. JOB441 was halted and its stock quarantined beforehand. Dispatch means the hangers left the yard; doorstep delivery is a separate matter."
+    },
+    {
+      "at": "2027-06-11T10:05:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "print_replace_desk",
+      "query": "JOB442"
+    }
+  ],
+  "pending_cases": []
+}

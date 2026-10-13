@@ -30,17 +30,22 @@
       "landlord.main.2.acknowledge": {
         "kind": "acknowledge"
       },
-      "landlord.main.3.delegate": {
-        "kind": "delegate",
+      "landlord.main.3.consult": {
+        "kind": "consult",
         "target": "manager",
         "workflow": "main",
         "forward_fields": [
           "pet_weight",
           "move_date"
-        ]
+        ],
+        "text": "宠物规则和货梯时段要问物业，我先向青栎公寓物业转过去核实，稍后把结果回复您。"
       },
       "landlord.main.4.reply": {
         "kind": "reply"
+      },
+      "landlord.elevator_gossip.1.deny": {
+        "kind": "deny",
+        "text": "货梯时段我印象里11月12日上午就有空档，直接搬就行，错不了——不过这只是我的印象，房东不做主；正式安排请向青栎公寓物业确认，并以青栎搬入登记系统的办结结论为准。"
       }
     },
     "workflows": [
@@ -78,8 +83,8 @@
           },
           {
             "id": "main_3",
-            "label": "内部转交",
-            "tool": "landlord.main.3.delegate",
+            "label": "内部咨询后答复",
+            "tool": "landlord.main.3.consult",
             "delay": {
               "mode": "business",
               "minutes": 0
@@ -92,6 +97,27 @@
             "delay": {
               "mode": "business",
               "minutes": 30
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "elevator_gossip",
+        "label": "货梯时段口头印象",
+        "aliases": [
+          "货梯",
+          "电梯"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "elevator_gossip_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "landlord.elevator_gossip.1.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
             }
           }
         ],
@@ -173,5 +199,5 @@
     }
   },
   "start_at": "2026-11-03T19:30:00+08:00",
-  "deadline_at": "2026-11-12T17:00:00+08:00"
+  "deadline_at": "2026-11-13T17:00:00+08:00"
 }

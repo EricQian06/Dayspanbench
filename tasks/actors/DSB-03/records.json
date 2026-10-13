@@ -5,7 +5,7 @@
     "id": "records",
     "name": "澄川学院教务·唐宁",
     "role": "学分转换预审",
-    "description": "必须取得当前签章大纲；不能把旧大纲送交委员会。",
+    "description": "必须取得当前签章大纲；不能把旧大纲送交委员会；正式登记走登记系统。",
     "calendar": "office",
     "channels": [
       "email"
@@ -13,7 +13,9 @@
     "contact_details": {
       "email": "tangning@bench.example"
     },
-    "knowledge": [],
+    "knowledge": [
+      "effective"
+    ],
     "tools": {
       "records.main.1.lookup": {
         "kind": "lookup",
@@ -33,6 +35,14 @@
       },
       "records.main.4.reply": {
         "kind": "reply"
+      },
+      "records.register_channel.1.deny": {
+        "kind": "deny",
+        "text": "跨校学分转换的正式登记不在我处柜台办理：请通过澄川学院学分转换登记系统（chengchuan_credit_register）提交，登记须使用现行签章大纲版本，提交说明见办理入口页。"
+      },
+      "records.syllabus_archive.1.deny": {
+        "kind": "deny",
+        "text": "课程大纲不在教务存档范围，我处只做学分转换预审；签章大纲请向课程负责人索取。"
       }
     },
     "workflows": [
@@ -62,7 +72,12 @@
             ],
             "normalization": {
               "type": "text",
-              "aliases": {}
+              "aliases": {
+                "CS204-2026-v2-signed": [
+                  "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
+                  "CS204课程正式签章大纲版本为CS204-2026-v2-signed"
+                ]
+              }
             }
           }
         },
@@ -104,6 +119,50 @@
             }
           }
         ]
+      },
+      {
+        "id": "register_channel",
+        "label": "正式登记渠道说明",
+        "aliases": [
+          "登记",
+          "登记系统",
+          "正式登记",
+          "系统"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "register_channel_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "records.register_channel.1.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "syllabus_archive",
+        "label": "大纲存档查询",
+        "aliases": [
+          "存档",
+          "大纲存档"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "syllabus_archive_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "records.syllabus_archive.1.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
       }
     ],
     "process_engine": {
@@ -125,9 +184,11 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是澄川学院教务·唐宁，负责学分转换预审。必须取得当前签章大纲；不能把旧大纲送交委员会。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是澄川学院教务·唐宁，负责学分转换预审。必须取得当前签章大纲；不能把旧大纲送交委员会；正式登记走登记系统。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
-    "evidence_authorities": []
+    "evidence_authorities": [
+      "attest:effective_term"
+    ]
   },
   "calendar": {
     "timezone": "Asia/Shanghai",
@@ -149,7 +210,21 @@
       ]
     ]
   },
-  "local_facts": {},
+  "local_facts": {
+    "effective": {
+      "value": "2027春季",
+      "text": "该转换结论从2027春季学期开始适用。",
+      "attributes": {
+        "subject": {
+          "task": "DSB-03",
+          "case": {
+            "course_code": "CS204"
+          }
+        },
+        "predicate": "effective_term"
+      }
+    }
+  },
   "start_at": "2026-11-05T14:00:00+08:00",
-  "deadline_at": "2027-02-03T17:00:00+08:00"
+  "deadline_at": "2027-02-09T17:00:00+08:00"
 }

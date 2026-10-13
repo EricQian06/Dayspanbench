@@ -1,0 +1,671 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-29",
+  "answer": {
+    "conclusion": "handoff_accepted",
+    "claims": [
+      {
+        "key": "clinician_plan_current",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0004",
+          "EV-0005"
+        ]
+      },
+      {
+        "key": "old_share_revoked",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0001"
+        ]
+      },
+      {
+        "key": "five_assignments_accepted",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0006"
+        ]
+      },
+      {
+        "key": "driver_packets_logistics_only",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0007"
+        ]
+      },
+      {
+        "key": "other_evenings_unchanged",
+        "status": "confirmed",
+        "value": true,
+        "evidence_ids": [
+          "EV-0002",
+          "EV-0003"
+        ]
+      }
+    ]
+  },
+  "result": {
+    "task_id": "DSB-29",
+    "scoring_version": "0.3.0",
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "goal_results": [
+      {
+        "key": "clinician_plan_current",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "old_share_revoked",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "five_assignments_accepted",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "driver_packets_logistics_only",
+        "passed": true,
+        "reasons": []
+      },
+      {
+        "key": "other_evenings_unchanged",
+        "passed": true,
+        "reasons": []
+      }
+    ],
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 27.5,
+    "calendar_days": 1.145833,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2027-09-17T19:30:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2027-09-16T17:20:00+00:00",
+      "from": "noafield@bench.example",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Care coordination desk·Noa Field。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2027-09-16T19:24:00+00:00",
+      "from": "noafield@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Care coordination desk·Noa Field。您咨询的事项已经核实，具体情况如下：The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0002",
+          "issuer": "care_desk",
+          "issued_at": "2027-09-16T18:26:00+00:00",
+          "text": "The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0003",
+          "issuer": "care_desk",
+          "issued_at": "2027-09-16T19:09:00+00:00",
+          "text": "The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2027-09-16T20:50:00+00:00",
+      "from": "dr.lenapark@bench.example",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Care clinician·Dr. Lena Park。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "evidence": []
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2027-09-17T00:06:00+00:00",
+      "from": "dr.lenapark@bench.example",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Care clinician·Dr. Lena Park。您咨询的事项已经核实，具体情况如下：The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
+      "evidence": [
+        {
+          "id": "EV-0004",
+          "issuer": "clinician",
+          "issued_at": "2027-09-16T23:07:00+00:00",
+          "text": "The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.",
+          "value": true,
+          "valid_until": null,
+          "kind": "fact"
+        },
+        {
+          "id": "EV-0005",
+          "issuer": "clinician",
+          "issued_at": "2027-09-16T23:51:00+00:00",
+          "text": "The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.",
+          "value": true,
+          "valid_until": null,
+          "kind": "document"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2027-09-16T16:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "family_dialogue",
+      "found": true,
+      "tool_kind": "dialogue"
+    },
+    {
+      "at": "2027-09-16T16:00:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "family_dialogue",
+      "question": "Who may do what, what may each caregiver see, and what are the pickup and appointment times?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-16T16:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "access_board",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-09-16T16:00:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "access_board",
+      "query": "share",
+      "entries": [
+        "old-link-FAM",
+        "morning-link-aiko",
+        "friday-link-beth"
+      ]
+    },
+    {
+      "at": "2027-09-16T16:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "revoke_share",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-09-16T16:00:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "revoke_share",
+      "entry": "old-link-FAM",
+      "accepted": true
+    },
+    {
+      "at": "2027-09-16T16:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "noafield@bench.example",
+      "text": "Please confirm the standing Saturday and Sunday evening service is unchanged and the caregiver roster is current",
+      "fields": {
+        "dates": "2027-09-17",
+        "end_date": "2027-09-19",
+        "pickup": "home-FAM"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-09-16T16:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-09-16T16:30:00+00:00",
+      "kind": "page_updated",
+      "page": "care-entry",
+      "url": "https://carehandoff.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-09-16T16:30:00+00:00",
+      "kind": "selection_processed",
+      "tool": "revoke_share",
+      "accepted": true,
+      "result": "Share old-link-FAM revoked: the driver's access to the superseded April full clinical plan ends now. Earlier downloads are not erased, and no other caregiver share was touched."
+    },
+    {
+      "at": "2027-09-16T16:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-16T16:32:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "step": "main_1",
+      "start_at": "2027-09-16T16:32:00+00:00",
+      "due_at": "2027-09-16T17:20:00+00:00",
+      "tool": "care_desk.main.1.acknowledge"
+    },
+    {
+      "at": "2027-09-16T16:32:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-16T17:20:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0001",
+      "tool": "care_desk.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-09-16T17:20:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-09-16T17:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-16T17:20:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "step": "main_2",
+      "start_at": "2027-09-16T17:20:00+00:00",
+      "due_at": "2027-09-16T18:26:00+00:00",
+      "tool": "care_desk.main.2.lookup"
+    },
+    {
+      "at": "2027-09-16T17:20:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-16T18:26:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0001",
+      "tool": "care_desk.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-09-16T18:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-16T18:26:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "step": "main_3",
+      "start_at": "2027-09-16T18:26:00+00:00",
+      "due_at": "2027-09-16T19:09:00+00:00",
+      "tool": "care_desk.main.3.document"
+    },
+    {
+      "at": "2027-09-16T18:26:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-16T19:09:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0001",
+      "tool": "care_desk.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-09-16T19:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-16T19:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "step": "main_4",
+      "start_at": "2027-09-16T19:09:00+00:00",
+      "due_at": "2027-09-16T19:24:00+00:00",
+      "tool": "care_desk.main.4.reply"
+    },
+    {
+      "at": "2027-09-16T19:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-16T19:24:00+00:00",
+      "kind": "tool_call",
+      "actor": "care_desk",
+      "case_id": "CASE-0001",
+      "tool": "care_desk.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-09-16T19:24:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "care_desk",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-09-16T19:24:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2027-09-16T19:24:00+00:00",
+      "kind": "agent_send",
+      "recipient": "dr.lenapark@bench.example",
+      "text": "Please release the current clinician-confirmed plan v2 instructions for the September 17-19 care handoff",
+      "fields": {
+        "dates": "2027-09-17",
+        "end_date": "2027-09-19",
+        "pickup": "home-FAM"
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-09-16T19:24:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2027-09-16T20:00:00+00:00",
+      "kind": "page_updated",
+      "page": "care-roster",
+      "url": "https://carehandoff.bench/contact"
+    },
+    {
+      "at": "2027-09-16T20:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "handoff_plans",
+      "removed": [],
+      "added": [
+        "fam-plan-v2"
+      ]
+    },
+    {
+      "at": "2027-09-16T20:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-16T20:00:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "step": "main_1",
+      "start_at": "2027-09-16T20:00:00+00:00",
+      "due_at": "2027-09-16T20:50:00+00:00",
+      "tool": "clinician.main.1.acknowledge"
+    },
+    {
+      "at": "2027-09-16T20:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-16T20:50:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinician",
+      "case_id": "CASE-0002",
+      "tool": "clinician.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-09-16T20:50:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-09-16T20:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-16T20:50:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "step": "main_2",
+      "start_at": "2027-09-16T20:50:00+00:00",
+      "due_at": "2027-09-16T23:07:00+00:00",
+      "tool": "clinician.main.2.lookup"
+    },
+    {
+      "at": "2027-09-16T20:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-16T23:07:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinician",
+      "case_id": "CASE-0002",
+      "tool": "clinician.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-09-16T23:07:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-16T23:07:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "step": "main_3",
+      "start_at": "2027-09-16T23:07:00+00:00",
+      "due_at": "2027-09-16T23:51:00+00:00",
+      "tool": "clinician.main.3.document"
+    },
+    {
+      "at": "2027-09-16T23:07:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-16T23:51:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinician",
+      "case_id": "CASE-0002",
+      "tool": "clinician.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-09-16T23:51:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-09-16T23:51:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "step": "main_4",
+      "start_at": "2027-09-16T23:51:00+00:00",
+      "due_at": "2027-09-17T00:06:00+00:00",
+      "tool": "clinician.main.4.reply"
+    },
+    {
+      "at": "2027-09-16T23:51:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-09-17T00:06:00+00:00",
+      "kind": "tool_call",
+      "actor": "clinician",
+      "case_id": "CASE-0002",
+      "tool": "clinician.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-09-17T00:06:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "clinician",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-09-17T00:06:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0004",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    },
+    {
+      "at": "2027-09-17T00:06:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "family_dialogue",
+      "question": "Do you approve the five assignments: Beth Friday 19:30-20:30 with the Friday packet, Aiko both mornings with the morning packets, and Luis both rides with logistics-only packets, after revoking his old link?",
+      "matched": true
+    },
+    {
+      "at": "2027-09-17T00:06:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "handoff_plans",
+      "found": true,
+      "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-09-17T00:06:00+00:00",
+      "kind": "agent_hidden_catalog",
+      "tool": "handoff_plans",
+      "query": "handoff",
+      "entries": [
+        "april-handoff",
+        "luis-clinical-handoff",
+        "temp-helper-handoff",
+        "four-slot-handoff",
+        "fam-plan-v2"
+      ]
+    },
+    {
+      "at": "2027-09-17T00:06:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "handoff_send",
+      "found": true,
+      "tool_kind": "select"
+    },
+    {
+      "at": "2027-09-17T00:06:00+00:00",
+      "kind": "agent_selection_submitted",
+      "tool": "handoff_send",
+      "entry": "fam-plan-v2",
+      "accepted": true
+    },
+    {
+      "at": "2027-09-17T19:00:00+00:00",
+      "kind": "page_updated",
+      "page": "care-entry",
+      "url": "https://carehandoff.bench/entry",
+      "cause": "selection"
+    },
+    {
+      "at": "2027-09-17T19:00:00+00:00",
+      "kind": "selection_processed",
+      "tool": "handoff_send",
+      "accepted": true,
+      "result": "Handoff sent and accepted: Beth accepted fri-pm, Aiko accepted sat-am and sun-am, Luis accepted sat-ride and sun-ride. Packets went separately; Luis received only ride logistics (ride-sat, ride-sun) with no drug names, diagnoses or clinical attachments. The existing evening service is unchanged, and no care has been performed yet."
+    },
+    {
+      "at": "2027-09-17T19:30:00+00:00",
+      "kind": "agent_selection_status",
+      "tool": "handoff_send",
+      "query": "handoff status"
+    }
+  ],
+  "pending_cases": []
+}

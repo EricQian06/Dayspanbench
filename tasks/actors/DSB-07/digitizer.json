@@ -58,7 +58,7 @@
             "tool": "digitizer.main.2.document",
             "delay": {
               "mode": "business",
-              "minutes": 60
+              "minutes": 480
             }
           },
           {
@@ -136,5 +136,5 @@
     }
   },
   "start_at": "2026-11-05T15:00:00+08:00",
-  "deadline_at": "2027-06-07T17:00:00+08:00"
+  "deadline_at": "2027-06-11T17:00:00+08:00"
 }

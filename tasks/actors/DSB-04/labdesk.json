@@ -17,14 +17,23 @@
     },
     "knowledge": [],
     "tools": {
-      "labdesk.main.1.refer": {
+      "labdesk.main.1.suggest": {
+        "kind": "suggest",
+        "text": "培训记录归谁管我说不准：可能是安全员温遥，也可能仪器管理员杜和那边留了登记，或者耗材库宋野能查到；建议您分别去信确认。另外我印象里这批进口滤芯11月10日就到库了，错不了，供您参考，到货情况请以耗材库核实为准。",
+        "guesses": [
+          "safety",
+          "instrument",
+          "stores"
+        ]
+      },
+      "labdesk.main.2.refer": {
         "kind": "refer",
         "contacts": [
           "safety",
           "instrument"
         ]
       },
-      "labdesk.main.2.reply": {
+      "labdesk.main.3.reply": {
         "kind": "reply"
       }
     },
@@ -41,8 +50,8 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询联系人目录并转介",
-            "tool": "labdesk.main.1.refer",
+            "label": "给出猜测性答复",
+            "tool": "labdesk.main.1.suggest",
             "delay": {
               "mode": "business",
               "minutes": 30
@@ -50,8 +59,17 @@
           },
           {
             "id": "main_2",
+            "label": "查询联系人目录并转介",
+            "tool": "labdesk.main.2.refer",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
             "label": "向请求者回复已取得的结果",
-            "tool": "labdesk.main.2.reply",
+            "tool": "labdesk.main.3.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -106,5 +124,5 @@
   },
   "local_facts": {},
   "start_at": "2026-11-04T09:30:00+08:00",
-  "deadline_at": "2026-11-25T17:00:00+08:00"
+  "deadline_at": "2026-11-27T17:00:00+08:00"
 }

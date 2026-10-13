@@ -1,0 +1,198 @@
+{
+  "private": true,
+  "task_id": "DSB-13",
+  "actor": {
+    "id": "harbor_manager",
+    "name": "Harbor Family Table manager·Robin Diaz",
+    "role": "confirmed alternative restaurant status",
+    "description": "Only confirms the r106 menu and reservation terms; access and allergen evidence already verified (verify-F106).",
+    "calendar": "us_eastern_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "robindiaz@bench.example"
+    },
+    "knowledge": [
+      "harbor_address",
+      "harbor_time",
+      "harbor_total",
+      "harbor_verified"
+    ],
+    "tools": {
+      "harbor_manager.main.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "harbor_address",
+          "harbor_time",
+          "harbor_total",
+          "harbor_verified"
+        ]
+      },
+      "harbor_manager.main.2.document": {
+        "kind": "document",
+        "facts": [
+          "harbor_address",
+          "harbor_time",
+          "harbor_total",
+          "harbor_verified"
+        ]
+      },
+      "harbor_manager.main.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Harbor status and quote",
+        "aliases": [
+          "harbor",
+          "verified",
+          "alternative",
+          "status"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "查询业务记录",
+            "tool": "harbor_manager.main.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "签发书面确认",
+            "tool": "harbor_manager.main.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "harbor_manager.main.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Harbor Family Table manager·Robin Diaz，负责confirmed alternative restaurant status。Only confirms the r106 menu and reservation terms; access and allergen evidence already verified (verify-F106). 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:harbor_address",
+      "attest:harbor_time",
+      "attest:harbor_total",
+      "attest:harbor_verified"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/New_York",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "harbor_address": {
+      "value": "6 Harbor Lane, Riverdale test district",
+      "text": "Harbor Family Table is located at 6 Harbor Lane, Riverdale test district.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "harbor_address"
+      }
+    },
+    "harbor_time": {
+      "value": "13:45",
+      "text": "Harbor Family Table offers a six-top at 13:45 on 2027-07-11.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "harbor_time"
+      }
+    },
+    "harbor_total": {
+      "value": 259.6,
+      "text": "The Harbor Family Table pre-tip total is 259.60 USD including tax and mandatory service.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "harbor_total"
+      }
+    },
+    "harbor_verified": {
+      "value": true,
+      "text": "Provider evidence verify-F106 (valid until 2027-07-11 14:00 New York time) confirms a step-free table route and written sesame controls for Harbor Family Table's menu-106 v1.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-13",
+          "case": {
+            "date": "2027-07-11",
+            "area": "Riverdale test district",
+            "party_size": 6
+          }
+        },
+        "predicate": "harbor_verified"
+      }
+    }
+  },
+  "start_at": "2027-07-09T09:00:00-04:00",
+  "deadline_at": "2027-07-11T12:00:00-04:00"
+}

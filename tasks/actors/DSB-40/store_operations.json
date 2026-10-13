@@ -1,0 +1,206 @@
+{
+  "private": true,
+  "task_id": "DSB-40",
+  "actor": {
+    "id": "store_operations",
+    "name": "Test Appliance Cooperative inventory desk·Riley Carter",
+    "role": "listings, delivery slots and orders",
+    "description": "Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "rileycarter@bench.example"
+    },
+    "knowledge": [
+      "delivery_window",
+      "order_total",
+      "ordered_sku",
+      "payment_terms"
+    ],
+    "tools": {
+      "store_operations.slot.1.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "order_total",
+          "delivery_window"
+        ]
+      },
+      "store_operations.slot.2.document": {
+        "kind": "document",
+        "facts": [
+          "order_total",
+          "delivery_window"
+        ]
+      },
+      "store_operations.slot.3.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "slot",
+        "label": "Listing and delivery slot status",
+        "aliases": [
+          "listing",
+          "slot",
+          "delivery",
+          "stock",
+          "offer",
+          "price",
+          "quote",
+          "order"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "slot_1",
+            "label": "check the current listing, all-in total and delivery slot",
+            "tool": "store_operations.slot.1.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "slot_2",
+            "label": "签发书面确认",
+            "tool": "store_operations.slot.2.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "slot_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "store_operations.slot.3.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Test Appliance Cooperative inventory desk·Riley Carter，负责listings, delivery slots and orders。Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:delivery_window",
+      "attest:order_total",
+      "attest:ordered_sku",
+      "attest:payment_terms"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "delivery_window": {
+      "value": "2027-06-09 10:00-12:00",
+      "text": "The assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "delivery_window"
+      }
+    },
+    "order_total": {
+      "value": 1181.6,
+      "text": "The ordered total is 1181.60 USD all-in - item 1020.00, tax 81.60, delivery 50.00 and old-fridge recycling 30.00 - within the 1300 USD budget.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "order_total"
+      }
+    },
+    "ordered_sku": {
+      "value": "COOL-16-B",
+      "text": "The confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "ordered_sku"
+      }
+    },
+    "payment_terms": {
+      "value": "pay_on_delivery",
+      "text": "The order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "payment_terms"
+      }
+    }
+  },
+  "start_at": "2027-06-07T09:00:00-05:00",
+  "deadline_at": "2027-06-09T12:00:00-05:00"
+}

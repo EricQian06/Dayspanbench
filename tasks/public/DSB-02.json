@@ -13,9 +13,21 @@
     {
       "id": "listing-intro",
       "title": "青栎房源简介",
-      "text": "青栎公寓在租房源。房东通常19—21点回复。宠物需物业周五复核；11月11日开放新一期货梯表，才能确认下半月搬入时段。",
+      "text": "青栎公寓在租房源。房东通常19—21点回复。宠物需物业周五复核；11月11日开放新一期货梯表，才能确认下半月搬入时段。本页另挂有楼宇宠物饲养规定等文件。",
       "contacts": [],
       "snippet": "青栎在租房源概况与搬入安排说明。",
+      "documents": [
+        {
+          "id": "listing-pet-leaflet",
+          "title": "楼宇宠物饲养规定.pdf",
+          "text": "青栎公寓楼宇宠物饲养规定：本楼仅限5公斤以下宠物入住，8公斤及以上犬只不符合饲养条件。（留存方整理）",
+          "facts": [
+            "pet_ref"
+          ],
+          "issuer": "manager",
+          "url": "https://qingli.bench/files/listing-pet-leaflet.pdf"
+        }
+      ],
       "url": "https://qingli.bench/intro"
     },
     {
@@ -30,14 +42,48 @@
     },
     {
       "id": "listing-entry",
-      "title": "青栎公寓入住办理入口",
-      "text": "青栎公寓入住办理流程：入住前需先确认楼宇宠物规则（由青栎公寓物业周五复核）与货梯时段；本页面仅说明青栎公寓入住流程，不构成租约，也不能在线签约，具体条件请与房东及青栎公寓物业联系。",
+      "title": "青栎公寓搬入货梯使用登记",
+      "text": "青栎公寓入住办理流程：入住前需先确认楼宇宠物规则（由青栎公寓物业周五复核）与货梯时段；货梯时段的书面结论通过本页登记表单申请后取得。本页面仅说明青栎公寓入住流程，不构成租约，也不能在线签约。",
       "contacts": [],
-      "snippet": "青栎公寓入住条件与办理流程说明；不支持在线签约。",
+      "snippet": "青栎公寓入住条件、办理流程与搬入登记表单说明；不支持在线签约。",
+      "form": {
+        "id": "elevator_form",
+        "title": "搬入货梯使用登记",
+        "fields": [
+          {
+            "name": "move_date",
+            "label": "期望搬入日期",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "pet_weight",
+            "label": "宠物重量",
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "本表单不能在线直接提交：须通过青栎搬入登记系统办理；系统名称与受理时间以房源简介页最新公告为准。"
+      },
       "url": "https://qingli.bench/entry"
     }
   ],
   "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "leave_note",
+    "fetch_document",
+    "check_schedule"
+  ],
   "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
   "answer_keys": [
     "monthly_rent",
@@ -80,5 +126,5 @@
     "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
   },
   "start_at": "2026-11-03T19:30:00+08:00",
-  "deadline_at": "2026-11-12T17:00:00+08:00"
+  "deadline_at": "2026-11-13T17:00:00+08:00"
 }

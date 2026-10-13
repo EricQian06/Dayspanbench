@@ -1,0 +1,97 @@
+{
+  "id": "DSB-40",
+  "title": "Fridge replacement: verified access and a changed delivery slot",
+  "brief": "Our refrigerator failed. Find one with at least 16 cu ft, Energy Star, no wider than 32.5 in, at most 1300 USD all-in including tax, delivery and old-fridge recycling, delivered by 2027-06-10 09:00 Chicago time. Ask me about the space, access, address and ordering permission before ordering; the seller must verify unpack-at-door fit and recycling in writing, watch for delivery-slot changes, and make at most one approved order. Pay on delivery only - no new credit, subscription, deposit or agent payment.",
+  "user_fields": {
+    "need": "refrigerator replacement",
+    "delivery_deadline": "2027-06-10",
+    "min_capacity_cuft": 16,
+    "max_width_in": 32.5,
+    "budget_usd": 1300
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "store-intro",
+      "title": "Test Appliance Cooperative storefront",
+      "text": "Synthetic appliance listings for the test district; listing claims alone do not establish fit, eligibility or a confirmed delivery slot. Current listings are found through the store's product search service (product_search), and uncommitted delivery routes can change without notice, so re-check the live slot before ordering. Household space, access, address and approval facts can be clarified through the household desk (householder_dialogue). Measured fit, unpack-at-door and recycling confirmations come from the delivery specialist by mail.",
+      "contacts": [],
+      "snippet": "Test Appliance Cooperative: refrigerator listings and household requirements desk.",
+      "url": "https://fridgedelivery.bench/intro"
+    },
+    {
+      "id": "store-contact",
+      "title": "Store contacts",
+      "text": "The delivery specialist (Morgan Hale) verifies measured installation fit, the doorway route, unpack-at-door handling and recycling; the inventory desk (Riley Carter) quotes current all-in totals and delivery slots. Both answer daily during business hours.",
+      "contacts": [
+        "fulfillment_agent",
+        "store_operations"
+      ],
+      "snippet": "Contacts for the delivery specialist and the inventory desk.",
+      "url": "https://fridgedelivery.bench/contact"
+    },
+    {
+      "id": "store-entry",
+      "title": "Order desk",
+      "text": "Orders are placed through the store's order desk (order_create): pick one current product_search listing whose all-in total, payment terms and live delivery slot still satisfy the requirements, obtain the householder's approval of the exact SKU, fit evidence, delivery interval, recycling and full price (review available from June 8 at 13:00 Chicago time), then submit that one plan. At most one order; pay on delivery only - no new credit, subscription, deposit or agent payment. Stale offers are revalidated against live listings at order time.",
+      "contacts": [],
+      "snippet": "Order desk: one approved pay-on-delivery order, live slot only, no agent payment.",
+      "url": "https://fridgedelivery.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: search listings, contact the store, gather written fit verification, and place at most the one pay-on-delivery order the householder has approved; no payment, new credit account, subscription, deposit or other binding commitment.",
+  "answer_keys": [
+    "ordered_sku",
+    "order_total",
+    "delivery_window",
+    "payment_terms",
+    "fit_verified",
+    "recycling_confirmed"
+  ],
+  "value_normalization": {
+    "ordered_sku": {
+      "type": "text"
+    },
+    "order_total": {
+      "type": "number",
+      "units": {}
+    },
+    "delivery_window": {
+      "type": "text"
+    },
+    "payment_terms": {
+      "type": "text"
+    },
+    "fit_verified": {
+      "type": "boolean"
+    },
+    "recycling_confirmed": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "order_confirmed": "One approved pay-on-delivery order with verified fit and a deadline-meeting slot",
+    "unconfirmed": "Fit, slot or approval could not be verified in time",
+    "not_feasible": "No current listing satisfies the hard constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-06-07T09:00:00-05:00",
+  "deadline_at": "2027-06-09T12:00:00-05:00"
+}

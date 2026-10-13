@@ -1,0 +1,99 @@
+{
+  "id": "DSB-19",
+  "title": "Clinic-gated accessible rehabilitation transport",
+  "brief": "Arrange accessible transport for my September 3, 2027, 10:00 rehabilitation appointment in the Chicago test district; arrive 30 minutes early and confirm the return after the visit. Ask me about access needs, limits and authorization; verify lift, securement and companion capacity with dispatch, book the outbound first, and book the return only after the clinic records my actual release - never the estimated end time. Share pickup and access needs only, not my diagnosis. No payment.",
+  "user_fields": {
+    "date": "2027-09-03",
+    "city": "Chicago test district",
+    "appointment": "10:00"
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "transport-intro",
+      "title": "Access Ride Coordination Portal",
+      "text": "Synthetic clinic and accessible-transport records for the Chicago test district: appointment logistics, the lift-equipped fleet and the booking desks. Current appointment state is read through the clinic portal service (clinic_portal) and live vehicle inventory through the ride search service (ride_search); fleet status and releases change without notice, so re-check before booking. The patient's constraints can be clarified through the patient desk (patient_dialogue). Written fleet verification comes from the dispatch desk by mail.",
+      "contacts": [],
+      "snippet": "Clinic appointment state, lift-equipped vehicle inventory and booking desks.",
+      "url": "https://accessride.bench/intro"
+    },
+    {
+      "id": "transport-contacts",
+      "title": "Transport and clinic contacts",
+      "text": "Accessible-vehicle dispatch (fleet verification and bookings) is handled by Dana Whitfield; appointment logistics and release records by clinic coordinator Marcus Lee. Both answer daily during business hours.",
+      "contacts": [
+        "dispatch_desk",
+        "clinic_coordinator"
+      ],
+      "snippet": "Contacts for the Access Ride dispatch desk and the Cedar Rehabilitation Clinic coordinator.",
+      "url": "https://accessride.bench/contact"
+    },
+    {
+      "id": "transport-entry",
+      "title": "Ride booking desks",
+      "text": "Each leg is booked through its own desk: the outbound desk (book_outbound) once the current verified vehicle is approved, and the return desk (book_return) only after the clinic records the actual release through clinic_portal. Each desk takes one current ride_search row; approve the exact vehicle and window for each leg with the patient first; at most one booking per leg and no payment. Stale vehicles are revalidated against live inventory at booking time.",
+      "contacts": [],
+      "snippet": "Outbound and return booking desks; the return is booked only after the actual clinic release.",
+      "url": "https://accessride.bench/entry"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "check_schedule"
+  ],
+  "authorization": "Advisory and coordination only: search inventories, verify fleet capacity, and book at most the two approved legs; share pickup and access needs only - no diagnosis, medical records, medication advice or payment.",
+  "answer_keys": [
+    "outbound_booked",
+    "outbound_arrival",
+    "lift_verified",
+    "clinic_release",
+    "return_pickup",
+    "return_booked",
+    "total_fare"
+  ],
+  "value_normalization": {
+    "outbound_booked": {
+      "type": "boolean"
+    },
+    "outbound_arrival": {
+      "type": "text"
+    },
+    "lift_verified": {
+      "type": "boolean"
+    },
+    "clinic_release": {
+      "type": "text"
+    },
+    "return_pickup": {
+      "type": "text"
+    },
+    "return_booked": {
+      "type": "boolean"
+    },
+    "total_fare": {
+      "type": "number",
+      "units": {}
+    }
+  },
+  "conclusion_options": {
+    "both_legs_booked": "Accessible outbound and post-release return both booked within budget",
+    "unconfirmed": "Vehicle access verification or the clinic release could not be obtained in time",
+    "not_feasible": "No current vehicle satisfies the access, timing and budget constraints"
+  },
+  "answer_format": {
+    "conclusion": "选择conclusion_options中的一个键",
+    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+  },
+  "start_at": "2027-09-02T08:00:00-05:00",
+  "deadline_at": "2027-09-04T12:00:00-05:00"
+}

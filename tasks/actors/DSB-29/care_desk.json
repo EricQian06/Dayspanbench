@@ -1,0 +1,205 @@
+{
+  "private": true,
+  "task_id": "DSB-29",
+  "actor": {
+    "id": "care_desk",
+    "name": "Care coordination desk·Noa Field",
+    "role": "caregiver roster, access shares and handoff dispatch",
+    "description": "Keeps the caregiver roster, access shares and standing services; share revocations go through the access service (revoke_share) and scoped handoffs through the handoff service (handoff_send); the driver never receives clinical material.",
+    "calendar": "us_pacific_office",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "noafield@bench.example"
+    },
+    "knowledge": [
+      "coverage_accepted",
+      "driver_logistics_only",
+      "old_share_revoked",
+      "other_evenings"
+    ],
+    "tools": {
+      "care_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "care_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "other_evenings"
+        ]
+      },
+      "care_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "other_evenings"
+        ]
+      },
+      "care_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Roster and standing services",
+        "aliases": [
+          "roster",
+          "evening",
+          "standing",
+          "service",
+          "schedule",
+          "coverage",
+          "caregiver"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "care_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the standing evening service and roster",
+            "tool": "care_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "care_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "care_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Care coordination desk·Noa Field，负责caregiver roster, access shares and handoff dispatch。Keeps the caregiver roster, access shares and standing services; share revocations go through the access service (revoke_share) and scoped handoffs through the handoff service (handoff_send); the driver never receives clinical material. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:driver_packets_logistics_only",
+      "attest:five_assignments_accepted",
+      "attest:old_share_revoked",
+      "attest:other_evenings_unchanged"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Los_Angeles",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "hours": [
+      [
+        "09:00",
+        "17:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "coverage_accepted": {
+      "value": true,
+      "text": "All five required assignments (fri-pm, sat-am, sun-am, sat-ride, sun-ride) were sent separately and accepted by Beth, Aiko and Luis.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-29",
+          "case": {
+            "dates": "2027-09-17",
+            "end_date": "2027-09-19",
+            "pickup": "home-FAM"
+          }
+        },
+        "predicate": "five_assignments_accepted"
+      }
+    },
+    "driver_logistics_only": {
+      "value": true,
+      "text": "Driver Luis received only the ride packets ride-sat and ride-sun with pickup, destination and appointment logistics; no drug names, diagnoses or clinical attachments were sent to him.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-29",
+          "case": {
+            "dates": "2027-09-17",
+            "end_date": "2027-09-19",
+            "pickup": "home-FAM"
+          }
+        },
+        "predicate": "driver_packets_logistics_only"
+      }
+    },
+    "old_share_revoked": {
+      "value": true,
+      "text": "The old-link-FAM full-plan share to driver Luis has been revoked for future access; earlier downloads are not claimed to be erased.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-29",
+          "case": {
+            "dates": "2027-09-17",
+            "end_date": "2027-09-19",
+            "pickup": "home-FAM"
+          }
+        },
+        "predicate": "old_share_revoked"
+      }
+    },
+    "other_evenings": {
+      "value": true,
+      "text": "The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-29",
+          "case": {
+            "dates": "2027-09-17",
+            "end_date": "2027-09-19",
+            "pickup": "home-FAM"
+          }
+        },
+        "predicate": "other_evenings_unchanged"
+      }
+    }
+  },
+  "start_at": "2027-09-16T09:00:00-07:00",
+  "deadline_at": "2027-09-18T12:00:00-07:00"
+}

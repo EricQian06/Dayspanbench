@@ -22,13 +22,11 @@
     "tools": {
       "b_desk.main.1.lookup": {
         "kind": "lookup",
-        "facts": [
-          "b_available",
-          "b_price"
-        ]
+        "facts": []
       },
-      "b_desk.main.2.reply": {
-        "kind": "reply"
+      "b_desk.main.2.deny": {
+        "kind": "deny",
+        "text": "指定日期的房态与总价不随邮件逐案答复：请通过酒店房态报价核对渠道（wuzhang_rate_check）提交登记，办结后返回可售状态与两晚总价；办理进度可经无障碍住宿进度查询（wuzhang_lodging_status）复核。"
       },
       "b_desk.measure.1.acknowledge": {
         "kind": "acknowledge"
@@ -43,6 +41,10 @@
       },
       "b_desk.measure.3.reply": {
         "kind": "reply"
+      },
+      "b_desk.a_query.1.deny": {
+        "kind": "deny",
+        "text": "A旅舍的测量记录与通行尺寸不归B酒店查询范围，我处只处理本酒店指定房型的咨询；请向A旅舍前台确认。"
       }
     },
     "workflows": [
@@ -62,7 +64,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "登记房态核对请求",
             "tool": "b_desk.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -71,8 +73,8 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
-            "tool": "b_desk.main.2.reply",
+            "label": "明确表示不知情或不归管",
+            "tool": "b_desk.main.2.deny",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -123,6 +125,26 @@
             "delay": {
               "mode": "business",
               "minutes": 30
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "a_query",
+        "label": "A旅舍询问回绝",
+        "aliases": [
+          "A旅舍"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "a_query_1",
+            "label": "明确表示不知情或不归管",
+            "tool": "b_desk.a_query.1.deny",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
             }
           }
         ],
@@ -208,5 +230,5 @@
     }
   },
   "start_at": "2026-11-06T13:30:00+08:00",
-  "deadline_at": "2026-11-12T18:00:00+08:00"
+  "deadline_at": "2026-11-13T18:00:00+08:00"
 }
