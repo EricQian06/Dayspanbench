@@ -301,9 +301,19 @@ def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, judg
     # pending_criteria so the summary excludes it from pass-rate denominators.
     if result.get("valid_episode") and task.get("judge_criteria") and judge_client:
         progress(f"{task['id']} llm judge")
-        review = LLMJudge(judge_client, validation_retries=judge_validation_retries).judge(task, env, answer)
+        judge = LLMJudge(judge_client, validation_retries=judge_validation_retries)
+        review = judge.judge(task, env, answer)
         result["llm_judge"] = review
-        result.update(score_with_judge(env, review))
+        # Anchor review (scoring 0.5.1): anchor tokens the literal check could
+        # not find go to a second judge pass for value-level equivalence; a
+        # graded confirmation lifts summary_anchors_ok, a denial or a pending
+        # (infrastructure) review keeps the deterministic verdict.
+        anchor_review = None
+        missing = (result.get("deterministic_checks") or {}).get("summary_anchor_missing")
+        if missing:
+            anchor_review = judge.review_anchors(task, env, answer, missing)
+            result["anchor_review_detail"] = anchor_review
+        result.update(score_with_judge(env, review, anchor_review=anchor_review))
         result["judge_pending"] = review["status"] == "pending"
         write_jsonl(run_dir / "judge_calls.jsonl", judge_client.calls)
         if review["status"] == "graded":

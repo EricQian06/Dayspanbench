@@ -46,14 +46,17 @@ def key_tokens(text):
 
 def missing_key_tokens(answer, tokens):
     """Which required anchors are absent from an answer string (case-folded,
-    word-boundary matching so JOB442 cannot satisfy JOB441's inner 441)."""
+    word-boundary matching so JOB442 cannot satisfy JOB441's inner 441).
+    The boundary only counts alphanumerics as continuation: a hyphen must not,
+    or the date 2027-07-11 could never satisfy its own extracted tokens
+    2027/07/11 — any reply keeping the date verbatim would still fail."""
     if not isinstance(answer, str):
         return list(tokens)
     haystack = unicodedata.normalize("NFKC", answer).casefold()
     missing = []
     for token in tokens:
         needle = unicodedata.normalize("NFKC", token).casefold()
-        if re.search(r"(?<![0-9a-z_-])" + re.escape(needle) + r"(?![0-9a-z_-])", haystack):
+        if re.search(r"(?<![0-9a-z])" + re.escape(needle) + r"(?![0-9a-z])", haystack):
             continue
         missing.append(token)
     return missing

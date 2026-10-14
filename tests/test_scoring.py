@@ -50,6 +50,16 @@ class TokenAnchorTests(unittest.TestCase):
         # extracted from one, so it counts as present.
         self.assertTrue(token_present("June 12 09:00-15:00 shutdown", "15", frozenset(key_tokens("June 12 09:00-15:00 shutdown"))))
 
+    def test_numeric_equivalence_for_trailing_zeros_and_units(self):
+        # 236.0 / 236.00 / 236 are the same number; formatting must not fail
+        # the anchor (scoring 0.5.1).
+        self.assertTrue(token_present("总费用236.00 USD", "236.0"))
+        self.assertTrue(token_present("total 236 USD", "236.0"))
+        self.assertTrue(token_present("236.0", "236.00"))
+        self.assertTrue(token_present("1,236.00 元", "1236.0"))
+        self.assertFalse(token_present("total 230.00 USD", "236.0"))
+        self.assertFalse(token_present("约二百三十六美元", "236.0"))
+
 
 class DeterministicEvaluateTests(unittest.TestCase):
     def test_reference_on_criterionless_task_scores_deterministic_only(self):
@@ -199,6 +209,49 @@ class ScoreWithJudgeTests(unittest.TestCase):
         result = score_with_judge(env, review([True, True]))
         self.assertFalse(result["resolved_success"])
         self.assertTrue(result["bounded_handling_success"])
+
+    def test_anchor_review_confirmation_lifts_missing_anchor(self):
+        # Simulate a format-level anchor miss (judge subparts all pass), then
+        # a graded anchor-review confirmation lifts summary_anchors_ok.
+        answer = deepcopy(self.answer)
+        base = self.env.evaluate(answer)
+        self.assertTrue(base["deterministic_anchors_ok"])  # reference passes first
+        checks = base["deterministic_checks"]
+        # Force a miss the way a "236.00 vs 236.0" episode would look.
+        checks["summary_anchor_missing"] = ["9999"]
+        checks["summary_anchors_ok"] = False
+        base["deterministic_anchors_ok"] = False
+        result = score_with_judge(self.env, review([True, True]), base=base,
+                                  anchor_review={"status": "graded", "confirmed": True, "tokens": []})
+        self.assertEqual(result["deterministic_checks"]["anchor_review_verdict"],
+                         "judge_confirmed_equivalent")
+        self.assertEqual(result["deterministic_checks"]["summary_anchor_missing"], [])
+        self.assertTrue(result["deterministic_anchors_ok"])
+        self.assertTrue(result["complete"])
+
+    def test_anchor_review_denial_keeps_deterministic_failure(self):
+        base = self.env.evaluate(deepcopy(self.answer))
+        checks = base["deterministic_checks"]
+        checks["summary_anchor_missing"] = ["9999"]
+        checks["summary_anchors_ok"] = False
+        base["deterministic_anchors_ok"] = False
+        result = score_with_judge(self.env, review([True, True]), base=base,
+                                  anchor_review={"status": "graded", "confirmed": False, "tokens": []})
+        self.assertEqual(result["deterministic_checks"]["anchor_review_verdict"], "judge_denied")
+        self.assertFalse(result["deterministic_anchors_ok"])
+        self.assertFalse(result["complete"])
+
+    def test_pending_anchor_review_keeps_deterministic_verdict(self):
+        base = self.env.evaluate(deepcopy(self.answer))
+        checks = base["deterministic_checks"]
+        checks["summary_anchor_missing"] = ["9999"]
+        checks["summary_anchors_ok"] = False
+        base["deterministic_anchors_ok"] = False
+        result = score_with_judge(self.env, review([True, True]), base=base,
+                                  anchor_review={"status": "pending", "confirmed": False, "tokens": []})
+        self.assertFalse(result["deterministic_anchors_ok"])
+        self.assertFalse(result["complete"])
+        self.assertEqual(result["anchor_review"]["status"], "pending")
 
 
 class ValidationSmokeTests(unittest.TestCase):

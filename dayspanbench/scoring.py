@@ -33,7 +33,7 @@ import unicodedata
 from .calendar import parse, stamp
 from .llm import key_tokens, missing_key_tokens
 
-SCORING_VERSION = "0.5.0"
+SCORING_VERSION = "0.5.1"
 
 
 def text_key(value):
@@ -179,10 +179,13 @@ def anchor_tokens(env):
 
 
 def token_present(summary, token, summary_tokens=frozenset()):
-    """Literal presence with light numeric normalization: thousands grouping
-    and surrounding punctuation in the summary do not break an anchor. A token
-    that the same tokenizer extracts from the summary (e.g. "15" inside
-    "09:00-15:00") also counts: extraction and matching stay symmetric."""
+    """Literal presence with light numeric normalization: thousands grouping,
+    trailing zeros and surrounding punctuation in the summary do not break an
+    anchor (236.00 USD satisfies 236.0 — same number, different formatting).
+    A token that the same tokenizer extracts from the summary (e.g. "15"
+    inside "09:00-15:00") also counts: extraction and matching stay
+    symmetric. Format-level mismatches beyond this are the anchor-review
+    judge's call, not this check's."""
     if not isinstance(summary, str):
         return False
     if not missing_key_tokens(summary, [token]):
@@ -196,6 +199,19 @@ def token_present(summary, token, summary_tokens=frozenset()):
         grouped = f"{int(token):,}" if token.isdigit() else None
         if grouped and not missing_key_tokens(summary, [grouped]):
             return True
+        # Numeric equivalence: strip grouping separators and compare every
+        # number in the summary to the anchor by value, so 236.00 / 236
+        # both satisfy 236.0.
+        try:
+            value = float(token)
+        except ValueError:
+            return False
+        for match in re.finditer(r"[+-]?\d+(?:\.\d+)?", flat):
+            try:
+                if float(match.group(0)) == value:
+                    return True
+            except ValueError:
+                continue
     return False
 
 
@@ -313,16 +329,42 @@ def evaluate(env, answer):
     }
 
 
-def score_with_judge(env, review, base=None):
+def score_with_judge(env, review, base=None, anchor_review=None):
     """Compose the final score from an LLMJudge review
     ({"status": "graded"|"pending"|"skipped", "criteria": [...]}) on top of the
     deterministic evaluate() output. Pending reviews never count as passes and
     are reported explicitly (pending_criteria) so callers can drop the episode
-    from pass-rate denominators instead of scoring it as a failure."""
+    from pass-rate denominators instead of scoring it as a failure.
+
+    anchor_review is the LLMJudge's second pass over anchor tokens the literal
+    check could not find in the summary ({"status": "graded"|"pending",
+    "confirmed": bool, "tokens": [...]}). A graded confirmation that the
+    summary carries the same values in equivalent formatting lifts
+    summary_anchors_ok — the deterministic check stays a format-level safety
+    net, the judge decides value-level equivalence. A denial or a pending
+    (infrastructure) review keeps the deterministic verdict."""
     task = env.task
     base = dict(base if base is not None else evaluate(env, getattr(env, "final_answer", None)))
     criteria = task.get("judge_criteria") or []
     base["subparts_total"] = len(criteria)
+    if anchor_review:
+        base["anchor_review"] = {"status": anchor_review.get("status"),
+                                  "confirmed": anchor_review.get("confirmed")}
+        checks = base["deterministic_checks"]
+        if (anchor_review.get("status") == "graded"
+                and anchor_review.get("confirmed") and checks.get("summary_anchor_missing")):
+            checks["summary_anchor_missing"] = []
+            checks["summary_anchors_ok"] = True
+            checks["anchor_review_verdict"] = "judge_confirmed_equivalent"
+            base["deterministic_anchors_ok"] = (
+                checks["conclusion_label_legal"] and checks["conclusion_correct"]
+                and checks["answer_schema_valid"] and checks["forms_all_accepted"]
+                and checks["summary_anchors_ok"]
+                and checks["pending_process_satisfied"] and checks["pending_deadline_reached"])
+            base["resolved_success"] = base["deterministic_anchors_ok"] and task["completion_class"] == "resolved"
+            base["bounded_handling_success"] = base["deterministic_anchors_ok"] and task["completion_class"] == "bounded_unresolved"
+        elif anchor_review.get("status") == "graded":
+            checks["anchor_review_verdict"] = "judge_denied"
     if not criteria or not review or review.get("status") == "skipped":
         base["scored_by"] = "deterministic_only"
         base["subparts_passed"], base["pending_criteria"] = 0, 0
