@@ -1313,10 +1313,15 @@ class AgentTools:
         return {"messages": deepcopy(self._env.messages[after:]), "cursor": len(self._env.messages), "now": stamp(self._env.now)}
 
     def wait_until(self, until, wake_on_message=True):
+        # wake_on_message is kept for call-site compatibility but no longer
+        # lets a wait skip past mail: any agent-visible message delivered during
+        # the jump intercepts the clock at its delivery time. A deliberate
+        # "sleep to the deadline" otherwise hides a mid-wait reply (or a
+        # returned/rejected letter) until it is too late to act on it.
         if self._env.finished:
             raise ValueError("Episode already finished")
         before = len(self._env.messages)
-        self._env.advance(until, wake_on_message)
+        self._env.advance(until, wake_on_message=True)
         return self.read_inbox(before)
 
     # ---- Optional per-task tools ------------------------------------------------    # Enabled by listing them in the task's public["tools"]. Some carry real

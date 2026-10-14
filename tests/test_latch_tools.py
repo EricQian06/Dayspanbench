@@ -86,7 +86,7 @@ class CatalogTests(unittest.TestCase):
         self.assertTrue(ev["agent_visible"])
 
     def test_catalog_update_removes_stale_offer(self):
-        self.api.wait_until("2026-11-07T10:01:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-07T10:01:00+08:00")
         result = self.api.garden_menu_search(query="lunch")
         self.assertEqual([r["id"] for r in result["results"]], ["lunch-1330"])
 
@@ -97,7 +97,7 @@ class CatalogTests(unittest.TestCase):
             self.api.garden_reserve_table(entry="lunch-1330")
         pending = self.api.garden_reserve_table(query="status")
         self.assertEqual(pending["status"], "pending")
-        self.api.wait_until("2026-11-06T17:30:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-06T17:30:00+08:00")
         outcome = self.api.garden_reserve_table(query="status")
         self.assertEqual(outcome["status"], "processed")
         self.assertEqual(outcome["state"], "The table has been reserved.")
@@ -105,16 +105,16 @@ class CatalogTests(unittest.TestCase):
 
     def test_select_rejects_wrong_option(self):
         self.api.garden_reserve_table(entry="lunch-1300")
-        self.api.wait_until("2026-11-06T17:30:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-06T17:30:00+08:00")
         outcome = self.api.garden_reserve_table(query="status")
         self.assertEqual(outcome["status"], "rejected")
 
     def test_hold_expiry_cancels_pending_selection(self):
         # Submitted at Friday 17:30: the hold lapses 240 elapsed minutes later,
         # before the office-calendar processing completes on Monday morning.
-        self.api.wait_until("2026-11-06T17:30:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-06T17:30:00+08:00")
         self.api.garden_reserve_table(entry="lunch-1330")
-        self.api.wait_until("2026-11-06T21:31:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-06T21:31:00+08:00")
         outcome = self.api.garden_reserve_table(query="status")
         self.assertEqual(outcome["status"], "expired")
 

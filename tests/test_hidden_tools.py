@@ -127,7 +127,7 @@ class FormTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.heanhuiguan_booking(fields={"event_date": "2026-11-13", "headcount": 80})
         # 120 business minutes on the office calendar land the same working day.
-        self.api.wait_until("2026-11-06T17:30:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-06T17:30:00+08:00")
         form = self.api.visit_page(self.url)["form"]
         self.assertEqual(form["status"], "已办结")
         self.assertEqual(form["result_text"], "登记信息已核对无误，预约登记完成。")
@@ -136,7 +136,7 @@ class FormTests(unittest.TestCase):
 
     def test_wrong_values_are_rejected_on_processing(self):
         self.api.heanhuiguan_booking(fields={"event_date": "2026-11-20", "headcount": 80})
-        self.api.wait_until("2026-11-06T17:30:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-06T17:30:00+08:00")
         form = self.api.visit_page(self.url)["form"]
         self.assertEqual(form["status"], "已退回")
         self.assertEqual(form["result_text"], "登记日期与档期安排不符，已退回。 不符合的字段：event_date。")
@@ -157,7 +157,7 @@ class StatusAndRecordTests(unittest.TestCase):
         # Before the first timeline entry the initial state shows.
         result = self.api.heanhuiguan_progress(query="预约")
         self.assertEqual(result["records"][0]["state"], "尚未查询到预约登记记录。")
-        self.api.wait_until("2026-11-06T12:01:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-06T12:01:00+08:00")
         result = self.api.heanhuiguan_progress()
         self.assertEqual(result["records"][0]["state"], "系统升级，预约登记暂时不可用。")
         self.assertEqual(self.api.heanhuiguan_progress(query="无关词")["records"], [])
@@ -166,7 +166,7 @@ class StatusAndRecordTests(unittest.TestCase):
         self.api.heanhuiguan_booking(fields={"event_date": "2026-11-13", "headcount": 80})
         state = self.api.heanhuiguan_progress(query="booking")["records"][0]["state"]
         self.assertIn("已提交，待处理", state)
-        self.api.wait_until("2026-11-06T17:30:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-06T17:30:00+08:00")
         self.assertEqual(self.api.heanhuiguan_progress(query="booking")["records"][0]["state"],
                          "登记信息已核对无误，预约登记完成。")
 
@@ -174,7 +174,7 @@ class StatusAndRecordTests(unittest.TestCase):
         miss = self.api.heanhuiguan_archive()["records"][0]
         self.assertFalse(miss["found"])
         self.api.heanhuiguan_booking(fields={"event_date": "2026-11-13", "headcount": 80})
-        self.api.wait_until("2026-11-06T17:30:00+08:00", wake_on_message=False)
+        self.env.advance("2026-11-06T17:30:00+08:00")
         hit = self.api.heanhuiguan_archive(key="booking-receipt")["records"][0]
         self.assertTrue(hit["found"])
         self.assertEqual(hit["evidence"][0]["value"], "72小时内取消收取50%")
@@ -189,7 +189,7 @@ class GuessChainDenyTests(unittest.TestCase):
         api.visit_page("https://qinggang.bench/contact")
         api.send_email(mailbox(task, "service"), "请核实活动办理管辖",
                        {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"})
-        api.wait_until("2026-11-04T17:00:00+08:00", wake_on_message=False)
+        env.advance("2026-11-04T17:00:00+08:00")
         self.assertIn("sound", env.known_contacts)  # exposed by the desk's suggest
         case_id = api.send_email(mailbox(task, "sound"), "请确认北广场活动扩声设备的使用",
                                  {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"})["case_id"]

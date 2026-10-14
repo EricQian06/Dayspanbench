@@ -120,7 +120,7 @@
   },
   {
     "name": "wait_until",
-    "description": "工具名称：wait_until。\n调用方法：{\"tool\":\"wait_until\",\"arguments\":{\"until\":\"2026-11-05T09:00:00+08:00\",\"wake_on_message\":true}}，wake_on_message可省略，默认为true。\n参数字段：until（必填）为目标时刻，须为带UTC偏移的ISO 8601格式，不能早于当前时间；wake_on_message（可选）为true时中途收到对Agent可见的消息即提前返回，为false时一直等到目标时刻。\n用途：推进虚拟日历时间，不需要真实睡眠，最多推进到任务截止时刻。返回自等待开始后的新消息、游标和当前时间，格式同read_inbox；默认模式下不会通过中途唤醒泄漏内部完成时间。",
+    "description": "工具名称：wait_until。\n调用方法：{\"tool\":\"wait_until\",\"arguments\":{\"until\":\"2026-11-05T09:00:00+08:00\"}}。\n参数字段：until（必填）为目标时刻，须为带UTC偏移的ISO 8601格式，不能早于当前时间。\n用途：推进虚拟日历时间，不需要真实睡眠，最多推进到任务截止时刻。若等待期间有对Agent可见的新消息送达，时钟会拦截在该消息的送达时刻并立即返回，不会跳过中途邮件；规划长等待时应考虑到可能被中途来信提前唤醒。返回自等待开始后的新消息、游标和当前时间，格式同read_inbox。",
     "parameters": {
       "type": "object",
       "properties": {
@@ -130,7 +130,9 @@
         },
         "wake_on_message": {
           "type": "boolean",
-          "default": true
+          "default": true,
+          "deprecated": true,
+          "description": "已废弃：无论取值如何，中途有新消息送达时等待都会在消息送达时刻被拦截；保留该字段仅为兼容旧调用方。"
         }
       },
       "required": [

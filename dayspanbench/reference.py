@@ -33,7 +33,10 @@ def run_reference(task, *, recipient=None):
             page = next(p for p in task["public"]["pages"] if p["id"] == action["page"])
             api.visit_page(page["url"])
         elif action["op"] == "advance":
-            api.wait_until(action["at"], wake_on_message=False)
+            # The authored witness advances to exact times (no message wake), so
+            # replay stays deterministic; only the evaluated agent's wait_until
+            # intercepts jumps at delivered mail.
+            env.advance(action["at"])
         elif action["op"] == "send":
             raw_fields = action.get("fields", "$user")
             fields = deepcopy(task["public"]["user_fields"] if raw_fields == "$user" else raw_fields)

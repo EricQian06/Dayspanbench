@@ -91,7 +91,7 @@ python3 scripts/serve.py --task DSB-01
 等待下一条对Agent可见的回复，或等到截止：
 
 ```json
-{"id": 3, "tool": "wait_until", "arguments": {"until": "2026-11-10T18:00:00+08:00", "wake_on_message": true}}
+{"id": 3, "tool": "wait_until", "arguments": {"until": "2026-11-10T18:00:00+08:00"}}
 ```
 
 `submit_answer`只允许调用一次。结构化答案示例见[协议](docs/environment-contract.md)。服务器默认使用规则接收者；显式指定`--simulator llm`后会调用所配置的LLM。详见[接入与命令示例](docs/scoring-and-simulator.md)。
