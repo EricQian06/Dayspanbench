@@ -486,7 +486,10 @@
           "applicant": "Rosa Delgado",
           "case_id": "RELIEF-11822",
           "mailing_address": "214 Sage Street Apt 2",
-          "documents": "bill-current, shelter-letter-signed, denial-letter",
+          "documents": [
+            "bill-current, shelter-letter-signed, denial-letter",
+            "current utility bill, signed shelter letter, denial letter"
+          ],
           "portal_version": "v2",
           "user_approval": "approved"
         },

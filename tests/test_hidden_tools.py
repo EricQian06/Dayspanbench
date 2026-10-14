@@ -139,7 +139,7 @@ class FormTests(unittest.TestCase):
         self.api.wait_until("2026-11-06T17:30:00+08:00", wake_on_message=False)
         form = self.api.visit_page(self.url)["form"]
         self.assertEqual(form["status"], "已退回")
-        self.assertEqual(form["result_text"], "登记日期与档期安排不符，已退回。")
+        self.assertEqual(form["result_text"], "登记日期与档期安排不符，已退回。 不符合的字段：event_date。")
         # A rejected submission may be corrected and re-submitted.
         receipt = self.api.heanhuiguan_booking(fields={"event_date": "2026-11-13", "headcount": 80})
         self.assertEqual(receipt["status"], "submitted")

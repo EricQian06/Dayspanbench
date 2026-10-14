@@ -80,7 +80,7 @@
     {
       "id": "case-contacts",
       "title": "Advocacy office contacts",
-      "text": "The tenant advocacy office caseworker Priya Nair verifies registered-agent addresses for the deposit-demand case. Tracked-mail dispatch and outcome records are handled through the desks on the entry page.",
+      "text": "The tenant advocacy office caseworker Priya Nair verifies registered-agent addresses for the deposit-demand case. The tenant herself, Sofia Alvarez, answers questions about her instructions, privacy and mailing permission through the tenant desk (sofia_dialogue) named on this page - ask her before anything is sent. Tracked-mail dispatch and outcome records are handled through the desks on the entry page.",
       "contacts": [
         "tenant_advocate"
       ],

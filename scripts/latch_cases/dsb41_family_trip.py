@@ -631,6 +631,8 @@ def build(A, tasks, sites, horizons, conclusions):
                               "answer": "Pat uses a folding walker: no stairs anywhere, every walking segment at most 0.3 miles, step-free routes only, and the hotel needs a provider-confirmed roll-in shower for five people."},
                              {"keywords": ["dietary", "shellfish", "allergy", "allergen", "food", "child menu", "dinner", "meal", "breakfast"],
                               "answer": "Jordan has a shellfish allergy - every family dinner needs a confirmed cross-contact answer from the provider, never a menu label. Kai and Riley need child menus with early dinners, and we prefer a vegetarian breakfast."},
+                             {"keywords": ["5615", "sb-733"],
+                              "answer": "Yes, I approve the exact trip plan: flight SB-733 (air-209) at 2390 USD and hotel LFS-FAM-2 (htl-302) at 1680 USD, current refundable quotes, complete total 5615 USD. Submit the bookings only after this approval; no payment is taken."},
                              {"keywords": ["budget", "cost", "price", "total", "money", "cap", "spend"],
                               "answer": "Caps: airfare at most 2400 USD, hotel at most 1800 USD, ground transport at most 450, food at most 700, attractions at most 300, plus 300 contingency, and the complete trip at most 6000 USD."},
                              {"keywords": ["dates", "date", "when", "schedule", "outbound", "return", "nights"],

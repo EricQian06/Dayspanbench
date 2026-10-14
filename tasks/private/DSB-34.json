@@ -478,8 +478,23 @@
       "params": {
         "form": "signature_request_form",
         "expect": {
-          "renewal_version": "1",
-          "rider_version": "2",
+          "renewal_version": [
+            "1",
+            "v1",
+            "version 1",
+            "renewal v1",
+            "renewal-4B v1",
+            "renewal-4B-v1"
+          ],
+          "rider_version": [
+            "2",
+            "v2",
+            "version 2",
+            "rider v2",
+            "corrected rider v2",
+            "rider-4B v2",
+            "rider-4B-v2"
+          ],
           "rent_usd": "1960",
           "user_approval": "approved"
         },

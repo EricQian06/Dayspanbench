@@ -554,10 +554,24 @@
       "params": {
         "form": "demand_dispatch_form",
         "expect": {
-          "recipient": "208 Example Plaza, Suite 814, Test City",
-          "return_address": "90 Clinic Lane, Test City",
+          "recipient": [
+            "208 Example Plaza, Suite 814, Test City",
+            "Registered Office Services, 208 Example Plaza, Suite 814, Test City",
+            "Registered Office Services for Parkview Test LLC, 208 Example Plaza, Suite 814, Test City"
+          ],
+          "return_address": [
+            "90 Clinic Lane, Test City",
+            "Tenant Support Test Clinic, attention Sofia Alvarez, 90 Clinic Lane, Test City",
+            "Tenant Support Test Clinic, 90 Clinic Lane, Test City"
+          ],
           "demand_usd": "1850",
-          "attachments": "deposit-receipt-redacted",
+          "attachments": [
+            "deposit-receipt-redacted",
+            "deposit-receipt-redacted.pdf",
+            "redacted deposit receipt",
+            "redacted deposit receipt (deposit-receipt-redacted.pdf)",
+            "redacted deposit receipt only"
+          ],
           "user_approval": "approved"
         },
         "process_delay": 120,

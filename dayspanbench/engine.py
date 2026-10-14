@@ -5,6 +5,7 @@ object, the task fixtures, the host filesystem, or the private audit log.
 """
 
 from copy import deepcopy
+import unicodedata
 from dataclasses import dataclass, field
 from datetime import date, timedelta
 import heapq
@@ -106,9 +107,37 @@ def normalize_field_date(value, default_year):
         return None
 
 
+_TEXT_STOPWORDS = {"the", "a", "an", "of", "to", "for", "in", "on", "at", "by",
+                   "under", "with", "and", "or", "only", "这", "该", "的"}
+
+
+def _text_word_set(value):
+    """Word multiset of a text with articles/prepositions/fillers dropped."""
+    text = unicodedata.normalize("NFKC", value).strip().casefold()
+    text = re.sub(r"\.pdf\b", "", text)
+    words = re.findall(r"[a-z一-鿿0-9-]+", text)
+    return sorted(w for w in words if w not in _TEXT_STOPWORDS)
+
+
 def field_value_equivalent(value, expected):
     """Exact match, the same quantity written with a synonym or no unit,
-    or the same date in another common spelling."""
+    the same date in another common spelling, or the same text with
+    articles/prepositions/file extensions spelled differently. An expected
+    list accepts any of its entries."""
+    if isinstance(expected, list):
+        return any(field_value_equivalent(value, item) for item in expected)
+    # Number/boolean vs string spelling of the same scalar (310 vs "310",
+    # True vs "true") is the same value, not a wrong one.
+    if isinstance(value, bool) and isinstance(expected, str):
+        return value == {"true": True, "false": False}.get(expected.strip().casefold(), None)
+    if isinstance(expected, bool) and isinstance(value, str):
+        return expected == {"true": True, "false": False}.get(value.strip().casefold(), None)
+    if isinstance(value, (int, float)) and not isinstance(value, bool) \
+            and isinstance(expected, str) and normalize_field_value(expected) is not None:
+        return normalize_field_value(expected)[0] == float(value)
+    if isinstance(expected, (int, float)) and not isinstance(expected, bool) \
+            and isinstance(value, str) and normalize_field_value(value) is not None:
+        return normalize_field_value(value)[0] == float(expected)
     if value == expected:
         return True
     if not (isinstance(value, str) and isinstance(expected, str)):
@@ -122,7 +151,12 @@ def field_value_equivalent(value, expected):
     year_match = re.match(r"\s*(\d{4})", expected)
     default_year = int(year_match.group(1)) if year_match else None
     left_date = normalize_field_date(value, default_year)
-    return left_date is not None and left_date == normalize_field_date(expected, default_year)
+    if left_date is not None and left_date == normalize_field_date(expected, default_year):
+        return True
+    # Free text: tolerate articles, prepositions, "only" and file extensions
+    # ("the landlord" == "landlord", "masked-id-token.pdf" == "masked-id-token")
+    # but not genuinely different wording.
+    return _text_word_set(value) == _text_word_set(expected)
 
 
 @dataclass
@@ -398,6 +432,11 @@ class Environment:
         else:
             submission["status"] = "rejected"
             submission["result_text"] = params.get("reject_text") or "您提交的信息与登记情况不符，已退回；请核对后重新提交。"
+            # Name the fields that did not match the registered record, so a
+            # correct submission is never rejected without a fixable pointer.
+            mismatched = submission.get("mismatched") or list((params.get("expect") or {}))
+            if mismatched:
+                submission["result_text"] += " 不符合的字段：" + "、".join(mismatched) + "。"
         update = params.get("page_update")
         if update:
             page = next((p for p in self.task["public"]["pages"] if p["id"] == update["page"]), None)
@@ -1468,8 +1507,9 @@ class AgentTools:
         if missing:
             raise ValueError("表单必填字段缺失：" + "、".join(missing))
         expect = params.get("expect") or {}
-        accepted = all(field_value_equivalent(values.get(key), expected)
-                       for key, expected in expect.items())
+        mismatched = [key for key, expected in expect.items()
+                      if not field_value_equivalent(values.get(key), expected)]
+        accepted = not mismatched
         if params.get("process_at"):
             at = max(env.now, parse(params["process_at"]))
         else:
@@ -1477,6 +1517,7 @@ class AgentTools:
             at = calendar.add_business(env.now, params.get("process_delay", 60))
         env.form_submissions[form_id] = {"status": "pending", "submitted_at": stamp(env.now),
                                          "values": deepcopy(values), "accepted": accepted,
+                                         "mismatched": mismatched,
                                          "result_text": None, "evidence": []}
         env.record("agent_form_submitted", tool=name, form=form_id, accepted=accepted)
         env.enqueue(at, "form_processed", form_id)

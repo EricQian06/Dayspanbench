@@ -184,7 +184,7 @@ def build(A, tasks, sites, horizons, conclusions):
                          "expect": {"scope": "inspection", "fee_usd": 40, "verified_provider": True},
                          "process_delay": 120, "calendar": "us_central_daily",
                          "result_text": "Appointment confirmed: appointment-HOM1, Pipe-B Plumbing (pipe-B, landlord-approved verified provider), unit-H, 2027-06-12 11:00-12:00 Central time, inspection only, 40 USD within the 45 USD cap, landlord responsible for the cost. The provider acknowledges tenant-present entry only - no unattended entry, no key sharing, the cat stays inside. No repair is authorized and no payment was taken.",
-                         "reject_text": "The requested slot is not a current, bookable row that meets the constraints (verified landlord-approved provider, inspection scope only, fee within the cap, entirely inside the tenant's window, tenant's approval of the exact plan); nothing was booked. Re-check the live slot board and the tenant's approval, then resubmit.",
+                         "reject_text": "That slot cannot be booked; nothing was booked. Please choose another slot from the live board and resubmit.",
                          "facts": ["inspection_confirmed", "slot_date", "slot_start", "provider",
                                    "fee_usd", "tenant_present"],
                          "issuer": "dispatch",
