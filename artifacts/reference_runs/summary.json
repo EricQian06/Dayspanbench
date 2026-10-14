@@ -1,7 +1,7 @@
 [
   {
     "task_id": "DSB-01",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -49,7 +49,7 @@
   },
   {
     "task_id": "DSB-02",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -97,7 +97,7 @@
   },
   {
     "task_id": "DSB-03",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -145,7 +145,7 @@
   },
   {
     "task_id": "DSB-04",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -193,7 +193,7 @@
   },
   {
     "task_id": "DSB-05",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -241,7 +241,7 @@
   },
   {
     "task_id": "DSB-06",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -289,7 +289,7 @@
   },
   {
     "task_id": "DSB-07",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -337,7 +337,7 @@
   },
   {
     "task_id": "DSB-08",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -385,7 +385,7 @@
   },
   {
     "task_id": "DSB-09",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -433,7 +433,7 @@
   },
   {
     "task_id": "DSB-10",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -481,7 +481,7 @@
   },
   {
     "task_id": "DSB-11",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -529,7 +529,7 @@
   },
   {
     "task_id": "DSB-12",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -577,7 +577,7 @@
   },
   {
     "task_id": "DSB-13",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -625,7 +625,7 @@
   },
   {
     "task_id": "DSB-14",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -673,7 +673,7 @@
   },
   {
     "task_id": "DSB-15",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -721,7 +721,7 @@
   },
   {
     "task_id": "DSB-16",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -769,7 +769,7 @@
   },
   {
     "task_id": "DSB-17",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -817,7 +817,7 @@
   },
   {
     "task_id": "DSB-18",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -865,7 +865,7 @@
   },
   {
     "task_id": "DSB-19",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -913,7 +913,7 @@
   },
   {
     "task_id": "DSB-20",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -961,7 +961,7 @@
   },
   {
     "task_id": "DSB-21",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1009,7 +1009,7 @@
   },
   {
     "task_id": "DSB-22",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1057,7 +1057,7 @@
   },
   {
     "task_id": "DSB-23",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1105,7 +1105,7 @@
   },
   {
     "task_id": "DSB-24",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1153,7 +1153,7 @@
   },
   {
     "task_id": "DSB-25",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1201,7 +1201,7 @@
   },
   {
     "task_id": "DSB-26",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1249,7 +1249,7 @@
   },
   {
     "task_id": "DSB-27",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1297,7 +1297,7 @@
   },
   {
     "task_id": "DSB-28",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1345,7 +1345,7 @@
   },
   {
     "task_id": "DSB-29",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1393,7 +1393,7 @@
   },
   {
     "task_id": "DSB-30",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1441,7 +1441,7 @@
   },
   {
     "task_id": "DSB-31",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1489,7 +1489,7 @@
   },
   {
     "task_id": "DSB-32",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1537,7 +1537,7 @@
   },
   {
     "task_id": "DSB-33",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1585,7 +1585,7 @@
   },
   {
     "task_id": "DSB-34",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1633,7 +1633,7 @@
   },
   {
     "task_id": "DSB-35",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1681,7 +1681,7 @@
   },
   {
     "task_id": "DSB-36",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1703,7 +1703,7 @@
     },
     "deterministic_anchors_ok": true,
     "subparts_passed": 0,
-    "subparts_total": 3,
+    "subparts_total": 4,
     "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
@@ -1714,11 +1714,11 @@
     "completion_class": "resolved",
     "calendar_hours": 5.0,
     "calendar_days": 0.208333,
-    "agent_messages": 1,
-    "contacted_actors": 1,
+    "agent_messages": 2,
+    "contacted_actors": 2,
     "as_of": "2027-07-31T18:00:00+00:00",
     "title": "Accessible festival evening: the correct 21:00 set with step-free travel",
-    "actors": 1,
+    "actors": 2,
     "deadline": "2027-08-02T17:00:00-03:00",
     "horizon_design": {
       "reference_days": 2,
@@ -1729,7 +1729,7 @@
   },
   {
     "task_id": "DSB-37",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1777,7 +1777,7 @@
   },
   {
     "task_id": "DSB-38",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1825,7 +1825,7 @@
   },
   {
     "task_id": "DSB-39",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1873,7 +1873,7 @@
   },
   {
     "task_id": "DSB-40",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1887,7 +1887,7 @@
         "expired_holds": 0
       },
       "forms_all_accepted": true,
-      "summary_anchor_tokens": 8,
+      "summary_anchor_tokens": 9,
       "summary_anchor_missing": [],
       "summary_anchors_ok": true,
       "pending_process_satisfied": true,
@@ -1895,7 +1895,7 @@
     },
     "deterministic_anchors_ok": true,
     "subparts_passed": 0,
-    "subparts_total": 3,
+    "subparts_total": 4,
     "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
@@ -1906,11 +1906,11 @@
     "completion_class": "resolved",
     "calendar_hours": 33.0,
     "calendar_days": 1.375,
-    "agent_messages": 2,
-    "contacted_actors": 1,
+    "agent_messages": 3,
+    "contacted_actors": 2,
     "as_of": "2027-06-08T23:00:00+00:00",
     "title": "Fridge replacement: verified access and a changed delivery slot",
-    "actors": 2,
+    "actors": 3,
     "deadline": "2027-06-09T12:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
@@ -1921,7 +1921,7 @@
   },
   {
     "task_id": "DSB-41",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1969,7 +1969,7 @@
   },
   {
     "task_id": "DSB-42",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],

@@ -7,7 +7,7 @@
   },
   "result": {
     "task_id": "DSB-13",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],

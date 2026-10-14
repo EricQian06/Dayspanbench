@@ -3,11 +3,11 @@
   "task_id": "DSB-36",
   "answer": {
     "conclusion": "access_confirmed",
-    "summary": "The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nThe current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.\nThe current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.\nThe current official set ends at 21:35, leaving the 21:50 return bus feasible.\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nThree free seated step-free access places for the 21:00 set have been confirmed with check-in from 20:30 to 20:45; no payment was taken.\nThe full family plan is 108 CAD: admission 0 (free) + transport 18 + food 60 + contingency 30, within the 360 CAD cap.\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nAccessible bus-L round trip关键要素：{\"route_step_free\": true, \"home_arrival\": \"22:15\", \"bus_fare\": 18}\nThe current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.\nThe current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.\nThe current official set ends at 21:35, leaving the 21:50 return bus feasible.\nPancho Libre - 21:00 Maritime Museum (confirmed)关键要素：{\"show_start\": \"21:00\", \"stage\": \"Maritime Museum\", \"show_end\": \"21:35\"}\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nSeated access and step-free route status书面核实回执关键要素：{\"seats\": 3, \"route_step_free\": true, \"bus_fare\": 18}\nAccess confirmed: three free seated step-free places for the confirmed 21:00 Pancho Libre set at the Maritime Museum stage, viewing platform opens 20:30, check-in by 20:45, fee 0 CAD. Full plan 108 CAD (admission 0, transport 18, food 60, contingency 30). No payment taken.\nThree free seated step-free access places for the 21:00 set have been confirmed with check-in from 20:30 to 20:45; no payment was taken.\nThe full family plan is 108 CAD: admission 0 (free) + transport 18 + food 60 + contingency 30, within the 360 CAD cap.\nreserve_access确认回执关键要素：{\"access_reserved\": true, \"total_cost\": 108, \"seats\": 3}"
+    "summary": "The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nThe current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.\nThe current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.\nThe current official set ends at 21:35, leaving the 21:50 return bus feasible.\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nWritten minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in.\nThree free seated step-free access places for the 21:00 set have been confirmed with check-in from 20:30 to 20:45; no payment was taken.\nThe full family plan is 108 CAD: admission 0 (free) + transport 18 + food 60 + contingency 30, within the 360 CAD cap.\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nAccessible bus-L round trip关键要素：{\"route_step_free\": true, \"home_arrival\": \"22:15\", \"bus_fare\": 18}\nThe current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.\nThe current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.\nThe current official set ends at 21:35, leaving the 21:50 return bus feasible.\nPancho Libre - 21:00 Maritime Museum (confirmed)关键要素：{\"show_start\": \"21:00\", \"stage\": \"Maritime Museum\", \"show_end\": \"21:35\"}\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nSeated access and step-free route status书面核实回执关键要素：{\"seats\": 3, \"route_step_free\": true, \"bus_fare\": 18}\nWritten minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in.\nWritten minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in.\nMinor-accompaniment confirmation书面核实回执关键要素：{\"minor_confirmation\": true}\nAccess confirmed: three free seated step-free places for the confirmed 21:00 Pancho Libre set at the Maritime Museum stage, viewing platform opens 20:30, check-in by 20:45, fee 0 CAD. Full plan 108 CAD (admission 0, transport 18, food 60, contingency 30). No payment taken.\nThree free seated step-free access places for the 21:00 set have been confirmed with check-in from 20:30 to 20:45; no payment was taken.\nThe full family plan is 108 CAD: admission 0 (free) + transport 18 + food 60 + contingency 30, within the 360 CAD cap.\nreserve_access确认回执关键要素：{\"access_reserved\": true, \"total_cost\": 108, \"seats\": 3}"
   },
   "result": {
     "task_id": "DSB-36",
-    "scoring_version": "0.5.0",
+    "scoring_version": "0.5.1",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -29,7 +29,7 @@
     },
     "deterministic_anchors_ok": true,
     "subparts_passed": 0,
-    "subparts_total": 3,
+    "subparts_total": 4,
     "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
@@ -40,8 +40,8 @@
     "completion_class": "resolved",
     "calendar_hours": 5.0,
     "calendar_days": 0.208333,
-    "agent_messages": 1,
-    "contacted_actors": 1,
+    "agent_messages": 2,
+    "contacted_actors": 2,
     "as_of": "2027-07-31T18:00:00+00:00"
   },
   "agent_messages": [
@@ -57,7 +57,17 @@
     },
     {
       "id": "MSG-0002",
-      "at": "2027-07-31T16:29:00+00:00",
+      "at": "2027-07-31T14:35:00+00:00",
+      "from": "tomokafor@bench.example",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement",
+      "channel": "email",
+      "text": "您好，我是Harbour Festival welfare desk·Tom Okafor。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "receipts": []
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2027-07-31T16:43:00+00:00",
       "from": "priyanair3@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
@@ -74,7 +84,28 @@
             "bus_fare": 18
           },
           "issuer": "access_desk",
-          "issued_at": "2027-07-31T16:29:00+00:00"
+          "issued_at": "2027-07-31T16:43:00+00:00"
+        }
+      ]
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2027-07-31T16:48:00+00:00",
+      "from": "tomokafor@bench.example",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "channel": "email",
+      "text": "您好，我是Harbour Festival welfare desk·Tom Okafor。您咨询的事项已经核实，具体情况如下：Written minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in.Written minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in.以上为正式书面核实结论；随信附办结回执（回执号R-0005），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
+        {
+          "receipt_no": "R-0005",
+          "title": "Minor-accompaniment confirmation书面核实回执",
+          "text": "Written minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in.\nWritten minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in.",
+          "fields": {
+            "minor_confirmation": true
+          },
+          "issuer": "welfare_desk",
+          "issued_at": "2027-07-31T16:48:00+00:00"
         }
       ]
     }
@@ -224,6 +255,26 @@
       "origin": "agent"
     },
     {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "agent_send",
+      "recipient": "tomokafor@bench.example",
+      "text": "Please issue a written minor-accompaniment confirmation for Lila Chen, age 8, attending the 21:00 Pancho Libre set with Wei Chen and Mei Chen on July 31",
+      "fields": {
+        "date": "2027-07-31",
+        "city": "Halifax test district",
+        "party_size": 3
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
       "at": "2027-07-31T13:57:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
@@ -246,6 +297,32 @@
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "access_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-31T14:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-31T14:09:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "step": "main_1",
+      "start_at": "2027-07-31T14:09:00+00:00",
+      "due_at": "2027-07-31T14:35:00+00:00",
+      "tool": "welfare_desk.main.1.acknowledge"
+    },
+    {
+      "at": "2027-07-31T14:09:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
       "old": "queued",
       "new": "working"
     },
@@ -279,14 +356,55 @@
       "actor": "access_desk",
       "step": "main_2",
       "start_at": "2027-07-31T14:35:00+00:00",
-      "due_at": "2027-07-31T15:41:00+00:00",
+      "due_at": "2027-07-31T15:48:00+00:00",
       "tool": "access_desk.main.2.lookup"
+    },
+    {
+      "at": "2027-07-31T14:35:00+00:00",
+      "kind": "tool_call",
+      "actor": "welfare_desk",
+      "case_id": "CASE-0002",
+      "tool": "welfare_desk.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-07-31T14:35:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-07-31T14:35:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-31T14:35:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "step": "main_2",
+      "start_at": "2027-07-31T14:35:00+00:00",
+      "due_at": "2027-07-31T15:56:00+00:00",
+      "tool": "welfare_desk.main.2.lookup"
     },
     {
       "at": "2027-07-31T14:35:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "access_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-31T14:35:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
       "old": "queued",
       "new": "working"
     },
@@ -308,7 +426,7 @@
       ]
     },
     {
-      "at": "2027-07-31T15:41:00+00:00",
+      "at": "2027-07-31T15:48:00+00:00",
       "kind": "tool_call",
       "actor": "access_desk",
       "case_id": "CASE-0001",
@@ -316,25 +434,25 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2027-07-31T15:41:00+00:00",
+      "at": "2027-07-31T15:48:00+00:00",
       "kind": "fact_registered",
       "fact": "seats",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T15:41:00+00:00",
+      "at": "2027-07-31T15:48:00+00:00",
       "kind": "fact_registered",
       "fact": "route_step_free",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T15:41:00+00:00",
+      "at": "2027-07-31T15:48:00+00:00",
       "kind": "fact_registered",
       "fact": "bus_fare",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T15:41:00+00:00",
+      "at": "2027-07-31T15:48:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "access_desk",
@@ -342,17 +460,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-07-31T15:41:00+00:00",
+      "at": "2027-07-31T15:48:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "access_desk",
       "step": "main_3",
-      "start_at": "2027-07-31T15:41:00+00:00",
-      "due_at": "2027-07-31T16:14:00+00:00",
+      "start_at": "2027-07-31T15:48:00+00:00",
+      "due_at": "2027-07-31T16:28:00+00:00",
       "tool": "access_desk.main.3.document"
     },
     {
-      "at": "2027-07-31T15:41:00+00:00",
+      "at": "2027-07-31T15:48:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "access_desk",
@@ -360,7 +478,47 @@
       "new": "working"
     },
     {
-      "at": "2027-07-31T16:14:00+00:00",
+      "at": "2027-07-31T15:56:00+00:00",
+      "kind": "tool_call",
+      "actor": "welfare_desk",
+      "case_id": "CASE-0002",
+      "tool": "welfare_desk.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-07-31T15:56:00+00:00",
+      "kind": "fact_registered",
+      "fact": "minor_confirmation",
+      "issuer": "welfare_desk"
+    },
+    {
+      "at": "2027-07-31T15:56:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-31T15:56:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "step": "main_3",
+      "start_at": "2027-07-31T15:56:00+00:00",
+      "due_at": "2027-07-31T16:33:00+00:00",
+      "tool": "welfare_desk.main.3.document"
+    },
+    {
+      "at": "2027-07-31T15:56:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-31T16:28:00+00:00",
       "kind": "tool_call",
       "actor": "access_desk",
       "case_id": "CASE-0001",
@@ -368,25 +526,25 @@
       "tool_kind": "document"
     },
     {
-      "at": "2027-07-31T16:14:00+00:00",
+      "at": "2027-07-31T16:28:00+00:00",
       "kind": "fact_registered",
       "fact": "seats",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T16:14:00+00:00",
+      "at": "2027-07-31T16:28:00+00:00",
       "kind": "fact_registered",
       "fact": "route_step_free",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T16:14:00+00:00",
+      "at": "2027-07-31T16:28:00+00:00",
       "kind": "fact_registered",
       "fact": "bus_fare",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T16:14:00+00:00",
+      "at": "2027-07-31T16:28:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "access_desk",
@@ -394,17 +552,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-07-31T16:14:00+00:00",
+      "at": "2027-07-31T16:28:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "access_desk",
       "step": "main_4",
-      "start_at": "2027-07-31T16:14:00+00:00",
-      "due_at": "2027-07-31T16:29:00+00:00",
+      "start_at": "2027-07-31T16:28:00+00:00",
+      "due_at": "2027-07-31T16:43:00+00:00",
       "tool": "access_desk.main.4.reply"
     },
     {
-      "at": "2027-07-31T16:14:00+00:00",
+      "at": "2027-07-31T16:28:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "access_desk",
@@ -412,7 +570,47 @@
       "new": "working"
     },
     {
-      "at": "2027-07-31T16:29:00+00:00",
+      "at": "2027-07-31T16:33:00+00:00",
+      "kind": "tool_call",
+      "actor": "welfare_desk",
+      "case_id": "CASE-0002",
+      "tool": "welfare_desk.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-07-31T16:33:00+00:00",
+      "kind": "fact_registered",
+      "fact": "minor_confirmation",
+      "issuer": "welfare_desk"
+    },
+    {
+      "at": "2027-07-31T16:33:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-07-31T16:33:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "step": "main_4",
+      "start_at": "2027-07-31T16:33:00+00:00",
+      "due_at": "2027-07-31T16:48:00+00:00",
+      "tool": "welfare_desk.main.4.reply"
+    },
+    {
+      "at": "2027-07-31T16:33:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-07-31T16:43:00+00:00",
       "kind": "tool_call",
       "actor": "access_desk",
       "case_id": "CASE-0001",
@@ -420,7 +618,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2027-07-31T16:29:00+00:00",
+      "at": "2027-07-31T16:43:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "access_desk",
@@ -428,32 +626,55 @@
       "new": "replied"
     },
     {
-      "at": "2027-07-31T16:29:00+00:00",
+      "at": "2027-07-31T16:43:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0002",
+      "message_id": "MSG-0003",
       "case_id": "CASE-0001",
       "status": "reply"
     },
     {
-      "at": "2027-07-31T16:30:00+00:00",
+      "at": "2027-07-31T16:48:00+00:00",
+      "kind": "tool_call",
+      "actor": "welfare_desk",
+      "case_id": "CASE-0002",
+      "tool": "welfare_desk.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-07-31T16:48:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "welfare_desk",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-07-31T16:48:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0004",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    },
+    {
+      "at": "2027-07-31T17:00:00+00:00",
       "kind": "fact_registered",
       "fact": "route_step_free",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T16:30:00+00:00",
+      "at": "2027-07-31T17:00:00+00:00",
       "kind": "fact_registered",
       "fact": "home_arrival",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T16:30:00+00:00",
+      "at": "2027-07-31T17:00:00+00:00",
       "kind": "fact_registered",
       "fact": "bus_fare",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T16:30:00+00:00",
+      "at": "2027-07-31T17:00:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "festival_search",
       "query": "route",
@@ -464,48 +685,48 @@
       ]
     },
     {
-      "at": "2027-07-31T16:30:00+00:00",
+      "at": "2027-07-31T17:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "family_dialogue",
-      "question": "Do you approve the exact plan: 21:00 Maritime Museum set, bus-L step-free round trip, three seated places, 108 CAD total?",
+      "question": "Do you approve the exact plan: 21:00 Maritime Museum set, bus-L step-free round trip at the official 18 CAD family fare, three seated places, the written minor-accompaniment confirmation for Lila carried at check-in, 108 CAD total?",
       "matched": true,
       "answer": "Wei needs no stairs, walking segments at most twelve minutes and standing stretches at most twenty-five minutes, with confirmed seats. Lila is eight; no alcohol package."
     },
     {
-      "at": "2027-07-31T16:30:00+00:00",
+      "at": "2027-07-31T17:00:00+00:00",
       "kind": "agent_discover_tools",
       "name": "reserve_access",
       "found": true,
       "tool_kind": "select"
     },
     {
-      "at": "2027-07-31T16:30:00+00:00",
+      "at": "2027-07-31T17:00:00+00:00",
       "kind": "agent_selection_submitted",
       "tool": "reserve_access",
       "entry": "offer-L1",
       "accepted": true
     },
     {
-      "at": "2027-07-31T17:00:00+00:00",
+      "at": "2027-07-31T17:30:00+00:00",
       "kind": "fact_registered",
       "fact": "access_reserved",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T17:00:00+00:00",
+      "at": "2027-07-31T17:30:00+00:00",
       "kind": "fact_registered",
       "fact": "total_cost",
       "issuer": "access_desk"
     },
     {
-      "at": "2027-07-31T17:00:00+00:00",
+      "at": "2027-07-31T17:30:00+00:00",
       "kind": "page_updated",
       "page": "festival-entry",
       "url": "https://harbourfestival.bench/entry",
       "cause": "selection"
     },
     {
-      "at": "2027-07-31T17:00:00+00:00",
+      "at": "2027-07-31T17:30:00+00:00",
       "kind": "selection_processed",
       "tool": "reserve_access",
       "accepted": true,

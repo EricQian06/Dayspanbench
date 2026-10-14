@@ -5,7 +5,7 @@
     "id": "store_operations",
     "name": "Test Appliance Cooperative inventory desk·Riley Carter",
     "role": "listings, delivery slots and orders",
-    "description": "Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time.",
+    "description": "Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. Building access and elevator bookings are not store records.",
     "calendar": "us_central_daily",
     "channels": [
       "email"
@@ -20,21 +20,31 @@
       "payment_terms"
     ],
     "tools": {
-      "store_operations.slot.1.lookup": {
+      "store_operations.slot.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "store_operations.slot.2.suggest": {
+        "kind": "suggest",
+        "text": "I don't hold building-access arrangements, so I can only guess: the crew might handle freight entry themselves, or the building may run a service-elevator booking with its own manager - honestly not sure which; you'd want to check with the building side before the delivery window.",
+        "guesses": [
+          "building_manager"
+        ]
+      },
+      "store_operations.slot.3.lookup": {
         "kind": "lookup",
         "facts": [
           "order_total",
           "delivery_window"
         ]
       },
-      "store_operations.slot.2.document": {
+      "store_operations.slot.4.document": {
         "kind": "document",
         "facts": [
           "order_total",
           "delivery_window"
         ]
       },
-      "store_operations.slot.3.reply": {
+      "store_operations.slot.5.reply": {
         "kind": "reply"
       }
     },
@@ -56,17 +66,17 @@
         "steps": [
           {
             "id": "slot_1",
-            "label": "check the current listing, all-in total and delivery slot",
-            "tool": "store_operations.slot.1.lookup",
+            "label": "发出受理回执",
+            "tool": "store_operations.slot.1.acknowledge",
             "delay": {
               "mode": "business",
-              "minutes": 60
+              "minutes": 30
             }
           },
           {
             "id": "slot_2",
-            "label": "签发书面确认",
-            "tool": "store_operations.slot.2.document",
+            "label": "给出猜测性答复",
+            "tool": "store_operations.slot.2.suggest",
             "delay": {
               "mode": "business",
               "minutes": 30
@@ -74,8 +84,26 @@
           },
           {
             "id": "slot_3",
+            "label": "check the current listing, all-in total and delivery slot",
+            "tool": "store_operations.slot.3.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "slot_4",
+            "label": "签发书面确认",
+            "tool": "store_operations.slot.4.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "slot_5",
             "label": "向请求者回复已取得的结果",
-            "tool": "store_operations.slot.3.reply",
+            "tool": "store_operations.slot.5.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0
@@ -104,7 +132,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Test Appliance Cooperative inventory desk·Riley Carter，负责listings, delivery slots and orders。Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "你是Test Appliance Cooperative inventory desk·Riley Carter，负责listings, delivery slots and orders。Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. Building access and elevator bookings are not store records. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
     },
     "evidence_authorities": [
       "attest:delivery_window",

@@ -15,16 +15,29 @@
       "text": "Synthetic festival listings for the Halifax test district: shows, routes and the access desk. Current shows, routes and access offers are found through the festival search service (festival_search); listings and route status can change, so re-check before reserving. The family's constraints can be clarified through the family profile desk (family_dialogue). Official show confirmation and free seated access come from the festival access desk.",
       "contacts": [],
       "snippet": "Halifax festival show listings, step-free routes and the access desk.",
+      "documents": [
+        {
+          "id": "volunteer-flyer",
+          "title": "volunteer-flyer.pdf",
+          "text": "Volunteer-run festival flyer: accessible bus-L family round trip 12 CAD all weekend, cheaper than the official desk rate (compiled by the retaining party).",
+          "facts": [
+            "fare_ref"
+          ],
+          "issuer": "access_desk",
+          "url": "https://harbourfestival.bench/files/volunteer-flyer.pdf"
+        }
+      ],
       "url": "https://harbourfestival.bench/intro"
     },
     {
       "id": "festival-contacts",
       "title": "Festival access contacts",
-      "text": "The Harbour Festival access desk is handled by Priya Nair, who answers daily during business hours.",
+      "text": "The Harbour Festival access desk is handled by Priya Nair, who answers daily during business hours; the welfare desk (Tom Okafor) issues written minor-accompaniment confirmations for under-16 attendees.",
       "contacts": [
-        "access_desk"
+        "access_desk",
+        "welfare_desk"
       ],
-      "snippet": "Contact for the Harbour Festival access desk.",
+      "snippet": "Contacts for the Harbour Festival access desk and welfare desk.",
       "url": "https://harbourfestival.bench/contact"
     },
     {
@@ -59,7 +72,8 @@
     "home_arrival",
     "total_cost",
     "access_reserved",
-    "seats"
+    "seats",
+    "minor_confirmed"
   ],
   "value_normalization": {
     "show_start": {
@@ -87,6 +101,9 @@
     "seats": {
       "type": "number",
       "units": {}
+    },
+    "minor_confirmed": {
+      "type": "boolean"
     }
   },
   "conclusion_options": {

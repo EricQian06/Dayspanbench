@@ -1,0 +1,159 @@
+{
+  "private": true,
+  "task_id": "DSB-36",
+  "actor": {
+    "id": "welfare_desk",
+    "name": "Harbour Festival welfare desk·Tom Okafor",
+    "role": "minor-accompaniment confirmations for under-16 attendees",
+    "description": "Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations.",
+    "calendar": "halifax_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "tomokafor@bench.example"
+    },
+    "knowledge": [
+      "minor_confirmation"
+    ],
+    "tools": {
+      "welfare_desk.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "welfare_desk.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "minor_confirmation"
+        ]
+      },
+      "welfare_desk.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "minor_confirmation"
+        ]
+      },
+      "welfare_desk.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Minor-accompaniment confirmation",
+        "aliases": [
+          "minor",
+          "child",
+          "kid",
+          "accompany",
+          "accompaniment",
+          "welfare",
+          "under-16",
+          "lila",
+          "age",
+          "guardian"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "welfare_desk.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the under-16 attendance record and issue the written accompaniment confirmation",
+            "tool": "welfare_desk.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 60
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "welfare_desk.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "welfare_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Harbour Festival welfare desk·Tom Okafor，负责minor-accompaniment confirmations for under-16 attendees。Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:minor_confirmed"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Halifax",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "09:00",
+        "21:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "minor_confirmation": {
+      "value": true,
+      "text": "Written minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "minor_confirmed"
+      }
+    }
+  },
+  "start_at": "2027-07-31T10:00:00-03:00",
+  "deadline_at": "2027-08-02T17:00:00-03:00"
+}

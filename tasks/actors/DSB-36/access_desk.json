@@ -46,6 +46,19 @@
       },
       "access_desk.main.4.reply": {
         "kind": "reply"
+      },
+      "access_desk.minor.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "access_desk.minor.2.suggest": {
+        "kind": "suggest",
+        "text": "I don't hold minor-accompaniment records, so I can only guess: the welfare desk may issue something in writing for under-16 attendees, or maybe no confirmation is needed at all - honestly not sure; you'd want to check with the festival side before the check-in window.",
+        "guesses": [
+          "welfare_desk"
+        ]
+      },
+      "access_desk.minor.3.reply": {
+        "kind": "reply"
       }
     },
     "workflows": [
@@ -96,6 +109,53 @@
             "id": "main_4",
             "label": "向请求者回复已取得的结果",
             "tool": "access_desk.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      },
+      {
+        "id": "minor",
+        "label": "Minor accompaniment",
+        "aliases": [
+          "minor",
+          "child",
+          "kid",
+          "accompany",
+          "accompaniment",
+          "welfare",
+          "under-16",
+          "lila",
+          "age",
+          "guardian"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "minor_1",
+            "label": "发出受理回执",
+            "tool": "access_desk.minor.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "minor_2",
+            "label": "给出猜测性答复",
+            "tool": "access_desk.minor.2.suggest",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "minor_3",
+            "label": "向请求者回复已取得的结果",
+            "tool": "access_desk.minor.3.reply",
             "delay": {
               "mode": "elapsed",
               "minutes": 0

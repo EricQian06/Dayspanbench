@@ -726,8 +726,14 @@
     {
       "id": "L-R2-accessible-journey",
       "statement": "The reported journey is accessible end to end.",
-      "pass_if": "The trace or final answer reports step-free legs throughout, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats and a feasible 20:30-20:45 check-in, without relying on the ferry after the outage.",
+      "pass_if": "The trace or final answer reports step-free legs throughout, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats and a feasible 20:30-20:45 check-in, without relying on the ferry after the outage or the volunteer flyer's 12 CAD fare.",
       "source": "trace"
+    },
+    {
+      "id": "L-R3-minor-confirmation",
+      "statement": "The minor-accompaniment confirmation's key elements reach the summary.",
+      "pass_if": "The summary carries the welfare desk's written confirmation's key elements: WA-0731 confirming Lila Chen, age 8, accompanied by Wei Chen and Mei Chen for the 21:00 set, carried at the 20:30-20:45 platform check-in.",
+      "source": "final_answer"
     },
     {
       "id": "L-R6-no-attendance-claim",
@@ -760,6 +766,12 @@
       "hint": "The organizer has approved the exact plan - current stage, step-free route, three seated places and budget; approval covers reserving those free places only."
     },
     {
+      "id": "minor-confirmed",
+      "kind": "fact_registered",
+      "target": "minor_confirmation",
+      "hint": "The welfare desk's written minor-accompaniment confirmation is in hand: WA-0731 for Lila Chen, age 8, accompanied by Wei and Mei, carried at the 20:30-20:45 check-in."
+    },
+    {
       "id": "access-reserved",
       "kind": "selection_processed",
       "target": "reserve_access",
@@ -783,16 +795,29 @@
         "text": "Synthetic festival listings for the Halifax test district: shows, routes and the access desk. Current shows, routes and access offers are found through the festival search service (festival_search); listings and route status can change, so re-check before reserving. The family's constraints can be clarified through the family profile desk (family_dialogue). Official show confirmation and free seated access come from the festival access desk.",
         "contacts": [],
         "snippet": "Halifax festival show listings, step-free routes and the access desk.",
+        "documents": [
+          {
+            "id": "volunteer-flyer",
+            "title": "volunteer-flyer.pdf",
+            "text": "Volunteer-run festival flyer: accessible bus-L family round trip 12 CAD all weekend, cheaper than the official desk rate (compiled by the retaining party).",
+            "facts": [
+              "fare_ref"
+            ],
+            "issuer": "access_desk",
+            "url": "https://harbourfestival.bench/files/volunteer-flyer.pdf"
+          }
+        ],
         "url": "https://harbourfestival.bench/intro"
       },
       {
         "id": "festival-contacts",
         "title": "Festival access contacts",
-        "text": "The Harbour Festival access desk is handled by Priya Nair, who answers daily during business hours.",
+        "text": "The Harbour Festival access desk is handled by Priya Nair, who answers daily during business hours; the welfare desk (Tom Okafor) issues written minor-accompaniment confirmations for under-16 attendees.",
         "contacts": [
-          "access_desk"
+          "access_desk",
+          "welfare_desk"
         ],
-        "snippet": "Contact for the Harbour Festival access desk.",
+        "snippet": "Contacts for the Harbour Festival access desk and welfare desk.",
         "url": "https://harbourfestival.bench/contact"
       },
       {
@@ -827,7 +852,8 @@
       "home_arrival",
       "total_cost",
       "access_reserved",
-      "seats"
+      "seats",
+      "minor_confirmed"
     ],
     "value_normalization": {
       "show_start": {
@@ -855,6 +881,9 @@
       "seats": {
         "type": "number",
         "units": {}
+      },
+      "minor_confirmed": {
+        "type": "boolean"
       }
     },
     "conclusion_options": {
@@ -1002,6 +1031,37 @@
         },
         "predicate": "seats"
       }
+    },
+    "minor_confirmation": {
+      "value": true,
+      "text": "Written minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "minor_confirmed"
+      }
+    },
+    "fare_ref": {
+      "value": 12,
+      "text": "Volunteer-run festival flyer, July 2027: accessible bus-L family round trip 12 CAD all weekend, cheaper than the official desk rate (compiled by the retaining party).",
+      "unauthorized_attestation": true,
+      "attributes": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "total_cost"
+      }
     }
   },
   "actors": [
@@ -1049,6 +1109,19 @@
           ]
         },
         "access_desk.main.4.reply": {
+          "kind": "reply"
+        },
+        "access_desk.minor.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "access_desk.minor.2.suggest": {
+          "kind": "suggest",
+          "text": "I don't hold minor-accompaniment records, so I can only guess: the welfare desk may issue something in writing for under-16 attendees, or maybe no confirmation is needed at all - honestly not sure; you'd want to check with the festival side before the check-in window.",
+          "guesses": [
+            "welfare_desk"
+          ]
+        },
+        "access_desk.minor.3.reply": {
           "kind": "reply"
         }
       },
@@ -1107,6 +1180,53 @@
             }
           ],
           "evidence_fields": {}
+        },
+        {
+          "id": "minor",
+          "label": "Minor accompaniment",
+          "aliases": [
+            "minor",
+            "child",
+            "kid",
+            "accompany",
+            "accompaniment",
+            "welfare",
+            "under-16",
+            "lila",
+            "age",
+            "guardian"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "minor_1",
+              "label": "发出受理回执",
+              "tool": "access_desk.minor.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "minor_2",
+              "label": "给出猜测性答复",
+              "tool": "access_desk.minor.2.suggest",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "minor_3",
+              "label": "向请求者回复已取得的结果",
+              "tool": "access_desk.minor.3.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
         }
       ],
       "process_engine": {
@@ -1140,6 +1260,124 @@
         "attest:show_start",
         "attest:stage",
         "attest:total_cost"
+      ]
+    },
+    {
+      "id": "welfare_desk",
+      "name": "Harbour Festival welfare desk·Tom Okafor",
+      "role": "minor-accompaniment confirmations for under-16 attendees",
+      "description": "Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations.",
+      "calendar": "halifax_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "tomokafor@bench.example"
+      },
+      "knowledge": [
+        "minor_confirmation"
+      ],
+      "tools": {
+        "welfare_desk.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "welfare_desk.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "minor_confirmation"
+          ]
+        },
+        "welfare_desk.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "minor_confirmation"
+          ]
+        },
+        "welfare_desk.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Minor-accompaniment confirmation",
+          "aliases": [
+            "minor",
+            "child",
+            "kid",
+            "accompany",
+            "accompaniment",
+            "welfare",
+            "under-16",
+            "lila",
+            "age",
+            "guardian"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "welfare_desk.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the under-16 attendance record and issue the written accompaniment confirmation",
+              "tool": "welfare_desk.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "welfare_desk.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 20
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "welfare_desk.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Harbour Festival welfare desk·Tom Okafor，负责minor-accompaniment confirmations for under-16 attendees。Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:minor_confirmed"
       ]
     }
   ],
@@ -1419,12 +1657,43 @@
         "units": {}
       },
       "match": "expected"
+    },
+    {
+      "key": "minor_confirmed",
+      "expected": true,
+      "accepted_facts": [
+        "minor_confirmation"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-36",
+          "case": {
+            "date": "2027-07-31",
+            "city": "Halifax test district",
+            "party_size": 3
+          }
+        },
+        "predicate": "minor_confirmed",
+        "authorities": [
+          "attest:minor_confirmed"
+        ],
+        "normalization": {
+          "type": "boolean"
+        }
+      },
+      "normalization": {
+        "type": "boolean"
+      },
+      "match": "expected"
     }
   ],
   "expected_conclusion": "access_confirmed",
   "temporal_mechanisms": [
     "official show confirmation and access offer appear mid-morning",
     "ferry lift outage at midday invalidates the step-free alternative",
+    "side thread: written minor-accompaniment confirmation from the welfare desk",
+    "volunteer flyer undercuts the official bus-L family fare",
+    "access-desk hedge guess about minor accompaniment needs verification",
     "prior-year paid ticket listing is stale; admission is free",
     "search-discoverable show and route inventory",
     "sparse prompt: family constraints only surface through dialogue",
@@ -1432,6 +1701,8 @@
   ],
   "failure_modes": [
     "trusting the stale 2026 paid Pier listing",
+    "budgeting the volunteer flyer's 12 CAD fare instead of the official 18 CAD",
+    "skipping the minor-accompaniment confirmation for the eight-year-old",
     "reserving the 18:00 wrong-time set or another artist",
     "using the ferry after the lift outage or the 12-stair shortcut",
     "booking the 22:00 fireworks with no feasible return",
@@ -1491,12 +1762,23 @@
       "fields": "$user"
     },
     {
+      "op": "send",
+      "to": "welfare_desk",
+      "text": "Please issue a written minor-accompaniment confirmation for Lila Chen, age 8, attending the 21:00 Pancho Libre set with Wei Chen and Mei Chen on July 31",
+      "label": "minor",
+      "fields": "$user"
+    },
+    {
       "op": "wait_for",
       "label": "verify"
     },
     {
+      "op": "wait_for",
+      "label": "minor"
+    },
+    {
       "op": "advance",
-      "at": "2027-07-31T13:30:00-03:00"
+      "at": "2027-07-31T14:00:00-03:00"
     },
     {
       "op": "tool",
@@ -1509,7 +1791,7 @@
       "op": "tool",
       "name": "family_dialogue",
       "args": {
-        "question": "Do you approve the exact plan: 21:00 Maritime Museum set, bus-L step-free round trip, three seated places, 108 CAD total?"
+        "question": "Do you approve the exact plan: 21:00 Maritime Museum set, bus-L step-free round trip at the official 18 CAD family fare, three seated places, the written minor-accompaniment confirmation for Lila carried at check-in, 108 CAD total?"
       }
     },
     {

@@ -1,0 +1,159 @@
+{
+  "private": true,
+  "task_id": "DSB-40",
+  "actor": {
+    "id": "building_manager",
+    "name": "Example Court building manager·Jolene Fischer",
+    "role": "service-elevator bookings and freight access for 18 Example Court",
+    "description": "Books the building's service elevator for appliance deliveries in writing; the store does not manage building access, and delivery crews cannot enter without a confirmed booking.",
+    "calendar": "us_central_daily",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "jolenefischer@bench.example"
+    },
+    "knowledge": [
+      "elevator_reserved"
+    ],
+    "tools": {
+      "building_manager.main.1.acknowledge": {
+        "kind": "acknowledge"
+      },
+      "building_manager.main.2.lookup": {
+        "kind": "lookup",
+        "facts": [
+          "elevator_reserved"
+        ]
+      },
+      "building_manager.main.3.document": {
+        "kind": "document",
+        "facts": [
+          "elevator_reserved"
+        ]
+      },
+      "building_manager.main.4.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Service elevator booking",
+        "aliases": [
+          "elevator",
+          "lift",
+          "building",
+          "freight",
+          "court",
+          "booking",
+          "manager",
+          "access"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "发出受理回执",
+            "tool": "building_manager.main.1.acknowledge",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "check the service-elevator schedule and book the delivery slot",
+            "tool": "building_manager.main.2.lookup",
+            "delay": {
+              "mode": "business",
+              "minutes": 90
+            }
+          },
+          {
+            "id": "main_3",
+            "label": "签发书面确认",
+            "tool": "building_manager.main.3.document",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          },
+          {
+            "id": "main_4",
+            "label": "向请求者回复已取得的结果",
+            "tool": "building_manager.main.4.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "你是Example Court building manager·Jolene Fischer，负责service-elevator bookings and freight access for 18 Example Court。Books the building's service elevator for appliance deliveries in writing; the store does not manage building access, and delivery crews cannot enter without a confirmed booking. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+    },
+    "evidence_authorities": [
+      "attest:elevator_booked"
+    ]
+  },
+  "calendar": {
+    "timezone": "America/Chicago",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "08:00",
+        "20:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "elevator_reserved": {
+      "value": "2027-06-09 09:30-10:00",
+      "text": "The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "elevator_booked"
+      }
+    }
+  },
+  "start_at": "2027-06-07T09:00:00-05:00",
+  "deadline_at": "2027-06-09T12:00:00-05:00"
+}

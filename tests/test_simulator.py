@@ -264,10 +264,13 @@ class CharacterSimulatorTests(unittest.TestCase):
         env = Environment(task, recipients(task, client))
         env.tools().visit_page("https://heanhuiguan.bench/contact")
         env.tools().send_email(mailbox(task, "reception"), "活动联系入口")
-        with self.assertRaises(SimulatorError):
-            env.tools().wait_until(task["deadline_at"])
-        self.assertFalse(env.messages)
-        self.assertTrue(env.finished)
+        env.tools().wait_until(task["deadline_at"])
+        # v0.5.1: the fabricated "all goals complete" never reaches the agent;
+        # the engine-determined canonical reply is delivered instead and the
+        # episode stays valid (the rephrase layer is wording only).
+        self.assertFalse(env.simulator_failure)
+        self.assertFalse(env.finished)
+        self.assertNotIn("所有目标已完成", json.dumps(env.messages, ensure_ascii=False))
 
     def test_forged_document_still_fails_engine_admission(self):
         task = load(3)

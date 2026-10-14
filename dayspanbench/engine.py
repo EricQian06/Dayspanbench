@@ -370,32 +370,34 @@ class Environment:
         schema = {"type": "object", "properties": {"answer": {"type": "string"}},
                   "required": ["answer"], "additionalProperties": False}
         tokens = key_tokens(canonical)
-        try:
-            for attempt in range(2):
-                result = self.dialogue_client.complete(
-                    purpose="dialogue", actor_id=tool_name, system=DIALOGUE_PROMPT,
-                    view=view, schema=schema)
-                answer = result.get("answer") if isinstance(result, dict) else None
-                missing = missing_key_tokens(answer, tokens)
-                if isinstance(answer, str) and answer.strip() and not missing:
-                    history.append({"question": question, "answer": answer,
-                                    "at": stamp(self.now)})
-                    return answer
-                if attempt == 0:
-                    view = deepcopy(view)
-                    view["validation_feedback"] = {
-                        "previous_answer": answer,
-                        "error": "answer is empty or not a string"
-                                 if not isinstance(answer, str) or not answer.strip()
-                                 else "answer lost required key tokens: " + ", ".join(missing),
-                        "requirements": ("answer必须是非空字符串，且把canonical_fact中的全部数字、编号、"
-                                         "带引号专名原样保留，在此基础上重新组织措辞。")}
-            raise SimulatorError("Dialogue reply lost required key tokens")
-        except SimulatorError as exc:
-            self.simulator_failure = str(exc)
-            self.finished = True
-            self.record("simulator_failure", source=tool_name, reason=str(exc))
-            raise
+        for attempt in range(2):
+            result = self.dialogue_client.complete(
+                purpose="dialogue", actor_id=tool_name, system=DIALOGUE_PROMPT,
+                view=view, schema=schema)
+            answer = result.get("answer") if isinstance(result, dict) else None
+            missing = missing_key_tokens(answer, tokens)
+            if isinstance(answer, str) and answer.strip() and not missing:
+                history.append({"question": question, "answer": answer,
+                                "at": stamp(self.now)})
+                return answer
+            if attempt == 0:
+                view = deepcopy(view)
+                view["validation_feedback"] = {
+                    "previous_answer": answer,
+                    "error": "answer is empty or not a string"
+                             if not isinstance(answer, str) or not answer.strip()
+                             else "answer lost required key tokens: " + ", ".join(missing),
+                    "requirements": ("answer必须是非空字符串，且把canonical_fact中的全部数字、编号、"
+                                     "带引号专名原样保留，在此基础上重新组织措辞。")}
+        # The persona rephrase is wording only; the canonical fact is
+        # engine-determined. Two failed phrasings fall back to the canonical
+        # text verbatim — the agent loses no information, so the episode stays
+        # valid; the fallback is audited for environment-failure statistics.
+        self.record("dialogue_fallback", source=tool_name,
+                    reason="persona rephrase failed twice; canonical text used")
+        history.append({"question": question, "answer": canonical,
+                        "at": stamp(self.now)})
+        return canonical
 
     def contact(self, actor_id):
         actor = self.actors[actor_id].spec

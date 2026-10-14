@@ -104,16 +104,20 @@ class DialogueLLMTests(unittest.TestCase):
         self.assertIn("247.80", dialogue_calls[1]["view"]["validation_feedback"]["error"])
         self.assertFalse(env.simulator_failure)
 
-    def test_persistent_token_loss_invalidates_the_episode(self):
+    def test_persistent_token_loss_falls_back_to_canonical(self):
+        # v0.5.1: the persona rephrase is wording only. Two failed phrasings
+        # deliver the canonical fact verbatim — the episode stays valid (the
+        # agent loses no information) and the fallback is audited.
         client = FixtureClient(dialogue=lambda view: {"answer": "No idea, sorry."})
         env = llm_env(dialogue_task(), client)
         api = env.tools()
         api.discover_tools("ask_user")
-        with self.assertRaises(SimulatorError):
-            api.ask_user(question="budget?")
-        self.assertTrue(env.simulator_failure)
-        self.assertTrue(env.finished)
-        self.assertTrue(any(r["kind"] == "simulator_failure" for r in env.audit))
+        canonical = dialogue_task()["hidden_tools"][0]["params"]["rules"][0]["answer"]
+        result = api.ask_user(question="budget?")
+        self.assertEqual(result["answer"], canonical)
+        self.assertFalse(env.simulator_failure)
+        self.assertFalse(env.finished)
+        self.assertTrue(any(r["kind"] == "dialogue_fallback" for r in env.audit))
         self.assertEqual(len([c for c in client.calls if c["purpose"] == "dialogue"]), 2)
 
     def test_keyword_mode_without_llm_simulator_stays_deterministic(self):
@@ -179,11 +183,17 @@ class RenderLLMTests(unittest.TestCase):
         self.assertIn("247.80", text)
         self.assertEqual(len(client.calls), 2)
         self.assertIn("validation_feedback", client.calls[1]["view"])
-        # Persistently losing the anchors is a SimulatorError, never a score.
+        # v0.5.1: persistently losing the anchors falls back to the canonical
+        # text verbatim (information is engine-determined, wording is not),
+        # audited via .fallbacks — never an invalid episode.
         stubborn = FixtureClient(reply=lambda view: {"tone": "polite", "text": "办好了。"})
-        with self.assertRaises(SimulatorError):
-            LLMSimulator(stubborn, "test").render(self.reply_view())
-        self.assertEqual(len([c for c in stubborn.calls]), 2)
+        sim = LLMSimulator(stubborn, "test")
+        view = self.reply_view()
+        text = sim.render(view)
+        self.assertEqual(text, view["canonical_text"])
+        self.assertEqual(len(stubborn.calls), 2)
+        self.assertEqual(len(sim.fallbacks), 1)
+        self.assertIn("canonical", sim.fallbacks[0]["reason"])
 
     def test_non_reply_status_is_deterministic_passthrough(self):
         client = FixtureClient()

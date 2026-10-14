@@ -172,6 +172,19 @@ class JudgeTests(unittest.TestCase):
         review = judge.judge(self.task, self.env, {})
         self.assertEqual(review["status"], "pending")
 
+    def test_provider_quirk_keys_are_normalized_not_pending(self):
+        # deepseek-v4-flash style output: "verdicts"/"pass", no evidence array
+        # but inline citations in "reason". Key spelling must not turn a
+        # gradeable episode into a pending one.
+        verdict = {"verdicts": [{"criterion_id": "R6", "pass": True,
+                                 "reason": "final_answer.summary states the reservation; receipt R-0001 confirms."}]}
+        judge = LLMJudge(_client(verdict))
+        review = judge.judge(self.task, self.env, {"conclusion": "ok"})
+        self.assertEqual(review["status"], "graded")
+        self.assertTrue(review["criteria"][0]["passed"])
+        self.assertTrue(review["criteria"][0]["evidence_synthesized"])
+        self.assertEqual(review["criteria"][0]["evidence"][0]["pointer"], "judge.reason")
+
 
 if __name__ == "__main__":
     unittest.main()

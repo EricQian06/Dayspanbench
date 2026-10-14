@@ -14,20 +14,33 @@
     {
       "id": "store-intro",
       "title": "Test Appliance Cooperative storefront",
-      "text": "Synthetic appliance listings for the test district; listing claims alone do not establish fit, eligibility or a confirmed delivery slot. Current listings are found through the store's product search service (product_search), and uncommitted delivery routes can change without notice, so re-check the live slot before ordering. Household space, access, address and approval facts can be clarified through the household desk (householder_dialogue). Measured fit, unpack-at-door and recycling confirmations come from the delivery specialist by mail.",
+      "text": "Synthetic appliance listings for the test district; listing claims alone do not establish fit, eligibility or a confirmed delivery slot. Current listings are found through the store's product search service (product_search), and uncommitted delivery routes can change without notice, so re-check the live slot before ordering. Household space, access, address and approval facts can be clarified through the household desk (householder_dialogue). Measured fit, unpack-at-door and recycling confirmations come from the delivery specialist by mail; all-in totals come from the store's own desks in writing.",
       "contacts": [],
       "snippet": "Test Appliance Cooperative: refrigerator listings and household requirements desk.",
+      "documents": [
+        {
+          "id": "price-comparison",
+          "title": "price-comparison.pdf",
+          "text": "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling; COOL-17-A all-in 1040.00 USD. (留存方整理)",
+          "facts": [
+            "total_ref"
+          ],
+          "issuer": "building_manager",
+          "url": "https://fridgedelivery.bench/files/price-comparison.pdf"
+        }
+      ],
       "url": "https://fridgedelivery.bench/intro"
     },
     {
       "id": "store-contact",
       "title": "Store contacts",
-      "text": "The delivery specialist (Morgan Hale) verifies measured installation fit, the doorway route, unpack-at-door handling and recycling; the inventory desk (Riley Carter) quotes current all-in totals and delivery slots. Both answer daily during business hours.",
+      "text": "The delivery specialist (Morgan Hale) verifies measured installation fit, the doorway route, unpack-at-door handling and recycling; the inventory desk (Riley Carter) quotes current all-in totals and delivery slots; the building manager (Jolene Fischer) books the service elevator for 18 Example Court. All answer daily during business hours.",
       "contacts": [
         "fulfillment_agent",
-        "store_operations"
+        "store_operations",
+        "building_manager"
       ],
-      "snippet": "Contacts for the delivery specialist and the inventory desk.",
+      "snippet": "Contacts for the delivery specialist, the inventory desk and the building manager.",
       "url": "https://fridgedelivery.bench/contact"
     },
     {
@@ -60,7 +73,8 @@
     "delivery_window",
     "payment_terms",
     "fit_verified",
-    "recycling_confirmed"
+    "recycling_confirmed",
+    "elevator_booked"
   ],
   "value_normalization": {
     "ordered_sku": {
@@ -81,6 +95,9 @@
     },
     "recycling_confirmed": {
       "type": "boolean"
+    },
+    "elevator_booked": {
+      "type": "text"
     }
   },
   "conclusion_options": {

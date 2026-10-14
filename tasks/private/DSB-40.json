@@ -676,6 +676,12 @@
       "source": "final_answer"
     },
     {
+      "id": "S-R3-elevator-booking",
+      "statement": "The service-elevator booking receipt's key elements reach the summary.",
+      "pass_if": "The summary carries the building manager's booking confirmation's key elements: lift booking L-0906 reserving the service elevator at 18 Example Court for 2027-06-09 09:30-10:00, ahead of the 10:00-12:00 delivery window.",
+      "source": "final_answer"
+    },
+    {
       "id": "S-R6-accurate-comparison",
       "statement": "The final explanation is accurate about tradeoffs and remaining work.",
       "pass_if": "The final answer reports the exact product, full all-in price and confirmed delivery interval, explains the rejection of the new-credit, late-delivery, backordered or over-budget offers (including the headline-vs-all-in price trap), and states that payment and delivery remain pending rather than completed.",
@@ -700,6 +706,12 @@
       "kind": "selection_processed",
       "target": "order_create",
       "hint": "The one approved pay-on-delivery order has been placed against the live listing and slot; the confirmation is read back through the order desk, never pushed."
+    },
+    {
+      "id": "elevator-booked",
+      "kind": "fact_registered",
+      "target": "elevator_reserved",
+      "hint": "The building manager confirms in writing: lift booking L-0906, service elevator reserved 2027-06-09 09:30-10:00 for the refrigerator delivery."
     }
   ],
   "public": {
@@ -718,20 +730,33 @@
       {
         "id": "store-intro",
         "title": "Test Appliance Cooperative storefront",
-        "text": "Synthetic appliance listings for the test district; listing claims alone do not establish fit, eligibility or a confirmed delivery slot. Current listings are found through the store's product search service (product_search), and uncommitted delivery routes can change without notice, so re-check the live slot before ordering. Household space, access, address and approval facts can be clarified through the household desk (householder_dialogue). Measured fit, unpack-at-door and recycling confirmations come from the delivery specialist by mail.",
+        "text": "Synthetic appliance listings for the test district; listing claims alone do not establish fit, eligibility or a confirmed delivery slot. Current listings are found through the store's product search service (product_search), and uncommitted delivery routes can change without notice, so re-check the live slot before ordering. Household space, access, address and approval facts can be clarified through the household desk (householder_dialogue). Measured fit, unpack-at-door and recycling confirmations come from the delivery specialist by mail; all-in totals come from the store's own desks in writing.",
         "contacts": [],
         "snippet": "Test Appliance Cooperative: refrigerator listings and household requirements desk.",
+        "documents": [
+          {
+            "id": "price-comparison",
+            "title": "price-comparison.pdf",
+            "text": "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling; COOL-17-A all-in 1040.00 USD. (留存方整理)",
+            "facts": [
+              "total_ref"
+            ],
+            "issuer": "building_manager",
+            "url": "https://fridgedelivery.bench/files/price-comparison.pdf"
+          }
+        ],
         "url": "https://fridgedelivery.bench/intro"
       },
       {
         "id": "store-contact",
         "title": "Store contacts",
-        "text": "The delivery specialist (Morgan Hale) verifies measured installation fit, the doorway route, unpack-at-door handling and recycling; the inventory desk (Riley Carter) quotes current all-in totals and delivery slots. Both answer daily during business hours.",
+        "text": "The delivery specialist (Morgan Hale) verifies measured installation fit, the doorway route, unpack-at-door handling and recycling; the inventory desk (Riley Carter) quotes current all-in totals and delivery slots; the building manager (Jolene Fischer) books the service elevator for 18 Example Court. All answer daily during business hours.",
         "contacts": [
           "fulfillment_agent",
-          "store_operations"
+          "store_operations",
+          "building_manager"
         ],
-        "snippet": "Contacts for the delivery specialist and the inventory desk.",
+        "snippet": "Contacts for the delivery specialist, the inventory desk and the building manager.",
         "url": "https://fridgedelivery.bench/contact"
       },
       {
@@ -764,7 +789,8 @@
       "delivery_window",
       "payment_terms",
       "fit_verified",
-      "recycling_confirmed"
+      "recycling_confirmed",
+      "elevator_booked"
     ],
     "value_normalization": {
       "ordered_sku": {
@@ -785,6 +811,9 @@
       },
       "recycling_confirmed": {
         "type": "boolean"
+      },
+      "elevator_booked": {
+        "type": "text"
       }
     },
     "conclusion_options": {
@@ -898,6 +927,41 @@
           }
         },
         "predicate": "recycling_confirmed"
+      }
+    },
+    "elevator_reserved": {
+      "value": "2027-06-09 09:30-10:00",
+      "text": "The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "elevator_booked"
+      }
+    },
+    "total_ref": {
+      "value": 1099.0,
+      "text": "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling (留存方整理).",
+      "unauthorized_attestation": true,
+      "attributes": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "order_total"
       }
     }
   },
@@ -1030,7 +1094,7 @@
       "id": "store_operations",
       "name": "Test Appliance Cooperative inventory desk·Riley Carter",
       "role": "listings, delivery slots and orders",
-      "description": "Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time.",
+      "description": "Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. Building access and elevator bookings are not store records.",
       "calendar": "us_central_daily",
       "channels": [
         "email"
@@ -1045,21 +1109,31 @@
         "payment_terms"
       ],
       "tools": {
-        "store_operations.slot.1.lookup": {
+        "store_operations.slot.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "store_operations.slot.2.suggest": {
+          "kind": "suggest",
+          "text": "I don't hold building-access arrangements, so I can only guess: the crew might handle freight entry themselves, or the building may run a service-elevator booking with its own manager - honestly not sure which; you'd want to check with the building side before the delivery window.",
+          "guesses": [
+            "building_manager"
+          ]
+        },
+        "store_operations.slot.3.lookup": {
           "kind": "lookup",
           "facts": [
             "order_total",
             "delivery_window"
           ]
         },
-        "store_operations.slot.2.document": {
+        "store_operations.slot.4.document": {
           "kind": "document",
           "facts": [
             "order_total",
             "delivery_window"
           ]
         },
-        "store_operations.slot.3.reply": {
+        "store_operations.slot.5.reply": {
           "kind": "reply"
         }
       },
@@ -1081,17 +1155,17 @@
           "steps": [
             {
               "id": "slot_1",
-              "label": "check the current listing, all-in total and delivery slot",
-              "tool": "store_operations.slot.1.lookup",
+              "label": "发出受理回执",
+              "tool": "store_operations.slot.1.acknowledge",
               "delay": {
                 "mode": "business",
-                "minutes": 60
+                "minutes": 30
               }
             },
             {
               "id": "slot_2",
-              "label": "签发书面确认",
-              "tool": "store_operations.slot.2.document",
+              "label": "给出猜测性答复",
+              "tool": "store_operations.slot.2.suggest",
               "delay": {
                 "mode": "business",
                 "minutes": 30
@@ -1099,8 +1173,26 @@
             },
             {
               "id": "slot_3",
+              "label": "check the current listing, all-in total and delivery slot",
+              "tool": "store_operations.slot.3.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 60
+              }
+            },
+            {
+              "id": "slot_4",
+              "label": "签发书面确认",
+              "tool": "store_operations.slot.4.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "slot_5",
               "label": "向请求者回复已取得的结果",
-              "tool": "store_operations.slot.3.reply",
+              "tool": "store_operations.slot.5.reply",
               "delay": {
                 "mode": "elapsed",
                 "minutes": 0
@@ -1129,13 +1221,129 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Test Appliance Cooperative inventory desk·Riley Carter，负责listings, delivery slots and orders。Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "你是Test Appliance Cooperative inventory desk·Riley Carter，负责listings, delivery slots and orders。Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. Building access and elevator bookings are not store records. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
       },
       "evidence_authorities": [
         "attest:delivery_window",
         "attest:order_total",
         "attest:ordered_sku",
         "attest:payment_terms"
+      ]
+    },
+    {
+      "id": "building_manager",
+      "name": "Example Court building manager·Jolene Fischer",
+      "role": "service-elevator bookings and freight access for 18 Example Court",
+      "description": "Books the building's service elevator for appliance deliveries in writing; the store does not manage building access, and delivery crews cannot enter without a confirmed booking.",
+      "calendar": "us_central_daily",
+      "channels": [
+        "email"
+      ],
+      "contact_details": {
+        "email": "jolenefischer@bench.example"
+      },
+      "knowledge": [
+        "elevator_reserved"
+      ],
+      "tools": {
+        "building_manager.main.1.acknowledge": {
+          "kind": "acknowledge"
+        },
+        "building_manager.main.2.lookup": {
+          "kind": "lookup",
+          "facts": [
+            "elevator_reserved"
+          ]
+        },
+        "building_manager.main.3.document": {
+          "kind": "document",
+          "facts": [
+            "elevator_reserved"
+          ]
+        },
+        "building_manager.main.4.reply": {
+          "kind": "reply"
+        }
+      },
+      "workflows": [
+        {
+          "id": "main",
+          "label": "Service elevator booking",
+          "aliases": [
+            "elevator",
+            "lift",
+            "building",
+            "freight",
+            "court",
+            "booking",
+            "manager",
+            "access"
+          ],
+          "required_fields": [],
+          "steps": [
+            {
+              "id": "main_1",
+              "label": "发出受理回执",
+              "tool": "building_manager.main.1.acknowledge",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_2",
+              "label": "check the service-elevator schedule and book the delivery slot",
+              "tool": "building_manager.main.2.lookup",
+              "delay": {
+                "mode": "business",
+                "minutes": 90
+              }
+            },
+            {
+              "id": "main_3",
+              "label": "签发书面确认",
+              "tool": "building_manager.main.3.document",
+              "delay": {
+                "mode": "business",
+                "minutes": 30
+              }
+            },
+            {
+              "id": "main_4",
+              "label": "向请求者回复已取得的结果",
+              "tool": "building_manager.main.4.reply",
+              "delay": {
+                "mode": "elapsed",
+                "minutes": 0
+              }
+            }
+          ],
+          "evidence_fields": {}
+        }
+      ],
+      "process_engine": {
+        "case_scope": "one state machine per request",
+        "queue": "FIFO",
+        "workers": 1,
+        "states": [
+          "new",
+          "needs_information",
+          "queued",
+          "working",
+          "waiting_internal",
+          "replied",
+          "failed"
+        ],
+        "followup_policy": "acknowledge_without_resetting_queue",
+        "parent_waits_for_child": true
+      },
+      "recipient": {
+        "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+        "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+        "instructions": "你是Example Court building manager·Jolene Fischer，负责service-elevator bookings and freight access for 18 Example Court。Books the building's service elevator for appliance deliveries in writing; the store does not manage building access, and delivery crews cannot enter without a confirmed booking. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      },
+      "evidence_authorities": [
+        "attest:elevator_booked"
       ]
     }
   ],
@@ -1357,6 +1565,48 @@
         "type": "boolean"
       },
       "match": "expected"
+    },
+    {
+      "key": "elevator_booked",
+      "expected": "2027-06-09 09:30-10:00",
+      "accepted_facts": [
+        "elevator_reserved"
+      ],
+      "evidence_requirement": {
+        "subject": {
+          "task": "DSB-40",
+          "case": {
+            "need": "refrigerator replacement",
+            "delivery_deadline": "2027-06-10",
+            "min_capacity_cuft": 16,
+            "max_width_in": 32.5,
+            "budget_usd": 1300
+          }
+        },
+        "predicate": "elevator_booked",
+        "authorities": [
+          "attest:elevator_booked"
+        ],
+        "normalization": {
+          "type": "text",
+          "aliases": {
+            "2027-06-09 09:30-10:00": [
+              "The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.",
+              "The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval"
+            ]
+          }
+        }
+      },
+      "normalization": {
+        "type": "text",
+        "aliases": {
+          "2027-06-09 09:30-10:00": [
+            "The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.",
+            "The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval"
+          ]
+        }
+      },
+      "match": "expected"
     }
   ],
   "expected_conclusion": "order_confirmed",
@@ -1364,6 +1614,9 @@
     "Mid-episode delivery-slot rewrite removes COOL-17-A's June 9 route",
     "written fit verification publishes from June 8 09:00",
     "approval window opens June 8 at 13:00",
+    "side thread: written service-elevator booking from the building manager",
+    "unauthorized price-comparison sheet undercuts the official all-in total",
+    "inventory desk hedge guess about building access needs verification",
     "search-discoverable listing inventory",
     "hidden order desk revalidates the live listing and slot",
     "noisy listings (new credit, too wide, backordered, headline-vs-all-in price)",
@@ -1371,10 +1624,12 @@
   ],
   "failure_modes": [
     "ordering on the headline item price instead of the all-in total",
+    "citing the neighborhood comparison sheet's 1099.00 USD instead of the store's written total",
     "reusing COOL-17-A's stale June 9 delivery promise after the slot change",
     "ordering before the householder approves the exact plan",
     "opening the new-credit 990 USD offer",
     "treating a dispatch estimate or fit verification as a confirmed slot",
+    "skipping the service-elevator booking and assuming the crew handles building access",
     "booking the too-wide, backordered or over-budget listings"
   ],
   "reference_actions": [
@@ -1427,8 +1682,19 @@
       "fields": "$user"
     },
     {
+      "op": "send",
+      "to": "building_manager",
+      "text": "Please book the service elevator at 18 Example Court for a refrigerator delivery on June 9 between 10:00 and 12:00",
+      "label": "elevator",
+      "fields": "$user"
+    },
+    {
       "op": "wait_for",
       "label": "fit"
+    },
+    {
+      "op": "wait_for",
+      "label": "elevator"
     },
     {
       "op": "advance",

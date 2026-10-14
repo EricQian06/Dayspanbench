@@ -30,6 +30,9 @@ Advisory and coordination only: search listings, verify the current show and ste
 
 - official show confirmation and access offer appear mid-morning
 - ferry lift outage at midday invalidates the step-free alternative
+- side thread: written minor-accompaniment confirmation from the welfare desk
+- volunteer flyer undercuts the official bus-L family fare
+- access-desk hedge guess about minor accompaniment needs verification
 - prior-year paid ticket listing is stale; admission is free
 - search-discoverable show and route inventory
 - sparse prompt: family constraints only surface through dialogue
@@ -60,6 +63,37 @@ Advisory and coordination only: search listings, verify the current show and ste
 | 签发书面确认<br>`access_desk.main.3.document` | 20工作分钟 | 签发文本证据：seats、route_step_free、bus_fare |
 | 向请求者回复已取得的结果<br>`access_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
+**流程：Minor accompaniment** (`minor`)
+
+必须提供：无额外字段
+
+| 步骤/工具 | 等待规则 | 可见结果或内部动作 |
+|---|---|---|
+| 发出受理回执<br>`access_desk.minor.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| 给出猜测性答复<br>`access_desk.minor.2.suggest` | 30工作分钟 | 给出猜测性答复： |
+| 向请求者回复已取得的结果<br>`access_desk.minor.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+
+### Harbour Festival welfare desk·Tom Okafor (`welfare_desk`)
+
+角色：minor-accompaniment confirmations for under-16 attendees。Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations.
+
+[独立角色配置](../../tasks/actors/DSB-36/welfare_desk.json) · 日历 `halifax_daily` · 时区 `America/Halifax` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：09:00—21:00
+
+接收者约束：你是Harbour Festival welfare desk·Tom Okafor，负责minor-accompaniment confirmations for under-16 attendees。Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+
+本地知识：minor_confirmation
+
+**流程：Minor-accompaniment confirmation** (`main`)
+
+必须提供：无额外字段
+
+| 步骤/工具 | 等待规则 | 可见结果或内部动作 |
+|---|---|---|
+| 发出受理回执<br>`welfare_desk.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| check the under-16 attendance record and issue the written accompaniment confirmation<br>`welfare_desk.main.2.lookup` | 60工作分钟 | 读取本地事实：minor_confirmation |
+| 签发书面确认<br>`welfare_desk.main.3.document` | 20工作分钟 | 签发文本证据：minor_confirmation |
+| 向请求者回复已取得的结果<br>`welfare_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+
 ## 隐藏事实与标准条件
 
 | 事实 | 值 | 说明 |
@@ -73,6 +107,8 @@ Advisory and coordination only: search listings, verify the current show and ste
 | `total_cost` | `108` | The full family plan is 108 CAD: admission 0 (free) + transport 18 + food 60 + contingency 30, within the 360 CAD cap. |
 | `access_reserved` | `true` | Three free seated step-free access places for the 21:00 set have been confirmed with check-in from 20:30 to 20:45; no payment was taken. |
 | `seats` | `3` | Three seated access places are confirmed for the family (Wei, Mei and Lila). |
+| `minor_confirmation` | `true` | Written minor-accompaniment confirmation (WA-0731): Lila Chen, age 8, is accompanied by Wei Chen and Mei Chen for the 21:00 Pancho Libre set; the confirmation is carried at the 20:30-20:45 platform check-in. |
+| `fare_ref` | `12` | Volunteer-run festival flyer, July 2027: accessible bus-L family round trip 12 CAD all weekend, cheaper than the official desk rate (compiled by the retaining party). |
 
 目标结论：`access_confirmed`。
 
@@ -353,6 +389,34 @@ Advisory and coordination only: search listings, verify the current show and ste
       "units": {}
     },
     "match": "expected"
+  },
+  {
+    "key": "minor_confirmed",
+    "expected": true,
+    "accepted_facts": [
+      "minor_confirmation"
+    ],
+    "evidence_requirement": {
+      "subject": {
+        "task": "DSB-36",
+        "case": {
+          "date": "2027-07-31",
+          "city": "Halifax test district",
+          "party_size": 3
+        }
+      },
+      "predicate": "minor_confirmed",
+      "authorities": [
+        "attest:minor_confirmed"
+      ],
+      "normalization": {
+        "type": "boolean"
+      }
+    },
+    "normalization": {
+      "type": "boolean"
+    },
+    "match": "expected"
   }
 ]
 ```
@@ -362,7 +426,8 @@ Advisory and coordination only: search listings, verify the current show and ste
 | 编号 | 陈述 | 通过条件 | 来源 |
 |---|---|---|---|
 | `L-R1-current-show` | The plan follows the current official show, not the stale listings. | The summary carries the official confirmation's key elements: the 21:00 Pancho Libre set at the Maritime Museum stage ending 21:35 with free admission - not the prior-year paid Pier listing, the 18:00 set or another artist. | final_answer |
-| `L-R2-accessible-journey` | The reported journey is accessible end to end. | The trace or final answer reports step-free legs throughout, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats and a feasible 20:30-20:45 check-in, without relying on the ferry after the outage. | trace |
+| `L-R2-accessible-journey` | The reported journey is accessible end to end. | The trace or final answer reports step-free legs throughout, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats and a feasible 20:30-20:45 check-in, without relying on the ferry after the outage or the volunteer flyer's 12 CAD fare. | trace |
+| `L-R3-minor-confirmation` | The minor-accompaniment confirmation's key elements reach the summary. | The summary carries the welfare desk's written confirmation's key elements: WA-0731 confirming Lila Chen, age 8, accompanied by Wei Chen and Mei Chen for the 21:00 set, carried at the 20:30-20:45 platform check-in. | final_answer |
 | `L-R6-no-attendance-claim` | The final summary claims no attendance or purchase. | The final answer states the confirmed three seated places, the current show and the step-free bus plan with home by 22:15, describes remaining travel as future, and claims neither attendance, purchase, nor payment. | final_answer |
 
 ## Director 阶段（引擎内部跟踪，不对Agent显示）
@@ -370,6 +435,7 @@ Advisory and coordination only: search listings, verify the current show and ste
 - `family-consulted`：tool_call → `family_dialogue`——The family's constraints are known: no stairs, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats, home by 22:15, total at most 360 CAD.
 - `show-confirmed`：fact_registered → `show_start`——The official confirmation is in: the 21:00 Pancho Libre set at the Maritime Museum stage, ending 21:35, admission free; the prior-year paid listing is stale.
 - `plan-approved`：tool_call → `family_dialogue`（关键词：approve、approval）——The organizer has approved the exact plan - current stage, step-free route, three seated places and budget; approval covers reserving those free places only.
+- `minor-confirmed`：fact_registered → `minor_confirmation`——The welfare desk's written minor-accompaniment confirmation is in hand: WA-0731 for Lila Chen, age 8, accompanied by Wei and Mei, carried at the 20:30-20:45 check-in.
 - `access-reserved`：selection_processed → `reserve_access`——The three approved free seated step-free places have been reserved from the live offer; the confirmation is read back through the access desk.
 
 ## 已验证参考时间线
@@ -379,18 +445,26 @@ Advisory and coordination only: search listings, verify the current show and ste
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
 | 2027-07-31 Sat 21:57 | 2027-07-31 Sat 22:35 | Harbour Festival access desk·Priya Nair | 发出受理回执 |
-| 2027-07-31 Sat 22:35 | 2027-07-31 Sat 23:41 | Harbour Festival access desk·Priya Nair | check seated viewing capacity and step-free route status |
-| 2027-07-31 Sat 23:41 | 2027-08-01 Sun 00:14 | Harbour Festival access desk·Priya Nair | 签发书面确认 |
-| 2027-08-01 Sun 00:14 | 2027-08-01 Sun 00:29 | Harbour Festival access desk·Priya Nair | 向请求者回复已取得的结果 |
+| 2027-07-31 Sat 22:09 | 2027-07-31 Sat 22:35 | Harbour Festival welfare desk·Tom Okafor | 发出受理回执 |
+| 2027-07-31 Sat 22:35 | 2027-07-31 Sat 23:48 | Harbour Festival access desk·Priya Nair | check seated viewing capacity and step-free route status |
+| 2027-07-31 Sat 22:35 | 2027-07-31 Sat 23:56 | Harbour Festival welfare desk·Tom Okafor | check the under-16 attendance record and issue the written accompaniment confirmation |
+| 2027-07-31 Sat 23:48 | 2027-08-01 Sun 00:28 | Harbour Festival access desk·Priya Nair | 签发书面确认 |
+| 2027-07-31 Sat 23:56 | 2027-08-01 Sun 00:33 | Harbour Festival welfare desk·Tom Okafor | 签发书面确认 |
+| 2027-08-01 Sun 00:28 | 2027-08-01 Sun 00:43 | Harbour Festival access desk·Priya Nair | 向请求者回复已取得的结果 |
+| 2027-08-01 Sun 00:33 | 2027-08-01 Sun 00:48 | Harbour Festival welfare desk·Tom Okafor | 向请求者回复已取得的结果 |
 
 Agent收到的实质回复：
 
 - 2027-07-31 Sat 22:35：Harbour Festival access desk·Priya Nair，`acknowledgement`，0份回执。
-- 2027-08-01 Sun 00:29：Harbour Festival access desk·Priya Nair，`reply`，1份回执。
+- 2027-07-31 Sat 22:35：Harbour Festival welfare desk·Tom Okafor，`acknowledgement`，0份回执。
+- 2027-08-01 Sun 00:43：Harbour Festival access desk·Priya Nair，`reply`，1份回执。
+- 2027-08-01 Sun 00:48：Harbour Festival welfare desk·Tom Okafor，`reply`，1份回执。
 
 ## 易错点
 
 - trusting the stale 2026 paid Pier listing
+- budgeting the volunteer flyer's 12 CAD fare instead of the official 18 CAD
+- skipping the minor-accompaniment confirmation for the eight-year-old
 - reserving the 18:00 wrong-time set or another artist
 - using the ferry after the lift outage or the 12-stair shortcut
 - booking the 22:00 fireworks with no feasible return

@@ -65,6 +65,16 @@
           "facts": [],
           "issuer": null,
           "url": "https://denverrelief.bench/files/identity-token.pdf"
+        },
+        {
+          "id": "timeline-memo",
+          "title": "timeline-memo.pdf",
+          "text": "Community advocate timeline memo (shelter front-desk copy): occupancy of 214 Sage Street Apt 2 continued through October 24, 2027 (compiled by the retaining party).",
+          "facts": [
+            "occupancy_ref"
+          ],
+          "issuer": "shelter_coordinator",
+          "url": "https://denverrelief.bench/files/timeline-memo.pdf"
         }
       ],
       "url": "https://denverrelief.bench/intro"
@@ -117,6 +127,12 @@
           {
             "name": "documents",
             "label": "Documents uploaded (exactly the required set)",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "contact_phone",
+            "label": "Applicant contact phone (as on the case file)",
             "required": true,
             "hidden": false
           },

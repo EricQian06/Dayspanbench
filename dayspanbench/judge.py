@@ -178,12 +178,45 @@ class LLMJudge:
                 current["validation_feedback"] = feedback
             result = self.client.complete(purpose="judge", actor_id=view["task_id"],
                                           system=JUDGE_PROMPT, view=current, schema=JUDGE_SCHEMA)
-            feedback = self._check(result, criteria_ids)
+            feedback = self._check(self._normalize(result), criteria_ids)
             if feedback is None:
                 return result
             if self.client.calls:
                 self.client.calls[-1]["validation_error"] = feedback
         raise ValueError(feedback)
+
+    @staticmethod
+    def _normalize(result):
+        """Provider-quirk normalization before strict validation: some models
+        return the verdict list under a different key ("verdicts"), spell the
+        boolean as "pass", or omit the evidence array while citing pointers
+        inline in "reason". The verdicts' content is what matters; dropping a
+        gradeable episode to pending over key spelling would be an environment
+        failure, not an agent failure. Evidence synthesized from "reason" is
+        flagged so the audit trail stays honest."""
+        if not isinstance(result, dict):
+            return result
+        verdicts = result.get("criteria")
+        if not isinstance(verdicts, list) and isinstance(result.get("verdicts"), list):
+            verdicts = result["verdicts"]
+        if not isinstance(verdicts, list):
+            return result
+        normalized = []
+        for verdict in verdicts:
+            if not isinstance(verdict, dict):
+                normalized.append(verdict)
+                continue
+            v = dict(verdict)
+            if "passed" not in v and "pass" in v:
+                v["passed"] = v.pop("pass")
+            if not isinstance(v.get("evidence"), list) or not v["evidence"]:
+                reason = v.get("reason")
+                if isinstance(reason, str) and reason.strip():
+                    v["evidence"] = [{"source": "final_answer", "pointer": "judge.reason",
+                                      "quote_or_value": reason}]
+                    v["evidence_synthesized"] = True
+            normalized.append(v)
+        return {"criteria": normalized}
 
     @staticmethod
     def _check(result, criteria_ids):
@@ -192,7 +225,8 @@ class LLMJudge:
             return "Verdicts must cover exactly the listed criteria, one each."
         seen = set()
         for verdict in verdicts:
-            if set(verdict) != {"criterion_id", "passed", "evidence", "reason"}:
+            if not set(verdict) <= {"criterion_id", "passed", "evidence", "reason", "evidence_synthesized"} \
+                    or not {"criterion_id", "passed", "evidence", "reason"} <= set(verdict):
                 return "Each verdict has exactly criterion_id, passed, evidence, reason."
             if verdict["criterion_id"] not in criteria_ids or verdict["criterion_id"] in seen:
                 return "criterion_id must be one of the listed ids, without duplicates."
@@ -221,11 +255,12 @@ class LLMJudge:
             return {"status": "pending",
                     "criteria": [{"id": c["id"], "passed": None, "reason": "judge call failed; pending"}
                                  for c in criteria]}
-        by_id = {v["criterion_id"]: v for v in result["criteria"]}
+        by_id = {v["criterion_id"]: v for v in self._normalize(result)["criteria"]}
         return {"status": "graded",
                 "criteria": [{"id": c["id"], "statement": c["statement"],
                               "passed": by_id[c["id"]]["passed"],
                               "evidence": by_id[c["id"]]["evidence"],
+                              "evidence_synthesized": by_id[c["id"]].get("evidence_synthesized", False),
                               "reason": by_id[c["id"]]["reason"]} for c in criteria]}
 
     # ---- anchor review: value-level equivalence for tokens the literal

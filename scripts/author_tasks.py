@@ -1383,6 +1383,9 @@ TRAP_PREDICATES = {
     "DSB-10": {"actual_ref": "actual"},
     "DSB-11": {"stable_ref": "stable"},
     "DSB-12": {"review_case_ref": "review_case"},
+    "DSB-40": {"total_ref": "order_total"},
+    "DSB-31": {"occupancy_ref": "occupancy_214"},
+    "DSB-36": {"fare_ref": "total_cost"},
 }
 
 

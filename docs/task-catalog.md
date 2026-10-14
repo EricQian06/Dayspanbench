@@ -43,10 +43,10 @@
 | [DSB-33](tasks/DSB-33.md) | Attended leak inspection: one approved slot, no repairs | 2 | 1.16667天 / 28小时 | 短期 | 2027-06-12 Sat 02:00 | resolved |
 | [DSB-34](tasks/DSB-34.md) | Credit renewal: correct the written rider, then register the signed bundle | 1 | 6.29167天 / 151小时 | mid-short | 2027-09-15 Wed 04:00 | resolved |
 | [DSB-35](tasks/DSB-35.md) | Deposit demand: verified recipient, private address kept out | 1 | 1.25天 / 30小时 | mid-short | 2027-03-20 Sat 04:00 | resolved |
-| [DSB-36](tasks/DSB-36.md) | Accessible festival evening: the correct 21:00 set with step-free travel | 1 | 0.208333天 / 5小时 | 短期 | 2027-08-01 Sun 02:00 | resolved |
+| [DSB-36](tasks/DSB-36.md) | Accessible festival evening: the correct 21:00 set with step-free travel | 2 | 0.208333天 / 5小时 | 短期 | 2027-08-01 Sun 02:00 | resolved |
 | [DSB-37](tasks/DSB-37.md) | Rail cancellation recovery with an accompanied folding bicycle | 1 | 0.1875天 / 4.5小时 | 短期 | 2027-10-08 Fri 02:00 | resolved |
 | [DSB-38](tasks/DSB-38.md) | Pet ownership transfer: right Luna across registry, license and shelter release | 2 | 1.27083天 / 30.5小时 | 短期 | 2027-03-24 Wed 04:30 | resolved |
 | [DSB-39](tasks/DSB-39.md) | Weekly replanning: protected caregiver week, unsent CEO reply, applied focus plan | 1 | 3.1875天 / 76.5小时 | 中短期 | 2027-05-11 Tue 02:30 | resolved |
-| [DSB-40](tasks/DSB-40.md) | Fridge replacement: verified access and a changed delivery slot | 2 | 1.375天 / 33小时 | 短期 | 2027-06-09 Wed 07:00 | resolved |
+| [DSB-40](tasks/DSB-40.md) | Fridge replacement: verified access and a changed delivery slot | 3 | 1.375天 / 33小时 | 短期 | 2027-06-09 Wed 07:00 | resolved |
 | [DSB-41](tasks/DSB-41.md) | Five-person Chicago-Seattle family trip: recovered inventory and exact approval | 5 | 13.25天 / 318小时 | 中短期 | 2027-05-15 Sat 04:00 | resolved |
 | [DSB-42](tasks/DSB-42.md) | Interview rescheduling: two separate recruiters, rotated link, no cross-employer disclosure | 2 | 2.14583天 / 51.5小时 | 短期 | 2027-09-16 Thu 01:30 | resolved |
