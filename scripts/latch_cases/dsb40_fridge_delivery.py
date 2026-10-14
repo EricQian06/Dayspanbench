@@ -190,7 +190,8 @@ def build(A, tasks, sites, horizons, conclusions):
             hidden_tool("householder_dialogue",
                         "Ask the householder, Angela Davis, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
                         "dialogue",
-                        {"persona": "Angela Davis (householder)",
+                        {"persona": "Angela Davis (householder). Practical and unhurried: she answers exactly what is asked, gives her measurements and access facts precisely, and reviews an exact order plan only once her June 8 13:00 window opens.",
+                         "dialogue_mode": "llm",
                          "rules": [
                              {"keywords": ["request", "need", "size", "capacity", "cuft", "width", "energy", "budget", "deadline", "when"],
                               "answer": "At least 16 cubic feet, Energy Star, no wider than 32.5 inches, at most 1300 USD all-in including tax, delivery and old-fridge recycling, with delivery completed by June 10, 2027, 09:00 Chicago time."},
@@ -211,10 +212,25 @@ def build(A, tasks, sites, horizons, conclusions):
         authorization="Advisory and coordination only: search listings, contact the store, gather written fit verification, and place at most the one pay-on-delivery order the householder has approved; no payment, new credit account, subscription, deposit or other binding commitment.",
         display_timezone="America/Chicago",
         judge_criteria=[
+            {"id": "S-R1-fit-verified",
+             "statement": "The written fit and recycling verification is carried into the summary.",
+             "pass_if": "The summary carries the fit verification's key elements: fit-S206 confirming COOL-16-B's minimum opening fits the measured 33 x 70 x 35 in opening with the verified unpack-at-door route, and old-fridge recycling included in the delivery service.",
+             "source": "final_answer"},
+            {"id": "S-R2-order-receipt",
+             "statement": "The order receipt's key elements reach the summary.",
+             "pass_if": "The summary carries the order receipt's key elements: COOL-16-B for Angela Davis at home-A, all-in 1181.60 USD (item 1020.00, tax 81.60, delivery 50.00, recycling 30.00) within the 1300 USD budget, assigned delivery 2027-06-09 10:00-12:00 Chicago time, pay on delivery.",
+             "source": "final_answer"},
             {"id": "S-R6-accurate-comparison",
              "statement": "The final explanation is accurate about tradeoffs and remaining work.",
              "pass_if": "The final answer reports the exact product, full all-in price and confirmed delivery interval, explains the rejection of the new-credit, late-delivery, backordered or over-budget offers (including the headline-vs-all-in price trap), and states that payment and delivery remain pending rather than completed.",
              "source": "final_answer"}],
+        stages=[
+            {"id": "householder-consulted", "kind": "tool_call", "target": "householder_dialogue",
+             "hint": "The household facts are known: 33 x 70 x 35 in opening, 33 in doorway with no stairs, home-A delivery 08:00-18:00, recycling wanted, pay-on-delivery only and review from June 8 13:00."},
+            {"id": "fit-verified", "kind": "fact_registered", "target": "fit_verified",
+             "hint": "The delivery specialist's written verification is in: measured fit, unpack-at-door route and recycling confirmed in writing. Live slots can still change, so re-check before ordering."},
+            {"id": "order-placed", "kind": "selection_processed", "target": "order_create",
+             "hint": "The one approved pay-on-delivery order has been placed against the live listing and slot; the confirmation is read back through the order desk, never pushed."}],
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; ordering COOL-17-A was legal only before the June 8 12:00 slot change, but the scored answer keys follow the COOL-16-B plan."))
     sites["DSB-40"] = "fridgedelivery"
     horizons["DSB-40"] = (2, "短期", "mid-episode delivery-slot rewrite plus approval window")

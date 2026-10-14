@@ -45,15 +45,15 @@ flowchart TD
 | 阶段 | 何时做 | 输入文件 / 代码 | 产生或返回什么 |
 |---|---|---|---|
 | ① 编题与导出 | 任务内容、人物、日历或规则改变后 | `scripts/author_tasks.py` | 覆盖更新12份私有JSON、12份公开JSON、41份人物JSON |
-| ② 静态验收与回归 | 导出后、正式测评前 | `scripts/validate.py`、`dayspanbench/validation.py`、`tests/test_environment.py` | 检查引用、转交材料、证据门槛、导出一致性和引擎行为；输出检查结果 |
+| ② 静态验收与回归 | 导出后、正式测评前 | `scripts/validate.py`、`dayspanbench/validation.py`、`tests/test_environment.py` | 检查引用、转交材料、凭证门槛、导出一致性和引擎行为；输出检查结果 |
 | ③ 作者可行性验收 | 新题或规则改变后 | `scripts/replay.py`、`dayspanbench/reference.py`、私有任务JSON | 更新12份参考回放及`summary.json`；不是模型成绩 |
 | ④ 生成人类审查材料 | 参考回放更新后 | `scripts/render_cards.py`读取私有JSON与参考回放 | 更新12份任务卡和`docs/task-catalog.md` |
-| ⑤ 启动一个正式episode | 每个模型 × 每题 × 每次重复都重新启动 | `scripts/serve.py --task DSB-xx`加载该题私有JSON | 全新时钟、角色实例、事项、收件箱、事件队列和证据集合；可保存运行配置，尚无最终结果 |
+| ⑤ 启动一个正式episode | 每个模型 × 每题 × 每次重复都重新启动 | `scripts/serve.py --task DSB-xx`加载该题私有JSON | 全新时钟、角色实例、事项、收件箱、事件队列和回执集合；可保存运行配置，尚无最终结果 |
 | ⑥ 模型循环调用工具 | episode运行中 | 接入方用`docs/agent-tools.json`描述工具；服务调用引擎、接收者和日历 | 公开观察、消息、凭证、联系人、模拟时间；状态保存在进程内存，可用--run-dir保存日志 |
-| ⑦ 最终提交与评分 | Agent决定完成，或到截止后作答 | `submit_answer`经Environment.evaluate调用scoring.py读取目标和本次证据 | 返回目标得分、成功类型、历时和消息数；指定--run-dir保存本次结果，不修改参考回放 |
+| ⑦ 最终提交与评分 | Agent决定完成，或到截止后作答 | `submit_answer`经Environment.evaluate调用scoring.py做确定性锚点核对，随后由LLM终审逐子部分评阅 | 返回`scored_by`/`subparts_*`/`deterministic_anchors_ok`、成功类型、历时和消息数；指定--run-dir保存本次结果，不修改参考回放 |
 | ⑧ 保存与分析模型实验 | episode结束或异常终止后 | 外层实验驱动器保存本次真实请求、响应与分数；可信主进程保存内部审计 | 服务可保存RPC/内部审计/模拟器调用/评分；被测模型自身输出和成本需外层驱动器记录 |
 
-任务内容不变时，无需在每个模型episode前重跑①至④。正式episode只需要冻结好的私有定义和运行时代码。新的episode必须使用全新环境；在原实例里继续会继承消息、时间和证据。
+任务内容不变时，无需在每个模型episode前重跑①至④。正式episode只需要冻结好的私有定义和运行时代码。新的episode必须使用全新环境；在原实例里继续会继承消息、时间和回执。
 
 ## 3. 每题重复出现的五类文件
 
@@ -98,7 +98,7 @@ flowchart TD
 | `actor.workflows` | 事项受理与步骤执行 | 收到请求后；每一步完成后 | 校验必需字段和已观察凭证，选择下一工具及等待时间 |
 | `actor.recipient.instructions`及工作流标签 | 接收者模拟器 | 新的外部消息需要判断意图时 | 构造当前人物的受限`view`；默认`RuleRecipient`做关键词路由 |
 | `actor.recipient.rule_adapter/llm_adapter` | 适配器说明 | 接入或审查时 | 字符串只是清单元数据，不会自动动态导入或调用模型；CLI可启用LLMSimulator，或由主进程注入自定义回调 |
-| `actor.recipient.reply_prefix` | 回复生成 | 对Agent正式回复时 | 引擎把前缀与实际取得的证据拼成回复；人物LLM当前不自由生成事实 |
+| `actor.recipient.reply_prefix` | 回复生成 | 对Agent正式回复时 | 引擎把前缀与canonical内容（事实、回执、联系人）交给人物LLM按人设撰写回信；关键token校验保证事实不被改写 |
 | `actor.tools/knowledge` | 人物工具模拟器 | 排程步骤到期时 | 只允许本角色声明的查询、文书、转介、内部转交和回复 |
 | `calendar` | 日历模拟器 | 计算开始、完成、批次时刻 | 独立导出的完整角色日历；当前运行时从私有定义的`calendars`取同样内容 |
 | `local_facts` | 局部知识导出 | 配置验证、人工审查；未来角色服务加载 | 当前运行时由全局事实表加角色权限提供；不直接传给受限LLM路由回调 |
@@ -132,12 +132,12 @@ flowchart TD
 | [pyproject.toml](/Users/weiwen/Documents/ChatGPT/DaySpanBench/pyproject.toml) | 安装/环境准备时 | 包版本、Python版本与依赖元数据；不是每题参数或实验配置 |
 | [.gitignore](/Users/weiwen/Documents/ChatGPT/DaySpanBench/.gitignore) | 版本管理时 | 忽略缓存、虚拟环境等；不会在运行时隔离模型可访问文件 |
 | [docs/evaluation-file-guide.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/evaluation-file-guide.md) | 接入方/评审，需要追踪文件流向时 | 本文：逐阶段职责、逐题逐文件索引；不被运行时读取 |
-| [dayspanbench/scoring.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/scoring.py) | 最终评分与受理证据匹配 | 归一化、证据属性、能力状态和失败原因 |
+| [dayspanbench/scoring.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/scoring.py) | 确定性锚点核对与受理凭证匹配 | 答案结构、结论标签、回执要素核对、能力状态和失败原因（主分数见LLM终审） |
 | [dayspanbench/llm.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/llm.py) | LLM人物交互时 | Chat/Responses HTTP调用、结构化返回、重试和日志 |
-| [dayspanbench/simulator.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/simulator.py) | LLM人物交互时 | 局部上下文、字段抽取和受约束回复规划 |
-| [tests/test_scoring.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tests/test_scoring.py) | CI/评分变更后 | 合法替代路径、归一化和无效证据负例 |
+| [dayspanbench/simulator.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/simulator.py) | LLM人物交互时 | 局部上下文、字段抽取、人格化回信生成（key-token校验）与dialogue人格 |
+| [tests/test_scoring.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tests/test_scoring.py) | CI/评分变更后 | 合法替代路径、归一化和无效凭证负例 |
 | [tests/test_simulator.py](/Users/weiwen/Documents/ChatGPT/DaySpanBench/tests/test_simulator.py) | CI/模拟器变更后 | 隔离、越权、HTTP协议与CLI日志测试 |
-| [docs/scoring-and-simulator.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/scoring-and-simulator.md) | 接入和评审时 | v0.3评分、LLM参数、日志和运行命令 |
+| [docs/scoring-and-simulator.md](/Users/weiwen/Documents/ChatGPT/DaySpanBench/docs/scoring-and-simulator.md) | 接入和评审时 | v0.5评分（LLM终审主指标）、LLM参数、日志和运行命令 |
 
 ## 7. 正式模型测评的日志文件
 
@@ -156,8 +156,8 @@ v0.3的`serve.py --run-dir <目录>`已能保存一次环境episode：`manifest.
 3. 模型驱动器向同一持续运行的进程发送`recall_task`（或`observe`），把返回的公开任务和初始联系人交给被测Agent。人物包、任务卡和参考答案不进入模型上下文。
 4. Agent联系`forwarder`；引擎创建事项并内部转给`warehouse`，到期后回传记录和新联系人。此阶段不会重新打开`warehouse.json`；使用的是启动时已加载的私有配置。
 5. Agent联系`exporter`取v2，再联系`customsdesk`初审；内部`broker/preliminary`到期返回登记号。随后Agent再次联系`exporter`取得v3和溯源材料。
-6. Agent带新版证据联系`customsdesk/final`，内部进入`broker/main`长期复核。`calendar.py`和事件队列负责跨月等待；原单证到期后不能用于新受理。
-7. 到300天截止，Agent提交已有四项证据和放行未确认。scoring.py检查目标、本次证据与已受理的技术复核能力，也接受材料齐备后经转介直联代理。
+6. Agent带新版单证凭证联系`customsdesk/final`，内部进入`broker/main`长期复核。`calendar.py`和事件队列负责跨月等待；原单证到期后不能用于新受理。
+7. 到300天截止，Agent提交自然语言总结并如实说明放行未确认。LLM终审逐子部分评阅总结，确定性锚点核对已受理的技术复核能力，也接受材料齐备后经转介直联代理。
 8. JSONL返回本次分数。指定--run-dir时服务保存本次环境日志与结果；现有`artifacts/reference_runs/DSB-12.json`保持作者回放含义。
 
 ## 9. 逐题、逐文件清单
@@ -383,7 +383,7 @@ python3 scripts/serve.py --task DSB-12
 - [初始化角色实例与进程内状态](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
 - [observe只返回时间、工具与未读数，recall_task重发初始任务简报，web_search只返回页面搜索链接，visit_page登记联系人](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
 - [接收者仅取得受限view](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
-- [最终评分读取目标及本次证据](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/scoring.py)。
+- [最终评分读取确定性锚点与本次回执](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/scoring.py)。
 - [submit_answer只返回一次评分](/Users/weiwen/Documents/ChatGPT/DaySpanBench/dayspanbench/engine.py)。
 - [同源导出私有、公开和人物配置](/Users/weiwen/Documents/ChatGPT/DaySpanBench/scripts/author_tasks.py)。
 - [作者回放读取、执行和保存路径](/Users/weiwen/Documents/ChatGPT/DaySpanBench/scripts/replay.py)。

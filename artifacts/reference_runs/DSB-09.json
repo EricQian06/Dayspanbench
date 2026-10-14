@@ -3,92 +3,39 @@
   "task_id": "DSB-09",
   "answer": {
     "conclusion": "consultation_only_not_approval",
-    "claims": [
-      {
-        "key": "responsible_office",
-        "status": "confirmed",
-        "value": "街区公共空间管理处",
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0002"
-        ]
-      },
-      {
-        "key": "consultation_receipt",
-        "status": "confirmed",
-        "value": "CONSULT-DEC03-19",
-        "evidence_ids": [
-          "EV-0003",
-          "EV-0004"
-        ]
-      },
-      {
-        "key": "case_category",
-        "status": "confirmed",
-        "value": "临时扩声活动预咨询",
-        "evidence_ids": [
-          "EV-0005"
-        ]
-      },
-      {
-        "key": "required_documents",
-        "status": "confirmed",
-        "value": [
-          "平面图",
-          "时段说明",
-          "声设备清单"
-        ],
-        "evidence_ids": [
-          "EV-0006"
-        ]
-      },
-      {
-        "key": "earliest_processing_date",
-        "status": "confirmed",
-        "value": "2027-01-04",
-        "evidence_ids": [
-          "EV-0007"
-        ]
-      }
-    ]
+    "summary": "拟用地点属于街区公共空间管理处管辖；不是私人场地。\n本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。\n拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。\n需要准备平面图、时段说明和声设备清单。\n按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日；不是活动批准日期。\n拟用地点属于街区公共空间管理处管辖；不是私人场地。\n拟用地点属于街区公共空间管理处管辖；不是私人场地。\n活动事项咨询书面核实回执关键要素：{\"jurisdiction\": \"街区公共空间管理处\"}\n本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。\n本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。\n意见征集阶段确认书面核实回执关键要素：{\"consultation_receipt\": \"CONSULT-DEC03-19\"}\n联合复核登记已办结：拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请；需准备平面图、时段说明和声设备清单；按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日。办理进度可经晴港复核进度查询（qinggang_review_status）复核。\n拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。\n需要准备平面图、时段说明和声设备清单。\n按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日；不是活动批准日期。\n表单review_form办结回执关键要素：{\"category\": \"临时扩声活动预咨询\", \"documents\": [\"平面图\", \"时段说明\", \"声设备清单\"], \"earliest\": \"2027-01-04\", \"consultation_receipt\": \"CONSULT-DEC03-19\"}"
   },
   "result": {
     "task_id": "DSB-09",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 4,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 7,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "responsible_office",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "consultation_receipt",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "case_category",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "required_documents",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "earliest_processing_date",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 1321.0,
@@ -106,7 +53,7 @@
       "status": "reply",
       "channel": "email",
       "text": "北广场这类开放场地的管辖我记不很准：可能归街区公共空间管理处，也可能要走活动环境咨询那边的口径，建议您分别去函确认。另外北广场带两只音箱的活动我印象里按一般户外活动备案登记应该就行吧，不过我也就随口一说，具体以联合复核结论为准。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -115,25 +62,17 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是晴港政务咨询台·谢茵。您咨询的事项已经核实，具体情况如下：拟用地点属于街区公共空间管理处管辖；不是私人场地。拟用地点属于街区公共空间管理处管辖；不是私人场地。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。此外，相关事项建议您联系活动环境咨询员·陆笙（lusheng@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是晴港政务咨询台·谢茵。您咨询的事项已经核实，具体情况如下：拟用地点属于街区公共空间管理处管辖；不是私人场地。拟用地点属于街区公共空间管理处管辖；不是私人场地。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。此外，相关事项建议您联系活动环境咨询员·陆笙（lusheng@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0001",
-          "issuer": "land",
-          "issued_at": "2026-11-05T04:00:00+00:00",
-          "text": "拟用地点属于街区公共空间管理处管辖；不是私人场地。",
-          "value": "街区公共空间管理处",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0002",
-          "issuer": "land",
-          "issued_at": "2026-11-05T06:21:00+00:00",
-          "text": "拟用地点属于街区公共空间管理处管辖；不是私人场地。",
-          "value": "街区公共空间管理处",
-          "valid_until": null,
-          "kind": "document"
+          "receipt_no": "R-0001",
+          "title": "活动事项咨询书面核实回执",
+          "text": "拟用地点属于街区公共空间管理处管辖；不是私人场地。\n拟用地点属于街区公共空间管理处管辖；不是私人场地。",
+          "fields": {
+            "jurisdiction": "街区公共空间管理处"
+          },
+          "issuer": "service",
+          "issued_at": "2026-11-05T08:11:00+00:00"
         }
       ]
     },
@@ -145,7 +84,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是活动环境咨询员·陆笙。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-12-03 10:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0004",
@@ -154,25 +93,17 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是活动环境咨询员·陆笙。您咨询的事项已经核实，具体情况如下：本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是活动环境咨询员·陆笙。您咨询的事项已经核实，具体情况如下：本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0003",
+          "receipt_no": "R-0002",
+          "title": "意见征集阶段确认书面核实回执",
+          "text": "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。\n本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
+          "fields": {
+            "consultation_receipt": "CONSULT-DEC03-19"
+          },
           "issuer": "sound",
-          "issued_at": "2026-12-03T02:20:00+00:00",
-          "text": "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
-          "value": "CONSULT-DEC03-19",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0004",
-          "issuer": "sound",
-          "issued_at": "2026-12-03T02:35:00+00:00",
-          "text": "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
-          "value": "CONSULT-DEC03-19",
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2026-12-03T02:50:00+00:00"
         }
       ]
     },
@@ -184,7 +115,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是活动环境咨询员·陆笙。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0006",
@@ -194,7 +125,7 @@
       "status": "reply",
       "channel": "email",
       "text": "您好，我是活动环境咨询员·陆笙。联合分类复核的书面结论不随邮件出具：请通过晴港联合复核登记渠道（qinggang_review_register）提交登记，登记须使用本轮意见征集回执编号，办结结论以表单状态为准；办理进度可经晴港复核进度查询（qinggang_review_status）复核。",
-      "evidence": []
+      "receipts": []
     }
   ],
   "private_audit": [
@@ -378,6 +309,12 @@
     },
     {
       "at": "2026-11-05T04:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "jurisdiction",
+      "issuer": "land"
+    },
+    {
+      "at": "2026-11-05T04:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "land",
@@ -409,6 +346,12 @@
       "case_id": "CASE-0002",
       "tool": "land.main.2.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2026-11-05T06:21:00+00:00",
+      "kind": "fact_registered",
+      "fact": "jurisdiction",
+      "issuer": "land"
     },
     {
       "at": "2026-11-05T06:21:00+00:00",
@@ -643,6 +586,12 @@
     },
     {
       "at": "2026-12-03T02:20:00+00:00",
+      "kind": "fact_registered",
+      "fact": "consultation_receipt",
+      "issuer": "sound"
+    },
+    {
+      "at": "2026-12-03T02:20:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "sound",
@@ -674,6 +623,12 @@
       "case_id": "CASE-0003",
       "tool": "sound.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2026-12-03T02:35:00+00:00",
+      "kind": "fact_registered",
+      "fact": "consultation_receipt",
+      "issuer": "sound"
     },
     {
       "at": "2026-12-03T02:35:00+00:00",
@@ -750,8 +705,7 @@
       "case_id": "CASE-0004",
       "field": "consultation_receipt",
       "evidence": [
-        "EV-0003",
-        "EV-0004"
+        "consultation_receipt"
       ]
     },
     {
@@ -857,6 +811,24 @@
       "tool": "qinggang_review_register",
       "form": "review_form",
       "accepted": true
+    },
+    {
+      "at": "2026-12-28T07:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "category",
+      "issuer": "sound"
+    },
+    {
+      "at": "2026-12-28T07:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "documents",
+      "issuer": "sound"
+    },
+    {
+      "at": "2026-12-28T07:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "earliest",
+      "issuer": "sound"
     },
     {
       "at": "2026-12-28T07:00:00+00:00",

@@ -30,9 +30,10 @@ def obtain_rights_confirmation(task, env, api):
     api.send_email(mailbox(task, "rights"), "请确认ARC-71两种用途的权利授权",
                    {"archive_id": "ARC-71", "usage": "非商业实体展览及展览网站"})
     drain(env)
-    visible = [ev for m in env.messages for ev in m["evidence"]
-               if ev["id"].startswith("EV-")]
-    return {ev["id"]: ev for ev in visible}
+    # v0.5: established facts live on the director; the written reply made
+    # them agent-visible.
+    return {fid: ev for fid, ev in env.director.facts.items()
+            if ev["agent_visible"]}
 
 
 class ComprehensionUnitTests(unittest.TestCase):
@@ -62,8 +63,12 @@ class ComprehensionUnitTests(unittest.TestCase):
         self.assertTrue(self.check(
             "图像ARC-71获准用于本次非商业实体展览，并授权展览网站、社交媒体公开发布"))
 
-    def test_evidence_id_citation_admits(self):
-        self.assertTrue(self.check("已获权利方书面确认", ["随信附上确认结论：" + self.exhibit_ids[0]]))
+    def test_receipt_text_quotation_admits(self):
+        # v0.5: EV-id citation is retired; quoting the receipt's own wording
+        # (the written confirmation the agent actually received) still admits.
+        fact = self.env.director.facts[self.exhibit_ids[0]]
+        self.assertTrue(self.check("已获权利方书面确认", ["随信附上确认结论：" + fact["text"]]))
+
 
     def test_prose_restatement_admits(self):
         self.assertTrue(self.check("权利方已确认：实体展览用途获准"))
@@ -101,7 +106,7 @@ class ComprehensionAdmissionTests(unittest.TestCase):
         drain(self.env)
         reply = next(m for m in self.env.messages if m["case_id"] == result["case_id"]
                      and m["status"] == "reply")
-        self.assertTrue(any(ev["value"] == 600 for ev in reply["evidence"]))
+        self.assertTrue(any(600 in r["fields"].values() for r in reply["receipts"]))
 
     def test_digitize_bounces_without_confirmation(self):
         # No rights confirmation has been obtained: the prose claim has no

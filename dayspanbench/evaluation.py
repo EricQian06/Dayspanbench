@@ -11,6 +11,7 @@ from urllib.error import HTTPError, URLError
 
 from .engine import Environment
 from .llm import StructuredClient, SimulatorError
+from .scoring import score_with_judge
 from .simulator import LLMSimulator
 from .judge import LLMJudge
 
@@ -39,9 +40,10 @@ AGENT_PROMPT = """你正在完成DaySpanBench的一项信息获取任务。你�
 - 邮件回复有随机延迟，需要主动等待并跟进；不要因为一时没有回复就认定失败。
 - wait_until等待途中若有新邮件送达，时钟会在该邮件送达时刻提前返回；规划长等待时以返回的当前时间为准重新安排后续动作。
 
-【禁止事项】
-- 不要编造已确认的信息；无法确认的字段如实标记unconfirmed，但仍应合理跟进。
-- 最终作答时，文本类value须与所引证据的结论一致并采用其原文表述（如证据value为"尚无承诺日期"，就照此填写，不要同义改写）；权威方明确回复否定性结论（"没有X""尚无X"）时，该字段报confirmed并引用证据，"没拿到肯定答复"不等于unconfirmed。
+【最终作答】
+- submit_answer的answer为{"conclusion":"<结论标签>","summary":"<自然语言总结>"}：conclusion从公开conclusion_options中选择标签或其公开中文名称；summary用自己的话完整总结本次任务结果。
+- summary必须涵盖已取得的全部关键信息：编号（受理号、票号、单号、预约号等）、数量、金额、日期、时间、单位；以实际收到的回执和书面答复为依据陈述，不要引用"证据编号"之类的内部编号。
+- 未能确认或尚未办结的事项，在summary中如实说明"尚未确认"，不要编造；权威方明确回复否定性结论（"没有X""尚无X"）时，如实转述该否定结论，"没拿到肯定答复"不等于编造。
 - 不要提交场景证据之外的猜想或真实世界知识。
 - 主进程不会代你判断事实或生成最终答案；submit_answer只允许一次，不提供试错评分。
 
@@ -292,14 +294,17 @@ def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, judg
                   agent_usage=usage_total(agent.calls), simulator_usage=usage_total(simulator_client.calls if simulator_client else []))
     if answer is not None:
         write_json(run_dir / "final_answer.json", answer)
-    # Post-episode LLM review of the final response (authored language
-    # criteria only): runs after the episode and its deterministic score are
-    # final, and a judge failure never invalidates the episode. The judge runs
-    # whenever the task carries criteria and a client was supplied.
+    # Post-episode LLM review is the PRIMARY score for tasks with authored
+    # judge_criteria: the deterministic anchors from evaluate() are recomposed
+    # with the per-criterion verdicts by score_with_judge. A pending judge
+    # (infrastructure failure) keeps the episode valid but records
+    # pending_criteria so the summary excludes it from pass-rate denominators.
     if result.get("valid_episode") and task.get("judge_criteria") and judge_client:
         progress(f"{task['id']} llm judge")
         review = LLMJudge(judge_client, validation_retries=judge_validation_retries).judge(task, env, answer)
         result["llm_judge"] = review
+        result.update(score_with_judge(env, review))
+        result["judge_pending"] = review["status"] == "pending"
         write_jsonl(run_dir / "judge_calls.jsonl", judge_client.calls)
         if review["status"] == "graded":
             result["judge_passed"] = sum(1 for c in review["criteria"] if c["passed"])
@@ -310,41 +315,63 @@ def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, judg
 
 def summarize(results, requested_tasks):
     valid = [r for r in results if r["valid_episode"]]
+    scored = [r for r in valid if not r.get("judge_pending")]
     def group(kind, key):
-        selected = [r for r in valid if r["completion_class"] == kind]
+        # Judge-pending episodes stay valid but leave the pass-rate denominator:
+        # an infrastructure failure is never an agent failure.
+        selected = [r for r in scored if r["completion_class"] == kind]
         successes = sum(bool(r.get(key)) for r in selected)
         return {"successes": successes, "valid_episodes": len(selected),
                 "rate": successes / len(selected) if selected else None}
     return {"requested_tasks": requested_tasks, "finished_episodes": len(results), "valid_episodes": len(valid),
-            "invalid_episodes": len(results) - len(valid), "resolved": group("resolved", "resolved_success"),
+            "invalid_episodes": len(results) - len(valid),
+            "judge_pending_episodes": sum(bool(r.get("judge_pending")) for r in valid),
+            "resolved": group("resolved", "resolved_success"),
             "bounded_unresolved": group("bounded_unresolved", "bounded_handling_success"),
-            "mean_required_fact_coverage": sum(r["required_fact_coverage"] for r in valid) / len(valid) if valid else None,
+            "mean_required_fact_coverage": sum(r.get("required_fact_coverage") or 0 for r in valid) / len(valid) if valid else None,
             "results": sorted(results, key=lambda r: r["task_id"])}
 
 
 def render_report(summary, agent_model, simulator_model):
     lines = ["# DaySpanBench 实测报告", "", f"被测模型：`{agent_model}`；人物模拟器：`{simulator_model}`。",
-             "每题独立一次运行；使用虚拟日历、确定性结果评分。该小样本不代表模型稳定成功率。", "",
-             f"已结束 {summary['finished_episodes']}/{len(summary['requested_tasks'])} 题；有效 {summary['valid_episodes']}；基础设施/模拟器故障 {summary['invalid_episodes']}。"]
+             "每题独立一次运行；虚拟日历，LLM终审（judge子部分）为主指标，确定性锚点仅作过程核对。该小样本不代表模型稳定成功率。", "",
+             f"已结束 {summary['finished_episodes']}/{len(summary['requested_tasks'])} 题；有效 {summary['valid_episodes']}；基础设施/模拟器故障 {summary['invalid_episodes']}；judge挂起 {summary.get('judge_pending_episodes', 0)}。"]
     for label, key in (("可解决题成功率", "resolved"), ("截止受阻题处理成功率", "bounded_unresolved")):
         item = summary[key]
         value = f"{item['rate']:.1%}" if item["rate"] is not None else "N/A"
-        lines.append(f"- {label}：{item['successes']}/{item['valid_episodes']}（{value}；仅有效运行）。")
-    lines += ["", "| 任务 | 结果 | 事实覆盖率 | 虚拟天数 | Agent步数 | 对外消息 |", "|---|---|---:|---:|---:|---:|"]
+        lines.append(f"- {label}：{item['successes']}/{item['valid_episodes']}（{value}；仅有效且非judge挂起运行）。")
+    lines += ["", "| 任务 | 结果 | 评分方式 | 子部分/事实覆盖 | 虚拟天数 | Agent步数 | 对外消息 |", "|---|---|---|---:|---:|---:|---:|"]
     for row in summary["results"]:
         state = ("通过" if row.get("complete") else "未通过") if row["valid_episode"] else "无效：" + row["termination"]
-        coverage = f"{row['required_fact_coverage']:.0%}" if row["valid_episode"] else "—"
-        lines.append(f"| {row['task_id']} | {state} | {coverage} | {row.get('calendar_days', '—')} | {row['agent_steps']} | {row.get('agent_messages', '—')} |")
-    lines += ["", "DSB-12的事实覆盖率只涉及可核实的四项目标，不表示放行已确认。故障不计作Agent失败；步数耗尽而未提交计有效失败。",
+        if row.get("judge_pending"):
+            state = "judge挂起"
+        coverage = f"{row.get('required_fact_coverage', 0):.0%}" if row["valid_episode"] else "—"
+        lines.append(f"| {row['task_id']} | {state} | {row.get('scored_by', '—')} | {coverage} | {row.get('calendar_days', '—')} | {row['agent_steps']} | {row.get('agent_messages', '—')} |")
+    lines += ["", "覆盖率列：judge题为子部分通过率（pending不计分母），无judge_criteria的题暂为确定性事实覆盖率。故障与judge挂起不计作Agent失败；步数耗尽而未提交计有效失败。",
               "", "## 未通过与故障原因", ""]
     for row in summary["results"]:
         if not row["valid_episode"]:
             lines.append(f"- {row['task_id']}：{row.get('error', row.get('error_type', row['termination']))}")
+        elif row.get("judge_pending"):
+            lines.append(f"- {row['task_id']}：judge调用失败，{row.get('pending_criteria', 'N/A')}条子部分挂起（pending）。")
         elif not row.get("complete"):
-            reasons = [f"{g['key']}: {', '.join(g['reasons'])}" for g in row["goal_results"] if not g["passed"]]
-            if not row["conclusion_correct"]:
+            reasons = []
+            checks = row.get("deterministic_checks") or {}
+            if row.get("conclusion_correct") is False:
                 reasons.append("结论标签不正确")
-            reasons.extend(row["schema_errors"])
+            missing = checks.get("summary_anchor_missing") or []
+            if missing:
+                reasons.append("总结缺失关键要素：" + "、".join(missing[:10]) + (f"（等{len(missing)}项）" if len(missing) > 10 else ""))
+            if checks.get("forms_all_accepted") is False:
+                reasons.append("表单/选择未全部按expect办结")
+            if checks.get("pending_process_satisfied") is False:
+                reasons.append("截止受理流程未完成")
+            if checks.get("pending_deadline_reached") is False:
+                reasons.append("未等到截止时点即作答")
+            for criterion in (row.get("llm_judge") or {}).get("criteria", []):
+                if criterion.get("passed") is False:
+                    reasons.append(f"子部分{criterion['id']}未通过：{criterion.get('reason', '')}")
+            reasons.extend(row.get("schema_errors") or [])
             lines.append(f"- {row['task_id']}（{row['termination']}）：" + "；".join(reasons))
     lines += ["", "每题的final_answer.json、rpc_trace.jsonl与result.json提供答案、交互和逐项目标判定；agent_calls.jsonl与simulator_calls.jsonl记录实际API调用与服务端usage。",
               "日志不含认证头，但包含任务轨迹与环境私有信息，不应再作为被测Agent的输入。", ""]

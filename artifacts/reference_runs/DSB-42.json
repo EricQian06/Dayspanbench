@@ -3,75 +3,39 @@
   "task_id": "DSB-42",
   "answer": {
     "conclusion": "both_rescheduled",
-    "claims": [
-      {
-        "key": "stripe_offer_confirmed",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0003"
-        ]
-      },
-      {
-        "key": "shopify_offer_confirmed",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0002",
-          "EV-0004"
-        ]
-      },
-      {
-        "key": "stripe_rescheduled",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0005"
-        ]
-      },
-      {
-        "key": "shopify_rescheduled",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0006"
-        ]
-      }
-    ]
+    "summary": "The Stripe recruiter separately confirmed replacement slot w01: Thursday September 16, 2027 10:00-12:00 Central time (08:00-10:00 UTC-07:00), two hours, meeting link link-stripe-current.\nThe Shopify recruiter separately confirmed replacement slot w02: Friday September 17, 2027 09:00-10:30 Central time (10:00-11:30 UTC-04:00), ninety minutes, initially with meeting link link-shopify-old.\nThe Stripe replacement was confirmed with the current link link-stripe-current (slot w01: Thursday September 16, 2027 10:00-12:00 Central, two hours); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nThe Shopify replacement was confirmed with the current link link-shopify-new (slot w02 version 2, after the September 15 09:30 rotation: Friday September 17, 2027 09:00-10:30 Central, ninety minutes); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nw01 - Stripe replacement slot (pending recruiter)关键要素：{\"stripe_offer\": true}\nw02 - Shopify replacement slot (pending recruiter, link v1)关键要素：{\"shopify_offer\": true}\nw02 - Shopify replacement slot (link rotated, v2)关键要素：{\"shopify_offer\": true}\nConfirmed: the Stripe final interview is Thursday September 16, 2027 10:00-12:00 Central time (08:00-10:00 UTC-07:00), two hours, at meeting link link-stripe-current. The old Wednesday invitation is superseded now that the replacement is confirmed; nothing was withdrawn.\nThe Stripe replacement was confirmed with the current link link-stripe-current (slot w01: Thursday September 16, 2027 10:00-12:00 Central, two hours); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nstripe_reschedule确认回执关键要素：{\"stripe_rescheduled\": true, \"company\": \"stripe\"}\nConfirmed: the Shopify final interview is Friday September 17, 2027 09:00-10:30 Central time (10:00-11:30 UTC-04:00), ninety minutes, at the current meeting link link-shopify-new (slot version 2 after the September 15 rotation). The old Wednesday invitation is superseded now that the replacement is confirmed; nothing was withdrawn.\nThe Shopify replacement was confirmed with the current link link-shopify-new (slot w02 version 2, after the September 15 09:30 rotation: Friday September 17, 2027 09:00-10:30 Central, ninety minutes); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nshopify_reschedule确认回执关键要素：{\"shopify_rescheduled\": true, \"company\": \"shopify\"}"
   },
   "result": {
     "task_id": "DSB-42",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 3,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "stripe_offer_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "shopify_offer_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "stripe_rescheduled",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "shopify_rescheduled",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 51.5,
@@ -89,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Stripe recruiter desk·Jordan Blake。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -99,7 +63,7 @@
       "status": "reply",
       "channel": "email",
       "text": "您好，我是Stripe recruiter desk·Jordan Blake。您咨询的事项已经按流程处理完毕。如有其他问题，欢迎随时来信。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0003",
@@ -109,7 +73,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Shopify recruiter desk·Sam Ortiz。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0004",
@@ -119,7 +83,7 @@
       "status": "reply",
       "channel": "email",
       "text": "您好，我是Shopify recruiter desk·Sam Ortiz。您咨询的事项已经按流程处理完毕。如有其他问题，欢迎随时来信。",
-      "evidence": []
+      "receipts": []
     }
   ],
   "private_audit": [
@@ -135,7 +99,8 @@
       "kind": "agent_dialogue",
       "tool": "candidate_dialogue",
       "question": "What is your availability, privacy rule and approval requirement for rescheduling the two interviews?",
-      "matched": true
+      "matched": true,
+      "answer": "September 15 13:00-17:00 Chicago is protected. I can interview September 16 10:00-12:00 and September 17 09:00-10:30."
     },
     {
       "at": "2027-09-13T14:00:00+00:00",
@@ -153,6 +118,18 @@
         "int-stripe",
         "int-shopify"
       ]
+    },
+    {
+      "at": "2027-09-14T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "stripe_offer",
+      "issuer": "stripe_recruiter"
+    },
+    {
+      "at": "2027-09-14T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "shopify_offer",
+      "issuer": "shopify_recruiter"
     },
     {
       "at": "2027-09-14T16:30:00+00:00",
@@ -403,6 +380,18 @@
     },
     {
       "at": "2027-09-15T15:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "stripe_offer",
+      "issuer": "stripe_recruiter"
+    },
+    {
+      "at": "2027-09-15T15:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "shopify_offer",
+      "issuer": "shopify_recruiter"
+    },
+    {
+      "at": "2027-09-15T15:00:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "interview_board",
       "query": "shopify slot link",
@@ -422,7 +411,8 @@
       "kind": "agent_dialogue",
       "tool": "candidate_dialogue",
       "question": "Stripe is Thursday September 16 10:00-12:00 Central at link-stripe-current, and Shopify is Friday September 17 09:00-10:30 Central at link-shopify-new. Do you approve rescheduling both to these exact slots?",
-      "matched": true
+      "matched": true,
+      "answer": "September 15 13:00-17:00 Chicago is protected. I can interview September 16 10:00-12:00 and September 17 09:00-10:30."
     },
     {
       "at": "2027-09-15T15:00:00+00:00",
@@ -437,6 +427,12 @@
       "tool": "stripe_reschedule",
       "entry": "w01",
       "accepted": true
+    },
+    {
+      "at": "2027-09-15T16:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "stripe_rescheduled",
+      "issuer": "stripe_recruiter"
     },
     {
       "at": "2027-09-15T16:00:00+00:00",
@@ -471,6 +467,12 @@
       "tool": "shopify_reschedule",
       "entry": "w02-v2",
       "accepted": true
+    },
+    {
+      "at": "2027-09-15T17:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "shopify_rescheduled",
+      "issuer": "shopify_recruiter"
     },
     {
       "at": "2027-09-15T17:30:00+00:00",

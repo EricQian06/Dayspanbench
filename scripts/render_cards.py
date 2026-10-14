@@ -76,8 +76,20 @@ def render():
                 text += f" 有效至{local(fact['valid_until'])}。"
             lines.append(f"| `{fid}` | `{json.dumps(fact['value'], ensure_ascii=False)}` | {text} |")
         lines += ["", "目标结论：`" + task["expected_conclusion"] + "`。", "",
-                  "```json", json.dumps(task["goals"], ensure_ascii=False, indent=2), "```", "",
-                  "## 已验证参考时间线", "", "时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。", "",
+                  "```json", json.dumps(task["goals"], ensure_ascii=False, indent=2), "```", ""]
+        if task.get("judge_criteria"):
+            lines += ["## LLM终审子部分（v0.5 主评分标准）", "",
+                      "| 编号 | 陈述 | 通过条件 | 来源 |", "|---|---|---|---|"]
+            for c in task["judge_criteria"]:
+                lines.append(f"| `{c['id']}` | {c['statement']} | {c['pass_if']} | {c['source']} |")
+            lines.append("")
+        if task.get("stages"):
+            lines += ["## Director 阶段（引擎内部跟踪，不对Agent显示）", ""]
+            lines += [f"- `{s['id']}`：{s['kind']} → `{s['target']}`"
+                      + (f"（关键词：{'、'.join(s['keywords'])}）" if s.get("keywords") else "")
+                      + (f"——{s['hint']}" if s.get("hint") else "") for s in task["stages"]]
+            lines.append("")
+        lines += ["## 已验证参考时间线", "", "时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。", "",
                   "| 开始 | 完成/预计完成 | 人物 | 阶段 |", "|---|---|---|---|"]
         actor_map = {a["id"]: a for a in task["actors"]}
         # Messages are addressed by sender mailbox; resolve back to the actor.
@@ -89,7 +101,7 @@ def render():
                 lines.append(f"| {local(event['start_at'])} | {local(event['due_at'])} | {name} | {phase} |")
         lines += ["", "Agent收到的实质回复：", ""]
         for message in run["agent_messages"]:
-            lines.append(f"- {local(message['at'])}：{by_email[message['from']]['name']}，`{message['status']}`，{len(message['evidence'])}条文本证据。")
+            lines.append(f"- {local(message['at'])}：{by_email[message['from']]['name']}，`{message['status']}`，{len(message.get('receipts') or [])}份回执。")
         if run["pending_cases"]:
             lines += ["", "截止时仍在等待：", ""]
             lines += [f"- {c['actor']} / {c['id']}：`{c['state']}`。" for c in run["pending_cases"]]

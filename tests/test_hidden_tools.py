@@ -44,6 +44,14 @@ def form_task():
              {"key": "booking-receipt", "title": "预约登记回执", "text": "预约登记回执：材料已核收。",
               "facts": ["cancel"], "issuer": "sales", "requires_form": "venue-form"}]}},
     ]
+    # The fixture swaps the entry-page form and hidden tools wholesale, so the
+    # authored DSB-01 stage graph (hean_equip_*) is retargeted to the fixture's
+    # own channel to keep the private stage graph referentially valid.
+    task["stages"] = [
+        {"id": "booking-filed", "kind": "tool_call", "target": "heanhuiguan_booking",
+         "hint": "预约登记已提交；结论只在办结后出具。"},
+        {"id": "booking-processed", "kind": "form_processed", "target": "venue-form",
+         "hint": "预约登记已办结，回执已随页面送达。"}]
     return task
 
 
@@ -131,8 +139,12 @@ class FormTests(unittest.TestCase):
         form = self.api.visit_page(self.url)["form"]
         self.assertEqual(form["status"], "已办结")
         self.assertEqual(form["result_text"], "登记信息已核对无误，预约登记完成。")
-        self.assertEqual(form["evidence"][0]["value"], 10500)
-        self.assertTrue(self.env.evidence[form["evidence"][0]["id"]]["agent_visible"])
+        # The processed form hands the agent a receipt artifact whose key
+        # fields carry the authored fact values.
+        self.assertEqual(form["receipts"][0]["receipt_no"], "R-0001")
+        self.assertEqual(form["receipts"][0]["fields"], {"price": 10500, "event_date": "2026-11-13"})
+        self.assertIn("10500", form["receipts"][0]["text"])
+        self.assertTrue(self.env.director.facts["price"]["agent_visible"])
 
     def test_wrong_values_are_rejected_on_processing(self):
         self.api.heanhuiguan_booking(fields={"event_date": "2026-11-20", "headcount": 80})
@@ -177,7 +189,7 @@ class StatusAndRecordTests(unittest.TestCase):
         self.env.advance("2026-11-06T17:30:00+08:00")
         hit = self.api.heanhuiguan_archive(key="booking-receipt")["records"][0]
         self.assertTrue(hit["found"])
-        self.assertEqual(hit["evidence"][0]["value"], "72小时内取消收取50%")
+        self.assertEqual(hit["receipts"][0]["fields"], {"cancel": "72小时内取消收取50%"})
 
 
 class GuessChainDenyTests(unittest.TestCase):

@@ -3,115 +3,39 @@
   "task_id": "DSB-13",
   "answer": {
     "conclusion": "reserved_verified",
-    "claims": [
-      {
-        "key": "restaurant_address",
-        "status": "confirmed",
-        "value": "12 Ramp Lane, Riverdale test district",
-        "evidence_ids": [
-          "EV-0008"
-        ]
-      },
-      {
-        "key": "table_time",
-        "status": "confirmed",
-        "value": "13:30",
-        "evidence_ids": [
-          "EV-0009"
-        ]
-      },
-      {
-        "key": "total_cost",
-        "status": "confirmed",
-        "value": 247.8,
-        "evidence_ids": [
-          "EV-0010"
-        ]
-      },
-      {
-        "key": "access_verified",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0004"
-        ]
-      },
-      {
-        "key": "sesame_controls_written",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0002",
-          "EV-0005"
-        ]
-      },
-      {
-        "key": "child_meals_fish_free",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0003",
-          "EV-0006"
-        ]
-      },
-      {
-        "key": "reservation_confirmed",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0007"
-        ]
-      }
-    ]
+    "summary": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nOne reservation for six at Garden Ramp Bistro on 2027-07-11 at 13:30 has been confirmed with the meal requirements acknowledged; no payment or automatic gratuity was taken.\nThe confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.\nThe reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.\nThe current pre-tip total for the six-meal plan is 247.80 USD including tax and mandatory service, within the 280 USD budget.\nProvider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nProvider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nAccess and sesame verification书面核实回执关键要素：{\"access\": true, \"controls\": true, \"fish_free\": true}\nReservation confirmed: Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district, 2027-07-11 at 13:30 New York time, six seats - four adult roast chicken and two fish-free child tomato pasta - with step-free access and written sesame controls acknowledged by the provider; pre-tip total 247.80 USD including tax and mandatory service; no payment taken. The controls are provider-reported, not a medical guarantee.\nOne reservation for six at Garden Ramp Bistro on 2027-07-11 at 13:30 has been confirmed with the meal requirements acknowledged; no payment or automatic gratuity was taken.\nThe confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.\nThe reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.\nThe current pre-tip total for the six-meal plan is 247.80 USD including tax and mandatory service, within the 280 USD budget.\nreserve_table确认回执关键要素：{\"reserved\": true, \"address\": \"12 Ramp Lane, Riverdale test district\", \"table_time\": \"13:30\", \"total_cost\": 247.8, \"party_size\": 6}"
   },
   "result": {
     "task_id": "DSB-13",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 4,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "restaurant_address",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "table_time",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "access_verified",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "sesame_controls_written",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "child_meals_fish_free",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "reservation_confirmed",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 29.0,
@@ -129,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Garden Ramp Bistro manager·Alex Chen。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -138,61 +62,19 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Garden Ramp Bistro manager·Alex Chen。您咨询的事项已经核实，具体情况如下：Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Garden Ramp Bistro manager·Alex Chen。您咨询的事项已经核实，具体情况如下：Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0001",
+          "receipt_no": "R-0001",
+          "title": "Access and sesame verification书面核实回执",
+          "text": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nProvider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.",
+          "fields": {
+            "access": true,
+            "controls": true,
+            "fish_free": true
+          },
           "issuer": "garden_manager",
-          "issued_at": "2027-07-09T17:26:00+00:00",
-          "text": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0002",
-          "issuer": "garden_manager",
-          "issued_at": "2027-07-09T17:26:00+00:00",
-          "text": "Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0003",
-          "issuer": "garden_manager",
-          "issued_at": "2027-07-09T17:26:00+00:00",
-          "text": "Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0004",
-          "issuer": "garden_manager",
-          "issued_at": "2027-07-09T18:09:00+00:00",
-          "text": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
-        },
-        {
-          "id": "EV-0005",
-          "issuer": "garden_manager",
-          "issued_at": "2027-07-09T18:09:00+00:00",
-          "text": "Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
-        },
-        {
-          "id": "EV-0006",
-          "issuer": "garden_manager",
-          "issued_at": "2027-07-09T18:09:00+00:00",
-          "text": "Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-07-09T18:24:00+00:00"
         }
       ]
     }
@@ -210,7 +92,8 @@
       "kind": "agent_dialogue",
       "tool": "family_dialogue",
       "question": "What are the party size, accessibility needs, food requirements, budget and approval arrangements for the lunch?",
-      "matched": true
+      "matched": true,
+      "answer": "Four adults and two children aged six and nine; the booking name is David Klein."
     },
     {
       "at": "2027-07-09T13:00:00+00:00",
@@ -309,6 +192,24 @@
     },
     {
       "at": "2027-07-09T17:26:00+00:00",
+      "kind": "fact_registered",
+      "fact": "access",
+      "issuer": "garden_manager"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "fact_registered",
+      "fact": "controls",
+      "issuer": "garden_manager"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
+      "kind": "fact_registered",
+      "fact": "fish_free",
+      "issuer": "garden_manager"
+    },
+    {
+      "at": "2027-07-09T17:26:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "garden_manager",
@@ -340,6 +241,24 @@
       "case_id": "CASE-0001",
       "tool": "garden_manager.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "fact_registered",
+      "fact": "access",
+      "issuer": "garden_manager"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "fact_registered",
+      "fact": "controls",
+      "issuer": "garden_manager"
+    },
+    {
+      "at": "2027-07-09T18:09:00+00:00",
+      "kind": "fact_registered",
+      "fact": "fish_free",
+      "issuer": "garden_manager"
     },
     {
       "at": "2027-07-09T18:09:00+00:00",
@@ -454,6 +373,30 @@
       "tool": "reserve_table",
       "entry": "r101-v2",
       "accepted": true
+    },
+    {
+      "at": "2027-07-10T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "reserved",
+      "issuer": "garden_manager"
+    },
+    {
+      "at": "2027-07-10T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "address",
+      "issuer": "garden_manager"
+    },
+    {
+      "at": "2027-07-10T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "table_time",
+      "issuer": "garden_manager"
+    },
+    {
+      "at": "2027-07-10T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "total_cost",
+      "issuer": "garden_manager"
     },
     {
       "at": "2027-07-10T16:30:00+00:00",

@@ -3,103 +3,39 @@
   "task_id": "DSB-23",
   "answer": {
     "conclusion": "stay_booked",
-    "claims": [
-      {
-        "key": "pet_acceptance_written",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0003"
-        ]
-      },
-      {
-        "key": "train_arrival_current",
-        "status": "confirmed",
-        "value": "23:40",
-        "evidence_ids": [
-          "EV-0002"
-        ]
-      },
-      {
-        "key": "late_checkin_deadline",
-        "status": "confirmed",
-        "value": "00:30",
-        "evidence_ids": [
-          "EV-0006",
-          "EV-0007",
-          "EV-0008"
-        ]
-      },
-      {
-        "key": "companion_supervision_acknowledged",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0004",
-          "EV-0005"
-        ]
-      },
-      {
-        "key": "stay_confirmed",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0009"
-        ]
-      },
-      {
-        "key": "total_cost",
-        "status": "confirmed",
-        "value": 378,
-        "evidence_ids": [
-          "EV-0010"
-        ]
-      }
-    ]
+    "summary": "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nTrain train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nReservation stay-XPT1 confirms two nights at the Villa des Roses, 2027-04-16 to 2027-04-18, for Camille Moreau and Nino: written 28 kg pet acceptance, the extended 00:30 late check-in, open-air parking for the 2.05 m car and Lea's supervision linked; total 378 EUR; no payment taken.\nThe stay total is 378 EUR - 310 EUR room for two nights, 20 EUR pet fee and 48 EUR open-air parking for two nights - within the 420 EUR budget.\ntrain-XPT - DELAYED, arrival 23:40 (version 2)关键要素：{\"train_arrival\": \"23:40\"}\nWritten hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nWritten hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nPet and parking verification书面核实回执关键要素：{\"pet_accepted\": true}\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nSupervision acknowledgement书面核实回执关键要素：{\"companion_ack\": true}\nVilla des Roses - written extension, late check-in until 00:30关键要素：{\"late_extension\": \"00:30\"}\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nLate check-in extension书面核实回执关键要素：{\"late_extension\": \"00:30\"}\nStay confirmed: reservation stay-XPT1, Villa des Roses, two nights 2027-04-16 to 2027-04-18, for Camille Moreau and Nino - written 28 kg pet acceptance (pet-accept-XPT), late check-in extended to 00:30 (late-XPT2) for the delayed 23:40 arrival, open-air parking for the 2.05 m car, Lea Bernard's supervision linked; total 378 EUR; no payment taken. Arrival and the stay itself remain in the future.\nReservation stay-XPT1 confirms two nights at the Villa des Roses, 2027-04-16 to 2027-04-18, for Camille Moreau and Nino: written 28 kg pet acceptance, the extended 00:30 late check-in, open-air parking for the 2.05 m car and Lea's supervision linked; total 378 EUR; no payment taken.\nThe stay total is 378 EUR - 310 EUR room for two nights, 20 EUR pet fee and 48 EUR open-air parking for two nights - within the 420 EUR budget.\nstay_book确认回执关键要素：{\"stay_confirmed\": true, \"total_cost\": 378, \"total_eur\": 378, \"pet_accepted\": true}"
   },
   "result": {
     "task_id": "DSB-23",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "pet_acceptance_written",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "train_arrival_current",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "late_checkin_deadline",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "companion_supervision_acknowledged",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "stay_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 21.0,
@@ -117,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -126,25 +62,17 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您咨询的事项已经核实，具体情况如下：Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您咨询的事项已经核实，具体情况如下：Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0001",
+          "receipt_no": "R-0002",
+          "title": "Pet and parking verification书面核实回执",
+          "text": "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nWritten hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.",
+          "fields": {
+            "pet_accepted": true
+          },
           "issuer": "hotel_desk",
-          "issued_at": "2027-04-16T17:51:00+00:00",
-          "text": "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0003",
-          "issuer": "hotel_desk",
-          "issued_at": "2027-04-17T06:19:00+00:00",
-          "text": "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-04-17T06:34:00+00:00"
         }
       ]
     },
@@ -156,7 +84,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Travel companion·Lea Bernard。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0004",
@@ -165,25 +93,17 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Travel companion·Lea Bernard。您咨询的事项已经核实，具体情况如下：Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Travel companion·Lea Bernard。您咨询的事项已经核实，具体情况如下：Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0004",
+          "receipt_no": "R-0003",
+          "title": "Supervision acknowledgement书面核实回执",
+          "text": "Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.",
+          "fields": {
+            "companion_ack": true
+          },
           "issuer": "companion_lea",
-          "issued_at": "2027-04-17T08:32:00+00:00",
-          "text": "Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0005",
-          "issuer": "companion_lea",
-          "issued_at": "2027-04-17T09:01:00+00:00",
-          "text": "Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-04-17T09:16:00+00:00"
         }
       ]
     },
@@ -195,7 +115,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0006",
@@ -204,25 +124,17 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您咨询的事项已经核实，具体情况如下：Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您咨询的事项已经核实，具体情况如下：Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.以上为正式书面核实结论；随信附办结回执（回执号R-0005），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0007",
+          "receipt_no": "R-0005",
+          "title": "Late check-in extension书面核实回执",
+          "text": "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
+          "fields": {
+            "late_extension": "00:30"
+          },
           "issuer": "hotel_desk",
-          "issued_at": "2027-04-17T11:25:00+00:00",
-          "text": "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
-          "value": "00:30",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0008",
-          "issuer": "hotel_desk",
-          "issued_at": "2027-04-17T11:51:00+00:00",
-          "text": "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
-          "value": "00:30",
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-04-17T12:06:00+00:00"
         }
       ]
     }
@@ -240,7 +152,8 @@
       "kind": "agent_dialogue",
       "tool": "camille_dialogue",
       "question": "What are Nino's details, your travel logistics and your approval conditions for the hotel booking?",
-      "matched": true
+      "matched": true,
+      "answer": "Nino weighs 28 kg, has existing chip pet-XPT and a current vet letter. The hotel must accept this exact dog in writing, and he must never be left alone - not even during parking or check-in."
     },
     {
       "at": "2027-04-16T16:00:00+00:00",
@@ -365,6 +278,12 @@
     },
     {
       "at": "2027-04-16T17:51:00+00:00",
+      "kind": "fact_registered",
+      "fact": "pet_accepted",
+      "issuer": "hotel_desk"
+    },
+    {
+      "at": "2027-04-16T17:51:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "hotel_desk",
@@ -408,6 +327,12 @@
     },
     {
       "at": "2027-04-16T18:35:00+00:00",
+      "kind": "fact_registered",
+      "fact": "train_arrival",
+      "issuer": "rail_desk"
+    },
+    {
+      "at": "2027-04-16T18:35:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "trip_records",
       "query": "train",
@@ -422,6 +347,12 @@
       "case_id": "CASE-0001",
       "tool": "hotel_desk.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-04-17T06:19:00+00:00",
+      "kind": "fact_registered",
+      "fact": "pet_accepted",
+      "issuer": "hotel_desk"
     },
     {
       "at": "2027-04-17T06:19:00+00:00",
@@ -581,6 +512,12 @@
     },
     {
       "at": "2027-04-17T08:32:00+00:00",
+      "kind": "fact_registered",
+      "fact": "companion_ack",
+      "issuer": "companion_lea"
+    },
+    {
+      "at": "2027-04-17T08:32:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "companion_lea",
@@ -612,6 +549,12 @@
       "case_id": "CASE-0002",
       "tool": "companion_lea.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-04-17T09:01:00+00:00",
+      "kind": "fact_registered",
+      "fact": "companion_ack",
+      "issuer": "companion_lea"
     },
     {
       "at": "2027-04-17T09:01:00+00:00",
@@ -661,6 +604,12 @@
       "message_id": "MSG-0004",
       "case_id": "CASE-0002",
       "status": "reply"
+    },
+    {
+      "at": "2027-04-17T09:16:00+00:00",
+      "kind": "fact_registered",
+      "fact": "late_extension",
+      "issuer": "hotel_desk"
     },
     {
       "at": "2027-04-17T09:16:00+00:00",
@@ -769,6 +718,12 @@
     },
     {
       "at": "2027-04-17T11:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "late_extension",
+      "issuer": "hotel_desk"
+    },
+    {
+      "at": "2027-04-17T11:25:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -800,6 +755,12 @@
       "case_id": "CASE-0003",
       "tool": "hotel_desk.extension.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-04-17T11:51:00+00:00",
+      "kind": "fact_registered",
+      "fact": "late_extension",
+      "issuer": "hotel_desk"
     },
     {
       "at": "2027-04-17T11:51:00+00:00",
@@ -855,7 +816,8 @@
       "kind": "agent_dialogue",
       "tool": "camille_dialogue",
       "question": "Do you approve the exact plan: Villa des Roses two nights, written 28 kg pet acceptance, extension to 00:30, Lea supervising Nino throughout, total 378 EUR?",
-      "matched": true
+      "matched": true,
+      "answer": "Nino weighs 28 kg, has existing chip pet-XPT and a current vet letter. The hotel must accept this exact dog in writing, and he must never be left alone - not even during parking or check-in."
     },
     {
       "at": "2027-04-17T12:06:00+00:00",
@@ -870,6 +832,18 @@
       "tool": "stay_book",
       "entry": "villa-extended",
       "accepted": true
+    },
+    {
+      "at": "2027-04-17T12:06:00+00:00",
+      "kind": "fact_registered",
+      "fact": "stay_confirmed",
+      "issuer": "hotel_desk"
+    },
+    {
+      "at": "2027-04-17T12:06:00+00:00",
+      "kind": "fact_registered",
+      "fact": "total_cost",
+      "issuer": "hotel_desk"
     },
     {
       "at": "2027-04-17T12:06:00+00:00",

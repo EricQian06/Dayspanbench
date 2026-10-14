@@ -16,9 +16,10 @@ from pathlib import Path
 
 from .calendar import Calendar, parse, stamp
 from .comprehension import understood_evidence
+from .director import DirectorState
 from .recipient import RuleRecipient
 from .scoring import evaluate as evaluate_outcome
-from .llm import SimulatorError
+from .llm import SimulatorError, key_tokens, missing_key_tokens
 
 
 TRANSITIONS = {
@@ -62,6 +63,15 @@ UNIT_SYNONYMS = (
 )
 
 _UNIT_LOOKUP = {unit: canon for canon, synonyms in UNIT_SYNONYMS for unit in synonyms}
+
+# v0.5 milestone 2, dialogue-mode LLM: the engine injects the canonical fact
+# (the matched rule's answer or the authored default); the model contributes
+# only the persona's wording and continuity with the prior dialogue.
+DIALOGUE_PROMPT = """你是基准环境中的一名对话者，按persona设定回答Agent的一个问题。
+canonical_fact是引擎确定的权威事实，必须完整传达：其中的全部数字、编号、带引号的专名必须原样保留，不得改动或省略，也不得添加canonical_fact之外的任何事实或承诺。
+可以用自然语言组织措辞，并结合prior_dialogue中本对话的既往问答做上下文衔接；stage_hint（如有）仅是情境提示，不得提及评分或进度结构。
+matched_topic为false时，canonical_fact是引导性默认答复：按persona口吻说明没有更多可补充的内容，可引导Agent换个话题提问。
+只输出符合Schema的JSON，不输出解释或思维过程。"""
 
 
 def normalize_field_value(value):
@@ -188,12 +198,28 @@ class Environment:
                 else (recipient or RuleRecipient()))
             for actor in task["actors"]
         }
+        # v0.5 milestone 2: when the episode runs under the LLM simulator, the
+        # shared StructuredClient also powers dialogue-mode LLM hidden tools
+        # (params.dialogue_mode == "llm"). Under the rule recipient there is
+        # no client and dialogue stays in authored keyword mode.
+        self.dialogue_client = None
+        for state in self.actors.values():
+            client = getattr(state.recipient, "client", None)
+            if client is not None and hasattr(client, "complete"):
+                self.dialogue_client = client
+                break
+        # Per hidden dialogue tool: the running question/answer history the
+        # LLM persona sees, so an NPC can answer from prior interaction.
+        self.dialogue_history = {}
         self.known_contacts = set(task["public"]["initial_contacts"])
         # Mailboxes are the addressing surface: an address that belongs to no
         # actor is a black hole that acknowledges delivery and never replies.
         self.email_to_actor = {a["contact_details"]["email"]: a["id"] for a in task["actors"] if "email" in a.get("contact_details", {})}
         self.cases = {}
-        self.evidence = {}
+        # v0.5: the EV-xxxx evidence ledger is gone. Established facts are
+        # registered on the director (no citable numbering), and completions
+        # hand the agent natural-language receipt artifacts instead.
+        self.director = DirectorState(task)
         self.messages = []
         self.audit = []
         self.events = []
@@ -202,6 +228,7 @@ class Environment:
         self.finished = False
         self.agent_sends = 0
         self.simulator_failure = None
+        self.final_answer = None
         # Web pages are not static: scheduled page_update events rewrite page
         # content at authored virtual times, so information the agent already
         # read can go stale and must be re-checked. The update schedule itself
@@ -251,8 +278,21 @@ class Environment:
     def tools(self):
         return AgentTools(self)
 
+    @property
+    def evidence(self):
+        """Deprecated compatibility view: established facts keyed by fact id.
+
+        The EV-xxxx ledger is retired; this exposes the director's registered
+        facts so the deterministic scoring/judge/reference layers keep running
+        until their own milestones. Records carry authored fact ids, never
+        citable EV numbers, and agent surfaces receive receipts instead."""
+        return self.director.facts
+
     def record(self, kind, **data):
         self.audit.append({"at": stamp(self.now), "kind": kind, **deepcopy(data)})
+        # Authored stage definitions advance deterministically from the audit
+        # stream (tool_call / form_processed / fact_registered events).
+        self.director.advance(self.audit[-1])
 
     def transition(self, case, state):
         old = case["state"]
@@ -265,18 +305,22 @@ class Environment:
         self.serial += 1
         heapq.heappush(self.events, (at, self.serial, kind, case_id))
 
-    def emit(self, case, text, evidence_ids=None, contacts=None, status="reply", internal_ok=False):
+    def emit(self, case, text, contacts=None, status="reply", internal_ok=False, receipts=None):
         if case.get("parent") and not internal_ok:
             raise ValueError("Internal cases must complete through handoff return")
         contacts = contacts or []
+        receipts = receipts or []
         actor = self.actors[case["actor"]]
         if hasattr(actor.recipient, "render"):
             view = {"actor_id": case["actor"], "name": actor.spec["name"], "role": actor.spec["role"],
+                    "persona": actor.spec.get("persona"),
                     "now": stamp(self.now), "case_id": case["id"], "case_state": case["state"],
                     "status": status, "canonical_text": text, "history": deepcopy(actor.history),
+                    "stage_hint": self.director.snapshot()["hint"],
                     "contacts": [self.contact(cid) for cid in contacts],
-                    "evidence": [{k: deepcopy(self.evidence[e][k]) for k in ("id", "text", "value", "issuer", "valid_until")}
-                                 for e in evidence_ids or []]}
+                    "facts": [{k: deepcopy(self.director.facts[f][k]) for k in ("id", "text", "value", "issuer", "valid_until")}
+                              for f in dict.fromkeys(case.get("facts", [])) if f in self.director.facts],
+                    "receipts": deepcopy(receipts)}
             text = self.recipient_call(actor, "render", view)
         # Contacts are only spoken of in the natural-language text (the sender
         # shares their mailboxes in prose); structured contact cards never ride
@@ -287,15 +331,12 @@ class Environment:
                    "from": actor.spec["contact_details"]["email"],
                    "case_id": case["id"], "status": status,
                    "channel": "phone" if case.get("origin") == "phone" else "email",
-                   "text": text, "evidence": []}
-        for evidence_id in evidence_ids or []:
-            if case.get("origin") == "phone":
-                # Spoken answers carry information but never written evidence.
-                continue
-            ev = self.evidence[evidence_id]
-            ev["agent_visible"] = True
-            message["evidence"].append({key: deepcopy(ev[key]) for key in
-                ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")})
+                   "text": text, "receipts": deepcopy(receipts)}
+        # Facts stated in a written letter are established as agent-visible.
+        for fact_id in case.get("facts", []):
+            record = self.director.facts.get(fact_id)
+            if record is not None:
+                record["agent_visible"] = True
         self.messages.append(message)
         self.actors[case["actor"]].outbox.append(message["id"])
         actor.history.append({"role": "recipient", "text": text, "case_id": case["id"], "at": stamp(self.now)})
@@ -308,6 +349,52 @@ class Environment:
             self.simulator_failure = str(exc)
             self.finished = True
             self.record("simulator_failure", actor=actor.spec["id"], reason=str(exc))
+            raise
+
+    def render_dialogue(self, tool_name, params, question, canonical, matched):
+        """LLM rephrase of an authored dialogue answer (dialogue_mode="llm").
+        The engine injects the canonical fact, the director's stage hint and
+        the running dialogue history; the model returns only the persona's
+        wording. Key tokens (numbers, ids, quoted names) must survive
+        verbatim — one repair retry, then SimulatorError, which marks the
+        episode invalid, not failed."""
+        history = self.dialogue_history.setdefault(tool_name, [])
+        snapshot = self.director.snapshot()
+        view = {"persona": params.get("persona", "the user"),
+                "question": question, "canonical_fact": canonical,
+                "matched_topic": matched,
+                "prior_dialogue": deepcopy(history[-12:]),
+                "stage_hint": snapshot["hint"],
+                "achieved_stages": snapshot["achieved_stages"],
+                "now": stamp(self.now)}
+        schema = {"type": "object", "properties": {"answer": {"type": "string"}},
+                  "required": ["answer"], "additionalProperties": False}
+        tokens = key_tokens(canonical)
+        try:
+            for attempt in range(2):
+                result = self.dialogue_client.complete(
+                    purpose="dialogue", actor_id=tool_name, system=DIALOGUE_PROMPT,
+                    view=view, schema=schema)
+                answer = result.get("answer") if isinstance(result, dict) else None
+                missing = missing_key_tokens(answer, tokens)
+                if isinstance(answer, str) and answer.strip() and not missing:
+                    history.append({"question": question, "answer": answer,
+                                    "at": stamp(self.now)})
+                    return answer
+                if attempt == 0:
+                    view = deepcopy(view)
+                    view["validation_feedback"] = {
+                        "previous_answer": answer,
+                        "error": "answer is empty or not a string"
+                                 if not isinstance(answer, str) or not answer.strip()
+                                 else "answer lost required key tokens: " + ", ".join(missing),
+                        "requirements": ("answer必须是非空字符串，且把canonical_fact中的全部数字、编号、"
+                                         "带引号专名原样保留，在此基础上重新组织措辞。")}
+            raise SimulatorError("Dialogue reply lost required key tokens")
+        except SimulatorError as exc:
+            self.simulator_failure = str(exc)
+            self.finished = True
+            self.record("simulator_failure", source=tool_name, reason=str(exc))
             raise
 
     def contact(self, actor_id):
@@ -333,7 +420,7 @@ class Environment:
         workflow = next(w for w in actor.spec["workflows"] if w["id"] == workflow_id)
         self.case_serial += 1
         case = {"id": f"CASE-{self.case_serial:04d}", "actor": actor_id, "workflow": deepcopy(workflow),
-                "state": "new", "step": 0, "fields": deepcopy(fields), "evidence": [],
+                "state": "new", "step": 0, "fields": deepcopy(fields), "facts": [],
                 "contacts": [], "parent": parent, "origin": origin, "received_at": stamp(self.now),
                 "correspondence": []}
         self.cases[case["id"]] = case
@@ -358,7 +445,7 @@ class Environment:
         actor = self.actors[actor_id]
         self.case_serial += 1
         case = {"id": f"CASE-{self.case_serial:04d}", "actor": actor_id, "workflow": None,
-                "state": "new", "step": 0, "fields": deepcopy(fields), "evidence": [],
+                "state": "new", "step": 0, "fields": deepcopy(fields), "facts": [],
                 "contacts": [], "parent": None, "origin": "agent", "received_at": stamp(self.now)}
         self.cases[case["id"]] = case
         actor.cases.append(case["id"])
@@ -411,9 +498,10 @@ class Environment:
 
     def process_form(self, form_id):
         """Flip a submitted web form to its processed/rejected outcome at the
-        authored virtual time: publish the result text, optionally issue
-        evidence facts and rewrite the carrying page. The agent is never
-        notified; it must re-visit the page or query the status tool."""
+        authored virtual time: publish the result text, register the authored
+        facts and issue a receipt artifact, then rewrite the carrying page. The
+        agent is never notified; it must re-visit the page or query the status
+        tool."""
         submission = self.form_submissions.get(form_id)
         params = self.form_specs.get(form_id)
         if submission is None or params is None or submission["status"] != "pending":
@@ -421,6 +509,7 @@ class Environment:
         if submission["accepted"]:
             submission["status"] = "processed"
             submission["result_text"] = params.get("result_text") or "您提交的申请已受理办结。"
+            available = []
             for fact_id in params.get("facts", []):
                 fact = self.task["facts"][fact_id]
                 # A fact gated behind a later availability simply is not
@@ -428,7 +517,12 @@ class Environment:
                 if fact.get("available_at") and self.now < parse(fact["available_at"]):
                     self.record("form_fact_pending", form=form_id, fact=fact_id)
                     continue
-                submission["evidence"].append(self.issue_public(fact_id, params["issuer"]))
+                available.append(fact_id)
+            if available:
+                submission["receipts"].append(self.issue_receipt(
+                    params.get("receipt_title") or f"表单{form_id}办结回执",
+                    available, params["issuer"], submission["result_text"],
+                    params.get("expect")))
         else:
             submission["status"] = "rejected"
             submission["result_text"] = params.get("reject_text") or "您提交的信息与登记情况不符，已退回；请核对后重新提交。"
@@ -465,8 +559,8 @@ class Environment:
 
     def process_selection(self, tool_name):
         """Complete a pending selection: accepted only if the picked entry
-        still satisfies the authored expectations; acceptance issues written
-        evidence exactly like a processed form."""
+        still satisfies the authored expectations; acceptance registers the
+        facts and issues a receipt artifact exactly like a processed form."""
         selection = self.selections.get(tool_name)
         if not selection or selection["status"] != "pending":
             return
@@ -479,12 +573,18 @@ class Environment:
         if selection["accepted"]:
             selection["status"] = "processed"
             selection["result_text"] = params.get("result_text") or "Your selection has been confirmed."
+            available = []
             for fact_id in params.get("facts", []):
                 fact = self.task["facts"][fact_id]
                 if fact.get("available_at") and self.now < parse(fact["available_at"]):
                     self.record("selection_fact_pending", tool=tool_name, fact=fact_id)
                     continue
-                selection["evidence"].append(self.issue_public(fact_id, params["issuer"]))
+                available.append(fact_id)
+            if available:
+                selection["receipts"].append(self.issue_receipt(
+                    params.get("receipt_title") or f"{tool_name}确认回执",
+                    available, params["issuer"], selection["result_text"],
+                    params.get("expect")))
         else:
             selection["status"] = "rejected"
             selection["result_text"] = params.get("reject_text") or \
@@ -739,18 +839,48 @@ class Environment:
         self.enqueue(end, "complete", case["id"])
         self.notify_eta_slip(case)
 
-    def issue(self, case, fact_id, kind="fact"):
+    def register_fact(self, fact_id, issuer_id, agent_visible=True):
+        """Establish a fact on the director: no EV numbering, just the authored
+        fact id and its record for deterministic checks. Availability is still
+        gated exactly like the retired evidence issuance was."""
         fact = self.task["facts"][fact_id]
         if fact.get("available_at") and self.now < parse(fact["available_at"]):
-            raise ValueError(f"Fact {fact_id} queried before its availability")
-        ev_id = f"EV-{len(self.evidence)+1:04d}"
-        self.evidence[ev_id] = {"id": ev_id, "fact_id": fact_id, "value": deepcopy(fact["value"]),
-            "text": fact["text"], "issuer": case["actor"], "issued_at": stamp(self.now),
-            "valid_until": fact.get("valid_until"), "kind": kind, "agent_visible": False,
-            "attributes": deepcopy(fact["attributes"]),
-            "authorities": deepcopy(self.actors[case["actor"]].spec["evidence_authorities"])}
-        case["evidence"].append(ev_id)
-        return ev_id
+            raise ValueError(f"Fact {fact_id} not yet published")
+        record = self.director.register_fact(fact_id, fact["value"], fact["text"], issuer_id,
+            stamp(self.now), valid_until=fact.get("valid_until"),
+            attributes=fact.get("attributes"),
+            authorities=self.actors[issuer_id].spec.get("evidence_authorities"),
+            agent_visible=agent_visible)
+        self.record("fact_registered", fact=fact_id, issuer=issuer_id)
+        return record
+
+    def issue_receipt(self, title, fact_ids, issuer_id, base_text="", expect=None,
+                      reregister=True):
+        """Register the facts and issue one natural-language receipt artifact:
+        full voucher text plus structured key fields (numbers, amounts, dates)
+        derived from the facts and the channel's expect mapping. The receipt
+        number is a bookkeeping label only; the agent must carry the key
+        contents into its final summary in its own words.
+
+        reregister=False covers facts already registered under the right
+        issuer (e.g. an internal handoff attested them): the receipt cites the
+        existing records instead of re-attesting them under this channel."""
+        fields, texts = {}, []
+        for fact_id in fact_ids or []:
+            if reregister:
+                record = self.register_fact(fact_id, issuer_id)
+            else:
+                record = self.director.facts.get(fact_id)
+                if record is None:
+                    continue
+            fields[fact_id] = deepcopy(record["value"])
+            texts.append(record["text"])
+        for key, expected in (expect or {}).items():
+            fields.setdefault(key, deepcopy(expected))
+        text = base_text or ""
+        if texts:
+            text = (text + "\n" if text else "") + "\n".join(texts)
+        return self.director.issue_receipt(title, text, fields, issuer_id, stamp(self.now))
 
     def _catalog_entry(self, catalog_name, entry_id):
         """The current inventory row for an id, or None if it is gone."""
@@ -764,21 +894,6 @@ class Environment:
             return False
         return True
 
-    def issue_public(self, fact_id, issuer_id, kind="document"):
-        """Issue engine attestation for a fact the agent retrieved itself by
-        fetching a published document, outside any recipient case. The issuer's
-        attestation authority still applies; availability is still gated."""
-        fact = self.task["facts"][fact_id]
-        if fact.get("available_at") and self.now < parse(fact["available_at"]):
-            raise ValueError(f"Fact {fact_id} not yet published")
-        ev_id = f"EV-{len(self.evidence)+1:04d}"
-        self.evidence[ev_id] = {"id": ev_id, "fact_id": fact_id, "value": deepcopy(fact["value"]),
-            "text": fact["text"], "issuer": issuer_id, "issued_at": stamp(self.now),
-            "valid_until": fact.get("valid_until"), "kind": kind, "agent_visible": True,
-            "attributes": deepcopy(fact["attributes"]),
-            "authorities": deepcopy(self.actors[issuer_id].spec["evidence_authorities"])}
-        return ev_id
-
     def execute_tool(self, case, tool_id):
         actor = self.actors[case["actor"]]
         if tool_id not in actor.spec["tools"]:
@@ -789,14 +904,14 @@ class Environment:
             for fact_id in tool["facts"]:
                 if fact_id not in actor.spec["knowledge"]:
                     raise PermissionError("Cross-actor fact access")
-                self.issue(case, fact_id)
+                self.register_fact(fact_id, case["actor"], agent_visible=False)
+                case["facts"].append(fact_id)
         elif tool["kind"] == "document":
             for fact_id in tool["facts"]:
-                if fact_id not in actor.spec["knowledge"] and not any(
-                    self.evidence[e]["fact_id"] == fact_id for e in case["evidence"]
-                ):
+                if fact_id not in actor.spec["knowledge"] and fact_id not in case["facts"]:
                     raise PermissionError("Document contains an unobserved fact")
-                self.issue(case, fact_id, "document")
+                self.register_fact(fact_id, case["actor"], agent_visible=False)
+                case["facts"].append(fact_id)
         elif tool["kind"] == "refer":
             case["contacts"].extend(tool["contacts"])
         elif tool["kind"] == "acknowledge":
@@ -853,7 +968,7 @@ class Environment:
             self.transition(case, "replied")
             if case.get("parent"):
                 parent = self.cases[case["parent"]]
-                parent["evidence"].extend(case["evidence"])
+                parent["facts"].extend(case["facts"])
                 parent["contacts"].extend(case["contacts"])
                 self.record("handoff_return", case_id=case["id"], parent=parent["id"])
                 parent["step"] += 1
@@ -861,19 +976,29 @@ class Environment:
             else:
                 # One natural-language email paragraph, assembled deterministically.
                 parts = [f"您好，我是{actor.spec['name']}。"]
-                texts = [self.evidence[e]["text"] for e in case["evidence"]]
-                if texts:
+                receipt = None
+                if case["facts"]:
+                    # The canonical result text plus a receipt artifact: the
+                    # agent must remember the key contents and write them into
+                    # its final summary itself. The facts were already attested
+                    # under their original issuers; do not re-attest them here.
+                    receipt = self.issue_receipt(
+                        f"{case['workflow'].get('label', case['workflow']['id'])}书面核实回执",
+                        case["facts"], case["actor"], reregister=False)
                     parts.append("您咨询的事项已经核实，具体情况如下：")
-                    parts.extend(texts)
-                    # Positive confirmation: cited conclusions are backed by the
-                    # structured written evidence attached to this letter.
-                    parts.append("以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。")
+                    parts.extend(record["text"] for record in
+                                 (self.director.facts[f] for f in case["facts"]))
+                    parts.append("以上为正式书面核实结论；随信附办结回执"
+                                 f"（回执号{receipt['receipt_no']}），该回执的关键内容（编号、数量、日期）须记入最终总结。")
                 else:
                     parts.append("您咨询的事项已经按流程处理完毕。")
                 if case["contacts"]:
                     parts.append(f"此外，相关事项建议您联系{self.contact_mentions(dict.fromkeys(case['contacts']))}，他们可以继续为您处理。")
                 parts.append("如有其他问题，欢迎随时来信。")
-                self.emit(case, "".join(parts), case["evidence"], list(dict.fromkeys(case["contacts"])))
+                # Spoken answers carry information but never written receipts.
+                self.emit(case, "".join(parts), list(dict.fromkeys(case["contacts"])),
+                          receipts=None if case.get("origin") == "phone" else
+                          ([receipt] if receipt else None))
             return "done"
         else:
             raise ValueError("Unknown recipient tool")
@@ -952,6 +1077,10 @@ class Environment:
     def evaluate(self, answer):
         if self.simulator_failure:
             raise SimulatorError("Invalid episode: simulator failed")
+        # v0.5 answer schema: {"conclusion": str, "summary": str}. The new
+        # structure is stored for the milestone-3 scoring rewrite; the legacy
+        # deterministic scorer still runs unchanged in the meantime.
+        self.final_answer = deepcopy(answer)
         return evaluate_outcome(self, answer)
 
 
@@ -1096,14 +1225,12 @@ class AgentTools:
                 else:
                     form["status"] = "已办结" if submission["status"] == "processed" else "已退回"
                     form["result_text"] = submission["result_text"]
-                    if submission["evidence"]:
-                        form["evidence"] = [{k: deepcopy(env.evidence[ev][k]) for k in
-                            ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")}
-                            for ev in submission["evidence"]]
+                    if submission["receipts"]:
                         # Positive confirmation: the processed form is an official
-                        # conclusion channel and the receipt carries written evidence.
-                        form["evidence_note"] = ("本表单办结结论为正式书面凭证，已随页面送达"
-                                                 "（evidence，含编号、签发人与内容），其证据编号可在最终提交中引用。")
+                        # conclusion channel and the receipt is the written voucher.
+                        form["receipts"] = deepcopy(submission["receipts"])
+                        form["receipt_note"] = ("本表单办结结论为正式办结凭证，回执已随页面送达；"
+                                                 "该回执的关键内容（编号、数量、日期）须记入最终总结。")
             visible["form"] = form
         # Pages can be revised during the episode; this is when the returned
         # content last changed (the task start for never-updated pages).
@@ -1250,7 +1377,7 @@ class AgentTools:
 
         Quick interactions complete during the call; longer workflows continue
         asynchronously and the written reply later reaches the inbox without
-        evidence attachments, since spoken answers issue no documents.
+        receipt attachments, since spoken answers issue no documents.
         """
         env = self._env
         if not isinstance(text, str) or (fields is not None and not isinstance(fields, dict)):
@@ -1381,20 +1508,18 @@ class AgentTools:
         if document is None:
             raise ValueError("Unknown document address")
         result = {"url": url, "title": document["title"], "text": document["text"],
-                  "at": stamp(env.now), "evidence": []}
-        for fact_id in document.get("facts", []):
-            ev_id = env.issue_public(fact_id, document["issuer"])
-            ev = env.evidence[ev_id]
-            result["evidence"].append({key: deepcopy(ev[key]) for key in
-                ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")})
-        if result["evidence"]:
-            # Written material with attached records. The note deliberately
+                  "at": stamp(env.now), "receipts": []}
+        if document.get("facts"):
+            result["receipts"].append(env.issue_receipt(
+                f"《{document['title']}》书面材料回执", document["facts"], document["issuer"]))
+        if result["receipts"]:
+            # Written material with an attached receipt. The note deliberately
             # stays neutral and identical for formal and reference documents:
             # the environment never labels attestation authority per file —
             # the agent must check issuers itself (contract section on oral /
             # uncertain information states the general rule).
-            result["note"] = ("书面材料已下载，随附本文件载明的记录与对应证据编号"
-                              "（evidence，含编号、签发人与内容），其证据编号可在最终提交中引用。")
+            result["note"] = ("书面材料已下载，随附载明本文件内容的回执；"
+                              "该回执的关键内容（编号、数量、日期）须记入最终总结。")
         else:
             result["note"] = "本文件为普通说明材料，不随下载签发书面凭证。"
         env.record("agent_fetch_document", url=url, facts=document.get("facts", []))
@@ -1523,7 +1648,7 @@ class AgentTools:
         env.form_submissions[form_id] = {"status": "pending", "submitted_at": stamp(env.now),
                                          "values": deepcopy(values), "accepted": accepted,
                                          "mismatched": mismatched,
-                                         "result_text": None, "evidence": []}
+                                         "result_text": None, "receipts": []}
         env.record("agent_form_submitted", tool=name, form=form_id, accepted=accepted)
         env.enqueue(at, "form_processed", form_id)
         return {"status": "submitted", "form": form_id, "at": stamp(env.now),
@@ -1560,23 +1685,21 @@ class AgentTools:
                 else:
                     outcome["state"] = submission["result_text"]
                     # A processed status query is an official confirmation channel
-                    # and carries the issued written evidence, just like the
-                    # carrying page does after a revisit (same field projection).
-                    if submission["status"] == "processed" and submission["evidence"]:
-                        outcome["evidence"] = [{k: deepcopy(env.evidence[ev][k]) for k in
-                            ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")}
-                            for ev in submission["evidence"]]
+                    # and carries the issued receipts, just like the carrying
+                    # page does after a revisit.
+                    if submission["status"] == "processed" and submission["receipts"]:
+                        outcome["receipts"] = deepcopy(submission["receipts"])
                         # Positive confirmation: the processed status query is an
-                        # official channel and the written evidence is delivered.
-                        outcome["evidence_note"] = ("本查询为正式办结渠道，书面凭证已随本查询送达"
-                                                    "（evidence，含编号、签发人与内容），其证据编号可在最终提交中引用。")
+                        # official channel and the receipt is the written voucher.
+                        outcome["receipt_note"] = ("本查询为正式办结渠道，回执已随本查询送达；"
+                                                   "该回执的关键内容（编号、数量、日期）须记入最终总结。")
             results.append(outcome)
         return {"records": results, "now": stamp(env.now)}
 
     def _hidden_record(self, name, spec, kwargs):
         """Retrieve an authored record that exists only after its precondition
-        (a virtual time and/or a form having been processed); a hit issues
-        evidence like fetch_document does, a miss explains why not."""
+        (a virtual time and/or a form having been processed); a hit issues a
+        receipt like fetch_document does, a miss explains why not."""
         env = self._env
         key = kwargs.get("key")
         if set(kwargs) - {"key"} or (key is not None and not isinstance(key, str)):
@@ -1600,12 +1723,11 @@ class AgentTools:
                                 "text": "该记录尚未生成或暂不可查询，请稍后再查。"})
                 continue
             entry = {"key": record["key"], "found": True, "title": record["title"],
-                     "text": record["text"], "at": stamp(env.now), "evidence": []}
-            for fact_id in record.get("facts", []):
-                ev_id = env.issue_public(fact_id, record["issuer"])
-                ev = env.evidence[ev_id]
-                entry["evidence"].append({k: deepcopy(ev[k]) for k in
-                    ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")})
+                     "text": record["text"], "at": stamp(env.now), "receipts": []}
+            if record.get("facts"):
+                entry["receipts"].append(env.issue_receipt(
+                    record["title"], record["facts"], record["issuer"], record["text"]))
+                entry["receipt_note"] = "本记录为正式渠道出具的书面材料；该回执的关键内容（编号、数量、日期）须记入最终总结。"
             results.append(entry)
         env.record("agent_hidden_record", tool=name, key=key,
                    found=[r["key"] for r in results if r["found"]])
@@ -1614,7 +1736,8 @@ class AgentTools:
     def _hidden_catalog(self, name, spec, kwargs):
         """Search an authored inventory (flights, menus, products, schedules):
         rows filtered by query terms, honoring per-row availability windows.
-        A row may carry facts issued on retrieval (official listing evidence)."""
+        A row may carry facts registered on retrieval (an official listing
+        receipt)."""
         env = self._env
         query = kwargs.get("query")
         if set(kwargs) - {"query"} or (query is not None and not isinstance(query, str)):
@@ -1630,19 +1753,17 @@ class AgentTools:
                 continue
             row = {"id": entry["id"], "title": entry["title"], "text": entry.get("text", ""),
                    "fields": deepcopy(entry.get("fields", {}))}
-            evidence = []
+            available = []
             for fact_id in entry.get("facts", []):
                 fact = env.task["facts"][fact_id]
                 if fact.get("available_at") and env.now < parse(fact["available_at"]):
                     continue
-                ev_id = env.issue_public(fact_id, entry["issuer"])
-                ev = env.evidence[ev_id]
-                evidence.append({k: deepcopy(ev[k]) for k in
-                    ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")})
-            if evidence:
-                row["evidence"] = evidence
-                row["evidence_note"] = ("This listing is an official channel; the written evidence above "
-                                        "has been delivered and its ids may be cited in the final submission.")
+                available.append(fact_id)
+            if available:
+                row["receipts"] = [env.issue_receipt(entry["title"], available, entry["issuer"])]
+                row["receipt_note"] = ("This listing is an official channel; the receipt above has been "
+                                       "delivered. Its key contents (numbers, quantities, dates) must be "
+                                       "recorded in your final summary.")
             rows.append(row)
         env.record("agent_hidden_catalog", tool=name, query=query,
                    entries=[r["id"] for r in rows])
@@ -1665,7 +1786,8 @@ class AgentTools:
         """Pick one option out of a linked catalog tool and commit it: the
         entry must still be listed when the booking is processed; an authored
         hold can lapse first. Processing completes later at an authored virtual
-        time and accepted selections issue written evidence, like a form."""
+        time and accepted selections register facts and issue a receipt, like
+        a form."""
         env = self._env
         params = spec["params"]
         # Calling the select tool with {"query": ...} reads back the current
@@ -1680,13 +1802,11 @@ class AgentTools:
             outcome = {"status": selection["status"], "entry": selection["entry"],
                        "submitted_at": selection["submitted_at"], "now": stamp(env.now),
                        "state": selection["result_text"] or "The selection is being processed."}
-            if selection["status"] == "processed" and selection["evidence"]:
-                outcome["evidence"] = [{k: deepcopy(env.evidence[ev][k]) for k in
-                    ("id", "issuer", "issued_at", "text", "value", "valid_until", "kind")}
-                    for ev in selection["evidence"]]
-                outcome["evidence_note"] = ("This query is an official confirmation channel; the written "
-                                            "evidence above has been delivered and its ids may be cited "
-                                            "in the final submission.")
+            if selection["status"] == "processed" and selection["receipts"]:
+                outcome["receipts"] = deepcopy(selection["receipts"])
+                outcome["receipt_note"] = ("This query is an official confirmation channel; the receipt "
+                                           "above has been delivered. Its key contents (numbers, "
+                                           "quantities, dates) must be recorded in your final summary.")
             return outcome
         if set(kwargs) != {"entry"} or not isinstance(kwargs.get("entry"), str):
             raise ValueError("hidden select tool takes either {\"entry\": option_id} to select, "
@@ -1711,7 +1831,7 @@ class AgentTools:
             at = calendar.add_business(env.now, params.get("process_delay", 60))
         env.selections[name] = {"entry": kwargs["entry"].strip(), "catalog": params["catalog"],
                                 "status": "pending", "submitted_at": stamp(env.now),
-                                "accepted": accepted, "result_text": None, "evidence": [],
+                                "accepted": accepted, "result_text": None, "receipts": [],
                                 "params": params}
         env.record("agent_selection_submitted", tool=name, entry=kwargs["entry"], accepted=accepted)
         env.enqueue(at, "selection_processed", name)
@@ -1729,9 +1849,14 @@ class AgentTools:
 
     def _hidden_dialogue(self, name, spec, kwargs):
         """Ask the task's principal (the user being assisted) a question.
-        Replies are authored canned answers matched by keyword: the agent must
-        ask the right question to surface a fact that was never in any page.
-        User statements are information, not attested evidence."""
+        Keyword mode (the default): replies are authored canned answers matched
+        by keyword; the agent must ask the right question to surface a fact
+        that was never in any page. dialogue_mode="llm" (only active when the
+        episode runs under the LLM simulator): the matched rule's answer (or
+        the authored default) is the canonical fact the engine injects, and
+        the model contributes only the persona's wording, grounded on the
+        prior dialogue history. User statements are information, not
+        attested evidence."""
         env = self._env
         question = kwargs.get("question")
         if set(kwargs) != {"question"} or not isinstance(question, str) or not question.strip():
@@ -1744,12 +1869,15 @@ class AgentTools:
                 matched = rule
                 break
         if matched is None:
-            answer = params.get("default") or \
+            canonical = params.get("default") or \
                 "I don't have anything more to say about that; please work from what you already have."
         else:
-            answer = matched["answer"]
+            canonical = matched["answer"]
+        answer = canonical
+        if params.get("dialogue_mode") == "llm" and env.dialogue_client is not None:
+            answer = env.render_dialogue(name, params, question, canonical, matched is not None)
         env.record("agent_dialogue", tool=name, question=question,
-                   matched=matched is not None)
+                   matched=matched is not None, answer=answer)
         return {"speaker": params.get("persona", "the user"), "answer": answer, "at": stamp(env.now)}
 
     def submit_answer(self, answer):

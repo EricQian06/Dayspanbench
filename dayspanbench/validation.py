@@ -199,6 +199,24 @@ def validate_task(task):
         check(criterion["source"] in {"final_answer", "trace", "final_state"}, f"{cwhere}: unknown source")
     check(len({c["id"] for c in task.get("judge_criteria", [])}) == len(task.get("judge_criteria", [])),
           "Duplicate judge criterion id")
+    # Authored director stages: private progress graph for NPC wording hints.
+    check("stages" not in task["public"], "Authored stages must stay private")
+    check(len({s["id"] for s in task.get("stages", [])}) == len(task.get("stages", [])),
+          "Duplicate stage id")
+    for index, stage in enumerate(task.get("stages", [])):
+        swhere = f"stages[{index}]"
+        check(set(stage) <= {"id", "kind", "target", "hint", "keywords"},
+              f"{swhere}: unsupported field")
+        check(bool(stage.get("id")), f"{swhere}: missing id")
+        check(stage.get("kind") in {"tool_call", "form_processed", "selection_processed", "fact_registered"},
+              f"{swhere}: unknown stage kind")
+        check(bool(stage.get("target")), f"{swhere}: missing target")
+        if stage.get("kind") == "form_processed":
+            check(stage.get("target") in form_ids, f"{swhere}: form_processed target must be a form id")
+        if stage.get("keywords"):
+            check(isinstance(stage["keywords"], list)
+                  and all(isinstance(k, str) and k.strip() for k in stage["keywords"]),
+                  f"{swhere}: keywords must be non-empty strings")
     hidden_names = []
     for index, tool in enumerate(task.get("hidden_tools", [])):
         where = f"hidden_tools[{index}]"

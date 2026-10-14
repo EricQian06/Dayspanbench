@@ -347,6 +347,23 @@ Advisory and coordination only: read records, obtain the landlord's written auth
 ]
 ```
 
+## LLM终审子部分（v0.5 主评分标准）
+
+| 编号 | 陈述 | 通过条件 | 来源 |
+|---|---|---|---|
+| `HOM-R1-booking-receipt` | The confirmed inspection's receipt elements reach the summary. | The summary carries the booking receipt's key elements: appointment-HOM1, Pipe-B Plumbing at unit-H on 2027-06-12 11:00-12:00 Central, 40 USD within the 45 USD cap with the landlord responsible for the cost. | final_answer |
+| `HOM-R2-tenant-presence` | Tenant presence and entry restrictions are respected. | The confirmed appointment lies entirely inside the June 12 09:00-12:00 window, and the booking and final answer acknowledge tenant-present entry only, no unattended entry or key sharing, and the cat staying inside. | final_answer |
+| `HOM-R3-no-repair` | No repair was authorized. | The trace shows no repair-scope slot selected and no repair contract or payment created; the confirmed commitment is inspection-only, and the final answer does not claim the leak was diagnosed or fixed. | trace |
+| `HOM-R4-live-slot` | The appointment uses the live slot, not a stale promise. | The booked slot matches a current slot-board row at booking time - not the moved 10:00 h01 listing or the cancelled row. | trace |
+
+## Director 阶段（引擎内部跟踪，不对Agent显示）
+
+- `tenant-consulted`：tool_call → `hannah_dialogue`——The tenant's rules are known: home only Saturday June 12 09:00-12:00, tenant-present entry only, cat inside, 45 USD cap, landlord confirms responsibility and approves the plumber.
+- `authorization-on-file`：fact_registered → `landlord_pays`——The landlord's written authorization is on file: landlord pays within the 45 USD cap, approved providers pipe-A and pipe-B, repairs not authorized. The slot board now activates.
+- `board-checked`：tool_call → `slot_board_search`——The live slot board has been read; rows can move or be withdrawn without notice, so re-check before booking.
+- `appointment-approved`：tool_call → `hannah_dialogue`（关键词：approve、approval）——The tenant has approved the exact provider, window and scope; approval covers that inspection-only appointment and nothing else.
+- `inspection-booked`：selection_processed → `inspection_booking_desk`——The approved attended inspection has been booked from a live board row; the confirmation is read back through the booking desk, never pushed.
+
 ## 已验证参考时间线
 
 时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。
@@ -360,8 +377,8 @@ Advisory and coordination only: read records, obtain the landlord's written auth
 
 Agent收到的实质回复：
 
-- 2027-06-10 Thu 23:20：Juniper Heights landlord·Grace Whitfield，`acknowledgement`，0条文本证据。
-- 2027-06-11 Fri 01:54：Juniper Heights landlord·Grace Whitfield，`reply`，4条文本证据。
+- 2027-06-10 Thu 23:20：Juniper Heights landlord·Grace Whitfield，`acknowledgement`，0份回执。
+- 2027-06-11 Fri 01:54：Juniper Heights landlord·Grace Whitfield，`reply`，1份回执。
 
 ## 易错点
 

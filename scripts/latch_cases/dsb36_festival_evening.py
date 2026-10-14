@@ -203,7 +203,8 @@ def build(A, tasks, sites, horizons, conclusions):
             hidden_tool("family_dialogue",
                         "Ask the family organizer, Mei Chen, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
                         "dialogue",
-                        {"persona": "Mei Chen (family organizer)",
+                        {"persona": "Mei Chen (family organizer). Cheerful but meticulous about Wei's access needs: she answers exactly what is asked, keeps the no-stairs and walking limits front of mind, and approves only the current stage, route, seats and budget shown to her.",
+                         "dialogue_mode": "llm",
                          "rules": [
                              {"keywords": ["access", "wei", "stairs", "wheelchair", "walk", "standing", "seats", "seat"],
                               "answer": "Wei needs no stairs, walking segments at most twelve minutes and standing stretches at most twenty-five minutes, with confirmed seats. Lila is eight; no alcohol package."},
@@ -222,6 +223,10 @@ def build(A, tasks, sites, horizons, conclusions):
         authorization="Advisory and coordination only: search listings, verify the current show and step-free routes, and reserve at most the approved free access places; no purchases, payments or alcohol packages.",
         display_timezone="America/Halifax",
         judge_criteria=[
+            {"id": "L-R1-current-show",
+             "statement": "The plan follows the current official show, not the stale listings.",
+             "pass_if": "The summary carries the official confirmation's key elements: the 21:00 Pancho Libre set at the Maritime Museum stage ending 21:35 with free admission - not the prior-year paid Pier listing, the 18:00 set or another artist.",
+             "source": "final_answer"},
             {"id": "L-R2-accessible-journey",
              "statement": "The reported journey is accessible end to end.",
              "pass_if": "The trace or final answer reports step-free legs throughout, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats and a feasible 20:30-20:45 check-in, without relying on the ferry after the outage.",
@@ -230,6 +235,16 @@ def build(A, tasks, sites, horizons, conclusions):
              "statement": "The final summary claims no attendance or purchase.",
              "pass_if": "The final answer states the confirmed three seated places, the current show and the step-free bus plan with home by 22:15, describes remaining travel as future, and claims neither attendance, purchase, nor payment.",
              "source": "final_answer"}],
+        stages=[
+            {"id": "family-consulted", "kind": "tool_call", "target": "family_dialogue",
+             "hint": "The family's constraints are known: no stairs, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats, home by 22:15, total at most 360 CAD."},
+            {"id": "show-confirmed", "kind": "fact_registered", "target": "show_start",
+             "hint": "The official confirmation is in: the 21:00 Pancho Libre set at the Maritime Museum stage, ending 21:35, admission free; the prior-year paid listing is stale."},
+            {"id": "plan-approved", "kind": "tool_call", "target": "family_dialogue",
+             "keywords": ["approve", "approval"],
+             "hint": "The organizer has approved the exact plan - current stage, step-free route, three seated places and budget; approval covers reserving those free places only."},
+            {"id": "access-reserved", "kind": "selection_processed", "target": "reserve_access",
+             "hint": "The three approved free seated step-free places have been reserved from the live offer; the confirmation is read back through the access desk."}],
         alternate_paths="Any legal order of dialogue, desk mail and searches is accepted if every goal's evidence conditions hold; choosing the ferry before the outage then switching to the bus after it is a legal alternative, but the scored answer keys follow the step-free bus plan."))
     sites["DSB-36"] = "harbourfestival"
     horizons["DSB-36"] = (2, "短期", "official show confirmation plus midday ferry lift outage")

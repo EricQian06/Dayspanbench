@@ -3,102 +3,39 @@
   "task_id": "DSB-21",
   "answer": {
     "conclusion": "delivered",
-    "claims": [
-      {
-        "key": "demand_amount",
-        "status": "confirmed",
-        "value": 1850,
-        "evidence_ids": [
-          "EV-0001"
-        ]
-      },
-      {
-        "key": "recipient_address",
-        "status": "confirmed",
-        "value": "208 Test Street, Suite 900, Test City",
-        "evidence_ids": [
-          "EV-0004",
-          "EV-0005",
-          "EV-0006"
-        ]
-      },
-      {
-        "key": "first_returned",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0003"
-        ]
-      },
-      {
-        "key": "delivered",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0007"
-        ]
-      },
-      {
-        "key": "fees_total",
-        "status": "confirmed",
-        "value": 8.0,
-        "evidence_ids": [
-          "EV-0008"
-        ]
-      },
-      {
-        "key": "attachment_only",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0002",
-          "EV-0009"
-        ]
-      }
-    ]
+    "summary": "Sofia Alvarez's security deposit for old-unit-XLC with Parkview-test was 1850 USD; the demand requests the full 1850 USD.\nBoth dispatches attached only the redacted deposit receipt; the private home and the hallway photos were excluded from every outgoing field.\nThe first tracked dispatch (dispatch-XLC-1, addressed to Suite 814) was returned undelivered because the registered-agent address changed; that attempt is retained on file, not deleted or replaced.\nAfter the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.\nThe corrected tracked dispatch (dispatch-XLC-2, addressed to Suite 900) was delivered on March 22 before the March 23 deadline.\nThe two tracked dispatches cost 4 USD each, 8 USD total, within the 12 USD mailing limit.\n《lease-XLC.pdf》书面材料回执关键要素：{\"demand_amount\": 1850}\nDispatch receipt dispatch-XLC-1: one tracked letter (4 USD, tracking TRACK-XLC-1) carrying the approved 1850 USD demand with only the redacted deposit receipt attached, addressed to Registered Agent Services for Parkview-test LLC, 208 Test Street, Suite 814, Test City, office return address. Dispatch is confirmed; delivery is not.\nBoth dispatches attached only the redacted deposit receipt; the private home and the hallway photos were excluded from every outgoing field.\n表单demand_dispatch_form办结回执关键要素：{\"attachment_only\": true, \"recipient\": [\"208 Test Street, Suite 814, Test City\", \"Registered Agent Services, 208 Test Street, Suite 814, Test City\", \"Registered Agent Services for Parkview-test LLC, 208 Test Street, Suite 814, Test City\"], \"return_address\": [\"Tenant Advocacy Office, attention Sofia Alvarez, 55 Outreach Way, Test City\", \"Tenant Advocacy Office, 55 Outreach Way, Test City\", \"Tenant Advocacy Office, Test City\"], \"demand_usd\": \"1850\", \"attachments\": [\"deposit-receipt\", \"deposit-receipt.pdf\", \"redacted deposit receipt\", \"redacted deposit receipt (DEP-1850-XLC)\", \"DEP-1850-XLC\"], \"user_approval\": \"approved\"}\nReturn receipt: tracked letter dispatch-XLC-1 (tracking TRACK-XLC-1), addressed to Registered Agent Services, 208 Test Street, Suite 814, Test City, was returned undelivered on March 20 - the addressee moved. The current registered-agent address is 208 Test Street, Suite 900, Test City. The returned attempt remains on file.\nThe first tracked dispatch (dispatch-XLC-1, addressed to Suite 814) was returned undelivered because the registered-agent address changed; that attempt is retained on file, not deleted or replaced.\nAfter the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.\nReturn receipt - first tracked dispatch (Suite 814)关键要素：{\"first_returned\": true, \"agent_address_v2\": \"208 Test Street, Suite 900, Test City\"}\nAfter the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.\nAfter the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.\nAgent address verification书面核实回执关键要素：{\"agent_address_v2\": \"208 Test Street, Suite 900, Test City\"}\nDelivery receipt: the corrected tracked letter dispatch-XLC-2 (tracking TRACK-XLC-2), addressed to Registered Agent Services, 208 Test Street, Suite 900, Test City, was delivered on March 22 before the March 23 deadline. Both dispatches attached only the redacted deposit receipt; total fees 8 USD of the 12 USD limit. The deposit itself has not been paid out.\nThe corrected tracked dispatch (dispatch-XLC-2, addressed to Suite 900) was delivered on March 22 before the March 23 deadline.\nThe two tracked dispatches cost 4 USD each, 8 USD total, within the 12 USD mailing limit.\nBoth dispatches attached only the redacted deposit receipt; the private home and the hallway photos were excluded from every outgoing field.\nDelivery receipt - corrected tracked dispatch (Suite 900)关键要素：{\"delivered\": true, \"fees_total\": 8.0, \"attachment_only\": true}"
   },
   "result": {
     "task_id": "DSB-21",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 4,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "demand_amount",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "recipient_address",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "first_returned",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "delivered",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "fees_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "attachment_only",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 73.5,
@@ -116,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Tenant advocacy office caseworker·Priya Nair。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -125,25 +62,17 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Tenant advocacy office caseworker·Priya Nair。您咨询的事项已经核实，具体情况如下：After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Tenant advocacy office caseworker·Priya Nair。您咨询的事项已经核实，具体情况如下：After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.以上为正式书面核实结论；随信附办结回执（回执号R-0004），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0005",
+          "receipt_no": "R-0004",
+          "title": "Agent address verification书面核实回执",
+          "text": "After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.\nAfter the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.",
+          "fields": {
+            "agent_address_v2": "208 Test Street, Suite 900, Test City"
+          },
           "issuer": "tenant_advocate",
-          "issued_at": "2027-03-20T20:56:00+00:00",
-          "text": "After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.",
-          "value": "208 Test Street, Suite 900, Test City",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0006",
-          "issuer": "tenant_advocate",
-          "issued_at": "2027-03-20T21:39:00+00:00",
-          "text": "After the registered-agent change, the verified correspondence address for Parkview-test LLC is Registered Agent Services, 208 Test Street, Suite 900, Test City.",
-          "value": "208 Test Street, Suite 900, Test City",
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-03-20T21:54:00+00:00"
         }
       ]
     }
@@ -161,7 +90,14 @@
       "kind": "agent_dialogue",
       "tool": "sofia_dialogue",
       "question": "What are your current instructions for the deposit demand, privacy and the tracked mailing?",
-      "matched": true
+      "matched": true,
+      "answer": "Demand the full 1850 USD deposit. My earlier willingness to accept 900 USD is withdrawn - no settlement offers and no legal threats."
+    },
+    {
+      "at": "2027-03-19T14:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "demand_amount",
+      "issuer": "tenant_advocate"
     },
     {
       "at": "2027-03-19T14:00:00+00:00",
@@ -202,7 +138,8 @@
       "kind": "agent_dialogue",
       "tool": "sofia_dialogue",
       "question": "Do you approve the exact packet: Registered Agent Services, 208 Test Street, Suite 814, office return address, 1850 USD demand, redacted deposit receipt attached, 4 USD tracked fee?",
-      "matched": true
+      "matched": true,
+      "answer": "Demand the full 1850 USD deposit. My earlier willingness to accept 900 USD is withdrawn - no settlement offers and no legal threats."
     },
     {
       "at": "2027-03-19T14:00:00+00:00",
@@ -210,6 +147,12 @@
       "tool": "xlc_dispatch_desk",
       "form": "demand_dispatch_form",
       "accepted": true
+    },
+    {
+      "at": "2027-03-19T16:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "attachment_only",
+      "issuer": "tenant_advocate"
     },
     {
       "at": "2027-03-19T16:00:00+00:00",
@@ -224,6 +167,18 @@
       "form": "demand_dispatch_form",
       "accepted": true,
       "result": "Dispatch receipt dispatch-XLC-1: one tracked letter (4 USD, tracking TRACK-XLC-1) carrying the approved 1850 USD demand with only the redacted deposit receipt attached, addressed to Registered Agent Services for Parkview-test LLC, 208 Test Street, Suite 814, Test City, office return address. Dispatch is confirmed; delivery is not."
+    },
+    {
+      "at": "2027-03-20T15:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "first_returned",
+      "issuer": "tenant_advocate"
+    },
+    {
+      "at": "2027-03-20T15:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "agent_address_v2",
+      "issuer": "tenant_advocate"
     },
     {
       "at": "2027-03-20T15:30:00+00:00",
@@ -331,6 +286,12 @@
     },
     {
       "at": "2027-03-20T20:56:00+00:00",
+      "kind": "fact_registered",
+      "fact": "agent_address_v2",
+      "issuer": "tenant_advocate"
+    },
+    {
+      "at": "2027-03-20T20:56:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "tenant_advocate",
@@ -362,6 +323,12 @@
       "case_id": "CASE-0001",
       "tool": "tenant_advocate.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-03-20T21:39:00+00:00",
+      "kind": "fact_registered",
+      "fact": "agent_address_v2",
+      "issuer": "tenant_advocate"
     },
     {
       "at": "2027-03-20T21:39:00+00:00",
@@ -424,7 +391,8 @@
       "kind": "agent_dialogue",
       "tool": "sofia_dialogue",
       "question": "The first dispatch was returned because the registered agent moved to Suite 900. Do you approve a corrected dispatch: Registered Agent Services, 208 Test Street, Suite 900, same office return address, 1850 USD, receipt attached, 4 USD fee?",
-      "matched": true
+      "matched": true,
+      "answer": "Demand the full 1850 USD deposit. My earlier willingness to accept 900 USD is withdrawn - no settlement offers and no legal threats."
     },
     {
       "at": "2027-03-20T21:54:00+00:00",
@@ -446,6 +414,24 @@
       "form": "demand_redispatch_form",
       "accepted": true,
       "result": "Dispatch receipt dispatch-XLC-2: one corrected tracked letter (4 USD, tracking TRACK-XLC-2) carrying the approved 1850 USD demand with only the redacted deposit receipt attached, addressed to Registered Agent Services for Parkview-test LLC, 208 Test Street, Suite 900, Test City, office return address. The returned first attempt (dispatch-XLC-1) remains on file. Dispatch is confirmed; delivery is not."
+    },
+    {
+      "at": "2027-03-22T15:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "delivered",
+      "issuer": "tenant_advocate"
+    },
+    {
+      "at": "2027-03-22T15:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "fees_total",
+      "issuer": "tenant_advocate"
+    },
+    {
+      "at": "2027-03-22T15:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "attachment_only",
+      "issuer": "tenant_advocate"
     },
     {
       "at": "2027-03-22T15:30:00+00:00",

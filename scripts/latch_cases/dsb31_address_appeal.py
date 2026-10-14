@@ -153,7 +153,8 @@ def build(A, tasks, sites, horizons, conclusions):
             hidden_tool("rosa_dialogue",
                         "Ask the applicant, Rosa Delgado, one question. Argument: {\"question\": text}. She answers only what is explicitly asked.",
                         "dialogue",
-                        {"persona": "Rosa Delgado (applicant)",
+                        {"persona": "Rosa Delgado (applicant). Weary from the flood but precise about her records: she answers exactly what is asked, keeps her mailing address and timeline straight, and approves only the exact request read back to her.",
+                         "dialogue_mode": "llm",
                          "rules": [
                              {"keywords": ["mailing", "address", "sleep", "shelter", "living", "stay", "since", "when", "timeline", "occupied"],
                               "answer": "My mailing address has never changed: 214 Sage Street Apt 2. I lived there until the flood and occupied it through October 20, 2027. Since October 21, 2027 I have been sleeping at 615 Ceylon Street Shelter - that is not my mailing address and the portal must not change it."},
@@ -197,10 +198,28 @@ def build(A, tasks, sites, horizons, conclusions):
              "statement": "The mailing address is preserved against the autofill.",
              "pass_if": "The filed request keeps the mailing address at 214 Sage Street Apt 2 and the trace shows the portal v2 shelter-address autofill was recognized and overridden, not accepted.",
              "source": "trace"},
+            {"id": "GOV-R3-docs-limited",
+             "statement": "Only the required verified documents were uploaded.",
+             "pass_if": "The filed request uploads exactly the current utility bill, the signed shelter letter and the denial letter, with no raw identity document, no superseded bill and no unsigned letter draft.",
+             "source": "trace"},
+            {"id": "GOV-R4-receipt-carried",
+             "statement": "The acceptance receipt's key elements reach the summary.",
+             "pass_if": "The summary carries the receipt's key elements: RELIEF-11822-R1, one reconsideration request accepted on the current portal version before the November 5 deadline, and the decision pending.",
+             "source": "final_answer"},
             {"id": "GOV-R6-no-benefit-claim",
              "statement": "The final explanation does not claim an award.",
              "pass_if": "The final answer reports the accepted reconsideration request and receipt accurately and describes the decision as pending, not awarded, granted or approved.",
              "source": "final_answer"}],
+        stages=[
+            {"id": "applicant-consulted", "kind": "tool_call", "target": "rosa_dialogue",
+             "hint": "The applicant's addresses and timeline are known: mailing address unchanged at 214 Sage Street Apt 2, shelter sleeping since October 21, and the denial was an address-history mismatch."},
+            {"id": "shelter-letter-obtained", "kind": "fact_registered", "target": "shelter_residence",
+             "hint": "The signed shelter letter (v2) is in hand from the coordinator's written request; the unsigned draft is not valid proof."},
+            {"id": "request-approved", "kind": "tool_call", "target": "rosa_dialogue",
+             "keywords": ["approve", "approval"],
+             "hint": "The applicant has approved the exact reconsideration request - mailing address, residence history, documents and portal version as read to her."},
+            {"id": "request-filed", "kind": "form_processed", "target": "relief_appeal_form",
+             "hint": "The approved request has been filed on the current portal version; the outcome lands on the portal page, never pushed."}],
         alternate_paths="Any legal order of dialogue, document gathering, shelter-letter request and portal refiling is accepted if every goal's evidence conditions hold; a v1 submission that is returned and correctly redone on v2 is part of the intended difficulty, not a failure."))
     sites["DSB-31"] = "denverrelief"
     horizons["DSB-31"] = (4, "mid-short", "shelter-letter turnaround plus a mid-case portal revision")

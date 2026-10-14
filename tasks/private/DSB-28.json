@@ -625,7 +625,8 @@
       "usage": "Ask the learner, Sofia Martinez, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
       "kind": "dialogue",
       "params": {
-        "persona": "Sofia Martinez (working parent)",
+        "persona": "Sofia Martinez (working parent). Warm but time-poor: she answers exactly what is asked in plain, practical sentences, states her study rules and approval requirements firmly, and never volunteers facts the question did not cover.",
+        "dialogue_mode": "llm",
         "rules": [
           {
             "keywords": [
@@ -698,10 +699,52 @@
       "source": "trace"
     },
     {
+      "id": "E-R2-adviser-verification",
+      "statement": "The adviser's written verification is carried into the summary.",
+      "pass_if": "The summary carries the written verification's key elements: the c02 -> c03 -> c04 sequence, sixteen weeks at six hours weekly, 1900 USD total including the 100 USD assessment fee, and the refusal of any exemption.",
+      "source": "final_answer"
+    },
+    {
+      "id": "E-R3-first-stage-receipt",
+      "statement": "The first-stage reservation receipt is reported accurately.",
+      "pass_if": "The summary carries the reservation receipt's key elements: one c02 Python Foundation seat (four weeks, six hours weekly, 400 USD, asynchronous) reserved, no payment taken, and c03/c04 still conditional and unreserved.",
+      "source": "final_answer"
+    },
+    {
       "id": "E-R6-plan-vs-achievement",
       "statement": "The summary separates plan from achievement.",
       "pass_if": "The final answer reports the single reserved c02 seat and the conditional sixteen-week 1900 USD plan, and claims neither a paid fee, nor a completed course, nor a certificate award, nor guaranteed later admission.",
       "source": "final_answer"
+    }
+  ],
+  "stages": [
+    {
+      "id": "learner-consulted",
+      "kind": "tool_call",
+      "target": "learner_dialogue",
+      "hint": "The learner's availability, background and approval rules are known: weeknights and Sunday mornings, never Saturdays; no Python credential; approval of the whole path before any reservation."
+    },
+    {
+      "id": "pathway-verified",
+      "kind": "fact_registered",
+      "target": "pathway_verified",
+      "hint": "The adviser's written verification is on the program board: c02 -> c03 -> c04, sixteen weeks, six hours weekly, 1900 USD total, no exemption."
+    },
+    {
+      "id": "plan-approved",
+      "kind": "tool_call",
+      "target": "learner_dialogue",
+      "keywords": [
+        "approve",
+        "approval"
+      ],
+      "hint": "The learner has approved the exact whole-path plan (cost, sequencing, weekly slots); approval covers reserving the first stage only."
+    },
+    {
+      "id": "first-stage-reserved",
+      "kind": "selection_processed",
+      "target": "reserve_first_stage",
+      "hint": "The one approved c02 seat reservation has been processed; read the outcome back through the desk, never pushed."
     }
   ],
   "public": {
@@ -776,7 +819,7 @@
     },
     "answer_format": {
       "conclusion": "选择conclusion_options中的一个键",
-      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
     }
   },
   "facts": {

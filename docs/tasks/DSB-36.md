@@ -357,6 +357,21 @@ Advisory and coordination only: search listings, verify the current show and ste
 ]
 ```
 
+## LLM终审子部分（v0.5 主评分标准）
+
+| 编号 | 陈述 | 通过条件 | 来源 |
+|---|---|---|---|
+| `L-R1-current-show` | The plan follows the current official show, not the stale listings. | The summary carries the official confirmation's key elements: the 21:00 Pancho Libre set at the Maritime Museum stage ending 21:35 with free admission - not the prior-year paid Pier listing, the 18:00 set or another artist. | final_answer |
+| `L-R2-accessible-journey` | The reported journey is accessible end to end. | The trace or final answer reports step-free legs throughout, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats and a feasible 20:30-20:45 check-in, without relying on the ferry after the outage. | trace |
+| `L-R6-no-attendance-claim` | The final summary claims no attendance or purchase. | The final answer states the confirmed three seated places, the current show and the step-free bus plan with home by 22:15, describes remaining travel as future, and claims neither attendance, purchase, nor payment. | final_answer |
+
+## Director 阶段（引擎内部跟踪，不对Agent显示）
+
+- `family-consulted`：tool_call → `family_dialogue`——The family's constraints are known: no stairs, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats, home by 22:15, total at most 360 CAD.
+- `show-confirmed`：fact_registered → `show_start`——The official confirmation is in: the 21:00 Pancho Libre set at the Maritime Museum stage, ending 21:35, admission free; the prior-year paid listing is stale.
+- `plan-approved`：tool_call → `family_dialogue`（关键词：approve、approval）——The organizer has approved the exact plan - current stage, step-free route, three seated places and budget; approval covers reserving those free places only.
+- `access-reserved`：selection_processed → `reserve_access`——The three approved free seated step-free places have been reserved from the live offer; the confirmation is read back through the access desk.
+
 ## 已验证参考时间线
 
 时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。
@@ -370,8 +385,8 @@ Advisory and coordination only: search listings, verify the current show and ste
 
 Agent收到的实质回复：
 
-- 2027-07-31 Sat 22:35：Harbour Festival access desk·Priya Nair，`acknowledgement`，0条文本证据。
-- 2027-08-01 Sun 00:29：Harbour Festival access desk·Priya Nair，`reply`，6条文本证据。
+- 2027-07-31 Sat 22:35：Harbour Festival access desk·Priya Nair，`acknowledgement`，0份回执。
+- 2027-08-01 Sun 00:29：Harbour Festival access desk·Priya Nair，`reply`，1份回执。
 
 ## 易错点
 

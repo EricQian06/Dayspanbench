@@ -3,75 +3,39 @@
   "task_id": "DSB-05",
   "answer": {
     "conclusion": "within_budget_with_current_quote",
-    "claims": [
-      {
-        "key": "current_total",
-        "status": "confirmed",
-        "value": 18600,
-        "evidence_ids": [
-          "EV-0006",
-          "EV-0007"
-        ]
-      },
-      {
-        "key": "minimum_quantity",
-        "status": "confirmed",
-        "value": 500,
-        "evidence_ids": [
-          "EV-0001"
-        ]
-      },
-      {
-        "key": "earliest_dispatch",
-        "status": "confirmed",
-        "value": "2026-12-09",
-        "evidence_ids": [
-          "EV-0008"
-        ]
-      },
-      {
-        "key": "qa_pass",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0004",
-          "EV-0005"
-        ]
-      }
-    ]
+    "summary": "该规格最小订单量为500件。\n500件批次旧报价18000元，有效至11月10日16点。\n材料M26批次符合用户要求的Q7检测规范，报告已复核。\n500件批次重新确认的总报价18600元，有效至12月11日16点。\n如按有效报价下单，最早可于12月9日出库；本次尚未下单。\n该规格最小订单量为500件。\n500件批次旧报价18000元，有效至11月10日16点。\n500件批次旧报价18000元，有效至11月10日16点。\n初次报价书面核实回执关键要素：{\"moq\": 500, \"quote_old\": 18000}\n材料M26批次符合用户要求的Q7检测规范，报告已复核。\n材料M26批次符合用户要求的Q7检测规范，报告已复核。\n材料Q7报告书面核实回执关键要素：{\"qa\": true}\n500件批次重新确认的总报价18600元，有效至12月11日16点。\n500件批次重新确认的总报价18600元，有效至12月11日16点。\n刷新过期报价书面核实回执关键要素：{\"quote_new\": 18600}\n出库预核登记已办结：如按有效报价下单，最早可于12月9日出库；本次尚未下单。办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。\n如按有效报价下单，最早可于12月9日出库；本次尚未下单。\n表单dispatch_form办结回执关键要素：{\"dispatch\": \"2026-12-09\", \"quantity\": 500, \"spec\": \"M26-Q7\"}"
   },
   "result": {
     "task_id": "DSB-05",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "current_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "minimum_quantity",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "earliest_dispatch",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "qa_pass",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 836.5,
@@ -89,7 +53,7 @@
       "status": "reply",
       "channel": "email",
       "text": "出库和排产的事我不直接管：排产核对归排产员苏渝。出库的书面预核结论走哪个渠道我记不准，可能要问排产员，也可能质检傅黎那边留了登记渠道，建议您分别去信确认。另外这个规格我记得好像300件起就可以订了，不过我不太确定，供您参考，起订量请以排产核对为准。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -99,7 +63,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是棱川制造质检·傅黎。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-12-07 13:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0003",
@@ -109,7 +73,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是棱川制造销售·罗岑。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-09 14:05（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0004",
@@ -118,34 +82,18 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是棱川制造销售·罗岑。您咨询的事项已经核实，具体情况如下：该规格最小订单量为500件。500件批次旧报价18000元，有效至11月10日16点。500件批次旧报价18000元，有效至11月10日16点。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是棱川制造销售·罗岑。您咨询的事项已经核实，具体情况如下：该规格最小订单量为500件。500件批次旧报价18000元，有效至11月10日16点。500件批次旧报价18000元，有效至11月10日16点。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0001",
-          "issuer": "factory",
-          "issued_at": "2026-11-07T03:01:00+00:00",
-          "text": "该规格最小订单量为500件。",
-          "value": 500,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0002",
+          "receipt_no": "R-0001",
+          "title": "初次报价书面核实回执",
+          "text": "该规格最小订单量为500件。\n500件批次旧报价18000元，有效至11月10日16点。\n500件批次旧报价18000元，有效至11月10日16点。",
+          "fields": {
+            "moq": 500,
+            "quote_old": 18000
+          },
           "issuer": "sales",
-          "issued_at": "2026-11-09T03:14:00+00:00",
-          "text": "500件批次旧报价18000元，有效至11月10日16点。",
-          "value": 18000,
-          "valid_until": "2026-11-10T16:00:00+08:00",
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0003",
-          "issuer": "sales",
-          "issued_at": "2026-11-09T05:34:00+00:00",
-          "text": "500件批次旧报价18000元，有效至11月10日16点。",
-          "value": 18000,
-          "valid_until": "2026-11-10T16:00:00+08:00",
-          "kind": "document"
+          "issued_at": "2026-11-09T05:49:00+00:00"
         }
       ]
     },
@@ -156,25 +104,17 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是棱川制造质检·傅黎。您咨询的事项已经核实，具体情况如下：材料M26批次符合用户要求的Q7检测规范，报告已复核。材料M26批次符合用户要求的Q7检测规范，报告已复核。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是棱川制造质检·傅黎。您咨询的事项已经核实，具体情况如下：材料M26批次符合用户要求的Q7检测规范，报告已复核。材料M26批次符合用户要求的Q7检测规范，报告已复核。以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0004",
+          "receipt_no": "R-0002",
+          "title": "材料Q7报告书面核实回执",
+          "text": "材料M26批次符合用户要求的Q7检测规范，报告已复核。\n材料M26批次符合用户要求的Q7检测规范，报告已复核。",
+          "fields": {
+            "qa": true
+          },
           "issuer": "qa",
-          "issued_at": "2026-12-07T04:00:00+00:00",
-          "text": "材料M26批次符合用户要求的Q7检测规范，报告已复核。",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0005",
-          "issuer": "qa",
-          "issued_at": "2026-12-07T05:31:00+00:00",
-          "text": "材料M26批次符合用户要求的Q7检测规范，报告已复核。",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2026-12-07T05:46:00+00:00"
         }
       ]
     },
@@ -186,7 +126,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是棱川制造销售·罗岑。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0007",
@@ -195,25 +135,17 @@
       "case_id": "CASE-0004",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是棱川制造销售·罗岑。您咨询的事项已经核实，具体情况如下：500件批次重新确认的总报价18600元，有效至12月11日16点。500件批次重新确认的总报价18600元，有效至12月11日16点。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是棱川制造销售·罗岑。您咨询的事项已经核实，具体情况如下：500件批次重新确认的总报价18600元，有效至12月11日16点。500件批次重新确认的总报价18600元，有效至12月11日16点。以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0006",
+          "receipt_no": "R-0003",
+          "title": "刷新过期报价书面核实回执",
+          "text": "500件批次重新确认的总报价18600元，有效至12月11日16点。\n500件批次重新确认的总报价18600元，有效至12月11日16点。",
+          "fields": {
+            "quote_new": 18600
+          },
           "issuer": "sales",
-          "issued_at": "2026-12-07T08:26:00+00:00",
-          "text": "500件批次重新确认的总报价18600元，有效至12月11日16点。",
-          "value": 18600,
-          "valid_until": "2026-12-11T16:00:00+08:00",
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0007",
-          "issuer": "sales",
-          "issued_at": "2026-12-07T08:50:00+00:00",
-          "text": "500件批次重新确认的总报价18600元，有效至12月11日16点。",
-          "value": 18600,
-          "valid_until": "2026-12-11T16:00:00+08:00",
-          "kind": "document"
+          "issued_at": "2026-12-07T09:05:00+00:00"
         }
       ]
     }
@@ -526,6 +458,12 @@
     },
     {
       "at": "2026-11-07T03:01:00+00:00",
+      "kind": "fact_registered",
+      "fact": "moq",
+      "issuer": "factory"
+    },
+    {
+      "at": "2026-11-07T03:01:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "factory",
@@ -608,6 +546,12 @@
     },
     {
       "at": "2026-11-09T03:14:00+00:00",
+      "kind": "fact_registered",
+      "fact": "quote_old",
+      "issuer": "sales"
+    },
+    {
+      "at": "2026-11-09T03:14:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "sales",
@@ -639,6 +583,12 @@
       "case_id": "CASE-0001",
       "tool": "sales.main.6.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2026-11-09T05:34:00+00:00",
+      "kind": "fact_registered",
+      "fact": "quote_old",
+      "issuer": "sales"
     },
     {
       "at": "2026-11-09T05:34:00+00:00",
@@ -739,6 +689,12 @@
     },
     {
       "at": "2026-12-07T04:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "qa",
+      "issuer": "qa"
+    },
+    {
+      "at": "2026-12-07T04:00:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "qa",
@@ -770,6 +726,12 @@
       "case_id": "CASE-0002",
       "tool": "qa.main.4.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2026-12-07T05:31:00+00:00",
+      "kind": "fact_registered",
+      "fact": "qa",
+      "issuer": "qa"
     },
     {
       "at": "2026-12-07T05:31:00+00:00",
@@ -916,6 +878,12 @@
     },
     {
       "at": "2026-12-07T08:26:00+00:00",
+      "kind": "fact_registered",
+      "fact": "quote_new",
+      "issuer": "sales"
+    },
+    {
+      "at": "2026-12-07T08:26:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "sales",
@@ -947,6 +915,12 @@
       "case_id": "CASE-0004",
       "tool": "sales.refresh.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2026-12-07T08:50:00+00:00",
+      "kind": "fact_registered",
+      "fact": "quote_new",
+      "issuer": "sales"
     },
     {
       "at": "2026-12-07T08:50:00+00:00",
@@ -1010,6 +984,12 @@
       "tool": "lengchuan_dispatch_apply",
       "form": "dispatch_form",
       "accepted": true
+    },
+    {
+      "at": "2026-12-08T02:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "dispatch",
+      "issuer": "factory"
     },
     {
       "at": "2026-12-08T02:00:00+00:00",

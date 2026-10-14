@@ -171,7 +171,8 @@ def build(A, tasks, sites, horizons, conclusions):
             hidden_tool("learner_dialogue",
                         "Ask the learner, Sofia Martinez, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
                         "dialogue",
-                        {"persona": "Sofia Martinez (working parent)",
+                        {"persona": "Sofia Martinez (working parent). Warm but time-poor: she answers exactly what is asked in plain, practical sentences, states her study rules and approval requirements firmly, and never volunteers facts the question did not cover.",
+                         "dialogue_mode": "llm",
                          "rules": [
                              {"keywords": ["available", "availability", "schedule", "time", "when", "study",
                                            "hour", "week", "saturday", "sunday", "evening", "monday",
@@ -198,10 +199,28 @@ def build(A, tasks, sites, horizons, conclusions):
              "statement": "The prerequisite chain is truthful.",
              "pass_if": "The trace and final answer sequence c02 before c03 before c04 with later admission conditional, and never claim a Python credential or spreadsheet exemption the learner does not have.",
              "source": "trace"},
+            {"id": "E-R2-adviser-verification",
+             "statement": "The adviser's written verification is carried into the summary.",
+             "pass_if": "The summary carries the written verification's key elements: the c02 -> c03 -> c04 sequence, sixteen weeks at six hours weekly, 1900 USD total including the 100 USD assessment fee, and the refusal of any exemption.",
+             "source": "final_answer"},
+            {"id": "E-R3-first-stage-receipt",
+             "statement": "The first-stage reservation receipt is reported accurately.",
+             "pass_if": "The summary carries the reservation receipt's key elements: one c02 Python Foundation seat (four weeks, six hours weekly, 400 USD, asynchronous) reserved, no payment taken, and c03/c04 still conditional and unreserved.",
+             "source": "final_answer"},
             {"id": "E-R6-plan-vs-achievement",
              "statement": "The summary separates plan from achievement.",
              "pass_if": "The final answer reports the single reserved c02 seat and the conditional sixteen-week 1900 USD plan, and claims neither a paid fee, nor a completed course, nor a certificate award, nor guaranteed later admission.",
              "source": "final_answer"}],
+        stages=[
+            {"id": "learner-consulted", "kind": "tool_call", "target": "learner_dialogue",
+             "hint": "The learner's availability, background and approval rules are known: weeknights and Sunday mornings, never Saturdays; no Python credential; approval of the whole path before any reservation."},
+            {"id": "pathway-verified", "kind": "fact_registered", "target": "pathway_verified",
+             "hint": "The adviser's written verification is on the program board: c02 -> c03 -> c04, sixteen weeks, six hours weekly, 1900 USD total, no exemption."},
+            {"id": "plan-approved", "kind": "tool_call", "target": "learner_dialogue",
+             "keywords": ["approve", "approval"],
+             "hint": "The learner has approved the exact whole-path plan (cost, sequencing, weekly slots); approval covers reserving the first stage only."},
+            {"id": "first-stage-reserved", "kind": "selection_processed", "target": "reserve_first_stage",
+             "hint": "The one approved c02 seat reservation has been processed; read the outcome back through the desk, never pushed."}],
         alternate_paths="Any legal order of dialogue, catalog searches and adviser mail is accepted if every goal's evidence conditions hold; the reference path reads the catalog before and after the August 25 schedule change and reserves only after the adviser verification and the learner's approval."))
     sites["DSB-28"] = "analyticspath"
     horizons["DSB-28"] = (2, "短期", "adviser verification turnaround plus a mid-case course schedule rewrite")

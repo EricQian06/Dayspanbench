@@ -30,8 +30,9 @@ def mailbox(task, actor_id):
 
 
 class FixtureClient:
-    def __init__(self, route=None, reply=None):
+    def __init__(self, route=None, reply=None, dialogue=None):
         self.route_override, self.reply_override = route, reply
+        self.dialogue_override = dialogue
         self.calls = []
 
     def complete(self, **kwargs):
@@ -41,9 +42,18 @@ class FixtureClient:
             if self.route_override:
                 return self.route_override(view)
             return {"workflow_id": view.get("existing_workflow_id") or RuleRecipient().choose(view), "fields": []}
+        if kwargs["purpose"] == "dialogue":
+            if self.dialogue_override:
+                return self.dialogue_override(view)
+            return {"answer": view.get("canonical_fact")}
         if self.reply_override:
             return self.reply_override(view)
-        return {"tone": "polite", "evidence_order": [e["id"] for e in reversed(view["evidence"])]}
+        # v0.5 render: echo every canonical material so key tokens survive.
+        parts = [view.get("canonical_text", "")]
+        parts.extend(f.get("text", "") for f in view.get("facts", []))
+        parts.extend(r.get("text", "") for r in view.get("receipts", []))
+        parts.extend(f"{c['name']}（{c['contact_details']['email']}）" for c in view.get("contacts", []))
+        return {"tone": "polite", "text": "\n".join(p for p in parts if p)}
 
 
 def recipients(task, client):
@@ -182,7 +192,10 @@ class CharacterSimulatorTests(unittest.TestCase):
                 self.assertEqual(len({id(a.recipient) for a in env.actors.values()}), len(task["actors"]))
                 for call in client.calls:
                     view = call["view"]
-                    self.assertFalse({"facts", "goals", "expected_conclusion", "reference_actions", "calendars"} & set(view))
+                    # The render view may carry the case's established facts
+                    # (the NPC's own attestations); private authoring keys
+                    # must never leak.
+                    self.assertFalse({"goals", "expected_conclusion", "reference_actions", "calendars"} & set(view))
                     self.assertEqual(view["actor_id"], call["actor_id"])
 
     def test_natural_language_field_extraction_and_missing_material_followup(self):

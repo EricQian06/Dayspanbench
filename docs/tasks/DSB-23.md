@@ -332,6 +332,25 @@ Advisory and coordination only: search listings, contact the hotel, companion an
 ]
 ```
 
+## LLM终审子部分（v0.5 主评分标准）
+
+| 编号 | 陈述 | 通过条件 | 来源 |
+|---|---|---|---|
+| `XPT-R1-pet-acceptance-written` | The hotel's written pet acceptance named the exact dog and conditions. | The summary reports the written permission pet-accept-XPT accepting Nino (28 kg, current vet letter) for April 16-17 with no unattended periods and open-air parking fitting the 2.05 m car - not a generic pets-welcome claim. | final_answer |
+| `XPT-R2-stay-receipt` | The final summary carries the reservation receipt's key elements. | The summary states reservation stay-XPT1: two nights at the Villa des Roses, 2027-04-16 to 2027-04-18, for Camille Moreau and Nino, total 378 EUR within the 420 EUR budget, with the extended 00:30 late check-in and Lea's supervision linked, and no payment taken. | final_answer |
+| `XPT-R3-arrival-matched-to-current-train` | The booking plan matched the current delayed arrival, not the withdrawn schedule. | The trace shows the plan validated against the 23:40 arrival plus the 25-minute transfer with the written 00:30 extension, with no commitment relying on the 23:50 limit or on a supervision acknowledgement made before the delay. | trace |
+| `XPT-R4-supervision-rebound` | Supervision was acknowledged for the delayed itinerary. | The trace shows Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current 23:40 arrival itinerary, with no unattended periods. | trace |
+| `XPT-R6-no-future-stay-invented` | The final summary reports the reservation without inventing performance. | The final answer states the confirmed reservation with its written conditions, the revised check-in and the linked supervision, and claims neither arrival, stay performance nor payment. | final_answer |
+
+## Director 阶段（引擎内部跟踪，不对Agent显示）
+
+- `traveler-constraints-known`：tool_call → `camille_dialogue`——The traveler has been asked about her dog, logistics, supervision and approval conditions; nothing has been booked yet.
+- `pet-acceptance-written`：fact_registered → `pet_accepted`——The hotel's written acceptance naming the exact dog is in hand; marketing claims never substitute for it.
+- `supervision-acknowledged`：fact_registered → `companion_ack`——The companion has acknowledged supervision for the itinerary as it currently stands; an acknowledgement for an older arrival does not carry over.
+- `extension-written`：fact_registered → `late_extension`——The hotel's written late-check-in extension for the delayed itinerary has landed; the arrival now fits the check-in limit.
+- `plan-approved`：tool_call → `camille_dialogue`（关键词：approve、approval）——The traveler has been shown the exact hotel, pet policy, current arrival deadline, supervision and total for approval; approval applies only to that plan.
+- `stay-booked`：selection_processed → `stay_book`——The one approved stay has been processed; the confirmation receipt is with the agent and arrival remains in the future.
+
 ## 已验证参考时间线
 
 时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。
@@ -353,12 +372,12 @@ Advisory and coordination only: search listings, contact the hotel, companion an
 
 Agent收到的实质回复：
 
-- 2027-04-17 Sat 01:05：Villa des Roses hotel desk·Marc Aubert，`acknowledgement`，0条文本证据。
-- 2027-04-17 Sat 14:34：Villa des Roses hotel desk·Marc Aubert，`reply`，2条文本证据。
-- 2027-04-17 Sat 15:45：Travel companion·Lea Bernard，`acknowledgement`，0条文本证据。
-- 2027-04-17 Sat 17:16：Travel companion·Lea Bernard，`reply`，2条文本证据。
-- 2027-04-17 Sat 18:22：Villa des Roses hotel desk·Marc Aubert，`acknowledgement`，0条文本证据。
-- 2027-04-17 Sat 20:06：Villa des Roses hotel desk·Marc Aubert，`reply`，2条文本证据。
+- 2027-04-17 Sat 01:05：Villa des Roses hotel desk·Marc Aubert，`acknowledgement`，0份回执。
+- 2027-04-17 Sat 14:34：Villa des Roses hotel desk·Marc Aubert，`reply`，1份回执。
+- 2027-04-17 Sat 15:45：Travel companion·Lea Bernard，`acknowledgement`，0份回执。
+- 2027-04-17 Sat 17:16：Travel companion·Lea Bernard，`reply`，1份回执。
+- 2027-04-17 Sat 18:22：Villa des Roses hotel desk·Marc Aubert，`acknowledgement`，0份回执。
+- 2027-04-17 Sat 20:06：Villa des Roses hotel desk·Marc Aubert，`reply`，1份回执。
 
 ## 易错点
 

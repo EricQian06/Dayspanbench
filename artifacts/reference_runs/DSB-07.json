@@ -3,75 +3,39 @@
   "task_id": "DSB-07",
   "answer": {
     "conclusion": "physical_only",
-    "claims": [
-      {
-        "key": "physical_exhibit_allowed",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0003"
-        ]
-      },
-      {
-        "key": "online_allowed",
-        "status": "confirmed",
-        "value": false,
-        "evidence_ids": [
-          "EV-0002",
-          "EV-0004"
-        ]
-      },
-      {
-        "key": "total_fee",
-        "status": "confirmed",
-        "value": 800,
-        "evidence_ids": [
-          "EV-0006"
-        ]
-      },
-      {
-        "key": "scan_dpi",
-        "status": "confirmed",
-        "value": 600,
-        "evidence_ids": [
-          "EV-0005"
-        ]
-      }
-    ]
+    "summary": "图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。\n可提供600dpi扫描件；文件用途仍受授权范围限制。\n本次数字化和授权服务合计800元。\n图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。\n图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。\n权利范围核实书面核实回执关键要素：{\"exhibit\": true, \"online\": false}\n取得许可后的数字化规格确认书面核实回执关键要素：{\"scan\": 600}\n费用核定登记已办结：本次数字化和授权服务合计800元；办理进度可经北汀费用进度查询（beiting_fee_status）复核。\n本次数字化和授权服务合计800元。\n表单fee_form办结回执关键要素：{\"fee\": 800, \"archive_id\": \"ARC-71\"}"
   },
   "result": {
     "task_id": "DSB-07",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 2,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "physical_exhibit_allowed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "online_allowed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_fee",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "scan_dpi",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 5155.5,
@@ -89,7 +53,7 @@
       "status": "reply",
       "channel": "email",
       "text": "您好，我是北汀档案馆接待·关雨。您咨询的事项已经按流程处理完毕。此外，相关事项建议您联系权利方联络员·Alex Chen（alexchen@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -99,7 +63,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是权利方联络员·Alex Chen。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-05-31 09:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0003",
@@ -108,43 +72,18 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是权利方联络员·Alex Chen。您咨询的事项已经核实，具体情况如下：图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。授权不包含网站或社交媒体公开发布。图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。授权不包含网站或社交媒体公开发布。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是权利方联络员·Alex Chen。您咨询的事项已经核实，具体情况如下：图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。授权不包含网站或社交媒体公开发布。图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。授权不包含网站或社交媒体公开发布。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0001",
+          "receipt_no": "R-0001",
+          "title": "权利范围核实书面核实回执",
+          "text": "图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。\n图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。",
+          "fields": {
+            "exhibit": true,
+            "online": false
+          },
           "issuer": "rights",
-          "issued_at": "2027-05-31T13:20:00+00:00",
-          "text": "图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0002",
-          "issuer": "rights",
-          "issued_at": "2027-05-31T13:20:00+00:00",
-          "text": "授权不包含网站或社交媒体公开发布。",
-          "value": false,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0003",
-          "issuer": "rights",
-          "issued_at": "2027-05-31T13:35:00+00:00",
-          "text": "图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
-        },
-        {
-          "id": "EV-0004",
-          "issuer": "rights",
-          "issued_at": "2027-05-31T13:35:00+00:00",
-          "text": "授权不包含网站或社交媒体公开发布。",
-          "value": false,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-05-31T13:50:00+00:00"
         }
       ]
     },
@@ -156,7 +95,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是北汀档案馆接待·关雨。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-06-08 10:16（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0005",
@@ -166,7 +105,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是北汀档案馆接待·关雨。数字化规格要由数字化组核对，我先转过去确认，稍后把扫描规格回复您。预计最早将于2027-06-08 10:16（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0006",
@@ -175,16 +114,17 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是北汀档案馆接待·关雨。您咨询的事项已经核实，具体情况如下：可提供600dpi扫描件；文件用途仍受授权范围限制。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是北汀档案馆接待·关雨。您咨询的事项已经核实，具体情况如下：可提供600dpi扫描件；文件用途仍受授权范围限制。以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0005",
-          "issuer": "digitizer",
-          "issued_at": "2027-06-07T07:22:00+00:00",
+          "receipt_no": "R-0002",
+          "title": "取得许可后的数字化规格确认书面核实回执",
           "text": "可提供600dpi扫描件；文件用途仍受授权范围限制。",
-          "value": 600,
-          "valid_until": null,
-          "kind": "document"
+          "fields": {
+            "scan": 600
+          },
+          "issuer": "archive",
+          "issued_at": "2027-06-08T02:00:00+00:00"
         }
       ]
     }
@@ -428,6 +368,18 @@
     },
     {
       "at": "2027-05-31T13:20:00+00:00",
+      "kind": "fact_registered",
+      "fact": "exhibit",
+      "issuer": "rights"
+    },
+    {
+      "at": "2027-05-31T13:20:00+00:00",
+      "kind": "fact_registered",
+      "fact": "online",
+      "issuer": "rights"
+    },
+    {
+      "at": "2027-05-31T13:20:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "rights",
@@ -459,6 +411,18 @@
       "case_id": "CASE-0002",
       "tool": "rights.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-05-31T13:35:00+00:00",
+      "kind": "fact_registered",
+      "fact": "exhibit",
+      "issuer": "rights"
+    },
+    {
+      "at": "2027-05-31T13:35:00+00:00",
+      "kind": "fact_registered",
+      "fact": "online",
+      "issuer": "rights"
     },
     {
       "at": "2027-05-31T13:35:00+00:00",
@@ -534,8 +498,7 @@
       "case_id": "CASE-0003",
       "field": "exhibition_permission",
       "evidence": [
-        "EV-0001",
-        "EV-0003"
+        "exhibit"
       ]
     },
     {
@@ -706,6 +669,12 @@
     },
     {
       "at": "2027-06-07T07:22:00+00:00",
+      "kind": "fact_registered",
+      "fact": "scan",
+      "issuer": "digitizer"
+    },
+    {
+      "at": "2027-06-07T07:22:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0004",
       "actor": "digitizer",
@@ -814,6 +783,12 @@
       "tool": "beiting_fee_apply",
       "form": "fee_form",
       "accepted": true
+    },
+    {
+      "at": "2027-06-08T02:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "fee",
+      "issuer": "archive"
     },
     {
       "at": "2027-06-08T02:00:00+00:00",

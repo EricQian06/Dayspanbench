@@ -622,7 +622,8 @@
       "usage": "Ask the stranded passenger, Owen Hale, one question. Argument: {\"question\": text}. He answers only what is explicitly asked and does not volunteer other facts.",
       "kind": "dialogue",
       "params": {
-        "persona": "Owen Hale (stranded passenger)",
+        "persona": "Owen Hale (stranded passenger). Slightly tense from the cancellation but cooperative: he answers exactly what is asked, keeps his bike-with-me rule absolute, and approves only the exact live plan read back to him.",
+        "dialogue_mode": "llm",
         "rules": [
           {
             "keywords": [
@@ -675,16 +676,64 @@
   ],
   "judge_criteria": [
     {
+      "id": "MOB-R1-current-alert",
+      "statement": "The plan follows the authoritative cancellation, not the superseded all-clear.",
+      "pass_if": "The trace shows the current cancellation record (v3) used as the disruption basis, with no reliance on the superseded all-clear alert or the pre-delay rail schedule.",
+      "source": "trace"
+    },
+    {
       "id": "MOB-R2-connection",
       "statement": "The reported connection is reachable and in time.",
       "pass_if": "The trace or final answer reports the 15:10 transfer with a ten-minute boarding buffer before the 15:30 coach and final arrival at or before 19:30, using current times rather than the pre-delay rail schedule.",
       "source": "trace"
     },
     {
+      "id": "MOB-R3-bike-accompanied",
+      "statement": "The accompanied folded-bike evidence is carried into the summary.",
+      "pass_if": "The summary carries the bike confirmation's key elements: bike-MOB1, both the local transfer and the coach accept the folded Brompton kept with the passenger, no unattended storage and no extra bike fee.",
+      "source": "final_answer"
+    },
+    {
+      "id": "MOB-R4-bundle-receipt",
+      "statement": "The replacement bundle's receipt elements reach the summary.",
+      "pass_if": "The summary carries the booking receipt's key elements: the m02 coach bundle with the transfer departing Reading 15:10, coach departing Mereoak 15:30, arrival at Bristol Temple Meads 19:00, and 18 GBP extra within the allowed outlay.",
+      "source": "final_answer"
+    },
+    {
       "id": "MOB-R6-no-arrival-claim",
       "statement": "The final summary does not invent completed travel.",
       "pass_if": "The final answer states the confirmed bundle, the transfer departure and boarding deadline, and that travel has not yet occurred; it claims neither arrival nor payment and leaves the original return leg unchanged.",
       "source": "final_answer"
+    }
+  ],
+  "stages": [
+    {
+      "id": "passenger-consulted",
+      "kind": "tool_call",
+      "target": "traveler_dialogue",
+      "hint": "The passenger's constraints are known: folded Brompton stays with him, at most 18 GBP extra, no compensation claim, original return leg preserved, approval of the exact plan first."
+    },
+    {
+      "id": "bike-acceptance-confirmed",
+      "kind": "fact_registered",
+      "target": "bike_accompanied",
+      "hint": "The rail desk's written confirmation is in: both legs accept the accompanied folded bike with no unattended storage and no extra fee."
+    },
+    {
+      "id": "plan-approved",
+      "kind": "tool_call",
+      "target": "traveler_dialogue",
+      "keywords": [
+        "approve",
+        "approval"
+      ],
+      "hint": "The passenger has approved the exact live journey, transfer buffer, bike acceptance and total; approval covers that one bundle only."
+    },
+    {
+      "id": "replacement-reserved",
+      "kind": "selection_processed",
+      "target": "reserve_replacement",
+      "hint": "The approved replacement bundle has been confirmed against live inventory; the confirmation is read back through the booking desk, never pushed."
     }
   ],
   "public": {
@@ -775,7 +824,7 @@
     },
     "answer_format": {
       "conclusion": "选择conclusion_options中的一个键",
-      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
     }
   },
   "facts": {

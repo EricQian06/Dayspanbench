@@ -3,155 +3,39 @@
   "task_id": "DSB-41",
   "answer": {
     "conclusion": "trip_completed",
-    "claims": [
-      {
-        "key": "flight_booked",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0015"
-        ]
-      },
-      {
-        "key": "flight_total",
-        "status": "confirmed",
-        "value": 2390,
-        "evidence_ids": [
-          "EV-0016"
-        ]
-      },
-      {
-        "key": "hotel_booked",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0017"
-        ]
-      },
-      {
-        "key": "hotel_accessible",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0006",
-          "EV-0011"
-        ]
-      },
-      {
-        "key": "hotel_total",
-        "status": "confirmed",
-        "value": 1680,
-        "evidence_ids": [
-          "EV-0018"
-        ]
-      },
-      {
-        "key": "routes_step_free",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0007",
-          "EV-0008"
-        ]
-      },
-      {
-        "key": "dining_shellfish_safe",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0009",
-          "EV-0010"
-        ]
-      },
-      {
-        "key": "itinerary_paced",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0012"
-        ]
-      },
-      {
-        "key": "trip_budget_total",
-        "status": "confirmed",
-        "value": 5615,
-        "evidence_ids": [
-          "EV-0013"
-        ]
-      },
-      {
-        "key": "plan_approval_recorded",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0014"
-        ]
-      }
-    ]
+    "summary": "Provider verification access-htl-302-2027 confirms the Lakefront family suite (LFS-FAM-2) has a roll-in shower with grab bars, a step-free entrance and an elevator for five-person occupancy.\nProvider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.\nThe Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.\nCityStep verification CS-SEA-01: the current route from the Lakefront family suite to the Space Needle is step-free with zero stairs and a longest walking segment of 0.3 miles (one transfer).\nCityStep verification CS-SEA-06: the current route from the Lakefront family suite to the Seattle Great Wheel is step-free with zero stairs and a longest walking segment of 0.25 miles (one transfer).\nSafePlate confirmation SAFE-SEA-01: Harbor Table keeps a separate preparation area and the manager confirms no shellfish cross-contact for the selected family dishes; a child menu is available for early dinners.\nSafePlate confirmation SAFE-SEA-05: the Lakefront Breakfast Room breakfast kitchen uses no shellfish (manager confirmation recorded); child menu and vegetarian breakfast available.\nThe recorded itinerary keeps at most one major attraction per day (Space Needle on June 13, Great Wheel on June 16) with hotel rest afternoons on June 14 and June 15, and uses only current verified step-free routes and shellfish-safe family dining.\nThe complete current trip budget is 5615 USD: airfare 2390, hotel 1680, ground transport 360, food 620, attractions 265 and 300 contingency - within every category cap and the 6000 USD trip cap.\nMorgan Lee approved the exact final plan (flight air-209 / SB-733, hotel htl-302 / LFS-FAM-2, current quote versions, complete total 5615 USD, refundable cancellation terms) on May 12, 2027 after 12:00 Chicago time, before either booking was submitted.\nExactly one refundable round-trip nonstop booking for five travellers on SB-733/SB-734 (listing air-209), ORD to SEA, outbound 2027-06-12 arriving 15:20 local and return 2027-06-17, five seats together, has been confirmed; no payment was taken.\nThe booked five-traveller round-trip airfare is 2390 USD, within the 2400 USD airfare cap.\nExactly one refundable five-person accessible family suite booking (listing htl-302, LFS-FAM-2, South Lake Union) for five nights 2027-06-12 to 2027-06-17 has been confirmed with free cancellation until 2027-06-09 18:00 Pacific; no payment was taken.\nThe booked five-night hotel stay totals 1680 USD, within the 1800 USD hotel cap.\nLFS-FAM-2 - Family Suite, South Lake Union (provider-confirmed)关键要素：{\"hotel_accessible\": true}\nProvider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.\nThe Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.\nProvider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.\nThe Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.\nAccessible suite verification书面核实回执关键要素：{\"hotel_301_accessible\": true, \"hotel_hold_until\": \"2027-05-14T09:00\"}\nCS-SEA-01 - Lakefront family suite to Space Needle (verified)关键要素：{\"route_401_ok\": true}\nCS-SEA-06 - Lakefront family suite to Seattle Great Wheel (verified)关键要素：{\"route_406_ok\": true}\nSAFE-SEA-01 - Harbor Table (confirmed)关键要素：{\"dining_501_safe\": true}\nSAFE-SEA-05 - Lakefront Breakfast Room (confirmed)关键要素：{\"dining_505_safe\": true}\nPlan recorded: approved final plan for the five-person Chicago-Seattle trip - flight SB-733 (air-209) at 2390 USD and hotel LFS-FAM-2 (htl-302) at 1680 USD on current quotes, verified step-free routes CS-SEA-01 (Space Needle, June 13) and CS-SEA-06 (Great Wheel, June 16), shellfish-safe family dining at Harbor Table and the Lakefront Breakfast Room, at most one major attraction per day with hotel rest afternoons on June 14 and June 15, complete budget 5615 USD within every cap, refundable cancellation terms; approved by Morgan Lee on May 12, 2027; no payment taken.\nThe recorded itinerary keeps at most one major attraction per day (Space Needle on June 13, Great Wheel on June 16) with hotel rest afternoons on June 14 and June 15, and uses only current verified step-free routes and shellfish-safe family dining.\nThe complete current trip budget is 5615 USD: airfare 2390, hotel 1680, ground transport 360, food 620, attractions 265 and 300 contingency - within every category cap and the 6000 USD trip cap.\nMorgan Lee approved the exact final plan (flight air-209 / SB-733, hotel htl-302 / LFS-FAM-2, current quote versions, complete total 5615 USD, refundable cancellation terms) on May 12, 2027 after 12:00 Chicago time, before either booking was submitted.\nconfirm_trip_plan确认回执关键要素：{\"itinerary_paced\": true, \"budget_total\": 5615, \"plan_approved\": true, \"total_usd\": 5615}\nFlight booked: one refundable round-trip nonstop booking for five travellers on SB-733/SB-734 (listing air-209), ORD to SEA, outbound 2027-06-12 departing 10:55 arriving 15:20 local, return 2027-06-17 departing 14:40 arriving 20:35, five seats together; total 2390 USD within the airfare cap; no payment taken.\nExactly one refundable round-trip nonstop booking for five travellers on SB-733/SB-734 (listing air-209), ORD to SEA, outbound 2027-06-12 arriving 15:20 local and return 2027-06-17, five seats together, has been confirmed; no payment was taken.\nThe booked five-traveller round-trip airfare is 2390 USD, within the 2400 USD airfare cap.\nbook_flight确认回执关键要素：{\"flight_booked\": true, \"flight_total\": 2390, \"seats\": 5, \"destination\": \"SEA\", \"stops\": 0}\nHotel booked: one refundable accessible family suite (listing htl-302, LFS-FAM-2) in South Lake Union for five, five nights 2027-06-12 to 2027-06-17, provider-verified roll-in shower (access-htl-302-2027), free cancellation until 2027-06-09 18:00 Pacific; stay total 1680 USD within the hotel cap; no payment taken.\nExactly one refundable five-person accessible family suite booking (listing htl-302, LFS-FAM-2, South Lake Union) for five nights 2027-06-12 to 2027-06-17 has been confirmed with free cancellation until 2027-06-09 18:00 Pacific; no payment was taken.\nThe booked five-night hotel stay totals 1680 USD, within the 1800 USD hotel cap.\nbook_hotel确认回执关键要素：{\"hotel_booked\": true, \"hotel_total\": 1680, \"occupancy\": 5, \"roll_in_shower\": true, \"refundable\": true}"
   },
   "result": {
     "task_id": "DSB-41",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 1
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 3,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 4,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "flight_booked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "flight_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "hotel_booked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "hotel_accessible",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "hotel_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "routes_step_free",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "dining_shellfish_safe",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "itinerary_paced",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "trip_budget_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "plan_approval_recorded",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 318.0,
@@ -169,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Lakefront Suites Seattle accessibility desk·Dana Rowe。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-05-03 11:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -178,43 +62,18 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Lakefront Suites Seattle accessibility desk·Dana Rowe。您咨询的事项已经核实，具体情况如下：Provider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.The Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.Provider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.The Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Lakefront Suites Seattle accessibility desk·Dana Rowe。您咨询的事项已经核实，具体情况如下：Provider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.The Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.Provider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.The Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0002",
+          "receipt_no": "R-0002",
+          "title": "Accessible suite verification书面核实回执",
+          "text": "Provider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.\nThe Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.\nProvider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.\nThe Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.",
+          "fields": {
+            "hotel_301_accessible": true,
+            "hotel_hold_until": "2027-05-14T09:00"
+          },
           "issuer": "lakefront_desk",
-          "issued_at": "2027-05-03T15:26:00+00:00",
-          "text": "Provider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0003",
-          "issuer": "lakefront_desk",
-          "issued_at": "2027-05-03T15:26:00+00:00",
-          "text": "The Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.",
-          "value": "2027-05-14T09:00",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0004",
-          "issuer": "lakefront_desk",
-          "issued_at": "2027-05-03T16:09:00+00:00",
-          "text": "Provider verification access-htl-301-2027 confirms the pending Accessible Family Suite (LFS-ACCESS-1) has a roll-in shower and five-person occupancy.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
-        },
-        {
-          "id": "EV-0005",
-          "issuer": "lakefront_desk",
-          "issued_at": "2027-05-03T16:09:00+00:00",
-          "text": "The Lakefront accessibility desk granted a refundable rate hold on the Accessible Family Suite until 2027-05-14 09:00 Chicago time; the hold lapses if not converted into a booking.",
-          "value": "2027-05-14T09:00",
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-05-03T16:24:00+00:00"
         }
       ]
     }
@@ -232,56 +91,64 @@
       "kind": "agent_dialogue",
       "tool": "trip_dialogue",
       "question": "Who are the travellers and what are their ages?",
-      "matched": true
+      "matched": true,
+      "answer": "The travellers are Morgan Lee (41), Jordan Lee (39), Pat Lee (72), Kai Lee (10) and Riley Lee (8) - two adults, one grandparent and two children, five in total."
     },
     {
       "at": "2027-05-01T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "trip_dialogue",
       "question": "What identity and passport details do you need for the booking?",
-      "matched": true
+      "matched": true,
+      "answer": "All five passports are valid through at least August 2028; the validity month is enough - do not request or store full passport numbers. Use Morgan Lee as the booking contact."
     },
     {
       "at": "2027-05-01T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "trip_dialogue",
       "question": "What are the mobility and accessibility needs?",
-      "matched": true
+      "matched": true,
+      "answer": "Pat uses a folding walker: no stairs anywhere, every walking segment at most 0.3 miles, step-free routes only, and the hotel needs a provider-confirmed roll-in shower for five people."
     },
     {
       "at": "2027-05-01T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "trip_dialogue",
       "question": "What are the dietary needs and meal requirements?",
-      "matched": true
+      "matched": true,
+      "answer": "Jordan has a shellfish allergy - every family dinner needs a confirmed cross-contact answer from the provider, never a menu label. Kai and Riley need child menus with early dinners, and we prefer a vegetarian breakfast."
     },
     {
       "at": "2027-05-01T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "trip_dialogue",
       "question": "What is the budget for the trip?",
-      "matched": true
+      "matched": true,
+      "answer": "Caps: airfare at most 2400 USD, hotel at most 1800 USD, ground transport at most 450, food at most 700, attractions at most 300, plus 300 contingency, and the complete trip at most 6000 USD."
     },
     {
       "at": "2027-05-01T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "trip_dialogue",
       "question": "What are the trip dates and flight requirements?",
-      "matched": true
+      "matched": true,
+      "answer": "Outbound June 12, 2027, returning June 17 - five nights in Seattle. The outbound flight must be a current round trip arriving before 16:00 local time."
     },
     {
       "at": "2027-05-01T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "trip_dialogue",
       "question": "How should we compare transport modes?",
-      "matched": true
+      "matched": true,
+      "answer": "Compare air, rail, driving and the bus alternatives before choosing; we prefer the nonstop flight to SEA if feasible - round trip, at least five seats, seats together if possible, refundable."
     },
     {
       "at": "2027-05-01T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "trip_dialogue",
       "question": "What is the approval process before booking?",
-      "matched": true
+      "matched": true,
+      "answer": "I can review and approve the exact plan only from May 12 at 12:00 Chicago time: show the exact flight, hotel, current quote versions, complete total and cancellation terms, and I will approve that exact plan. Book only after my approval; no payment, and no nonrefundable rate without a fresh explicit approval."
     },
     {
       "at": "2027-05-01T14:00:00+00:00",
@@ -335,6 +202,12 @@
       "name": "hotel_search",
       "found": true,
       "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-05-01T14:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "hotel_accessible",
+      "issuer": "lakefront_desk"
     },
     {
       "at": "2027-05-01T14:00:00+00:00",
@@ -449,6 +322,18 @@
     },
     {
       "at": "2027-05-03T15:26:00+00:00",
+      "kind": "fact_registered",
+      "fact": "hotel_301_accessible",
+      "issuer": "lakefront_desk"
+    },
+    {
+      "at": "2027-05-03T15:26:00+00:00",
+      "kind": "fact_registered",
+      "fact": "hotel_hold_until",
+      "issuer": "lakefront_desk"
+    },
+    {
+      "at": "2027-05-03T15:26:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "lakefront_desk",
@@ -480,6 +365,18 @@
       "case_id": "CASE-0001",
       "tool": "lakefront_desk.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-05-03T16:09:00+00:00",
+      "kind": "fact_registered",
+      "fact": "hotel_301_accessible",
+      "issuer": "lakefront_desk"
+    },
+    {
+      "at": "2027-05-03T16:09:00+00:00",
+      "kind": "fact_registered",
+      "fact": "hotel_hold_until",
+      "issuer": "lakefront_desk"
     },
     {
       "at": "2027-05-03T16:09:00+00:00",
@@ -532,6 +429,12 @@
     },
     {
       "at": "2027-05-03T16:24:00+00:00",
+      "kind": "fact_registered",
+      "fact": "hotel_accessible",
+      "issuer": "lakefront_desk"
+    },
+    {
+      "at": "2027-05-03T16:24:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "hotel_search",
       "query": "accessible family suite hold",
@@ -569,6 +472,18 @@
     },
     {
       "at": "2027-05-03T16:24:00+00:00",
+      "kind": "fact_registered",
+      "fact": "route_401_ok",
+      "issuer": "citystep_desk"
+    },
+    {
+      "at": "2027-05-03T16:24:00+00:00",
+      "kind": "fact_registered",
+      "fact": "route_406_ok",
+      "issuer": "citystep_desk"
+    },
+    {
+      "at": "2027-05-03T16:24:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "access_routes",
       "query": "step-free routes",
@@ -588,6 +503,18 @@
       "name": "dining_search",
       "found": true,
       "tool_kind": "catalog"
+    },
+    {
+      "at": "2027-05-03T16:24:00+00:00",
+      "kind": "fact_registered",
+      "fact": "dining_501_safe",
+      "issuer": "safeplate_desk"
+    },
+    {
+      "at": "2027-05-03T16:24:00+00:00",
+      "kind": "fact_registered",
+      "fact": "dining_505_safe",
+      "issuer": "safeplate_desk"
     },
     {
       "at": "2027-05-03T16:24:00+00:00",
@@ -682,6 +609,12 @@
     },
     {
       "at": "2027-05-12T15:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "hotel_accessible",
+      "issuer": "lakefront_desk"
+    },
+    {
+      "at": "2027-05-12T15:00:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "hotel_search",
       "query": "current family suite rate",
@@ -699,7 +632,8 @@
       "kind": "agent_dialogue",
       "tool": "trip_dialogue",
       "question": "Do you approve the exact plan: flight SB-733 at 2390 USD, hotel LFS-FAM-2 at 1680 USD, current quotes, 5615 USD total, refundable terms?",
-      "matched": true
+      "matched": true,
+      "answer": "Yes, I approve the exact trip plan: flight SB-733 (air-209) at 2390 USD and hotel LFS-FAM-2 (htl-302) at 1680 USD, current refundable quotes, complete total 5615 USD. Submit the bookings only after this approval; no payment is taken."
     },
     {
       "at": "2027-05-12T17:30:00+00:00",
@@ -714,6 +648,24 @@
       "tool": "confirm_trip_plan",
       "entry": "plan-final",
       "accepted": true
+    },
+    {
+      "at": "2027-05-12T19:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "itinerary_paced",
+      "issuer": "trip_desk"
+    },
+    {
+      "at": "2027-05-12T19:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "budget_total",
+      "issuer": "trip_desk"
+    },
+    {
+      "at": "2027-05-12T19:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "plan_approved",
+      "issuer": "trip_desk"
     },
     {
       "at": "2027-05-12T19:30:00+00:00",
@@ -751,6 +703,18 @@
     },
     {
       "at": "2027-05-12T21:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "flight_booked",
+      "issuer": "skybridge_desk"
+    },
+    {
+      "at": "2027-05-12T21:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "flight_total",
+      "issuer": "skybridge_desk"
+    },
+    {
+      "at": "2027-05-12T21:30:00+00:00",
       "kind": "page_updated",
       "page": "trip-entry",
       "url": "https://skybridgetrip.bench/entry",
@@ -782,6 +746,18 @@
       "tool": "book_hotel",
       "entry": "htl-302",
       "accepted": true
+    },
+    {
+      "at": "2027-05-13T00:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "hotel_booked",
+      "issuer": "lakefront_desk"
+    },
+    {
+      "at": "2027-05-13T00:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "hotel_total",
+      "issuer": "lakefront_desk"
     },
     {
       "at": "2027-05-13T00:00:00+00:00",

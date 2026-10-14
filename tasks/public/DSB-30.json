@@ -89,7 +89,7 @@
   },
   "answer_format": {
     "conclusion": "选择conclusion_options中的一个键",
-    "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+    "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
   },
   "start_at": "2027-07-10T09:00:00-05:00",
   "deadline_at": "2027-07-14T17:00:00-05:00"

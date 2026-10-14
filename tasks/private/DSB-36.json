@@ -650,7 +650,8 @@
       "usage": "Ask the family organizer, Mei Chen, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
       "kind": "dialogue",
       "params": {
-        "persona": "Mei Chen (family organizer)",
+        "persona": "Mei Chen (family organizer). Cheerful but meticulous about Wei's access needs: she answers exactly what is asked, keeps the no-stairs and walking limits front of mind, and approves only the current stage, route, seats and budget shown to her.",
+        "dialogue_mode": "llm",
         "rules": [
           {
             "keywords": [
@@ -717,6 +718,12 @@
   ],
   "judge_criteria": [
     {
+      "id": "L-R1-current-show",
+      "statement": "The plan follows the current official show, not the stale listings.",
+      "pass_if": "The summary carries the official confirmation's key elements: the 21:00 Pancho Libre set at the Maritime Museum stage ending 21:35 with free admission - not the prior-year paid Pier listing, the 18:00 set or another artist.",
+      "source": "final_answer"
+    },
+    {
       "id": "L-R2-accessible-journey",
       "statement": "The reported journey is accessible end to end.",
       "pass_if": "The trace or final answer reports step-free legs throughout, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats and a feasible 20:30-20:45 check-in, without relying on the ferry after the outage.",
@@ -727,6 +734,36 @@
       "statement": "The final summary claims no attendance or purchase.",
       "pass_if": "The final answer states the confirmed three seated places, the current show and the step-free bus plan with home by 22:15, describes remaining travel as future, and claims neither attendance, purchase, nor payment.",
       "source": "final_answer"
+    }
+  ],
+  "stages": [
+    {
+      "id": "family-consulted",
+      "kind": "tool_call",
+      "target": "family_dialogue",
+      "hint": "The family's constraints are known: no stairs, walks at most twelve minutes, standing at most twenty-five minutes, confirmed seats, home by 22:15, total at most 360 CAD."
+    },
+    {
+      "id": "show-confirmed",
+      "kind": "fact_registered",
+      "target": "show_start",
+      "hint": "The official confirmation is in: the 21:00 Pancho Libre set at the Maritime Museum stage, ending 21:35, admission free; the prior-year paid listing is stale."
+    },
+    {
+      "id": "plan-approved",
+      "kind": "tool_call",
+      "target": "family_dialogue",
+      "keywords": [
+        "approve",
+        "approval"
+      ],
+      "hint": "The organizer has approved the exact plan - current stage, step-free route, three seated places and budget; approval covers reserving those free places only."
+    },
+    {
+      "id": "access-reserved",
+      "kind": "selection_processed",
+      "target": "reserve_access",
+      "hint": "The three approved free seated step-free places have been reserved from the live offer; the confirmation is read back through the access desk."
     }
   ],
   "public": {
@@ -827,7 +864,7 @@
     },
     "answer_format": {
       "conclusion": "选择conclusion_options中的一个键",
-      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
     }
   },
   "facts": {

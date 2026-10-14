@@ -3,132 +3,39 @@
   "task_id": "DSB-36",
   "answer": {
     "conclusion": "access_confirmed",
-    "claims": [
-      {
-        "key": "show_start",
-        "status": "confirmed",
-        "value": "21:00",
-        "evidence_ids": [
-          "EV-0004"
-        ]
-      },
-      {
-        "key": "stage",
-        "status": "confirmed",
-        "value": "Maritime Museum",
-        "evidence_ids": [
-          "EV-0005"
-        ]
-      },
-      {
-        "key": "show_end",
-        "status": "confirmed",
-        "value": "21:35",
-        "evidence_ids": [
-          "EV-0006"
-        ]
-      },
-      {
-        "key": "route_step_free",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0007",
-          "EV-0011",
-          "EV-0014",
-          "EV-0016"
-        ]
-      },
-      {
-        "key": "home_arrival",
-        "status": "confirmed",
-        "value": "22:15",
-        "evidence_ids": [
-          "EV-0002",
-          "EV-0008",
-          "EV-0017"
-        ]
-      },
-      {
-        "key": "total_cost",
-        "status": "confirmed",
-        "value": 108,
-        "evidence_ids": [
-          "EV-0020"
-        ]
-      },
-      {
-        "key": "access_reserved",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0019"
-        ]
-      },
-      {
-        "key": "seats",
-        "status": "confirmed",
-        "value": 3,
-        "evidence_ids": [
-          "EV-0010",
-          "EV-0013"
-        ]
-      }
-    ]
+    "summary": "The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nThe current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.\nThe current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.\nThe current official set ends at 21:35, leaving the 21:50 return bus feasible.\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nThree free seated step-free access places for the 21:00 set have been confirmed with check-in from 20:30 to 20:45; no payment was taken.\nThe full family plan is 108 CAD: admission 0 (free) + transport 18 + food 60 + contingency 30, within the 360 CAD cap.\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe bus-L return arrives 22:10 with a five-minute walk home, reaching home by 22:15 - inside the requirement.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nAccessible bus-L round trip关键要素：{\"route_step_free\": true, \"home_arrival\": \"22:15\", \"bus_fare\": 18}\nThe current official Pancho Libre set (l02 v2) starts at 21:00 at the Maritime Museum stage and ends at 21:35.\nThe current 21:00 Pancho Libre set plays the Maritime Museum stage, not the prior-year Pier stage.\nThe current official set ends at 21:35, leaving the 21:50 return bus feasible.\nPancho Libre - 21:00 Maritime Museum (confirmed)关键要素：{\"show_start\": \"21:00\", \"stage\": \"Maritime Museum\", \"show_end\": \"21:35\"}\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nSeated access and step-free route status书面核实回执关键要素：{\"seats\": 3, \"route_step_free\": true, \"bus_fare\": 18}\nAccess confirmed: three free seated step-free places for the confirmed 21:00 Pancho Libre set at the Maritime Museum stage, viewing platform opens 20:30, check-in by 20:45, fee 0 CAD. Full plan 108 CAD (admission 0, transport 18, food 60, contingency 30). No payment taken.\nThree free seated step-free access places for the 21:00 set have been confirmed with check-in from 20:30 to 20:45; no payment was taken.\nThe full family plan is 108 CAD: admission 0 (free) + transport 18 + food 60 + contingency 30, within the 360 CAD cap.\nreserve_access确认回执关键要素：{\"access_reserved\": true, \"total_cost\": 108, \"seats\": 3}"
   },
   "result": {
     "task_id": "DSB-36",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 7,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 3,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "show_start",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "stage",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "show_end",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "route_step_free",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "home_arrival",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "access_reserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "seats",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 5.0,
@@ -146,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Harbour Festival access desk·Priya Nair。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -155,61 +62,19 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Harbour Festival access desk·Priya Nair。您咨询的事项已经核实，具体情况如下：Three seated access places are confirmed for the family (Wei, Mei and Lila).The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.The step-free bus-L round trip costs 18 CAD for the three-person family.Three seated access places are confirmed for the family (Wei, Mei and Lila).The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.The step-free bus-L round trip costs 18 CAD for the three-person family.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Harbour Festival access desk·Priya Nair。您咨询的事项已经核实，具体情况如下：Three seated access places are confirmed for the family (Wei, Mei and Lila).The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.The step-free bus-L round trip costs 18 CAD for the three-person family.Three seated access places are confirmed for the family (Wei, Mei and Lila).The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.The step-free bus-L round trip costs 18 CAD for the three-person family.以上为正式书面核实结论；随信附办结回执（回执号R-0004），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0010",
+          "receipt_no": "R-0004",
+          "title": "Seated access and step-free route status书面核实回执",
+          "text": "Three seated access places are confirmed for the family (Wei, Mei and Lila).\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.\nThree seated access places are confirmed for the family (Wei, Mei and Lila).\nThe reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.\nThe step-free bus-L round trip costs 18 CAD for the three-person family.",
+          "fields": {
+            "seats": 3,
+            "route_step_free": true,
+            "bus_fare": 18
+          },
           "issuer": "access_desk",
-          "issued_at": "2027-07-31T15:41:00+00:00",
-          "text": "Three seated access places are confirmed for the family (Wei, Mei and Lila).",
-          "value": 3,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0011",
-          "issuer": "access_desk",
-          "issued_at": "2027-07-31T15:41:00+00:00",
-          "text": "The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0012",
-          "issuer": "access_desk",
-          "issued_at": "2027-07-31T15:41:00+00:00",
-          "text": "The step-free bus-L round trip costs 18 CAD for the three-person family.",
-          "value": 18,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0013",
-          "issuer": "access_desk",
-          "issued_at": "2027-07-31T16:14:00+00:00",
-          "text": "Three seated access places are confirmed for the family (Wei, Mei and Lila).",
-          "value": 3,
-          "valid_until": null,
-          "kind": "document"
-        },
-        {
-          "id": "EV-0014",
-          "issuer": "access_desk",
-          "issued_at": "2027-07-31T16:14:00+00:00",
-          "text": "The reserved bus-L route is step-free on every leg: outbound 20:00-20:20 with an eight-minute walk, standing stretches at most seven minutes, and return departing 21:50 after an eight-minute walk from the stage.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
-        },
-        {
-          "id": "EV-0015",
-          "issuer": "access_desk",
-          "issued_at": "2027-07-31T16:14:00+00:00",
-          "text": "The step-free bus-L round trip costs 18 CAD for the three-person family.",
-          "value": 18,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-07-31T16:29:00+00:00"
         }
       ]
     }
@@ -227,7 +92,8 @@
       "kind": "agent_dialogue",
       "tool": "family_dialogue",
       "question": "What are the access needs, travel constraints, budget and approval arrangements for the festival visit?",
-      "matched": true
+      "matched": true,
+      "answer": "Wei needs no stairs, walking segments at most twelve minutes and standing stretches at most twenty-five minutes, with confirmed seats. Lila is eight; no alcohol package."
     },
     {
       "at": "2027-07-31T13:00:00+00:00",
@@ -261,6 +127,42 @@
     },
     {
       "at": "2027-07-31T13:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "route_step_free",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "home_arrival",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bus_fare",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "show_start",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "stage",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "show_end",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "festival_search",
       "query": "Pancho Libre access",
@@ -271,6 +173,24 @@
         "l02-v2",
         "offer-L1"
       ]
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "route_step_free",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "home_arrival",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T13:25:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bus_fare",
+      "issuer": "access_desk"
     },
     {
       "at": "2027-07-31T13:25:00+00:00",
@@ -397,6 +317,24 @@
     },
     {
       "at": "2027-07-31T15:41:00+00:00",
+      "kind": "fact_registered",
+      "fact": "seats",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T15:41:00+00:00",
+      "kind": "fact_registered",
+      "fact": "route_step_free",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T15:41:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bus_fare",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T15:41:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "access_desk",
@@ -428,6 +366,24 @@
       "case_id": "CASE-0001",
       "tool": "access_desk.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-07-31T16:14:00+00:00",
+      "kind": "fact_registered",
+      "fact": "seats",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T16:14:00+00:00",
+      "kind": "fact_registered",
+      "fact": "route_step_free",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T16:14:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bus_fare",
+      "issuer": "access_desk"
     },
     {
       "at": "2027-07-31T16:14:00+00:00",
@@ -480,6 +436,24 @@
     },
     {
       "at": "2027-07-31T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "route_step_free",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "home_arrival",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bus_fare",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T16:30:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "festival_search",
       "query": "route",
@@ -494,7 +468,8 @@
       "kind": "agent_dialogue",
       "tool": "family_dialogue",
       "question": "Do you approve the exact plan: 21:00 Maritime Museum set, bus-L step-free round trip, three seated places, 108 CAD total?",
-      "matched": true
+      "matched": true,
+      "answer": "Wei needs no stairs, walking segments at most twelve minutes and standing stretches at most twenty-five minutes, with confirmed seats. Lila is eight; no alcohol package."
     },
     {
       "at": "2027-07-31T16:30:00+00:00",
@@ -509,6 +484,18 @@
       "tool": "reserve_access",
       "entry": "offer-L1",
       "accepted": true
+    },
+    {
+      "at": "2027-07-31T17:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "access_reserved",
+      "issuer": "access_desk"
+    },
+    {
+      "at": "2027-07-31T17:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "total_cost",
+      "issuer": "access_desk"
     },
     {
       "at": "2027-07-31T17:00:00+00:00",

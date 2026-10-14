@@ -1,32 +1,27 @@
-# v0.3：按目标评分与LLM人物模拟器
+# v0.5：LLM终审主评分与LLM人物模拟器
 
-本版本将评分从固定值/事实ID与指定人物链条，改为类型归一化、证据属性和必要业务能力。评分仍由程序执行。人物可以选择规则模式或实际调用LLM的模式；LLM不控制事实、时间和成绩。
+v0.5把评分范式从"结构化claims+证据编号引用的确定性核对"改为"**LLM评审官为主、确定性锚点为辅**"（`SCORING_VERSION 0.5.0`）：每题作者编写子部分标准`judge_criteria`，Agent提交`{conclusion, summary}`自然语言总结，LLM评审官逐条评阅；引擎另做一层确定性锚点核对（结论标签、表单办结、回执要素是否在总结中字面出现、截止受阻题的待处理状态）。人物可以选择规则模式或实际调用LLM的模式；LLM不控制事实、时间和进程，NPC措辞由LLM生成。
 
-**例外：LLM终审（judge，v0.4新增）。** 自LATCH_BENCH移植的任务（DSB-13起）除确定性评分外，还带作者撰写的语言性标准（`judge_criteria`，私有）。episode结束、模拟器交互全部完成后，由独立LLM评审官复核Agent的最终回复与Agent自己发出的信件，逐条给出通过与否、证据引用与理由（`dayspanbench/judge.py`）。评审结果只作为**独立指标**记录（`llm_judge`/`judge_passed`/`judge_total`），不改变`resolved_success`/`bounded_handling_success`，也不影响episode有效性；评审输出经结构校验与重试，仍失败则记pending。评审官只能看到Agent可见的证据与Agent发出的信件，看不到私有目标或评分配置。运行方式见`scripts/evaluate.py --judge simulator`（复用模拟器的StructuredClient；`--judge off`可关闭）。
+**LLM终审（judge）是主评分指标。** episode结束、模拟器交互全部完成后，独立LLM评审官（`dayspanbench/judge.py`）依据私有`judge_criteria`评阅：
+- **输入**：各条标准（statement/pass_if/source）、Agent最终总结、Agent发出的信件，以及Agent可见的回执工件（receipts）、director已达成事实、审计轨迹摘要（工具调用、dialogue问答、表单办结结果）。看不到私有目标、隐藏事实或评分配置。
+- **输出**：逐条`{criterion_id, passed, evidence, reason}`；主分数`score = subparts_passed / subparts_total`。输出经结构校验与重试，仍失败则该题标`judge_pending`，失败标准计`pending_criteria`，不计入通过率分母，也不影响episode有效性。
+- **非确定性披露**：主分数由LLM给出，是非确定性指标。正式实验建议对同一episode多次评审取均值或多数，并报告pending比例；单次评审结果不应直接当作最终成绩。
+- 无`judge_criteria`的题退化为`deterministic_only`口径（仅确定性锚点）。
+- 运行方式见`scripts/evaluate.py --judge simulator`（默认，复用模拟器的StructuredClient；`--judge off`可关闭）。
 
 ## 评分规则
 
-每项已确认结论必须引用本次实际送达、仍有效、对象和事实类型正确、由具备相应签发权限的角色产生的证据。权限与属性由可信环境配置和工具执行器赋予，Agent与人物LLM均不能提交或修改这些元数据。
+LLM评审官负责自然语言总结与信件的逐子部分评阅；确定性层只做进程锚点核对，二者合成最终分数：`complete := 全部子部分通过 AND deterministic_anchors_ok`。
 
-| 变化 | 通过的例子 | 仍不通过 |
-|---|---|---|
-| 预设语义别名 | “尚无承诺日期”与“尚未承诺正式稳定版发布日期” | “下周一定发布” |
-| 数量和单位归一化 | `92`厘米与`{"value":0.92,"unit":"m"}`；`"2,360 CNY"`与2360元 | 厘米与千克；把布尔true当数字1；错误数值 |
-| 日期和时区 | `2026年12月9日`与`2026-12-09`；同一时刻的UTC与北京时间 | 不带时区的时间戳；错误日期 |
-| 集合字段 | 同一材料清单换序 | 缺项、加项、重复项 |
-| 证据匹配 | 相同对象/事实类型、授权来源、实际取得的另一份证据 | 猜中证据ID、未送达、过期、无签发权限、属于其他对象 |
-| 动态文书标识 | DSB-12实际签发并取得的另一有效新版单证号 | 没有对应有效证据的任意编号 |
-| 流程能力 | 直联合格代理或经过多级转交，真实进入技术复核 | 只有初审登记、缺材料、未真正受理或未等到截止 |
+确定性锚点（`dayspanbench/scoring.py`）核对：
+- 答案对象结构（`{"conclusion": str, "summary": str}`）与结论标签合法性。
+- 表单/选定是否按作者预期办结（审计轨迹）。
+- 关键回执要素（受理号、票号、数量、金额、日期）是否在summary中字面或轻度归一化后出现。
+- 截止受阻题（如DSB-12）的待处理事项状态。
 
-同义处理采用作者声明的有限别名，不是任意自由文本的语义理解。数量转换仅接受该字段声明的单位；文本做Unicode NFKC、空白和大小写归一化。公开观察中的`value_normalization`说明字段类型和单位，不包含会泄露答案的私有别名。
+类型归一化（数值/单位/日期/集合/预设别名）保留用于引擎内部的材料受理与事实登记核对，不再出现在Agent答案结构中。
 
-`unconfirmed`条目不附带`value`和`evidence_ids`，不能用未确认标签包裹“已放行”等实质断言。
-
-`goals[].evidence_requirement`描述`subject`、`predicate`和授权签发能力；`facts[].attributes`描述事实对象和类型，证据签发时复制这些属性与发行人的权限。`accepted_facts`保留为作者参考策略的可行性见证，不再限制运行时评分只能接受那些事实ID。
-
-一般目标使用`match: expected`，需要正确目标值与有效证据同时成立。DSB-12的登记号、新版单证和溯源编号使用`match: evidence`，答案必须与实际取得的合格证据一致，允许合规的编号变化。没有增加任意来源的宽松接受。
-
-材料受理也使用证据属性与值匹配，避免评分接受替代凭证、入口却拒绝它。事项保存`admitted_at`和`admission_evidence`，后续检查凭证在受理时有效；最终答案引用的证据则需在提交时有效。
+材料受理仍按事实属性与值匹配：事项保存`admitted_at`和`admission_evidence`（director事实记录），后续检查凭证在受理时有效。引擎受理层拒绝凭空声称——引用回执中的编号、回执原文实质片段或正确转述凭证结论均可核对，但必须有引擎登记的、对Agent可见、未过期、属性匹配的事实作锚点。
 
 ## DSB-12的两条真实路径
 
@@ -41,12 +36,13 @@
 
 ## LLM负责什么
 
-`dayspanbench/simulator.py`中的`LLMSimulator`有两个真实API调用入口：
+`dayspanbench/simulator.py`中的`LLMSimulator`有三个真实API调用入口：
 
-- `route`：读取当前角色、当前消息和该角色自己的历史，选择已声明工作流，逐字提取消息里的字段。显式结构化字段优先；抽取值必须有可核对的原文，仍要经过引擎的材料校验。
-- `render`：读取当前已取得证据，选择语气和证据呈现顺序；引擎据此渲染回复。模型不能增加、删除或改写事实段落，也不能改变消息送达时刻。
+- `route`：读取当前角色、当前消息和该角色自己的历史，选择已声明工作流，逐字提取消息里的字段。显式结构化字段优先；抽取值必须有可核对的原文，仍要经过引擎的材料校验。路由不变，保持确定性校验。
+- `render`（v0.5升级）：正式回复（`status: reply`）的正文由LLM在该人物的人设口吻下撰写，输入为引擎确定的canonical内容（事实、回执、联系人）、该人物与Agent的既往交互历史与director阶段提示；其他状态（needs_information/acknowledgement/referral/failed）仍用引擎的确定性canonical文本，受理语义不依赖模型。模型输出须**原样保留关键token**（数字、编号、带引号专名、联系人邮箱）：引擎做key-token校验，丢失即带反馈重试，仍失败则`SimulatorError`、episode记无效。模型不能增加、删除或改写事实内容，也不能改变消息送达时刻。
+- `dialogue`（v0.5新增）：标注`dialogue_mode: llm`的委托人问答工具由LLM人格作答——输入persona、该委托人既往问答历史与阶段提示，引擎注入关键词匹配到的canonical答复作为事实约束；规则层校验答复不得与authored事实矛盾。
 
-默认回复模式是**受约束的回复规划**：它不是任意自由生成的人物对话。语气来自预设选项，事实与澄清内容来自可信环境。这样可以实际测量LLM意图理解、跨轮补件和信息组织，同时保持事实评分可复现。若后续增加自由改写、谈判或情绪，需要另设模式并校准模拟器，不能把本模式描述成已经覆盖这些能力。
+这不是任意自由生成的人物对话：事实、材料校验、内部转交、日历推进和消息时刻全部由状态引擎决定，LLM只负责措辞与上下文衔接。这样可以实际测量LLM意图理解、跨轮补件和信息组织，同时保持事实可复现。
 
 每个人物有独立实例与历史，底层可共用一个无会话状态的HTTP客户端。默认保留最近24条本人物消息，并在每次路由中提供自身事项的ID和状态；未实现LLM记忆摘要或进程重启恢复。内部转交使用已指定的工作流，不调用LLM猜测转交目的。
 
@@ -119,7 +115,7 @@ python3 scripts/serve.py --task DSB-12 --simulator rule
 | `final_answer.json` | 有最终提交时保存Agent实际答案 |
 | `result.json` | 本次评分，或没有最终提交/模拟器故障的终止原因 |
 
-人物模拟器拒绝、超时或输出越权时，返回终止错误，`valid_episode=false`，进程以状态2退出；不生成一个看似有效的Agent失败分数，也不让Agent在已损坏状态上继续。正式统计应报告无效episode比例，并预先固定重试规则。正常规则评分保留`resolved_success`与`bounded_handling_success`的区分，每项失败新增可审查的`reasons`。
+人物模拟器拒绝、超时或输出越权（含render丢失关键token）时，返回终止错误，`valid_episode=false`，进程以状态2退出；不生成一个看似有效的Agent失败分数，也不让Agent在已损坏状态上继续。正式统计应报告无效episode比例，并预先固定重试规则。v0.5评分输出`scored_by`/`subparts_*`/`pending_criteria`/`deterministic_anchors_ok`（旧字段`resolved_success`/`bounded_handling_success`等为兼容别名），每项失败附可审查的`reasons`；judge评审失败的标准计pending、不判失败。
 
 日志目录必须新建或为空，避免覆盖已有实验。日志包含私有提示词与内部信息，不能交给被测Agent。文件用于审计，不是可恢复的checkpoint。未提交就断开会记录`no_final_submission`；外层驱动器应进一步区分超预算、异常退出等原因。
 

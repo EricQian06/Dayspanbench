@@ -1,36 +1,35 @@
 [
   {
     "task_id": "DSB-01",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 3,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "cancellation",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "slot_available",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "projector_available",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 103.5,
@@ -50,36 +49,35 @@
   },
   {
     "task_id": "DSB-02",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "monthly_rent",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "deposit",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "pet_allowed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "earliest_move",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 207.0,
@@ -99,36 +97,35 @@
   },
   {
     "task_id": "DSB-03",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 3,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "syllabus_version",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "credits",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "credit_scope",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "effective_term",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 2155.5,
@@ -148,36 +145,35 @@
   },
   {
     "task_id": "DSB-04",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 6,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "safety_certificate",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "filter_batch",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "earliest_measurement",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "price",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 505.33,
@@ -197,36 +193,35 @@
   },
   {
     "task_id": "DSB-05",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "current_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "minimum_quantity",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "earliest_dispatch",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "qa_pass",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 836.5,
@@ -246,36 +241,35 @@
   },
   {
     "task_id": "DSB-06",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "covered",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "replacement_part",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "part_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "earliest_visit",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 328.5,
@@ -295,36 +289,35 @@
   },
   {
     "task_id": "DSB-07",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 2,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "physical_exhibit_allowed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "online_allowed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_fee",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "scan_dpi",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 5155.5,
@@ -344,46 +337,35 @@
   },
   {
     "task_id": "DSB-08",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "a_door_cm",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "a_bathroom_cm",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "b_door_cm",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "b_bathroom_cm",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "b_available",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "b_total_price",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 144.18,
@@ -403,41 +385,35 @@
   },
   {
     "task_id": "DSB-09",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 4,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 7,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "responsible_office",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "consultation_receipt",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "case_category",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "required_documents",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "earliest_processing_date",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 1321.0,
@@ -457,41 +433,35 @@
   },
   {
     "task_id": "DSB-10",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "asking_price",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "measured_shutter",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "hotshoe_works",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "return_policy",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "earliest_pickup",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 73.05,
@@ -511,36 +481,35 @@
   },
   {
     "task_id": "DSB-11",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 3,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "reproduced",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "verified_patch",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "candidate_version",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "stable_release_date",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 2664.0,
@@ -560,41 +529,35 @@
   },
   {
     "task_id": "DSB-12",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 0,
+        "accepted": 0,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 7,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": false,
     "resolved_success": false,
     "bounded_handling_success": true,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "initial_warehouse_record",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "review_reference",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "declaration_version",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "batch_trace",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "release_status",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "bounded_unresolved",
     "calendar_hours": 7200.0,
@@ -614,51 +577,35 @@
   },
   {
     "task_id": "DSB-13",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 4,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "restaurant_address",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "table_time",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "access_verified",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "sesame_controls_written",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "child_meals_fish_free",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "reservation_confirmed",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 29.0,
@@ -678,41 +625,35 @@
   },
   {
     "task_id": "DSB-14",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "audience",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "bilingual",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "retracted",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "halted",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "dispatched",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 1.42,
@@ -732,46 +673,35 @@
   },
   {
     "task_id": "DSB-15",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 1,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "token_revoked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "no_reversal",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "dispute_filed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "disputed_amount",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "card_active",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "rent_unchanged",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 47.97,
@@ -791,36 +721,35 @@
   },
   {
     "task_id": "DSB-16",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "role_requirements_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "bridge_enrollment_recorded",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "assessed_artifacts_issued",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "application_received",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 224.0,
@@ -840,51 +769,35 @@
   },
   {
     "task_id": "DSB-17",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "meal_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "delivery_time",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "sesame_controls_written",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "child_meals_fish_free",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "helper_window",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "helper_acknowledged",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 32.0,
@@ -904,46 +817,35 @@
   },
   {
     "task_id": "DSB-18",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 3,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "permit_expires",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "portal_verified",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "initial_submitted",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "notice_delivered",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "supplement_submitted",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "followup_complete",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 193.0,
@@ -963,51 +865,35 @@
   },
   {
     "task_id": "DSB-19",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 6,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "outbound_booked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "outbound_arrival",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "lift_verified",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "clinic_release",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "return_pickup",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "return_booked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_fare",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 28.67,
@@ -1027,61 +913,35 @@
   },
   {
     "task_id": "DSB-20",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 2,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "rent",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "bedrooms",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "repair_completed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "drying_verified",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "retest_independent_pass",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "hold_active_no_deposit",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "signing_packet_delivered",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "repair_duties_preserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "lease_unsigned",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 144.0,
@@ -1101,46 +961,35 @@
   },
   {
     "task_id": "DSB-21",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 4,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "demand_amount",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "recipient_address",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "first_returned",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "delivered",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "fees_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "attachment_only",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 73.5,
@@ -1160,61 +1009,35 @@
   },
   {
     "task_id": "DSB-22",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 10,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "film_start",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "film_end",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "jazz_start",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "return_depart",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "home_arrival",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "transport_reserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "film_reserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "jazz_reserved",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 19.0,
@@ -1234,46 +1057,35 @@
   },
   {
     "task_id": "DSB-23",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "pet_acceptance_written",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "train_arrival_current",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "late_checkin_deadline",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "companion_supervision_acknowledged",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "stay_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 21.0,
@@ -1293,36 +1105,35 @@
   },
   {
     "task_id": "DSB-24",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "estimate_confirmed_in_writing",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "review_version_current",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "focus_hours_reserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "work_plan_acknowledged",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 32.0,
@@ -1342,46 +1153,35 @@
   },
   {
     "task_id": "DSB-25",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "ordered_sku",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "order_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "installment_amount",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "delivery_date",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "fit_verified",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "recycling_confirmed",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 30.0,
@@ -1401,46 +1201,35 @@
   },
   {
     "task_id": "DSB-26",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 1,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "caregivers_vetted",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "staffing_review_final",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "caregiver_withdrawal_handled",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "care_reserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "trip_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 55.83,
@@ -1460,46 +1249,35 @@
   },
   {
     "task_id": "DSB-27",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "owner_proof_attested",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "account_recovered",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "unknown_session_revoked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "partner_share_restored",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "trusted_access_preserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "contractor_share_unchanged",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 7.58,
@@ -1519,26 +1297,35 @@
   },
   {
     "task_id": "DSB-28",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 4,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "pathway_verified_by_adviser",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "first_stage_reserved",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 50.0,
@@ -1558,41 +1345,35 @@
   },
   {
     "task_id": "DSB-29",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "clinician_plan_current",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "old_share_revoked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "five_assignments_accepted",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "driver_packets_logistics_only",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "other_evenings_unchanged",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 27.5,
@@ -1612,46 +1393,35 @@
   },
   {
     "task_id": "DSB-30",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 3,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "duplicate_transaction",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "duplicate_amount",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "reversal_posted",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "dispute_filed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "required_payment",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "autopay_covers",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 99.47,
@@ -1671,41 +1441,35 @@
   },
   {
     "task_id": "DSB-31",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 6,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "occupied_until",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "shelter_since",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "mailing_address",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "reconsideration_submitted",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "docs_limited",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 76.0,
@@ -1725,46 +1489,35 @@
   },
   {
     "task_id": "DSB-32",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 6,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "referral_approved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "appointment_date",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "appointment_time",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "estimate",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "intake_shared",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "appointment_confirmed",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 50.5,
@@ -1784,56 +1537,35 @@
   },
   {
     "task_id": "DSB-33",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 6,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 4,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "inspection_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "slot_date",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "slot_start",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "provider",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "fee_usd",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "landlord_pays",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "tenant_present_only",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "no_repair_authorized",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 28.0,
@@ -1853,51 +1585,35 @@
   },
   {
     "task_id": "DSB-34",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 3,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "renewal_rent",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "credit_one_time_usd",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "first_month_due",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "repair_duty_preserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "mailing_address_unchanged",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "renewal_registered",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "tenant_signed",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 151.0,
@@ -1917,46 +1633,35 @@
   },
   {
     "task_id": "DSB-35",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "demand_amount",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "verified_recipient",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "return_address",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "dispatched_once",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "dispatch_fee",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "attachments_limited",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 30.0,
@@ -1976,56 +1681,35 @@
   },
   {
     "task_id": "DSB-36",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 7,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 3,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "show_start",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "stage",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "show_end",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "route_step_free",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "home_arrival",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "total_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "access_reserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "seats",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 5.0,
@@ -2045,46 +1729,35 @@
   },
   {
     "task_id": "DSB-37",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "replacement_reserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "arrival",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "extra_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "bike_accompanied",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "transfer_depart",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "return_preserved",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 4.5,
@@ -2104,46 +1777,35 @@
   },
   {
     "task_id": "DSB-38",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 4,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "chip_scan_verified",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "shelter_consent_held",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "registry_owner_transferred",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "license_fee_user_paid",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "municipal_license_issued",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "shelter_release_authorized",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 30.5,
@@ -2163,31 +1825,35 @@
   },
   {
     "task_id": "DSB-39",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 4,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "final_review_time_published",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "focus_plan_applied",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "ceo_reply_drafted_unsent",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 76.5,
@@ -2207,46 +1873,35 @@
   },
   {
     "task_id": "DSB-40",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 8,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 3,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "ordered_sku",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "order_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "delivery_window",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "payment_terms",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "fit_verified",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "recycling_confirmed",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 33.0,
@@ -2266,66 +1921,35 @@
   },
   {
     "task_id": "DSB-41",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 1
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 3,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 4,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "flight_booked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "flight_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "hotel_booked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "hotel_accessible",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "hotel_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "routes_step_free",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "dining_shellfish_safe",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "itinerary_paced",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "trip_budget_total",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "plan_approval_recorded",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 318.0,
@@ -2345,36 +1969,35 @@
   },
   {
     "task_id": "DSB-42",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 3,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "stripe_offer_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "shopify_offer_confirmed",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "stripe_rescheduled",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "shopify_rescheduled",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 51.5,

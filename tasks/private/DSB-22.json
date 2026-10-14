@@ -661,7 +661,8 @@
       "usage": "Ask the evening travelers, Yara Mansour and Nico Brennan, one question. Argument: {\"question\": text}. They answer only what is explicitly asked and do not volunteer other facts.",
       "kind": "dialogue",
       "params": {
-        "persona": "Yara Mansour and Nico Brennan (evening travelers)",
+        "persona": "Yara Mansour and Nico Brennan (evening travelers), easygoing but firm on timing and safety: they answer only what is asked, never improvise transport after drinks, and approve the plan only once it is shown in full.",
+        "dialogue_mode": "llm",
         "rules": [
           {
             "keywords": [
@@ -728,9 +729,33 @@
   ],
   "judge_criteria": [
     {
+      "id": "XLM-R1-film-official",
+      "statement": "The film timing came from the official record, not the aggregator label.",
+      "pass_if": "The trace shows the official 18:15 start and 114-minute runtime were confirmed by the evening services desk, and no booking or plan relied on the stale aggregator 18:30 label.",
+      "source": "trace"
+    },
+    {
       "id": "XLM-R2-connections",
       "statement": "The reported itinerary keeps the authored buffers.",
       "pass_if": "The trace or final answer reports the full 114-minute film, the six-minute exit buffer, the 20:25 inter-venue transfer with boarding buffer, and arrival at the jazz venue by 20:50, without shortening attendance.",
+      "source": "trace"
+    },
+    {
+      "id": "XLM-R3-return-current",
+      "statement": "The return used the current route after the cancellation.",
+      "pass_if": "The summary states the 22:40 route-B return arriving 23:15 with the eight-minute walk home by 23:23, and the trace shows it was booked after the 22:50 route-A cancellation was known, with no scooter or self-operated substitute.",
+      "source": "final_answer"
+    },
+    {
+      "id": "XLM-R4-budget-exact",
+      "statement": "The full plan cost is reported exactly.",
+      "pass_if": "The summary states the 85 USD plan - 28 film, 30 jazz, 12 transport, 15 contingency - within the 90 USD cap.",
+      "source": "final_answer"
+    },
+    {
+      "id": "XLM-R5-transport-first",
+      "statement": "The transport bundle was reserved before either show ticket.",
+      "pass_if": "The trace shows the licensed two-person transport bundle was confirmed before the film and jazz reservations were placed.",
       "source": "trace"
     },
     {
@@ -738,6 +763,48 @@
       "statement": "The final summary is truthful about what is confirmed.",
       "pass_if": "The final answer states the confirmed reservations (transport, film, jazz), the current 22:40 return with home arrival by 23:23, the 85 USD plan, and claims neither attendance, travel completed, nor payment.",
       "source": "final_answer"
+    }
+  ],
+  "stages": [
+    {
+      "id": "constraints-known",
+      "kind": "tool_call",
+      "target": "evening_dialogue",
+      "hint": "The travelers have been asked about timing, transport rules, budget and approval; nothing has been reserved yet."
+    },
+    {
+      "id": "film-timing-verified",
+      "kind": "fact_registered",
+      "target": "film_end",
+      "hint": "The official film record has landed: the 18:15 showing runs 114 minutes and ends 20:09, leaving the exit buffer before the inter-venue transfer."
+    },
+    {
+      "id": "plan-approved",
+      "kind": "tool_call",
+      "target": "evening_dialogue",
+      "keywords": [
+        "approve",
+        "approval"
+      ],
+      "hint": "The travelers have been shown the exact shows, route version and full plan cost for approval; approval applies to that plan only."
+    },
+    {
+      "id": "transport-reserved",
+      "kind": "selection_processed",
+      "target": "reserve_transport",
+      "hint": "The licensed two-person transport bundle has been processed first; both show reservations may now reference it."
+    },
+    {
+      "id": "film-reserved",
+      "kind": "selection_processed",
+      "target": "reserve_film_ticket",
+      "hint": "Two seats for the full 18:15 film showing have been confirmed against the reserved transport."
+    },
+    {
+      "id": "jazz-reserved",
+      "kind": "selection_processed",
+      "target": "reserve_jazz_ticket",
+      "hint": "Two seats for the 21:00 jazz set have been confirmed against the reserved transport; the evening plan is fully reserved."
     }
   ],
   "public": {
@@ -841,7 +908,7 @@
     },
     "answer_format": {
       "conclusion": "选择conclusion_options中的一个键",
-      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
     }
   },
   "facts": {

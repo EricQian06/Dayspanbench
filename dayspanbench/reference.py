@@ -1,6 +1,7 @@
 """Privileged authoring witness, NOT an agent or an LLM performance baseline."""
 
 from copy import deepcopy
+import json
 
 from .engine import Environment
 
@@ -72,15 +73,37 @@ def run_reference(task, *, recipient=None):
             getattr(api, action["name"])(**_resolve_fact_values(action.get("args", {}), env))
         else:
             raise ValueError(f"Unknown reference op {action['op']}")
-    # A solvability witness uses private goal labels, but only actually obtained
-    # evidence. These answers must never be used as a model performance result.
-    claims = []
-    for goal in task["goals"]:
-        if goal.get("status") == "unconfirmed":
-            claims.append({"key": goal["key"], "status": "unconfirmed"})
-        else:
-            ids = [ev["id"] for ev in env.evidence.values() if ev["fact_id"] in goal["accepted_facts"] and ev["agent_visible"]]
-            claims.append({"key": goal["key"], "status": "confirmed", "value": deepcopy(goal["expected"]), "evidence_ids": ids})
-    answer = {"conclusion": task["expected_conclusion"], "claims": claims}
+    # A solvability witness files the v0.5 answer structure: the expected
+    # conclusion label plus a mechanical summary stitched from the receipts
+    # and established facts the episode actually produced (no LLM involved).
+    # These answers must never be used as a model performance result.
+    answer = {"conclusion": task["expected_conclusion"],
+              "summary": _mechanical_summary(env, task)}
     result = api.submit_answer(answer)
     return env, answer, result
+
+
+def _mechanical_summary(env, task):
+    """Concatenate every agent-visible established fact and receipt the
+    witness obtained, then state the deadline-blocked goals honestly. The
+    result carries all deterministic anchor elements by construction."""
+    lines, seen = [], set()
+
+    def add(text):
+        if isinstance(text, str) and text.strip() and text not in seen:
+            seen.add(text)
+            lines.append(text)
+
+    for record in env.director.facts.values():
+        if record.get("agent_visible"):
+            add(record.get("text"))
+    for receipt in env.director.receipts:
+        add(receipt.get("text"))
+        fields = receipt.get("fields") or {}
+        if fields:
+            add(f"{receipt.get('title') or '回执'}关键要素："
+                + json.dumps(fields, ensure_ascii=False))
+    for goal in task.get("goals", []):
+        if goal.get("status") == "unconfirmed":
+            lines.append(f"截至截止时间，{goal['key']}尚无权威确认。")
+    return "\n".join(lines)

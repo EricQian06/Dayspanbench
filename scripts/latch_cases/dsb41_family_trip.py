@@ -621,7 +621,8 @@ def build(A, tasks, sites, horizons, conclusions):
             hidden_tool("trip_dialogue",
                         "Ask the family organizer, Morgan Lee, one question. Argument: {\"question\": text}. He answers only what is explicitly asked and does not volunteer other facts.",
                         "dialogue",
-                        {"persona": "Morgan Lee (family organizer)",
+                        {"persona": "Morgan Lee (family organizer). Plain-spoken, protective of the whole family's comfort, and particular that nothing binding happens without seeing the exact numbers first.",
+                         "dialogue_mode": "llm",
                          "rules": [
                              {"keywords": ["traveller", "traveler", "who", "names", "ages", "party", "people", "adults", "children"],
                               "answer": "The travellers are Morgan Lee (41), Jordan Lee (39), Pat Lee (72), Kai Lee (10) and Riley Lee (8) - two adults, one grandparent and two children, five in total."},
@@ -665,7 +666,26 @@ def build(A, tasks, sites, horizons, conclusions):
             {"id": "TRF9-truthful-summary",
              "statement": "The final summary accurately distinguishes confirmed, lapsed and cancelled records.",
              "pass_if": "The final answer reports the confirmed flight and hotel bookings with amounts and refundable terms, reports the lapsed hold and the cancelled flight and over-cap rate as not booked, and claims neither payment nor completed travel.",
+             "source": "final_answer"},
+            {"id": "TRF10-bookings-receipt",
+             "statement": "The final summary carries the key elements of both booking confirmations.",
+             "pass_if": "The final answer reports the flight confirmation for five travellers on SB-733/SB-734 (listing air-209) with the 2390 USD refundable round trip, and the hotel confirmation for the accessible family suite LFS-FAM-2 (listing htl-302) with the 1680 USD five-night refundable stay and the provider-verified roll-in shower, plus the complete 5615 USD trip budget within every cap.",
              "source": "final_answer"}],
+        stages=[
+            {"id": "traveller-consulted", "kind": "tool_call", "target": "trip_dialogue",
+             "hint": "The family's own requirements surface only through the family profile desk; the travellers, mobility, dietary, budget, dates and approval rules are collected there first."},
+            {"id": "flight-inventory-checked", "kind": "tool_call", "target": "flight_search",
+             "hint": "Current round-trip listings come from the flight search service; compare operating carriers and flight numbers, not display ids."},
+            {"id": "hotel-verified", "kind": "fact_registered", "target": "hotel_accessible",
+             "hint": "Written provider verification of the accessible suite is on file; a pending confirmation is not a verified room, and rates can change mid-week."},
+            {"id": "plan-approved", "kind": "tool_call", "target": "trip_dialogue", "keywords": ["approve", "approval"],
+             "hint": "The traveller reviews and approves the exact plan only from May 12 at 12:00 Chicago time: exact flight, hotel, current quote versions, complete total and cancellation terms."},
+            {"id": "plan-recorded", "kind": "selection_processed", "target": "confirm_trip_plan",
+             "hint": "The approved exact plan is recorded at the trip plan desk from one current plan listing."},
+            {"id": "flight-booked", "kind": "selection_processed", "target": "book_flight",
+             "hint": "After approval, the one flight booking is submitted through the flight booking desk against current inventory."},
+            {"id": "hotel-booked", "kind": "selection_processed", "target": "book_hotel",
+             "hint": "After approval, the one hotel booking is submitted through the hotel booking desk; a hold is not a booking and lapses unconverted."}],
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; using the provider-confirmed family suite (LFS-FAM-2) from the beginning is a legal alternative to the held-suite recovery path, and mail re-verification of routes, dining or the suite is equally valid evidence, but the scored answer keys follow the recovered plan booked after the May 12 approval window opens."))
     sites["DSB-41"] = "skybridgetrip"
     horizons["DSB-41"] = (13, "中短期", "mid-window flight cancellation and hotel rate change plus a lapsing hold and a late approval gate")

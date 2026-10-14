@@ -1,6 +1,6 @@
 # 自动测评完整流程
 
-`scripts/evaluate.py`把真实被测模型、人物模拟器、环境状态引擎和规则评分接在一起。它不调用作者参考策略，不替Agent生成答案。`serve.py`仍用于外部Agent通过stdin/stdout接入；自动测评直接调度同一组`AgentTools`，无需再手动启动服务。
+`scripts/evaluate.py`把真实被测模型、人物模拟器、环境状态引擎、确定性锚点核对和LLM终审接在一起。它不调用作者参考策略，不替Agent生成答案。`serve.py`仍用于外部Agent通过stdin/stdout接入；自动测评直接调度同一组`AgentTools`，无需再手动启动服务。
 
 ## 配置与运行
 
@@ -16,7 +16,7 @@ python3 scripts/evaluate.py \
   --run-dir artifacts/evaluation_runs/provider-check-001
 ```
 
-检查通过后，运行全部12题：
+检查通过后，运行全部题目（默认42题）：
 
 ```bash
 python3 scripts/evaluate.py \
@@ -27,6 +27,8 @@ python3 scripts/evaluate.py \
 ```
 
 日志目录必须是新目录或空目录。`--tasks DSB-01 DSB-12`可限定题目；`--simulator rule`可单独测规则人物环境，但与LLM人物环境是不同实验设置，不应混合汇报。重新运行使用新目录；当前不支持从中断事项恢复。
+
+**`--judge`（默认`simulator`）**：episode结束、模拟器交互全部完成后，由独立的LLM评审官依据各题私有的`judge_criteria`逐子部分评阅Agent的最终总结与发出的信件——这是v0.5的**主评分指标**。`simulator`复用人物模拟器的StructuredClient；`--judge off`关闭（此时带标准的题只保留确定性锚点结果）。评审输出经结构校验，`--judge-validation-retries`（默认1）控制重试次数；调用失败的标准记`pending`，该题标`judge_pending`，episode仍有效但不计入通过率分母。主分数由LLM给出，**非确定性**：正式实验建议对同一episode多次评测取均值或多数，并报告judge挂起比例。
 
 被测模型通过非流式Chat Completions返回`{"tool":"...","arguments":{...}}`。工具定义写入系统消息，不依赖服务商的原生function calling或JSON Schema支持。默认给Agent发送`max_tokens=4096`；可显式用`--agent-token-parameter max_completion_tokens`切换参数名，或`omit`不发送上限。`--agent-max-tokens`设置额度。人物模拟器默认输出预算为8192个token（`--simulator-max-tokens`），包含服务计入其中的推理token；仍默认使用严格`json_schema`；服务不支持时可显式选择`--simulator-format json_object`，不会自动换模式或换模型。
 
@@ -41,19 +43,25 @@ python3 scripts/evaluate.py \
 3. 每轮调用被测模型，解析一个工具动作，校验公开参数Schema，调用白名单工具。
 4. 发送消息和等待事件时可能调用人物LLM；事实内容、材料校验、内部转交和日历推进由状态引擎决定。真实API耗时不推进模拟日历。
 5. 工具返回结果加入被测模型的完整交互历史。当前没有历史截断或自动摘要；人物模拟器的历史窗口独立配置，默认24条。
-6. Agent自行调用`submit_answer`，主进程执行规则评分后停止该题。评分结果不会回传给模型试错。
+6. Agent自行调用`submit_answer`（`{conclusion, summary}`自然语言总结），主进程执行确定性锚点核对并（默认）触发LLM终审后停止该题。评分结果不会回传给模型试错。
 7. 每题完成即更新总表与报告。所有题都结束后，报告也直接打印到终端。
 
 Agent接口没有shell、文件读取、网络搜索等任意执行能力；模型只通过公开工具访问环境。隔离边界是发送给远程模型的请求内容；可信主进程本身仍可访问全部题目文件。
 
 ## 结果与故障口径
 
-- 11道`resolved`题报告`resolved_success`成功率。
-- DSB-12单独报告`bounded_handling_success`，不是放行成功率。
-- `required_fact_coverage`反映实际取得证据，区别于最终答对。DSB-12只对四个可核实目标计算覆盖率。
+v0.5起`result.json`的主要评分字段：
+
+- `scored_by`：本题分数来源——`judge`（LLM评审官，主指标）、`judge_pending`（评审调用失败，标准pending）、`deterministic_only`（无`judge_criteria`的题）、`awaiting_judge`（未评）。
+- `subparts_passed`/`subparts_total`：逐子部分通过数与总数，主分数为其比值。
+- `pending_criteria`：因评审基础设施失败而pending的标准条数；pending题保持有效但不计入通过率分母。
+- `deterministic_anchors_ok`：确定性锚点是否全部满足（结论标签、表单/选定办结、关键回执要素字面出现在summary、截止受阻题待处理状态）。
+- `complete`：全部子部分通过且锚点满足；旧字段`resolved_success`/`bounded_handling_success`/`information_sufficient`/`required_fact_coverage`保留为兼容别名（汇总口径仍按resolved/bounded_unresolved分组报告）。
+- `llm_judge`（含逐条`criterion_id/passed/evidence/reason`）、`judge_passed`/`judge_total`：评审明细。
+
 - 步数耗尽、动作格式错误或错误作答属于模型行为；步数耗尽按有效失败计，`submitted=false`，主进程仅用空答案计算终局诊断，不替模型作答。
-- 人物模拟器错误、Agent API传输/响应封装错误、主进程错误使episode无效，单列并排除成功率分母。不能把故障当成模型答错，也不能把仅存活样本的比例当成全12题无条件成功率。
-- 默认每题一次，报告一次真实运行结果，不提供跨随机重复的稳定性估计。接口检查结果与本地测试不能计作模型测评成绩。
+- 人物模拟器错误、Agent API传输/响应封装错误、主进程错误使episode无效，单列并排除成功率分母。不能把故障当成模型答错，也不能把仅存活样本的比例当成全部题目的无条件成功率。
+- 默认每题一次，报告一次真实运行结果，不提供跨随机重复的稳定性估计；LLM终审本身非确定性，建议正式报告附多次评测的均值或多数结果。接口检查结果与本地测试不能计作模型测评成绩。
 
 ## 日志文件在何时使用
 
@@ -68,9 +76,10 @@ Agent接口没有shell、文件读取、网络搜索等任意执行能力；模�
 | `DSB-xx/agent_calls.jsonl` | 每轮/故障退出 | 实际Agent请求与响应、返回模型标识、usage和HTTP尝试数 |
 | `DSB-xx/rpc_trace.jsonl` | 每个工具动作后 | 主进程执行的动作、返回结果和参数错误 |
 | `DSB-xx/simulator_calls.jsonl` | 每轮/故障退出 | 人物LLM调用、上下文、输出与usage，仅环境审计可读 |
-| `DSB-xx/private_audit.jsonl` | 每轮/故障退出 | 内部流程、证据和转交记录，仅环境审计可读 |
+| `DSB-xx/private_audit.jsonl` | 每轮/故障退出 | 内部流程、回执和转交记录，仅环境审计可读 |
 | `DSB-xx/final_answer.json` | Agent最终提交后 | 真实模型答案，未提交时不存在 |
-| `DSB-xx/result.json` | 单题结束 | 有效性、终止原因、逐项目标评分与成本指标 |
+| `DSB-xx/result.json` | 单题结束 | 有效性、终止原因、judge逐子部分评分（scored_by/subparts_*/pending_criteria/deterministic_anchors_ok）与成本指标 |
+| `DSB-xx/judge_calls.jsonl` | judge评审后 | 评审LLM调用、输入视图、输出与validation_error，仅环境审计可读 |
 | `summary.json`、`report.md` | 每题结束和整批结束 | 机器可读总表与人类可读报告，进行中时题数可能未齐 |
 | `preflight.json` | `--check-only`结束 | 接口检测状态，不是测评分数 |
 

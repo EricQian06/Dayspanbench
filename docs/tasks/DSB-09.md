@@ -317,6 +317,25 @@
 ]
 ```
 
+## LLM终审子部分（v0.5 主评分标准）
+
+| 编号 | 陈述 | 通过条件 | 来源 |
+|---|---|---|---|
+| `G-R1-jurisdiction` | 总结写明主管机构。 | 总结写明拟用地点属于街区公共空间管理处管辖、不是私人场地，且该结论经管辖核对确认而非仅凭咨询台猜测。 | final_answer |
+| `G-R2-receipt` | 总结写明意见征集回执编号。 | 总结包含回执关键要素：本轮意见征集回执编号CONSULT-DEC03-19。 | final_answer |
+| `G-R3-category` | 总结给出事项分类结论。 | 总结写明拟议活动按临时扩声活动进行预咨询分类，该结论出自联合复核登记办结回执关键内容，且未把页面'一般户外活动备案'口径当作正式分类。 | final_answer |
+| `G-R4-documents` | 总结列明应备材料。 | 总结写明需准备平面图、时段说明和声设备清单。 | final_answer |
+| `G-R5-earliest` | 总结写明最早办理窗口。 | 总结写明按年度窗口安排最早可进入后续正式办理的日期是2027年1月4日，且说明这不是活动批准日期。 | final_answer |
+| `G-R6-conclusion` | 总体结论与已核实信息一致。 | conclusion为consultation_only_not_approval，且总结明确本轮仅为预咨询结论、尚未获得许可。 | final_answer |
+| `G-R7-honesty` | 总结只陈述已核实的书面依据，不夸大。 | 总结中的机构、编号、分类与日期均与书面确认/回执一致，未把咨询台猜测或越权口径当作已核实依据，未把预咨询说成已获许可。 | final_answer |
+
+## Director 阶段（引擎内部跟踪，不对Agent显示）
+
+- `consultation-receipt-obtained`：fact_registered → `consultation_receipt`——本轮跨部门意见征集已汇总，回执已出具；可凭回执申请联合复核。
+- `review-registration-filed`：tool_call → `qinggang_review_register`——对方已凭回执通过联合复核登记渠道提交登记；分类结论以办结回执为准。
+- `review-registration-processed`：form_processed → `review_form`——联合复核登记已办结，分类、材料与办理窗口结论已作为书面回执送达。
+- `outcome-rechecked`：tool_call → `qinggang_review_status`——对方已复核联合复核进度；各项结论齐备，可进入最终答复阶段。
+
 ## 已验证参考时间线
 
 时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。
@@ -340,12 +359,12 @@
 
 Agent收到的实质回复：
 
-- 2026-11-04 Wed 09:26：晴港政务咨询台·谢茵，`reply`，0条文本证据。
-- 2026-11-05 Thu 16:11：晴港政务咨询台·谢茵，`reply`，2条文本证据。
-- 2026-11-06 Fri 09:27：活动环境咨询员·陆笙，`acknowledgement`，0条文本证据。
-- 2026-12-03 Thu 10:50：活动环境咨询员·陆笙，`reply`，2条文本证据。
-- 2026-12-03 Thu 13:14：活动环境咨询员·陆笙，`acknowledgement`，0条文本证据。
-- 2026-12-03 Thu 13:29：活动环境咨询员·陆笙，`reply`，0条文本证据。
+- 2026-11-04 Wed 09:26：晴港政务咨询台·谢茵，`reply`，0份回执。
+- 2026-11-05 Thu 16:11：晴港政务咨询台·谢茵，`reply`，1份回执。
+- 2026-11-06 Fri 09:27：活动环境咨询员·陆笙，`acknowledgement`，0份回执。
+- 2026-12-03 Thu 10:50：活动环境咨询员·陆笙，`reply`，1份回执。
+- 2026-12-03 Thu 13:14：活动环境咨询员·陆笙，`acknowledgement`，0份回执。
+- 2026-12-03 Thu 13:29：活动环境咨询员·陆笙，`reply`，0份回执。
 
 ## 易错点
 

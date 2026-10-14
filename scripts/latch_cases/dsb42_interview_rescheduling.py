@@ -218,7 +218,8 @@ def build(A, tasks, sites, horizons, conclusions):
             hidden_tool("candidate_dialogue",
                         "Ask the candidate, Nadia Okonkwo, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
                         "dialogue",
-                        {"persona": "Nadia Okonkwo (candidate)",
+                        {"persona": "Nadia Okonkwo (candidate). Courteous and quietly firm about her privacy; she wants both interviews kept and every change shown to her exactly before it is made.",
+                         "dialogue_mode": "llm",
                          "rules": [
                              {"keywords": ["available", "availability", "time", "when", "protected",
                                            "september", "window"],
@@ -247,7 +248,24 @@ def build(A, tasks, sites, horizons, conclusions):
             {"id": "W-R6-summary-accuracy",
              "statement": "The final summary is accurate.",
              "pass_if": "The final answer reports both confirmations in Chicago time with their durations and current links (link-shopify-new after the rotation), and claims neither a job offer nor an attended interview.",
+             "source": "final_answer"},
+            {"id": "W-R7-receipt-elements",
+             "statement": "The final summary carries the key elements of both reschedule confirmations.",
+             "pass_if": "The final answer reports the Stripe replacement as Thursday September 16, 2027 10:00-12:00 Central (two hours) at link-stripe-current and the Shopify replacement as Friday September 17, 2027 09:00-10:30 Central (ninety minutes) at link-shopify-new, with both old Wednesday invitations superseded only after their replacements were confirmed and nothing withdrawn.",
              "source": "final_answer"}],
+        stages=[
+            {"id": "candidate-consulted", "kind": "tool_call", "target": "candidate_dialogue",
+             "hint": "Availability, privacy wording and approval rules surface only through the candidate profile desk."},
+            {"id": "board-checked", "kind": "tool_call", "target": "interview_board",
+             "hint": "The current interviews and replacement slots live on the interview board; replacement offers appear once each recruiter confirms them."},
+            {"id": "offers-confirmed", "kind": "fact_registered", "target": "stripe_offer",
+             "hint": "Each recruiter's separately confirmed replacement is documented in writing after the generic prior-commitment message."},
+            {"id": "slots-approved", "kind": "tool_call", "target": "candidate_dialogue", "keywords": ["approve", "approval"],
+             "hint": "The candidate approves both exact new slots and their current links before either desk is used; links can rotate without notice."},
+            {"id": "stripe-rescheduled", "kind": "selection_processed", "target": "stripe_reschedule",
+             "hint": "The approved Stripe replacement is confirmed at its own desk before the old Stripe invitation is superseded."},
+            {"id": "shopify-rescheduled", "kind": "selection_processed", "target": "shopify_reschedule",
+             "hint": "The approved Shopify replacement with its current rotated link is confirmed at its own desk; nothing is withdrawn."}],
         alternate_paths="Any legal order of dialogue, board reads and recruiter mail is accepted if every goal's evidence conditions hold; either employer may be rescheduled first, and the rotated Shopify link must be refreshed before its desk accepts a slot."))
     sites["DSB-42"] = "interviewdesk"
     horizons["DSB-42"] = (2, "短期", "recruiter offer confirmation, a mid-morning link rotation and two separate per-employer desks")

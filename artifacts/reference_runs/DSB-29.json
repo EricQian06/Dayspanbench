@@ -3,88 +3,39 @@
   "task_id": "DSB-29",
   "answer": {
     "conclusion": "handoff_accepted",
-    "claims": [
-      {
-        "key": "clinician_plan_current",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0004",
-          "EV-0005"
-        ]
-      },
-      {
-        "key": "old_share_revoked",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001"
-        ]
-      },
-      {
-        "key": "five_assignments_accepted",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0006"
-        ]
-      },
-      {
-        "key": "driver_packets_logistics_only",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0007"
-        ]
-      },
-      {
-        "key": "other_evenings_unchanged",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0002",
-          "EV-0003"
-        ]
-      }
-    ]
+    "summary": "The old-link-FAM full-plan share to driver Luis has been revoked for future access; earlier downloads are not claimed to be erased.\nThe existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.\nThe clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.\nAll five required assignments (fri-pm, sat-am, sun-am, sat-ride, sun-ride) were sent separately and accepted by Beth, Aiko and Luis.\nDriver Luis received only the ride packets ride-sat and ride-sun with pickup, destination and appointment logistics; no drug names, diagnoses or clinical attachments were sent to him.\nShare old-link-FAM revoked: the driver's access to the superseded April full clinical plan ends now. Earlier downloads are not erased, and no other caregiver share was touched.\nThe old-link-FAM full-plan share to driver Luis has been revoked for future access; earlier downloads are not claimed to be erased.\nrevoke_share确认回执关键要素：{\"old_share_revoked\": true}\nThe existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.\nThe existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.\nRoster and standing services书面核实回执关键要素：{\"other_evenings\": true}\nThe clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.\nThe clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.\nCurrent plan release书面核实回执关键要素：{\"plan_v2\": true}\nHandoff sent and accepted: Beth accepted fri-pm, Aiko accepted sat-am and sun-am, Luis accepted sat-ride and sun-ride. Packets went separately; Luis received only ride logistics (ride-sat, ride-sun) with no drug names, diagnoses or clinical attachments. The existing evening service is unchanged, and no care has been performed yet.\nAll five required assignments (fri-pm, sat-am, sun-am, sat-ride, sun-ride) were sent separately and accepted by Beth, Aiko and Luis.\nDriver Luis received only the ride packets ride-sat and ride-sun with pickup, destination and appointment logistics; no drug names, diagnoses or clinical attachments were sent to him.\nhandoff_send确认回执关键要素：{\"coverage_accepted\": true, \"driver_logistics_only\": true}"
   },
   "result": {
     "task_id": "DSB-29",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "clinician_plan_current",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "old_share_revoked",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "five_assignments_accepted",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "driver_packets_logistics_only",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "other_evenings_unchanged",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 27.5,
@@ -102,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Care coordination desk·Noa Field。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -111,25 +62,17 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Care coordination desk·Noa Field。您咨询的事项已经核实，具体情况如下：The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Care coordination desk·Noa Field。您咨询的事项已经核实，具体情况如下：The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0002",
+          "receipt_no": "R-0002",
+          "title": "Roster and standing services书面核实回执",
+          "text": "The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.\nThe existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.",
+          "fields": {
+            "other_evenings": true
+          },
           "issuer": "care_desk",
-          "issued_at": "2027-09-16T18:26:00+00:00",
-          "text": "The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0003",
-          "issuer": "care_desk",
-          "issued_at": "2027-09-16T19:09:00+00:00",
-          "text": "The existing confirmed evening service for 2027-09-18 and 2027-09-19 is unchanged.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-09-16T19:24:00+00:00"
         }
       ]
     },
@@ -141,7 +84,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Care clinician·Dr. Lena Park。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0004",
@@ -150,25 +93,17 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Care clinician·Dr. Lena Park。您咨询的事项已经核实，具体情况如下：The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Care clinician·Dr. Lena Park。您咨询的事项已经核实，具体情况如下：The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0004",
+          "receipt_no": "R-0003",
+          "title": "Current plan release书面核实回执",
+          "text": "The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.\nThe clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.",
+          "fields": {
+            "plan_v2": true
+          },
           "issuer": "clinician",
-          "issued_at": "2027-09-16T23:07:00+00:00",
-          "text": "The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0005",
-          "issuer": "clinician",
-          "issued_at": "2027-09-16T23:51:00+00:00",
-          "text": "The clinician confirmed clinical plan version 2 and issued its scoped instruction packets (morning-v2, friday-v2) in writing; the April plan version 1 is superseded.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-09-17T00:06:00+00:00"
         }
       ]
     }
@@ -186,7 +121,8 @@
       "kind": "agent_dialogue",
       "tool": "family_dialogue",
       "question": "Who may do what, what may each caregiver see, and what are the pickup and appointment times?",
-      "matched": true
+      "matched": true,
+      "answer": "Aiko may provide morning care only. Beth is the licensed nurse covering Friday evening. Luis may drive but must never see drug names or diagnoses. The unverified temp helper is not authorized. Saturday and Sunday evenings already have an unchanged confirmed service - do not touch it."
     },
     {
       "at": "2027-09-16T16:00:00+00:00",
@@ -239,6 +175,12 @@
       "actor": "care_desk",
       "parent": null,
       "origin": "agent"
+    },
+    {
+      "at": "2027-09-16T16:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "old_share_revoked",
+      "issuer": "care_desk"
     },
     {
       "at": "2027-09-16T16:30:00+00:00",
@@ -331,6 +273,12 @@
     },
     {
       "at": "2027-09-16T18:26:00+00:00",
+      "kind": "fact_registered",
+      "fact": "other_evenings",
+      "issuer": "care_desk"
+    },
+    {
+      "at": "2027-09-16T18:26:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "care_desk",
@@ -362,6 +310,12 @@
       "case_id": "CASE-0001",
       "tool": "care_desk.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-09-16T19:09:00+00:00",
+      "kind": "fact_registered",
+      "fact": "other_evenings",
+      "issuer": "care_desk"
     },
     {
       "at": "2027-09-16T19:09:00+00:00",
@@ -524,6 +478,12 @@
     },
     {
       "at": "2027-09-16T23:07:00+00:00",
+      "kind": "fact_registered",
+      "fact": "plan_v2",
+      "issuer": "clinician"
+    },
+    {
+      "at": "2027-09-16T23:07:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "clinician",
@@ -555,6 +515,12 @@
       "case_id": "CASE-0002",
       "tool": "clinician.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-09-16T23:51:00+00:00",
+      "kind": "fact_registered",
+      "fact": "plan_v2",
+      "issuer": "clinician"
     },
     {
       "at": "2027-09-16T23:51:00+00:00",
@@ -610,7 +576,8 @@
       "kind": "agent_dialogue",
       "tool": "family_dialogue",
       "question": "Do you approve the five assignments: Beth Friday 19:30-20:30 with the Friday packet, Aiko both mornings with the morning packets, and Luis both rides with logistics-only packets, after revoking his old link?",
-      "matched": true
+      "matched": true,
+      "answer": "I approve only the exact assignments and role-limited packets you show me, sent separately; revoke Luis's old full-plan link first, and do not change the clinician's plan. Luis must never see drug names or diagnoses."
     },
     {
       "at": "2027-09-17T00:06:00+00:00",
@@ -645,6 +612,18 @@
       "tool": "handoff_send",
       "entry": "fam-plan-v2",
       "accepted": true
+    },
+    {
+      "at": "2027-09-17T19:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "coverage_accepted",
+      "issuer": "care_desk"
+    },
+    {
+      "at": "2027-09-17T19:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "driver_logistics_only",
+      "issuer": "care_desk"
     },
     {
       "at": "2027-09-17T19:00:00+00:00",

@@ -193,7 +193,8 @@ def build(A, tasks, sites, horizons, conclusions):
             hidden_tool("hannah_dialogue",
                         "Ask the tenant, Hannah Price, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
                         "dialogue",
-                        {"persona": "Hannah Price (tenant at unit-H)",
+                        {"persona": "Hannah Price (tenant at unit-H). Practical and firm about her home rules: she answers exactly what is asked, states her Saturday window, cat and key rules plainly, and approves only the exact provider, window and scope shown to her.",
+                         "dialogue_mode": "llm",
                          "rules": [
                              {"keywords": ["leak", "sink", "kitchen", "problem", "unit"],
                               "answer": "An intermittent leak is under my kitchen sink at unit-H. Arrange an inspection; do not authorize repairs."},
@@ -210,6 +211,10 @@ def build(A, tasks, sites, horizons, conclusions):
         authorization="Advisory and coordination only: read records, obtain the landlord's written authorization, and book at most the one attended inspection the tenant has approved - inspection scope only, within the fee cap; never authorize or pay for repairs, share keys, or allow unattended entry.",
         display_timezone="America/Chicago",
         judge_criteria=[
+            {"id": "HOM-R1-booking-receipt",
+             "statement": "The confirmed inspection's receipt elements reach the summary.",
+             "pass_if": "The summary carries the booking receipt's key elements: appointment-HOM1, Pipe-B Plumbing at unit-H on 2027-06-12 11:00-12:00 Central, 40 USD within the 45 USD cap with the landlord responsible for the cost.",
+             "source": "final_answer"},
             {"id": "HOM-R2-tenant-presence",
              "statement": "Tenant presence and entry restrictions are respected.",
              "pass_if": "The confirmed appointment lies entirely inside the June 12 09:00-12:00 window, and the booking and final answer acknowledge tenant-present entry only, no unattended entry or key sharing, and the cat staying inside.",
@@ -222,6 +227,18 @@ def build(A, tasks, sites, horizons, conclusions):
              "statement": "The appointment uses the live slot, not a stale promise.",
              "pass_if": "The booked slot matches a current slot-board row at booking time - not the moved 10:00 h01 listing or the cancelled row.",
              "source": "trace"}],
+        stages=[
+            {"id": "tenant-consulted", "kind": "tool_call", "target": "hannah_dialogue",
+             "hint": "The tenant's rules are known: home only Saturday June 12 09:00-12:00, tenant-present entry only, cat inside, 45 USD cap, landlord confirms responsibility and approves the plumber."},
+            {"id": "authorization-on-file", "kind": "fact_registered", "target": "landlord_pays",
+             "hint": "The landlord's written authorization is on file: landlord pays within the 45 USD cap, approved providers pipe-A and pipe-B, repairs not authorized. The slot board now activates."},
+            {"id": "board-checked", "kind": "tool_call", "target": "slot_board_search",
+             "hint": "The live slot board has been read; rows can move or be withdrawn without notice, so re-check before booking."},
+            {"id": "appointment-approved", "kind": "tool_call", "target": "hannah_dialogue",
+             "keywords": ["approve", "approval"],
+             "hint": "The tenant has approved the exact provider, window and scope; approval covers that inspection-only appointment and nothing else."},
+            {"id": "inspection-booked", "kind": "selection_processed", "target": "inspection_booking_desk",
+             "hint": "The approved attended inspection has been booked from a live board row; the confirmation is read back through the booking desk, never pushed."}],
         alternate_paths="Any legal order of dialogue, landlord mail and slot searches is accepted if every goal's evidence conditions hold; the reference path books after the June 11 slot move, and the scored answer keys follow the live h02 plan. Slots outside the window, unverified providers, repair scope or over-cap fees cannot pass."))
     sites["DSB-33"] = "juniperheights"
     horizons["DSB-33"] = (2, "短期", "landlord authorization turnaround plus a mid-case slot inventory change")

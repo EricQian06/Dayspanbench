@@ -396,6 +396,26 @@ Advisory and coordination only: search listings, verify official timing, and cre
 ]
 ```
 
+## LLM终审子部分（v0.5 主评分标准）
+
+| 编号 | 陈述 | 通过条件 | 来源 |
+|---|---|---|---|
+| `XLM-R1-film-official` | The film timing came from the official record, not the aggregator label. | The trace shows the official 18:15 start and 114-minute runtime were confirmed by the evening services desk, and no booking or plan relied on the stale aggregator 18:30 label. | trace |
+| `XLM-R2-connections` | The reported itinerary keeps the authored buffers. | The trace or final answer reports the full 114-minute film, the six-minute exit buffer, the 20:25 inter-venue transfer with boarding buffer, and arrival at the jazz venue by 20:50, without shortening attendance. | trace |
+| `XLM-R3-return-current` | The return used the current route after the cancellation. | The summary states the 22:40 route-B return arriving 23:15 with the eight-minute walk home by 23:23, and the trace shows it was booked after the 22:50 route-A cancellation was known, with no scooter or self-operated substitute. | final_answer |
+| `XLM-R4-budget-exact` | The full plan cost is reported exactly. | The summary states the 85 USD plan - 28 film, 30 jazz, 12 transport, 15 contingency - within the 90 USD cap. | final_answer |
+| `XLM-R5-transport-first` | The transport bundle was reserved before either show ticket. | The trace shows the licensed two-person transport bundle was confirmed before the film and jazz reservations were placed. | trace |
+| `XLM-R6-truthfulness` | The final summary is truthful about what is confirmed. | The final answer states the confirmed reservations (transport, film, jazz), the current 22:40 return with home arrival by 23:23, the 85 USD plan, and claims neither attendance, travel completed, nor payment. | final_answer |
+
+## Director 阶段（引擎内部跟踪，不对Agent显示）
+
+- `constraints-known`：tool_call → `evening_dialogue`——The travelers have been asked about timing, transport rules, budget and approval; nothing has been reserved yet.
+- `film-timing-verified`：fact_registered → `film_end`——The official film record has landed: the 18:15 showing runs 114 minutes and ends 20:09, leaving the exit buffer before the inter-venue transfer.
+- `plan-approved`：tool_call → `evening_dialogue`（关键词：approve、approval）——The travelers have been shown the exact shows, route version and full plan cost for approval; approval applies to that plan only.
+- `transport-reserved`：selection_processed → `reserve_transport`——The licensed two-person transport bundle has been processed first; both show reservations may now reference it.
+- `film-reserved`：selection_processed → `reserve_film_ticket`——Two seats for the full 18:15 film showing have been confirmed against the reserved transport.
+- `jazz-reserved`：selection_processed → `reserve_jazz_ticket`——Two seats for the 21:00 jazz set have been confirmed against the reserved transport; the evening plan is fully reserved.
+
 ## 已验证参考时间线
 
 时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。
@@ -409,8 +429,8 @@ Advisory and coordination only: search listings, verify official timing, and cre
 
 Agent收到的实质回复：
 
-- 2027-10-02 Sat 05:10：Riverside Evening Services desk·Sam Okafor，`acknowledgement`，0条文本证据。
-- 2027-10-02 Sat 07:34：Riverside Evening Services desk·Sam Okafor，`reply`，4条文本证据。
+- 2027-10-02 Sat 05:10：Riverside Evening Services desk·Sam Okafor，`acknowledgement`，0份回执。
+- 2027-10-02 Sat 07:34：Riverside Evening Services desk·Sam Okafor，`reply`，1份回执。
 
 ## 易错点
 

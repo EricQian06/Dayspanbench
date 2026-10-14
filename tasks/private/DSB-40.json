@@ -593,7 +593,8 @@
       "usage": "Ask the householder, Angela Davis, one question. Argument: {\"question\": text}. She answers only what is explicitly asked and does not volunteer other facts.",
       "kind": "dialogue",
       "params": {
-        "persona": "Angela Davis (householder)",
+        "persona": "Angela Davis (householder). Practical and unhurried: she answers exactly what is asked, gives her measurements and access facts precisely, and reviews an exact order plan only once her June 8 13:00 window opens.",
+        "dialogue_mode": "llm",
         "rules": [
           {
             "keywords": [
@@ -663,10 +664,42 @@
   ],
   "judge_criteria": [
     {
+      "id": "S-R1-fit-verified",
+      "statement": "The written fit and recycling verification is carried into the summary.",
+      "pass_if": "The summary carries the fit verification's key elements: fit-S206 confirming COOL-16-B's minimum opening fits the measured 33 x 70 x 35 in opening with the verified unpack-at-door route, and old-fridge recycling included in the delivery service.",
+      "source": "final_answer"
+    },
+    {
+      "id": "S-R2-order-receipt",
+      "statement": "The order receipt's key elements reach the summary.",
+      "pass_if": "The summary carries the order receipt's key elements: COOL-16-B for Angela Davis at home-A, all-in 1181.60 USD (item 1020.00, tax 81.60, delivery 50.00, recycling 30.00) within the 1300 USD budget, assigned delivery 2027-06-09 10:00-12:00 Chicago time, pay on delivery.",
+      "source": "final_answer"
+    },
+    {
       "id": "S-R6-accurate-comparison",
       "statement": "The final explanation is accurate about tradeoffs and remaining work.",
       "pass_if": "The final answer reports the exact product, full all-in price and confirmed delivery interval, explains the rejection of the new-credit, late-delivery, backordered or over-budget offers (including the headline-vs-all-in price trap), and states that payment and delivery remain pending rather than completed.",
       "source": "final_answer"
+    }
+  ],
+  "stages": [
+    {
+      "id": "householder-consulted",
+      "kind": "tool_call",
+      "target": "householder_dialogue",
+      "hint": "The household facts are known: 33 x 70 x 35 in opening, 33 in doorway with no stairs, home-A delivery 08:00-18:00, recycling wanted, pay-on-delivery only and review from June 8 13:00."
+    },
+    {
+      "id": "fit-verified",
+      "kind": "fact_registered",
+      "target": "fit_verified",
+      "hint": "The delivery specialist's written verification is in: measured fit, unpack-at-door route and recycling confirmed in writing. Live slots can still change, so re-check before ordering."
+    },
+    {
+      "id": "order-placed",
+      "kind": "selection_processed",
+      "target": "order_create",
+      "hint": "The one approved pay-on-delivery order has been placed against the live listing and slot; the confirmation is read back through the order desk, never pushed."
     }
   ],
   "public": {
@@ -761,7 +794,7 @@
     },
     "answer_format": {
       "conclusion": "选择conclusion_options中的一个键",
-      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
     }
   },
   "facts": {

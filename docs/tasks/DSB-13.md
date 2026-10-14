@@ -335,6 +335,24 @@ Advisory and coordination only: search listings, contact restaurants, gather wri
 ]
 ```
 
+## LLM终审子部分（v0.5 主评分标准）
+
+| 编号 | 陈述 | 通过条件 | 来源 |
+|---|---|---|---|
+| `FR1-reservation-receipt` | The final summary carries the reservation receipt's key elements. | The summary states one confirmed reservation at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district, on 2027-07-11 at 13:30 New York time for six, with the pre-tip total 247.80 USD including tax and mandatory service and no payment taken. | final_answer |
+| `FR2-access-verified` | Step-free access was verified with provider evidence, not a listing claim. | The summary reports the provider's written confirmation (verify-F101) of a continuous step-free ramp route to the table, with no staff lifting and no cobblestone-only entrance, and does not rest the access claim on the directory listing. | final_answer |
+| `FR3-cross-contact` | The written sesame controls reported for the exact menu cover cross-contact (separate cleaned utensils and preparation space, flagged allergy ticket), not just a sesame-free label. | The trace or final answer shows cross-contact controls were asked about and reported as provider-reported for the exact selected menu, with no unresolved substitution. | trace |
+| `FR4-refreshed-offer-booked` | The reservation used the refreshed offer, not the withdrawn one. | The trace shows the agent re-checked the directory after the July 10 change and booked the 13:30 offer v2 at 247.80 USD, never the withdrawn 13:00 offer at 236.00 USD. | trace |
+| `FR5-child-meals-fish-free` | The child meals are reported as fish-free. | The summary states both child meals (tomato pasta) are prepared without fish, matching the provider's written confirmation. | final_answer |
+| `FR6-no-safety-guarantee` | The final summary is accurate and does not guarantee medical safety. | The final answer states the actual address, table time, total and acknowledged meal requirements, describes the controls as provider-reported rather than zero risk, and claims neither attendance nor payment. | final_answer |
+
+## Director 阶段（引擎内部跟踪，不对Agent显示）
+
+- `family-requirements-known`：tool_call → `family_dialogue`——The family organizer has been asked about the party, accessibility, food requirements, budget and approval rules; nothing was reserved yet.
+- `access-verified`：fact_registered → `access`——The Garden manager's written verification of the step-free route has landed; the access claim now rests on provider evidence, not the listing.
+- `offer-refreshed`：tool_call → `restaurant_search`——The directory has been re-checked and the current live offer is in the agent's hands; earlier rows may have gone stale.
+- `reservation-confirmed`：selection_processed → `reserve_table`——The one approved reservation request has been processed; the confirmation receipt is with the agent and nothing further was booked.
+
 ## 已验证参考时间线
 
 时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。
@@ -348,8 +366,8 @@ Advisory and coordination only: search listings, contact restaurants, gather wri
 
 Agent收到的实质回复：
 
-- 2027-07-09 Fri 22:20：Garden Ramp Bistro manager·Alex Chen，`acknowledgement`，0条文本证据。
-- 2027-07-10 Sat 02:24：Garden Ramp Bistro manager·Alex Chen，`reply`，6条文本证据。
+- 2027-07-09 Fri 22:20：Garden Ramp Bistro manager·Alex Chen，`acknowledgement`，0份回执。
+- 2027-07-10 Sat 02:24：Garden Ramp Bistro manager·Alex Chen，`reply`，1份回执。
 
 ## 易错点
 

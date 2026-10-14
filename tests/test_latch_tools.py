@@ -78,12 +78,13 @@ class CatalogTests(unittest.TestCase):
         # Unrelated queries never see the clue.
         self.assertEqual(api.web_search("venue")["service_mentions"], [])
 
-    def test_catalog_lists_and_filters_with_evidence(self):
+    def test_catalog_lists_and_filters_with_receipt(self):
         result = self.api.garden_menu_search(query="six-person")
         self.assertEqual([r["id"] for r in result["results"]], ["lunch-1300"])
-        self.assertEqual(result["results"][0]["evidence"][0]["value"], 10500)
-        ev = self.env.evidence[result["results"][0]["evidence"][0]["id"]]
-        self.assertTrue(ev["agent_visible"])
+        receipt = result["results"][0]["receipts"][0]
+        self.assertEqual(receipt["fields"], {"price": 10500})
+        self.assertIn("10500", receipt["text"])
+        self.assertTrue(self.env.director.facts["price"]["agent_visible"])
 
     def test_catalog_update_removes_stale_offer(self):
         self.env.advance("2026-11-07T10:01:00+08:00")
@@ -101,7 +102,7 @@ class CatalogTests(unittest.TestCase):
         outcome = self.api.garden_reserve_table(query="status")
         self.assertEqual(outcome["status"], "processed")
         self.assertEqual(outcome["state"], "The table has been reserved.")
-        self.assertEqual(outcome["evidence"][0]["value"], True)  # the slot fact
+        self.assertEqual(outcome["receipts"][0]["fields"], {"slot": True})  # the slot fact
 
     def test_select_rejects_wrong_option(self):
         self.api.garden_reserve_table(entry="lunch-1300")

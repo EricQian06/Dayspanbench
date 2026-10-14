@@ -106,7 +106,7 @@ def main(argv=None):
                 if "document_id" in extracted or ("item_id" in extracted and extracted["item_id"] != "ITEM42"):
                     raise SimulatorError("Preflight invented a missing field")
                 actor.render({"actor_id": "fixture", "name": "测试联系人", "role": "信息查询", "history": [],
-                              "status": "reply", "canonical_text": "查询完成", "contacts": [], "evidence": []})
+                              "status": "reply", "canonical_text": "查询完成", "contacts": [], "facts": []})
                 checks.extend(["simulator_route", "simulator_missing_fields", "simulator_reply"])
             result = {"ok": True, "checks": checks}
         except (AgentAPIError, SimulatorError, ValueError) as error:

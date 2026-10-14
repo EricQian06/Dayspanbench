@@ -70,7 +70,7 @@ def main(argv=None):
             parser.error(str(error))
     env = Environment(task, recipients)
     api = env.tools()
-    manifest = {"task_id": args.task, "task_set_version": task["task_set_version"], "scoring_version": "0.3.0",
+    manifest = {"task_id": args.task, "task_set_version": task["task_set_version"], "scoring_version": "0.5.0",
                 "task_sha256": hashlib.sha256(task_path.read_bytes()).hexdigest(),
                 "simulator": args.simulator, "history_limit": args.history_limit,
                 "simulator_config": client.config.public_dict() if client else None,

@@ -272,6 +272,23 @@ Advisory and coordination only: search live inventory, confirm bike policy, and 
 ]
 ```
 
+## LLM终审子部分（v0.5 主评分标准）
+
+| 编号 | 陈述 | 通过条件 | 来源 |
+|---|---|---|---|
+| `MOB-R1-current-alert` | The plan follows the authoritative cancellation, not the superseded all-clear. | The trace shows the current cancellation record (v3) used as the disruption basis, with no reliance on the superseded all-clear alert or the pre-delay rail schedule. | trace |
+| `MOB-R2-connection` | The reported connection is reachable and in time. | The trace or final answer reports the 15:10 transfer with a ten-minute boarding buffer before the 15:30 coach and final arrival at or before 19:30, using current times rather than the pre-delay rail schedule. | trace |
+| `MOB-R3-bike-accompanied` | The accompanied folded-bike evidence is carried into the summary. | The summary carries the bike confirmation's key elements: bike-MOB1, both the local transfer and the coach accept the folded Brompton kept with the passenger, no unattended storage and no extra bike fee. | final_answer |
+| `MOB-R4-bundle-receipt` | The replacement bundle's receipt elements reach the summary. | The summary carries the booking receipt's key elements: the m02 coach bundle with the transfer departing Reading 15:10, coach departing Mereoak 15:30, arrival at Bristol Temple Meads 19:00, and 18 GBP extra within the allowed outlay. | final_answer |
+| `MOB-R6-no-arrival-claim` | The final summary does not invent completed travel. | The final answer states the confirmed bundle, the transfer departure and boarding deadline, and that travel has not yet occurred; it claims neither arrival nor payment and leaves the original return leg unchanged. | final_answer |
+
+## Director 阶段（引擎内部跟踪，不对Agent显示）
+
+- `passenger-consulted`：tool_call → `traveler_dialogue`——The passenger's constraints are known: folded Brompton stays with him, at most 18 GBP extra, no compensation claim, original return leg preserved, approval of the exact plan first.
+- `bike-acceptance-confirmed`：fact_registered → `bike_accompanied`——The rail desk's written confirmation is in: both legs accept the accompanied folded bike with no unattended storage and no extra fee.
+- `plan-approved`：tool_call → `traveler_dialogue`（关键词：approve、approval）——The passenger has approved the exact live journey, transfer buffer, bike acceptance and total; approval covers that one bundle only.
+- `replacement-reserved`：selection_processed → `reserve_replacement`——The approved replacement bundle has been confirmed against live inventory; the confirmation is read back through the booking desk, never pushed.
+
 ## 已验证参考时间线
 
 时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。
@@ -285,8 +302,8 @@ Advisory and coordination only: search live inventory, confirm bike policy, and 
 
 Agent收到的实质回复：
 
-- 2027-10-07 Thu 23:15：Rail recovery desk·Tom Ashby，`acknowledgement`，0条文本证据。
-- 2027-10-08 Fri 00:24：Rail recovery desk·Tom Ashby，`reply`，2条文本证据。
+- 2027-10-07 Thu 23:15：Rail recovery desk·Tom Ashby，`acknowledgement`，0份回执。
+- 2027-10-08 Fri 00:24：Rail recovery desk·Tom Ashby，`reply`，1份回执。
 
 ## 易错点
 

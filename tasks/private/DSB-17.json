@@ -577,7 +577,8 @@
       "usage": "Ask the family organizer, David Klein, one question. Argument: {\"question\": text}. He answers only what is explicitly asked and does not volunteer other facts.",
       "kind": "dialogue",
       "params": {
-        "persona": "David Klein (family organizer)",
+        "persona": "David Klein (family organizer), warm but strict about safety and approvals: he answers exactly what is asked, insists on written controls and named helper coverage, and re-approves only plans shown to him in full after any change.",
+        "dialogue_mode": "llm",
         "rules": [
           {
             "keywords": [
@@ -662,9 +663,27 @@
   ],
   "judge_criteria": [
     {
+      "id": "XFF-R1-order-receipt",
+      "statement": "The final summary carries the order receipt's key elements.",
+      "pass_if": "The summary states one confirmed order of menu ff1 version 2, six portions (four adult, two child) delivered 2027-07-11 at 13:30 New York time, total 236.00 USD including tax and delivery, with no payment taken.",
+      "source": "final_answer"
+    },
+    {
+      "id": "XFF-R2-controls-written",
+      "statement": "Written exact-menu sesame controls were obtained from the provider.",
+      "pass_if": "The summary reports the kitchen's written controls for menu ff1 - no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, a flagged allergy ticket - described as provider-reported, and both child portions fish-free.",
+      "source": "final_answer"
+    },
+    {
       "id": "XFF-coverage-matched-to-current-time",
       "statement": "Helper coverage was matched to the menu's current delivery time after the change, not to the withdrawn 12:00 window.",
       "pass_if": "The trace shows the acknowledged helper window corresponds to the 13:30 delivery (Marta 13:00-15:00 covering 13:30-14:30), with no commitment relying on Ana's 12:00-13:00 window or on the driver for mealtime assistance.",
+      "source": "trace"
+    },
+    {
+      "id": "XFF-refreshed-listing-booked",
+      "statement": "The order used the refreshed delivery-time listing.",
+      "pass_if": "The trace shows the agent re-checked the menus after the July 10 change and ordered ff1 version 2 at the 13:30 delivery, never the withdrawn 12:00 version.",
       "source": "trace"
     },
     {
@@ -672,6 +691,48 @@
       "statement": "The final summary is accurate and does not overclaim.",
       "pass_if": "The final answer reports the confirmed order, delivery time, total, controls described as provider-reported and the named helper coverage, and claims neither that the meal was eaten or care performed, that payment was made, nor zero allergy risk.",
       "source": "final_answer"
+    }
+  ],
+  "stages": [
+    {
+      "id": "family-requirements-known",
+      "kind": "tool_call",
+      "target": "family_dialogue",
+      "hint": "The family organizer has been asked about the party, accessibility, food requirements, helpers, budget and approval rules; nothing was ordered yet."
+    },
+    {
+      "id": "menus-read",
+      "kind": "tool_call",
+      "target": "menu_search",
+      "hint": "The current home-meal menus are in the agent's hands; delivery times can be revised mid-week, so earlier rows may be stale."
+    },
+    {
+      "id": "controls-verified",
+      "kind": "fact_registered",
+      "target": "controls",
+      "hint": "The kitchen's written exact-menu sesame cross-contact controls have landed; the allergen claim now rests on provider evidence, not a listing label."
+    },
+    {
+      "id": "helper-acknowledged",
+      "kind": "fact_registered",
+      "target": "helper_ack",
+      "hint": "A helper has acknowledged covering wheelchair assistance, child supervision and meal handoff for the current meal window in writing."
+    },
+    {
+      "id": "plan-approved",
+      "kind": "tool_call",
+      "target": "family_dialogue",
+      "keywords": [
+        "approve",
+        "approval"
+      ],
+      "hint": "The organizer has been shown the exact revised plan - menu, portions, delivery window, cost and named helper - and approval applies only to that plan."
+    },
+    {
+      "id": "order-confirmed",
+      "kind": "selection_processed",
+      "target": "meal_order",
+      "hint": "The one approved meal order has been processed; the confirmation receipt is with the agent and nothing further was ordered."
     }
   ],
   "public": {
@@ -769,7 +830,7 @@
     },
     "answer_format": {
       "conclusion": "选择conclusion_options中的一个键",
-      "claims": "每个answer_keys条目提供key、status=confirmed/unconfirmed、value和evidence_ids；value可采用声明的归一化表示；unconfirmed不填写value和evidence_ids。"
+      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
     }
   },
   "facts": {

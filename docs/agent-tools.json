@@ -105,7 +105,7 @@
   },
   {
     "name": "read_inbox",
-    "description": "工具名称：read_inbox。\n调用方法：{\"tool\":\"read_inbox\",\"arguments\":{\"after\":0}}，after可省略，默认为0。\n参数字段：after为上一轮返回的cursor值，跳过此前的消息，避免重复读取。\n用途：读取Agent自己收到的消息和证据。返回字段：messages为自游标后的消息列表；cursor为当前消息总数，作为下次读取的游标；now为当前虚拟时间。每条消息含id（编号）、at（送达时间）、from（发件人邮箱地址）、case_id（所属事项编号）、status（reply正式回复、referral转介说明、needs_information缺件提示、acknowledgement确认回执、failed办理失败之一）、channel（email或phone）、text（正文，单段自然语言）和evidence（随信送达的结构化证据列表，电话答复恒为空；每条证据含id、issuer签发人、issued_at签发时间、text内容、value值、valid_until有效期上界、kind种类）。消息不附带结构化联系人卡片，被转介联系人的邮箱会在正文中以自然语言给出。",
+    "description": "工具名称：read_inbox。\n调用方法：{\"tool\":\"read_inbox\",\"arguments\":{\"after\":0}}，after可省略，默认为0。\n参数字段：after为上一轮返回的cursor值，跳过此前的消息，避免重复读取。\n用途：读取Agent自己收到的消息和回执。返回字段：messages为自游标后的消息列表；cursor为当前消息总数，作为下次读取的游标；now为当前虚拟时间。每条消息含id（编号）、at（送达时间）、from（发件人邮箱地址）、case_id（所属事项编号）、status（reply正式回复、referral转介说明、needs_information缺件提示、acknowledgement确认回执、failed办理失败之一）、channel（email或phone）、text（正文，单段自然语言）和receipts（随信送达的自然语言回执列表，电话答复恒为空；每条回执含receipt_no回执号（仅作核对记录之用，最终总结中不要求引用）、title标题、issuer签发人、issued_at签发时间、text凭证正文、fields关键要素（如受理号、票号、金额、数量、截止时间））；回执的关键内容须记入最终总结。消息不附带结构化联系人卡片，被转介联系人的邮箱会在正文中以自然语言给出。",
     "parameters": {
       "type": "object",
       "properties": {
@@ -176,7 +176,7 @@
   },
   {
     "name": "fetch_document",
-    "description": "工具名称：fetch_document（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"fetch_document\",\"arguments\":{\"url\":\"https://组织名.bench/files/文件.pdf\"}}。\n参数字段：url（必填）为文件地址，来自visit_page返回的documents列表。\n用途：下载页面挂出的文件，返回url、title、text（文件内容）与at（时间）。部分官方文件（如价目、公告）随下载签发结构化书面证据（evidence列表，含id、issuer、issued_at、text、value、valid_until、kind）；也有些文件只是普通说明。",
+    "description": "工具名称：fetch_document（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"fetch_document\",\"arguments\":{\"url\":\"https://组织名.bench/files/文件.pdf\"}}。\n参数字段：url（必填）为文件地址，来自visit_page返回的documents列表。\n用途：下载页面挂出的文件，返回url、title、text（文件内容）与at（时间）。部分官方文件（如价目、公告）随下载签发自然语言书面回执（receipts列表，含receipt_no、issuer、issued_at、text、fields）；也有些文件只是普通说明。",
     "parameters": {
       "type": "object",
       "properties": {
@@ -270,7 +270,7 @@
   },
   {
     "name": "submit_answer",
-    "description": "工具名称：submit_answer。\n调用方法：{\"tool\":\"submit_answer\",\"arguments\":{\"answer\":{\"conclusion\":\"suitable\",\"claims\":[{\"key\":\"total_cost\",\"status\":\"confirmed\",\"value\":10500,\"evidence_ids\":[\"EV-0002\"]}]}}}。\n参数字段：answer（必填）为结构化答案对象，其中conclusion为结论，从公开conclusion_options中选择标签或其公开中文名称；claims为断言列表，须覆盖全部公开answer_keys，每条含key（答案字段名）、status（confirmed或unconfirmed）、value（字段取值，支持公开归一化类型，仅confirmed填写）、evidence_ids（证据编号列表，仅confirmed填写，须来自本次实际收到的回复）。\n用途：最终提交并评分，只允许一次，不提供试错；提交后episode关闭。unconfirmed条目不填写value和evidence_ids，不要编造已确认的信息。",
+    "description": "工具名称：submit_answer。\n调用方法：{\"tool\":\"submit_answer\",\"arguments\":{\"answer\":{\"conclusion\":\"suitable\",\"summary\":\"经与主办方往来确认，场地总费用为10500元，其中……（自然语言总结）\"}}}。\n参数字段：answer（必填）为最终答案对象，其中conclusion为结论标签，从公开conclusion_options中选择标签或其公开中文名称；summary为自然语言总结，用自己的话完整陈述本次任务结果。\n用途：最终提交并评分，只允许一次，不提供试错；提交后episode关闭。summary必须涵盖已取得的全部关键信息（编号如受理号/票号/单号、数量、金额、日期、时间、单位），以实际收到的回执和书面答复为依据，不要引用证据编号之类的内部编号；未能确认或尚未办结的事项如实说明，不要编造。",
     "parameters": {
       "type": "object",
       "properties": {
@@ -280,40 +280,14 @@
             "conclusion": {
               "type": "string"
             },
-            "claims": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "key": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "confirmed",
-                      "unconfirmed"
-                    ]
-                  },
-                  "value": {},
-                  "evidence_ids": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "key",
-                  "status"
-                ],
-                "additionalProperties": false
-              }
+            "summary": {
+              "type": "string",
+              "description": "自然语言总结，须包含全部已取得的关键编号、数量、金额、日期与单位"
             }
           },
           "required": [
             "conclusion",
-            "claims"
+            "summary"
           ],
           "additionalProperties": false
         }

@@ -3,101 +3,39 @@
   "task_id": "DSB-37",
   "answer": {
     "conclusion": "recovery_confirmed",
-    "claims": [
-      {
-        "key": "replacement_reserved",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0004"
-        ]
-      },
-      {
-        "key": "arrival",
-        "status": "confirmed",
-        "value": "19:00",
-        "evidence_ids": [
-          "EV-0005"
-        ]
-      },
-      {
-        "key": "extra_cost",
-        "status": "confirmed",
-        "value": 18,
-        "evidence_ids": [
-          "EV-0006"
-        ]
-      },
-      {
-        "key": "bike_accompanied",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0002",
-          "EV-0003"
-        ]
-      },
-      {
-        "key": "transfer_depart",
-        "status": "confirmed",
-        "value": "15:10",
-        "evidence_ids": [
-          "EV-0007"
-        ]
-      },
-      {
-        "key": "return_preserved",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0008"
-        ]
-      }
-    ]
+    "summary": "Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nOne replacement bundle (coach plus local transfer entitlement, accompanied folded bike accepted) has been confirmed; no payment was taken.\nThe reserved replacement (m02 coach) departs Mereoak 15:30 and arrives Bristol Temple Meads 19:00, inside the 19:30 deadline.\nThe complete replacement bundle costs 18 GBP extra: coach fare 14 + local transfer 4 + bicycle fee 0, at the maximum allowed outlay.\nThe local transfer departs Reading 15:10 and reaches Mereoak 15:20, giving a ten-minute boarding buffer before the 15:30 coach.\nThe original return leg of ticket T-MOB is preserved unchanged; no compensation claim was made and no payment was taken.\nBike acceptance bike-MOB1 (m02)关键要素：{\"bike_accompanied\": true}\nProvider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nProvider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nBike policy confirmation书面核实回执关键要素：{\"bike_accompanied\": true}\nReplacement confirmed: m02 coach plus local transfer as one bundle - transfer departs Reading 15:10, arrives Mereoak 15:20 (ten-minute boarding buffer), coach departs 15:30, arrives Bristol Temple Meads 19:00. Extra outlay 18 GBP (fare 14 + transfer 4 + bike fee 0); accompanied folded bike accepted on both legs (bike-MOB1). Original return leg preserved; no payment taken and no compensation claim made.\nOne replacement bundle (coach plus local transfer entitlement, accompanied folded bike accepted) has been confirmed; no payment was taken.\nThe reserved replacement (m02 coach) departs Mereoak 15:30 and arrives Bristol Temple Meads 19:00, inside the 19:30 deadline.\nThe complete replacement bundle costs 18 GBP extra: coach fare 14 + local transfer 4 + bicycle fee 0, at the maximum allowed outlay.\nThe local transfer departs Reading 15:10 and reaches Mereoak 15:20, giving a ten-minute boarding buffer before the 15:30 coach.\nThe original return leg of ticket T-MOB is preserved unchanged; no compensation claim was made and no payment was taken.\nreserve_replacement确认回执关键要素：{\"replacement_reserved\": true, \"arrival\": \"19:00\", \"extra_cost\": 18, \"transfer_depart\": \"15:10\", \"return_preserved\": true, \"seats\": 2}"
   },
   "result": {
     "task_id": "DSB-37",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 5,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "replacement_reserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "arrival",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "extra_cost",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "bike_accompanied",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "transfer_depart",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "return_preserved",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 4.5,
@@ -115,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Rail recovery desk·Tom Ashby。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -124,25 +62,17 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Rail recovery desk·Tom Ashby。您咨询的事项已经核实，具体情况如下：Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Rail recovery desk·Tom Ashby。您咨询的事项已经核实，具体情况如下：Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0002",
+          "receipt_no": "R-0002",
+          "title": "Bike policy confirmation书面核实回执",
+          "text": "Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nProvider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.",
+          "fields": {
+            "bike_accompanied": true
+          },
           "issuer": "rail_desk",
-          "issued_at": "2027-10-07T15:41:00+00:00",
-          "text": "Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0003",
-          "issuer": "rail_desk",
-          "issued_at": "2027-10-07T16:09:00+00:00",
-          "text": "Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-10-07T16:24:00+00:00"
         }
       ]
     }
@@ -160,7 +90,8 @@
       "kind": "agent_dialogue",
       "tool": "traveler_dialogue",
       "question": "What are the bicycle, ticket and budget constraints, and what approval do you require?",
-      "matched": true
+      "matched": true,
+      "answer": "The folded Brompton stays with me throughout; no unattended storage. The old bike reservation BR441 belonged only to the cancelled 1C27 and is invalid now."
     },
     {
       "at": "2027-10-07T13:30:00+00:00",
@@ -196,6 +127,12 @@
         "m01-v2",
         "bike-m02"
       ]
+    },
+    {
+      "at": "2027-10-07T14:10:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bike_accompanied",
+      "issuer": "rail_desk"
     },
     {
       "at": "2027-10-07T14:10:00+00:00",
@@ -308,6 +245,12 @@
     },
     {
       "at": "2027-10-07T15:41:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bike_accompanied",
+      "issuer": "rail_desk"
+    },
+    {
+      "at": "2027-10-07T15:41:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "rail_desk",
@@ -339,6 +282,12 @@
       "case_id": "CASE-0001",
       "tool": "rail_desk.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-10-07T16:09:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bike_accompanied",
+      "issuer": "rail_desk"
     },
     {
       "at": "2027-10-07T16:09:00+00:00",
@@ -394,7 +343,8 @@
       "kind": "agent_dialogue",
       "tool": "traveler_dialogue",
       "question": "Do you approve the exact plan: 15:10 transfer, 15:30 m02 coach, bike with you, 18 GBP extra?",
-      "matched": true
+      "matched": true,
+      "answer": "The folded Brompton stays with me throughout; no unattended storage. The old bike reservation BR441 belonged only to the cancelled 1C27 and is invalid now."
     },
     {
       "at": "2027-10-07T16:24:00+00:00",
@@ -409,6 +359,36 @@
       "tool": "reserve_replacement",
       "entry": "m02",
       "accepted": true
+    },
+    {
+      "at": "2027-10-07T16:44:00+00:00",
+      "kind": "fact_registered",
+      "fact": "replacement_reserved",
+      "issuer": "rail_desk"
+    },
+    {
+      "at": "2027-10-07T16:44:00+00:00",
+      "kind": "fact_registered",
+      "fact": "arrival",
+      "issuer": "rail_desk"
+    },
+    {
+      "at": "2027-10-07T16:44:00+00:00",
+      "kind": "fact_registered",
+      "fact": "extra_cost",
+      "issuer": "rail_desk"
+    },
+    {
+      "at": "2027-10-07T16:44:00+00:00",
+      "kind": "fact_registered",
+      "fact": "transfer_depart",
+      "issuer": "rail_desk"
+    },
+    {
+      "at": "2027-10-07T16:44:00+00:00",
+      "kind": "fact_registered",
+      "fact": "return_preserved",
+      "issuer": "rail_desk"
     },
     {
       "at": "2027-10-07T16:44:00+00:00",

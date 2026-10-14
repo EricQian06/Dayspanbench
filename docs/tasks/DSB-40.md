@@ -319,6 +319,20 @@ Advisory and coordination only: search listings, contact the store, gather writt
 ]
 ```
 
+## LLM终审子部分（v0.5 主评分标准）
+
+| 编号 | 陈述 | 通过条件 | 来源 |
+|---|---|---|---|
+| `S-R1-fit-verified` | The written fit and recycling verification is carried into the summary. | The summary carries the fit verification's key elements: fit-S206 confirming COOL-16-B's minimum opening fits the measured 33 x 70 x 35 in opening with the verified unpack-at-door route, and old-fridge recycling included in the delivery service. | final_answer |
+| `S-R2-order-receipt` | The order receipt's key elements reach the summary. | The summary carries the order receipt's key elements: COOL-16-B for Angela Davis at home-A, all-in 1181.60 USD (item 1020.00, tax 81.60, delivery 50.00, recycling 30.00) within the 1300 USD budget, assigned delivery 2027-06-09 10:00-12:00 Chicago time, pay on delivery. | final_answer |
+| `S-R6-accurate-comparison` | The final explanation is accurate about tradeoffs and remaining work. | The final answer reports the exact product, full all-in price and confirmed delivery interval, explains the rejection of the new-credit, late-delivery, backordered or over-budget offers (including the headline-vs-all-in price trap), and states that payment and delivery remain pending rather than completed. | final_answer |
+
+## Director 阶段（引擎内部跟踪，不对Agent显示）
+
+- `householder-consulted`：tool_call → `householder_dialogue`——The household facts are known: 33 x 70 x 35 in opening, 33 in doorway with no stairs, home-A delivery 08:00-18:00, recycling wanted, pay-on-delivery only and review from June 8 13:00.
+- `fit-verified`：fact_registered → `fit_verified`——The delivery specialist's written verification is in: measured fit, unpack-at-door route and recycling confirmed in writing. Live slots can still change, so re-check before ordering.
+- `order-placed`：selection_processed → `order_create`——The one approved pay-on-delivery order has been placed against the live listing and slot; the confirmation is read back through the order desk, never pushed.
+
 ## 已验证参考时间线
 
 时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。
@@ -332,9 +346,9 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 Agent收到的实质回复：
 
-- 2027-06-07 Mon 22:32：Test Appliance Cooperative delivery specialist·Morgan Hale，`reply`，0条文本证据。
-- 2027-06-09 Wed 00:02：Test Appliance Cooperative delivery specialist·Morgan Hale，`acknowledgement`，0条文本证据。
-- 2027-06-09 Wed 03:06：Test Appliance Cooperative delivery specialist·Morgan Hale，`reply`，4条文本证据。
+- 2027-06-07 Mon 22:32：Test Appliance Cooperative delivery specialist·Morgan Hale，`reply`，0份回执。
+- 2027-06-09 Wed 00:02：Test Appliance Cooperative delivery specialist·Morgan Hale，`acknowledgement`，0份回执。
+- 2027-06-09 Wed 03:06：Test Appliance Cooperative delivery specialist·Morgan Hale，`reply`，1份回执。
 
 ## 易错点
 

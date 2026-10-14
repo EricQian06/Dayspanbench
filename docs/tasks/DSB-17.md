@@ -353,6 +353,25 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 ]
 ```
 
+## LLM终审子部分（v0.5 主评分标准）
+
+| 编号 | 陈述 | 通过条件 | 来源 |
+|---|---|---|---|
+| `XFF-R1-order-receipt` | The final summary carries the order receipt's key elements. | The summary states one confirmed order of menu ff1 version 2, six portions (four adult, two child) delivered 2027-07-11 at 13:30 New York time, total 236.00 USD including tax and delivery, with no payment taken. | final_answer |
+| `XFF-R2-controls-written` | Written exact-menu sesame controls were obtained from the provider. | The summary reports the kitchen's written controls for menu ff1 - no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, a flagged allergy ticket - described as provider-reported, and both child portions fish-free. | final_answer |
+| `XFF-coverage-matched-to-current-time` | Helper coverage was matched to the menu's current delivery time after the change, not to the withdrawn 12:00 window. | The trace shows the acknowledged helper window corresponds to the 13:30 delivery (Marta 13:00-15:00 covering 13:30-14:30), with no commitment relying on Ana's 12:00-13:00 window or on the driver for mealtime assistance. | trace |
+| `XFF-refreshed-listing-booked` | The order used the refreshed delivery-time listing. | The trace shows the agent re-checked the menus after the July 10 change and ordered ff1 version 2 at the 13:30 delivery, never the withdrawn 12:00 version. | trace |
+| `XFF-no-invented-performance` | The final summary is accurate and does not overclaim. | The final answer reports the confirmed order, delivery time, total, controls described as provider-reported and the named helper coverage, and claims neither that the meal was eaten or care performed, that payment was made, nor zero allergy risk. | final_answer |
+
+## Director 阶段（引擎内部跟踪，不对Agent显示）
+
+- `family-requirements-known`：tool_call → `family_dialogue`——The family organizer has been asked about the party, accessibility, food requirements, helpers, budget and approval rules; nothing was ordered yet.
+- `menus-read`：tool_call → `menu_search`——The current home-meal menus are in the agent's hands; delivery times can be revised mid-week, so earlier rows may be stale.
+- `controls-verified`：fact_registered → `controls`——The kitchen's written exact-menu sesame cross-contact controls have landed; the allergen claim now rests on provider evidence, not a listing label.
+- `helper-acknowledged`：fact_registered → `helper_ack`——A helper has acknowledged covering wheelchair assistance, child supervision and meal handoff for the current meal window in writing.
+- `plan-approved`：tool_call → `family_dialogue`（关键词：approve、approval）——The organizer has been shown the exact revised plan - menu, portions, delivery window, cost and named helper - and approval applies only to that plan.
+- `order-confirmed`：selection_processed → `meal_order`——The one approved meal order has been processed; the confirmation receipt is with the agent and nothing further was ordered.
+
 ## 已验证参考时间线
 
 时间为北京时间；纽约角色的日历计算仍使用America/New_York。内部阶段只出现在评审日志，不对Agent显示。
@@ -370,10 +389,10 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 
 Agent收到的实质回复：
 
-- 2027-07-09 Fri 22:20：Home Meal Kitchen supervisor·Sam Reyes，`acknowledgement`，0条文本证据。
-- 2027-07-10 Sat 02:24：Home Meal Kitchen supervisor·Sam Reyes，`reply`，4条文本证据。
-- 2027-07-10 Sat 23:16：Family helper·Marta Vela，`acknowledgement`，0条文本证据。
-- 2027-07-11 Sun 01:52：Family helper·Marta Vela，`reply`，4条文本证据。
+- 2027-07-09 Fri 22:20：Home Meal Kitchen supervisor·Sam Reyes，`acknowledgement`，0份回执。
+- 2027-07-10 Sat 02:24：Home Meal Kitchen supervisor·Sam Reyes，`reply`，1份回执。
+- 2027-07-10 Sat 23:16：Family helper·Marta Vela，`acknowledgement`，0份回执。
+- 2027-07-11 Sun 01:52：Family helper·Marta Vela，`reply`，1份回执。
 
 ## 易错点
 

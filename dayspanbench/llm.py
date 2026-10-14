@@ -2,7 +2,9 @@
 
 from dataclasses import dataclass, field
 import json
+import re
 import time
+import unicodedata
 from typing import Mapping
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
@@ -11,6 +13,50 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler
 
 class SimulatorError(RuntimeError):
     """An environment failure, never an evaluated-agent failure."""
+
+
+def key_tokens(text):
+    """Verbatim anchors a model rephrase must preserve: every number (with
+    decimals), every letter+digit id-like token (JOB441, CS204-2026-v2), and
+    every quoted proper name, and every email address (contact channels only
+    travel in prose). Digits inside an id token are not separate anchors (441
+    within JOB441), and pure words carry no anchor: wording is the model's
+    job, facts are the engine's."""
+    if not isinstance(text, str) or not text:
+        return []
+    tokens = set()
+    covered = []
+    for email in re.findall(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+", text):
+        tokens.add(email)
+    for match in re.finditer(r"[A-Za-z0-9][A-Za-z0-9_-]*", text):
+        token = match.group(0)
+        if any(c.isdigit() for c in token) and any(c.isalpha() for c in token):
+            tokens.add(token)
+            covered.append(match.span())
+    for match in re.finditer(r"\d+(?:\.\d+)?", text):
+        if any(start <= match.start() and match.end() <= end for start, end in covered):
+            continue
+        tokens.add(match.group(0))
+    for quoted in re.findall(r"\"([^\"]+)\"|“([^”]+)”", text):
+        name = (quoted[0] or quoted[1]).strip()
+        if name:
+            tokens.add(name)
+    return sorted(tokens)
+
+
+def missing_key_tokens(answer, tokens):
+    """Which required anchors are absent from an answer string (case-folded,
+    word-boundary matching so JOB442 cannot satisfy JOB441's inner 441)."""
+    if not isinstance(answer, str):
+        return list(tokens)
+    haystack = unicodedata.normalize("NFKC", answer).casefold()
+    missing = []
+    for token in tokens:
+        needle = unicodedata.normalize("NFKC", token).casefold()
+        if re.search(r"(?<![0-9a-z_-])" + re.escape(needle) + r"(?![0-9a-z_-])", haystack):
+            continue
+        missing.append(token)
+    return missing
 
 
 class NoRedirect(HTTPRedirectHandler):

@@ -3,101 +3,39 @@
   "task_id": "DSB-38",
   "answer": {
     "conclusion": "transfer_complete",
-    "claims": [
-      {
-        "key": "chip_scan_verified",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0002",
-          "EV-0004"
-        ]
-      },
-      {
-        "key": "shelter_consent_held",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0003"
-        ]
-      },
-      {
-        "key": "registry_owner_transferred",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0005"
-        ]
-      },
-      {
-        "key": "license_fee_user_paid",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0007"
-        ]
-      },
-      {
-        "key": "municipal_license_issued",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0006"
-        ]
-      },
-      {
-        "key": "shelter_release_authorized",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0008"
-        ]
-      }
-    ]
+    "summary": "Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.\nClinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.\nRegistry transfer transfer-P1: HomeAgain-test chip 981020000123456 owner updated from the shelter to Imani Bennett, 2704 East 12th Street, Apt 6, Test City (registry version 2).\nMunicipal license license-P1 issued for chip 981020000123456, owner Imani Bennett, matching the transferred registry record and the settled fee receipt.\nFee receipt receipt-P1: Imani Bennett personally paid the 27 USD municipal pet license fee through the portal; the agent initiated and paid nothing.\nRelease authorization release-P1 authorizes the shelter to release intake APA-88421 to Imani Bennett; physical pickup has not yet occurred.\nSigned shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.\nSigned shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.\nShelter consent and records书面核实回执关键要素：{\"shelter_consent\": true}\nClinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.\nClinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.\nChip scan verification书面核实回执关键要素：{\"scan_verified\": true}\nRegistry transferred: transfer-P1 - HomeAgain-test chip 981020000123456 owner updated from the shelter to Imani Bennett, 2704 East 12th Street, Apt 6, Test City (registry version 2). No license or release was created, and no other chip or registry was touched.\nRegistry transfer transfer-P1: HomeAgain-test chip 981020000123456 owner updated from the shelter to Imani Bennett, 2704 East 12th Street, Apt 6, Test City (registry version 2).\nregistry_transfer确认回执关键要素：{\"registry_transferred\": true, \"chip\": \"981020000123456\", \"stage\": \"validated\"}\nLicense issued: license-P1 for chip 981020000123456, owner Imani Bennett - matching the transferred registry record and the settled receipt-P1 (27 USD, paid by the adopter through the portal). No account was charged by the agent and no subscription was added.\nMunicipal license license-P1 issued for chip 981020000123456, owner Imani Bennett, matching the transferred registry record and the settled fee receipt.\nFee receipt receipt-P1: Imani Bennett personally paid the 27 USD municipal pet license fee through the portal; the agent initiated and paid nothing.\nlicense_issue确认回执关键要素：{\"license_issued\": true, \"fee_paid\": true, \"fee_usd\": 27, \"payer\": \"Imani Bennett\"}\nRelease authorized: release-P1 for intake APA-88421 to Imani Bennett, after the matching registry transfer and license-P1. This authorizes shelter pickup only - the dog has not been collected yet.\nRelease authorization release-P1 authorizes the shelter to release intake APA-88421 to Imani Bennett; physical pickup has not yet occurred.\nshelter_release确认回执关键要素：{\"release_authorized\": true, \"chip\": \"981020000123456\", \"stage\": \"license_issued\"}"
   },
   "result": {
     "task_id": "DSB-38",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 3,
+        "accepted": 3,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 4,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "chip_scan_verified",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "shelter_consent_held",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "registry_owner_transferred",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "license_fee_user_paid",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "municipal_license_issued",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "shelter_release_authorized",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 30.5,
@@ -115,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Riverside vet clinic·Dr. Maya Osei。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -125,7 +63,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Municipal pet records desk·Jordan Hale。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0003",
@@ -134,25 +72,17 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Municipal pet records desk·Jordan Hale。您咨询的事项已经核实，具体情况如下：Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Municipal pet records desk·Jordan Hale。您咨询的事项已经核实，具体情况如下：Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0001",
+          "receipt_no": "R-0001",
+          "title": "Shelter consent and records书面核实回执",
+          "text": "Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.\nSigned shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.",
+          "fields": {
+            "shelter_consent": true
+          },
           "issuer": "pet_admin",
-          "issued_at": "2027-03-22T16:41:00+00:00",
-          "text": "Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0003",
-          "issuer": "pet_admin",
-          "issued_at": "2027-03-22T17:31:00+00:00",
-          "text": "Signed shelter transfer consent consent-P1 names Imani Bennett as the adopting owner of intake APA-88421.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-03-22T17:46:00+00:00"
         }
       ]
     },
@@ -163,25 +93,17 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Riverside vet clinic·Dr. Maya Osei。您咨询的事项已经核实，具体情况如下：Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Riverside vet clinic·Dr. Maya Osei。您咨询的事项已经核实，具体情况如下：Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0002",
+          "receipt_no": "R-0002",
+          "title": "Chip scan verification书面核实回执",
+          "text": "Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.\nClinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.",
+          "fields": {
+            "scan_verified": true
+          },
           "issuer": "clinic",
-          "issued_at": "2027-03-22T17:03:00+00:00",
-          "text": "Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0004",
-          "issuer": "clinic",
-          "issued_at": "2027-03-22T17:50:00+00:00",
-          "text": "Clinic scan scan-P1 confirms intake APA-88421 - the three-year-old brindle mixed-breed - carries existing chip 981020000123456; no second implant was made or needed.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-03-22T18:05:00+00:00"
         }
       ]
     }
@@ -199,7 +121,8 @@
       "kind": "agent_dialogue",
       "tool": "adopter_dialogue",
       "question": "Which Luna is she, what are your adopter details, and what approval do you give for the transfer, license and release?",
-      "matched": true
+      "matched": true,
+      "answer": "Luna is the three-year-old brindle mixed-breed from intake APA-88421 - not the greyhound with the same name. She already has chip 981020000123456; never implant another chip."
     },
     {
       "at": "2027-03-22T14:00:00+00:00",
@@ -412,6 +335,12 @@
     },
     {
       "at": "2027-03-22T16:41:00+00:00",
+      "kind": "fact_registered",
+      "fact": "shelter_consent",
+      "issuer": "pet_admin"
+    },
+    {
+      "at": "2027-03-22T16:41:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "pet_admin",
@@ -446,6 +375,12 @@
     },
     {
       "at": "2027-03-22T17:03:00+00:00",
+      "kind": "fact_registered",
+      "fact": "scan_verified",
+      "issuer": "clinic"
+    },
+    {
+      "at": "2027-03-22T17:03:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "clinic",
@@ -477,6 +412,12 @@
       "case_id": "CASE-0002",
       "tool": "pet_admin.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-03-22T17:31:00+00:00",
+      "kind": "fact_registered",
+      "fact": "shelter_consent",
+      "issuer": "pet_admin"
     },
     {
       "at": "2027-03-22T17:31:00+00:00",
@@ -534,6 +475,12 @@
       "case_id": "CASE-0001",
       "tool": "clinic.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-03-22T17:50:00+00:00",
+      "kind": "fact_registered",
+      "fact": "scan_verified",
+      "issuer": "clinic"
     },
     {
       "at": "2027-03-22T17:50:00+00:00",
@@ -599,7 +546,8 @@
       "kind": "agent_dialogue",
       "tool": "adopter_dialogue",
       "question": "Do you approve the exact packet: transfer chip 981020000123456 on HomeAgain-test to Imani Bennett, issue the matching license after your own 27 USD payment, and obtain the shelter release?",
-      "matched": true
+      "matched": true,
+      "answer": "Luna is the three-year-old brindle mixed-breed from intake APA-88421 - not the greyhound with the same name. She already has chip 981020000123456; never implant another chip."
     },
     {
       "at": "2027-03-22T18:05:00+00:00",
@@ -614,6 +562,12 @@
       "tool": "registry_transfer",
       "entry": "transfer-ready",
       "accepted": true
+    },
+    {
+      "at": "2027-03-22T18:05:00+00:00",
+      "kind": "fact_registered",
+      "fact": "registry_transferred",
+      "issuer": "pet_admin"
     },
     {
       "at": "2027-03-22T18:05:00+00:00",
@@ -670,6 +624,18 @@
     },
     {
       "at": "2027-03-23T17:05:00+00:00",
+      "kind": "fact_registered",
+      "fact": "license_issued",
+      "issuer": "pet_admin"
+    },
+    {
+      "at": "2027-03-23T17:05:00+00:00",
+      "kind": "fact_registered",
+      "fact": "fee_paid",
+      "issuer": "pet_admin"
+    },
+    {
+      "at": "2027-03-23T17:05:00+00:00",
       "kind": "page_updated",
       "page": "pet-entry",
       "url": "https://pettransfer.bench/entry",
@@ -719,6 +685,12 @@
       "tool": "shelter_release",
       "entry": "release-ready",
       "accepted": true
+    },
+    {
+      "at": "2027-03-23T20:10:00+00:00",
+      "kind": "fact_registered",
+      "fact": "release_authorized",
+      "issuer": "pet_admin"
     },
     {
       "at": "2027-03-23T20:10:00+00:00",

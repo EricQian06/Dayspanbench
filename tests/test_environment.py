@@ -9,6 +9,7 @@ import sys
 
 from dayspanbench.calendar import Calendar, parse
 from dayspanbench.engine import Environment
+from dayspanbench.llm import key_tokens
 from dayspanbench.recipient import LLMRecipient
 from dayspanbench.reference import run_reference
 from dayspanbench.validation import validate_task
@@ -109,8 +110,9 @@ class EnvironmentTests(unittest.TestCase):
         # lecturer's attested reply, not out of thin air.
         api.send_email(mailbox(task, "lecturer"), "请补发正式签章大纲", {"course_code": "CS204"})
         api.wait_until("2026-11-10T15:00:00+08:00")  # lecturer has replied after the trip
-        syllabus = next(m for m in env.messages if m["status"] == "reply"
-                        and m["from"] == mailbox(task, "lecturer"))["evidence"][0]["value"]
+        syllabus = next(r["fields"]["syllabus"] for m in env.messages
+                        if m["status"] == "reply" and m["from"] == mailbox(task, "lecturer")
+                        for r in m["receipts"])
         first = api.send_email(mailbox(task, "records"), "咨询CS204学分转换",
                                {"course_code": "CS204", "syllabus_version": syllabus})
         # A mid-workflow acceptance receipt reaches the inbox before the
@@ -294,7 +296,7 @@ class EnvironmentTests(unittest.TestCase):
         self.assertTrue(any(e["kind"] == "early_reply" and e["case_id"] == early["case_id"] for e in env.audit))
         early_case = env.cases[early["case_id"]]
         self.assertEqual(early_case["state"], "replied")
-        self.assertFalse(any(m["case_id"] == early["case_id"] and m["evidence"] for m in env.messages))
+        self.assertFalse(any(m["case_id"] == early["case_id"] and m["receipts"] for m in env.messages))
         # In-window filing with a synonym unit spelling of the width admits.
         filed = api.send_email(mailbox(task, "b_desk"), "无障碍复测",
                                {**fields, "wheelchair_width": "78厘米"})
@@ -325,19 +327,32 @@ class EnvironmentTests(unittest.TestCase):
         # seeded reply delay places it.
         self.assertEqual(env.now, parse(reply["messages"][-1]["at"]))
 
-    def test_expired_or_unreceived_evidence_does_not_score(self):
+    def test_expired_quote_is_no_anchor_but_current_quote_is(self):
         env, answer, _ = run_reference(load(5))
+        result = env.evaluate(answer)
+        self.assertTrue(result["complete"])
+        # The superseded quote expired at scoring time; its figure must not be
+        # demanded from the final summary.
         old = next(e for e in env.evidence.values() if e["fact_id"] == "quote_old")
-        bad = deepcopy(answer)
-        bad["claims"][0]["evidence_ids"] = [old["id"]]
-        self.assertFalse(env.evaluate(bad)["complete"])
-        bad["claims"][0]["evidence_ids"] = ["EV-NOT-ISSUED"]
-        self.assertFalse(env.evaluate(bad)["complete"])
+        for token in key_tokens(str(old["value"])):
+            self.assertNotIn(token, result["deterministic_checks"]["summary_anchor_missing"])
+        # Dropping a current anchor element from the summary fails the anchors.
+        token, failed = None, None
+        for candidate in sorted(key_tokens(answer["summary"])):
+            stripped = answer["summary"].replace(candidate, "X")
+            attempt = env.evaluate({**answer, "summary": stripped})
+            if candidate in attempt["deterministic_checks"]["summary_anchor_missing"]:
+                token, failed = candidate, attempt
+                break
+        self.assertIsNotNone(token, "no anchor token could be dropped")
+        self.assertFalse(failed["complete"])
 
-    def test_unknown_claim_cannot_replace_available_answer(self):
+    def test_missing_summary_is_a_schema_failure(self):
         env, answer, _ = run_reference(load(1))
-        answer["claims"][0] = {"key": "total_cost", "status": "unconfirmed"}
-        self.assertFalse(env.evaluate(answer)["complete"])
+        answer.pop("summary")
+        result = env.evaluate(answer)
+        self.assertFalse(result["answer_schema_valid"])
+        self.assertFalse(result["complete"])
 
     def test_unresolved_requires_real_query_and_deadline_wait(self):
         env, answer, result = run_reference(load(12))
@@ -398,7 +413,7 @@ class EnvironmentTests(unittest.TestCase):
         case = env.cases[early["case_id"]]
         self.assertEqual(case["state"], "replied")
         self.assertEqual(case["workflow"]["id"], "main")
-        self.assertFalse(case["evidence"])
+        self.assertFalse(case["facts"])
         self.assertFalse(any(e["fact_id"] == "declaration" for e in env.evidence.values()))
         self.assertTrue(any(e["kind"] == "early_reply" for e in env.audit))
         # Filing again inside the window opens a normal case with an ETA receipt.
@@ -448,7 +463,7 @@ class EnvironmentTests(unittest.TestCase):
             api.wait_until(task["deadline_at"])
         self.assertTrue(any(ev["agent_visible"] and ev["fact_id"] == "workaround" for ev in env.evidence.values()))
         self.assertFalse(any(ev["agent_visible"] and ev["fact_id"] == "candidate" for ev in env.evidence.values()))
-        self.assertFalse(env.evaluate({"conclusion": "workaround_available_stable_uncommitted", "claims": []})["information_sufficient"])
+        self.assertFalse(env.evaluate({"conclusion": "workaround_available_stable_uncommitted", "summary": ""})["information_sufficient"])
 
     def test_llm_router_is_scoped_and_validated(self):
         views = []
@@ -503,10 +518,8 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(responses[5]["error"]["type"], "PermissionError")
         self.assertNotIn('"private_audit"', completed.stdout)
 
-    def test_duplicate_claims_and_multiple_submissions_rejected(self):
+    def test_multiple_submissions_rejected(self):
         env, answer, _ = run_reference(load(1))
-        answer["claims"].append(deepcopy(answer["claims"][0]))
-        self.assertFalse(env.evaluate(answer)["complete"])
         with self.assertRaises(ValueError):
             env.tools().submit_answer(answer)
 
@@ -634,7 +647,7 @@ class EnvironmentTests(unittest.TestCase):
         while env.cases[reopened["case_id"]]["state"] != "replied" and env.events:
             env.advance(env.events[0][0])
         reply = next(m for m in env.messages if m["case_id"] == reopened["case_id"] and m["status"] == "reply")
-        self.assertTrue(any(e["value"] == 18600 for e in reply["evidence"]))
+        self.assertTrue(any(18600 in r["fields"].values() for r in reply["receipts"]))
 
     def test_agent_email_gets_no_instant_reply(self):
         task = load(1)
@@ -836,13 +849,13 @@ class EnvironmentTests(unittest.TestCase):
         env.advance("2026-11-07T10:00:00+08:00")
         self.assertEqual(api.call("reception", "请转接销售")["status"], "no_answer")
         # Within work hours a quick referral completes during the call, but a
-        # spoken answer attaches no evidence.
+        # spoken answer attaches no receipts.
         env.advance("2026-11-09T09:30:00+08:00")
         result = api.call("reception", "联系活动场地")
         self.assertEqual(result["status"], "answered")
         message = next(m for m in env.messages if m["case_id"] == result["case_id"])
         self.assertEqual(message["channel"], "phone")
-        self.assertEqual(message["evidence"], [])
+        self.assertEqual(message["receipts"], [])
 
 
 class ComplexityMechanismTests(unittest.TestCase):
@@ -897,7 +910,7 @@ class ComplexityMechanismTests(unittest.TestCase):
         final = [m for m in env.messages if m["status"] == "reply"]
         self.assertTrue(final)
 
-    def test_per_task_optional_tools_and_fetch_document_evidence(self):
+    def test_per_task_optional_tools_and_fetch_document_receipt(self):
         task = load(5)
         env = Environment(task)
         api = env.tools()
@@ -916,10 +929,9 @@ class ComplexityMechanismTests(unittest.TestCase):
         documents = api.visit_page(url)["documents"]
         self.assertEqual(documents[0]["title"], "12月批次价目文件.pdf")
         fetched = api.fetch_document(documents[0]["url"])
-        self.assertEqual(fetched["evidence"][0]["value"], 18600)
-        # The fetched price file is agent-visible engine evidence.
-        evidence = env.evidence[fetched["evidence"][0]["id"]]
-        self.assertTrue(evidence["agent_visible"])
+        self.assertIn(18600, fetched["receipts"][0]["fields"].values())
+        # The fetched price file's fact is agent-visible on the director.
+        self.assertTrue(env.director.facts["quote_new"]["agent_visible"])
         # A task that does not declare the tool rejects it (every task now
         # ships fetch_document for its published files, so strip it manually).
         stripped = load(3)

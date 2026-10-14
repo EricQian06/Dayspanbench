@@ -3,74 +3,39 @@
   "task_id": "DSB-11",
   "answer": {
     "conclusion": "workaround_available_stable_uncommitted",
-    "claims": [
-      {
-        "key": "reproduced",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001"
-        ]
-      },
-      {
-        "key": "verified_patch",
-        "status": "confirmed",
-        "value": "commit-7bc2",
-        "evidence_ids": [
-          "EV-0002",
-          "EV-0003"
-        ]
-      },
-      {
-        "key": "candidate_version",
-        "status": "confirmed",
-        "value": "1.4.2-rc1",
-        "evidence_ids": [
-          "EV-0005"
-        ]
-      },
-      {
-        "key": "stable_release_date",
-        "status": "confirmed",
-        "value": "尚无承诺日期",
-        "evidence_ids": [
-          "EV-0004"
-        ]
-      }
-    ]
+    "summary": "提交的日志可重现在编译器C19下的兼容问题。\nCI在commit-7bc2上验证该兼容问题已修复。\n正式稳定版没有承诺发布日期；候选版不能标为稳定版。\n发布负责人确认当前仅有候选版1.4.2-rc1。\n提交的日志可重现在编译器C19下的兼容问题。\nCI在commit-7bc2上验证该兼容问题已修复。\nCI在commit-7bc2上验证该兼容问题已修复。\n兼容问题确认书面核实回执关键要素：{\"repro\": true, \"workaround\": \"commit-7bc2\"}\n发布状态登记已办结：正式稳定版没有承诺发布日期；候选版不能标为稳定版。办理进度可经星舟发布进度查询（xingzhou_release_status）复核。\n正式稳定版没有承诺发布日期；候选版不能标为稳定版。\n表单release_form办结回执关键要素：{\"stable\": \"尚无承诺日期\", \"version\": \"1.4.1\", \"verified_commit\": \"commit-7bc2\"}\n季度发布状态复核书面核实回执关键要素：{\"candidate\": \"1.4.2-rc1\"}"
   },
   "result": {
     "task_id": "DSB-11",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 1,
+        "accepted": 1,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 3,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "reproduced",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "verified_patch",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "candidate_version",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "stable_release_date",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 2664.0,
@@ -88,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是星舟项目维护者·简川。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-18 20:20（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -97,34 +62,18 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：提交的日志可重现在编译器C19下的兼容问题。CI在commit-7bc2上验证该兼容问题已修复。CI在commit-7bc2上验证该兼容问题已修复。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：提交的日志可重现在编译器C19下的兼容问题。CI在commit-7bc2上验证该兼容问题已修复。CI在commit-7bc2上验证该兼容问题已修复。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0001",
-          "issuer": "ci",
-          "issued_at": "2026-11-13T13:31:00+00:00",
-          "text": "提交的日志可重现在编译器C19下的兼容问题。",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0002",
-          "issuer": "ci",
-          "issued_at": "2026-11-13T13:31:00+00:00",
-          "text": "CI在commit-7bc2上验证该兼容问题已修复。",
-          "value": "commit-7bc2",
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0003",
-          "issuer": "ci",
-          "issued_at": "2026-11-13T13:46:00+00:00",
-          "text": "CI在commit-7bc2上验证该兼容问题已修复。",
-          "value": "commit-7bc2",
-          "valid_until": null,
-          "kind": "document"
+          "receipt_no": "R-0001",
+          "title": "兼容问题确认书面核实回执",
+          "text": "提交的日志可重现在编译器C19下的兼容问题。\nCI在commit-7bc2上验证该兼容问题已修复。\nCI在commit-7bc2上验证该兼容问题已修复。",
+          "fields": {
+            "repro": true,
+            "workaround": "commit-7bc2"
+          },
+          "issuer": "maintainer",
+          "issued_at": "2026-11-18T12:04:00+00:00"
         }
       ]
     },
@@ -136,7 +85,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是星舟项目维护者·简川。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-02-24 20:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0004",
@@ -145,16 +94,17 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：发布负责人确认当前仅有候选版1.4.2-rc1。以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：发布负责人确认当前仅有候选版1.4.2-rc1。以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0005",
-          "issuer": "release",
-          "issued_at": "2027-02-09T14:00:00+00:00",
+          "receipt_no": "R-0003",
+          "title": "季度发布状态复核书面核实回执",
           "text": "发布负责人确认当前仅有候选版1.4.2-rc1。",
-          "value": "1.4.2-rc1",
-          "valid_until": null,
-          "kind": "fact"
+          "fields": {
+            "candidate": "1.4.2-rc1"
+          },
+          "issuer": "maintainer",
+          "issued_at": "2027-02-24T12:46:00+00:00"
         }
       ]
     }
@@ -341,6 +291,18 @@
     },
     {
       "at": "2026-11-13T13:31:00+00:00",
+      "kind": "fact_registered",
+      "fact": "repro",
+      "issuer": "ci"
+    },
+    {
+      "at": "2026-11-13T13:31:00+00:00",
+      "kind": "fact_registered",
+      "fact": "workaround",
+      "issuer": "ci"
+    },
+    {
+      "at": "2026-11-13T13:31:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0002",
       "actor": "ci",
@@ -372,6 +334,12 @@
       "case_id": "CASE-0002",
       "tool": "ci.main.2.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2026-11-13T13:46:00+00:00",
+      "kind": "fact_registered",
+      "fact": "workaround",
+      "issuer": "ci"
     },
     {
       "at": "2026-11-13T13:46:00+00:00",
@@ -549,8 +517,7 @@
       "case_id": "CASE-0003",
       "field": "verified_commit",
       "evidence": [
-        "EV-0002",
-        "EV-0003"
+        "workaround"
       ]
     },
     {
@@ -664,6 +631,12 @@
     },
     {
       "at": "2027-02-09T12:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "stable",
+      "issuer": "upstream"
+    },
+    {
+      "at": "2027-02-09T12:00:00+00:00",
       "kind": "page_updated",
       "page": "repo-entry",
       "url": "https://xingzhou.bench/entry",
@@ -691,6 +664,12 @@
       "case_id": "CASE-0004",
       "tool": "release.main.1.lookup",
       "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-02-09T14:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "candidate",
+      "issuer": "release"
     },
     {
       "at": "2027-02-09T14:00:00+00:00",

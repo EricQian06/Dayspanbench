@@ -3,74 +3,39 @@
   "task_id": "DSB-24",
   "answer": {
     "conclusion": "plan_committed",
-    "claims": [
-      {
-        "key": "estimate_confirmed_in_writing",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0001",
-          "EV-0002"
-        ]
-      },
-      {
-        "key": "review_version_current",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0003"
-        ]
-      },
-      {
-        "key": "focus_hours_reserved",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0004"
-        ]
-      },
-      {
-        "key": "work_plan_acknowledged",
-        "status": "confirmed",
-        "value": true,
-        "evidence_ids": [
-          "EV-0005"
-        ]
-      }
-    ]
+    "summary": "The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.\nProvider update (October 5, 08:30 Central): the leadership review moved to October 6, 2027 15:00 Central with a 14:00 preparation cutoff, work version 2; plans built on the October 8 review are stale.\nThe approved eight-hour allocation - October 5 09:00-12:00 and 13:00-16:00, October 6 09:00-11:00 Central - was reserved on the calendar as Focus blocks before the 14:00 cutoff; every existing private event is untouched.\nThe work board acknowledged the same eight-hour preparation plan linked to reservation focus-XPW1, sharing only neutral availability blocks, the deliverable id and its due time; the deliverable remains not_started with zero completed hours.\nThe manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.\nThe manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.\nWritten effort estimate书面核实回执关键要素：{\"estimate_confirmed\": true}\nPreparation plan v2 (moved October 6 review)关键要素：{\"review_v2\": true}\nReservation confirmed: focus-XPW1 reserves October 5 09:00-12:00 and 13:00-16:00 plus October 6 09:00-11:00 Central as Focus blocks - eight hours, all finished before the October 6 14:00 preparation cutoff. Every existing private event is untouched, and the review pack itself remains not_started.\nThe approved eight-hour allocation - October 5 09:00-12:00 and 13:00-16:00, October 6 09:00-11:00 Central - was reserved on the calendar as Focus blocks before the 14:00 cutoff; every existing private event is untouched.\nfocus_reserve确认回执关键要素：{\"focus_reserved\": true, \"hours\": 8}\nWork board acknowledged: plan-XPW1 commits the same eight-hour allocation linked to reservation focus-XPW1 for review-pack-XPW (work version 2), sharing only neutral availability blocks, the deliverable id and its due time. The deliverable remains not_started with zero completed hours.\nThe work board acknowledged the same eight-hour preparation plan linked to reservation focus-XPW1, sharing only neutral availability blocks, the deliverable id and its due time; the deliverable remains not_started with zero completed hours.\nboard_commit确认回执关键要素：{\"plan_acknowledged\": true, \"hours\": 8}"
   },
   "result": {
     "task_id": "DSB-24",
-    "scoring_version": "0.3.0",
+    "scoring_version": "0.5.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "summary_anchors_ok": true,
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 5,
+    "pending_criteria": 0,
     "complete": true,
     "information_sufficient": true,
     "resolved_success": true,
     "bounded_handling_success": false,
     "required_fact_coverage": 1.0,
-    "answer_schema_valid": true,
-    "schema_errors": [],
-    "goal_results": [
-      {
-        "key": "estimate_confirmed_in_writing",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "review_version_current",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "focus_hours_reserved",
-        "passed": true,
-        "reasons": []
-      },
-      {
-        "key": "work_plan_acknowledged",
-        "passed": true,
-        "reasons": []
-      }
-    ],
     "conclusion_correct": true,
     "completion_class": "resolved",
     "calendar_hours": 32.0,
@@ -88,7 +53,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Operations manager·Dana Reyes。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0002",
@@ -97,25 +62,17 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Operations manager·Dana Reyes。您咨询的事项已经核实，具体情况如下：The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.以上为正式书面核实结论，对应的结构化书面凭证已随本信送达（见evidence附件，含证据编号与签发人），其证据编号可在最终提交中引用。如有其他问题，欢迎随时来信。",
-      "evidence": [
+      "text": "您好，我是Operations manager·Dana Reyes。您咨询的事项已经核实，具体情况如下：The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "receipts": [
         {
-          "id": "EV-0001",
+          "receipt_no": "R-0001",
+          "title": "Written effort estimate书面核实回执",
+          "text": "The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.\nThe manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.",
+          "fields": {
+            "estimate_confirmed": true
+          },
           "issuer": "ops_manager",
-          "issued_at": "2027-10-04T22:26:00+00:00",
-          "text": "The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.",
-          "value": true,
-          "valid_until": null,
-          "kind": "fact"
-        },
-        {
-          "id": "EV-0002",
-          "issuer": "ops_manager",
-          "issued_at": "2027-10-04T23:09:00+00:00",
-          "text": "The manager's written confirmation (October 4, 15:00 Central): eight focused hours remain for review-pack-XPW; reserving them does not mean the pack is complete.",
-          "value": true,
-          "valid_until": null,
-          "kind": "document"
+          "issued_at": "2027-10-04T23:24:00+00:00"
         }
       ]
     },
@@ -127,7 +84,7 @@
       "status": "acknowledgement",
       "channel": "email",
       "text": "您好，我是Operations manager·Dana Reyes。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
-      "evidence": []
+      "receipts": []
     },
     {
       "id": "MSG-0004",
@@ -137,7 +94,7 @@
       "status": "reply",
       "channel": "email",
       "text": "您好，我是Operations manager·Dana Reyes。您咨询的事项已经按流程处理完毕。如有其他问题，欢迎随时来信。",
-      "evidence": []
+      "receipts": []
     }
   ],
   "private_audit": [
@@ -153,7 +110,8 @@
       "kind": "agent_dialogue",
       "tool": "work_dialogue",
       "question": "What are the deliverable, availability, privacy rules, approval scope and submission buffer for the review preparation?",
-      "matched": true
+      "matched": true,
+      "answer": "Prepare the operations review pack. Eight focused hours remain, subject to the manager's written estimate confirmation. Reserve preparation time; do not claim that the pack is already written."
     },
     {
       "at": "2027-10-04T14:00:00+00:00",
@@ -272,6 +230,12 @@
     },
     {
       "at": "2027-10-04T22:26:00+00:00",
+      "kind": "fact_registered",
+      "fact": "estimate_confirmed",
+      "issuer": "ops_manager"
+    },
+    {
+      "at": "2027-10-04T22:26:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "ops_manager",
@@ -303,6 +267,12 @@
       "case_id": "CASE-0001",
       "tool": "ops_manager.main.3.document",
       "tool_kind": "document"
+    },
+    {
+      "at": "2027-10-04T23:09:00+00:00",
+      "kind": "fact_registered",
+      "fact": "estimate_confirmed",
+      "issuer": "ops_manager"
     },
     {
       "at": "2027-10-04T23:09:00+00:00",
@@ -483,6 +453,12 @@
     },
     {
       "at": "2027-10-05T15:41:00+00:00",
+      "kind": "fact_registered",
+      "fact": "review_v2",
+      "issuer": "ops_manager"
+    },
+    {
+      "at": "2027-10-05T15:41:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "prep_catalog",
       "query": "current preparation plan",
@@ -498,7 +474,8 @@
       "kind": "agent_dialogue",
       "tool": "work_dialogue",
       "question": "The review moved to October 6 at 15:00 with a 14:00 cutoff. Do you approve reserving October 5 09:00-12:00 and 13:00-16:00 plus October 6 09:00-11:00, and committing the same allocation to the work board?",
-      "matched": true
+      "matched": true,
+      "answer": "Prepare the operations review pack. Eight focused hours remain, subject to the manager's written estimate confirmation. Reserve preparation time; do not claim that the pack is already written."
     },
     {
       "at": "2027-10-05T15:41:00+00:00",
@@ -513,6 +490,12 @@
       "tool": "focus_reserve",
       "entry": "plan-xpw-v2",
       "accepted": true
+    },
+    {
+      "at": "2027-10-05T16:41:00+00:00",
+      "kind": "fact_registered",
+      "fact": "focus_reserved",
+      "issuer": "ops_manager"
     },
     {
       "at": "2027-10-05T16:41:00+00:00",
@@ -547,6 +530,12 @@
       "tool": "board_commit",
       "entry": "plan-xpw-v2",
       "accepted": true
+    },
+    {
+      "at": "2027-10-05T21:30:00+00:00",
+      "kind": "fact_registered",
+      "fact": "plan_acknowledged",
+      "issuer": "ops_manager"
     },
     {
       "at": "2027-10-05T21:30:00+00:00",
