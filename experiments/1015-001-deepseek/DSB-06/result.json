@@ -1,0 +1,182 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-06",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": true,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 1,
+      "accepted": 1,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 5,
+    "summary_anchor_missing": [
+      "G-42"
+    ],
+    "summary_anchors_ok": false,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true,
+    "anchor_review_verdict": "judge_denied"
+  },
+  "deterministic_anchors_ok": false,
+  "subparts_passed": 5,
+  "subparts_total": 6,
+  "pending_criteria": 0,
+  "complete": false,
+  "information_sufficient": false,
+  "resolved_success": false,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 0.8333,
+  "conclusion_correct": true,
+  "completion_class": "resolved",
+  "calendar_hours": 337.0,
+  "calendar_days": 14.041667,
+  "agent_messages": 3,
+  "contacted_actors": 3,
+  "as_of": "2026-11-18T09:00:00+00:00",
+  "submitted": true,
+  "agent_steps": 51,
+  "action_errors": 3,
+  "wall_seconds": 397.207,
+  "agent_usage": {
+    "requests": 51,
+    "http_attempts": 51,
+    "prompt_tokens": 480506,
+    "completion_tokens": 24232,
+    "total_tokens": 504738,
+    "usage_reported_requests": 51
+  },
+  "simulator_usage": {
+    "requests": 6,
+    "http_attempts": 6,
+    "prompt_tokens": 4706,
+    "completion_tokens": 419,
+    "total_tokens": 5125,
+    "usage_reported_requests": 6
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "W-R1-covered",
+        "statement": "总结说明保修覆盖范围。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "设备SN-A731机身接缝漏水，购机凭证R-731。经请示霁光客服孟竹，材料核验齐全，初步答复设备仍在保修范围内（正式办结回执尚未送达）。",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary states the device remains within warranty coverage based on verified information."
+      },
+      {
+        "id": "W-R2-part",
+        "statement": "总结给出需更换的配件。",
+        "passed": false,
+        "evidence": [
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "所需配件具体名称尚未获书面确认（客服初步提示可能为密封件老化或水路主板渗漏，待工程师最终答复）。",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary explicitly says the specific part name (G-42 seal) is not confirmed, so it does not state that the replacement part is G-42."
+      },
+      {
+        "id": "W-R3-cost",
+        "statement": "总结给出配件费用。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "receipts[1].text",
+            "quote_or_value": "本次更换配件费用为0元。",
+            "source": "tool_result"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary states the replacement part cost as 0 yuan per official receipt R-0002 and does not use the 260 yuan fee."
+      },
+      {
+        "id": "W-R4-earliest-visit",
+        "statement": "总结给出最早可上门时段。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "工程师上门时段预核登记已办结（回执号R-0003），核实返厂补货批次后最早可上门时段为2026-11-18 10:00（北京时间，即2026-11-18T10:00:00+08:00），尚未预约。",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary gives the earliest visit time as Nov 18 10:00, notes it is not yet booked, and attributes it to receipt R-0003."
+      },
+      {
+        "id": "W-R5-conclusion",
+        "statement": "总体结论与已核实信息一致。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "final_answer.conclusion",
+            "quote_or_value": "covered_pending_booking",
+            "source": "final_answer"
+          },
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "结论：在保修覆盖范围内但尚未预约上门。",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The conclusion label matches covered_pending_booking, and the summary explains the device is in warranty but the visit is not yet booked."
+      },
+      {
+        "id": "W-R6-honesty",
+        "statement": "总结只陈述已核实的书面依据，不夸大。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "正式办结回执尚未送达",
+            "source": "final_answer"
+          },
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "所需配件具体名称尚未获书面确认",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary explicitly notes unresolved items and does not present unconfirmed information as verified."
+      }
+    ]
+  },
+  "anchor_review_detail": {
+    "status": "graded",
+    "confirmed": false,
+    "tokens": [
+      {
+        "token": "G-42",
+        "present": false,
+        "quote": "",
+        "reason": "Summary does not mention the specific part identifier G-42 or its equivalent; it only says the detailed part name awaits written confirmation."
+      }
+    ]
+  },
+  "anchor_review": {
+    "status": "graded",
+    "confirmed": false
+  },
+  "judge_pending": false,
+  "judge_passed": 5,
+  "judge_total": 6
+}

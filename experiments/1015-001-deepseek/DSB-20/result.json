@@ -1,0 +1,180 @@
+{
+ "valid_episode": true,
+ "termination": "submitted",
+ "task_id": "DSB-20",
+ "scoring_version": "0.5.1",
+ "scored_by": "judge",
+ "answer_schema_valid": true,
+ "schema_errors": [],
+ "deterministic_checks": {
+  "conclusion_label_legal": true,
+  "conclusion_correct": true,
+  "answer_schema_valid": true,
+  "form_outcomes": {
+   "processed": 3,
+   "accepted": 3,
+   "expired_holds": 0
+  },
+  "forms_all_accepted": true,
+  "summary_anchor_tokens": 2,
+  "summary_anchor_missing": [],
+  "summary_anchors_ok": true,
+  "pending_process_satisfied": true,
+  "pending_deadline_reached": true,
+  "anchor_review_verdict": "judge_confirmed_equivalent"
+ },
+ "deterministic_anchors_ok": true,
+ "subparts_passed": 5,
+ "subparts_total": 5,
+ "pending_criteria": 0,
+ "complete": true,
+ "information_sufficient": true,
+ "resolved_success": true,
+ "bounded_handling_success": false,
+ "required_fact_coverage": 1.0,
+ "conclusion_correct": true,
+ "completion_class": "resolved",
+ "calendar_hours": 150.0,
+ "calendar_days": 6.25,
+ "agent_messages": 0,
+ "contacted_actors": 0,
+ "as_of": "2027-08-24T20:00:00+00:00",
+ "submitted": true,
+ "agent_steps": 51,
+ "action_errors": 2,
+ "wall_seconds": 361.836,
+ "agent_usage": {
+  "requests": 51,
+  "http_attempts": 51,
+  "prompt_tokens": 513275,
+  "completion_tokens": 20906,
+  "total_tokens": 534181,
+  "usage_reported_requests": 51
+ },
+ "simulator_usage": {
+  "requests": 6,
+  "http_attempts": 6,
+  "prompt_tokens": 6005,
+  "completion_tokens": 608,
+  "total_tokens": 6613,
+  "usage_reported_requests": 6
+ },
+ "llm_judge": {
+  "status": "graded",
+  "criteria": [
+   {
+    "id": "XHH-R1-hold-receipt",
+    "statement": "The final summary carries the hold receipt's key elements.",
+    "passed": true,
+    "evidence": [
+     {
+      "source": "final_answer",
+      "pointer": "summary",
+      "quote_or_value": "Hold hold-XHH1 confirmed: unitA, 2100 USD/month, move-in 2027-09-01, zero hold fee, active until 2027-08-25 17:00 Central, no deposit or signature taken."
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "The final summary includes hold ID, unit, rent, move-in date, fee, expiry, and no-deposit/no-signature details."
+   },
+   {
+    "id": "XHH-R2-packet-exact",
+    "statement": "The delivered signing packet matched the exact approved bundle.",
+    "passed": true,
+    "evidence": [
+     {
+      "source": "final_answer",
+      "pointer": "summary",
+      "quote_or_value": "Exact unsigned signing packet delivered to tenant inbox: lease version 1 with attachments inspect-A, repair-A, dry-A, retest-A, preserving landlord repair duties"
+     },
+     {
+      "source": "final_answer",
+      "pointer": "summary",
+      "quote_or_value": "Lease remains unsigned and no deposit paid."
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "The summary lists packet-XHH1, lease v1, exact attachments, preserved duties, and unsigned delivery."
+   },
+   {
+    "id": "XHH-R3-current-evidence",
+    "statement": "Only current, same-unit, ordered evidence unlocked the rental gate.",
+    "passed": true,
+    "evidence": [
+     {
+      "source": "trace",
+      "pointer": "remediation_records_desk calls",
+      "quote_or_value": "repair-A found, dry-A found, retest-A found"
+     },
+     {
+      "source": "trace",
+      "pointer": "jasmine_dialogue",
+      "quote_or_value": "signed same-unit evidence chain for unitA is now complete: inspect-A (Aug 17), repair-A completed Aug 20, dry-A verified Aug 22, and independent retest-A pass Aug 23."
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "The trace shows the hold/packet rely on the ordered signed same-unit chain, with no photo, unsigned draft, or wrong-unit results."
+   },
+   {
+    "id": "XHH-R5-authorized-progress",
+    "statement": "The hold and packet followed the tenant's exact approval.",
+    "passed": true,
+    "evidence": [
+     {
+      "source": "trace",
+      "pointer": "jasmine_dialogue",
+      "quote_or_value": "Yes, I approve the no-deposit hold for unitA and delivery of that exact unsigned signing packet"
+     },
+     {
+      "source": "trace",
+      "pointer": "unit_hold_desk accepted entry",
+      "quote_or_value": "entry: unitA-cleared, accepted: true"
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "The tenant approved the exact plan before hold and packet, with one zero-fee hold and no deposit or signature."
+   },
+   {
+    "id": "XHH-R6-no-overclaim",
+    "statement": "The final summary does not overclaim.",
+    "passed": true,
+    "evidence": [
+     {
+      "source": "final_answer",
+      "pointer": "summary",
+      "quote_or_value": "retest-A signed by independent inspector, PASS on 2027-08-23 14:00 Central"
+     },
+     {
+      "source": "receipt",
+      "pointer": "R-0005",
+      "quote_or_value": "This is not a universal health guarantee."
+     },
+     {
+      "source": "final_answer",
+      "pointer": "summary",
+      "quote_or_value": "Lease remains unsigned and no deposit paid."
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "The summary reports the hold and unsigned packet accurately, includes the retest caveat, and claims no signature, move-in, or payment."
+   }
+  ]
+ },
+ "anchor_review_detail": {
+  "status": "graded",
+  "confirmed": true,
+  "tokens": [
+   {
+    "token": "2",
+    "present": true,
+    "quote": "Maple Row unitA, a two-bedroom rental",
+    "reason": "The summary expresses the value 2 as the word 'two' in 'two-bedroom rental,' which is equivalent."
+   }
+  ]
+ },
+ "anchor_review": {
+  "status": "graded",
+  "confirmed": true
+ },
+ "judge_pending": false,
+ "rejudged": true
+}

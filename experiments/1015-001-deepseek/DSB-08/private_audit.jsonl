@@ -1,0 +1,136 @@
+{"at": "2026-11-06T05:30:00+00:00", "kind": "fact_registered", "fact": "b_door_ref", "issuer": "a_desk"}
+{"at": "2026-11-06T05:30:00+00:00", "kind": "agent_fetch_document", "url": "https://wuzhangzhusu.bench/files/hotels-b-door-ref.pdf", "facts": ["b_door_ref"]}
+{"at": "2026-11-06T05:30:00+00:00", "kind": "agent_send", "recipient": "lanxin@bench.example", "text": "您好，我们计划2026-11-14至2026-11-16入住A旅舍两晚，轮椅宽78cm，房门和浴室净宽须至少80cm。请安排现场实测房门与浴室净宽，并告知实测尺寸。", "fields": {"wheelchair_width": "78cm", "stay_dates": "2026-11-14/2026-11-16"}, "channel": "email"}
+{"at": "2026-11-06T05:30:00+00:00", "kind": "case_created", "case_id": "CASE-0001", "actor": "a_desk", "parent": null, "origin": "agent"}
+{"at": "2026-11-06T05:30:00+00:00", "kind": "agent_send", "recipient": "mihe@bench.example", "text": "您好，我们计划2026-11-14至2026-11-16入住B酒店两晚，轮椅宽78cm，房门和浴室净宽须至少80cm。请安排现场实测房门与浴室净宽，并告知B酒店该日期无障碍房的房态和两晚总价。", "fields": {"wheelchair_width": "78cm", "stay_dates": "2026-11-14/2026-11-16"}, "channel": "email"}
+{"at": "2026-11-06T05:30:00+00:00", "kind": "case_created", "case_id": "CASE-0002", "actor": "b_desk", "parent": null, "origin": "agent"}
+{"at": "2026-11-06T05:53:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "a_desk", "old": "new", "new": "queued"}
+{"at": "2026-11-06T05:53:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "a_desk", "step": "main_1", "start_at": "2026-11-06T05:53:00+00:00", "due_at": "2026-11-06T06:37:00+00:00", "tool": "a_desk.main.1.suggest"}
+{"at": "2026-11-06T05:53:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "a_desk", "old": "queued", "new": "working"}
+{"at": "2026-11-06T06:14:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "b_desk", "old": "new", "new": "queued"}
+{"at": "2026-11-06T06:14:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "b_desk", "old": "queued", "new": "working"}
+{"at": "2026-11-06T06:14:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "b_desk", "old": "working", "new": "replied"}
+{"at": "2026-11-06T06:14:00+00:00", "kind": "early_reply", "case_id": "CASE-0002", "actor": "b_desk", "accept_after": "2026-11-09T09:00:00+08:00"}
+{"at": "2026-11-06T06:14:00+00:00", "kind": "delivery", "message_id": "MSG-0001", "case_id": "CASE-0002", "status": "reply"}
+{"at": "2026-11-06T06:14:00+00:00", "kind": "agent_discover_tools", "name": "rate_form", "found": false}
+{"at": "2026-11-06T06:37:00+00:00", "kind": "tool_call", "actor": "a_desk", "case_id": "CASE-0001", "tool": "a_desk.main.1.suggest", "tool_kind": "suggest"}
+{"at": "2026-11-06T06:37:00+00:00", "kind": "delivery", "message_id": "MSG-0002", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2026-11-06T06:37:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "a_desk", "old": "working", "new": "queued"}
+{"at": "2026-11-06T06:37:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "a_desk", "step": "main_2", "start_at": "2026-11-06T06:37:00+00:00", "due_at": "2026-11-06T07:57:00+00:00", "tool": "a_desk.main.2.delegate"}
+{"at": "2026-11-06T06:37:00+00:00", "kind": "agent_send", "recipient": "jiangyan@bench.example", "text": "您好，我们计划2026-11-14至2026-11-16入住A旅舍两晚，轮椅宽78cm，房门和浴室净宽须至少80cm。A旅舍前台建议由您进行现场测量，请安排实测A旅舍无障碍房的房门和浴室净宽，并告知实测尺寸。", "fields": {"wheelchair_width": "78cm", "stay_dates": "2026-11-14/2026-11-16"}, "channel": "email"}
+{"at": "2026-11-06T06:37:00+00:00", "kind": "case_created", "case_id": "CASE-0003", "actor": "a_tech", "parent": null, "origin": "agent"}
+{"at": "2026-11-06T06:37:00+00:00", "kind": "agent_send", "recipient": "zhengyan@bench.example", "text": "您好，我们计划2026-11-14至2026-11-16入住B酒店，轮椅宽78cm，房门和浴室净宽须至少80cm。A旅舍前台提到您处可能留有B酒店无障碍房的复测记录，烦请告知B酒店无障碍房房门和浴室的实测净宽。", "fields": {"wheelchair_width": "78cm", "stay_dates": "2026-11-14/2026-11-16"}, "channel": "email"}
+{"at": "2026-11-06T06:37:00+00:00", "kind": "case_created", "case_id": "CASE-0004", "actor": "b_tech", "parent": null, "origin": "agent"}
+{"at": "2026-11-06T06:37:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "a_desk", "old": "queued", "new": "working"}
+{"at": "2026-11-06T07:13:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "a_tech", "old": "new", "new": "queued"}
+{"at": "2026-11-06T07:13:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "a_tech", "step": "main_1", "start_at": "2026-11-06T07:13:00+00:00", "due_at": "2026-11-09T01:30:00+00:00", "tool": "a_tech.main.1.lookup"}
+{"at": "2026-11-06T07:13:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "a_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-06T07:19:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "b_tech", "old": "new", "new": "queued"}
+{"at": "2026-11-06T07:19:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "b_tech", "step": "main_1", "start_at": "2026-11-11T02:00:00+00:00", "due_at": "2026-11-12T03:13:00+00:00", "tool": "b_tech.main.1.lookup"}
+{"at": "2026-11-06T07:57:00+00:00", "kind": "tool_call", "actor": "a_desk", "case_id": "CASE-0001", "tool": "a_desk.main.2.delegate", "tool_kind": "delegate"}
+{"at": "2026-11-06T07:57:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "a_desk", "old": "working", "new": "waiting_internal"}
+{"at": "2026-11-06T07:57:00+00:00", "kind": "case_created", "case_id": "CASE-0005", "actor": "a_tech", "parent": "CASE-0001", "origin": "agent"}
+{"at": "2026-11-06T07:57:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "a_tech", "old": "new", "new": "queued"}
+{"at": "2026-11-06T07:57:00+00:00", "kind": "scheduled", "case_id": "CASE-0005", "actor": "a_tech", "step": "main_1", "start_at": "2026-11-09T01:30:00+00:00", "due_at": "2026-11-09T03:48:00+00:00", "tool": "a_tech.main.1.lookup"}
+{"at": "2026-11-07T02:00:00+00:00", "kind": "page_updated", "page": "hotels-intro", "url": "https://wuzhangzhusu.bench/intro"}
+{"at": "2026-11-09T01:30:00+00:00", "kind": "tool_call", "actor": "a_tech", "case_id": "CASE-0003", "tool": "a_tech.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-09T01:30:00+00:00", "kind": "fact_registered", "fact": "a_door", "issuer": "a_tech"}
+{"at": "2026-11-09T01:30:00+00:00", "kind": "fact_registered", "fact": "a_bath", "issuer": "a_tech"}
+{"at": "2026-11-09T01:30:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "a_tech", "old": "working", "new": "queued"}
+{"at": "2026-11-09T01:30:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "a_tech", "step": "main_2", "start_at": "2026-11-09T03:48:00+00:00", "due_at": "2026-11-09T05:26:00+00:00", "tool": "a_tech.main.2.document"}
+{"at": "2026-11-09T01:30:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "a_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-09T03:48:00+00:00", "kind": "tool_call", "actor": "a_tech", "case_id": "CASE-0005", "tool": "a_tech.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-09T03:48:00+00:00", "kind": "fact_registered", "fact": "a_door", "issuer": "a_tech"}
+{"at": "2026-11-09T03:48:00+00:00", "kind": "fact_registered", "fact": "a_bath", "issuer": "a_tech"}
+{"at": "2026-11-09T03:48:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "a_tech", "old": "working", "new": "queued"}
+{"at": "2026-11-09T03:48:00+00:00", "kind": "scheduled", "case_id": "CASE-0005", "actor": "a_tech", "step": "main_2", "start_at": "2026-11-09T05:26:00+00:00", "due_at": "2026-11-09T05:55:00+00:00", "tool": "a_tech.main.2.document"}
+{"at": "2026-11-09T03:48:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "a_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-09T05:26:00+00:00", "kind": "tool_call", "actor": "a_tech", "case_id": "CASE-0003", "tool": "a_tech.main.2.document", "tool_kind": "document"}
+{"at": "2026-11-09T05:26:00+00:00", "kind": "fact_registered", "fact": "a_door", "issuer": "a_tech"}
+{"at": "2026-11-09T05:26:00+00:00", "kind": "fact_registered", "fact": "a_bath", "issuer": "a_tech"}
+{"at": "2026-11-09T05:26:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "a_tech", "old": "working", "new": "queued"}
+{"at": "2026-11-09T05:26:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "a_tech", "step": "main_3", "start_at": "2026-11-09T05:26:00+00:00", "due_at": "2026-11-09T05:41:00+00:00", "tool": "a_tech.main.3.reply"}
+{"at": "2026-11-09T05:26:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "a_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-09T05:26:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "a_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-09T05:30:00+00:00", "kind": "agent_send", "recipient": "mihe@bench.example", "text": "您好，再次打扰。我们计划2026-11-14至2026-11-16入住B酒店两晚，轮椅宽78cm，需要确认：B酒店无障碍房门和浴室净宽复测事宜的排期安排，以及该日期无障碍房的房态和两晚总价。请问是否可以先行查询房态与总价？", "fields": {"wheelchair_width": "78cm", "stay_dates": "2026-11-14/2026-11-16"}, "channel": "email"}
+{"at": "2026-11-09T05:30:00+00:00", "kind": "case_created", "case_id": "CASE-0006", "actor": "b_desk", "parent": null, "origin": "agent"}
+{"at": "2026-11-09T05:30:00+00:00", "kind": "followup_reopened", "case_id": "CASE-0006", "original_case": "CASE-0002"}
+{"at": "2026-11-09T05:41:00+00:00", "kind": "tool_call", "actor": "a_tech", "case_id": "CASE-0003", "tool": "a_tech.main.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-09T05:41:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "a_tech", "old": "working", "new": "replied"}
+{"at": "2026-11-09T05:41:00+00:00", "kind": "delivery", "message_id": "MSG-0003", "case_id": "CASE-0003", "status": "reply"}
+{"at": "2026-11-09T05:55:00+00:00", "kind": "tool_call", "actor": "a_tech", "case_id": "CASE-0005", "tool": "a_tech.main.2.document", "tool_kind": "document"}
+{"at": "2026-11-09T05:55:00+00:00", "kind": "fact_registered", "fact": "a_door", "issuer": "a_tech"}
+{"at": "2026-11-09T05:55:00+00:00", "kind": "fact_registered", "fact": "a_bath", "issuer": "a_tech"}
+{"at": "2026-11-09T05:55:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "a_tech", "old": "working", "new": "queued"}
+{"at": "2026-11-09T05:55:00+00:00", "kind": "scheduled", "case_id": "CASE-0005", "actor": "a_tech", "step": "main_3", "start_at": "2026-11-09T05:55:00+00:00", "due_at": "2026-11-09T06:10:00+00:00", "tool": "a_tech.main.3.reply"}
+{"at": "2026-11-09T05:55:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "a_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-09T06:05:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "b_desk", "old": "new", "new": "queued"}
+{"at": "2026-11-09T06:05:00+00:00", "kind": "scheduled", "case_id": "CASE-0006", "actor": "b_desk", "step": "measure_1", "start_at": "2026-11-09T06:05:00+00:00", "due_at": "2026-11-09T06:59:00+00:00", "tool": "b_desk.measure.1.acknowledge"}
+{"at": "2026-11-09T06:05:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "b_desk", "old": "queued", "new": "working"}
+{"at": "2026-11-09T06:10:00+00:00", "kind": "tool_call", "actor": "a_tech", "case_id": "CASE-0005", "tool": "a_tech.main.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-09T06:10:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "a_tech", "old": "working", "new": "replied"}
+{"at": "2026-11-09T06:10:00+00:00", "kind": "handoff_return", "case_id": "CASE-0005", "parent": "CASE-0001"}
+{"at": "2026-11-09T06:10:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "a_desk", "old": "waiting_internal", "new": "queued"}
+{"at": "2026-11-09T06:10:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "a_desk", "step": "main_3", "start_at": "2026-11-09T06:10:00+00:00", "due_at": "2026-11-09T06:45:00+00:00", "tool": "a_desk.main.3.reply"}
+{"at": "2026-11-09T06:10:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "a_desk", "old": "queued", "new": "working"}
+{"at": "2026-11-09T06:45:00+00:00", "kind": "tool_call", "actor": "a_desk", "case_id": "CASE-0001", "tool": "a_desk.main.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-09T06:45:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "a_desk", "old": "working", "new": "replied"}
+{"at": "2026-11-09T06:45:00+00:00", "kind": "delivery", "message_id": "MSG-0004", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2026-11-09T06:59:00+00:00", "kind": "tool_call", "actor": "b_desk", "case_id": "CASE-0006", "tool": "b_desk.measure.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2026-11-09T06:59:00+00:00", "kind": "delivery", "message_id": "MSG-0005", "case_id": "CASE-0006", "status": "acknowledgement"}
+{"at": "2026-11-09T06:59:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "b_desk", "old": "working", "new": "queued"}
+{"at": "2026-11-09T06:59:00+00:00", "kind": "scheduled", "case_id": "CASE-0006", "actor": "b_desk", "step": "measure_2", "start_at": "2026-11-09T06:59:00+00:00", "due_at": "2026-11-09T07:52:00+00:00", "tool": "b_desk.measure.2.delegate"}
+{"at": "2026-11-09T06:59:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "b_desk", "old": "queued", "new": "working"}
+{"at": "2026-11-09T07:52:00+00:00", "kind": "tool_call", "actor": "b_desk", "case_id": "CASE-0006", "tool": "b_desk.measure.2.delegate", "tool_kind": "delegate"}
+{"at": "2026-11-09T07:52:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "b_desk", "old": "working", "new": "waiting_internal"}
+{"at": "2026-11-09T07:52:00+00:00", "kind": "case_created", "case_id": "CASE-0007", "actor": "b_tech", "parent": "CASE-0006", "origin": "agent"}
+{"at": "2026-11-09T07:52:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "b_tech", "old": "new", "new": "queued"}
+{"at": "2026-11-09T07:52:00+00:00", "kind": "scheduled", "case_id": "CASE-0007", "actor": "b_tech", "step": "main_1", "start_at": "2026-11-12T03:13:00+00:00", "due_at": "2026-11-13T05:21:00+00:00", "tool": "b_tech.main.1.lookup"}
+{"at": "2026-11-11T02:00:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "b_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-12T03:13:00+00:00", "kind": "tool_call", "actor": "b_tech", "case_id": "CASE-0004", "tool": "b_tech.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-12T03:13:00+00:00", "kind": "fact_registered", "fact": "b_door", "issuer": "b_tech"}
+{"at": "2026-11-12T03:13:00+00:00", "kind": "fact_registered", "fact": "b_bath", "issuer": "b_tech"}
+{"at": "2026-11-12T03:13:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "b_tech", "old": "working", "new": "queued"}
+{"at": "2026-11-12T03:13:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "b_tech", "step": "main_2", "start_at": "2026-11-13T05:21:00+00:00", "due_at": "2026-11-13T05:54:00+00:00", "tool": "b_tech.main.2.document"}
+{"at": "2026-11-12T03:13:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "b_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-13T05:21:00+00:00", "kind": "tool_call", "actor": "b_tech", "case_id": "CASE-0007", "tool": "b_tech.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-13T05:21:00+00:00", "kind": "fact_registered", "fact": "b_door", "issuer": "b_tech"}
+{"at": "2026-11-13T05:21:00+00:00", "kind": "fact_registered", "fact": "b_bath", "issuer": "b_tech"}
+{"at": "2026-11-13T05:21:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "b_tech", "old": "working", "new": "queued"}
+{"at": "2026-11-13T05:21:00+00:00", "kind": "scheduled", "case_id": "CASE-0007", "actor": "b_tech", "step": "main_2", "start_at": "2026-11-13T05:54:00+00:00", "due_at": "2026-11-13T06:29:00+00:00", "tool": "b_tech.main.2.document"}
+{"at": "2026-11-13T05:21:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "b_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-13T05:54:00+00:00", "kind": "tool_call", "actor": "b_tech", "case_id": "CASE-0004", "tool": "b_tech.main.2.document", "tool_kind": "document"}
+{"at": "2026-11-13T05:54:00+00:00", "kind": "fact_registered", "fact": "b_door", "issuer": "b_tech"}
+{"at": "2026-11-13T05:54:00+00:00", "kind": "fact_registered", "fact": "b_bath", "issuer": "b_tech"}
+{"at": "2026-11-13T05:54:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "b_tech", "old": "working", "new": "queued"}
+{"at": "2026-11-13T05:54:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "b_tech", "step": "main_3", "start_at": "2026-11-13T05:54:00+00:00", "due_at": "2026-11-13T06:09:00+00:00", "tool": "b_tech.main.3.reply"}
+{"at": "2026-11-13T05:54:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "b_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-13T05:54:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "b_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-13T06:09:00+00:00", "kind": "tool_call", "actor": "b_tech", "case_id": "CASE-0004", "tool": "b_tech.main.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-13T06:09:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "b_tech", "old": "working", "new": "replied"}
+{"at": "2026-11-13T06:09:00+00:00", "kind": "delivery", "message_id": "MSG-0006", "case_id": "CASE-0004", "status": "reply"}
+{"at": "2026-11-13T06:09:00+00:00", "kind": "agent_discover_tools", "name": "wuzhang_rate_check", "found": true, "tool_kind": "form"}
+{"at": "2026-11-13T06:09:00+00:00", "kind": "agent_form_submitted", "tool": "wuzhang_rate_check", "form": "rate_form", "accepted": true}
+{"at": "2026-11-13T06:29:00+00:00", "kind": "tool_call", "actor": "b_tech", "case_id": "CASE-0007", "tool": "b_tech.main.2.document", "tool_kind": "document"}
+{"at": "2026-11-13T06:29:00+00:00", "kind": "fact_registered", "fact": "b_door", "issuer": "b_tech"}
+{"at": "2026-11-13T06:29:00+00:00", "kind": "fact_registered", "fact": "b_bath", "issuer": "b_tech"}
+{"at": "2026-11-13T06:29:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "b_tech", "old": "working", "new": "queued"}
+{"at": "2026-11-13T06:29:00+00:00", "kind": "scheduled", "case_id": "CASE-0007", "actor": "b_tech", "step": "main_3", "start_at": "2026-11-13T06:29:00+00:00", "due_at": "2026-11-13T06:44:00+00:00", "tool": "b_tech.main.3.reply"}
+{"at": "2026-11-13T06:29:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "b_tech", "old": "queued", "new": "working"}
+{"at": "2026-11-13T06:44:00+00:00", "kind": "tool_call", "actor": "b_tech", "case_id": "CASE-0007", "tool": "b_tech.main.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-13T06:44:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "b_tech", "old": "working", "new": "replied"}
+{"at": "2026-11-13T06:44:00+00:00", "kind": "handoff_return", "case_id": "CASE-0007", "parent": "CASE-0006"}
+{"at": "2026-11-13T06:44:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "b_desk", "old": "waiting_internal", "new": "queued"}
+{"at": "2026-11-13T06:44:00+00:00", "kind": "scheduled", "case_id": "CASE-0006", "actor": "b_desk", "step": "measure_3", "start_at": "2026-11-13T06:44:00+00:00", "due_at": "2026-11-13T07:32:00+00:00", "tool": "b_desk.measure.3.reply"}
+{"at": "2026-11-13T06:44:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "b_desk", "old": "queued", "new": "working"}
+{"at": "2026-11-13T07:32:00+00:00", "kind": "tool_call", "actor": "b_desk", "case_id": "CASE-0006", "tool": "b_desk.measure.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-13T07:32:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "b_desk", "old": "working", "new": "replied"}
+{"at": "2026-11-13T07:32:00+00:00", "kind": "delivery", "message_id": "MSG-0007", "case_id": "CASE-0006", "status": "reply"}
+{"at": "2026-11-13T07:32:00+00:00", "kind": "agent_discover_tools", "name": "wuzhang_lodging_status", "found": true, "tool_kind": "status"}
+{"at": "2026-11-13T07:32:00+00:00", "kind": "agent_hidden_status", "tool": "wuzhang_lodging_status", "query": "B酒店 2026-11-14 无障碍房", "keys": []}
+{"at": "2026-11-13T07:32:00+00:00", "kind": "agent_hidden_status", "tool": "wuzhang_lodging_status", "query": "2026-11-14", "keys": []}
+{"at": "2026-11-13T08:09:00+00:00", "kind": "fact_registered", "fact": "b_available", "issuer": "b_desk"}
+{"at": "2026-11-13T08:09:00+00:00", "kind": "fact_registered", "fact": "b_price", "issuer": "b_desk"}
+{"at": "2026-11-13T08:09:00+00:00", "kind": "page_updated", "page": "hotels-entry", "url": "https://wuzhangzhusu.bench/entry", "cause": "form"}
+{"at": "2026-11-13T08:09:00+00:00", "kind": "form_processed", "form": "rate_form", "accepted": true, "result": "房态报价核对已办结：11月14—16日指定无障碍房有可售房，尚未预订；两晚总房费2360元。办理进度可经无障碍住宿进度查询（wuzhang_lodging_status）复核。"}
+{"at": "2026-11-13T10:00:00+00:00", "kind": "agent_hidden_status", "tool": "wuzhang_lodging_status", "query": "无障碍房", "keys": []}

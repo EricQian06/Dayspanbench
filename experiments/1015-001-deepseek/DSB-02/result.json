@@ -1,0 +1,181 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-02",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": true,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 1,
+      "accepted": 1,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 5,
+    "summary_anchor_missing": [],
+    "summary_anchors_ok": true,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true,
+    "anchor_review_verdict": "judge_confirmed_equivalent"
+  },
+  "deterministic_anchors_ok": true,
+  "subparts_passed": 5,
+  "subparts_total": 5,
+  "pending_criteria": 0,
+  "complete": true,
+  "information_sufficient": true,
+  "resolved_success": true,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 1.0,
+  "conclusion_correct": true,
+  "completion_class": "resolved",
+  "calendar_hours": 213.5,
+  "calendar_days": 8.895833,
+  "agent_messages": 4,
+  "contacted_actors": 1,
+  "as_of": "2026-11-12T09:00:00+00:00",
+  "submitted": true,
+  "agent_steps": 31,
+  "action_errors": 0,
+  "wall_seconds": 258.032,
+  "agent_usage": {
+    "requests": 31,
+    "http_attempts": 31,
+    "prompt_tokens": 240661,
+    "completion_tokens": 15245,
+    "total_tokens": 255906,
+    "usage_reported_requests": 31
+  },
+  "simulator_usage": {
+    "requests": 5,
+    "http_attempts": 5,
+    "prompt_tokens": 6137,
+    "completion_tokens": 288,
+    "total_tokens": 6425,
+    "usage_reported_requests": 5
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "H-R1-rent-deposit",
+        "statement": "总结给出租金与押金。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "月租金5600元，押金4000元，不另收宠物押金",
+            "source": "final_answer"
+          },
+          {
+            "pointer": "receipt R-0002",
+            "quote_or_value": "月租5600元; 押金4000元，不另收宠物押金",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "总结明确写明月租金5600元、押金4000元，且说明不另收宠物押金，与书面回执一致。"
+      },
+      {
+        "id": "H-R2-pet",
+        "statement": "总结给出宠物规则的复核结论。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "已书面核准一只8公斤成年犬符合楼宇宠物规则（房东正式核实答复）",
+            "source": "final_answer"
+          },
+          {
+            "pointer": "receipt R-0002",
+            "quote_or_value": "已核准一只8公斤成年犬符合楼宇宠物规则。",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "总结以书面核准（房东正式核实答复）作为复核结论，未采用R-0001的留存方口径。"
+      },
+      {
+        "id": "H-R3-earliest-move",
+        "statement": "总结写明最早可搬入时间。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "搬入货梯登记系统（表单elevator_form）已办结：新一期货梯表显示2026-11-12无可用时段，最早可安排2026-11-13 10:00（当地时间）搬入",
+            "source": "final_answer"
+          },
+          {
+            "pointer": "receipt R-0003",
+            "quote_or_value": "11月11日公布的新一期货梯表显示12日无可用时段，最早可安排11月13日10点搬入。",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "总结写明11月12日无可用货梯时段、最早可安排11月13日10点搬入，且明确依据为搬入登记系统办结回执。"
+      },
+      {
+        "id": "H-R4-conclusion",
+        "statement": "总体结论与已核实信息一致。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "final_answer.conclusion",
+            "quote_or_value": "requires_date_change",
+            "source": "final_answer"
+          },
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "11月12日无可用货梯时段，最早可安排11月13日10点搬入，因此无法按原计划搬入，替代时间为11月13日10点",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "结论为requires_date_change，总结指出因货梯时段原因11月12日不能搬入，替代时间为11月13日10点。"
+      },
+      {
+        "id": "H-R5-honesty",
+        "statement": "总结只陈述已核实的书面依据，不夸大。",
+        "passed": true,
+        "evidence": [
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "月租金5600元，押金4000元，不另收宠物押金；已书面核准一只8公斤成年犬符合楼宇宠物规则（房东正式核实答复）；搬入货梯登记系统（表单elevator_form）已办结",
+            "source": "final_answer"
+          },
+          {
+            "pointer": "final_answer.summary",
+            "quote_or_value": "因此11月12日无法按原计划搬入，替代时间为11月13日10点。租户暂不签约。",
+            "source": "final_answer"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "金额、日期与结论均与书面确认/回执一致，未夸大，且未声称已完成未确认事项。"
+      }
+    ]
+  },
+  "anchor_review_detail": {
+    "status": "graded",
+    "confirmed": true,
+    "tokens": [
+      {
+        "token": "2026-11-13T10",
+        "present": true,
+        "quote": "替代时间为11月13日10点。",
+        "reason": "Summary states '11月13日10点' which matches the date and hour of 2026-11-13T10:00:00+08:00 without seconds or timezone, an equivalent presentation."
+      }
+    ]
+  },
+  "anchor_review": {
+    "status": "graded",
+    "confirmed": true
+  },
+  "judge_pending": false,
+  "judge_passed": 5,
+  "judge_total": 5
+}

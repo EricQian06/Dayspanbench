@@ -1,0 +1,77 @@
+{"at": "2027-07-10T14:00:00+00:00", "kind": "agent_search_clue", "query": "Harbor Test Hotel", "services": ["account_ledger"]}
+{"at": "2027-07-10T14:00:00+00:00", "kind": "agent_discover_tools", "name": "account_ledger", "found": true, "tool_kind": "catalog"}
+{"at": "2027-07-10T14:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "account_ledger", "query": "hotel", "entries": ["tx301", "tx302", "tx303", "tx304"]}
+{"at": "2027-07-10T14:00:00+00:00", "kind": "agent_send", "recipient": "priyanoland@bench.example", "text": "I stayed once at Harbor Test Hotel (stay-441). My card shows two posted 486 USD charges in the current cycle: one with reference HH-441-A posted 2027-07-08 and one with reference HH-441-B posted 2027-07-09. Please provide your written finding on which posted charge is the actual charge for stay-441 and which is the duplicate, with the exact transaction reference, amount and your evidence.", "fields": {}, "channel": "email"}
+{"at": "2027-07-10T14:00:00+00:00", "kind": "case_created", "case_id": "CASE-0001", "actor": "hotel_billing", "parent": null, "origin": "agent"}
+{"at": "2027-07-10T14:00:00+00:00", "kind": "agent_send", "recipient": "jordanblake@bench.example", "text": "My card shows two posted 486 USD charges from Harbor Test Hotel in the current cycle: HH-441-A posted 2027-07-08 and HH-441-B posted 2027-07-09. I stayed once. Please confirm which posted charge is the duplicate candidate, provide the statement reference, and advise the payment amount due on July 20, 2027 for the corrected statement, and whether my existing autopay arrangement covers that required amount.", "fields": {}, "channel": "email"}
+{"at": "2027-07-10T14:00:00+00:00", "kind": "case_created", "case_id": "CASE-0002", "actor": "issuer_desk", "parent": null, "origin": "agent"}
+{"at": "2027-07-10T14:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "hotel_billing", "old": "new", "new": "queued"}
+{"at": "2027-07-10T14:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "hotel_billing", "old": "queued", "new": "working"}
+{"at": "2027-07-10T14:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "hotel_billing", "old": "working", "new": "replied"}
+{"at": "2027-07-10T14:23:00+00:00", "kind": "early_reply", "case_id": "CASE-0001", "actor": "hotel_billing", "accept_after": "2027-07-12T10:00:00-05:00"}
+{"at": "2027-07-10T14:23:00+00:00", "kind": "delivery", "message_id": "MSG-0001", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2027-07-10T14:23:00+00:00", "kind": "agent_discover_tools", "name": "cardholder_dialogue", "found": true, "tool_kind": "dialogue"}
+{"at": "2027-07-10T14:23:00+00:00", "kind": "agent_discover_tools", "name": "dispute_submit", "found": true, "tool_kind": "select"}
+{"at": "2027-07-10T14:23:00+00:00", "kind": "agent_dialogue", "tool": "cardholder_dialogue", "question": "For your stay at Harbor Test Hotel (stay-441), please confirm the exact amount charged and which posted transaction reference belongs to that stay: HH-441-A posted 2027-07-08 or HH-441-B posted 2027-07-09.", "matched": true, "answer": "The exact amount is 486 USD, and the posted transaction reference that belongs to stay-441 is HH-441-A posted 2027-07-08."}
+{"at": "2027-07-10T14:44:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "issuer_desk", "old": "new", "new": "queued"}
+{"at": "2027-07-10T14:44:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "issuer_desk", "old": "queued", "new": "working"}
+{"at": "2027-07-10T14:44:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "issuer_desk", "old": "working", "new": "replied"}
+{"at": "2027-07-10T14:44:00+00:00", "kind": "early_reply", "case_id": "CASE-0002", "actor": "issuer_desk", "accept_after": "2027-07-14T09:00:00-05:00"}
+{"at": "2027-07-10T14:44:00+00:00", "kind": "delivery", "message_id": "MSG-0002", "case_id": "CASE-0002", "status": "reply"}
+{"at": "2027-07-12T15:00:00+00:00", "kind": "agent_send", "recipient": "priyanoland@bench.example", "text": "As requested, here is the stay receipt for stay-441 and the transaction reference: stay-441, amount 486 USD, recorded payment reference HH-441-A posted 7 July 2027-08. Please provide your written finding on which posted charge is the actual charge for stay-441 and which is the duplicate, with the exact transaction reference, amount, reason and evidence.", "fields": {}, "channel": "email"}
+{"at": "2027-07-12T15:00:00+00:00", "kind": "case_created", "case_id": "CASE-0003", "actor": "hotel_billing", "parent": null, "origin": "agent"}
+{"at": "2027-07-12T15:00:00+00:00", "kind": "followup_reopened", "case_id": "CASE-0003", "original_case": "CASE-0001"}
+{"at": "2027-07-12T15:29:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "hotel_billing", "old": "new", "new": "queued"}
+{"at": "2027-07-12T15:29:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "hotel_billing", "step": "main_1", "start_at": "2027-07-12T15:29:00+00:00", "due_at": "2027-07-12T16:19:00+00:00", "tool": "hotel_billing.main.1.acknowledge"}
+{"at": "2027-07-12T15:29:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "hotel_billing", "old": "queued", "new": "working"}
+{"at": "2027-07-12T16:19:00+00:00", "kind": "tool_call", "actor": "hotel_billing", "case_id": "CASE-0003", "tool": "hotel_billing.main.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2027-07-12T16:19:00+00:00", "kind": "delivery", "message_id": "MSG-0003", "case_id": "CASE-0003", "status": "acknowledgement"}
+{"at": "2027-07-12T16:19:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "hotel_billing", "old": "working", "new": "queued"}
+{"at": "2027-07-12T16:19:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "hotel_billing", "step": "main_2", "start_at": "2027-07-12T16:19:00+00:00", "due_at": "2027-07-12T18:40:00+00:00", "tool": "hotel_billing.main.2.lookup"}
+{"at": "2027-07-12T16:19:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "hotel_billing", "old": "queued", "new": "working"}
+{"at": "2027-07-12T18:40:00+00:00", "kind": "tool_call", "actor": "hotel_billing", "case_id": "CASE-0003", "tool": "hotel_billing.main.2.lookup", "tool_kind": "lookup"}
+{"at": "2027-07-12T18:40:00+00:00", "kind": "fact_registered", "fact": "duplicate_transaction", "issuer": "hotel_billing"}
+{"at": "2027-07-12T18:40:00+00:00", "kind": "fact_registered", "fact": "duplicate_amount", "issuer": "hotel_billing"}
+{"at": "2027-07-12T18:40:00+00:00", "kind": "fact_registered", "fact": "reversal_posted", "issuer": "hotel_billing"}
+{"at": "2027-07-12T18:40:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "hotel_billing", "old": "working", "new": "queued"}
+{"at": "2027-07-12T18:40:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "hotel_billing", "step": "main_3", "start_at": "2027-07-12T18:40:00+00:00", "due_at": "2027-07-12T19:27:00+00:00", "tool": "hotel_billing.main.3.document"}
+{"at": "2027-07-12T18:40:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "hotel_billing", "old": "queued", "new": "working"}
+{"at": "2027-07-12T19:27:00+00:00", "kind": "tool_call", "actor": "hotel_billing", "case_id": "CASE-0003", "tool": "hotel_billing.main.3.document", "tool_kind": "document"}
+{"at": "2027-07-12T19:27:00+00:00", "kind": "fact_registered", "fact": "duplicate_transaction", "issuer": "hotel_billing"}
+{"at": "2027-07-12T19:27:00+00:00", "kind": "fact_registered", "fact": "duplicate_amount", "issuer": "hotel_billing"}
+{"at": "2027-07-12T19:27:00+00:00", "kind": "fact_registered", "fact": "reversal_posted", "issuer": "hotel_billing"}
+{"at": "2027-07-12T19:27:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "hotel_billing", "old": "working", "new": "queued"}
+{"at": "2027-07-12T19:27:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "hotel_billing", "step": "main_4", "start_at": "2027-07-12T19:27:00+00:00", "due_at": "2027-07-12T19:42:00+00:00", "tool": "hotel_billing.main.4.reply"}
+{"at": "2027-07-12T19:27:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "hotel_billing", "old": "queued", "new": "working"}
+{"at": "2027-07-12T19:42:00+00:00", "kind": "tool_call", "actor": "hotel_billing", "case_id": "CASE-0003", "tool": "hotel_billing.main.4.reply", "tool_kind": "reply"}
+{"at": "2027-07-12T19:42:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "hotel_billing", "old": "working", "new": "replied"}
+{"at": "2027-07-12T19:42:00+00:00", "kind": "delivery", "message_id": "MSG-0004", "case_id": "CASE-0003", "status": "reply"}
+{"at": "2027-07-12T19:42:00+00:00", "kind": "agent_dialogue", "tool": "cardholder_dialogue", "question": "The hotel and I were written to: hotel findings letter identifies posted charge HH-441-B (tx302, 486 USD) as the duplicate for stay-441; HH-441-A (tx301) is the legitimate payment. Do you approve filing one dispute for exactly this duplicate transaction HH-441-B (tx302), amount 486 USD, reason duplicate charge, evidence the hotel merchant finding identifying it as the duplicate?", "matched": true, "answer": "Yes, I approve filing one dispute for exactly this duplicate transaction HH-441-B (tx302), amount 486 USD, reason duplicate charge, evidence the hotel merchant finding identifying it as the duplicate. This corresponds to my stay-441 at Harbor Test Hotel with check-in 2027-07-07 and check-out 2027-07-08, invoice total 486 USD."}
+{"at": "2027-07-12T19:42:00+00:00", "kind": "agent_selection_submitted", "tool": "dispute_submit", "entry": "tx302", "accepted": true}
+{"at": "2027-07-12T19:42:00+00:00", "kind": "agent_selection_status", "tool": "dispute_submit", "query": "status"}
+{"at": "2027-07-12T21:12:00+00:00", "kind": "fact_registered", "fact": "dispute_filed", "issuer": "issuer_desk"}
+{"at": "2027-07-12T21:12:00+00:00", "kind": "page_updated", "page": "card-intro", "url": "https://chargedispute.bench/intro", "cause": "selection"}
+{"at": "2027-07-12T21:12:00+00:00", "kind": "selection_processed", "tool": "dispute_submit", "accepted": true, "result": "Dispute received: dispute-D1 for tx302 (reference HH-441-B), 486.00 USD, reason duplicate_charge, evidence stay-441 v1 and finding-D1 v1 identifying tx301 as the legitimate payment with no posted reversal. Review status: under review; no refund or provisional credit posted, and the required payment and scheduled autopay are unchanged."}
+{"at": "2027-07-14T14:00:00+00:00", "kind": "page_updated", "page": "statement-faq", "url": "https://chargedispute.bench/faq"}
+{"at": "2027-07-14T14:30:00+00:00", "kind": "agent_send", "recipient": "jordanblake@bench.example", "text": "The corrected final statement has now published (July 14 at 09:00 Chicago time). Please provide the corrected statement's required payment amount due July 20, 2027 and confirm whether my existing autopay arrangement covers that required amount. Also please confirm the current status of the dispute filed for HH-441-B (tx302).", "fields": {}, "channel": "email"}
+{"at": "2027-07-14T14:30:00+00:00", "kind": "case_created", "case_id": "CASE-0004", "actor": "issuer_desk", "parent": null, "origin": "agent"}
+{"at": "2027-07-14T14:30:00+00:00", "kind": "followup_reopened", "case_id": "CASE-0004", "original_case": "CASE-0002"}
+{"at": "2027-07-14T14:58:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "issuer_desk", "old": "new", "new": "queued"}
+{"at": "2027-07-14T14:58:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "issuer_desk", "step": "main_1", "start_at": "2027-07-14T14:58:00+00:00", "due_at": "2027-07-14T16:16:00+00:00", "tool": "issuer_desk.main.1.lookup"}
+{"at": "2027-07-14T14:58:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "issuer_desk", "old": "queued", "new": "working"}
+{"at": "2027-07-14T16:16:00+00:00", "kind": "tool_call", "actor": "issuer_desk", "case_id": "CASE-0004", "tool": "issuer_desk.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2027-07-14T16:16:00+00:00", "kind": "fact_registered", "fact": "required_payment", "issuer": "issuer_desk"}
+{"at": "2027-07-14T16:16:00+00:00", "kind": "fact_registered", "fact": "autopay_covers", "issuer": "issuer_desk"}
+{"at": "2027-07-14T16:16:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "issuer_desk", "old": "working", "new": "queued"}
+{"at": "2027-07-14T16:16:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "issuer_desk", "step": "main_2", "start_at": "2027-07-14T16:16:00+00:00", "due_at": "2027-07-14T17:09:00+00:00", "tool": "issuer_desk.main.2.document"}
+{"at": "2027-07-14T16:16:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "issuer_desk", "old": "queued", "new": "working"}
+{"at": "2027-07-14T17:09:00+00:00", "kind": "tool_call", "actor": "issuer_desk", "case_id": "CASE-0004", "tool": "issuer_desk.main.2.document", "tool_kind": "document"}
+{"at": "2027-07-14T17:09:00+00:00", "kind": "fact_registered", "fact": "required_payment", "issuer": "issuer_desk"}
+{"at": "2027-07-14T17:09:00+00:00", "kind": "fact_registered", "fact": "autopay_covers", "issuer": "issuer_desk"}
+{"at": "2027-07-14T17:09:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "issuer_desk", "old": "working", "new": "queued"}
+{"at": "2027-07-14T17:09:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "issuer_desk", "step": "main_3", "start_at": "2027-07-14T17:09:00+00:00", "due_at": "2027-07-14T17:24:00+00:00", "tool": "issuer_desk.main.3.reply"}
+{"at": "2027-07-14T17:09:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "issuer_desk", "old": "queued", "new": "working"}
+{"at": "2027-07-14T17:24:00+00:00", "kind": "tool_call", "actor": "issuer_desk", "case_id": "CASE-0004", "tool": "issuer_desk.main.3.reply", "tool_kind": "reply"}
+{"at": "2027-07-14T17:24:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "issuer_desk", "old": "working", "new": "replied"}
+{"at": "2027-07-14T17:24:00+00:00", "kind": "delivery", "message_id": "MSG-0005", "case_id": "CASE-0004", "status": "reply"}
+{"at": "2027-07-14T17:24:00+00:00", "kind": "agent_selection_status", "tool": "dispute_submit", "query": "status"}

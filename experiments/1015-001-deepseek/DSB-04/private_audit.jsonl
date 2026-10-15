@@ -1,0 +1,159 @@
+{"at": "2026-11-04T01:30:00+00:00", "kind": "agent_discover_tools", "name": "nanyu_training_record", "found": true, "tool_kind": "form"}
+{"at": "2026-11-04T01:30:00+00:00", "kind": "agent_discover_tools", "name": "nanyu_training_status", "found": true, "tool_kind": "status"}
+{"at": "2026-11-04T01:30:00+00:00", "kind": "agent_send", "recipient": "yeqing@bench.example", "text": "您好，我是顾晓，样品S-482。请问仪器管理员杜和以及安全员温遥的联系邮箱是什么？另外仪器使用费和耗材费用如何计算？", "fields": {}, "channel": "email"}
+{"at": "2026-11-04T01:30:00+00:00", "kind": "case_created", "case_id": "CASE-0001", "actor": "labdesk", "parent": null, "origin": "agent"}
+{"at": "2026-11-04T01:53:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "labdesk", "old": "new", "new": "queued"}
+{"at": "2026-11-04T01:53:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "labdesk", "step": "main_1", "start_at": "2026-11-04T01:53:00+00:00", "due_at": "2026-11-04T02:37:00+00:00", "tool": "labdesk.main.1.suggest"}
+{"at": "2026-11-04T01:53:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "labdesk", "old": "queued", "new": "working"}
+{"at": "2026-11-04T02:30:00+00:00", "kind": "agent_call", "recipient": "labdesk", "text": "您好，我是顾晓，样品S-482。想询问仪器管理员杜和与安全员温遥的联系邮箱，以及仪器使用和耗材费用。", "fields": {}}
+{"at": "2026-11-04T02:30:00+00:00", "kind": "case_created", "case_id": "CASE-0002", "actor": "labdesk", "parent": null, "origin": "phone"}
+{"at": "2026-11-04T02:30:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "labdesk", "old": "new", "new": "queued"}
+{"at": "2026-11-04T02:30:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "labdesk", "step": "main_1", "start_at": "2026-11-04T02:37:00+00:00", "due_at": "2026-11-04T03:07:00+00:00", "tool": "labdesk.main.1.suggest"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "tool_call", "actor": "labdesk", "case_id": "CASE-0001", "tool": "labdesk.main.1.suggest", "tool_kind": "suggest"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "delivery", "message_id": "MSG-0001", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "labdesk", "old": "working", "new": "queued"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "labdesk", "step": "main_2", "start_at": "2026-11-04T03:07:00+00:00", "due_at": "2026-11-04T03:57:00+00:00", "tool": "labdesk.main.2.refer"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "labdesk", "old": "queued", "new": "working"}
+{"at": "2026-11-04T03:07:00+00:00", "kind": "tool_call", "actor": "labdesk", "case_id": "CASE-0002", "tool": "labdesk.main.1.suggest", "tool_kind": "suggest"}
+{"at": "2026-11-04T03:07:00+00:00", "kind": "delivery", "message_id": "MSG-0002", "case_id": "CASE-0002", "status": "reply"}
+{"at": "2026-11-04T03:07:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "labdesk", "old": "working", "new": "queued"}
+{"at": "2026-11-04T03:07:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "labdesk", "step": "main_2", "start_at": "2026-11-04T03:57:00+00:00", "due_at": "2026-11-04T05:27:00+00:00", "tool": "labdesk.main.2.refer"}
+{"at": "2026-11-04T03:07:00+00:00", "kind": "agent_send", "recipient": "duhe@bench.example", "text": "您好，我是顾晓，样品S-482。请问仪器使用费及进口耗材费用如何收取？耗材到库后需要连续7天稳定性校准，校准完成后的可用窗口如何计算？", "fields": {}, "channel": "email"}
+{"at": "2026-11-04T03:07:00+00:00", "kind": "case_created", "case_id": "CASE-0003", "actor": "instrument", "parent": null, "origin": "agent"}
+{"at": "2026-11-04T03:07:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "labdesk", "old": "queued", "new": "working"}
+{"at": "2026-11-04T03:43:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "new", "new": "needs_information"}
+{"at": "2026-11-04T03:43:00+00:00", "kind": "delivery", "message_id": "MSG-0003", "case_id": "CASE-0003", "status": "needs_information"}
+{"at": "2026-11-04T03:43:00+00:00", "kind": "agent_hidden_status", "tool": "nanyu_training_status", "query": null, "keys": ["batch"]}
+{"at": "2026-11-04T03:43:00+00:00", "kind": "agent_send", "recipient": "songye@bench.example", "text": "您好，我是顾晓，样品S-482。请问本批进口滤芯等耗材预计何时到库？批次号是什么？", "fields": {}, "channel": "email"}
+{"at": "2026-11-04T03:43:00+00:00", "kind": "case_created", "case_id": "CASE-0004", "actor": "stores", "parent": null, "origin": "agent"}
+{"at": "2026-11-04T03:57:00+00:00", "kind": "tool_call", "actor": "labdesk", "case_id": "CASE-0001", "tool": "labdesk.main.2.refer", "tool_kind": "refer"}
+{"at": "2026-11-04T03:57:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "labdesk", "old": "working", "new": "queued"}
+{"at": "2026-11-04T03:57:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "labdesk", "step": "main_3", "start_at": "2026-11-04T03:57:00+00:00", "due_at": "2026-11-04T04:12:00+00:00", "tool": "labdesk.main.3.reply"}
+{"at": "2026-11-04T03:57:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "labdesk", "old": "queued", "new": "working"}
+{"at": "2026-11-04T03:57:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "labdesk", "old": "queued", "new": "working"}
+{"at": "2026-11-04T04:12:00+00:00", "kind": "tool_call", "actor": "labdesk", "case_id": "CASE-0001", "tool": "labdesk.main.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-04T04:12:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "labdesk", "old": "working", "new": "replied"}
+{"at": "2026-11-04T04:12:00+00:00", "kind": "delivery", "message_id": "MSG-0004", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2026-11-04T05:25:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "stores", "old": "new", "new": "needs_information"}
+{"at": "2026-11-04T05:25:00+00:00", "kind": "delivery", "message_id": "MSG-0005", "case_id": "CASE-0004", "status": "needs_information"}
+{"at": "2026-11-04T05:25:00+00:00", "kind": "agent_send", "recipient": "songye@bench.example", "text": "您好，补充样品编号：S-482。请提供本批进口滤芯耗材的预计到库日期和批次号。", "fields": {"sample_id": "S-482"}, "channel": "email"}
+{"at": "2026-11-04T05:25:00+00:00", "kind": "agent_send", "recipient": "wenyao@bench.example", "text": "您好，我是顾晓，已报名11月6日14点安全培训。请问培训合格记录如何取得？记录有效期如何计算？", "fields": {}, "channel": "email"}
+{"at": "2026-11-04T05:25:00+00:00", "kind": "case_created", "case_id": "CASE-0005", "actor": "safety", "parent": null, "origin": "agent"}
+{"at": "2026-11-04T05:27:00+00:00", "kind": "tool_call", "actor": "labdesk", "case_id": "CASE-0002", "tool": "labdesk.main.2.refer", "tool_kind": "refer"}
+{"at": "2026-11-04T05:27:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "labdesk", "old": "working", "new": "queued"}
+{"at": "2026-11-04T05:27:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "labdesk", "step": "main_3", "start_at": "2026-11-04T05:27:00+00:00", "due_at": "2026-11-04T05:27:00+00:00", "tool": "labdesk.main.3.reply"}
+{"at": "2026-11-04T05:27:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "labdesk", "old": "queued", "new": "working"}
+{"at": "2026-11-04T05:27:00+00:00", "kind": "tool_call", "actor": "labdesk", "case_id": "CASE-0002", "tool": "labdesk.main.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-04T05:27:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "labdesk", "old": "working", "new": "replied"}
+{"at": "2026-11-04T05:27:00+00:00", "kind": "delivery", "message_id": "MSG-0006", "case_id": "CASE-0002", "status": "reply"}
+{"at": "2026-11-04T06:09:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "safety", "old": "new", "new": "queued"}
+{"at": "2026-11-04T06:09:00+00:00", "kind": "scheduled", "case_id": "CASE-0005", "actor": "safety", "step": "main_1", "start_at": "2026-11-13T06:00:00+00:00", "due_at": "2026-11-13T08:00:00+00:00", "tool": "safety.main.1.lookup"}
+{"at": "2026-11-04T06:10:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "stores", "old": "needs_information", "new": "queued"}
+{"at": "2026-11-04T06:10:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "stores", "step": "main_1", "start_at": "2026-11-17T02:00:00+00:00", "due_at": "2026-11-17T05:17:00+00:00", "tool": "stores.main.1.lookup"}
+{"at": "2026-11-05T01:00:00+00:00", "kind": "page_updated", "page": "lab-intro", "url": "https://nanyu.bench/intro"}
+{"at": "2026-11-06T00:00:00+00:00", "kind": "agent_query_case_status", "case_id": "CASE-0003"}
+{"at": "2026-11-06T00:00:00+00:00", "kind": "agent_query_case_status", "case_id": "CASE-0004"}
+{"at": "2026-11-13T06:00:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "safety", "old": "queued", "new": "working"}
+{"at": "2026-11-13T08:00:00+00:00", "kind": "tool_call", "actor": "safety", "case_id": "CASE-0005", "tool": "safety.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-13T08:00:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "safety", "old": "working", "new": "queued"}
+{"at": "2026-11-13T08:00:00+00:00", "kind": "scheduled", "case_id": "CASE-0005", "actor": "safety", "step": "main_2", "start_at": "2026-11-13T08:00:00+00:00", "due_at": "2026-11-13T08:15:00+00:00", "tool": "safety.main.2.deny"}
+{"at": "2026-11-13T08:00:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "safety", "old": "queued", "new": "working"}
+{"at": "2026-11-13T08:15:00+00:00", "kind": "tool_call", "actor": "safety", "case_id": "CASE-0005", "tool": "safety.main.2.deny", "tool_kind": "deny"}
+{"at": "2026-11-13T08:15:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "safety", "old": "working", "new": "replied"}
+{"at": "2026-11-13T08:15:00+00:00", "kind": "delivery", "message_id": "MSG-0007", "case_id": "CASE-0005", "status": "reply"}
+{"at": "2026-11-13T18:00:00+00:00", "kind": "agent_form_submitted", "tool": "nanyu_training_record", "form": "lab_training_form", "accepted": true}
+{"at": "2026-11-13T18:00:00+00:00", "kind": "agent_hidden_status", "tool": "nanyu_training_status", "query": null, "keys": ["batch"]}
+{"at": "2026-11-13T18:00:00+00:00", "kind": "agent_hidden_status", "tool": "nanyu_training_status", "query": "顾晓", "keys": []}
+{"at": "2026-11-13T18:00:00+00:00", "kind": "fact_registered", "fact": "certificate", "issuer": "safety"}
+{"at": "2026-11-13T18:00:00+00:00", "kind": "page_updated", "page": "lab-entry", "url": "https://nanyu.bench/entry", "cause": "form"}
+{"at": "2026-11-13T18:00:00+00:00", "kind": "form_processed", "form": "lab_training_form", "accepted": true, "result": "培训记录申请已办结：顾晓已完成11月13日批次安全培训，合格记录号SAFE-NOV06-482；办理进度可经南屿培训状态查询（nanyu_training_status）复核。"}
+{"at": "2026-11-15T02:00:00+00:00", "kind": "agent_hidden_status", "tool": "nanyu_training_status", "query": "11月13日", "keys": []}
+{"at": "2026-11-15T02:00:00+00:00", "kind": "agent_hidden_status", "tool": "nanyu_training_status", "query": "培训记录", "keys": []}
+{"at": "2026-11-15T02:00:00+00:00", "kind": "agent_fetch_document", "url": "https://nanyu.bench/files/lab-training-notice.pdf", "facts": []}
+{"at": "2026-11-15T02:00:00+00:00", "kind": "agent_hidden_status", "tool": "nanyu_training_status", "query": "安全培训", "keys": ["batch"]}
+{"at": "2026-11-15T02:00:00+00:00", "kind": "agent_hidden_status", "tool": "nanyu_training_status", "query": "S-482", "keys": []}
+{"at": "2026-11-17T02:00:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "stores", "old": "queued", "new": "working"}
+{"at": "2026-11-17T05:17:00+00:00", "kind": "tool_call", "actor": "stores", "case_id": "CASE-0004", "tool": "stores.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-17T05:17:00+00:00", "kind": "fact_registered", "fact": "filter", "issuer": "stores"}
+{"at": "2026-11-17T05:17:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "stores", "old": "working", "new": "queued"}
+{"at": "2026-11-17T05:17:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "stores", "step": "main_2", "start_at": "2026-11-17T05:17:00+00:00", "due_at": "2026-11-17T05:32:00+00:00", "tool": "stores.main.2.reply"}
+{"at": "2026-11-17T05:17:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "stores", "old": "queued", "new": "working"}
+{"at": "2026-11-17T05:32:00+00:00", "kind": "tool_call", "actor": "stores", "case_id": "CASE-0004", "tool": "stores.main.2.reply", "tool_kind": "reply"}
+{"at": "2026-11-17T05:32:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "stores", "old": "working", "new": "replied"}
+{"at": "2026-11-17T05:32:00+00:00", "kind": "delivery", "message_id": "MSG-0008", "case_id": "CASE-0004", "status": "reply"}
+{"at": "2026-11-17T08:00:00+00:00", "kind": "agent_hidden_status", "tool": "nanyu_training_status", "query": "合格", "keys": []}
+{"at": "2026-11-18T06:00:00+00:00", "kind": "agent_send", "recipient": "duhe@bench.example", "text": "您好，补充安全培训合格记录：SAFE-NOV06-482（顾晓，11月13日批次）。请继续办理测量可用时间与费用咨询。样品编号S-482。", "fields": {"safety_certificate": "SAFE-NOV06-482", "sample_id": "S-482"}, "channel": "email"}
+{"at": "2026-11-18T06:00:00+00:00", "kind": "agent_query_case_status", "case_id": "CASE-0003"}
+{"at": "2026-11-18T06:28:00+00:00", "kind": "material_understood", "case_id": "CASE-0003", "field": "safety_certificate", "evidence": ["certificate"]}
+{"at": "2026-11-18T06:28:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "needs_information", "new": "queued"}
+{"at": "2026-11-18T06:28:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "instrument", "step": "main_1", "start_at": "2026-11-18T06:28:00+00:00", "due_at": "2026-11-18T07:16:00+00:00", "tool": "instrument.main.1.acknowledge"}
+{"at": "2026-11-18T06:28:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "queued", "new": "working"}
+{"at": "2026-11-18T07:16:00+00:00", "kind": "tool_call", "actor": "instrument", "case_id": "CASE-0003", "tool": "instrument.main.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2026-11-18T07:16:00+00:00", "kind": "delivery", "message_id": "MSG-0009", "case_id": "CASE-0003", "status": "acknowledgement"}
+{"at": "2026-11-18T07:16:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "working", "new": "queued"}
+{"at": "2026-11-18T07:16:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "instrument", "step": "main_2", "start_at": "2026-11-18T07:16:00+00:00", "due_at": "2026-11-18T08:39:00+00:00", "tool": "instrument.main.2.delegate"}
+{"at": "2026-11-18T07:16:00+00:00", "kind": "agent_send", "recipient": "songye@bench.example", "text": "您好，感谢确认F-26B滤芯已到库。请问该批滤芯的批次号是什么？", "fields": {"sample_id": "S-482"}, "channel": "email"}
+{"at": "2026-11-18T07:16:00+00:00", "kind": "case_created", "case_id": "CASE-0006", "actor": "stores", "parent": null, "origin": "agent"}
+{"at": "2026-11-18T07:16:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "queued", "new": "working"}
+{"at": "2026-11-18T07:57:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "stores", "old": "new", "new": "queued"}
+{"at": "2026-11-18T07:57:00+00:00", "kind": "scheduled", "case_id": "CASE-0006", "actor": "stores", "step": "main_1", "start_at": "2026-11-18T07:57:00+00:00", "due_at": "2026-11-19T02:11:00+00:00", "tool": "stores.main.1.lookup"}
+{"at": "2026-11-18T07:57:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "stores", "old": "queued", "new": "working"}
+{"at": "2026-11-18T08:39:00+00:00", "kind": "tool_call", "actor": "instrument", "case_id": "CASE-0003", "tool": "instrument.main.2.delegate", "tool_kind": "delegate"}
+{"at": "2026-11-18T08:39:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "working", "new": "waiting_internal"}
+{"at": "2026-11-18T08:39:00+00:00", "kind": "case_created", "case_id": "CASE-0007", "actor": "stores", "parent": "CASE-0003", "origin": "agent"}
+{"at": "2026-11-18T08:39:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "stores", "old": "new", "new": "queued"}
+{"at": "2026-11-18T08:39:00+00:00", "kind": "scheduled", "case_id": "CASE-0007", "actor": "stores", "step": "main_1", "start_at": "2026-11-19T02:11:00+00:00", "due_at": "2026-11-19T05:31:00+00:00", "tool": "stores.main.1.lookup"}
+{"at": "2026-11-19T02:11:00+00:00", "kind": "tool_call", "actor": "stores", "case_id": "CASE-0006", "tool": "stores.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-19T02:11:00+00:00", "kind": "fact_registered", "fact": "filter", "issuer": "stores"}
+{"at": "2026-11-19T02:11:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "stores", "old": "working", "new": "queued"}
+{"at": "2026-11-19T02:11:00+00:00", "kind": "scheduled", "case_id": "CASE-0006", "actor": "stores", "step": "main_2", "start_at": "2026-11-19T02:11:00+00:00", "due_at": "2026-11-19T02:26:00+00:00", "tool": "stores.main.2.reply"}
+{"at": "2026-11-19T02:11:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "stores", "old": "queued", "new": "working"}
+{"at": "2026-11-19T02:11:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "stores", "old": "queued", "new": "working"}
+{"at": "2026-11-19T02:26:00+00:00", "kind": "tool_call", "actor": "stores", "case_id": "CASE-0006", "tool": "stores.main.2.reply", "tool_kind": "reply"}
+{"at": "2026-11-19T02:26:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "stores", "old": "working", "new": "replied"}
+{"at": "2026-11-19T02:26:00+00:00", "kind": "delivery", "message_id": "MSG-0010", "case_id": "CASE-0006", "status": "reply"}
+{"at": "2026-11-19T02:26:00+00:00", "kind": "agent_send", "recipient": "songye@bench.example", "text": "您好，再次打扰。请问已到库的F-26B滤芯的批次号（batch number）是多少？", "fields": {"sample_id": "S-482"}, "channel": "email"}
+{"at": "2026-11-19T02:26:00+00:00", "kind": "case_created", "case_id": "CASE-0008", "actor": "stores", "parent": null, "origin": "agent"}
+{"at": "2026-11-19T02:26:00+00:00", "kind": "followup_reopened", "case_id": "CASE-0008", "original_case": "CASE-0006"}
+{"at": "2026-11-19T02:26:00+00:00", "kind": "agent_query_case_status", "case_id": "CASE-0008"}
+{"at": "2026-11-19T03:09:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "stores", "old": "new", "new": "queued"}
+{"at": "2026-11-19T03:09:00+00:00", "kind": "scheduled", "case_id": "CASE-0008", "actor": "stores", "step": "main_1", "start_at": "2026-11-19T05:31:00+00:00", "due_at": "2026-11-19T07:55:00+00:00", "tool": "stores.main.1.lookup"}
+{"at": "2026-11-19T05:31:00+00:00", "kind": "tool_call", "actor": "stores", "case_id": "CASE-0007", "tool": "stores.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-19T05:31:00+00:00", "kind": "fact_registered", "fact": "filter", "issuer": "stores"}
+{"at": "2026-11-19T05:31:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "stores", "old": "working", "new": "queued"}
+{"at": "2026-11-19T05:31:00+00:00", "kind": "scheduled", "case_id": "CASE-0007", "actor": "stores", "step": "main_2", "start_at": "2026-11-19T05:31:00+00:00", "due_at": "2026-11-19T05:46:00+00:00", "tool": "stores.main.2.reply"}
+{"at": "2026-11-19T05:31:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "stores", "old": "queued", "new": "working"}
+{"at": "2026-11-19T05:31:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "stores", "old": "queued", "new": "working"}
+{"at": "2026-11-19T05:46:00+00:00", "kind": "tool_call", "actor": "stores", "case_id": "CASE-0007", "tool": "stores.main.2.reply", "tool_kind": "reply"}
+{"at": "2026-11-19T05:46:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "stores", "old": "working", "new": "replied"}
+{"at": "2026-11-19T05:46:00+00:00", "kind": "handoff_return", "case_id": "CASE-0007", "parent": "CASE-0003"}
+{"at": "2026-11-19T05:46:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "waiting_internal", "new": "queued"}
+{"at": "2026-11-19T05:46:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "instrument", "step": "main_3", "start_at": "2026-11-19T05:46:00+00:00", "due_at": "2026-11-26T05:46:00+00:00", "tool": "instrument.main.3.lookup"}
+{"at": "2026-11-19T05:46:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "queued", "new": "working"}
+{"at": "2026-11-19T07:55:00+00:00", "kind": "tool_call", "actor": "stores", "case_id": "CASE-0008", "tool": "stores.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-19T07:55:00+00:00", "kind": "fact_registered", "fact": "filter", "issuer": "stores"}
+{"at": "2026-11-19T07:55:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "stores", "old": "working", "new": "queued"}
+{"at": "2026-11-19T07:55:00+00:00", "kind": "scheduled", "case_id": "CASE-0008", "actor": "stores", "step": "main_2", "start_at": "2026-11-19T07:55:00+00:00", "due_at": "2026-11-19T08:10:00+00:00", "tool": "stores.main.2.reply"}
+{"at": "2026-11-19T07:55:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "stores", "old": "queued", "new": "working"}
+{"at": "2026-11-19T08:10:00+00:00", "kind": "tool_call", "actor": "stores", "case_id": "CASE-0008", "tool": "stores.main.2.reply", "tool_kind": "reply"}
+{"at": "2026-11-19T08:10:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "stores", "old": "working", "new": "replied"}
+{"at": "2026-11-19T08:10:00+00:00", "kind": "delivery", "message_id": "MSG-0011", "case_id": "CASE-0008", "status": "reply"}
+{"at": "2026-11-26T05:46:00+00:00", "kind": "tool_call", "actor": "instrument", "case_id": "CASE-0003", "tool": "instrument.main.3.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-26T05:46:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "working", "new": "queued"}
+{"at": "2026-11-26T05:46:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "instrument", "step": "main_4", "start_at": "2026-11-26T05:46:00+00:00", "due_at": "2026-11-27T01:51:00+00:00", "tool": "instrument.main.4.lookup"}
+{"at": "2026-11-26T05:46:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "queued", "new": "working"}
+{"at": "2026-11-27T01:51:00+00:00", "kind": "tool_call", "actor": "instrument", "case_id": "CASE-0003", "tool": "instrument.main.4.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-27T01:51:00+00:00", "kind": "fact_registered", "fact": "window", "issuer": "instrument"}
+{"at": "2026-11-27T01:51:00+00:00", "kind": "fact_registered", "fact": "price", "issuer": "instrument"}
+{"at": "2026-11-27T01:51:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "working", "new": "queued"}
+{"at": "2026-11-27T01:51:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "instrument", "step": "main_5", "start_at": "2026-11-27T01:51:00+00:00", "due_at": "2026-11-27T02:44:00+00:00", "tool": "instrument.main.5.document"}
+{"at": "2026-11-27T01:51:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "queued", "new": "working"}
+{"at": "2026-11-27T02:44:00+00:00", "kind": "tool_call", "actor": "instrument", "case_id": "CASE-0003", "tool": "instrument.main.5.document", "tool_kind": "document"}
+{"at": "2026-11-27T02:44:00+00:00", "kind": "fact_registered", "fact": "window", "issuer": "instrument"}
+{"at": "2026-11-27T02:44:00+00:00", "kind": "fact_registered", "fact": "price", "issuer": "instrument"}
+{"at": "2026-11-27T02:44:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "working", "new": "queued"}
+{"at": "2026-11-27T02:44:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "instrument", "step": "main_6", "start_at": "2026-11-27T02:44:00+00:00", "due_at": "2026-11-27T02:59:00+00:00", "tool": "instrument.main.6.reply"}
+{"at": "2026-11-27T02:44:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "queued", "new": "working"}
+{"at": "2026-11-27T02:59:00+00:00", "kind": "tool_call", "actor": "instrument", "case_id": "CASE-0003", "tool": "instrument.main.6.reply", "tool_kind": "reply"}
+{"at": "2026-11-27T02:59:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "instrument", "old": "working", "new": "replied"}
+{"at": "2026-11-27T02:59:00+00:00", "kind": "delivery", "message_id": "MSG-0012", "case_id": "CASE-0003", "status": "reply"}

@@ -1,0 +1,169 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-23",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": false,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 0,
+      "accepted": 0,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 4,
+    "summary_anchor_missing": [],
+    "summary_anchors_ok": true,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true
+  },
+  "deterministic_anchors_ok": false,
+  "subparts_passed": 3,
+  "subparts_total": 5,
+  "pending_criteria": 0,
+  "complete": false,
+  "information_sufficient": false,
+  "resolved_success": false,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 0.6,
+  "conclusion_correct": false,
+  "completion_class": "resolved",
+  "calendar_hours": 48.0,
+  "calendar_days": 2.0,
+  "agent_messages": 5,
+  "contacted_actors": 3,
+  "as_of": "2027-04-18T16:00:00+00:00",
+  "submitted": true,
+  "agent_steps": 48,
+  "action_errors": 6,
+  "wall_seconds": 277.889,
+  "agent_usage": {
+    "requests": 48,
+    "http_attempts": 48,
+    "prompt_tokens": 454567,
+    "completion_tokens": 15557,
+    "total_tokens": 470124,
+    "usage_reported_requests": 48
+  },
+  "simulator_usage": {
+    "requests": 9,
+    "http_attempts": 9,
+    "prompt_tokens": 9277,
+    "completion_tokens": 841,
+    "total_tokens": 10118,
+    "usage_reported_requests": 9
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "XPT-R1-pet-acceptance-written",
+        "statement": "The hotel's written pet acceptance named the exact dog and conditions.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "receipt",
+            "pointer": "R-0003",
+            "quote_or_value": "Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car."
+          },
+          {
+            "source": "final_answer",
+            "pointer": "summary",
+            "quote_or_value": "酒店书面确认接受犬只Nino（28kg，芯片pet-XPT，有最新兽医证明），并确认露天停车适合2.05米高的车辆"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The final summary explicitly reports the hotel's written acceptance naming Nino (pet-XPT, 28 kg, vet letter) with no unattended periods and open-air parking fitting the 2.05 m car, matching receipt R-0003."
+      },
+      {
+        "id": "XPT-R2-stay-receipt",
+        "statement": "The final summary carries the reservation receipt's key elements.",
+        "passed": false,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "summary",
+            "quote_or_value": "Villa des Roses 酒店两晚（2027-04-16至04-18）总价378欧元（房费310欧元+宠物费20欧元+露天停车费24欧元/晚×2）"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "summary",
+            "quote_or_value": "停留确认与陪护确认均为未确认，未发起预订"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary lacks a reservation number (e.g., stay-XPT1), does not state the dates as 04-16 to 04-18 with an explicit check-out, omits the 00:30 late check-in and Lea's linked supervision, and the agent itself reports stay_confirmed unconfirmed."
+      },
+      {
+        "id": "XPT-R3-arrival-matched-to-current-train",
+        "statement": "The booking plan matched the current delayed arrival, not the withdrawn schedule.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "receipt",
+            "pointer": "R-0002",
+            "quote_or_value": "current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05"
+          },
+          {
+            "source": "trace",
+            "pointer": "agent_letters[3]",
+            "quote_or_value": "the train is now delayed and will arrive Lyon on 2027-04-16 at 23:40; with the 25-minute transfer check-in would land at 00:05 ... confirm in writing that Villa des Roses will accept late check-in up to at least 00:05"
+          },
+          {
+            "source": "trace",
+            "pointer": "dialogue[1].answer",
+            "quote_or_value": "train train-XPT now arriving 23:40 on April 16 with late check-in extended to 00:30"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The trace shows the plan was built and validated against the 23:40 arrival (plus 25-minute transfer landing at 00:05) with the written 00:30 extension, and the approval was explicitly tied to the current 23:40 arrival with no reliance on the withdrawn 23:50 limit."
+      },
+      {
+        "id": "XPT-R4-supervision-rebound",
+        "statement": "Supervision was acknowledged for the delayed itinerary.",
+        "passed": false,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "dialogue[1].answer",
+            "quote_or_value": "Lea Bernard supervising Nino the whole time"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "summary",
+            "quote_or_value": "陪护人Lea Bernard仅回复了受理回执，截止2027-04-18 16:00 UTC未收到她对全程看护Nino的书面确认"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The itinerary-level supervision was only stated by Camille in the dialogue as a plan condition, while the final summary explicitly reports Lea's written confirmation was never received, so no written acknowledgment by Lea on the delayed itinerary exists."
+      },
+      {
+        "id": "XPT-R6-no-future-stay-invented",
+        "statement": "The final summary reports the reservation without inventing performance.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "summary",
+            "quote_or_value": "酒店住宿未能完成预订 ... 按流程未发起预订，stay_confirmed与companion_supervision_acknowledged均为未确认"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "summary",
+            "quote_or_value": "Villa des Roses 酒店两晚（2027-04-16至04-18）总价378欧元 ... 酒店已书面将最晚入住时间延长至00:30（确认编号late-XPT2）"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary explicitly states no reservation was made and neither arrival, stay performance nor payment is claimed, while reporting the verified written conditions and the revised check-in."
+      }
+    ]
+  },
+  "judge_pending": false,
+  "judge_passed": 3,
+  "judge_total": 5
+}

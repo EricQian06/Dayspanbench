@@ -1,0 +1,39 @@
+{
+  "task_id": "DSB-05",
+  "task_set_version": "0.4.0",
+  "completion_class": "resolved",
+  "agent": {
+    "model": "deepseek-v4-flash-0731",
+    "base_url": "https://az.gptplus5.com/v1",
+    "api": "chat",
+    "output_format": "json_schema",
+    "timeout": 180,
+    "max_retries": 1,
+    "max_tokens": 4096,
+    "extra_body": {}
+  },
+  "agent_protocol": "json_action_chat",
+  "agent_token_parameter": "max_tokens",
+  "simulator": {
+    "model": "deepseek-v4-flash",
+    "base_url": "https://az.gptplus5.com/v1",
+    "api": "chat",
+    "output_format": "json_schema",
+    "timeout": 180,
+    "max_retries": 1,
+    "max_tokens": 8192,
+    "extra_body": {
+      "thinking": {
+        "type": "disabled"
+      }
+    }
+  },
+  "max_steps": 80,
+  "history_limit": 24,
+  "simulator_validation_retries": 2,
+  "latency_seed": 1015,
+  "task_sha256": "c2515c5cd6de60bdc84d6252d7e3ab5572ca637b7d15b0403b60026fe1fa6aef",
+  "agent_prompt_sha256": "4fd0e8fe5d39bd616c03eab462d54615bdb7f4fe79c490260c1bbaa3dcf150af",
+  "started_at": "2026-10-14T22:50:49.215544+00:00",
+  "time_mode": "virtual_calendar"
+}

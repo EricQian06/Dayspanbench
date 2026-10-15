@@ -1,0 +1,164 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-17",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": true,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 2,
+      "accepted": 1,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 3,
+    "summary_anchor_missing": [],
+    "summary_anchors_ok": true,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true
+  },
+  "deterministic_anchors_ok": true,
+  "subparts_passed": 5,
+  "subparts_total": 5,
+  "pending_criteria": 0,
+  "complete": true,
+  "information_sufficient": true,
+  "resolved_success": true,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 1.0,
+  "conclusion_correct": true,
+  "completion_class": "resolved",
+  "calendar_hours": 51.0,
+  "calendar_days": 2.125,
+  "agent_messages": 4,
+  "contacted_actors": 3,
+  "as_of": "2027-07-11T16:00:00+00:00",
+  "submitted": true,
+  "agent_steps": 46,
+  "action_errors": 0,
+  "wall_seconds": 360.852,
+  "agent_usage": {
+    "requests": 46,
+    "http_attempts": 46,
+    "prompt_tokens": 418557,
+    "completion_tokens": 20278,
+    "total_tokens": 438835,
+    "usage_reported_requests": 46
+  },
+  "simulator_usage": {
+    "requests": 9,
+    "http_attempts": 9,
+    "prompt_tokens": 10202,
+    "completion_tokens": 792,
+    "total_tokens": 10994,
+    "usage_reported_requests": 9
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "XFF-R1-order-receipt",
+        "statement": "The final summary carries the order receipt's key elements.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "菜单ff1第二版（ff1 v2），六份餐（四成人、两儿童），2027-07-11 13:30（纽约时间）送达，送餐窗口为13:30-14:30共60分钟；总费用236.00美元（含税16美元与配送费20美元）...未产生任何付款"
+          },
+          {
+            "source": "tool_result",
+            "pointer": "receipt R-0003",
+            "quote_or_value": "Order confirmed: menu ff1 version 2, six portions (four adult, two fish-free child) delivered 2027-07-11 at 13:30 New York time... total 236.00 USD including tax and delivery; no payment taken."
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The final summary states one confirmed ff1-v2 order with six portions, 13:30 New York delivery, 236.00 USD total including tax and delivery, and no payment taken, matching receipt R-0003."
+      },
+      {
+        "id": "XFF-R2-controls-written",
+        "statement": "Written exact-menu sesame controls were obtained from the provider.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "该订单附带厨房书面芝麻交叉接触控制（供应商报告性质、非医疗保证），两份儿童餐均不含鱼"
+          },
+          {
+            "source": "tool_result",
+            "pointer": "receipt R-0002 / established fact controls",
+            "quote_or_value": "Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket... These are provider-reported controls, not a medical guarantee. Both child portions on menu ff1 are prepared without fish."
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary reports the kitchen's written sesame controls, described as provider-reported (not a guarantee), specifying no sesame ingredients, separate cleaned utensils/prep space, a flagged allergy ticket, and both child portions fish-free, all sourced from receipt R-0002."
+      },
+      {
+        "id": "XFF-coverage-matched-to-current-time",
+        "statement": "Helper coverage was matched to the menu's current delivery time after the change, not to the withdrawn 12:00 window.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "trace.tool_calls (send_email to martavela)",
+            "quote_or_value": "Please confirm in writing that you will cover the full 60-minute mealtime window on Sunday 2027-07-11 from 13:30 to 14:30 for the family lunch, including meal assistance for the whole window."
+          },
+          {
+            "source": "trace",
+            "pointer": "trace.dialogue (family approval)",
+            "quote_or_value": "with helper Marta Vela covering the entire 60-minute meal window 13:30-14:30"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The acknowledged helper coverage is for the 13:30-14:30 window (Marta), matching receipt R-0003's 'helper coverage acknowledged for the full 13:30-14:30 meal window'; no commitment relies on Ana's 12:00-13:00 window or on the driver for mealtime assistance."
+      },
+      {
+        "id": "XFF-refreshed-listing-booked",
+        "statement": "The order used the refreshed delivery-time listing.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "trace.dialogue (second family approval)",
+            "quote_or_value": "menu ff1 version 2 ... delivery on Sunday 2027-07-11 at 13:30"
+          },
+          {
+            "source": "trace",
+            "pointer": "trace.form_outcomes",
+            "quote_or_value": "meal_order ff1-v2 accepted: true"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The trace shows the agent re-checked the menu after the July 10 change, updated to ff1 v2 with 13:30 delivery, received family approval, and successfully booked ff1-v2 (accepted true), never the withdrawn 12:00 v1."
+      },
+      {
+        "id": "XFF-no-invented-performance",
+        "statement": "The final summary is accurate and does not overclaim.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "结论为meal_covered：一次已批准、六份餐、预算内的订单，且与覆盖完整用餐窗口的辅助人员关联"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "供应商报告性质、非医疗保证' and '未产生任何付款"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The final answer reports only the confirmed order, delivery time, total, provider-reported controls and named helper coverage; it does not claim the meal was eaten, care was performed, payment was made, or zero allergy risk."
+      }
+    ]
+  },
+  "judge_pending": false,
+  "judge_passed": 5,
+  "judge_total": 5
+}

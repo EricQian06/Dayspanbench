@@ -1,0 +1,153 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-03",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": true,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 1,
+      "accepted": 1,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 3,
+    "summary_anchor_missing": [],
+    "summary_anchors_ok": true,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true
+  },
+  "deterministic_anchors_ok": true,
+  "subparts_passed": 6,
+  "subparts_total": 6,
+  "pending_criteria": 0,
+  "complete": true,
+  "information_sufficient": true,
+  "resolved_success": true,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 1.0,
+  "conclusion_correct": true,
+  "completion_class": "resolved",
+  "calendar_hours": 2146.0,
+  "calendar_days": 89.416667,
+  "agent_messages": 8,
+  "contacted_actors": 3,
+  "as_of": "2027-02-02T16:00:00+00:00",
+  "submitted": true,
+  "agent_steps": 54,
+  "action_errors": 3,
+  "wall_seconds": 407.866,
+  "agent_usage": {
+    "requests": 54,
+    "http_attempts": 54,
+    "prompt_tokens": 493707,
+    "completion_tokens": 20210,
+    "total_tokens": 513917,
+    "usage_reported_requests": 54
+  },
+  "simulator_usage": {
+    "requests": 14,
+    "http_attempts": 14,
+    "prompt_tokens": 15344,
+    "completion_tokens": 789,
+    "total_tokens": 16133,
+    "usage_reported_requests": 14
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "C-R1-syllabus",
+        "statement": "总结给出正式签章大纲版本。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "judge.reason",
+            "quote_or_value": "Final answer states the official signed syllabus version as CS204-2026-v2-signed, matching receipt R-0002 and established fact 'syllabus'."
+          }
+        ],
+        "evidence_synthesized": true,
+        "reason": "Final answer states the official signed syllabus version as CS204-2026-v2-signed, matching receipt R-0002 and established fact 'syllabus'."
+      },
+      {
+        "id": "C-R2-credits",
+        "statement": "总结给出可转换学分数。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "judge.reason",
+            "quote_or_value": "Final answer reports 3 transferable credits per receipt R-0003 and established fact 'credits', and does not mention the 4-credit dean office estimate."
+          }
+        ],
+        "evidence_synthesized": true,
+        "reason": "Final answer reports 3 transferable credits per receipt R-0003 and established fact 'credits', and does not mention the 4-credit dean office estimate."
+      },
+      {
+        "id": "C-R3-scope",
+        "statement": "总结写明学分计入范围。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "judge.reason",
+            "quote_or_value": "Final answer states the 3 credits count only toward professional electives and cannot replace required courses, matching receipt R-0003 and established fact 'scope'."
+          }
+        ],
+        "evidence_synthesized": true,
+        "reason": "Final answer states the 3 credits count only toward professional electives and cannot replace required courses, matching receipt R-0003 and established fact 'scope'."
+      },
+      {
+        "id": "C-R4-effective",
+        "statement": "总结写明生效学期。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "judge.reason",
+            "quote_or_value": "Final answer states the conversion applies from 2027 spring semester and cites the registration completion receipt R-0004, not just committee email."
+          }
+        ],
+        "evidence_synthesized": true,
+        "reason": "Final answer states the conversion applies from 2027 spring semester and cites the registration completion receipt R-0004, not just committee email."
+      },
+      {
+        "id": "C-R5-conclusion",
+        "statement": "总体结论与已核实信息一致。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "judge.reason",
+            "quote_or_value": "Final answer conclusion is 'eligible_with_scope_limit' and summary explains transferable but limited to professional electives."
+          }
+        ],
+        "evidence_synthesized": true,
+        "reason": "Final answer conclusion is 'eligible_with_scope_limit' and summary explains transferable but limited to professional electives."
+      },
+      {
+        "id": "C-R6-honesty",
+        "statement": "总结只陈述已核实的书面依据，不夸大。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "judge.reason",
+            "quote_or_value": "Final answer only reports verified written facts (syllabus version, credits, scope, effective semester) and does not overstate or include unverified oral impressions."
+          }
+        ],
+        "evidence_synthesized": true,
+        "reason": "Final answer only reports verified written facts (syllabus version, credits, scope, effective semester) and does not overstate or include unverified oral impressions."
+      }
+    ]
+  },
+  "judge_pending": false,
+  "judge_passed": 6,
+  "judge_total": 6
+}

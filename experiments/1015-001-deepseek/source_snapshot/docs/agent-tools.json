@@ -1,0 +1,301 @@
+[
+  {
+    "name": "observe",
+    "description": "工具名称：observe。\n调用方法：{\"tool\":\"observe\",\"arguments\":{}}，本工具无参数。\n用途：获取环境当前状态快照，包括当前虚拟时间（now）、本题可用工具名称列表（tools，每题不同：通用工具之外可能启用若干可选工具）和收件箱未读消息数（unread_messages）。任务详情请用recall_task获取，本工具不返回任务内容或联系人。",
+    "parameters": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "recall_task",
+    "description": "工具名称：recall_task。\n调用方法：{\"tool\":\"recall_task\",\"arguments\":{}}，本工具无参数。\n用途：重新获取初始系统消息中的任务信息，内容与初始完全一致，不随进度变化。返回字段：task为公开任务对象（含任务简介brief、用户字段user_fields、授权文本authorization、答案字段answer_keys、结论标签conclusion_options、答案结构说明answer_format、消息预算message_budget等）；deadline为任务截止时刻；contacts为初始直接提供的联系人名片列表，每张名片含id（联系人标识）、name（姓名）、role（职务）和contact_details（该人物实际拥有的联络渠道）。网页不会出现在其中，只能通过web_search发现。",
+    "parameters": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "web_search",
+    "description": "工具名称：web_search。\n调用方法：{\"tool\":\"web_search\",\"arguments\":{\"query\":\"检索词\"}}。\n参数字段：query（必填）为检索词，仅当词项与网页的标题或摘要相关时才返回对应链接，无关查询不返回任何结果。\n用途：搜索合成公开网络。网页内容会随时间更新，摘要反映页面当前版本，此前读过的信息可能已过时。返回字段：results为结果链接列表，每项含url（网址）、title（标题）和snippet（摘要，不含正文）；hint.total_pages为公开网页总数；hint.undiscovered_pages为尚未发现的网页数量（从未出现在搜索结果且从未访问），为0表示没有更多可发现的网站，不必继续换词搜索。正文和联系人须通过visit_page访问。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "visit_page",
+    "description": "工具名称：visit_page。\n调用方法：{\"tool\":\"visit_page\",\"arguments\":{\"url\":\"https://组织名.bench/页面\"}}。\n参数字段：url（必填）为要访问的网页地址，仅接受web_search返回过的网址。\n用途：访问网页，取得该页正文及页面上联系人的具体联络方式，并把这些人登记为已发现联系人。返回该页公开内容（网址url、标题title、正文text、最后更新时间last_updated——网页可能在任务期间更新，早前读到的信息可能已被修订，对时间敏感的结论应在提交前重访核对），以及contact_details为此页所列联系人的名片列表；若该页挂有文件，documents为文件链接列表（每项含url、title、text说明），文件内容须在启用fetch_document的题目里另行下载。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "send_email",
+    "description": "工具名称：send_email。\n调用方法：{\"tool\":\"send_email\",\"arguments\":{\"recipient\":\"yaolan@bench.example\",\"text\":\"正文\",\"fields\":{\"字段名\":\"取值\"},\"case_id\":\"CASE-0001\"}}，fields与case_id为可选。\n参数字段：recipient（必填）为收件人邮箱地址，须为已发现联系人的邮箱；text（必填）为正文，单段自然语言；fields（可选）为结构化字段对象，填写受理所需的具体取值；case_id（可选）为未完结事项的编号，仅用于该事项的补件或跟进。\n用途：向指定邮箱地址发送电子邮件：咨询、补材料或跟进。仅返回投递回执（case_id、status恒为received、at回执时间）；正式回复在对方工作时间经随机延迟后进入收件箱。投递回执不代表邮箱真实存在（无人使用的邮箱不会有任何回复），也不代表该事项由收件人负责（不负责时会收到转介说明）。对已完结或处理中的事项，含新具体请求的跟进会被重新路由为新事项（按正常受理延迟排队），否则仅收确认回执。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "recipient": {
+          "type": "string",
+          "description": "收件人邮箱地址，例如 yaolan@bench.example"
+        },
+        "text": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "case_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "recipient",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "call",
+    "description": "工具名称：call。\n调用方法：{\"tool\":\"call\",\"arguments\":{\"recipient\":\"support\",\"text\":\"口头说明\",\"fields\":{\"字段名\":\"取值\"}}}，fields为可选。\n参数字段：recipient（必填）为联系人卡片中的id（不是姓名、邮箱或电话号码）；text（必填）为通话中的口头说明；fields（可选）为结构化字段对象。\n用途：拨打已发现联系人的电话，为同步渠道，仅计入消息预算。返回status为四种之一：no_answer（当前不在对方接听时段）、clarification_needed（事项不明确，text为对方的澄清提示）、answered（简短事项通话中即时答复）、processing（较长流程已受理，稍后另行书面回复）。口头答复不构成书面凭证，书面证据只会经邮件送达。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "recipient": {
+          "type": "string",
+          "description": "联系人id，取自联系人卡片的id字段，例如 support"
+        },
+        "text": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "recipient",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "read_inbox",
+    "description": "工具名称：read_inbox。\n调用方法：{\"tool\":\"read_inbox\",\"arguments\":{\"after\":0}}，after可省略，默认为0。\n参数字段：after为上一轮返回的cursor值，跳过此前的消息，避免重复读取。\n用途：读取Agent自己收到的消息和回执。返回字段：messages为自游标后的消息列表；cursor为当前消息总数，作为下次读取的游标；now为当前虚拟时间。每条消息含id（编号）、at（送达时间）、from（发件人邮箱地址）、case_id（所属事项编号）、status（reply正式回复、referral转介说明、needs_information缺件提示、acknowledgement确认回执、failed办理失败之一）、channel（email或phone）、text（正文，单段自然语言）和receipts（随信送达的自然语言回执列表，电话答复恒为空；每条回执含receipt_no回执号（仅作核对记录之用，最终总结中不要求引用）、title标题、issuer签发人、issued_at签发时间、text凭证正文、fields关键要素（如受理号、票号、金额、数量、截止时间））；回执的关键内容须记入最终总结。消息不附带结构化联系人卡片，被转介联系人的邮箱会在正文中以自然语言给出。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "after": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "wait_until",
+    "description": "工具名称：wait_until。\n调用方法：{\"tool\":\"wait_until\",\"arguments\":{\"until\":\"2026-11-05T09:00:00+08:00\"}}。\n参数字段：until（必填）为目标时刻，须为带UTC偏移的ISO 8601格式，不能早于当前时间。\n用途：推进虚拟日历时间，不需要真实睡眠，最多推进到任务截止时刻。若等待期间有对Agent可见的新消息送达，时钟会拦截在该消息的送达时刻并立即返回，不会跳过中途邮件；规划长等待时应考虑到可能被中途来信提前唤醒。返回自等待开始后的新消息、游标和当前时间，格式同read_inbox。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "until": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "wake_on_message": {
+          "type": "boolean",
+          "default": true,
+          "deprecated": true,
+          "description": "已废弃：无论取值如何，中途有新消息送达时等待都会在消息送达时刻被拦截；保留该字段仅为兼容旧调用方。"
+        }
+      },
+      "required": [
+        "until"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "discover_tools",
+    "description": "工具名称：discover_tools。\n调用方法：{\"tool\":\"discover_tools\",\"arguments\":{\"name\":\"工具名\"}}。\n参数字段：name（必填）为工具名称字符串，通常来自对接方回复或网页正文中提到的渠道/系统名称原文。\n用途：部分任务存在初始工具列表之外的隐藏工具，其名称只会出现在对接方回复或网页正文中。用本工具按名称查询：命中时返回该工具的用法说明（usage）并解锁——此后它出现在observe()的tools列表中，可按说明调用；未命中时返回found为false的提示，不消耗消息预算，也不会泄露还有哪些隐藏工具。隐藏工具的调用参数以其usage说明为准。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "工具名称，以往来信件或网页正文中提到的名称原文为准"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "query_case_status",
+    "description": "工具名称：query_case_status（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"query_case_status\",\"arguments\":{\"case_id\":\"CASE-0001\"}}。\n参数字段：case_id（必填）为自己的事项编号。\n用途：查询某一在办或已完结事项的当前状态：state（状态）、subject（办理主题）、due_at（当前阶段预计完成时间）、promised_eta（受理回执承诺的最早办结时间）、waiting_on（内部转交中正在等待的对接人）。不产生新证据，也不影响办理进度。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "case_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "fetch_document",
+    "description": "工具名称：fetch_document（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"fetch_document\",\"arguments\":{\"url\":\"https://组织名.bench/files/文件.pdf\"}}。\n参数字段：url（必填）为文件地址，来自visit_page返回的documents列表。\n用途：下载页面挂出的文件，返回url、title、text（文件内容）与at（时间）。部分官方文件（如价目、公告）随下载签发自然语言书面回执（receipts列表，含receipt_no、issuer、issued_at、text、fields）；也有些文件只是普通说明。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "check_schedule",
+    "description": "工具名称：check_schedule（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"check_schedule\",\"arguments\":{\"contact\":\"联系人id\",\"date\":\"2026-11-10\",\"days\":7}}，date与days可选。\n参数字段：contact（必填）为已发现联系人的id；date（可选，YYYY-MM-DD）为起始日期，默认今天；days（可选，1—31，默认7）为查询天数。\n用途：列出该联系人未来若干天的开门/接听时段，按对方当地时间返回（contact、name、timezone、open_hours列表，每项含date、start、end）。只反映日历安排，不反映队列与办理进度。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "days": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "contact"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "lookup_directory",
+    "description": "工具名称：lookup_directory（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"lookup_directory\",\"arguments\":{\"query\":\"姓名或职务关键词\"}}。\n参数字段：query（必填）为检索词。\n用途：按姓名或职务关键词检索公开通讯录，命中即登记为已发现联系人并返回名片（results列表）；未命中不代表对方不存在，可更换关键词重试。并非所有人物都出现在网页上，通讯录是与网页不同的另一条发现渠道。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "request_callback",
+    "description": "工具名称：request_callback（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"request_callback\",\"arguments\":{\"contact\":\"联系人id\",\"topic\":\"事项说明\"}}，topic可选。\n参数字段：contact（必填）为已发现联系人的id；topic（可选）为事项说明。\n用途：登记回拨请求（status恒为registered）。计入消息预算。不承诺具体回电时间，不产生回复，也不影响任何在办事项的进度。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact": {
+          "type": "string"
+        },
+        "topic": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "leave_note",
+    "description": "工具名称：leave_note（可选工具，仅部分任务启用，以observe返回为准）。\n调用方法：{\"tool\":\"leave_note\",\"arguments\":{\"contact\":\"联系人id\",\"text\":\"留言内容\"}}。\n参数字段：contact（必填）为已发现联系人的id；text（必填）为留言内容。\n用途：给联系人留言（status恒为recorded）。计入消息预算。留言仅被记录，不作为正式来件处理，不会获得单独回复，也不影响任何在办事项的进度。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contact": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "contact",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "submit_answer",
+    "description": "工具名称：submit_answer。\n调用方法：{\"tool\":\"submit_answer\",\"arguments\":{\"answer\":{\"conclusion\":\"suitable\",\"summary\":\"经与主办方往来确认，场地总费用为10500元，其中……（自然语言总结）\"}}}。\n参数字段：answer（必填）为最终答案对象，其中conclusion为结论标签，从公开conclusion_options中选择标签或其公开中文名称；summary为自然语言总结，用自己的话完整陈述本次任务结果。\n用途：最终提交并评分，只允许一次，不提供试错；提交后episode关闭。summary必须涵盖已取得的全部关键信息（编号如受理号/票号/单号、数量、金额、日期、时间、单位），以实际收到的回执和书面答复为依据，不要引用证据编号之类的内部编号；未能确认或尚未办结的事项如实说明，不要编造。",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "answer": {
+          "type": "object",
+          "properties": {
+            "conclusion": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string",
+              "description": "自然语言总结，须包含全部已取得的关键编号、数量、金额、日期与单位"
+            }
+          },
+          "required": [
+            "conclusion",
+            "summary"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "answer"
+      ],
+      "additionalProperties": false
+    }
+  }
+]

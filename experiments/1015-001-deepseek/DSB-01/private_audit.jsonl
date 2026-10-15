@@ -1,0 +1,116 @@
+{"at": "2026-11-06T02:00:00+00:00", "kind": "agent_fetch_document", "url": "https://heanhuiguan.bench/files/venue-device-notice.pdf", "facts": []}
+{"at": "2026-11-06T02:00:00+00:00", "kind": "agent_send", "recipient": "chenzhi@bench.example", "text": "您好，我们计划11月13日18:00-21:00在贵馆举办80人活动，预算12000元。请问该时段是否可预订？总费用多少？取消条款如何？11月13日投影设备是否可用？另请提供负责报价、档期和设备确认的对接人联系方式。", "fields": {}, "channel": "email"}
+{"at": "2026-11-06T02:00:00+00:00", "kind": "case_created", "case_id": "CASE-0001", "actor": "reception", "parent": null, "origin": "agent"}
+{"at": "2026-11-06T02:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "reception", "old": "new", "new": "queued"}
+{"at": "2026-11-06T02:23:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "reception", "step": "main_1", "start_at": "2026-11-06T02:23:00+00:00", "due_at": "2026-11-06T03:07:00+00:00", "tool": "reception.main.1.refer"}
+{"at": "2026-11-06T02:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "reception", "old": "queued", "new": "working"}
+{"at": "2026-11-06T03:07:00+00:00", "kind": "tool_call", "actor": "reception", "case_id": "CASE-0001", "tool": "reception.main.1.refer", "tool_kind": "refer"}
+{"at": "2026-11-06T03:07:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "reception", "old": "working", "new": "queued"}
+{"at": "2026-11-06T03:07:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "reception", "step": "main_2", "start_at": "2026-11-06T03:07:00+00:00", "due_at": "2026-11-06T03:22:00+00:00", "tool": "reception.main.2.reply"}
+{"at": "2026-11-06T03:07:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "reception", "old": "queued", "new": "working"}
+{"at": "2026-11-06T03:22:00+00:00", "kind": "tool_call", "actor": "reception", "case_id": "CASE-0001", "tool": "reception.main.2.reply", "tool_kind": "reply"}
+{"at": "2026-11-06T03:22:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "reception", "old": "working", "new": "replied"}
+{"at": "2026-11-06T03:22:00+00:00", "kind": "delivery", "message_id": "MSG-0001", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2026-11-06T03:22:00+00:00", "kind": "agent_send", "recipient": "yaolan@bench.example", "text": "您好，我们计划11月13日18:00-21:00在贵馆举办80人活动，预算12000元。请问该时段是否可预订？总费用是多少？取消条款如何？", "fields": {}, "channel": "email"}
+{"at": "2026-11-06T03:22:00+00:00", "kind": "agent_send", "recipient": "yaolan@bench.example", "text": "您好，我们计划11月13日18:00-21:00在贵馆举办80人活动，预算12000元。请问该时段是否可预订？总费用是多少？取消条款如何？", "fields": {}, "channel": "email"}
+{"at": "2026-11-06T03:22:00+00:00", "kind": "case_created", "case_id": "CASE-0002", "actor": "sales", "parent": null, "origin": "agent"}
+{"at": "2026-11-06T03:22:00+00:00", "kind": "agent_send", "recipient": "zhaohang@bench.example", "text": "您好，我们计划11月13日18:00-21:00在贵馆举办80人活动，预算12000元。请问该时段是否可预订？11月13日投影设备是否可用？", "fields": {}, "channel": "email"}
+{"at": "2026-11-06T03:22:00+00:00", "kind": "case_created", "case_id": "CASE-0003", "actor": "operations", "parent": null, "origin": "agent"}
+{"at": "2026-11-06T03:57:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "new", "new": "needs_information"}
+{"at": "2026-11-06T03:57:00+00:00", "kind": "delivery", "message_id": "MSG-0002", "case_id": "CASE-0002", "status": "needs_information"}
+{"at": "2026-11-06T03:57:00+00:00", "kind": "agent_send", "recipient": "yaolan@bench.example", "text": "您好，补充活动信息：event_date为2026-11-13，headcount为80。请继续处理报价、档期与取消条款。", "fields": {"event_date": "2026-11-13", "headcount": 80}, "channel": "email"}
+{"at": "2026-11-06T03:57:00+00:00", "kind": "fact_registered", "fact": "price_ref", "issuer": "reception"}
+{"at": "2026-11-06T03:57:00+00:00", "kind": "agent_fetch_document", "url": "https://heanhuiguan.bench/files/venue-price-ref.pdf", "facts": ["price_ref"]}
+{"at": "2026-11-06T03:58:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "new", "new": "needs_information"}
+{"at": "2026-11-06T03:58:00+00:00", "kind": "delivery", "message_id": "MSG-0003", "case_id": "CASE-0003", "status": "needs_information"}
+{"at": "2026-11-06T03:58:00+00:00", "kind": "agent_send", "recipient": "zhaohang@bench.example", "text": "您好，补充活动信息：event_date为2026-11-13，event_time为18:00-21:00。请继续确认该时段档期及投影设备情况。", "fields": {"event_date": "2026-11-13", "event_time": "18:00-21:00"}, "channel": "email"}
+{"at": "2026-11-06T05:39:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "needs_information", "new": "queued"}
+{"at": "2026-11-06T05:39:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "sales", "step": "main_1", "start_at": "2026-11-06T05:39:00+00:00", "due_at": "2026-11-06T06:26:00+00:00", "tool": "sales.main.1.suggest"}
+{"at": "2026-11-06T05:39:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "queued", "new": "working"}
+{"at": "2026-11-06T05:43:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "needs_information", "new": "queued"}
+{"at": "2026-11-06T05:43:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "operations", "step": "main_1", "start_at": "2026-11-06T05:43:00+00:00", "due_at": "2026-11-06T06:56:00+00:00", "tool": "operations.main.1.lookup"}
+{"at": "2026-11-06T05:43:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "queued", "new": "working"}
+{"at": "2026-11-06T06:26:00+00:00", "kind": "tool_call", "actor": "sales", "case_id": "CASE-0002", "tool": "sales.main.1.suggest", "tool_kind": "suggest"}
+{"at": "2026-11-06T06:26:00+00:00", "kind": "delivery", "message_id": "MSG-0004", "case_id": "CASE-0002", "status": "reply"}
+{"at": "2026-11-06T06:26:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "working", "new": "queued"}
+{"at": "2026-11-06T06:26:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "sales", "step": "main_2", "start_at": "2026-11-06T06:26:00+00:00", "due_at": "2026-11-10T05:44:00+00:00", "tool": "sales.main.2.lookup"}
+{"at": "2026-11-06T06:26:00+00:00", "kind": "agent_send", "recipient": "zhoumin@bench.example", "text": "您好，我们计划11月13日18:00-21:00在贵馆举办80人活动。请问11月13日投影设备是否可用？如有检修计划，请提供书面说明。", "fields": {"event_date": "2026-11-13", "event_time": "18:00-21:00", "headcount": 80}, "channel": "email"}
+{"at": "2026-11-06T06:26:00+00:00", "kind": "case_created", "case_id": "CASE-0004", "actor": "technician", "parent": null, "origin": "agent"}
+{"at": "2026-11-06T06:26:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "queued", "new": "working"}
+{"at": "2026-11-06T06:56:00+00:00", "kind": "tool_call", "actor": "operations", "case_id": "CASE-0003", "tool": "operations.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-06T06:56:00+00:00", "kind": "fact_registered", "fact": "slot", "issuer": "operations"}
+{"at": "2026-11-06T06:56:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "working", "new": "queued"}
+{"at": "2026-11-06T06:56:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "operations", "step": "main_2", "start_at": "2026-11-06T06:56:00+00:00", "due_at": "2026-11-06T07:40:00+00:00", "tool": "operations.main.2.acknowledge"}
+{"at": "2026-11-06T06:56:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "queued", "new": "working"}
+{"at": "2026-11-06T07:04:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "technician", "old": "new", "new": "queued"}
+{"at": "2026-11-06T07:04:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "technician", "step": "main_1", "start_at": "2026-11-06T07:04:00+00:00", "due_at": "2026-11-09T03:24:00+00:00", "tool": "technician.main.1.lookup"}
+{"at": "2026-11-06T07:04:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "technician", "old": "queued", "new": "working"}
+{"at": "2026-11-06T07:40:00+00:00", "kind": "tool_call", "actor": "operations", "case_id": "CASE-0003", "tool": "operations.main.2.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2026-11-06T07:40:00+00:00", "kind": "delivery", "message_id": "MSG-0005", "case_id": "CASE-0003", "status": "acknowledgement"}
+{"at": "2026-11-06T07:40:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "working", "new": "queued"}
+{"at": "2026-11-06T07:40:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "operations", "step": "main_3", "start_at": "2026-11-06T07:40:00+00:00", "due_at": "2026-11-09T01:04:00+00:00", "tool": "operations.main.3.delegate"}
+{"at": "2026-11-06T07:40:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "queued", "new": "working"}
+{"at": "2026-11-06T09:00:00+00:00", "kind": "agent_send", "recipient": "chenzhi@bench.example", "text": "您好，我们计划11月13日18:00-21:00在贵馆举办80人活动。请问贵馆对已预约场地的取消条款是怎样的？另外简介页提到的设备保障登记渠道名称是什么？", "fields": {}, "channel": "email"}
+{"at": "2026-11-06T09:00:00+00:00", "kind": "case_created", "case_id": "CASE-0005", "actor": "reception", "parent": null, "origin": "agent"}
+{"at": "2026-11-07T02:00:00+00:00", "kind": "page_updated", "page": "venue-intro", "url": "https://heanhuiguan.bench/intro"}
+{"at": "2026-11-07T02:00:00+00:00", "kind": "agent_send", "recipient": "yaolan@bench.example", "text": "您好，请确认我们计划11月13日18:00-21:00在贵馆举办的80人活动的总费用是多少（是否场租8200元、服务费1400元，合计9600元）？取消条款是怎样的？", "fields": {}, "channel": "email"}
+{"at": "2026-11-07T02:00:00+00:00", "kind": "delivery", "message_id": "MSG-0006", "case_id": "CASE-0002", "status": "acknowledgement"}
+{"at": "2026-11-09T01:04:00+00:00", "kind": "tool_call", "actor": "operations", "case_id": "CASE-0003", "tool": "operations.main.3.delegate", "tool_kind": "delegate"}
+{"at": "2026-11-09T01:04:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "working", "new": "waiting_internal"}
+{"at": "2026-11-09T01:04:00+00:00", "kind": "case_created", "case_id": "CASE-0006", "actor": "technician", "parent": "CASE-0003", "origin": "agent"}
+{"at": "2026-11-09T01:04:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "technician", "old": "new", "new": "queued"}
+{"at": "2026-11-09T01:04:00+00:00", "kind": "scheduled", "case_id": "CASE-0006", "actor": "technician", "step": "main_1", "start_at": "2026-11-09T03:24:00+00:00", "due_at": "2026-11-09T08:29:00+00:00", "tool": "technician.main.1.lookup"}
+{"at": "2026-11-09T01:44:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "reception", "old": "new", "new": "queued"}
+{"at": "2026-11-09T01:44:00+00:00", "kind": "scheduled", "case_id": "CASE-0005", "actor": "reception", "step": "main_1", "start_at": "2026-11-09T01:44:00+00:00", "due_at": "2026-11-09T02:37:00+00:00", "tool": "reception.main.1.refer"}
+{"at": "2026-11-09T01:44:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "reception", "old": "queued", "new": "working"}
+{"at": "2026-11-09T02:37:00+00:00", "kind": "tool_call", "actor": "reception", "case_id": "CASE-0005", "tool": "reception.main.1.refer", "tool_kind": "refer"}
+{"at": "2026-11-09T02:37:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "reception", "old": "working", "new": "queued"}
+{"at": "2026-11-09T02:37:00+00:00", "kind": "scheduled", "case_id": "CASE-0005", "actor": "reception", "step": "main_2", "start_at": "2026-11-09T02:37:00+00:00", "due_at": "2026-11-09T02:52:00+00:00", "tool": "reception.main.2.reply"}
+{"at": "2026-11-09T02:37:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "reception", "old": "queued", "new": "working"}
+{"at": "2026-11-09T02:52:00+00:00", "kind": "tool_call", "actor": "reception", "case_id": "CASE-0005", "tool": "reception.main.2.reply", "tool_kind": "reply"}
+{"at": "2026-11-09T02:52:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "reception", "old": "working", "new": "replied"}
+{"at": "2026-11-09T02:52:00+00:00", "kind": "delivery", "message_id": "MSG-0007", "case_id": "CASE-0005", "status": "reply"}
+{"at": "2026-11-09T02:52:00+00:00", "kind": "agent_discover_tools", "name": "hean_equip_apply", "found": true, "tool_kind": "form"}
+{"at": "2026-11-09T02:52:00+00:00", "kind": "agent_discover_tools", "name": "hean_equip_status", "found": true, "tool_kind": "status"}
+{"at": "2026-11-09T02:52:00+00:00", "kind": "agent_form_submitted", "tool": "hean_equip_apply", "form": "hean_equip_form", "accepted": true}
+{"at": "2026-11-09T03:24:00+00:00", "kind": "tool_call", "actor": "technician", "case_id": "CASE-0004", "tool": "technician.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-09T03:24:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "technician", "old": "working", "new": "queued"}
+{"at": "2026-11-09T03:24:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "technician", "step": "main_2", "start_at": "2026-11-09T03:24:00+00:00", "due_at": "2026-11-09T03:39:00+00:00", "tool": "technician.main.2.deny"}
+{"at": "2026-11-09T03:24:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "technician", "old": "queued", "new": "working"}
+{"at": "2026-11-09T03:24:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "technician", "old": "queued", "new": "working"}
+{"at": "2026-11-09T03:39:00+00:00", "kind": "tool_call", "actor": "technician", "case_id": "CASE-0004", "tool": "technician.main.2.deny", "tool_kind": "deny"}
+{"at": "2026-11-09T03:39:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "technician", "old": "working", "new": "replied"}
+{"at": "2026-11-09T03:39:00+00:00", "kind": "delivery", "message_id": "MSG-0008", "case_id": "CASE-0004", "status": "reply"}
+{"at": "2026-11-09T08:29:00+00:00", "kind": "tool_call", "actor": "technician", "case_id": "CASE-0006", "tool": "technician.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-09T08:29:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "technician", "old": "working", "new": "queued"}
+{"at": "2026-11-09T08:29:00+00:00", "kind": "scheduled", "case_id": "CASE-0006", "actor": "technician", "step": "main_2", "start_at": "2026-11-09T08:29:00+00:00", "due_at": "2026-11-09T08:44:00+00:00", "tool": "technician.main.2.deny"}
+{"at": "2026-11-09T08:29:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "technician", "old": "queued", "new": "working"}
+{"at": "2026-11-09T08:44:00+00:00", "kind": "tool_call", "actor": "technician", "case_id": "CASE-0006", "tool": "technician.main.2.deny", "tool_kind": "deny"}
+{"at": "2026-11-09T08:44:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "technician", "old": "working", "new": "replied"}
+{"at": "2026-11-09T08:44:00+00:00", "kind": "handoff_return", "case_id": "CASE-0006", "parent": "CASE-0003"}
+{"at": "2026-11-09T08:44:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "waiting_internal", "new": "queued"}
+{"at": "2026-11-09T08:44:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "operations", "step": "main_4", "start_at": "2026-11-09T08:44:00+00:00", "due_at": "2026-11-10T01:22:00+00:00", "tool": "operations.main.4.reply"}
+{"at": "2026-11-09T08:44:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "queued", "new": "working"}
+{"at": "2026-11-09T08:52:00+00:00", "kind": "fact_registered", "fact": "projector", "issuer": "technician"}
+{"at": "2026-11-09T08:52:00+00:00", "kind": "page_updated", "page": "venue-entry", "url": "https://heanhuiguan.bench/entry", "cause": "form"}
+{"at": "2026-11-09T08:52:00+00:00", "kind": "form_processed", "form": "hean_equip_form", "accepted": true, "result": "设备保障登记已办结：11月13日投影设备全天检修，无法提供投影设备，也不提供替代设备；办理进度可经会馆进度查询渠道（hean_equip_status）复核。"}
+{"at": "2026-11-10T01:22:00+00:00", "kind": "tool_call", "actor": "operations", "case_id": "CASE-0003", "tool": "operations.main.4.reply", "tool_kind": "reply"}
+{"at": "2026-11-10T01:22:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "operations", "old": "working", "new": "replied"}
+{"at": "2026-11-10T01:22:00+00:00", "kind": "delivery", "message_id": "MSG-0009", "case_id": "CASE-0003", "status": "reply"}
+{"at": "2026-11-10T01:22:00+00:00", "kind": "agent_hidden_status", "tool": "hean_equip_status", "query": "2026-11-13", "keys": []}
+{"at": "2026-11-10T05:44:00+00:00", "kind": "tool_call", "actor": "sales", "case_id": "CASE-0002", "tool": "sales.main.2.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-10T05:44:00+00:00", "kind": "fact_registered", "fact": "price", "issuer": "sales"}
+{"at": "2026-11-10T05:44:00+00:00", "kind": "fact_registered", "fact": "cancel", "issuer": "sales"}
+{"at": "2026-11-10T05:44:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "working", "new": "queued"}
+{"at": "2026-11-10T05:44:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "sales", "step": "main_3", "start_at": "2026-11-10T05:44:00+00:00", "due_at": "2026-11-10T06:32:00+00:00", "tool": "sales.main.3.document"}
+{"at": "2026-11-10T05:44:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "queued", "new": "working"}
+{"at": "2026-11-10T06:32:00+00:00", "kind": "tool_call", "actor": "sales", "case_id": "CASE-0002", "tool": "sales.main.3.document", "tool_kind": "document"}
+{"at": "2026-11-10T06:32:00+00:00", "kind": "fact_registered", "fact": "price", "issuer": "sales"}
+{"at": "2026-11-10T06:32:00+00:00", "kind": "fact_registered", "fact": "cancel", "issuer": "sales"}
+{"at": "2026-11-10T06:32:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "working", "new": "queued"}
+{"at": "2026-11-10T06:32:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "sales", "step": "main_4", "start_at": "2026-11-10T06:32:00+00:00", "due_at": "2026-11-10T06:47:00+00:00", "tool": "sales.main.4.reply"}
+{"at": "2026-11-10T06:32:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "queued", "new": "working"}
+{"at": "2026-11-10T06:47:00+00:00", "kind": "tool_call", "actor": "sales", "case_id": "CASE-0002", "tool": "sales.main.4.reply", "tool_kind": "reply"}
+{"at": "2026-11-10T06:47:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sales", "old": "working", "new": "replied"}
+{"at": "2026-11-10T06:47:00+00:00", "kind": "delivery", "message_id": "MSG-0010", "case_id": "CASE-0002", "status": "reply"}
+{"at": "2026-11-10T06:47:00+00:00", "kind": "agent_hidden_status", "tool": "hean_equip_status", "query": null, "keys": ["equip-1113"]}

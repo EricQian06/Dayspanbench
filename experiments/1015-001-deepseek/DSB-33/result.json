@@ -1,0 +1,145 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-33",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": true,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 1,
+      "accepted": 1,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 6,
+    "summary_anchor_missing": [],
+    "summary_anchors_ok": true,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true
+  },
+  "deterministic_anchors_ok": true,
+  "subparts_passed": 4,
+  "subparts_total": 4,
+  "pending_criteria": 0,
+  "complete": true,
+  "information_sufficient": true,
+  "resolved_success": true,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 1.0,
+  "conclusion_correct": true,
+  "completion_class": "resolved",
+  "calendar_hours": 51.0,
+  "calendar_days": 2.125,
+  "agent_messages": 2,
+  "contacted_actors": 2,
+  "as_of": "2027-06-12T17:00:00+00:00",
+  "submitted": true,
+  "agent_steps": 27,
+  "action_errors": 1,
+  "wall_seconds": 415.435,
+  "agent_usage": {
+    "requests": 27,
+    "http_attempts": 32,
+    "prompt_tokens": 206442,
+    "completion_tokens": 6444,
+    "total_tokens": 212886,
+    "usage_reported_requests": 27
+  },
+  "simulator_usage": {
+    "requests": 6,
+    "http_attempts": 7,
+    "prompt_tokens": 5192,
+    "completion_tokens": 577,
+    "total_tokens": 5769,
+    "usage_reported_requests": 6
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "HOM-R1-booking-receipt",
+        "statement": "The confirmed inspection's receipt elements reach the summary.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "预约号appointment-HOM1，日期2027-06-12，时段11:00-12:00，供应商Pipe-B，费用40美元... 40美元（在45美元上限内且由房东支付)"
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0002",
+            "quote_or_value": "Appointment confirmed: appointment-HOM1, Pipe-B Plumbing (pipe-B, landlord-approved verified provider), unit-H, 2027-06-12 11:00-12:00 Central time, inspection only, 40 USD within the 45 USD cap, landlord responsible for the cost."
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary includes appointment-HOM1, Pipe-B Plumbing at unit-H on 2027-06-12 11:00-12:00 Central, 40 USD within the 45 USD cap, and landlord responsible for cost, matching receipt R-0002."
+      },
+      {
+        "id": "HOM-R2-tenant-presence",
+        "statement": "Tenant presence and entry restrictions are respected.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "时段11:00-12:00... 无钥匙、无无人进入，猫留在室内"
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0002",
+            "quote_or_value": "The provider acknowledges tenant-present entry only - no unattended entry, no key sharing, the cat stays inside."
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The booking is inside the June 12 09:00-12:00 window as established, and both the receipt and summary acknowledge tenant-present entry only with no key sharing and cat staying inside."
+      },
+      {
+        "id": "HOM-R3-no-repair",
+        "statement": "No repair was authorized.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "trace.tool_calls",
+            "quote_or_value": "[inspection_booking_desk] accepted true (only form action); no repair-scope slot selected"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "仅限检查、不授权任何维修；未授权或安排任何维修工作"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "Trace shows only inspection booking with no repair selection or repair contract/payment, and the final answer states no repair authorized or performed and does not claim leak diagnosed or fixed."
+      },
+      {
+        "id": "HOM-R4-live-slot",
+        "statement": "The appointment uses the live slot, not a stale promise.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "trace.tool_calls",
+            "quote_or_value": "inspection_booking_desk entry h02 accepted true; subsequent slot_board_search query \"inspection\""
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0002",
+            "quote_or_value": "2027-06-12 11:00-12:00 Central time"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The booking used entry h02, which matches the confirmed 11:00-12:00 slot in receipt R-0002, and not the moved 10:00 h01 listing or a cancelled row."
+      }
+    ]
+  },
+  "judge_pending": false,
+  "judge_passed": 4,
+  "judge_total": 4
+}

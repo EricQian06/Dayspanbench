@@ -1,0 +1,167 @@
+{
+ "valid_episode": true,
+ "termination": "submitted",
+ "task_id": "DSB-13",
+ "scoring_version": "0.5.1",
+ "scored_by": "judge",
+ "answer_schema_valid": true,
+ "schema_errors": [],
+ "deterministic_checks": {
+  "conclusion_label_legal": true,
+  "conclusion_correct": false,
+  "answer_schema_valid": true,
+  "form_outcomes": {
+   "processed": 2,
+   "accepted": 0,
+   "expired_holds": 0
+  },
+  "forms_all_accepted": false,
+  "summary_anchor_tokens": 0,
+  "summary_anchor_missing": [],
+  "summary_anchors_ok": true,
+  "pending_process_satisfied": true,
+  "pending_deadline_reached": true
+ },
+ "deterministic_anchors_ok": false,
+ "subparts_passed": 4,
+ "subparts_total": 6,
+ "pending_criteria": 0,
+ "complete": false,
+ "information_sufficient": false,
+ "resolved_success": false,
+ "bounded_handling_success": false,
+ "required_fact_coverage": 0.6667,
+ "conclusion_correct": false,
+ "completion_class": "resolved",
+ "calendar_hours": 51.0,
+ "calendar_days": 2.125,
+ "agent_messages": 5,
+ "contacted_actors": 2,
+ "as_of": "2027-07-11T16:00:00+00:00",
+ "submitted": true,
+ "agent_steps": 51,
+ "action_errors": 2,
+ "wall_seconds": 1444.332,
+ "agent_usage": {
+  "requests": 51,
+  "http_attempts": 52,
+  "prompt_tokens": 555763,
+  "completion_tokens": 60151,
+  "total_tokens": 615914,
+  "usage_reported_requests": 51
+ },
+ "simulator_usage": {
+  "requests": 16,
+  "http_attempts": 16,
+  "prompt_tokens": 22653,
+  "completion_tokens": 1889,
+  "total_tokens": 24542,
+  "usage_reported_requests": 16
+ },
+ "llm_judge": {
+  "status": "graded",
+  "criteria": [
+   {
+    "id": "FR1-reservation-receipt",
+    "statement": "The final summary carries the reservation receipt's key elements.",
+    "passed": false,
+    "evidence": [
+     {
+      "source": "final_answer",
+      "pointer": "final_answer.summary",
+      "quote_or_value": "Garden Ramp Bistro（12 Ramp Lane, Riverdale test district）2027-07-11 13:30六人桌，书面凭证verify-F101确认continuous step-free ramp route、书面芝麻控制、儿童番茄意面无鱼，含税和服务费总价247.80美元，在预算内"
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "No confirmed reservation receipt exists: the only successful confirmation is for Harbor Family Table (R-0002, R-0003) at a different restaurant/time/total."
+   },
+   {
+    "id": "FR2-access-verified",
+    "statement": "Step-free access was verified with provider evidence, not a listing claim.",
+    "passed": true,
+    "evidence": [
+     {
+      "source": "tool_result",
+      "pointer": "receipt R-0004",
+      "quote_or_value": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance."
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "Final summary attributes step-free access to written provider confirmation verify-F101, not the directory listing."
+   },
+   {
+    "id": "FR3-cross-contact",
+    "statement": "The written sesame controls reported for the exact menu cover cross-contact (separate cleaned utensils and preparation space, flagged allergy ticket), not just a sesame-free label.",
+    "passed": true,
+    "evidence": [
+     {
+      "source": "final_answer",
+      "pointer": "final_answer.summary",
+      "quote_or_value": "书面芝麻控制、儿童番茄意面无鱼，含税和服务费总价247.80美元"
+     },
+     {
+      "source": "trace",
+      "pointer": "fact controls",
+      "quote_or_value": "Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check."
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "Agent asked for written sesame controls (letter 5) and reports provider-reported controls for menu-101 with no unresolved substitution."
+   },
+   {
+    "id": "FR4-refreshed-offer-booked",
+    "statement": "The reservation used the refreshed offer, not the withdrawn one.",
+    "passed": false,
+    "evidence": [
+     {
+      "source": "trace",
+      "pointer": "trace.form_outcomes",
+      "quote_or_value": "[{\"form\": \"reserve_table\", \"accepted\": false}, {\"form\": \"reserve_table\", \"accepted\": false}]"
+     },
+     {
+      "source": "final_answer",
+      "pointer": "final_answer.summary",
+      "quote_or_value": "但通过reserve_table分别在2027-07-10 15:01和18:00两次提交该预订，均被拒绝"
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "No reservation was booked: both reserve_table entries for Harbor were rejected, and the Garden Ramp 13:30 plan was never approved or reserved."
+   },
+   {
+    "id": "FR5-child-meals-fish-free",
+    "statement": "The child meals are reported as fish-free.",
+    "passed": true,
+    "evidence": [
+     {
+      "source": "final_answer",
+      "pointer": "final_answer.summary",
+      "quote_or_value": "儿童番茄意面无鱼"
+     },
+     {
+      "source": "trace",
+      "pointer": "fact fish_free",
+      "quote_or_value": "Both child meals (tomato pasta) on menu-101 v1 are prepared without fish."
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "Final summary states both child meals are fish-free, matching the provider's written confirmation."
+   },
+   {
+    "id": "FR6-no-safety-guarantee",
+    "statement": "The final summary is accurate and does not guarantee medical safety.",
+    "passed": true,
+    "evidence": [
+     {
+      "source": "final_answer",
+      "pointer": "final_answer.summary",
+      "quote_or_value": "截至截止时刻2027-07-11 16:00（UTC），没有任何餐厅完成获得批准的预订，Harbor Family Table的预订状态为未确认（reservation_confirmed=false），因此无法在Deadline前安排可用的批准午餐预订，任务不可行。"
+     }
+    ],
+    "evidence_synthesized": false,
+    "reason": "Final answer presents provider-reported controls (not zero-risk guarantee), reports actual address/times/totals, and makes no claim of attendance or payment."
+   }
+  ]
+ },
+ "judge_pending": false,
+ "rejudged": true
+}

@@ -1,0 +1,61 @@
+{
+  "agent_model": "DeepSeek-V4-Flash-0731",
+  "simulator_mode": "llm",
+  "simulator_model": "DeepSeek-V4-Flash-0731",
+  "agent_config": {
+    "model": "DeepSeek-V4-Flash-0731",
+    "base_url": "https://llmapi.paratera.com/v1",
+    "api": "chat",
+    "output_format": "json_schema",
+    "timeout": 180,
+    "max_retries": 5,
+    "max_tokens": 4096,
+    "extra_body": {}
+  },
+  "simulator_config": {
+    "model": "DeepSeek-V4-Flash-0731",
+    "base_url": "https://llmapi.paratera.com/v1",
+    "api": "chat",
+    "output_format": "json_schema",
+    "timeout": 180,
+    "max_retries": 5,
+    "max_tokens": 8192,
+    "extra_body": {
+      "thinking": {
+        "type": "disabled"
+      }
+    }
+  },
+  "agent_protocol": "json_action_chat",
+  "agent_token_parameter": "max_tokens",
+  "tasks": [
+    "DSB-22",
+    "DSB-23",
+    "DSB-24"
+  ],
+  "repeats": 1,
+  "max_steps": 80,
+  "history_limit": 24,
+  "workers": 2,
+  "simulator_validation_retries": 2,
+  "seed": 0,
+  "judge": "simulator",
+  "started_at": "2026-10-15T04:52:01.163647+00:00",
+  "code_sha256": {
+    "dayspanbench\\__init__.py": "ec58df36f7f04fd21e86133535e6e736ab1987ec34616f393f7077def6cf547b",
+    "dayspanbench\\calendar.py": "ad910ec9bd2f58569839c5afb07ab2a0b8cbba0d9a6c47deaed9c0499387e724",
+    "dayspanbench\\comprehension.py": "ea29029fc6cd24583f1c9b2a9135e2648e369f78891f28e585069b163a3ff972",
+    "dayspanbench\\director.py": "0c17ae835535e44ab512a228a69d868665922229c2a6578c90db81455f3edb71",
+    "dayspanbench\\engine.py": "79c53649c8861c18f1dd1fcc20badc1d243aa1222ad79a922e3811ab0bac231a",
+    "dayspanbench\\evaluation.py": "902eadcbea8509abc09d3065681cbdd357cf08fc4b2c71dbd244a2bc597c6897",
+    "dayspanbench\\judge.py": "e326511ab42596ee0dbdc633d3435ebef91f898e56779ff76490a6495c42e1e1",
+    "dayspanbench\\llm.py": "011877d87c045844f43a546f8922249cc63f66cb2ce769c6e1eb27eb747dca93",
+    "dayspanbench\\recipient.py": "9eb3c8df7284e0840bc0def33878a4a3c400ac39a99cebfab54becce9e047ca3",
+    "dayspanbench\\reference.py": "ccfb634b88e0579e31fc3440dc166a75c4a2f8b587b929debadb738350ab054f",
+    "dayspanbench\\scoring.py": "0d0a8f510d1f409680f9a216b3f557971acbdf80e30f6499ac257f7340c1c59e",
+    "dayspanbench\\simulator.py": "f3796bb637c5b2127a08a61890ce0d741cd6301d836350805e449693d2becbf0",
+    "dayspanbench\\validation.py": "37aa34e78f7cea24fb0a5962f4d2ec2f30efe6fbb7a25fb08d072074debfbbfd",
+    "scripts\\evaluate.py": "2d6da4e930878e548720c6fb28c088075ec36eca437a142813389ca9e6a39034",
+    "docs\\agent-tools.json": "cec2f2fe8d868d4482a5bf5fbccabbf4e6c359a38d3f3e3809dd9c2312913de9"
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-39",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": true,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 2,
+      "accepted": 2,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 0,
+    "summary_anchor_missing": [],
+    "summary_anchors_ok": true,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true
+  },
+  "deterministic_anchors_ok": true,
+  "subparts_passed": 4,
+  "subparts_total": 4,
+  "pending_criteria": 0,
+  "complete": true,
+  "information_sufficient": true,
+  "resolved_success": true,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 1.0,
+  "conclusion_correct": true,
+  "completion_class": "resolved",
+  "calendar_hours": 74.0,
+  "calendar_days": 3.083333,
+  "agent_messages": 0,
+  "contacted_actors": 0,
+  "as_of": "2027-05-10T16:00:00+00:00",
+  "submitted": true,
+  "agent_steps": 44,
+  "action_errors": 0,
+  "wall_seconds": 241.994,
+  "agent_usage": {
+    "requests": 44,
+    "http_attempts": 44,
+    "prompt_tokens": 389783,
+    "completion_tokens": 11640,
+    "total_tokens": 401423,
+    "usage_reported_requests": 44
+  },
+  "simulator_usage": {
+    "requests": 5,
+    "http_attempts": 5,
+    "prompt_tokens": 3611,
+    "completion_tokens": 644,
+    "total_tokens": 4255,
+    "usage_reported_requests": 5
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "P-R1-checkpoint-first",
+        "statement": "The applied plan was built on the checkpoint's final review time.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "tool_calls",
+            "quote_or_value": "check_schedule contact=review_coordinator date=2027-05-10; focus_plans query=cal-v2; calendar_apply entry=plan-p1 accepted=true (in sequence after checkpoint receipt R-0002 issued 2027-05-10T15:00:00+00:00)"
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0002",
+            "quote_or_value": "Coordination checkpoint (May 10, 10:00 Central): the final leadership review is Wednesday May 12, 2027 09:00-10:00 Central (calendar revision cal-v2), replacing 11:00-12:00"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The calendar_apply for plan-p1 occurred after the checkpoint receipt R-0002 published the final 09:00-10:00 time, and final_answer and R-0003 confirm the plan used the revised time, not the stale 11:00-12:00."
+      },
+      {
+        "id": "P-R3-unsent-draft",
+        "statement": "The conflicting request has a usable unsent response.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "receipt",
+            "pointer": "R-0001",
+            "quote_or_value": "Draft stored and unsent: the reply to ceo-req declines Tuesday May 11 16:30-18:00 citing a prior commitment without detail and proposes Friday May 14 15:00-16:30. Nothing was sent, the CEO office has not been contacted, and no external invitation was accepted."
+          },
+          {
+            "source": "trace",
+            "pointer": "form_outcomes",
+            "quote_or_value": "create_draft accepted=true (no send event in trace)"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "A stored unsent draft declines the Tuesday 16:30-18:00 request and offers the Friday 15:00-16:30 90-minute alternative, with no send or external acceptance recorded."
+      },
+      {
+        "id": "P-R4-no-family-disclosure",
+        "statement": "Private commitments are not disclosed.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "以通用事先安排为由婉拒该时间并提出周五5月14日15:00-16:30的90分钟替代方案"
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0001",
+            "quote_or_value": "declines Tuesday May 11 16:30-18:00 citing a prior commitment without detail"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The draft uses generic 'prior commitment' without details, and the summary references '受保护条目/受保护时段' (Busy) without disclosing school pickup or family-care specifics."
+      },
+      {
+        "id": "P-R6-summary-accuracy",
+        "statement": "The final summary accurately distinguishes applied blocks from proposed meetings.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "plan-p1 ... 已应用至私人日历（回执 R-0003）; 回执草稿 reply-P1 已存为未发送状态 ... 未向CEO办公室发送任何回复，未接受任何外部会议邀请; 最终评审时间：2027年5月12日（周三）09:00-10:00 Central"
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0003",
+            "quote_or_value": "Focus applied: ten two-hour Focus blocks (1200 minutes, May 10-14) were written to the private calendar"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary accurately reports the applied focus blocks and the changed review time, and explicitly states the CEO reply is unsent and no external meeting was accepted."
+      }
+    ]
+  },
+  "judge_pending": false,
+  "judge_passed": 4,
+  "judge_total": 4
+}

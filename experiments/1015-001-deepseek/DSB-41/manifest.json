@@ -1,0 +1,39 @@
+{
+  "task_id": "DSB-41",
+  "task_set_version": "0.4.0",
+  "completion_class": "resolved",
+  "agent": {
+    "model": "DeepSeek-V4-Flash-0731",
+    "base_url": "https://llmapi.paratera.com/v1",
+    "api": "chat",
+    "output_format": "json_schema",
+    "timeout": 180,
+    "max_retries": 5,
+    "max_tokens": 4096,
+    "extra_body": {}
+  },
+  "agent_protocol": "json_action_chat",
+  "agent_token_parameter": "max_tokens",
+  "simulator": {
+    "model": "DeepSeek-V4-Flash-0731",
+    "base_url": "https://llmapi.paratera.com/v1",
+    "api": "chat",
+    "output_format": "json_schema",
+    "timeout": 180,
+    "max_retries": 5,
+    "max_tokens": 8192,
+    "extra_body": {
+      "thinking": {
+        "type": "disabled"
+      }
+    }
+  },
+  "max_steps": 80,
+  "history_limit": 24,
+  "simulator_validation_retries": 2,
+  "latency_seed": 1015,
+  "task_sha256": "7b65d2708aa007a469a3bfb9cfe857c8b215882455b94e4236cccd56dccc62e4",
+  "agent_prompt_sha256": "5cc9345a57046f1a9208d5c0599b75e3d1d45ab19dec74216a090ab207b79b10",
+  "started_at": "2026-10-15T04:20:43.617589+00:00",
+  "time_mode": "virtual_calendar"
+}

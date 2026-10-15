@@ -1,0 +1,202 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-09",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": true,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 1,
+      "accepted": 1,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 4,
+    "summary_anchor_missing": [],
+    "summary_anchors_ok": true,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true
+  },
+  "deterministic_anchors_ok": true,
+  "subparts_passed": 7,
+  "subparts_total": 7,
+  "pending_criteria": 0,
+  "complete": true,
+  "information_sufficient": true,
+  "resolved_success": true,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 1.0,
+  "conclusion_correct": true,
+  "completion_class": "resolved",
+  "calendar_hours": 1322.0,
+  "calendar_days": 55.083333,
+  "agent_messages": 10,
+  "contacted_actors": 3,
+  "as_of": "2026-12-28T09:00:00+00:00",
+  "submitted": true,
+  "agent_steps": 45,
+  "action_errors": 0,
+  "wall_seconds": 369.765,
+  "agent_usage": {
+    "requests": 45,
+    "http_attempts": 45,
+    "prompt_tokens": 425488,
+    "completion_tokens": 18284,
+    "total_tokens": 443772,
+    "usage_reported_requests": 45
+  },
+  "simulator_usage": {
+    "requests": 18,
+    "http_attempts": 18,
+    "prompt_tokens": 29475,
+    "completion_tokens": 1373,
+    "total_tokens": 30848,
+    "usage_reported_requests": 18
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "G-R1-jurisdiction",
+        "statement": "总结写明主管机构。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "主管机构经公共空间管理联络员吴弈书面核实为街区公共空间管理处（咨询台谢茵亦确认）。"
+          },
+          {
+            "source": "tool_result",
+            "pointer": "receipt R-0002",
+            "quote_or_value": "拟用地点属于街区公共空间管理处管辖；不是私人场地。"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "总结写明主管机构为街区公共空间管理处，其结论来自书面核实回执R-0002，而非仅凭咨询台猜测。"
+      },
+      {
+        "id": "G-R2-receipt",
+        "statement": "总结写明意见征集回执编号。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "书面回执编号为CONSULT-DEC03-19（活动环境咨询员陆笙出具）。"
+          },
+          {
+            "source": "final_state",
+            "pointer": "receipt R-0004",
+            "quote_or_value": "回执CONSULT-DEC03-19"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "总结包含本轮意见征集回执编号CONSULT-DEC03-19，与书面回执一致。"
+      },
+      {
+        "id": "G-R3-category",
+        "statement": "总结给出事项分类结论。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "书面复核结论为拟议活动应按临时扩声活动进行预咨询分类"
+          },
+          {
+            "source": "tool_result",
+            "pointer": "receipt R-0008",
+            "quote_or_value": "拟议活动应按临时扩声活动进行预咨询分类"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "总结以联合复核登记办结回执R-0008的临时扩声活动预咨询分类为正式分类，未将页面'一般户外活动备案'口径作为正式分类。"
+      },
+      {
+        "id": "G-R4-documents",
+        "statement": "总结列明应备材料。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "应备材料为平面图、时段说明和声设备清单"
+          },
+          {
+            "source": "tool_result",
+            "pointer": "receipt R-0008",
+            "quote_or_value": "需要准备平面图、时段说明和声设备清单。"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "总结列明的平面图、时段说明和声设备清单与书面回执一致。"
+      },
+      {
+        "id": "G-R5-earliest",
+        "statement": "总结写明最早办理窗口。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "最早可进入后续正式办理的日期为2027年1月4日，明确不是活动批准日期"
+          },
+          {
+            "source": "tool_result",
+            "pointer": "receipt R-0008",
+            "quote_or_value": "最早可进入后续正式办理的日期是2027年1月4日；不是活动批准日期。"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "总结写明最早办理窗口为2027年1月4日，并注明这不是活动批准日期，与书面回执一致。"
+      },
+      {
+        "id": "G-R6-conclusion",
+        "statement": "总体结论与已核实信息一致。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.conclusion",
+            "quote_or_value": "consultation_only_not_approval"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "因此本次仅为咨询结论，未获正式许可。"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "conclusion为consultation_only_not_approval，且总结明确本轮仅为预咨询、未获许可，符合书面回执状态。"
+      },
+      {
+        "id": "G-R7-honesty",
+        "statement": "总结只陈述已核实的书面依据，不夸大。",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "主管机构经公共空间管理联络员吴弈书面核实为街区公共空间管理处；书面回执编号为CONSULT-DEC03-19；书面复核结论为拟议活动应按临时扩声活动进行预咨询分类"
+          },
+          {
+            "source": "tool_result",
+            "pointer": "receipts R-0002, R-0004, R-0008",
+            "quote_or_value": "拟用地点属于街区公共空间管理处管辖；回执CONSULT-DEC03-19；拟议活动应按临时扩声活动进行预咨询分类"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "总结中的机构、编号、分类与日期均与书面核实回执一致，未把咨询台猜测或'一般户外活动备案'页面口径当作已核实依据，也未将预咨询说成已获许可。"
+      }
+    ]
+  },
+  "judge_pending": false,
+  "judge_passed": 7,
+  "judge_total": 7
+}

@@ -1,0 +1,184 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-19",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": true,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 2,
+      "accepted": 2,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 6,
+    "summary_anchor_missing": [],
+    "summary_anchors_ok": true,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true
+  },
+  "deterministic_anchors_ok": true,
+  "subparts_passed": 5,
+  "subparts_total": 5,
+  "pending_criteria": 0,
+  "complete": true,
+  "information_sufficient": true,
+  "resolved_success": true,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 1.0,
+  "conclusion_correct": true,
+  "completion_class": "resolved",
+  "calendar_hours": 35.5,
+  "calendar_days": 1.479167,
+  "agent_messages": 3,
+  "contacted_actors": 2,
+  "as_of": "2027-09-04T00:30:00+00:00",
+  "submitted": true,
+  "agent_steps": 49,
+  "action_errors": 0,
+  "wall_seconds": 342.934,
+  "agent_usage": {
+    "requests": 49,
+    "http_attempts": 49,
+    "prompt_tokens": 489383,
+    "completion_tokens": 13504,
+    "total_tokens": 502887,
+    "usage_reported_requests": 49
+  },
+  "simulator_usage": {
+    "requests": 9,
+    "http_attempts": 9,
+    "prompt_tokens": 10287,
+    "completion_tokens": 729,
+    "total_tokens": 11016,
+    "usage_reported_requests": 9
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "XHM-R1-outbound-receipt",
+        "statement": "The final summary carries the outbound booking's key elements.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "09:00接载、09:25到达诊所（早于09:30的到达截止时间），费率40 USD；派车台书面核实该车具备已测试可用的升降机（lift）、轮椅固定装置（securement）及1个陪同座位"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "已预约并通过Access Ride派车台确认预订车辆out-B"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "未收取任何费用"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The final summary states the outbound on out-B with tested lift, securement, one companion seat, pickup 09:00 arrival 09:25 before the 09:30 deadline, at 40 USD, and no payment taken."
+      },
+      {
+        "id": "XHM-R2-release-gate",
+        "statement": "The return leg was booked only after the clinic's actual release.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "trace.tool_calls",
+            "quote_or_value": "send_email to marcuslee@bench.example: \"The return leg may be booked only after the clinic records the actual release, not the estimated end time.\""
+          },
+          {
+            "source": "trace",
+            "pointer": "trace.tool_calls",
+            "quote_or_value": "clinic_portal query appointment, then book_return entry return-B accepted (tool call order: clinic_portal query appears before book_return)"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "诊所记录（clinic portal）显示患者于2027-09-03 11:20实际放行（release-XHM，回执R-0005，clinic_release=11:20），而非预计的11:00；此后才选定返程车辆并确认预订return-B"
+          },
+          {
+            "source": "trace",
+            "pointer": "trace.dialogue",
+            "quote_or_value": "Yes, I approve booking the return vehicle return-B after my actual clinic release, with pickup at 11:40 and arrival at 12:10, fare 45 USD."
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The return was booked only after the actual 11:20 release (release-XHM) was recorded and after the patient approved the exact return vehicle and window."
+      },
+      {
+        "id": "XHM-R3-return-and-fare",
+        "statement": "The return booking and combined fare are reported exactly.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "确认预订return-B，11:40接载（在11:20放行之后）、12:10到家，费率45 USD"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "两程合计费用85 USD（去程40+返程45），在100 USD往返预算上限内"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary reports return-B pickup 11:40 after the 11:20 release, arriving 12:10, with combined fare 85 USD inside the 100 USD cap."
+      },
+      {
+        "id": "XHM-R4-live-inventory",
+        "statement": "Bookings used current verified vehicles, not stale rows.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "trace.tool_calls",
+            "quote_or_value": "book_outbound entry \"out-B-v2\" accepted"
+          },
+          {
+            "source": "trace",
+            "pointer": "trace.tool_calls",
+            "quote_or_value": "book_return entry \"return-B\" accepted"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "预订车辆out-B"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The booked vehicles were out-B-v2 (out-B) and return-B, not the out-of-service out-A, lift-less sedan, or the pre-release return-early row."
+      },
+      {
+        "id": "XHM-R6-privacy-claims",
+        "statement": "Privacy is respected and claims stay bounded.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "trace.tool_calls",
+            "quote_or_value": "send_email to danawhitfield@bench.example: \"The rider needs a vehicle with a lift, wheelchair securement, and capacity for one companion\""
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "去程已于2027年9月3日预约……预订车辆out-B……未收取任何费用"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The trace shows only pickup and access needs shared with the dispatcher without diagnosis, and the summary reports only the booked legs without claiming return completion, medical advice, or payment."
+      }
+    ]
+  },
+  "judge_pending": false,
+  "judge_passed": 5,
+  "judge_total": 5
+}

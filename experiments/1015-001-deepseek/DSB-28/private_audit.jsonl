@@ -1,0 +1,56 @@
+{"at": "2027-08-23T14:00:00+00:00", "kind": "agent_search_clue", "query": "analytics certificate program", "services": ["course_catalog"]}
+{"at": "2027-08-23T14:00:00+00:00", "kind": "agent_discover_tools", "name": "course_catalog", "found": true, "tool_kind": "catalog"}
+{"at": "2027-08-23T14:00:00+00:00", "kind": "agent_discover_tools", "name": "learner_dialogue", "found": true, "tool_kind": "dialogue"}
+{"at": "2027-08-23T14:00:00+00:00", "kind": "agent_discover_tools", "name": "reserve_first_stage", "found": true, "tool_kind": "select"}
+{"at": "2027-08-23T14:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "course_catalog", "query": "analytics courses", "entries": ["c01-v1", "c03", "cert-E"]}
+{"at": "2027-08-23T14:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "course_catalog", "query": "", "entries": ["c01-v1", "c02", "c03", "c04", "c05", "c06", "cert-E"]}
+{"at": "2027-08-23T14:00:00+00:00", "kind": "agent_dialogue", "tool": "learner_dialogue", "question": "What is your weekly study schedule availability from September 6, 2027 onward, including whether Saturdays are available, and are you able to commit up to eight study hours per week?", "matched": true, "answer": "From September 6, 2027 onward, I can study only Monday-Friday after 20:00 and Sunday 09:00-12:00 Chicago time, never Saturdays. I can commit up to eight study hours per week. Please reserve Monday/Wednesday 20:00-22:00 and Sunday 09:00-11:00 if feasible."}
+{"at": "2027-08-23T14:00:00+00:00", "kind": "agent_send", "recipient": "rosakim@bench.example", "text": "Dear Ms. Kim, I am coordinating an analytics certificate plan for a learner. Could you please provide written verification of the cert-E pathway: the course order and prerequisites (c02 -> c03 -> c04), whether the learner's prerequisites are satisfied, the total cost including the assessment fee, and any schedule/delivery constraints? Learner: Sofia Martinez, start date 2027-09-06, available Monday-Friday after 20:00 and Sunday 09:00-12:00 Chicago time, not Saturdays, up to 8 hours weekly, budget 2500 USD. Thank you.", "fields": {}, "channel": "email"}
+{"at": "2027-08-23T14:00:00+00:00", "kind": "case_created", "case_id": "CASE-0001", "actor": "pathway_adviser", "parent": null, "origin": "agent"}
+{"at": "2027-08-23T14:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "pathway_adviser", "old": "new", "new": "queued"}
+{"at": "2027-08-23T14:23:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "pathway_adviser", "step": "main_1", "start_at": "2027-08-23T14:23:00+00:00", "due_at": "2027-08-23T15:07:00+00:00", "tool": "pathway_adviser.main.1.acknowledge"}
+{"at": "2027-08-23T14:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "pathway_adviser", "old": "queued", "new": "working"}
+{"at": "2027-08-23T15:07:00+00:00", "kind": "tool_call", "actor": "pathway_adviser", "case_id": "CASE-0001", "tool": "pathway_adviser.main.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2027-08-23T15:07:00+00:00", "kind": "delivery", "message_id": "MSG-0001", "case_id": "CASE-0001", "status": "acknowledgement"}
+{"at": "2027-08-23T15:07:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "pathway_adviser", "old": "working", "new": "queued"}
+{"at": "2027-08-23T15:07:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "pathway_adviser", "step": "main_2", "start_at": "2027-08-23T15:07:00+00:00", "due_at": "2027-08-23T15:22:00+00:00", "tool": "pathway_adviser.main.2.reply"}
+{"at": "2027-08-23T15:07:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "pathway_adviser", "old": "queued", "new": "working"}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "tool_call", "actor": "pathway_adviser", "case_id": "CASE-0001", "tool": "pathway_adviser.main.2.reply", "tool_kind": "reply"}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "pathway_adviser", "old": "working", "new": "replied"}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "delivery", "message_id": "MSG-0002", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "agent_discover_tools", "name": "program_board", "found": false}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "agent_dialogue", "tool": "learner_dialogue", "question": "What is your relevant background (e.g., programming experience) and do you give permission for me, as coordinator, to request written pathway verification from the program adviser and to propose a plan for your approval?", "matched": true, "answer": "I am a confident spreadsheet user with no Python credential. Do not claim a prerequisite is already completed. And yes, I give you permission, as coordinator, to request written pathway verification from the program adviser and to propose a plan for my approval."}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "agent_discover_tools", "name": "adviser_verification", "found": false}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "agent_discover_tools", "name": "program_board_service", "found": false}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "agent_discover_tools", "name": "program_board", "found": false}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "agent_discover_tools", "name": "board", "found": false}
+{"at": "2027-08-23T15:22:00+00:00", "kind": "agent_discover_tools", "name": "program board service", "found": false}
+{"at": "2027-08-24T14:00:00+00:00", "kind": "catalog_updated", "tool": "course_catalog", "removed": [], "added": ["pathway-verification"]}
+{"at": "2027-08-25T08:00:00+00:00", "kind": "agent_send", "recipient": "rosakim@bench.example", "text": "补充学习者背景信息：Sofia Martinez是熟练的电子表格使用者，但没有任何Python凭证；请不要认定该前提条件已完成。请据此出具cert-E路径的书面核验（前提条件、顺序c02->c03->c04、总费用含100美元评估费），并确认她的时间限制（周一至周五20:00后、周日09:00-12:00芝加哥时间，周六不行，每周最多8小时）是否满足。", "fields": {}, "channel": "email"}
+{"at": "2027-08-25T08:00:00+00:00", "kind": "case_created", "case_id": "CASE-0002", "actor": "pathway_adviser", "parent": null, "origin": "agent"}
+{"at": "2027-08-25T08:00:00+00:00", "kind": "followup_reopened", "case_id": "CASE-0002", "original_case": "CASE-0001"}
+{"at": "2027-08-25T08:00:00+00:00", "kind": "agent_check_schedule", "contact": "pathway_adviser", "date": null, "days": 7}
+{"at": "2027-08-25T13:35:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "pathway_adviser", "old": "new", "new": "queued"}
+{"at": "2027-08-25T13:35:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "pathway_adviser", "step": "main_1", "start_at": "2027-08-25T13:35:00+00:00", "due_at": "2027-08-25T14:26:00+00:00", "tool": "pathway_adviser.main.1.acknowledge"}
+{"at": "2027-08-25T13:35:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "pathway_adviser", "old": "queued", "new": "working"}
+{"at": "2027-08-25T14:00:00+00:00", "kind": "page_updated", "page": "pathway-intro", "url": "https://analyticspath.bench/intro"}
+{"at": "2027-08-25T14:00:00+00:00", "kind": "catalog_updated", "tool": "course_catalog", "removed": ["c01-v1"], "added": ["c01-v2"]}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "tool_call", "actor": "pathway_adviser", "case_id": "CASE-0002", "tool": "pathway_adviser.main.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "delivery", "message_id": "MSG-0003", "case_id": "CASE-0002", "status": "acknowledgement"}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "pathway_adviser", "old": "working", "new": "queued"}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "pathway_adviser", "step": "main_2", "start_at": "2027-08-25T14:26:00+00:00", "due_at": "2027-08-25T14:41:00+00:00", "tool": "pathway_adviser.main.2.reply"}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "agent_discover_tools", "name": "program_board_service", "found": false}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "fact_registered", "fact": "pathway_verified", "issuer": "pathway_adviser"}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "agent_hidden_catalog", "tool": "course_catalog", "query": "c02", "entries": ["c02", "c03", "cert-E", "pathway-verification"]}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "agent_dialogue", "tool": "learner_dialogue", "question": "The adviser's written verification: cert-E pathway is c02 Python Foundation (4 weeks, 6 hrs/wk, $400) -> c03 Applied Analytics (8 weeks, 6 hrs/wk, $1000) -> c04 Certificate Capstone (4 weeks, 6 hrs/wk, $400), plus $100 assessment fee, total $1900, 16 weeks at 6 hours weekly, no exemption for spreadsheet skills, later-stage seats conditional. c02 is asynchronous, fits your Sunday/MWF slots. May I reserve the first stage c02 for you?", "matched": true, "answer": "Yes, that matches what I approved. Please reserve the first stage, c02 Python Foundation, for me under the verified terms you listed. For scheduling, keep in mind I can study only Monday-Friday after 20:00 and Sunday 09:00-12:00 Chicago time, never Saturdays. Please reserve Monday/Wednesday 20:00-22:00 and Sunday 09:00-11:00 if feasible."}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "agent_selection_submitted", "tool": "reserve_first_stage", "entry": "c02", "accepted": true}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "agent_selection_status", "tool": "reserve_first_stage", "query": "c02"}
+{"at": "2027-08-25T14:26:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "pathway_adviser", "old": "queued", "new": "working"}
+{"at": "2027-08-25T14:41:00+00:00", "kind": "tool_call", "actor": "pathway_adviser", "case_id": "CASE-0002", "tool": "pathway_adviser.main.2.reply", "tool_kind": "reply"}
+{"at": "2027-08-25T14:41:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "pathway_adviser", "old": "working", "new": "replied"}
+{"at": "2027-08-25T14:41:00+00:00", "kind": "delivery", "message_id": "MSG-0004", "case_id": "CASE-0002", "status": "reply"}
+{"at": "2027-08-25T14:41:00+00:00", "kind": "agent_selection_status", "tool": "reserve_first_stage", "query": "c02"}
+{"at": "2027-08-25T15:26:00+00:00", "kind": "fact_registered", "fact": "first_stage_reserved", "issuer": "pathway_adviser"}
+{"at": "2027-08-25T15:26:00+00:00", "kind": "page_updated", "page": "pathway-entry", "url": "https://analyticspath.bench/entry", "cause": "selection"}
+{"at": "2027-08-25T15:26:00+00:00", "kind": "selection_processed", "tool": "reserve_first_stage", "accepted": true, "result": "Reservation confirmed: one c02 Python Foundation seat (four weeks, six hours weekly, 400 USD, asynchronous) is reserved for the learner. No payment was taken; c03 and c04 remain conditional future stages with no guaranteed seats, and no certificate has been awarded."}
+{"at": "2027-08-25T18:00:00+00:00", "kind": "agent_selection_status", "tool": "reserve_first_stage", "query": "c02"}

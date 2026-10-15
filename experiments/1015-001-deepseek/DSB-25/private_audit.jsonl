@@ -1,0 +1,74 @@
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_search_clue", "query": "refrigerator 16 cu ft 32.5 in width installment", "services": ["appliance_search", "finance_read"]}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_discover_tools", "name": "appliance_search", "found": true, "tool_kind": "catalog"}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_discover_tools", "name": "finance_read", "found": true, "tool_kind": "catalog"}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_discover_tools", "name": "household_dialogue", "found": true, "tool_kind": "dialogue"}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "appliance_search", "query": "refrigerator", "entries": ["sf-A", "sf-B", "sf-C", "sf-D", "sf-E", "sf-F"]}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "finance_read", "query": "terms", "entries": ["terms-A-v1", "terms-B"]}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_discover_tools", "name": "order_create", "found": true, "tool_kind": "select"}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "finance_read", "query": "terms-A", "entries": ["terms-A-v1", "terms-B", "cash-profile"]}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_dialogue", "tool": "household_dialogue", "question": "What are the space dimensions and constraints of the refrigerator installation location?", "matched": true, "answer": "The installation opening is 33 in wide, and the ground-floor doorway is also 33 in. Also, the seller must verify unpack-at-door handling and old-unit recycling in writing."}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_dialogue", "tool": "household_dialogue", "question": "What is your cash schedule for the three payment dates 2027-06-10, 2027-07-10 and 2027-08-10?", "matched": true, "answer": "For each of the next three installment dates I have 600 USD available cash and 200 USD protected obligations - keep those untouched, so each installment must stay within 400 USD. The existing card has 1500 USD available credit."}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "finance_read", "query": "sf-A", "entries": ["terms-A-v1", "terms-B", "cash-profile"]}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_dialogue", "tool": "household_dialogue", "question": "Please approve ordering SKU sf-B at 1140 USD total on the existing card: three zero-interest, no-fee installments of 380 USD each on 2027-06-10, 2027-07-10 and 2027-08-10.", "matched": true, "answer": "No, I cannot approve that. Each installment must stay within 400 USD because I have 600 USD available cash and 200 USD protected obligations on each of the three dates, and those protected funds are untouched. A 380 USD installment is within that 400 USD limit, and the existing card has 1500 USD available credit. Since the total is 1140 USD in three zero-interest, no-fee installments of exactly 380 USD each on 2027-06-10, 2027-07-10 and 2027-08-10, and 380 is within 400, I approve ordering SKU sf-B at 1140 USD total on the existing card with that exact schedule."}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "agent_send", "recipient": "samrivers@bench.example", "text": "Please verify in writing that SKU sf-B (16.5 cu ft, 31.5 in wide) fits the 33 in opening and doorway, and confirm unpack-at-door handling and old-unit recycling for this unit before delivery on 2027-06-09.", "fields": {}, "channel": "email"}
+{"at": "2027-06-07T14:00:00+00:00", "kind": "case_created", "case_id": "CASE-0001", "actor": "fulfillment_desk", "parent": null, "origin": "agent"}
+{"at": "2027-06-07T14:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "fulfillment_desk", "old": "new", "new": "queued"}
+{"at": "2027-06-07T14:23:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "fulfillment_desk", "step": "main_1", "start_at": "2027-06-07T14:23:00+00:00", "due_at": "2027-06-07T15:07:00+00:00", "tool": "fulfillment_desk.main.1.acknowledge"}
+{"at": "2027-06-07T14:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "fulfillment_desk", "old": "queued", "new": "working"}
+{"at": "2027-06-07T15:07:00+00:00", "kind": "tool_call", "actor": "fulfillment_desk", "case_id": "CASE-0001", "tool": "fulfillment_desk.main.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2027-06-07T15:07:00+00:00", "kind": "delivery", "message_id": "MSG-0001", "case_id": "CASE-0001", "status": "acknowledgement"}
+{"at": "2027-06-07T15:07:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "fulfillment_desk", "old": "working", "new": "queued"}
+{"at": "2027-06-07T15:07:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "fulfillment_desk", "step": "main_2", "start_at": "2027-06-07T15:07:00+00:00", "due_at": "2027-06-07T18:27:00+00:00", "tool": "fulfillment_desk.main.2.lookup"}
+{"at": "2027-06-07T15:07:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "fulfillment_desk", "old": "queued", "new": "working"}
+{"at": "2027-06-07T18:27:00+00:00", "kind": "tool_call", "actor": "fulfillment_desk", "case_id": "CASE-0001", "tool": "fulfillment_desk.main.2.lookup", "tool_kind": "lookup"}
+{"at": "2027-06-07T18:27:00+00:00", "kind": "fact_registered", "fact": "fit_verified", "issuer": "fulfillment_desk"}
+{"at": "2027-06-07T18:27:00+00:00", "kind": "fact_registered", "fact": "recycling_confirmed", "issuer": "fulfillment_desk"}
+{"at": "2027-06-07T18:27:00+00:00", "kind": "fact_registered", "fact": "delivery_date", "issuer": "fulfillment_desk"}
+{"at": "2027-06-07T18:27:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "fulfillment_desk", "old": "working", "new": "queued"}
+{"at": "2027-06-07T18:27:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "fulfillment_desk", "step": "main_3", "start_at": "2027-06-07T18:27:00+00:00", "due_at": "2027-06-07T19:18:00+00:00", "tool": "fulfillment_desk.main.3.document"}
+{"at": "2027-06-07T18:27:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "fulfillment_desk", "old": "queued", "new": "working"}
+{"at": "2027-06-07T19:18:00+00:00", "kind": "tool_call", "actor": "fulfillment_desk", "case_id": "CASE-0001", "tool": "fulfillment_desk.main.3.document", "tool_kind": "document"}
+{"at": "2027-06-07T19:18:00+00:00", "kind": "fact_registered", "fact": "fit_verified", "issuer": "fulfillment_desk"}
+{"at": "2027-06-07T19:18:00+00:00", "kind": "fact_registered", "fact": "recycling_confirmed", "issuer": "fulfillment_desk"}
+{"at": "2027-06-07T19:18:00+00:00", "kind": "fact_registered", "fact": "delivery_date", "issuer": "fulfillment_desk"}
+{"at": "2027-06-07T19:18:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "fulfillment_desk", "old": "working", "new": "queued"}
+{"at": "2027-06-07T19:18:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "fulfillment_desk", "step": "main_4", "start_at": "2027-06-07T19:18:00+00:00", "due_at": "2027-06-07T19:33:00+00:00", "tool": "fulfillment_desk.main.4.reply"}
+{"at": "2027-06-07T19:18:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "fulfillment_desk", "old": "queued", "new": "working"}
+{"at": "2027-06-07T19:33:00+00:00", "kind": "tool_call", "actor": "fulfillment_desk", "case_id": "CASE-0001", "tool": "fulfillment_desk.main.4.reply", "tool_kind": "reply"}
+{"at": "2027-06-07T19:33:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "fulfillment_desk", "old": "working", "new": "replied"}
+{"at": "2027-06-07T19:33:00+00:00", "kind": "delivery", "message_id": "MSG-0002", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2027-06-07T19:33:00+00:00", "kind": "agent_selection_submitted", "tool": "order_create", "entry": "sf-B", "accepted": true}
+{"at": "2027-06-07T19:33:00+00:00", "kind": "agent_send", "recipient": "danafields@bench.example", "text": "Please confirm the current financing terms for the order I placed for SKU sf-B: total 1140 USD on the existing card, three zero-interest no-fee installments of 380 USD each on 2027-06-10, 2027-07-10 and 2027-08-10.", "fields": {}, "channel": "email"}
+{"at": "2027-06-07T19:33:00+00:00", "kind": "case_created", "case_id": "CASE-0002", "actor": "store_desk", "parent": null, "origin": "agent"}
+{"at": "2027-06-07T20:15:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "store_desk", "old": "new", "new": "queued"}
+{"at": "2027-06-07T20:15:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "store_desk", "step": "quote_1", "start_at": "2027-06-07T20:15:00+00:00", "due_at": "2027-06-07T21:32:00+00:00", "tool": "store_desk.quote.1.lookup"}
+{"at": "2027-06-07T20:15:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "store_desk", "old": "queued", "new": "working"}
+{"at": "2027-06-07T21:32:00+00:00", "kind": "tool_call", "actor": "store_desk", "case_id": "CASE-0002", "tool": "store_desk.quote.1.lookup", "tool_kind": "lookup"}
+{"at": "2027-06-07T21:32:00+00:00", "kind": "fact_registered", "fact": "order_total", "issuer": "store_desk"}
+{"at": "2027-06-07T21:32:00+00:00", "kind": "fact_registered", "fact": "installment_amount", "issuer": "store_desk"}
+{"at": "2027-06-07T21:32:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "store_desk", "old": "working", "new": "queued"}
+{"at": "2027-06-07T21:32:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "store_desk", "step": "quote_2", "start_at": "2027-06-07T21:32:00+00:00", "due_at": "2027-06-07T22:15:00+00:00", "tool": "store_desk.quote.2.document"}
+{"at": "2027-06-07T21:32:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "store_desk", "old": "queued", "new": "working"}
+{"at": "2027-06-07T21:33:00+00:00", "kind": "fact_registered", "fact": "ordered_sku", "issuer": "store_desk"}
+{"at": "2027-06-07T21:33:00+00:00", "kind": "fact_registered", "fact": "order_total", "issuer": "store_desk"}
+{"at": "2027-06-07T21:33:00+00:00", "kind": "fact_registered", "fact": "installment_amount", "issuer": "store_desk"}
+{"at": "2027-06-07T21:33:00+00:00", "kind": "fact_registered", "fact": "delivery_date", "issuer": "store_desk"}
+{"at": "2027-06-07T21:33:00+00:00", "kind": "page_updated", "page": "store-entry", "url": "https://installmentgate.bench/entry", "cause": "selection"}
+{"at": "2027-06-07T21:33:00+00:00", "kind": "selection_processed", "tool": "order_create", "accepted": true, "result": "Order confirmed: sf-B (16.5 cu ft, 31.5 in wide) delivered 2027-06-09, all-in 1140.00 USD on the existing card, consuming installment reservation finance-XSF1 - three zero-interest payments of 380.00 USD due 2027-06-10, 2027-07-10 and 2027-08-10, each within the 400 USD dated residual cash after protected obligations. No new credit, no fees, no payment executed; delivery and future payments remain pending."}
+{"at": "2027-06-07T22:15:00+00:00", "kind": "tool_call", "actor": "store_desk", "case_id": "CASE-0002", "tool": "store_desk.quote.2.document", "tool_kind": "document"}
+{"at": "2027-06-07T22:15:00+00:00", "kind": "fact_registered", "fact": "order_total", "issuer": "store_desk"}
+{"at": "2027-06-07T22:15:00+00:00", "kind": "fact_registered", "fact": "installment_amount", "issuer": "store_desk"}
+{"at": "2027-06-07T22:15:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "store_desk", "old": "working", "new": "queued"}
+{"at": "2027-06-07T22:15:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "store_desk", "step": "quote_3", "start_at": "2027-06-07T22:15:00+00:00", "due_at": "2027-06-07T22:30:00+00:00", "tool": "store_desk.quote.3.reply"}
+{"at": "2027-06-07T22:15:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "store_desk", "old": "queued", "new": "working"}
+{"at": "2027-06-07T22:30:00+00:00", "kind": "tool_call", "actor": "store_desk", "case_id": "CASE-0002", "tool": "store_desk.quote.3.reply", "tool_kind": "reply"}
+{"at": "2027-06-07T22:30:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "store_desk", "old": "working", "new": "replied"}
+{"at": "2027-06-07T22:30:00+00:00", "kind": "delivery", "message_id": "MSG-0003", "case_id": "CASE-0002", "status": "reply"}
+{"at": "2027-06-07T22:30:00+00:00", "kind": "agent_selection_status", "tool": "order_create", "query": "sf-B"}
+{"at": "2027-06-08T09:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "finance_read", "query": "terms-B", "entries": ["terms-A-v1", "terms-B", "cash-profile"]}
+{"at": "2027-06-08T09:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "appliance_search", "query": "sf-B", "entries": ["sf-A", "sf-B", "sf-C", "sf-D", "sf-E", "sf-F"]}
+{"at": "2027-06-08T14:00:00+00:00", "kind": "page_updated", "page": "store-intro", "url": "https://installmentgate.bench/intro"}
+{"at": "2027-06-08T14:00:00+00:00", "kind": "catalog_updated", "tool": "appliance_search", "removed": ["sf-A"], "added": ["sf-A"]}
+{"at": "2027-06-08T14:00:00+00:00", "kind": "catalog_updated", "tool": "finance_read", "removed": ["terms-A-v1"], "added": ["terms-A-v2"]}
+{"at": "2027-06-09T08:00:00+00:00", "kind": "agent_hidden_catalog", "tool": "finance_read", "query": "terms-B", "entries": ["terms-B", "cash-profile", "terms-A-v2"]}
+{"at": "2027-06-09T08:00:00+00:00", "kind": "agent_selection_status", "tool": "order_create", "query": "sf-B"}

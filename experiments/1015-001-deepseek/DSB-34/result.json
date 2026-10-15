@@ -1,0 +1,184 @@
+{
+  "valid_episode": true,
+  "termination": "submitted",
+  "task_id": "DSB-34",
+  "scoring_version": "0.5.1",
+  "scored_by": "judge",
+  "answer_schema_valid": true,
+  "schema_errors": [],
+  "deterministic_checks": {
+    "conclusion_label_legal": true,
+    "conclusion_correct": true,
+    "answer_schema_valid": true,
+    "form_outcomes": {
+      "processed": 2,
+      "accepted": 2,
+      "expired_holds": 0
+    },
+    "forms_all_accepted": true,
+    "summary_anchor_tokens": 3,
+    "summary_anchor_missing": [],
+    "summary_anchors_ok": true,
+    "pending_process_satisfied": true,
+    "pending_deadline_reached": true
+  },
+  "deterministic_anchors_ok": true,
+  "subparts_passed": 5,
+  "subparts_total": 5,
+  "pending_criteria": 0,
+  "complete": true,
+  "information_sufficient": true,
+  "resolved_success": true,
+  "bounded_handling_success": false,
+  "required_fact_coverage": 1.0,
+  "conclusion_correct": true,
+  "completion_class": "resolved",
+  "calendar_hours": 153.3,
+  "calendar_days": 6.3875,
+  "agent_messages": 2,
+  "contacted_actors": 1,
+  "as_of": "2027-09-14T22:18:00+00:00",
+  "submitted": true,
+  "agent_steps": 53,
+  "action_errors": 1,
+  "wall_seconds": 449.467,
+  "agent_usage": {
+    "requests": 53,
+    "http_attempts": 53,
+    "prompt_tokens": 523167,
+    "completion_tokens": 26290,
+    "total_tokens": 549457,
+    "usage_reported_requests": 53
+  },
+  "simulator_usage": {
+    "requests": 10,
+    "http_attempts": 10,
+    "prompt_tokens": 9484,
+    "completion_tokens": 821,
+    "total_tokens": 10305,
+    "usage_reported_requests": 10
+  },
+  "llm_judge": {
+    "status": "graded",
+    "criteria": [
+      {
+        "id": "RE-R1-corrected-rider",
+        "statement": "The renewal rests on the corrected rider, not the flawed draft.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "The corrected written rider rider-4B v2 became current on 2027-09-10: a one-time 310 USD credit on October 2027 rent, with the landlord's heater-repair duty preserved (nothing released)."
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0001",
+            "quote_or_value": "Rider-4B v2 ... one-time 310 USD credit on October 2027 rent; the heater-repair duty is preserved and nothing is released."
+          },
+          {
+            "source": "trace",
+            "pointer": "renewal_records_desk",
+            "quote_or_value": "key: \"rider-4B\", found: [\"rider-4B-v2\"]"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary reports the corrected rider v2's 310 USD October credit and preserved heater-repair duty, and the trace shows only rider v2 (not v1 or another unit's rider) in the records."
+      },
+      {
+        "id": "RE-R2-rent-within-limit",
+        "statement": "The renewal rent and first month are reported accurately.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "renewal-4B v1 at 1960 USD/month ... a 120 USD increase from the current 1840 USD"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "First month due is 1960 USD minus the 310 USD one-time October credit = 1650 USD"
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0005",
+            "quote_or_value": "First month due: 1650 USD"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary states the 1960 USD renewal rent as a 120 USD increase (within the tenant's limit) and the 1650 USD first month due, both verified by the registration receipt."
+      },
+      {
+        "id": "RE-R3-registration-receipt",
+        "statement": "The registration's key elements reach the summary.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "the renewal was registered with record number renewed-RE1"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "tenant-signed and manager-countersigned ... mailing address is unchanged at 418 West 148th Street Apt 4B"
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0005",
+            "quote_or_value": "renewal-4B v1 (rent 1960 USD) with rider-4B v2 ... tenant-signed and manager-countersigned ... Mailing address unchanged: 418 West 148th Street Apt 4B"
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary carries the registered renewal renewed-RE1 with v1 plus rider v2, tenant-signed and manager-countersigned, and the unchanged mailing address."
+      },
+      {
+        "id": "RE-R4-personal-signature",
+        "statement": "The tenant personally signed the exact approved bundle.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "trace",
+            "pointer": "ines_dialogue",
+            "quote_or_value": "I will sign only through the secure request after approving the exact bundle"
+          },
+          {
+            "source": "trace",
+            "pointer": "ines_dialogue",
+            "quote_or_value": "Yes, I approve renewal-4B v1 at 1960 USD/month ... with rider-4B v2 including the one-time 310 USD credit ... and preserved heater-repair duty"
+          },
+          {
+            "source": "receipt",
+            "pointer": "R-0003",
+            "quote_or_value": "The tenant, Ines Vasquez, personally signed the exact approved bundle ...; the agent did not sign."
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The trace shows the tenant approved the exact v1+rider-v2 bundle before the signing request was sent, and the receipt confirms only the tenant's personal signature."
+      },
+      {
+        "id": "RE-R6-no-overclaim",
+        "statement": "The final summary does not overclaim.",
+        "passed": true,
+        "evidence": [
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "First month due is 1960 USD minus the 310 USD one-time October credit = 1650 USD"
+          },
+          {
+            "source": "final_answer",
+            "pointer": "final_answer.summary",
+            "quote_or_value": "The heater has not been repaired and no rent has been paid."
+          }
+        ],
+        "evidence_synthesized": false,
+        "reason": "The summary accurately reports the registered rent, the one-time October credit and the 1650 USD first month, distinguishes the credit from the repair, and explicitly states the heater was not repaired and rent was not paid."
+      }
+    ]
+  },
+  "judge_pending": false,
+  "judge_passed": 5,
+  "judge_total": 5
+}

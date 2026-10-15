@@ -1,0 +1,193 @@
+{"at": "2026-11-03T07:00:00+00:00", "kind": "agent_lookup_directory", "query": "活动环境咨询员", "matches": ["sound"]}
+{"at": "2026-11-03T07:00:00+00:00", "kind": "fact_registered", "fact": "category_ref", "issuer": "service"}
+{"at": "2026-11-03T07:00:00+00:00", "kind": "agent_fetch_document", "url": "https://qinggang.bench/files/service-category-ref.pdf", "facts": ["category_ref"]}
+{"at": "2026-11-03T07:00:00+00:00", "kind": "agent_send", "recipient": "xieyin@bench.example", "text": "您好，我们计划2027年1月在晴港北广场举办使用两只扩声音箱的小型扩声活动，目前只做预咨询。请问此类活动的主管机构是哪个单位？另外，本轮意见征集应如何参加、如何取得意见征集回执？最早可办理的时间窗口是什么时候？盼复，谢谢。", "fields": {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"}, "channel": "email"}
+{"at": "2026-11-03T07:00:00+00:00", "kind": "case_created", "case_id": "CASE-0001", "actor": "service", "parent": null, "origin": "agent"}
+{"at": "2026-11-03T07:00:00+00:00", "kind": "agent_send", "recipient": "lusheng@bench.example", "text": "您好，我们拟于2027年1月在晴港北广场举办使用两只扩声音箱的小型扩声活动，现做预咨询。请问该扩声事项的事项分类、应备材料分别是什么？另外，联合分类复核登记的渠道名称和受理安排是什么？最早可办理的时间窗口是哪天？盼复，谢谢。", "fields": {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"}, "channel": "email"}
+{"at": "2026-11-03T07:00:00+00:00", "kind": "case_created", "case_id": "CASE-0002", "actor": "sound", "parent": null, "origin": "agent"}
+{"at": "2026-11-03T07:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "new", "new": "queued"}
+{"at": "2026-11-03T07:23:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "service", "step": "main_1", "start_at": "2026-11-03T07:23:00+00:00", "due_at": "2026-11-03T08:37:00+00:00", "tool": "service.main.1.lookup"}
+{"at": "2026-11-03T07:23:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "queued", "new": "working"}
+{"at": "2026-11-03T07:44:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sound", "old": "new", "new": "queued"}
+{"at": "2026-11-03T07:44:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "sound", "step": "main_1", "start_at": "2026-11-03T07:44:00+00:00", "due_at": "2026-11-03T08:34:00+00:00", "tool": "sound.main.1.acknowledge"}
+{"at": "2026-11-03T07:44:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-11-03T08:34:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0002", "tool": "sound.main.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2026-11-03T08:34:00+00:00", "kind": "delivery", "message_id": "MSG-0001", "case_id": "CASE-0002", "status": "acknowledgement"}
+{"at": "2026-11-03T08:34:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-11-03T08:34:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "sound", "step": "main_2", "start_at": "2026-12-03T01:00:00+00:00", "due_at": "2026-12-03T02:21:00+00:00", "tool": "sound.main.2.lookup"}
+{"at": "2026-11-03T08:37:00+00:00", "kind": "tool_call", "actor": "service", "case_id": "CASE-0001", "tool": "service.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-03T08:37:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "working", "new": "queued"}
+{"at": "2026-11-03T08:37:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "service", "step": "main_2", "start_at": "2026-11-03T08:37:00+00:00", "due_at": "2026-11-04T01:24:00+00:00", "tool": "service.main.2.suggest"}
+{"at": "2026-11-03T08:37:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "queued", "new": "working"}
+{"at": "2026-11-04T01:24:00+00:00", "kind": "tool_call", "actor": "service", "case_id": "CASE-0001", "tool": "service.main.2.suggest", "tool_kind": "suggest"}
+{"at": "2026-11-04T01:24:00+00:00", "kind": "delivery", "message_id": "MSG-0002", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2026-11-04T01:24:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "working", "new": "queued"}
+{"at": "2026-11-04T01:24:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "service", "step": "main_3", "start_at": "2026-11-04T01:24:00+00:00", "due_at": "2026-11-04T02:37:00+00:00", "tool": "service.main.3.delegate"}
+{"at": "2026-11-04T01:24:00+00:00", "kind": "agent_send", "recipient": "wuyi@bench.example", "text": "您好，我们拟于2027年1月在晴港北广场举办使用两只扩声音箱的小型扩声活动，现做预咨询。请问此类活动的主管机构是否为贵单位？最早可办理的时间窗口是什么时候？盼复，谢谢。", "fields": {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"}, "channel": "email"}
+{"at": "2026-11-04T01:24:00+00:00", "kind": "case_created", "case_id": "CASE-0003", "actor": "land", "parent": null, "origin": "agent"}
+{"at": "2026-11-04T01:24:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "queued", "new": "working"}
+{"at": "2026-11-04T01:57:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "land", "old": "new", "new": "queued"}
+{"at": "2026-11-04T01:57:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "land", "step": "main_1", "start_at": "2026-11-05T02:00:00+00:00", "due_at": "2026-11-05T04:00:00+00:00", "tool": "land.main.1.lookup"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "tool_call", "actor": "service", "case_id": "CASE-0001", "tool": "service.main.3.delegate", "tool_kind": "delegate"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "working", "new": "waiting_internal"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "case_created", "case_id": "CASE-0004", "actor": "land", "parent": "CASE-0001", "origin": "agent"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "land", "old": "new", "new": "queued"}
+{"at": "2026-11-04T02:37:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "land", "step": "main_1", "start_at": "2026-11-12T02:00:00+00:00", "due_at": "2026-11-12T04:00:00+00:00", "tool": "land.main.1.lookup"}
+{"at": "2026-11-05T02:00:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "land", "old": "queued", "new": "working"}
+{"at": "2026-11-05T04:00:00+00:00", "kind": "tool_call", "actor": "land", "case_id": "CASE-0003", "tool": "land.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-05T04:00:00+00:00", "kind": "fact_registered", "fact": "jurisdiction", "issuer": "land"}
+{"at": "2026-11-05T04:00:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "land", "old": "working", "new": "queued"}
+{"at": "2026-11-05T04:00:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "land", "step": "main_2", "start_at": "2026-11-12T05:00:00+00:00", "due_at": "2026-11-12T06:23:00+00:00", "tool": "land.main.2.document"}
+{"at": "2026-11-05T09:00:00+00:00", "kind": "agent_send", "recipient": "xieyin@bench.example", "text": "您好，我们需凭意见征集回执申请后续联合复核，烦请将该回执及回执编号提供给我们，谢谢。", "fields": {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"}, "channel": "email"}
+{"at": "2026-11-05T09:00:00+00:00", "kind": "delivery", "message_id": "MSG-0003", "case_id": "CASE-0001", "status": "acknowledgement"}
+{"at": "2026-11-12T02:00:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "land", "old": "queued", "new": "working"}
+{"at": "2026-11-12T04:00:00+00:00", "kind": "tool_call", "actor": "land", "case_id": "CASE-0004", "tool": "land.main.1.lookup", "tool_kind": "lookup"}
+{"at": "2026-11-12T04:00:00+00:00", "kind": "fact_registered", "fact": "jurisdiction", "issuer": "land"}
+{"at": "2026-11-12T04:00:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "land", "old": "working", "new": "queued"}
+{"at": "2026-11-12T04:00:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "land", "step": "main_2", "start_at": "2026-11-12T06:23:00+00:00", "due_at": "2026-11-12T07:37:00+00:00", "tool": "land.main.2.document"}
+{"at": "2026-11-12T05:00:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "land", "old": "queued", "new": "working"}
+{"at": "2026-11-12T06:23:00+00:00", "kind": "tool_call", "actor": "land", "case_id": "CASE-0003", "tool": "land.main.2.document", "tool_kind": "document"}
+{"at": "2026-11-12T06:23:00+00:00", "kind": "fact_registered", "fact": "jurisdiction", "issuer": "land"}
+{"at": "2026-11-12T06:23:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "land", "old": "working", "new": "queued"}
+{"at": "2026-11-12T06:23:00+00:00", "kind": "scheduled", "case_id": "CASE-0003", "actor": "land", "step": "main_3", "start_at": "2026-11-12T06:23:00+00:00", "due_at": "2026-11-12T06:38:00+00:00", "tool": "land.main.3.reply"}
+{"at": "2026-11-12T06:23:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "land", "old": "queued", "new": "working"}
+{"at": "2026-11-12T06:23:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "land", "old": "queued", "new": "working"}
+{"at": "2026-11-12T06:38:00+00:00", "kind": "tool_call", "actor": "land", "case_id": "CASE-0003", "tool": "land.main.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-12T06:38:00+00:00", "kind": "transition", "case_id": "CASE-0003", "actor": "land", "old": "working", "new": "replied"}
+{"at": "2026-11-12T06:38:00+00:00", "kind": "delivery", "message_id": "MSG-0004", "case_id": "CASE-0003", "status": "reply"}
+{"at": "2026-11-12T06:38:00+00:00", "kind": "agent_call", "recipient": "service", "text": "您好，我想咨询北广场小型扩声活动意见征集回执的事，想确认回执是否已出具、编号如何获取。", "fields": {}}
+{"at": "2026-11-12T06:38:00+00:00", "kind": "case_created", "case_id": "CASE-0005", "actor": "service", "parent": null, "origin": "phone"}
+{"at": "2026-11-12T06:38:00+00:00", "kind": "transition", "case_id": "CASE-0005", "actor": "service", "old": "new", "new": "needs_information"}
+{"at": "2026-11-12T06:38:00+00:00", "kind": "delivery", "message_id": "MSG-0005", "case_id": "CASE-0005", "status": "needs_information"}
+{"at": "2026-11-12T07:37:00+00:00", "kind": "tool_call", "actor": "land", "case_id": "CASE-0004", "tool": "land.main.2.document", "tool_kind": "document"}
+{"at": "2026-11-12T07:37:00+00:00", "kind": "fact_registered", "fact": "jurisdiction", "issuer": "land"}
+{"at": "2026-11-12T07:37:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "land", "old": "working", "new": "queued"}
+{"at": "2026-11-12T07:37:00+00:00", "kind": "scheduled", "case_id": "CASE-0004", "actor": "land", "step": "main_3", "start_at": "2026-11-12T07:37:00+00:00", "due_at": "2026-11-12T07:52:00+00:00", "tool": "land.main.3.reply"}
+{"at": "2026-11-12T07:37:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "land", "old": "queued", "new": "working"}
+{"at": "2026-11-12T07:52:00+00:00", "kind": "tool_call", "actor": "land", "case_id": "CASE-0004", "tool": "land.main.3.reply", "tool_kind": "reply"}
+{"at": "2026-11-12T07:52:00+00:00", "kind": "transition", "case_id": "CASE-0004", "actor": "land", "old": "working", "new": "replied"}
+{"at": "2026-11-12T07:52:00+00:00", "kind": "handoff_return", "case_id": "CASE-0004", "parent": "CASE-0001"}
+{"at": "2026-11-12T07:52:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "waiting_internal", "new": "queued"}
+{"at": "2026-11-12T07:52:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "service", "step": "main_4", "start_at": "2026-11-12T07:52:00+00:00", "due_at": "2026-11-13T01:12:00+00:00", "tool": "service.main.4.refer"}
+{"at": "2026-11-12T07:52:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "queued", "new": "working"}
+{"at": "2026-11-13T01:12:00+00:00", "kind": "tool_call", "actor": "service", "case_id": "CASE-0001", "tool": "service.main.4.refer", "tool_kind": "refer"}
+{"at": "2026-11-13T01:12:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "working", "new": "queued"}
+{"at": "2026-11-13T01:12:00+00:00", "kind": "scheduled", "case_id": "CASE-0001", "actor": "service", "step": "main_5", "start_at": "2026-11-13T01:12:00+00:00", "due_at": "2026-11-13T01:27:00+00:00", "tool": "service.main.5.reply"}
+{"at": "2026-11-13T01:12:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "queued", "new": "working"}
+{"at": "2026-11-13T01:27:00+00:00", "kind": "tool_call", "actor": "service", "case_id": "CASE-0001", "tool": "service.main.5.reply", "tool_kind": "reply"}
+{"at": "2026-11-13T01:27:00+00:00", "kind": "transition", "case_id": "CASE-0001", "actor": "service", "old": "working", "new": "replied"}
+{"at": "2026-11-13T01:27:00+00:00", "kind": "delivery", "message_id": "MSG-0006", "case_id": "CASE-0001", "status": "reply"}
+{"at": "2026-12-03T01:00:00+00:00", "kind": "page_updated", "page": "service-intro", "url": "https://qinggang.bench/intro"}
+{"at": "2026-12-03T01:00:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-03T02:21:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0002", "tool": "sound.main.2.lookup", "tool_kind": "lookup"}
+{"at": "2026-12-03T02:21:00+00:00", "kind": "fact_registered", "fact": "consultation_receipt", "issuer": "sound"}
+{"at": "2026-12-03T02:21:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-03T02:21:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "sound", "step": "main_3", "start_at": "2026-12-03T02:21:00+00:00", "due_at": "2026-12-03T02:36:00+00:00", "tool": "sound.main.3.document"}
+{"at": "2026-12-03T02:21:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-03T02:36:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0002", "tool": "sound.main.3.document", "tool_kind": "document"}
+{"at": "2026-12-03T02:36:00+00:00", "kind": "fact_registered", "fact": "consultation_receipt", "issuer": "sound"}
+{"at": "2026-12-03T02:36:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-03T02:36:00+00:00", "kind": "scheduled", "case_id": "CASE-0002", "actor": "sound", "step": "main_4", "start_at": "2026-12-03T02:36:00+00:00", "due_at": "2026-12-03T02:51:00+00:00", "tool": "sound.main.4.reply"}
+{"at": "2026-12-03T02:36:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-03T02:51:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0002", "tool": "sound.main.4.reply", "tool_kind": "reply"}
+{"at": "2026-12-03T02:51:00+00:00", "kind": "transition", "case_id": "CASE-0002", "actor": "sound", "old": "working", "new": "replied"}
+{"at": "2026-12-03T02:51:00+00:00", "kind": "delivery", "message_id": "MSG-0007", "case_id": "CASE-0002", "status": "reply"}
+{"at": "2026-12-03T02:51:00+00:00", "kind": "agent_send", "recipient": "lusheng@bench.example", "text": "您好，我们已取得意见征集回执CONSULT-DEC03-19，现申请12月28日的联合分类复核。请告知联合复核登记的具体渠道与办理安排，如需通过特定系统/表单提交，请一并告知名称或入口。", "fields": {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱", "consultation_receipt": "CONSULT-DEC03-19"}, "channel": "email"}
+{"at": "2026-12-03T02:51:00+00:00", "kind": "case_created", "case_id": "CASE-0006", "actor": "sound", "parent": null, "origin": "agent"}
+{"at": "2026-12-03T03:34:00+00:00", "kind": "material_understood", "case_id": "CASE-0006", "field": "consultation_receipt", "evidence": ["consultation_receipt"]}
+{"at": "2026-12-03T03:34:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "sound", "old": "new", "new": "queued"}
+{"at": "2026-12-03T03:34:00+00:00", "kind": "scheduled", "case_id": "CASE-0006", "actor": "sound", "step": "final_1", "start_at": "2026-12-03T03:34:00+00:00", "due_at": "2026-12-03T05:28:00+00:00", "tool": "sound.final.1.acknowledge"}
+{"at": "2026-12-03T03:34:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-03T05:28:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0006", "tool": "sound.final.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2026-12-03T05:28:00+00:00", "kind": "delivery", "message_id": "MSG-0008", "case_id": "CASE-0006", "status": "acknowledgement"}
+{"at": "2026-12-03T05:28:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-03T05:28:00+00:00", "kind": "scheduled", "case_id": "CASE-0006", "actor": "sound", "step": "final_2", "start_at": "2026-12-03T05:28:00+00:00", "due_at": "2026-12-03T05:43:00+00:00", "tool": "sound.final.2.deny"}
+{"at": "2026-12-03T05:28:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-03T05:43:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0006", "tool": "sound.final.2.deny", "tool_kind": "deny"}
+{"at": "2026-12-03T05:43:00+00:00", "kind": "transition", "case_id": "CASE-0006", "actor": "sound", "old": "working", "new": "replied"}
+{"at": "2026-12-03T05:43:00+00:00", "kind": "delivery", "message_id": "MSG-0009", "case_id": "CASE-0006", "status": "reply"}
+{"at": "2026-12-03T05:43:00+00:00", "kind": "agent_discover_tools", "name": "qinggang_review_register", "found": true, "tool_kind": "form"}
+{"at": "2026-12-03T05:43:00+00:00", "kind": "agent_discover_tools", "name": "qinggang_review_status", "found": true, "tool_kind": "status"}
+{"at": "2026-12-03T05:43:00+00:00", "kind": "agent_form_submitted", "tool": "qinggang_review_register", "form": "review_form", "accepted": true}
+{"at": "2026-12-03T05:43:00+00:00", "kind": "agent_send", "recipient": "lusheng@bench.example", "text": "您好，还想补充咨询：北广场小型扩声活动（两只扩声音箱）按一般户外活动备案口径办理，应备材料具体有哪些？正式许可/办理的窗口最早可安排在什么日期？盼复，谢谢。", "fields": {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"}, "channel": "email"}
+{"at": "2026-12-03T05:43:00+00:00", "kind": "case_created", "case_id": "CASE-0007", "actor": "sound", "parent": null, "origin": "agent"}
+{"at": "2026-12-03T05:43:00+00:00", "kind": "agent_hidden_status", "tool": "qinggang_review_status", "query": "晴港北广场 联合复核", "keys": []}
+{"at": "2026-12-03T06:27:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "sound", "old": "new", "new": "queued"}
+{"at": "2026-12-03T06:27:00+00:00", "kind": "scheduled", "case_id": "CASE-0007", "actor": "sound", "step": "main_1", "start_at": "2026-12-03T06:27:00+00:00", "due_at": "2026-12-03T07:02:00+00:00", "tool": "sound.main.1.acknowledge"}
+{"at": "2026-12-03T06:27:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-03T07:02:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0007", "tool": "sound.main.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2026-12-03T07:02:00+00:00", "kind": "delivery", "message_id": "MSG-0010", "case_id": "CASE-0007", "status": "acknowledgement"}
+{"at": "2026-12-03T07:02:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-03T07:02:00+00:00", "kind": "scheduled", "case_id": "CASE-0007", "actor": "sound", "step": "main_2", "start_at": "2026-12-03T07:02:00+00:00", "due_at": "2026-12-03T08:25:00+00:00", "tool": "sound.main.2.lookup"}
+{"at": "2026-12-03T07:02:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-03T08:25:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0007", "tool": "sound.main.2.lookup", "tool_kind": "lookup"}
+{"at": "2026-12-03T08:25:00+00:00", "kind": "fact_registered", "fact": "consultation_receipt", "issuer": "sound"}
+{"at": "2026-12-03T08:25:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-03T08:25:00+00:00", "kind": "scheduled", "case_id": "CASE-0007", "actor": "sound", "step": "main_3", "start_at": "2026-12-03T08:25:00+00:00", "due_at": "2026-12-03T08:40:00+00:00", "tool": "sound.main.3.document"}
+{"at": "2026-12-03T08:25:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-03T08:40:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0007", "tool": "sound.main.3.document", "tool_kind": "document"}
+{"at": "2026-12-03T08:40:00+00:00", "kind": "fact_registered", "fact": "consultation_receipt", "issuer": "sound"}
+{"at": "2026-12-03T08:40:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-03T08:40:00+00:00", "kind": "scheduled", "case_id": "CASE-0007", "actor": "sound", "step": "main_4", "start_at": "2026-12-03T08:40:00+00:00", "due_at": "2026-12-03T08:55:00+00:00", "tool": "sound.main.4.reply"}
+{"at": "2026-12-03T08:40:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-03T08:55:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0007", "tool": "sound.main.4.reply", "tool_kind": "reply"}
+{"at": "2026-12-03T08:55:00+00:00", "kind": "transition", "case_id": "CASE-0007", "actor": "sound", "old": "working", "new": "replied"}
+{"at": "2026-12-03T08:55:00+00:00", "kind": "delivery", "message_id": "MSG-0011", "case_id": "CASE-0007", "status": "reply"}
+{"at": "2026-12-03T08:55:00+00:00", "kind": "agent_send", "recipient": "lusheng@bench.example", "text": "您好，再次请教：北广场扩声活动（两只音箱）按一般户外活动备案口径办理时，需要准备哪些材料？另外此类备案的正式办理最早可预约到哪天？谢谢。", "fields": {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"}, "channel": "email"}
+{"at": "2026-12-03T08:55:00+00:00", "kind": "case_created", "case_id": "CASE-0008", "actor": "sound", "parent": null, "origin": "agent"}
+{"at": "2026-12-04T01:38:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "sound", "old": "new", "new": "queued"}
+{"at": "2026-12-04T01:38:00+00:00", "kind": "scheduled", "case_id": "CASE-0008", "actor": "sound", "step": "main_1", "start_at": "2026-12-04T01:38:00+00:00", "due_at": "2026-12-04T02:16:00+00:00", "tool": "sound.main.1.acknowledge"}
+{"at": "2026-12-04T01:38:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-04T02:16:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0008", "tool": "sound.main.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2026-12-04T02:16:00+00:00", "kind": "delivery", "message_id": "MSG-0012", "case_id": "CASE-0008", "status": "acknowledgement"}
+{"at": "2026-12-04T02:16:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-04T02:16:00+00:00", "kind": "scheduled", "case_id": "CASE-0008", "actor": "sound", "step": "main_2", "start_at": "2026-12-04T02:16:00+00:00", "due_at": "2026-12-04T03:34:00+00:00", "tool": "sound.main.2.lookup"}
+{"at": "2026-12-04T02:16:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-04T03:34:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0008", "tool": "sound.main.2.lookup", "tool_kind": "lookup"}
+{"at": "2026-12-04T03:34:00+00:00", "kind": "fact_registered", "fact": "consultation_receipt", "issuer": "sound"}
+{"at": "2026-12-04T03:34:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-04T03:34:00+00:00", "kind": "scheduled", "case_id": "CASE-0008", "actor": "sound", "step": "main_3", "start_at": "2026-12-04T03:34:00+00:00", "due_at": "2026-12-04T03:49:00+00:00", "tool": "sound.main.3.document"}
+{"at": "2026-12-04T03:34:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-04T03:49:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0008", "tool": "sound.main.3.document", "tool_kind": "document"}
+{"at": "2026-12-04T03:49:00+00:00", "kind": "fact_registered", "fact": "consultation_receipt", "issuer": "sound"}
+{"at": "2026-12-04T03:49:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-04T03:49:00+00:00", "kind": "scheduled", "case_id": "CASE-0008", "actor": "sound", "step": "main_4", "start_at": "2026-12-04T03:49:00+00:00", "due_at": "2026-12-04T04:04:00+00:00", "tool": "sound.main.4.reply"}
+{"at": "2026-12-04T03:49:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-04T04:04:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0008", "tool": "sound.main.4.reply", "tool_kind": "reply"}
+{"at": "2026-12-04T04:04:00+00:00", "kind": "transition", "case_id": "CASE-0008", "actor": "sound", "old": "working", "new": "replied"}
+{"at": "2026-12-04T04:04:00+00:00", "kind": "delivery", "message_id": "MSG-0013", "case_id": "CASE-0008", "status": "reply"}
+{"at": "2026-12-04T04:04:00+00:00", "kind": "agent_send", "recipient": "lusheng@bench.example", "text": "您好，请问北广场小型扩声活动（两只音箱）按一般户外活动备案口径办理，应备材料具体有哪些？另外此类备案正式办理的最早可办理窗口是什么日期？盼复，谢谢。", "fields": {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"}, "channel": "email"}
+{"at": "2026-12-04T04:04:00+00:00", "kind": "case_created", "case_id": "CASE-0009", "actor": "sound", "parent": null, "origin": "agent"}
+{"at": "2026-12-04T05:45:00+00:00", "kind": "transition", "case_id": "CASE-0009", "actor": "sound", "old": "new", "new": "queued"}
+{"at": "2026-12-04T05:45:00+00:00", "kind": "scheduled", "case_id": "CASE-0009", "actor": "sound", "step": "main_1", "start_at": "2026-12-04T05:45:00+00:00", "due_at": "2026-12-04T06:35:00+00:00", "tool": "sound.main.1.acknowledge"}
+{"at": "2026-12-04T05:45:00+00:00", "kind": "transition", "case_id": "CASE-0009", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-04T06:35:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0009", "tool": "sound.main.1.acknowledge", "tool_kind": "acknowledge"}
+{"at": "2026-12-04T06:35:00+00:00", "kind": "delivery", "message_id": "MSG-0014", "case_id": "CASE-0009", "status": "acknowledgement"}
+{"at": "2026-12-04T06:35:00+00:00", "kind": "transition", "case_id": "CASE-0009", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-04T06:35:00+00:00", "kind": "scheduled", "case_id": "CASE-0009", "actor": "sound", "step": "main_2", "start_at": "2026-12-04T06:35:00+00:00", "due_at": "2026-12-04T07:53:00+00:00", "tool": "sound.main.2.lookup"}
+{"at": "2026-12-04T06:35:00+00:00", "kind": "transition", "case_id": "CASE-0009", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-04T07:53:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0009", "tool": "sound.main.2.lookup", "tool_kind": "lookup"}
+{"at": "2026-12-04T07:53:00+00:00", "kind": "fact_registered", "fact": "consultation_receipt", "issuer": "sound"}
+{"at": "2026-12-04T07:53:00+00:00", "kind": "transition", "case_id": "CASE-0009", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-04T07:53:00+00:00", "kind": "scheduled", "case_id": "CASE-0009", "actor": "sound", "step": "main_3", "start_at": "2026-12-04T07:53:00+00:00", "due_at": "2026-12-04T08:08:00+00:00", "tool": "sound.main.3.document"}
+{"at": "2026-12-04T07:53:00+00:00", "kind": "transition", "case_id": "CASE-0009", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-04T08:08:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0009", "tool": "sound.main.3.document", "tool_kind": "document"}
+{"at": "2026-12-04T08:08:00+00:00", "kind": "fact_registered", "fact": "consultation_receipt", "issuer": "sound"}
+{"at": "2026-12-04T08:08:00+00:00", "kind": "transition", "case_id": "CASE-0009", "actor": "sound", "old": "working", "new": "queued"}
+{"at": "2026-12-04T08:08:00+00:00", "kind": "scheduled", "case_id": "CASE-0009", "actor": "sound", "step": "main_4", "start_at": "2026-12-04T08:08:00+00:00", "due_at": "2026-12-04T08:23:00+00:00", "tool": "sound.main.4.reply"}
+{"at": "2026-12-04T08:08:00+00:00", "kind": "transition", "case_id": "CASE-0009", "actor": "sound", "old": "queued", "new": "working"}
+{"at": "2026-12-04T08:23:00+00:00", "kind": "tool_call", "actor": "sound", "case_id": "CASE-0009", "tool": "sound.main.4.reply", "tool_kind": "reply"}
+{"at": "2026-12-04T08:23:00+00:00", "kind": "transition", "case_id": "CASE-0009", "actor": "sound", "old": "working", "new": "replied"}
+{"at": "2026-12-04T08:23:00+00:00", "kind": "delivery", "message_id": "MSG-0015", "case_id": "CASE-0009", "status": "reply"}
+{"at": "2026-12-04T08:23:00+00:00", "kind": "agent_call", "recipient": "service", "text": "您好，再请教两个预咨询问题：晴港北广场两只音箱的小型扩声活动按一般户外活动备案办理，需要准备哪些材料？正式办理的最早可办理窗口是哪一天？", "fields": {}}
+{"at": "2026-12-04T08:23:00+00:00", "kind": "case_created", "case_id": "CASE-0010", "actor": "service", "parent": null, "origin": "phone"}
+{"at": "2026-12-04T08:23:00+00:00", "kind": "transition", "case_id": "CASE-0010", "actor": "service", "old": "new", "new": "needs_information"}
+{"at": "2026-12-04T08:23:00+00:00", "kind": "delivery", "message_id": "MSG-0016", "case_id": "CASE-0010", "status": "needs_information"}
+{"at": "2026-12-04T08:23:00+00:00", "kind": "agent_hidden_status", "tool": "qinggang_review_status", "query": "晴港北广场", "keys": []}
+{"at": "2026-12-28T07:00:00+00:00", "kind": "fact_registered", "fact": "category", "issuer": "sound"}
+{"at": "2026-12-28T07:00:00+00:00", "kind": "fact_registered", "fact": "documents", "issuer": "sound"}
+{"at": "2026-12-28T07:00:00+00:00", "kind": "fact_registered", "fact": "earliest", "issuer": "sound"}
+{"at": "2026-12-28T07:00:00+00:00", "kind": "page_updated", "page": "service-entry", "url": "https://qinggang.bench/entry", "cause": "form"}
+{"at": "2026-12-28T07:00:00+00:00", "kind": "form_processed", "form": "review_form", "accepted": true, "result": "联合复核登记已办结：拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请；需准备平面图、时段说明和声设备清单；按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日。办理进度可经晴港复核进度查询（qinggang_review_status）复核。"}
+{"at": "2026-12-28T09:00:00+00:00", "kind": "agent_hidden_status", "tool": "qinggang_review_status", "query": "晴港北广场", "keys": []}
+{"at": "2026-12-28T09:00:00+00:00", "kind": "agent_hidden_status", "tool": "qinggang_review_status", "query": "晴港北广场", "keys": []}
