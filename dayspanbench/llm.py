@@ -91,7 +91,7 @@ class LLMConfig:
             raise ValueError("Use HTTPS except for a local simulator service")
         if self.api not in {"chat", "responses"} or self.output_format not in {"json_schema", "json_object"}:
             raise ValueError("Unsupported simulator API/format")
-        if not 0 < self.timeout <= 300 or not 0 <= self.max_retries <= 3 or self.max_tokens <= 0:
+        if not 0 < self.timeout <= 300 or not 0 <= self.max_retries <= 8 or self.max_tokens <= 0:
             raise ValueError("Invalid timeout, retry count or token budget")
 
     def public_dict(self):
@@ -143,7 +143,10 @@ class StructuredClient:
                 except HTTPError as exc:
                     code = exc.code
                     exc.close()
-                    if attempt == config.max_retries or (code != 429 and not 500 <= code < 600):
+                    # 400 is retried too: some gateways report transient
+                    # "no healthy deployments" states as 400; a genuine bad
+                    # request still fails after the bounded retries.
+                    if attempt == config.max_retries or (code not in (400, 429) and not 500 <= code < 600):
                         raise SimulatorError(f"Simulator HTTP failure ({code})") from None
                 except (URLError, TimeoutError, OSError):
                     if attempt == config.max_retries:

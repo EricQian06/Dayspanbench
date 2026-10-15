@@ -185,6 +185,23 @@ class JudgeTests(unittest.TestCase):
         self.assertTrue(review["criteria"][0]["evidence_synthesized"])
         self.assertEqual(review["criteria"][0]["evidence"][0]["pointer"], "judge.reason")
 
+    def test_evidence_source_aliases_are_normalized_not_pending(self):
+        # Models on lenient gateways invent source names ("receipts",
+        # "established_facts"); aliases must coerce them instead of failing
+        # strict validation and marking the episode judge_pending.
+        verdict = {"criteria": [{"criterion_id": "R6", "passed": True,
+                                 "evidence": [
+                                     {"source": "receipts", "pointer": "R-0001",
+                                      "quote_or_value": "reservation confirmed"},
+                                     {"source": "Established_Facts", "pointer": "goals",
+                                      "quote_or_value": "reserved"}],
+                                 "reason": "Cited from receipt and facts."}]}
+        judge = LLMJudge(_client(verdict))
+        review = judge.judge(self.task, self.env, {"conclusion": "ok"})
+        self.assertEqual(review["status"], "graded")
+        sources = [e["source"] for e in review["criteria"][0]["evidence"]]
+        self.assertEqual(sources, ["receipt", "trace"])
+
 
 if __name__ == "__main__":
     unittest.main()

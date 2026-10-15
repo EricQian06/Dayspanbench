@@ -119,7 +119,11 @@ class ChatAgent:
                 except HTTPError as error:
                     code = error.code
                     error.close()
-                    if attempt == self.config.max_retries or (code != 429 and not 500 <= code < 600):
+                    # 400 is retried too: the shared gateway (az.gptplus5.com)
+                    # returns transient 400s during blips even for payloads that
+                    # replay successfully verbatim; a genuine bad request still
+                    # fails after the bounded retries.
+                    if attempt == self.config.max_retries or (code not in (400, 429) and not 500 <= code < 600):
                         raise AgentAPIError(f"Agent HTTP failure ({code})") from None
                 except (URLError, TimeoutError, OSError):
                     if attempt == self.config.max_retries:

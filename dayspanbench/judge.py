@@ -20,7 +20,7 @@ import json
 
 from .llm import SimulatorError
 
-EVIDENCE_SOURCES = ("tool_result", "trace", "final_state", "final_answer")
+EVIDENCE_SOURCES = ("tool_result", "trace", "final_state", "final_answer", "receipt")
 
 # Token-control budgets for the judge view.
 TRACE_LIMIT = 80        # most recent agent tool calls
@@ -160,6 +160,29 @@ def build_view(task, env, answer):
     }
 
 
+# Judge-side evidence-source aliases: models on lenient gateways invent
+# plausible source names ("receipts", "established_facts"); the citation's
+# content matters, so unknown sources are coerced instead of invalidating the
+# whole grade into pending.
+_EVIDENCE_SOURCE_ALIASES = {
+    "receipts": "receipt", "receipt": "receipt",
+    "established_facts": "trace", "facts": "trace", "director": "trace",
+    "summary": "final_answer", "final_summary": "final_answer",
+    "answer": "final_answer", "final answer": "final_answer",
+    "tool": "tool_result", "tool_call": "tool_result", "tool_result": "tool_result",
+    "trace": "trace", "final_state": "final_state", "final_answer": "final_answer",
+}
+
+
+def _normalize_evidence(e):
+    if not isinstance(e, dict):
+        return e
+    out = dict(e)
+    source = str(out.get("source", "")).strip().lower()
+    out["source"] = _EVIDENCE_SOURCE_ALIASES.get(source, "final_answer")
+    return out
+
+
 class LLMJudge:
     """Wraps a StructuredClient; validates the model's verdict against the
     authored criterion list and retries malformed output like the simulator."""
@@ -209,6 +232,8 @@ class LLMJudge:
             v = dict(verdict)
             if "passed" not in v and "pass" in v:
                 v["passed"] = v.pop("pass")
+            if isinstance(v.get("evidence"), list):
+                v["evidence"] = [_normalize_evidence(e) for e in v["evidence"]]
             if not isinstance(v.get("evidence"), list) or not v["evidence"]:
                 reason = v.get("reason")
                 if isinstance(reason, str) and reason.strip():
