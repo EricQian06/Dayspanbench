@@ -59,6 +59,9 @@
             }
           }
         ],
+        "deduplicate_by": [
+          "serial"
+        ],
         "evidence_fields": {}
       }
     ],

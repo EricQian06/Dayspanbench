@@ -77,7 +77,7 @@ def run_reference(task, *, recipient=None):
     # conclusion label plus a mechanical summary stitched from the receipts
     # and established facts the episode actually produced (no LLM involved).
     # These answers must never be used as a model performance result.
-    answer = {"conclusion": task["expected_conclusion"],
+    answer = {"conclusion": env.expected_conclusion(),
               "summary": _mechanical_summary(env, task)}
     result = api.submit_answer(answer)
     return env, answer, result

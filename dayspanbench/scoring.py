@@ -249,7 +249,7 @@ def evaluate(env, answer):
     options = task["public"].get("conclusion_options", {}) or {}
     legal_labels = set(options) | set(options.values())
     label_legal = isinstance(conclusion, str) and conclusion in legal_labels
-    expected = task.get("expected_conclusion")
+    expected = env.expected_conclusion()
     conclusion_correct = (conclusion in (expected, options.get(expected))
                           if expected is not None else label_legal)
 

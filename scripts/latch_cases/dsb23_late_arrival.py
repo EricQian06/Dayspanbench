@@ -18,8 +18,7 @@ def build(A, tasks, sites, horizons, conclusions):
     # villa-v1 for villa-verified; the XPT-DELAY event (train slips to 23:40
     # at 20:30) becomes a catalog update swapping train-v1 for train-v2 plus
     # a page_update at the same virtual time; the written late-check-in
-    # extension late-XPT2 becomes a further catalog update the following
-    # morning swapping villa-verified for villa-extended (late check-in until
+    # extension late-XPT2 becomes a further catalog update at 21:00 that evening swapping villa-verified for villa-extended (late check-in until
     # 00:30). The LATCH stay.book becomes a hidden kind="select" tool
     # (stay_book) linked to the catalog: only the villa-extended row is
     # acceptable, so booking on the stale 23:50 limit or an ineligible hotel
@@ -44,10 +43,11 @@ def build(A, tasks, sites, horizons, conclusions):
         "pet_accepted": fact(True,
                               "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car."),
         "train_arrival": fact("23:40",
-                              "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17."),
+                              "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.",
+                              available_at="2027-04-16T20:30:00+02:00"),
         "late_extension": fact("00:30",
                                "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
-                               available_at="2027-04-17T08:30:00+02:00"),
+                               available_at="2027-04-16T21:00:00+02:00"),
         "companion_ack": fact(True,
                               "Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.",
                               available_at="2027-04-16T20:30:00+02:00"),
@@ -144,7 +144,7 @@ def build(A, tasks, sites, horizons, conclusions):
                                  "late_until": "2027-04-16T23:50:00+02:00", "version": 1,
                                  "pet_accepted": True, "parking": "open_air", "car_height_m": 2.05,
                                  "status": "available"},
-                      "expires_at": "2027-04-17T08:30:00+02:00"}
+                      "expires_at": "2027-04-16T21:00:00+02:00"}
     train_v2 = {"id": "train-v2", "title": "train-XPT - DELAYED, arrival 23:40 (version 2)",
                 "text": "Updated rail record: train-XPT now arrives 2027-04-16 at 23:40; with the 25-minute transfer, check-in lands at 00:05 on 2027-04-17 - past the hotel's 23:50 limit unless a written extension is obtained.",
                 "fields": {"kind": "train", "train": "train-XPT", "version": 2,
@@ -166,7 +166,7 @@ def build(A, tasks, sites, horizons, conclusions):
               "Synthetic hotel and rail listings for a Lyon stay with a dog; listing claims alone do not establish pet acceptance. Current hotel terms and the rail arrival record are found through the trip records service (trip_records), and both can change - the train may slip and the hotel's terms with it, so re-check before booking. Personal constraints and authorization can be clarified through the traveler desk (camille_dialogue). Written pet and parking acceptance comes from the hotel desk by mail; supervision is acknowledged by the companion herself by mail.",
               [], "Lyon hotel listings, the rail arrival record and the traveler requirements desk."),
          page("lyon-contacts", "Hotel, companion and rail contacts",
-              "The Villa des Roses hotel desk (Marc Aubert) issues written pet acceptances and late-check-in extensions; travel companion Lea Bernard acknowledges animal supervision; the rail service desk (Julien Fabre) reports the current train arrival. All answer daily during business hours.",
+              "The Villa des Roses hotel desk (Marc Aubert) issues written pet acceptances and late-check-in extensions; travel companion Lea Bernard acknowledges animal supervision; the rail service desk (Julien Fabre) reports the current train arrival. All answer daily 08:00-23:59 Paris time for late-arrival coordination.",
               ["hotel_desk", "companion_lea", "rail_desk"], "Contacts for the hotel desk, the travel companion and the rail service desk."),
          page("lyon-entry", "Pet stay booking service",
               "Stays are booked through the booking service (stay_book): pick one current trip_records listing whose written terms accept the exact dog and parking and whose late-check-in limit covers the current arrival plus the 25-minute transfer; obtain the companion's supervision acknowledgement for that same itinerary and the traveler's approval of the exact plan (hotel, pet policy, current arrival deadline, supervision, total); then request that one stay. At most one booking; the dog is never left unattended and the driver or desk is never a supervision substitute; no payment.",
@@ -187,19 +187,19 @@ def build(A, tasks, sites, horizons, conclusions):
          send("hotel_desk", "Please issue the written pet acceptance for Nino (28 kg, current vet letter), the parking terms and the late check-in limit for April 16-18", "pet"),
          {"op": "advance", "at": "2027-04-16T20:35:00+02:00"},
          {"op": "tool", "name": "trip_records", "args": {"query": "train"}},
-         wait("pet"),
          send("companion_lea", "The train is now delayed to 23:40 with check-in around 00:05; please confirm you will stay with Nino during parking, check-in and the whole stay on this itinerary", "lea"),
-         wait("lea"),
          {"op": "tool", "name": "trip_records", "args": {"query": "villa"}},
          send("hotel_desk", "The delayed 23:40 arrival plus the 25-minute transfer lands at 00:05, past the 23:50 limit; please issue a written late check-in extension for this itinerary", "extension"),
+         wait("pet"),
+         wait("lea"),
          wait("extension"),
-         {"op": "tool", "name": "camille_dialogue", "args": {"question": "Do you approve the exact plan: Villa des Roses two nights, written 28 kg pet acceptance, extension to 00:30, Lea supervising Nino throughout, total 378 EUR?"}},
+         {"op": "tool", "name": "camille_dialogue", "args": {"question": "Do you approve the exact plan: Villa des Roses two nights, written 28 kg pet acceptance, current train arrival 23:40 and hotel arrival 00:05, extension to 00:30, Lea supervising Nino throughout, total 378 EUR?"}},
          {"op": "discover", "name": "stay_book"},
          {"op": "tool", "name": "stay_book", "args": {"entry": "villa-extended"}},
-         {"op": "advance", "at": "2027-04-17T15:00:00+02:00"},
+         {"op": "advance", "at": "2027-04-16T23:59:00+02:00"},
          {"op": "tool", "name": "stay_book", "args": {"query": "stay"}}],
         ["evening train delay rewrites the arrival record and breaks the 23:50 check-in fit",
-         "written hotel extension lands the next morning and gates the booking",
+         "written hotel extension lands at 21:00 that evening and gates booking before arrival",
          "companion acknowledgement exists only for the current delayed itinerary",
          "search-discoverable listings with five ineligible hotels",
          "hidden booking service revalidates the live listing at booking time",
@@ -223,14 +223,16 @@ def build(A, tasks, sites, horizons, conclusions):
                                       "remove": ["villa-v1"], "add": [villa_verified]},
                                      {"at": "2027-04-16T20:30:00+02:00",
                                       "remove": ["train-v1"], "add": [train_v2]},
-                                     {"at": "2027-04-17T08:30:00+02:00",
+                                     {"at": "2027-04-16T21:00:00+02:00",
                                       "remove": ["villa-verified"], "add": [villa_extended]}]}),
             hidden_tool("stay_book",
-                        "Pet stay booking service. Argument: {\"entry\": listing_id} to request the stay shown in one current trip_records row, or {\"query\": text} to read back the current booking status. Book only the plan the traveler has approved: written exact-dog acceptance, a late-check-in limit that covers the current arrival plus the 25-minute transfer, a companion supervision acknowledgement for that same itinerary, and the total within budget. At most one booking; the dog is never left unattended; no payment is taken.",
+                        "Pet stay booking service. Argument: {\"entry\": listing_id} to request the stay shown in one current trip_records row, or {\"query\": text} to read back the current booking status. Book only the plan the traveler has approved: written exact-dog acceptance, a late-check-in limit that covers the current arrival plus the 25-minute transfer, a companion supervision acknowledgement for that same itinerary, and the total within budget. Booking must finish before arrival at 2027-04-17T00:05:00+02:00; processing takes 15 business minutes. At most one booking; the dog is never left unattended; no payment is taken.",
                         "select",
                         {"catalog": "trip_records", "expect_entry": "villa-extended",
                          "expect": {"total_eur": 378, "pet_accepted": True},
-                         "process_at": "2027-04-17T09:30:00+02:00", "calendar": "paris_daily",
+                         "process_delay": 15, "calendar": "paris_trip_evening",
+                         "complete_before": "2027-04-17T00:05:00+02:00",
+                         "requires": {"facts": ["pet_accepted", "train_arrival", "late_extension", "companion_ack"]},
                          "result_text": "Stay confirmed: reservation stay-XPT1, Villa des Roses, two nights 2027-04-16 to 2027-04-18, for Camille Moreau and Nino - written 28 kg pet acceptance (pet-accept-XPT), late check-in extended to 00:30 (late-XPT2) for the delayed 23:40 arrival, open-air parking for the 2.05 m car, Lea Bernard's supervision linked; total 378 EUR; no payment taken. Arrival and the stay itself remain in the future.",
                          "reject_text": "The booking was returned: the listing is stale or does not match an approvable plan - the written pet acceptance, the current arrival fit, the companion acknowledgement and the traveler's approval must all hold; nothing was booked.",
                          "facts": ["stay_confirmed", "total_cost"], "issuer": "hotel_desk",
@@ -301,8 +303,18 @@ def build(A, tasks, sites, horizons, conclusions):
             {"id": "stay-booked", "kind": "selection_processed", "target": "stay_book",
              "hint": "The one approved stay has been processed; the confirmation receipt is with the agent and arrival remains in the future."}],
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the reference path re-verifies after the 20:30 delay, obtains the written extension and Lea's rebound acknowledgement, then books. Booking on the pre-delay 23:50 terms is not a legal path."))
+    # Late-arrival coordination is staffed this evening. Bound reading latency
+    # so the parallel confirmations plus 15-minute booking fit before arrival,
+    # including the engine's maximum per-step jitter (not just seed zero).
+    tasks[-1]["reply_delay"] = [10, 20]
+    tasks[-1]["calendars"] = dict(tasks[-1]["calendars"])
+    tasks[-1]["calendars"]["paris_trip_evening"] = {
+        "timezone": "Europe/Paris", "weekdays": list(range(7)),
+        "hours": [["08:00", "23:59"]]}
+    for actor in tasks[-1]["actors"]:
+        actor["calendar"] = "paris_trip_evening"
     sites["DSB-23"] = "lyonpetstay"
-    horizons["DSB-23"] = (2, "短期", "evening train delay, overnight written extension and supervision rebound before booking")
+    horizons["DSB-23"] = (2, "短期", "evening train delay, same-evening written extension and supervision rebound before booking")
     conclusions["DSB-23"] = {
         "stay_booked": "One approved pet stay with written acceptance, a fitting late-arrival extension and named supervision within budget",
         "unconfirmed": "Pet acceptance, the arrival fit or supervision could not be confirmed in time",

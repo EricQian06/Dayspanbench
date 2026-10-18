@@ -73,7 +73,7 @@ class DialogueLLMTests(unittest.TestCase):
         # The FixtureClient echoes the canonical fact; the engine injected it.
         self.assertEqual(first["answer"], "The budget cap is 247.80 USD for print run JOB441.")
         self.assertEqual(first["speaker"], "Keisha Brown (communications lead)")
-        view = client.calls[0]["view"]
+        view = [c for c in client.calls if c["purpose"] == "dialogue"][0]["view"]
         self.assertEqual(view["persona"], "Keisha Brown (communications lead)")
         self.assertEqual(view["canonical_fact"], first["answer"])
         self.assertTrue(view["matched_topic"])
@@ -82,7 +82,7 @@ class DialogueLLMTests(unittest.TestCase):
         # Second question sees the first exchange as prior dialogue.
         second = api.ask_user(question="And the deadline?")
         self.assertEqual(second["answer"], "The corrected hangers leave the yard with the 06:00 truck.")
-        view2 = client.calls[1]["view"]
+        view2 = [c for c in client.calls if c["purpose"] == "dialogue"][1]["view"]
         self.assertEqual(len(view2["prior_dialogue"]), 1)
         self.assertEqual(view2["prior_dialogue"][0]["question"], "What is the budget?")
         # The audit records the delivered answer.

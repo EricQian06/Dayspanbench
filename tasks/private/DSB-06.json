@@ -937,6 +937,10 @@
               }
             }
           ],
+          "deduplicate_by": [
+            "serial",
+            "symptom"
+          ],
           "evidence_fields": {}
         },
         {
@@ -1043,6 +1047,9 @@
                 "minutes": 0
               }
             }
+          ],
+          "deduplicate_by": [
+            "serial"
           ],
           "evidence_fields": {}
         }

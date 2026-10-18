@@ -6,7 +6,7 @@
     "name": "Travel companion·Lea Bernard",
     "role": "animal supervision during the trip",
     "description": "May stay with Nino and acknowledges supervision only for the itinerary shown to her; an acknowledgement for an older arrival time does not carry over after a delay.",
-    "calendar": "paris_daily",
+    "calendar": "paris_trip_evening",
     "channels": [
       "email"
     ],
@@ -133,7 +133,7 @@
     "hours": [
       [
         "08:00",
-        "20:00"
+        "23:59"
       ]
     ]
   },

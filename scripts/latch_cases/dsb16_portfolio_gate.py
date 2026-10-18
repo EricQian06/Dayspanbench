@@ -100,6 +100,7 @@ def build(A, tasks, sites, horizons, conclusions):
                                    "artifact_ids": "project-map,project-metrics",
                                    "classification": "public_synthetic", "assessment": "passed",
                                    "author": "Claire Bennett"},
+                        "requires_selections": {"enroll_desk": "processed"},
                         "facts": ["artifacts_assessed"], "issuer": "course_assessor"}
     tasks.append(task(
         "DSB-16", "Portfolio gate: assessed coursework before a truthful job application", "education_career",
@@ -250,6 +251,15 @@ def build(A, tasks, sites, horizons, conclusions):
             {"id": "application-submitted", "kind": "selection_processed", "target": "apply_desk",
              "hint": "The application backed by the assessed portfolio packet has been submitted; it is received, with no job offer and no resignation."}],
         alternate_paths="Any legal order of dialogue, record searches and provider mail is accepted if every goal's evidence conditions hold; the reference path confirms the role brief after the February 2 update, enrolls before the 18:00 deadline, and applies only after the February 10 assessment evidence exists."))
+    dialogue = next(h for h in tasks[-1]["hidden_tools"] if h["name"] == "career_dialogue")["params"]
+    dialogue["state_tools"] = ["enroll_desk", "apply_desk"]
+    dialogue["rules"][0]["variants"] = [{
+        "when": {"selections": {"enroll_desk": "processed"},
+                 "catalog_entry": {"catalog": "learning_records", "entry": "portfolio-packet"}},
+        "answer": "The two-week bridge course is complete. The assessor has passed my public-synthetic coursework project-map and project-metrics. The budget was 400 USD and the workload six hours weekly. These are assessed coursework, not paid employment. Ask for my approval of the exact application using this evidence; do not say I still need to complete these projects."}]
+    for update in tasks[-1]["page_updates"]:
+        if "February 10 update:" in update.get("text", ""):
+            update["text"] = update["text"].replace("the bridge course completed and", "for learners whose enrollment was processed, the bridge course completed and")
     sites["DSB-16"] = "portfoliogate"
     horizons["DSB-16"] = (11, "mid-short", "recruiter brief confirmation, enrollment deadline and a fixed-time assessment event gating the application")
     conclusions["DSB-16"] = {

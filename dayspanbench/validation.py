@@ -34,6 +34,45 @@ def validate_task(task):
     actors = {a["id"]: a for a in task["actors"]}
     check(len(actors) == len(task["actors"]), "Duplicate actor IDs")
     facts = task["facts"]
+    hidden = {t["name"]: t for t in task.get("hidden_tools", [])}
+
+    def check_selections(requirements, where):
+        for name, status in requirements.items():
+            check(hidden.get(name, {}).get("kind") == "select", f"{where}: unknown selection service {name}")
+            check(status in {"pending", "processed", "rejected", "expired"}, f"{where}: unknown selection status")
+
+    def check_condition(condition, where):
+        check(set(condition) <= {"not_before", "before", "facts", "selections", "catalog_entry"},
+              f"{where}: unsupported condition")
+        check(set(condition.get("facts", [])) <= set(facts), f"{where}: unknown prerequisite fact")
+        check_selections(condition.get("selections", {}), where)
+        item = condition.get("catalog_entry")
+        if item:
+            catalog = hidden.get(item.get("catalog"), {})
+            entries = catalog.get("params", {}).get("entries", []) + [
+                e for u in catalog.get("params", {}).get("updates", []) for e in u.get("add", [])]
+            check(catalog.get("kind") == "catalog" and any(e["id"] == item.get("entry") for e in entries),
+                  f"{where}: unknown conditional catalog entry")
+
+    for name, tool in hidden.items():
+        params = tool["params"]
+        check_condition(params.get("requires", {}), name)
+        if tool["kind"] == "catalog":
+            for entry in params.get("entries", []) + [e for u in params.get("updates", []) for e in u.get("add", [])]:
+                check_selections(entry.get("requires_selections", {}), name)
+    all_tools = {name: tool for actor in actors.values() for name, tool in actor["tools"].items()}
+    for fid, fact in facts.items():
+        if fact.get("computed"):
+            source = all_tools.get(fact["computed"].get("tool"), {})
+            check(source.get("kind") == "lookup" and fid in source.get("facts", []),
+                  f"{fid}: computed fact must name its producing lookup")
+            check("{value}" in fact["computed"].get("text", ""),
+                  f"{fid}: computed fact text must include its actual timestamp")
+    if task.get("conclusion_by_fact"):
+        rule = task["conclusion_by_fact"]
+        check(rule.get("fact") in facts, "conclusion_by_fact: unknown fact")
+        check(all(rule.get(k) in task["public"]["conclusion_options"] for k in ("before", "after", "missing")),
+              "conclusion_by_fact: unknown conclusion label")
     def check_requirement(req):
         check(bool(req.get("subject")) and bool(req.get("predicate")) and bool(req.get("authorities")), "Incomplete evidence requirement")
         check(any(f["attributes"]["subject"] == req["subject"] and f["attributes"]["predicate"] == req["predicate"] for f in facts.values()), "Evidence requirement has no fixture")
@@ -58,6 +97,11 @@ def validate_task(task):
             edges[wid] = []
             check(bool(workflow["aliases"]), f"{wid}: no rule routing aliases")
             check(bool(workflow["steps"]), f"{wid}: no steps")
+            if workflow.get("deduplicate_by"):
+                check(set(workflow["deduplicate_by"]) <= set(workflow["required_fields"]),
+                      f"{wid}: deduplication identity must use required fields")
+                check(all(actor["tools"][s["tool"]]["kind"] != "deny" for s in workflow["steps"]),
+                      f"{wid}: shared workflows must complete through reply")
             for field, requirement in workflow.get("evidence_fields", {}).items():
                 check(field in workflow["required_fields"], f"{wid}: bad evidence gate")
                 check_requirement(requirement)
@@ -293,6 +337,19 @@ def validate_task(task):
             catalog = params.get("catalog")
             catalogs = {t["name"] for t in task.get("hidden_tools", []) if t["kind"] == "catalog"}
             check(catalog in catalogs, f"{where}: select without a linked catalog tool")
+            required = params.get("requires", {}).get("facts", [])
+            check(set(required) <= set(facts), f"{where}: unknown prerequisite fact")
+            if params.get("complete_before"):
+                deadline = parse(params["complete_before"])
+                check(parse(task["start_at"]) < deadline <= parse(task["deadline_at"]),
+                      f"{where}: service deadline outside episode")
+                if params.get("process_at"):
+                    check(parse(params["process_at"]) < deadline,
+                          f"{where}: processing is scheduled after service deadline")
+                for fid in required + params.get("facts", []):
+                    release = facts.get(fid, {}).get("available_at")
+                    check(not release or parse(release) < deadline,
+                          f"{where}: fact {fid} is published after service deadline")
             check(not (params.get("process_at") and "process_delay" in params),
                   f"{where}: process_at and process_delay are mutually exclusive")
             if "process_at" in params:
@@ -313,9 +370,16 @@ def validate_task(task):
         elif tool["kind"] == "dialogue":
             rules = params.get("rules", [])
             check(bool(rules), f"{where}: dialogue tool without rules")
+            check(all(hidden.get(n, {}).get("kind") == "select" for n in params.get("state_tools", [])),
+                  f"{where}: role state must name existing selection services")
             for index, rule in enumerate(rules):
                 check(bool(rule.get("keywords")) and bool(rule.get("answer")),
                       f"{where}: rules[{index}] without keywords or answer")
+                check_condition(rule.get("when", {}), where)
+                for variant in rule.get("variants", []):
+                    check(bool(variant.get("when")) and bool(variant.get("answer")),
+                          f"{where}: conditional dialogue requires when and answer")
+                    check_condition(variant.get("when", {}), where)
         else:  # record
             records = params.get("records", [])
             check(bool(records), f"{where}: record tool without records")

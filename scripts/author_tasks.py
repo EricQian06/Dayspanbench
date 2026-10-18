@@ -641,6 +641,26 @@ TASKS.append(task("DSB-04", "共享仪器：培训、进口耗材与七天稳定
     page_updates=[page_update("lab-intro", "2026-11-05T09:00:00+08:00",
         text="南屿共享实验室（11月5日更新）：原定11月6日（周五）14点安全培训批次因场地调整取消，改至11月13日（周五）14点举行。进口耗材预计11月17日到库，之后需连续7天稳定性校准和人工复核。仪器使用须持有效安全培训记录。")]))
 
+# Availability follows the actual calibration and manual-review workflow,
+# including late applications and resource contention; no fixed-date answer.
+TASKS[-1]["facts"]["window"]["text"] = "最早可用时间由实际连续7天校准及人工复核完成时间确定，以本次办结回执为准。"
+TASKS[-1]["facts"]["window"]["computed"] = {
+    "tool": "instrument.main.4.lookup",
+    "text": "连续7天稳定性校准及人工复核已完成，最早可用时间为{value}；尚未预约仪器。"}
+TASKS[-1]["conclusion_by_fact"] = {
+    "fact": "window", "before": "available_after_calibration",
+    "after": "available_now", "missing": "unconfirmed"}
+for criterion in TASKS[-1]["judge_criteria"]:
+    if criterion["id"] == "L-R3-window":
+        criterion["pass_if"] = "总结中的最早可用时间与本次实际校准和人工复核完成后签发的最新书面回执一致，不以固定的11月25日为标准。"
+    if criterion["id"] == "L-R5-conclusion":
+        criterion["pass_if"] = "总体结论与本次实际状态一致：取得校准及人工复核完成的有效回执，且当前时间已达到回执可用时间时应为available_now；未核实则为unconfirmed。尚未预约不等于仪器尚不可用。"
+training_status = next(h for h in TASKS[-1]["hidden_tools"] if h["name"] == "nanyu_training_status")
+training_status["usage"] = "南屿培训状态查询。query可省略以读取全部记录；查批次用batch，查顾晓个人培训申请及办结凭证用training。"
+training_status["params"]["records"].append({
+    "key": "training", "label": "顾晓 个人培训申请 办理进度 合格记录 SAFE-NOV06-482",
+    "form": "lab_training_form", "initial": "尚未提交个人培训记录申请。"})
+
 # 05: Manufacturing — quote expires while waiting for QA.
 # The dispatch conclusion is form-only: the planner verifies production and the
 # MOQ by mail, but the written earliest-dispatch conclusion is issued
@@ -812,6 +832,12 @@ TASKS.append(task("DSB-06", "家电保修：等待原厂补货与工程师轮值
     page_updates=[page_update("service-intro", "2026-11-13T09:00:00+08:00",
         text="霁光电器售后（11月13日更新）：原厂配件补货批次已到库核验。上门时段的书面结论须通过霁光上门时段登记渠道（jiguang_visit_register）提交预核登记后取得，办理进度可经霁光上门进度查询（jiguang_visit_status）复核；是否在保修范围以受理核实为准，维修由工程师另行排期。")],
     reply_delay=(12, 30)))
+
+# Direct requests and internal referrals for the same active repair share work.
+for actor in TASKS[-1]["actors"]:
+    if actor["id"] in {"engineer", "parts"}:
+        next(w for w in actor["workflows"] if w["id"] == "main")["deduplicate_by"] = (
+            ["serial", "symptom"] if actor["id"] == "engineer" else ["serial"])
 
 # 07: Archive — rights-holder succession review, then a separate digitization request.
 # The fee conclusion is form-only: the front desk still names the rights
@@ -1477,7 +1503,7 @@ def add_direct_review_path(item):
     item["alternate_paths"] = "两条合法路径：由单证联络人内部转交，或材料核验后取得转介并直接联系境外代理。按同一复核能力、受理凭证和截止状态评分，不绑定人物ID或中间转交层数。"
 
 
-def write_tasks():
+def write_tasks(task_ids=None):
     # Stratified design across time scales; not an empirical frequency model.
     horizon_design = {
         "DSB-01": (3, "短期", "周末关门与设备内部转交"),
@@ -1512,6 +1538,8 @@ def write_tasks():
     for scope in ("private", "public"):
         (ROOT / "tasks" / scope).mkdir(parents=True, exist_ok=True)
     for original in TASKS:
+        if task_ids is not None and original["id"] not in task_ids:
+            continue
         item = deepcopy(original)
         add_direct_review_path(item)
         for page in item["public"]["pages"]:
@@ -1539,7 +1567,8 @@ def write_tasks():
                       "local_facts": {fid: item["facts"][fid] for fid in actor["knowledge"]},
                       "start_at": item["start_at"], "deadline_at": item["deadline_at"]}
             (directory / f"{actor['id']}.json").write_text(json.dumps(bundle, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {len(TASKS)} manually authored tasks and {sum(len(t['actors']) for t in TASKS)} actor configurations.")
+    written = [t for t in TASKS if task_ids is None or t["id"] in task_ids]
+    print(f"Wrote {len(written)} manually authored tasks and {sum(len(t['actors']) for t in written)} actor configurations.")
 
 
 # Tasks ported from the sibling LATCH_BENCH case corpus (cases/current/*.json):

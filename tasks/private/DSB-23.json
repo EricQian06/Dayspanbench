@@ -385,11 +385,29 @@
           "18:00"
         ]
       ]
+    },
+    "paris_trip_evening": {
+      "timezone": "Europe/Paris",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "08:00",
+          "23:59"
+        ]
+      ]
     }
   },
   "reply_delay": [
-    20,
-    45
+    10,
+    20
   ],
   "tools": [
     "observe",
@@ -542,7 +560,7 @@
                   "car_height_m": 2.05,
                   "status": "available"
                 },
-                "expires_at": "2027-04-17T08:30:00+02:00"
+                "expires_at": "2027-04-16T21:00:00+02:00"
               }
             ]
           },
@@ -571,7 +589,7 @@
             ]
           },
           {
-            "at": "2027-04-17T08:30:00+02:00",
+            "at": "2027-04-16T21:00:00+02:00",
             "remove": [
               "villa-verified"
             ],
@@ -604,7 +622,7 @@
     },
     {
       "name": "stay_book",
-      "usage": "Pet stay booking service. Argument: {\"entry\": listing_id} to request the stay shown in one current trip_records row, or {\"query\": text} to read back the current booking status. Book only the plan the traveler has approved: written exact-dog acceptance, a late-check-in limit that covers the current arrival plus the 25-minute transfer, a companion supervision acknowledgement for that same itinerary, and the total within budget. At most one booking; the dog is never left unattended; no payment is taken.",
+      "usage": "Pet stay booking service. Argument: {\"entry\": listing_id} to request the stay shown in one current trip_records row, or {\"query\": text} to read back the current booking status. Book only the plan the traveler has approved: written exact-dog acceptance, a late-check-in limit that covers the current arrival plus the 25-minute transfer, a companion supervision acknowledgement for that same itinerary, and the total within budget. Booking must finish before arrival at 2027-04-17T00:05:00+02:00; processing takes 15 business minutes. At most one booking; the dog is never left unattended; no payment is taken.",
       "kind": "select",
       "params": {
         "catalog": "trip_records",
@@ -613,8 +631,17 @@
           "total_eur": 378,
           "pet_accepted": true
         },
-        "process_at": "2027-04-17T09:30:00+02:00",
-        "calendar": "paris_daily",
+        "process_delay": 15,
+        "calendar": "paris_trip_evening",
+        "complete_before": "2027-04-17T00:05:00+02:00",
+        "requires": {
+          "facts": [
+            "pet_accepted",
+            "train_arrival",
+            "late_extension",
+            "companion_ack"
+          ]
+        },
         "result_text": "Stay confirmed: reservation stay-XPT1, Villa des Roses, two nights 2027-04-16 to 2027-04-18, for Camille Moreau and Nino - written 28 kg pet acceptance (pet-accept-XPT), late check-in extended to 00:30 (late-XPT2) for the delayed 23:40 arrival, open-air parking for the 2.05 m car, Lea Bernard's supervision linked; total 378 EUR; no payment taken. Arrival and the stay itself remain in the future.",
         "reject_text": "The booking was returned: the listing is stale or does not match an approvable plan - the written pet acceptance, the current arrival fit, the companion acknowledgement and the traveler's approval must all hold; nothing was booked.",
         "facts": [
@@ -805,7 +832,7 @@
       {
         "id": "lyon-contacts",
         "title": "Hotel, companion and rail contacts",
-        "text": "The Villa des Roses hotel desk (Marc Aubert) issues written pet acceptances and late-check-in extensions; travel companion Lea Bernard acknowledges animal supervision; the rail service desk (Julien Fabre) reports the current train arrival. All answer daily during business hours.",
+        "text": "The Villa des Roses hotel desk (Marc Aubert) issues written pet acceptances and late-check-in extensions; travel companion Lea Bernard acknowledges animal supervision; the rail service desk (Julien Fabre) reports the current train arrival. All answer daily 08:00-23:59 Paris time for late-arrival coordination.",
         "contacts": [
           "hotel_desk",
           "companion_lea",
@@ -897,6 +924,7 @@
     "train_arrival": {
       "value": "23:40",
       "text": "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.",
+      "available_at": "2027-04-16T20:30:00+02:00",
       "attributes": {
         "subject": {
           "task": "DSB-23",
@@ -913,7 +941,7 @@
     "late_extension": {
       "value": "00:30",
       "text": "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
-      "available_at": "2027-04-17T08:30:00+02:00",
+      "available_at": "2027-04-16T21:00:00+02:00",
       "attributes": {
         "subject": {
           "task": "DSB-23",
@@ -983,7 +1011,7 @@
       "name": "Villa des Roses hotel desk·Marc Aubert",
       "role": "written pet acceptance, parking terms and late check-in extensions",
       "description": "Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission.",
-      "calendar": "paris_daily",
+      "calendar": "paris_trip_evening",
       "channels": [
         "email"
       ],
@@ -1177,7 +1205,7 @@
       "name": "Travel companion·Lea Bernard",
       "role": "animal supervision during the trip",
       "description": "May stay with Nino and acknowledges supervision only for the itinerary shown to her; an acknowledgement for an older arrival time does not carry over after a delay.",
-      "calendar": "paris_daily",
+      "calendar": "paris_trip_evening",
       "channels": [
         "email"
       ],
@@ -1295,7 +1323,7 @@
       "name": "Rail service desk·Julien Fabre",
       "role": "current train arrival and delay status",
       "description": "Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit.",
-      "calendar": "paris_daily",
+      "calendar": "paris_trip_evening",
       "channels": [
         "email"
       ],
@@ -1612,7 +1640,7 @@
   "expected_conclusion": "stay_booked",
   "temporal_mechanisms": [
     "evening train delay rewrites the arrival record and breaks the 23:50 check-in fit",
-    "written hotel extension lands the next morning and gates the booking",
+    "written hotel extension lands at 21:00 that evening and gates booking before arrival",
     "companion acknowledgement exists only for the current delayed itinerary",
     "search-discoverable listings with five ineligible hotels",
     "hidden booking service revalidates the live listing at booking time",
@@ -1672,19 +1700,11 @@
       }
     },
     {
-      "op": "wait_for",
-      "label": "pet"
-    },
-    {
       "op": "send",
       "to": "companion_lea",
       "text": "The train is now delayed to 23:40 with check-in around 00:05; please confirm you will stay with Nino during parking, check-in and the whole stay on this itinerary",
       "label": "lea",
       "fields": "$user"
-    },
-    {
-      "op": "wait_for",
-      "label": "lea"
     },
     {
       "op": "tool",
@@ -1702,13 +1722,21 @@
     },
     {
       "op": "wait_for",
+      "label": "pet"
+    },
+    {
+      "op": "wait_for",
+      "label": "lea"
+    },
+    {
+      "op": "wait_for",
       "label": "extension"
     },
     {
       "op": "tool",
       "name": "camille_dialogue",
       "args": {
-        "question": "Do you approve the exact plan: Villa des Roses two nights, written 28 kg pet acceptance, extension to 00:30, Lea supervising Nino throughout, total 378 EUR?"
+        "question": "Do you approve the exact plan: Villa des Roses two nights, written 28 kg pet acceptance, current train arrival 23:40 and hotel arrival 00:05, extension to 00:30, Lea supervising Nino throughout, total 378 EUR?"
       }
     },
     {
@@ -1724,7 +1752,7 @@
     },
     {
       "op": "advance",
-      "at": "2027-04-17T15:00:00+02:00"
+      "at": "2027-04-16T23:59:00+02:00"
     },
     {
       "op": "tool",
@@ -1739,7 +1767,7 @@
   "horizon_design": {
     "reference_days": 2,
     "stratum": "短期",
-    "mechanism": "evening train delay, overnight written extension and supervision rebound before booking",
+    "mechanism": "evening train delay, same-evening written extension and supervision rebound before booking",
     "distribution": "manually stratified approximately logarithmic"
   }
 }

@@ -21,7 +21,7 @@
     {
       "id": "lyon-contacts",
       "title": "Hotel, companion and rail contacts",
-      "text": "The Villa des Roses hotel desk (Marc Aubert) issues written pet acceptances and late-check-in extensions; travel companion Lea Bernard acknowledges animal supervision; the rail service desk (Julien Fabre) reports the current train arrival. All answer daily during business hours.",
+      "text": "The Villa des Roses hotel desk (Marc Aubert) issues written pet acceptances and late-check-in extensions; travel companion Lea Bernard acknowledges animal supervision; the rail service desk (Julien Fabre) reports the current train arrival. All answer daily 08:00-23:59 Paris time for late-arrival coordination.",
       "contacts": [
         "hotel_desk",
         "companion_lea",

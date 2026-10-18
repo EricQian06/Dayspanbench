@@ -647,7 +647,10 @@
             "answer": "I can review the final plan from July 10 at 11:00 New York time. Show the restaurant address, current table time, six meals, written sesame controls, access evidence and full pre-tip cost. Reserve only after I approve; no payment or automatic gratuity."
           }
         ],
-        "default": "Please ask me about the party, accessibility, food requirements, timing, budget or permission."
+        "default": "Please ask me about the party, accessibility, food requirements, timing, budget or permission.",
+        "state_tools": [
+          "reserve_table"
+        ]
       }
     }
   ],
@@ -1551,13 +1554,20 @@
     },
     {
       "op": "advance",
-      "at": "2027-07-10T10:30:00-04:00"
+      "at": "2027-07-10T11:30:00-04:00"
     },
     {
       "op": "tool",
       "name": "restaurant_search",
       "args": {
         "query": "Garden Ramp Bistro"
+      }
+    },
+    {
+      "op": "tool",
+      "name": "family_dialogue",
+      "args": {
+        "question": "Do you approve this current plan: Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district, July 11 at 13:30, four adult meals and two fish-free child meals, written sesame ingredient and cross-contact controls and verified step-free wheelchair access, total 247.80 USD before optional tip, no payment or automatic gratuity?"
       }
     },
     {

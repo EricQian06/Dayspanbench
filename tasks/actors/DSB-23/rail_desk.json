@@ -6,7 +6,7 @@
     "name": "Rail service desk·Julien Fabre",
     "role": "current train arrival and delay status",
     "description": "Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit.",
-    "calendar": "paris_daily",
+    "calendar": "paris_trip_evening",
     "channels": [
       "email"
     ],
@@ -131,7 +131,7 @@
     "hours": [
       [
         "08:00",
-        "20:00"
+        "23:59"
       ]
     ]
   },
@@ -139,6 +139,7 @@
     "train_arrival": {
       "value": "23:40",
       "text": "Train train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.",
+      "available_at": "2027-04-16T20:30:00+02:00",
       "attributes": {
         "subject": {
           "task": "DSB-23",

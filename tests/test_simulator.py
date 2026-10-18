@@ -38,6 +38,8 @@ class FixtureClient:
     def complete(self, **kwargs):
         self.calls.append(deepcopy(kwargs))
         view = kwargs["view"]
+        if kwargs["purpose"] == "dialogue_topics":
+            return {"topic_ids": view["suggested_topic_ids"]}
         if kwargs["purpose"] == "route":
             if self.route_override:
                 return self.route_override(view)

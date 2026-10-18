@@ -6,7 +6,7 @@
     "name": "Villa des Roses hotel desk·Marc Aubert",
     "role": "written pet acceptance, parking terms and late check-in extensions",
     "description": "Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission.",
-    "calendar": "paris_daily",
+    "calendar": "paris_trip_evening",
     "channels": [
       "email"
     ],
@@ -209,7 +209,7 @@
     "hours": [
       [
         "08:00",
-        "20:00"
+        "23:59"
       ]
     ]
   },
@@ -217,7 +217,7 @@
     "late_extension": {
       "value": "00:30",
       "text": "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
-      "available_at": "2027-04-17T08:30:00+02:00",
+      "available_at": "2027-04-16T21:00:00+02:00",
       "attributes": {
         "subject": {
           "task": "DSB-23",

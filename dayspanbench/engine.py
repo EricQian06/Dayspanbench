@@ -20,6 +20,7 @@ from .director import DirectorState
 from .recipient import RuleRecipient
 from .scoring import evaluate as evaluate_outcome
 from .llm import SimulatorError, key_tokens, missing_key_tokens
+from .dialogue import current_facts, select_facts, role_state, condition_met
 
 
 TRANSITIONS = {
@@ -69,7 +70,8 @@ _UNIT_LOOKUP = {unit: canon for canon, synonyms in UNIT_SYNONYMS for unit in syn
 # only the persona's wording and continuity with the prior dialogue.
 DIALOGUE_PROMPT = """你是基准环境中的一名对话者，按persona设定回答Agent的一个问题。
 canonical_fact是引擎确定的权威事实，必须完整传达：其中的全部数字、编号、带引号的专名必须原样保留，不得改动或省略，也不得添加canonical_fact之外的任何事实或承诺。
-可以用自然语言组织措辞，并结合prior_dialogue中本对话的既往问答做上下文衔接；stage_hint（如有）仅是情境提示，不得提及评分或进度结构。
+role_facts是本角色当前可知资料，current_state是实际办理状态；二者优先于历史对话和Agent的推测。不得沿用过期的未完成状态，不得把申请或批准说成已办理成功。
+可以结合prior_dialogue组织措辞，但不得自行添加忘记或拒绝等设定。审批意见须依据role_facts中的授权条件和current_state；不得因历史错误回复而拒绝已满足条件的计划，也不得把批准说成已经办理成功。不得提及评分或内部进度结构。
 matched_topic为false时，canonical_fact是引导性默认答复：按persona口吻说明没有更多可补充的内容，可引导Agent换个话题提问。
 只输出符合Schema的JSON，不输出解释或思维过程。"""
 
@@ -179,6 +181,7 @@ class ActorState:
     outbox: list = field(default_factory=list)
     cases: list = field(default_factory=list)
     history: list = field(default_factory=list)
+    reservations: list = field(default_factory=list)
 
 
 class Environment:
@@ -351,21 +354,20 @@ class Environment:
             self.record("simulator_failure", actor=actor.spec["id"], reason=str(exc))
             raise
 
-    def render_dialogue(self, tool_name, params, question, canonical, matched):
+    def render_dialogue(self, tool_name, params, question, canonical, matched, role_facts=None):
         """LLM rephrase of an authored dialogue answer (dialogue_mode="llm").
-        The engine injects the canonical fact, the director's stage hint and
-        the running dialogue history; the model returns only the persona's
-        wording. Key tokens (numbers, ids, quoted names) must survive
-        verbatim — one repair retry, then SimulatorError, which marks the
-        episode invalid, not failed."""
+        The engine injects current role-scoped facts, service state and dialogue
+        history. Key tokens survive verbatim; one repair retry is followed by
+        the canonical answer if the model continues to lose those tokens."""
         history = self.dialogue_history.setdefault(tool_name, [])
-        snapshot = self.director.snapshot()
         view = {"persona": params.get("persona", "the user"),
                 "question": question, "canonical_fact": canonical,
                 "matched_topic": matched,
                 "prior_dialogue": deepcopy(history[-12:]),
-                "stage_hint": snapshot["hint"],
-                "achieved_stages": snapshot["achieved_stages"],
+                "stage_hint": None,
+                "achieved_stages": [],
+                "role_facts": deepcopy(role_facts or []),
+                "current_state": role_state(self, params),
                 "now": stamp(self.now)}
         schema = {"type": "object", "properties": {"answer": {"type": "string"}},
                   "required": ["answer"], "additionalProperties": False}
@@ -572,6 +574,10 @@ class Environment:
             # The option disappeared from inventory between selection and
             # processing: the booking cannot be honored.
             selection["accepted"] = False
+        if params.get("complete_before") and self.now >= parse(params["complete_before"]):
+            selection["accepted"] = False
+        if not condition_met(self, params.get("requires", {})):
+            selection["accepted"] = False
         if selection["accepted"]:
             selection["status"] = "processed"
             selection["result_text"] = params.get("result_text") or "Your selection has been confirmed."
@@ -671,6 +677,26 @@ class Environment:
             return
         case["admitted_at"] = stamp(self.now)
         case["admission_evidence"] = admission_evidence
+        keys = workflow.get("deduplicate_by", [])
+        if keys and all(case["fields"].get(k) is not None for k in keys):
+            for existing in self.cases.values():
+                if (existing["id"] == case["id"] or existing["actor"] != case["actor"]
+                        or existing.get("linked_to") or not existing.get("workflow")
+                        or existing["workflow"]["id"] != workflow["id"]
+                        or existing["state"] not in {"queued", "working", "waiting_internal"}):
+                    continue
+                if (all(existing["fields"].get(k) == case["fields"][k] for k in keys)
+                        and all(existing["fields"][k] == v for k, v in case["fields"].items()
+                                if k in existing["fields"])):
+                    case["linked_to"] = existing["id"]
+                    self.transition(case, "queued")
+                    self.transition(case, "working")
+                    self.transition(case, "waiting_internal")
+                    self.record("case_linked", case_id=case["id"], existing=existing["id"])
+                    if not case.get("parent"):
+                        self.emit(case, "同一事项已在办理，已关联原有进度；结果办结后回复。",
+                                  status="acknowledgement")
+                    return
         self.schedule_step(case)
 
     # Acknowledgements only promise an ETA when the remaining workflow is
@@ -708,18 +734,20 @@ class Environment:
         if now is None:
             now = self.now
         actor = self.actors[actor_id]
-        free = actor.free_at
+        reservations = list(actor.reservations)
         t = now
         for i in range(from_step, len(workflow["steps"])):
             step = workflow["steps"][i]
             tool = actor.spec["tools"][step["tool"]]
             if tool["kind"] in {"delegate", "consult"}:
-                _, t, free = actor.calendar.schedule(t, self.projected_delay(step["delay"], origin), free)
+                _, t = self.reserve_step(actor, t, tool,
+                    self.projected_delay(step["delay"], origin), reservations)
                 target_wf = next(w for w in self.actors[tool["target"]].spec["workflows"]
                                  if w["id"] == tool["workflow"])
                 t = max(t, self.estimate_completion(tool["target"], target_wf, 0, t, origin=origin))
             else:
-                _, t, free = actor.calendar.schedule(t, self.projected_delay(step["delay"], origin), free)
+                _, t = self.reserve_step(actor, t, tool,
+                    self.projected_delay(step["delay"], origin), reservations)
         return t
 
     def active_child(self, case, workflow_id):
@@ -735,6 +763,8 @@ class Environment:
         real progress instead of re-simulating it from scratch — re-estimating
         a finished reviewer from "now" once pushed a DSB-02 receipt a whole
         weekly batch past its original promise."""
+        if case.get("linked_to"):
+            return self.case_completion(self.cases[case["linked_to"]])
         t = self.now
         actor = self.actors[case["actor"]]
         workflow = case["workflow"]
@@ -752,7 +782,8 @@ class Environment:
             if child is not None:
                 t = self.case_completion(child)
             else:
-                _, t, _ = actor.calendar.schedule(t, step["delay"], actor.free_at)
+                _, t = self.reserve_step(actor, t, tool, step["delay"],
+                                         list(actor.reservations))
                 target_wf = next(w for w in self.actors[tool["target"]].spec["workflows"]
                                  if w["id"] == tool["workflow"])
                 t = max(t, self.estimate_completion(tool["target"], target_wf, 0, t, origin=case.get("origin")))
@@ -832,14 +863,30 @@ class Environment:
         self.transition(case, "queued")
         actor = self.actors[case["actor"]]
         step = case["workflow"]["steps"][case["step"]]
-        start, end, resource_free = actor.calendar.schedule(self.now, self.jittered_delay(case, step["delay"]), actor.free_at)
-        actor.free_at = resource_free
+        delay = self.jittered_delay(case, step["delay"])
+        start, end = self.reserve_step(actor, self.now, actor.spec["tools"][step["tool"]],
+                                       delay, actor.reservations)
+        actor.free_at = max((b for _, b in actor.reservations), default=self.now)
         case["due_at"] = stamp(end)
         self.record("scheduled", case_id=case["id"], actor=case["actor"], step=step["id"],
                     start_at=stamp(start), due_at=stamp(end), tool=step["tool"])
         self.enqueue(start, "start", case["id"])
         self.enqueue(end, "complete", case["id"])
         self.notify_eta_slip(case)
+
+    def reserve_step(self, actor, now, tool, delay, reservations):
+        """Do the work, then wait for publication without occupying the worker.
+
+        A release gates completion, not the start of all preceding work. Moving
+        the whole operation after publication unnecessarily delays long reviews.
+        Explicit not_before remains a start constraint in Calendar.reserve.
+        """
+        start, end = actor.calendar.reserve(now, delay, reservations)
+        for fid in tool.get("facts", []):
+            release = self.task["facts"][fid].get("available_at")
+            if release:
+                end = max(end, parse(release))
+        return start, end
 
     def register_fact(self, fact_id, issuer_id, agent_visible=True):
         """Establish a fact on the director: no EV numbering, just the authored
@@ -894,7 +941,8 @@ class Environment:
             return False
         if entry.get("expires_at") and self.now >= parse(entry["expires_at"]):
             return False
-        return True
+        return all(self.selections.get(name, {}).get("status") == status
+                   for name, status in entry.get("requires_selections", {}).items())
 
     def execute_tool(self, case, tool_id):
         actor = self.actors[case["actor"]]
@@ -906,6 +954,15 @@ class Environment:
             for fact_id in tool["facts"]:
                 if fact_id not in actor.spec["knowledge"]:
                     raise PermissionError("Cross-actor fact access")
+                fact = self.task["facts"][fact_id]
+                computed = fact.get("computed")
+                if (computed and computed.get("tool") == tool_id
+                        and fact_id not in self.director.facts):
+                    fact["value"] = stamp(self.now)
+                    fact["text"] = computed["text"].format(value=fact["value"])
+                    for goal in self.task.get("goals", []):
+                        if fact_id in goal.get("accepted_facts", []):
+                            goal["expected"] = fact["value"]
                 self.register_fact(fact_id, case["actor"], agent_visible=False)
                 case["facts"].append(fact_id)
         elif tool["kind"] == "document":
@@ -1001,12 +1058,24 @@ class Environment:
                 self.emit(case, "".join(parts), list(dict.fromkeys(case["contacts"])),
                           receipts=None if case.get("origin") == "phone" else
                           ([receipt] if receipt else None))
+            for linked in list(self.cases.values()):
+                if linked.get("linked_to") != case["id"] or linked["state"] != "waiting_internal":
+                    continue
+                linked["facts"] = list(case["facts"])
+                linked["contacts"] = list(case["contacts"])
+                self.transition(linked, "queued")
+                self.transition(linked, "working")
+                self.execute_tool(linked, tool_id)
             return "done"
         else:
             raise ValueError("Unknown recipient tool")
         return "continue"
 
     def complete_failure(self, case, reason):
+        for linked in list(self.cases.values()):
+            if linked.get("linked_to") == case["id"] and linked["state"] == "waiting_internal":
+                self.transition(linked, "failed")
+                self.complete_failure(linked, reason)
         if case.get("parent"):
             parent = self.cases[case["parent"]]
             self.transition(parent, "failed")
@@ -1065,16 +1134,38 @@ class Environment:
                 self.schedule_step(case)
 
     def advance(self, until, wake_on_message=False):
+        if self.simulator_failure:
+            raise SimulatorError("Invalid episode: background environment failed")
         until = parse(until) if isinstance(until, str) else until
         if until < self.now:
             raise ValueError("Cannot move the clock backwards")
         until = min(until, self.deadline)
         message_count = len(self.messages)
         while self.events and self.events[0][0] <= until:
-            self.process_event(heapq.heappop(self.events))
+            event = heapq.heappop(self.events)
+            try:
+                self.process_event(event)
+            except Exception as error:
+                # This is background work, not a malformed agent request.
+                # Keep the event for diagnosis; do not retry partially executed
+                # side effects or silently classify an orphaned case as valid.
+                heapq.heappush(self.events, event)
+                self.simulator_failure = {"type": type(error).__name__, "message": str(error)}
+                self.record("environment_failure", event_kind=event[2], target=event[3],
+                            error=str(error))
+                raise SimulatorError(f"Background event {event[2]} failed: {error}") from error
             if wake_on_message and len(self.messages) > message_count:
                 return
         self.now = until
+
+    def expected_conclusion(self):
+        rule = self.task.get("conclusion_by_fact")
+        if rule:
+            fact = self.director.facts.get(rule["fact"])
+            if not fact or not fact.get("agent_visible"):
+                return rule["missing"]
+            return rule["after"] if self.now >= parse(fact["value"]) else rule["before"]
+        return self.task.get("expected_conclusion")
 
     def evaluate(self, answer):
         if self.simulator_failure:
@@ -1831,6 +1922,11 @@ class AgentTools:
         else:
             calendar = Calendar(env.task["calendars"][params.get("calendar", "office")])
             at = calendar.add_business(env.now, params.get("process_delay", 60))
+        if params.get("complete_before") and at >= parse(params["complete_before"]):
+            raise ValueError("This request cannot complete before the service deadline: "
+                             + params["complete_before"])
+        if not condition_met(env, params.get("requires", {})):
+            raise ValueError("Required current evidence or prior service completion is missing")
         env.selections[name] = {"entry": kwargs["entry"].strip(), "catalog": params["catalog"],
                                 "status": "pending", "submitted_at": stamp(env.now),
                                 "accepted": accepted, "result_text": None, "receipts": [],
@@ -1851,35 +1947,30 @@ class AgentTools:
 
     def _hidden_dialogue(self, name, spec, kwargs):
         """Ask the task's principal (the user being assisted) a question.
-        Keyword mode (the default): replies are authored canned answers matched
-        by keyword; the agent must ask the right question to surface a fact
-        that was never in any page. dialogue_mode="llm" (only active when the
-        episode runs under the LLM simulator): the matched rule's answer (or
-        the authored default) is the canonical fact the engine injects, and
-        the model contributes only the persona's wording, grounded on the
-        prior dialogue history. User statements are information, not
-        attested evidence."""
+        All matching authored topics contribute facts, with semantic topic
+        selection in LLM mode. Conditional variants replace stale statements.
+        Only this role's current facts and explicitly scoped service state are
+        supplied; user statements remain information, not attested evidence."""
         env = self._env
         question = kwargs.get("question")
         if set(kwargs) != {"question"} or not isinstance(question, str) or not question.strip():
             raise ValueError("hidden dialogue tool takes a single string argument: question")
         params = spec["params"]
-        needle = question.casefold()
-        matched = None
-        for rule in params.get("rules", []):
-            if any(k.casefold() in needle for k in rule.get("keywords", [])):
-                matched = rule
-                break
-        if matched is None:
+        facts = current_facts(env, params)
+        matched = select_facts(env, name, params, question, facts)
+        if not matched:
             canonical = params.get("default") or \
                 "I don't have anything more to say about that; please work from what you already have."
         else:
-            canonical = matched["answer"]
+            canonical = "\n".join(f["text"] for f in matched)
         answer = canonical
         if params.get("dialogue_mode") == "llm" and env.dialogue_client is not None:
-            answer = env.render_dialogue(name, params, question, canonical, matched is not None)
+            answer = env.render_dialogue(name, params, question, canonical, bool(matched), facts)
+        else:
+            env.dialogue_history.setdefault(name, []).append({"question": question,
+                "answer": answer, "at": stamp(env.now)})
         env.record("agent_dialogue", tool=name, question=question,
-                   matched=matched is not None, answer=answer)
+                   matched=bool(matched), answer=answer)
         return {"speaker": params.get("persona", "the user"), "answer": answer, "at": stamp(env.now)}
 
     def submit_answer(self, answer):

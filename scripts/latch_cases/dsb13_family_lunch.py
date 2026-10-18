@@ -152,8 +152,9 @@ def build(A, tasks, sites, horizons, conclusions):
          wait("verify"),
          {"op": "discover", "name": "restaurant_search"},
          {"op": "tool", "name": "restaurant_search", "args": {"query": "Riverdale lunch six people"}},
-         {"op": "advance", "at": "2027-07-10T10:30:00-04:00"},
+         {"op": "advance", "at": "2027-07-10T11:30:00-04:00"},
          {"op": "tool", "name": "restaurant_search", "args": {"query": "Garden Ramp Bistro"}},
+         {"op": "tool", "name": "family_dialogue", "args": {"question": "Do you approve this current plan: Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district, July 11 at 13:30, four adult meals and two fish-free child meals, written sesame ingredient and cross-contact controls and verified step-free wheelchair access, total 247.80 USD before optional tip, no payment or automatic gratuity?"}},
          {"op": "discover", "name": "reserve_table"},
          {"op": "tool", "name": "reserve_table", "args": {"entry": "r101-v2"}},
          {"op": "advance", "at": "2027-07-10T14:00:00-04:00"},
@@ -249,6 +250,7 @@ def build(A, tasks, sites, horizons, conclusions):
             {"id": "reservation-confirmed", "kind": "selection_processed", "target": "reserve_table",
              "hint": "The one approved reservation request has been processed; the confirmation receipt is with the agent and nothing further was booked."}],
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the Garden offer after the July 10 change, and the already-verified Harbor Family Table is a legal alternative, but the scored answer keys follow the refreshed Garden plan."))
+    next(h for h in tasks[-1]["hidden_tools"] if h["name"] == "family_dialogue")["params"]["state_tools"] = ["reserve_table"]
     sites["DSB-13"] = "riverdale"
     horizons["DSB-13"] = (2, "短期", "mid-episode offer rewrite plus organizer approval window")
     conclusions["DSB-13"] = {

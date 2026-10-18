@@ -91,3 +91,59 @@ class Calendar:
         start = self.next_open(anchor)
         end = self.add_business(start, delay.get("minutes", 0))
         return start, end, end
+
+    def reserve(self, now, delay, reservations):
+        """Allocate working intervals, leaving gaps before future bookings usable.
+
+        Reservations are half-open UTC intervals. Existing work keeps priority;
+        ordinary business work can pause at closures or reserved intervals.
+        A weekly batch must fit its fixed slot without overlapping other work.
+        The caller owns the list; ETA projections pass a copy.
+        """
+        mode = delay.get("mode", "business")
+        anchor = max(now, parse(delay["not_before"])) if delay.get("not_before") else now
+        minutes = delay.get("minutes", 0)
+        if minutes < 0:
+            raise ValueError("Negative duration")
+        if mode == "elapsed":
+            return anchor, anchor + timedelta(minutes=minutes)
+        if mode not in {"business", "weekly"}:
+            raise ValueError(f"Unknown delay mode: {mode}")
+        occupied = sorted((a, b) for a, b in reservations if b > anchor)
+        if mode == "weekly":
+            for _ in range(53):
+                start = self.next_slot(anchor, delay["weekday"], delay["time"])
+                end = self.add_business(start, minutes)
+                conflicts = [(a, b) for a, b in occupied if a < end and b > start]
+                if not conflicts:
+                    break
+                anchor = max(start + timedelta(microseconds=1), max(b for _, b in conflicts))
+            else:
+                raise ValueError("No free weekly slot")
+        else:
+            start = self.next_open(anchor)
+            end = None
+        remaining = timedelta(minutes=minutes)
+        current, segments = start, []
+        for _ in range(20000):
+            current = self.next_open(current)
+            clash = next(((a, b) for a, b in occupied if a <= current < b), None)
+            if clash:
+                current = clash[1]
+                continue
+            if not segments:
+                start = current
+            if remaining == timedelta():
+                return start, current
+            close = next(b for a, b in self.intervals(current.astimezone(self.zone).date())
+                         if a <= current < b)
+            next_booking = min((a for a, b in occupied if a > current), default=close)
+            stop = min(close, next_booking, current + remaining)
+            segments.append((current, stop))
+            remaining -= stop - current
+            current = stop
+            if remaining == timedelta():
+                reservations.extend(segments)
+                reservations.sort()
+                return start, current
+        raise ValueError("Reservation exceeds simulation horizon")

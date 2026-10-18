@@ -439,7 +439,7 @@
     },
     {
       "name": "nanyu_training_status",
-      "usage": "南屿培训状态查询。调用参数：query为事项关键词（可省略）。",
+      "usage": "南屿培训状态查询。query可省略以读取全部记录；查批次用batch，查顾晓个人培训申请及办结凭证用training。",
       "kind": "status",
       "params": {
         "records": [
@@ -453,6 +453,12 @@
                 "text": "原定11月6日批次已取消，下一期改至11月13日（周五）14点。"
               }
             ]
+          },
+          {
+            "key": "training",
+            "label": "顾晓 个人培训申请 办理进度 合格记录 SAFE-NOV06-482",
+            "form": "lab_training_form",
+            "initial": "尚未提交个人培训记录申请。"
           }
         ]
       }
@@ -474,7 +480,7 @@
     {
       "id": "L-R3-window",
       "statement": "总结给出最早可用测量时段。",
-      "pass_if": "总结写明完成7天稳定性校准后最早可用测量时段为11月25日13点。",
+      "pass_if": "总结中的最早可用时间与本次实际校准和人工复核完成后签发的最新书面回执一致，不以固定的11月25日为标准。",
       "source": "final_answer"
     },
     {
@@ -486,7 +492,7 @@
     {
       "id": "L-R5-conclusion",
       "statement": "总体结论与已核实信息一致。",
-      "pass_if": "conclusion为available_after_calibration，且总结指出须待连续稳定性校准完成后方可测量。",
+      "pass_if": "总体结论与本次实际状态一致：取得校准及人工复核完成的有效回执，且当前时间已达到回执可用时间时应为available_now；未核实则为unconfirmed。尚未预约不等于仪器尚不可用。",
       "source": "final_answer"
     },
     {
@@ -691,7 +697,11 @@
     },
     "window": {
       "value": "2026-11-25T13:00:00+08:00",
-      "text": "完成7天稳定性校准后，最早可用测量时段为11月25日13点。",
+      "text": "最早可用时间由实际连续7天校准及人工复核完成时间确定，以本次办结回执为准。",
+      "computed": {
+        "tool": "instrument.main.4.lookup",
+        "text": "连续7天稳定性校准及人工复核已完成，最早可用时间为{value}；尚未预约仪器。"
+      },
       "attributes": {
         "subject": {
           "task": "DSB-04",
@@ -1420,6 +1430,12 @@
   ],
   "reference_is_privileged": true,
   "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "conclusion_by_fact": {
+    "fact": "window",
+    "before": "available_after_calibration",
+    "after": "available_now",
+    "missing": "unconfirmed"
+  },
   "horizon_design": {
     "reference_days": 21,
     "stratum": "中短期",
