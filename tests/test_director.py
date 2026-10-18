@@ -60,7 +60,7 @@ class StageAdvancementTests(unittest.TestCase):
     def test_keyword_stage_only_fires_on_matching_question(self):
         director = DirectorState({"stages": [
             {"id": "s1", "kind": "tool_call", "target": "user_dialogue",
-             "keywords": ["approve", "批准"], "hint": ""}]})
+             "keywords": ["approve", 'approved'], "hint": ""}]})
         self.assertEqual(director.advance({"kind": "agent_dialogue", "tool": "user_dialogue",
                                            "question": "What are the rules?"}), None)
         self.assertEqual(director.advance({"kind": "agent_dialogue", "tool": "user_dialogue",
@@ -70,7 +70,7 @@ class StageAdvancementTests(unittest.TestCase):
 class FactRegistrationTests(unittest.TestCase):
     def test_register_fact_records_established_fact(self):
         director = DirectorState()
-        record = director.register_fact("total", 18600, "总价为18600元。", "sales", "2026-11-02T09:00:00+08:00")
+        record = director.register_fact("total", 18600, 'The total price is CNY 18600.', "sales", "2026-11-02T09:00:00+08:00")
         self.assertEqual(record["id"], "total")
         self.assertEqual(record["fact_id"], "total")
         self.assertEqual(record["value"], 18600)
@@ -90,9 +90,9 @@ class FactRegistrationTests(unittest.TestCase):
 class ReceiptTests(unittest.TestCase):
     def test_receipt_numbering_and_shape(self):
         director = DirectorState()
-        first = director.issue_receipt("预约办结回执", "登记完成。", {"price": 10500}, "venue_desk",
+        first = director.issue_receipt('Booking completion receipt', 'Registration complete.', {"price": 10500}, "venue_desk",
                                        "2026-11-06T17:30:00+08:00")
-        second = director.issue_receipt("确认回执", "The table has been reserved.", {"slot": True},
+        second = director.issue_receipt('Confirmation receipt', "The table has been reserved.", {"slot": True},
                                         "trip_desk", "2026-11-06T18:00:00+08:00")
         self.assertEqual(first["receipt_no"], "R-0001")
         self.assertEqual(second["receipt_no"], "R-0002")

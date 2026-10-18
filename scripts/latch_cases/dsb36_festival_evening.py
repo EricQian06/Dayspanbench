@@ -292,7 +292,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The three approved free seated step-free places have been reserved from the live offer; the confirmation is read back through the access desk."}],
         alternate_paths="Any legal order of dialogue, desk mail and searches is accepted if every goal's evidence conditions hold; choosing the ferry before the outage then switching to the bus after it is a legal alternative, but the scored answer keys follow the step-free bus plan."))
     sites["DSB-36"] = "harbourfestival"
-    horizons["DSB-36"] = (2, "短期", "official show confirmation plus midday ferry lift outage")
+    horizons["DSB-36"] = (2, "Short term", "official show confirmation plus midday ferry lift outage")
     conclusions["DSB-36"] = {
         "access_confirmed": "Three free seated step-free places confirmed with a feasible step-free return",
         "unconfirmed": "The current show or step-free route could not be verified in time",

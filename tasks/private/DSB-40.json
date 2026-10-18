@@ -737,7 +737,7 @@
           {
             "id": "price-comparison",
             "title": "price-comparison.pdf",
-            "text": "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling; COOL-17-A all-in 1040.00 USD. (留存方整理)",
+            "text": "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling; COOL-17-A all-in 1040.00 USD. (compiled by the record holder)",
             "facts": [
               "total_ref"
             ],
@@ -822,8 +822,8 @@
       "not_feasible": "No current listing satisfies the hard constraints"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -948,7 +948,7 @@
     },
     "total_ref": {
       "value": 1099.0,
-      "text": "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling (留存方整理).",
+      "text": "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling (compiled by the record holder).",
       "unauthorized_attestation": true,
       "attributes": {
         "subject": {
@@ -1026,7 +1026,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "fulfillment_agent.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1044,7 +1044,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "fulfillment_agent.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1053,7 +1053,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "fulfillment_agent.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1083,7 +1083,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Test Appliance Cooperative delivery specialist·Morgan Hale，负责measured dimensions, access verification and delivery slots。Confirms measured installation fit, the unpack-at-door route and recycling in writing; verified dimensions do not guarantee the current delivery slot still meets the deadline. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Test Appliance Cooperative delivery specialist·Morgan Hale, responsible for measured dimensions, access verification and delivery slots. Confirms measured installation fit, the unpack-at-door route and recycling in writing; verified dimensions do not guarantee the current delivery slot still meets the deadline. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:fit_verified",
@@ -1155,7 +1155,7 @@
           "steps": [
             {
               "id": "slot_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "store_operations.slot.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1164,7 +1164,7 @@
             },
             {
               "id": "slot_2",
-              "label": "给出猜测性答复",
+              "label": "Offer a speculative answer",
               "tool": "store_operations.slot.2.suggest",
               "delay": {
                 "mode": "business",
@@ -1182,7 +1182,7 @@
             },
             {
               "id": "slot_4",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "store_operations.slot.4.document",
               "delay": {
                 "mode": "business",
@@ -1191,7 +1191,7 @@
             },
             {
               "id": "slot_5",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "store_operations.slot.5.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1221,7 +1221,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Test Appliance Cooperative inventory desk·Riley Carter，负责listings, delivery slots and orders。Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. Building access and elevator bookings are not store records. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Test Appliance Cooperative inventory desk·Riley Carter, responsible for listings, delivery slots and orders. Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. Building access and elevator bookings are not store records. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:delivery_window",
@@ -1283,7 +1283,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "building_manager.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1301,7 +1301,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "building_manager.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1310,7 +1310,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "building_manager.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1340,7 +1340,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Example Court building manager·Jolene Fischer，负责service-elevator bookings and freight access for 18 Example Court。Books the building's service elevator for appliance deliveries in writing; the store does not manage building access, and delivery crews cannot enter without a confirmed booking. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Example Court building manager·Jolene Fischer, responsible for service-elevator bookings and freight access for 18 Example Court. Books the building's service elevator for appliance deliveries in writing; the store does not manage building access, and delivery crews cannot enter without a confirmed booking. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:elevator_booked"
@@ -1734,7 +1734,7 @@
   "alternate_paths": "Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; ordering COOL-17-A was legal only before the June 8 12:00 slot change, but the scored answer keys follow the COOL-16-B plan.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "mid-episode delivery-slot rewrite plus approval window",
     "distribution": "manually stratified approximately logarithmic"
   }

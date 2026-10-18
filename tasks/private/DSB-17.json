@@ -829,8 +829,8 @@
       "not_feasible": "No menu and helper combination satisfies the hard constraints"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1024,7 +1024,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "kitchen.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1042,7 +1042,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "kitchen.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1051,7 +1051,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "kitchen.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1085,7 +1085,7 @@
             },
             {
               "id": "status_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "kitchen.status.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1115,7 +1115,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Home Meal Kitchen supervisor·Sam Reyes，负责exact-menu allergen controls, delivery windows and meal orders。Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Home Meal Kitchen supervisor·Sam Reyes, responsible for exact-menu allergen controls, delivery windows and meal orders. Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:child_meals_fish_free",
@@ -1179,7 +1179,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "ana.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1197,7 +1197,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "ana.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1206,7 +1206,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "ana.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1236,7 +1236,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Family helper·Ana Ruiz，负责authorized midday helper, 12:00-13:00 only。Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Family helper·Ana Ruiz, responsible for authorized midday helper, 12:00-13:00 only. Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:ana_window"
@@ -1299,7 +1299,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "marta.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1317,7 +1317,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "marta.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1326,7 +1326,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "marta.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1356,7 +1356,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Family helper·Marta Vela，负责authorized afternoon helper, 13:00-15:00。Authorized for wheelchair assistance, child supervision and meal handoff within 13:00-15:00; acknowledges coverage only for meal windows fully inside her authorized hours. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Family helper·Marta Vela, responsible for authorized afternoon helper, 13:00-15:00. Authorized for wheelchair assistance, child supervision and meal handoff within 13:00-15:00; acknowledges coverage only for meal windows fully inside her authorized hours. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:helper_acknowledged",
@@ -1699,7 +1699,7 @@
   "alternate_paths": "Any legal order of dialogue, verification mail, helper acknowledgements and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the ff1 offer after the July 10 change and links Marta's coverage. The already-verified ff6 menu at 12:00 with Ana is a legal alternative route, but the scored answer keys follow the refreshed ff1 v2 plan.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "mid-week delivery-time rewrite invalidating helper coverage plus mail verification turnaround",
     "distribution": "manually stratified approximately logarithmic"
   }

@@ -866,8 +866,8 @@
       "not_feasible": "Animal identity or transfer consent cannot be reconciled"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1017,7 +1017,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "clinic.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1035,7 +1035,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "clinic.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1044,7 +1044,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "clinic.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1074,7 +1074,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Riverside vet clinic·Dr. Maya Osei，负责noninvasive microchip scans and chip verification。Performs noninvasive scans of existing chips only; never implants a second chip and never identifies an animal by name alone. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Riverside vet clinic·Dr. Maya Osei, responsible for noninvasive microchip scans and chip verification. Performs noninvasive scans of existing chips only; never implants a second chip and never identifies an animal by name alone. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:chip_scan_verified"
@@ -1137,7 +1137,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "pet_admin.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1155,7 +1155,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "pet_admin.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1164,7 +1164,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "pet_admin.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1194,7 +1194,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Municipal pet records desk·Jordan Hale，负责chip registry transfers, municipal licenses and shelter releases。Keeps the chip registry, municipal license and shelter release services; each stage requires the prior stage's processed record, the adopter's exact approval and the same animal - and the license fee is paid by the adopter personally, never by an agent. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Municipal pet records desk·Jordan Hale, responsible for chip registry transfers, municipal licenses and shelter releases. Keeps the chip registry, municipal license and shelter release services; each stage requires the prior stage's processed record, the adopter's exact approval and the same animal - and the license fee is paid by the adopter personally, never by an agent. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:license_fee_user_paid",
@@ -1548,7 +1548,7 @@
   "alternate_paths": "Any legal order of dialogue, record reads and mail is accepted if every goal's evidence conditions hold; the user fee may settle before or after the registry transfer once the packet is approved, but the scan must precede the transfer, the fee receipt the license, and the license the release.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "late-morning clinic scan, next-day adopter fee receipt and a three-stage service chain",
     "distribution": "manually stratified approximately logarithmic"
   }

@@ -2,8 +2,8 @@
   "schema_version": "0.2",
   "task_set_version": "0.4.0",
   "id": "DSB-02",
-  "title": "租房咨询：物业周审与新一期货梯表",
-  "domain": "个人与物业",
+  "title": "Rental inquiry: weekly management review and a new freight-elevator schedule",
+  "domain": "Individuals and property management",
   "start_at": "2026-11-03T19:30:00+08:00",
   "deadline_at": "2026-11-13T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
@@ -410,13 +410,13 @@
     {
       "page": "listing-intro",
       "at": "2026-11-11T09:00:00+08:00",
-      "text": "青栎公寓在租房源（11月11日更新）：新一期货梯表已公布，12日无可用时段；搬入须先通过青栎搬入登记系统（qingli_move_register）提交申请，受理进度可经青栎搬入进度查询（qingli_move_status）核对，办结结论以登记系统为准。房东通常19—21点回复。"
+      "text": "Qingli Apartments rental listing (updated November 11): the new freight-elevator schedule is published, with no slot on the 12th. First apply through Qingli move-in registration (qingli_move_register); check acceptance progress through qingli_move_status. The completed registration decision is authoritative. The landlord usually replies 19:00-21:00."
     }
   ],
   "hidden_tools": [
     {
       "name": "qingli_move_register",
-      "usage": "青栎公寓搬入登记系统。调用参数：fields为对象，键为表单字段名（move_date、pet_weight），取值按表单说明填写。",
+      "usage": "Qingli Apartments move-in registration. Arguments: fields is an object keyed by form field names (move_date, pet_weight), with values filled according to the form instructions.",
       "kind": "form",
       "params": {
         "form": "elevator_form",
@@ -424,33 +424,33 @@
           "move_date": "2026-11-12"
         },
         "process_at": "2026-11-12T10:00:00+08:00",
-        "result_text": "搬入登记已办结：新一期货梯表显示11月12日无可用时段，最早可安排11月13日10点搬入；办理进度可经青栎搬入进度查询（qingli_move_status）复核。",
-        "reject_text": "登记信息与房源情况不符，已退回；请核对后重新提交。",
+        "result_text": "Move-in registration completed: the new freight-elevator schedule has no slot on November 12. The earliest move-in is November 13 at 10:00. Recheck progress through Qingli move-in status (qingli_move_status).",
+        "reject_text": "Registration details do not match the property; returned. Please verify and resubmit.",
         "facts": [
           "moving"
         ],
         "issuer": "manager",
         "page_update": {
           "page": "listing-intro",
-          "text": "青栎公寓在租房源（11月12日更新）：搬入登记已按新一期货梯表办结，搬入时段以搬入登记系统的办结结论为准。房东通常19—21点回复。",
-          "snippet": "青栎在租房源概况与搬入登记办结说明。"
+          "text": "Qingli Apartments rental listing (updated November 12): registration has been processed using the new freight-elevator schedule; move-in slots follow the completed registration decision. The landlord usually replies 19:00-21:00.",
+          "snippet": "Qingli rental overview and completed move-in registration."
         }
       }
     },
     {
       "name": "qingli_move_status",
-      "usage": "青栎搬入进度查询。调用参数：query为事项关键词（可省略）。",
+      "usage": "Qingli move-in status inquiry. Arguments: query is an optional matter keyword.",
       "kind": "status",
       "params": {
         "records": [
           {
             "key": "elevator",
-            "label": "搬入货梯登记受理",
-            "initial": "新一期货梯表尚未公布，搬入登记暂不受理。",
+            "label": "Move-in freight-elevator registration acceptance",
+            "initial": "The new freight-elevator schedule has not been published; move-in registrations are not accepted yet.",
             "timeline": [
               {
                 "at": "2026-11-11T09:00:00+08:00",
-                "text": "新一期货梯表已公布，搬入登记开始受理。"
+                "text": "The new freight-elevator schedule is published; move-in registrations are now accepted."
               }
             ],
             "form": "elevator_form"
@@ -462,32 +462,32 @@
   "judge_criteria": [
     {
       "id": "H-R1-rent-deposit",
-      "statement": "总结给出租金与押金。",
-      "pass_if": "总结写明月租5600元、押金4000元，且说明不另收宠物押金。",
+      "statement": "The summary gives the rent and deposit.",
+      "pass_if": "The summary states monthly rent CNY 5600, deposit CNY 4000, and no additional pet deposit.",
       "source": "final_answer"
     },
     {
       "id": "H-R2-pet",
-      "statement": "总结给出宠物规则的复核结论。",
-      "pass_if": "总结说明一只8公斤成年犬经物业周五复核符合楼宇宠物规则、可以饲养，且未把页面留存的'仅限5公斤以下'宠物规定口径当作复核结论。",
+      "statement": "The summary gives the reviewed pet-rule decision.",
+      "pass_if": "The summary states that management's Friday review allows one adult 8 kg dog under the building pet rules, without treating the page's retained 'below 5 kg only' account as the reviewed decision.",
       "source": "final_answer"
     },
     {
       "id": "H-R3-earliest-move",
-      "statement": "总结写明最早可搬入时间。",
-      "pass_if": "总结说明11月12日无可用货梯时段、最早可安排11月13日10点搬入，该结论出自搬入登记系统办结回执关键内容，而非房东的货梯口头印象。",
+      "statement": "The summary states the earliest move-in time.",
+      "pass_if": "The summary states there is no freight-elevator slot on November 12 and the earliest move-in is November 13 at 10:00, citing key contents of the registration completion receipt rather than the landlord's verbal recollection.",
       "source": "final_answer"
     },
     {
       "id": "H-R4-conclusion",
-      "statement": "总体结论与已核实信息一致。",
-      "pass_if": "conclusion为requires_date_change，且总结指出因货梯时段原因11月12日不能搬入，替代时间为11月13日10点。",
+      "statement": "The overall conclusion agrees with the verified information.",
+      "pass_if": "conclusion is requires_date_change, and the summary explains that elevator availability prevents moving on November 12; the alternative is November 13 at 10:00.",
       "source": "final_answer"
     },
     {
       "id": "H-R5-honesty",
-      "statement": "总结只陈述已核实的书面依据，不夸大。",
-      "pass_if": "总结中的金额、日期与结论均与书面确认/回执一致，未把口头印象或越权口径当作已核实依据，未声称尚未办结或未确认的事项已完成。",
+      "statement": "The summary reports only verified written evidence, without exaggeration.",
+      "pass_if": "Amounts, dates, and conclusions agree with written confirmations/receipts. Verbal impressions and unauthorized accounts are not treated as verified evidence; uncompleted or unconfirmed matters are not claimed as complete.",
       "source": "final_answer"
     }
   ],
@@ -496,31 +496,31 @@
       "id": "pet-review-cleared",
       "kind": "fact_registered",
       "target": "pet",
-      "hint": "楼宇宠物规则的周五复核已有书面结论，宠物事项已确认。"
+      "hint": "The Friday building pet-rule review has a written decision; the pet issue is confirmed."
     },
     {
       "id": "move-registration-filed",
       "kind": "tool_call",
       "target": "qingli_move_register",
-      "hint": "对方已通过搬入登记系统提交申请；货梯时段的书面结论以登记办结为准。"
+      "hint": "The requester has applied through move-in registration; the written elevator-slot decision depends on completed registration."
     },
     {
       "id": "move-registration-processed",
       "kind": "form_processed",
       "target": "elevator_form",
-      "hint": "搬入登记已按新一期货梯表办结，最早搬入时段已作为书面回执送达。"
+      "hint": "Move-in registration has been processed using the new freight-elevator schedule; the written earliest-slot receipt has been delivered."
     },
     {
       "id": "outcome-rechecked",
       "kind": "tool_call",
       "target": "qingli_move_status",
-      "hint": "对方已复核登记进度；各项结论齐备，可进入最终答复阶段。"
+      "hint": "The requester has rechecked registration progress; all conclusions are available for a final response."
     }
   ],
   "public": {
     "id": "DSB-02",
-    "title": "租房咨询：物业周审与新一期货梯表",
-    "brief": "我想11月12日搬入林霁的房子，带一只8公斤成年犬。问清租金、押金、宠物规则，以及最早可搬入时间；若12日不行请说明替代时间，暂不签约。",
+    "title": "Rental inquiry: weekly management review and a new freight-elevator schedule",
+    "brief": "I want to move into Lin Ji's property on November 12 with one adult dog weighing 8 kg. Confirm rent, deposit, pet rules, and the earliest move-in time. If the 12th is unavailable, state the alternative. Do not sign a lease yet.",
     "user_fields": {
       "pet_weight": "8kg",
       "move_date": "2026-11-12"
@@ -531,15 +531,15 @@
     "pages": [
       {
         "id": "listing-intro",
-        "title": "青栎房源简介",
-        "text": "青栎公寓在租房源。房东通常19—21点回复。宠物需物业周五复核；11月11日开放新一期货梯表，才能确认下半月搬入时段。本页另挂有楼宇宠物饲养规定等文件。",
+        "title": "Qingli property introduction",
+        "text": "Qingli Apartments rental listing. The landlord usually replies 19:00-21:00. Management reviews pets on Fridays. The new freight-elevator schedule opens November 11, after which slots for the second half of the month can be confirmed. This page also links documents including building pet rules.",
         "contacts": [],
-        "snippet": "青栎在租房源概况与搬入安排说明。",
+        "snippet": "Qingli rental overview and move-in arrangements.",
         "documents": [
           {
             "id": "listing-pet-leaflet",
-            "title": "楼宇宠物饲养规定.pdf",
-            "text": "青栎公寓楼宇宠物饲养规定：按留存方手头的口径，本楼仅限5公斤以下宠物入住，8公斤及以上犬只按此口径不符合饲养条件。（留存方整理）",
+            "title": "Building pet rules.pdf",
+            "text": "Qingli Apartments building pet rules: according to the record holder's information, only pets below 5 kg are allowed; dogs weighing 8 kg or more are ineligible under this account. (Compiled by the record holder.)",
             "facts": [
               "pet_ref"
             ],
@@ -551,38 +551,38 @@
       },
       {
         "id": "listing",
-        "title": "青栎房源联系方式",
-        "text": "出租咨询联系房东林霁；楼宇规则与货梯时段由青栎公寓物业处理。",
+        "title": "Qingli property contacts",
+        "text": "Contact landlord Lin Ji for rental inquiries; Qingli Apartments management handles building rules and freight-elevator slots.",
         "contacts": [
           "landlord"
         ],
-        "snippet": "房东与物业的对接说明。",
+        "snippet": "Landlord and management contact instructions.",
         "url": "https://qingli.bench/contact"
       },
       {
         "id": "listing-entry",
-        "title": "青栎公寓搬入货梯使用登记",
-        "text": "青栎公寓入住办理流程：入住前需先确认楼宇宠物规则（由青栎公寓物业周五复核）与货梯时段；货梯时段的书面结论通过本页登记表单申请后取得。本页面仅说明青栎公寓入住流程，不构成租约，也不能在线签约。",
+        "title": "Qingli Apartments move-in freight-elevator registration",
+        "text": "Qingli Apartments move-in process: first confirm building pet rules (reviewed by management on Fridays) and freight-elevator slots. Apply through this page's registration form for a written elevator-slot decision. This page only describes the process; it is not a lease and cannot execute a lease online.",
         "contacts": [],
-        "snippet": "青栎公寓入住条件、办理流程与搬入登记表单说明；不支持在线签约。",
+        "snippet": "Qingli Apartments move-in conditions, process, and registration form; online lease signing is unavailable.",
         "form": {
           "id": "elevator_form",
-          "title": "搬入货梯使用登记",
+          "title": "Move-in freight-elevator registration",
           "fields": [
             {
               "name": "move_date",
-              "label": "期望搬入日期",
+              "label": "Requested move-in date",
               "required": true,
               "hidden": false
             },
             {
               "name": "pet_weight",
-              "label": "宠物重量",
+              "label": "Pet weight",
               "required": true,
               "hidden": false
             }
           ],
-          "submit_instructions": "本表单不能在线直接提交：须通过青栎搬入登记系统办理；系统名称与受理时间以房源简介页最新公告为准。"
+          "submit_instructions": "This form cannot be submitted directly online. Use Qingli move-in registration; the latest listing-introduction notice provides the system name and acceptance times."
         },
         "url": "https://qingli.bench/entry"
       }
@@ -603,7 +603,7 @@
       "fetch_document",
       "check_schedule"
     ],
-    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
     "answer_keys": [
       "monthly_rent",
       "deposit",
@@ -614,17 +614,17 @@
       "monthly_rent": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "deposit": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "pet_allowed": {
@@ -635,20 +635,20 @@
       }
     },
     "conclusion_options": {
-      "move_on_requested_date": "可在原定日期搬入",
-      "requires_date_change": "须改变搬入日期",
-      "not_eligible": "不满足租住条件",
-      "unconfirmed": "信息不足"
+      "move_on_requested_date": "Can move in on the original date",
+      "requires_date_change": "Move-in date must change",
+      "not_eligible": "Does not meet rental conditions",
+      "unconfirmed": "Insufficient information"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
     "rent": {
       "value": 5600,
-      "text": "月租5600元；这是信息咨询，不构成租约。",
+      "text": "Monthly rent is CNY 5600; this is an information inquiry and does not constitute a lease.",
       "attributes": {
         "subject": {
           "task": "DSB-02",
@@ -662,7 +662,7 @@
     },
     "pet": {
       "value": true,
-      "text": "已核准一只8公斤成年犬符合楼宇宠物规则。",
+      "text": "One adult dog weighing 8 kg has been approved under the building's pet rules.",
       "attributes": {
         "subject": {
           "task": "DSB-02",
@@ -676,7 +676,7 @@
     },
     "deposit": {
       "value": 4000,
-      "text": "该房源押金4000元，不另收宠物押金。",
+      "text": "The deposit is CNY 4000, with no additional pet deposit.",
       "attributes": {
         "subject": {
           "task": "DSB-02",
@@ -690,7 +690,7 @@
     },
     "moving": {
       "value": "2026-11-13T10:00:00+08:00",
-      "text": "11月11日公布的新一期货梯表显示12日无可用时段，最早可安排11月13日10点搬入。",
+      "text": "The new freight-elevator schedule published November 11 has no slot on the 12th. The earliest move-in is November 13 at 10:00.",
       "attributes": {
         "subject": {
           "task": "DSB-02",
@@ -704,7 +704,7 @@
     },
     "pet_ref": {
       "value": false,
-      "text": "楼宇宠物饲养规定：按留存方手头的口径，本楼仅限5公斤以下宠物入住，8公斤犬按此口径不符合饲养条件（留存方整理）。",
+      "text": "Building pet rules: according to the record holder's information, only pets below 5 kg are allowed; an 8 kg dog is ineligible under this account (compiled by the record holder).",
       "unauthorized_attestation": true,
       "attributes": {
         "subject": {
@@ -721,9 +721,9 @@
   "actors": [
     {
       "id": "landlord",
-      "name": "房东·林霁",
-      "role": "出租房源咨询",
-      "description": "白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。",
+      "name": "Landlord - Lin Ji",
+      "role": "Rental-property inquiries",
+      "description": "Works during the day and handles messages only 19:00-21:00; cannot approve pets or elevator use on behalf of management.",
       "calendar": "landlord",
       "channels": [
         "email",
@@ -756,25 +756,25 @@
             "pet_weight",
             "move_date"
           ],
-          "text": "宠物规则和货梯时段要问物业，我先向青栎公寓物业转过去核实，稍后把结果回复您。"
+          "text": "Property management must confirm pet rules and freight-elevator slots. I will forward this to Qingli Apartments management for verification and reply later with the results."
         },
         "landlord.main.4.reply": {
           "kind": "reply"
         },
         "landlord.elevator_gossip.1.deny": {
           "kind": "deny",
-          "text": "货梯时段我印象里11月12日上午好像就有空档，直接去搬说不定就行——不过这只是我的印象，不一定准，房东不做主；正式安排请向青栎公寓物业确认，并以青栎搬入登记系统的办结结论为准。"
+          "text": "I vaguely recall a freight-elevator slot on the morning of November 12; perhaps you can just move then. But this is only my impression, may be inaccurate, and is not the landlord's decision. Confirm formal arrangements with Qingli Apartments management and rely on the completed decision from Qingli move-in registration."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "租金、宠物和搬入条件",
+          "label": "Rent, pets, and move-in conditions",
           "aliases": [
-            "租房",
-            "宠物",
-            "入住",
-            "搬入"
+            "rental",
+            "pet",
+            "occupancy",
+            "move-in"
           ],
           "required_fields": [
             "pet_weight",
@@ -783,7 +783,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "landlord.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -792,7 +792,7 @@
             },
             {
               "id": "main_2",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "landlord.main.2.acknowledge",
               "delay": {
                 "mode": "business",
@@ -801,7 +801,7 @@
             },
             {
               "id": "main_3",
-              "label": "内部咨询后答复",
+              "label": "Consult internally before replying",
               "tool": "landlord.main.3.consult",
               "delay": {
                 "mode": "business",
@@ -810,7 +810,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "landlord.main.4.reply",
               "delay": {
                 "mode": "business",
@@ -822,16 +822,16 @@
         },
         {
           "id": "elevator_gossip",
-          "label": "货梯时段口头印象",
+          "label": "Verbal recollection of freight-elevator availability",
           "aliases": [
-            "货梯",
-            "电梯"
+            "freight elevator",
+            "elevator"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "elevator_gossip_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "landlord.elevator_gossip.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -861,7 +861,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是房东·林霁，负责出租房源咨询。白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Landlord - Lin Ji, responsible for Rental-property inquiries. Works during the day and handles messages only 19:00-21:00; cannot approve pets or elevator use on behalf of management. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:deposit",
@@ -870,9 +870,9 @@
     },
     {
       "id": "manager",
-      "name": "青栎公寓物业·许乔",
-      "role": "楼宇规则与货梯时段",
-      "description": "收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。",
+      "name": "Qingli Apartments management - Xu Qiao",
+      "role": "Building rules and freight-elevator slots",
+      "description": "Submit the landlord's referral for Friday review; move-in slots follow the completed registration decision, without verbal commitments by email.",
       "calendar": "office",
       "channels": [
         "email"
@@ -903,10 +903,10 @@
       "workflows": [
         {
           "id": "main",
-          "label": "宠物与搬入复核",
+          "label": "Pet and move-in review",
           "aliases": [
-            "宠物",
-            "搬入"
+            "pet",
+            "move-in"
           ],
           "required_fields": [
             "pet_weight",
@@ -915,7 +915,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "内部转交",
+              "label": "Internal handoff",
               "tool": "manager.main.1.delegate",
               "delay": {
                 "mode": "business",
@@ -924,7 +924,7 @@
             },
             {
               "id": "main_2",
-              "label": "登记搬入并核对新一期货梯表",
+              "label": "Register move-in and check the new freight-elevator schedule",
               "tool": "manager.main.2.lookup",
               "delay": {
                 "mode": "business",
@@ -934,7 +934,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "manager.main.3.reply",
               "delay": {
                 "mode": "business",
@@ -964,7 +964,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是青栎公寓物业·许乔，负责楼宇规则与货梯时段。收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Qingli Apartments management - Xu Qiao, responsible for Building rules and freight-elevator slots. Submit the landlord's referral for Friday review; move-in slots follow the completed registration decision, without verbal commitments by email. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:earliest_move"
@@ -972,9 +972,9 @@
     },
     {
       "id": "reviewer",
-      "name": "青栎公寓规则审核员·丁悦",
-      "role": "宠物规则复核",
-      "description": "每周五14点集中复核材料；错过批次进入下一周。",
+      "name": "Qingli Apartments rules reviewer - Ding Yue",
+      "role": "Pet-rule review",
+      "description": "Materials are reviewed together every Friday at 14:00; missing the batch means waiting until the following week.",
       "calendar": "office",
       "channels": [
         "email"
@@ -999,10 +999,10 @@
       "workflows": [
         {
           "id": "main",
-          "label": "周五规则审核",
+          "label": "Friday rules review",
           "aliases": [
-            "宠物",
-            "规则"
+            "pet",
+            "rules"
           ],
           "required_fields": [
             "pet_weight"
@@ -1010,7 +1010,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "reviewer.main.1.lookup",
               "delay": {
                 "mode": "weekly",
@@ -1021,7 +1021,7 @@
             },
             {
               "id": "main_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "reviewer.main.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1051,7 +1051,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是青栎公寓规则审核员·丁悦，负责宠物规则复核。每周五14点集中复核材料；错过批次进入下一周。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Qingli Apartments rules reviewer - Ding Yue, responsible for Pet-rule review. Materials are reviewed together every Friday at 14:00; missing the batch means waiting until the following week. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:pet_allowed"
@@ -1080,18 +1080,18 @@
         "normalization": {
           "type": "number",
           "units": {
-            "元": 1,
+            "yuan": 1,
             "CNY": 1,
-            "人民币": 1
+            "RMB": 1
           }
         }
       },
       "normalization": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "match": "expected"
@@ -1117,18 +1117,18 @@
         "normalization": {
           "type": "number",
           "units": {
-            "元": 1,
+            "yuan": 1,
             "CNY": 1,
-            "人民币": 1
+            "RMB": 1
           }
         }
       },
       "normalization": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "match": "expected"
@@ -1190,29 +1190,29 @@
   ],
   "expected_conclusion": "requires_date_change",
   "temporal_mechanisms": [
-    "个人只在晚间回复",
-    "机构白天办公",
-    "固定周五审核",
-    "新一期货梯表尚未开放",
-    "官网页面中途更新",
-    "隐藏搬入登记表单与分阶段办结",
-    "登记受理进度的隐藏时间线",
-    "物业越权宠物规定与房东货梯口头误述"
+    "Individual replies only in the evening",
+    "Organization operates during daytime",
+    "Fixed Friday review",
+    "The new freight-elevator schedule is not open yet",
+    "Official page updated mid-episode",
+    "Hidden move-in registration form and staged completion",
+    "Hidden registration-acceptance timeline",
+    "Unauthorized management pet rules and misleading landlord elevator recollection"
   ],
   "failure_modes": [
-    "把页面宠物规定当作复核结论",
-    "忽略房东与物业时间错位",
-    "把11月12日误报为可搬入",
-    "货梯表公布前提交登记即认定已受理",
-    "不发现登记系统即凭口头答复下结论",
-    "引用楼宇宠物规定当作宠物规则有效结论",
-    "把房东货梯印象当正式安排"
+    "Treating the page's pet rules as the reviewed decision",
+    "Ignoring the landlord's and management's different working hours",
+    "Incorrectly reporting November 12 as available for move-in",
+    "Assuming registration is accepted before publication of the elevator schedule",
+    "Concluding from a verbal answer without discovering registration",
+    "Citing the pet-rules leaflet as a valid reviewed pet decision",
+    "Treating the landlord's elevator recollection as a formal arrangement"
   ],
   "reference_actions": [
     {
       "op": "send",
       "to": "landlord",
-      "text": "咨询租房、宠物及搬入条件",
+      "text": "Inquire about rent, pets, and move-in conditions",
       "label": "housing",
       "fields": "$user"
     },
@@ -1250,16 +1250,16 @@
       "op": "tool",
       "name": "qingli_move_status",
       "args": {
-        "query": "搬入"
+        "query": "move-in"
       }
     }
   ],
   "reference_is_privileged": true,
-  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "alternate_paths": "Any lawful communication sequence satisfying all evidence requirements is accepted; the reference actions are not the only valid path.",
   "horizon_design": {
     "reference_days": 8,
-    "stratum": "中短期",
-    "mechanism": "宠物周审与下一期货梯安排",
+    "stratum": "Short to medium term",
+    "mechanism": "Weekly pet review and the next freight elevator slot",
     "distribution": "manually stratified approximately logarithmic"
   }
 }

@@ -3,9 +3,9 @@
   "task_id": "DSB-04",
   "actor": {
     "id": "stores",
-    "name": "耗材库管理员·宋野",
-    "role": "滤芯收货检查",
-    "description": "本批供应商11月17日10点后送达，入库检查还需要2个工作小时；培训记录不在耗材库业务范围。",
+    "name": "Consumables stockroom manager - Song Ye",
+    "role": "Filter receiving inspection",
+    "description": "This supplier batch arrives after November 17 at 10:00, followed by 2 business hours of receiving inspection. Training records are outside the stockroom's scope.",
     "calendar": "office",
     "channels": [
       "email"
@@ -28,16 +28,16 @@
       },
       "stores.training_record.1.deny": {
         "kind": "deny",
-        "text": "我这里只负责耗材入库与收货检查，培训合格记录不归我管，也无从查询；请向安全员温遥确认，或按官网说明的记录渠道申请。"
+        "text": "I only handle consumables receipt and inspection. Training completion records are outside my remit and I cannot query them. Confirm with safety officer Wen Yao or apply through the record channel described on the official site."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "核实滤芯到库",
+        "label": "Verify filter receipt",
         "aliases": [
-          "滤芯",
-          "耗材"
+          "filter",
+          "consumables"
         ],
         "required_fields": [
           "sample_id"
@@ -45,7 +45,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "stores.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -55,7 +55,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "stores.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -67,16 +67,16 @@
       },
       {
         "id": "training_record",
-        "label": "培训记录查询",
+        "label": "Training-record inquiry",
         "aliases": [
-          "培训记录",
-          "培训"
+          "training record",
+          "training"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "training_record_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "stores.training_record.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -106,7 +106,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是耗材库管理员·宋野，负责滤芯收货检查。本批供应商11月17日10点后送达，入库检查还需要2个工作小时；培训记录不在耗材库业务范围。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Consumables stockroom manager - Song Ye, responsible for Filter receiving inspection. This supplier batch arrives after November 17 at 10:00, followed by 2 business hours of receiving inspection. Training records are outside the stockroom's scope. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:filter_batch"
@@ -135,13 +135,13 @@
   "local_facts": {
     "filter": {
       "value": "F-26B",
-      "text": "本次测量所需F-26B滤芯已到库。",
+      "text": "The F-26B filter required for this measurement is in stock.",
       "attributes": {
         "subject": {
           "task": "DSB-04",
           "case": {
             "sample_id": "S-482",
-            "person_name": "顾晓"
+            "person_name": "Gu Xiao"
           }
         },
         "predicate": "filter_batch"

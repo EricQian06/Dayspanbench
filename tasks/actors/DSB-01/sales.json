@@ -3,9 +3,9 @@
   "task_id": "DSB-01",
   "actor": {
     "id": "sales",
-    "name": "禾岸会馆销售·姚岚",
-    "role": "费用与取消条款",
-    "description": "报价必须带日期和人数；设备可用性需要运营确认。",
+    "name": "Hean Hall sales - Yao Lan",
+    "role": "Fees and cancellation terms",
+    "description": "Quotations require the event date and headcount; operations must confirm equipment availability.",
     "calendar": "office",
     "channels": [
       "email"
@@ -20,7 +20,7 @@
     "tools": {
       "sales.main.1.suggest": {
         "kind": "suggest",
-        "text": "设备可用性的事我不能确认：档期归运营赵航管；投影检修情况可能要问设备主管周敏，也可能前台陈芷那边留了登记渠道。建议您分别去信确认。",
+        "text": "I cannot confirm equipment availability. Zhao Hang in operations handles scheduling. Projector maintenance may be handled by equipment supervisor Zhou Min, or reception's Chen Zhi may have a registration channel. Please write to each to verify.",
         "guesses": [
           "operations",
           "technician",
@@ -48,12 +48,12 @@
     "workflows": [
       {
         "id": "main",
-        "label": "报价及取消条件",
+        "label": "Quotation and cancellation terms",
         "aliases": [
-          "报价",
-          "价格",
-          "费用",
-          "取消"
+          "quotation",
+          "price",
+          "fee",
+          "cancellation"
         ],
         "required_fields": [
           "event_date",
@@ -62,7 +62,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "sales.main.1.suggest",
             "delay": {
               "mode": "business",
@@ -71,7 +71,7 @@
           },
           {
             "id": "main_2",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "sales.main.2.lookup",
             "delay": {
               "mode": "business",
@@ -80,7 +80,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "sales.main.3.document",
             "delay": {
               "mode": "business",
@@ -89,7 +89,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "sales.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -119,7 +119,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是禾岸会馆销售·姚岚，负责费用与取消条款。报价必须带日期和人数；设备可用性需要运营确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Hean Hall sales - Yao Lan, responsible for Fees and cancellation terms. Quotations require the event date and headcount; operations must confirm equipment availability. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:cancellation",
@@ -148,8 +148,8 @@
   },
   "local_facts": {
     "cancel": {
-      "value": "72小时内取消收取50%",
-      "text": "活动前72小时内取消收取总价的50%。",
+      "value": "50% cancellation charge within 72 hours",
+      "text": "Cancellation within 72 hours before the event incurs a charge of 50% of the total price.",
       "attributes": {
         "subject": {
           "task": "DSB-01",
@@ -164,7 +164,7 @@
     },
     "price": {
       "value": 10500,
-      "text": "11月13日18—21点，80人活动：场租9000元、服务费1500元，总价10500元。",
+      "text": "For the November 13 event, 18:00-21:00, 80 attendees: venue hire CNY 9000, service fee CNY 1500, total CNY 10500.",
       "attributes": {
         "subject": {
           "task": "DSB-01",

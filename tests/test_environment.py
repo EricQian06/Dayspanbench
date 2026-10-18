@@ -103,17 +103,17 @@ class EnvironmentTests(unittest.TestCase):
         # The contact page only vaguely guesses where the signed syllabus
         # lives; the dean's office first suggests (making the lecturer
         # discoverable), then plainly denies, closing the archive request.
-        dean = api.send_email(mailbox(task, "dean_office"), "请查询CS204课程签章大纲存档", {})
+        dean = api.send_email(mailbox(task, "dean_office"), 'Please check the signed CS204 syllabus archive', {})
         while env.cases[dean["case_id"]]["state"] != "replied" and env.events:
             env.advance(env.events[0][0])
         # Legitimate material: the syllabus version must come from the
         # lecturer's attested reply, not out of thin air.
-        api.send_email(mailbox(task, "lecturer"), "请补发正式签章大纲", {"course_code": "CS204"})
+        api.send_email(mailbox(task, "lecturer"), 'Please reissue the official signed syllabus', {"course_code": "CS204"})
         api.wait_until("2026-11-10T15:00:00+08:00")  # lecturer has replied after the trip
         syllabus = next(r["fields"]["syllabus"] for m in env.messages
                         if m["status"] == "reply" and m["from"] == mailbox(task, "lecturer")
                         for r in m["receipts"])
-        first = api.send_email(mailbox(task, "records"), "咨询CS204学分转换",
+        first = api.send_email(mailbox(task, "records"), 'Inquire about CS204 credit transfer',
                                {"course_code": "CS204", "syllabus_version": syllabus})
         # A mid-workflow acceptance receipt reaches the inbox before the
         # internal handoff, without closing the case. Drain the event queue
@@ -125,7 +125,7 @@ class EnvironmentTests(unittest.TestCase):
         self.assertTrue(any(m["case_id"] == first["case_id"] and m["status"] == "acknowledgement"
                             for m in env.messages))
         before = len(env.cases)
-        ack = api.send_email(mailbox(task, "records"), "请问办理进度如何",
+        ack = api.send_email(mailbox(task, "records"), 'How is processing progressing',
                              {"course_code": "CS204", "syllabus_version": syllabus},
                              case_id=first["case_id"])
         self.assertEqual(ack["case_id"], first["case_id"])
@@ -136,7 +136,7 @@ class EnvironmentTests(unittest.TestCase):
         board = next(c for c in env.cases.values() if c["actor"] == "board")
         self.assertEqual(board["state"], "queued")
         # A follow-up that actually changes the material does re-open.
-        reopened = api.send_email(mailbox(task, "records"), "大纲版本有更新，请按新版本办理",
+        reopened = api.send_email(mailbox(task, "records"), 'The syllabus version has changed; please process the new version',
                                   {"course_code": "CS204", "syllabus_version": "CS204-2026-v3"},
                                   case_id=first["case_id"])
         self.assertNotEqual(reopened["case_id"], first["case_id"])
@@ -144,7 +144,7 @@ class EnvironmentTests(unittest.TestCase):
         # must not be treated as a new request and re-routed into a duplicate
         # parallel case.
         before = len(env.cases)
-        ping = api.send_email(mailbox(task, "records"), "请问办理进度如何", {}, case_id=first["case_id"])
+        ping = api.send_email(mailbox(task, "records"), 'How is processing progressing', {}, case_id=first["case_id"])
         self.assertEqual(ping["case_id"], first["case_id"])
         self.assertEqual(len(env.cases), before)
 
@@ -153,13 +153,13 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://chengchuan.bench/contact")
-        result = api.send_email(mailbox(task, "records"), "咨询学分转换", {"course_code": "CS204"})
+        result = api.send_email(mailbox(task, "records"), 'Inquire about credit transfer', {"course_code": "CS204"})
         # Admission is deferred to the recipient's work hours after the task's
         # reply delay; drain the event queue rather than guessing a timestamp.
         while env.events:
             env.advance(env.events[0][0])
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
-        api.send_email(mailbox(task, "records"), "补充大纲", {"syllabus_version": "CS204-2026-v2-signed"}, case_id=result["case_id"])
+        api.send_email(mailbox(task, "records"), 'Supplement syllabus', {"syllabus_version": "CS204-2026-v2-signed"}, case_id=result["case_id"])
         while env.events:
             env.advance(env.events[0][0])
         # A claimed-but-unverified syllabus still fails the evidence gate.
@@ -171,7 +171,7 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://jiguang.bench/contact")
-        result = api.send_email(mailbox(task, "support"), "保修咨询", {"serial": "OTHER", "receipt": "R-731"})
+        result = api.send_email(mailbox(task, "support"), 'Warranty inquiry', {"serial": "OTHER", "receipt": "R-731"})
         while env.events:
             env.advance(env.events[0][0])
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
@@ -180,12 +180,12 @@ class EnvironmentTests(unittest.TestCase):
         task = load(1)
         api = Environment(task).tools()
         with self.assertRaises(PermissionError):
-            api.send_email(mailbox(task, "technician"), "维修", {"event_date": "2026-11-13"})
+            api.send_email(mailbox(task, "technician"), 'maintenance', {"event_date": "2026-11-13"})
         self.assertFalse(hasattr(api, "execute_tool"))
         visible = json.dumps(api.recall_task(), ensure_ascii=False)
         self.assertNotIn('"expected_conclusion"', visible)
         self.assertNotIn('"facts"', visible)
-        self.assertNotIn("全天维修", visible)
+        self.assertNotIn('all-day maintenance', visible)
 
     def test_unit_variant_field_still_admits(self):
         # A quantity quoted with a synonym unit ("8公斤") describes the same case
@@ -195,7 +195,7 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         variant = {**task["public"]["user_fields"], "pet_weight": "8公斤"}
-        result = api.send_email(mailbox(task, "landlord"), "咨询宠物入住", variant)
+        result = api.send_email(mailbox(task, "landlord"), 'Inquire about pet move-in', variant)
         while env.events:
             env.advance(env.events[0][0])
         case = env.cases[result["case_id"]]
@@ -210,7 +210,7 @@ class EnvironmentTests(unittest.TestCase):
                         {"pet_weight": "8", "move_date": "2026年11月12日"}):
             env = Environment(task)
             api = env.tools()
-            case = env.cases[api.send_email(mailbox(task, "landlord"), "咨询宠物入住", variant)["case_id"]]
+            case = env.cases[api.send_email(mailbox(task, "landlord"), 'Inquire about pet move-in', variant)["case_id"]]
             while env.events:
                 env.advance(env.events[0][0])
             self.assertEqual(case["fields"]["pet_weight"], "8kg")
@@ -220,7 +220,7 @@ class EnvironmentTests(unittest.TestCase):
                         {"pet_weight": "8", "move_date": "11月13日"}):
             env = Environment(task)
             api = env.tools()
-            case = env.cases[api.send_email(mailbox(task, "landlord"), "咨询宠物入住", variant)["case_id"]]
+            case = env.cases[api.send_email(mailbox(task, "landlord"), 'Inquire about pet move-in', variant)["case_id"]]
             while env.events:
                 env.advance(env.events[0][0])
             self.assertEqual(case["state"], "needs_information")
@@ -229,8 +229,8 @@ class EnvironmentTests(unittest.TestCase):
         task = load(2)
         env = Environment(task)
         api = env.tools()
-        case = api.send_email(mailbox(task, "landlord"), "咨询宠物入住", task["public"]["user_fields"])
-        api.send_email(mailbox(task, "landlord"), "跟进一下", case_id=case["case_id"])
+        case = api.send_email(mailbox(task, "landlord"), 'Inquire about pet move-in', task["public"]["user_fields"])
+        api.send_email(mailbox(task, "landlord"), 'Following up', case_id=case["case_id"])
         env.advance(env.deadline)
         replies = [m for m in env.messages if m["status"] == "reply"]
         reference, _, _ = run_reference(load(2))
@@ -241,8 +241,8 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://heanhuiguan.bench/contact")
-        api.send_email(mailbox(task, "reception"), "联系活动场地")
-        api.send_email(mailbox(task, "reception"), "联系活动场地")
+        api.send_email(mailbox(task, "reception"), 'Contact event venue')
+        api.send_email(mailbox(task, "reception"), 'Contact event venue')
         env.advance("2026-11-06T17:00:00+08:00")
         scheduled = [e for e in env.audit if e["kind"] == "scheduled"]
         # The second case can never start before the single worker finishes the first.
@@ -254,15 +254,15 @@ class EnvironmentTests(unittest.TestCase):
         api = env.tools()
         api.visit_page("https://wuzhangzhusu.bench/contact")
         fields = task["public"]["user_fields"]
-        a = api.send_email(mailbox(task, "a_desk"), "无障碍尺寸", fields)
+        a = api.send_email(mailbox(task, "a_desk"), 'Accessibility dimensions', fields)
         # Before B's measurement window opens the desk only registers the
         # request; file after the window opens to get it admitted.
-        early = api.send_email(mailbox(task, "b_desk"), "无障碍复测", fields)
+        early = api.send_email(mailbox(task, "b_desk"), 'Accessibility remeasurement', fields)
         env.advance("2026-11-09T09:30:00+08:00")
         self.assertTrue(any(e["kind"] == "early_reply" and e["case_id"] == early["case_id"] for e in env.audit))
         self.assertFalse(any(e["kind"] == "scheduled" and e.get("actor") == "b_desk" and e["case_id"] == early["case_id"]
                               for e in env.audit))
-        b = api.send_email(mailbox(task, "b_desk"), "无障碍复测", fields)
+        b = api.send_email(mailbox(task, "b_desk"), 'Accessibility remeasurement', fields)
         self.assertNotEqual(a["case_id"], b["case_id"])
         self.assertNotEqual(early["case_id"], b["case_id"])
         env.advance("2026-11-09T17:00:00+08:00")
@@ -287,18 +287,18 @@ class EnvironmentTests(unittest.TestCase):
         api.visit_page("https://wuzhangzhusu.bench/contact")
         fields = dict(task["public"]["user_fields"])
         # Price/availability is answered immediately, window or not.
-        price = api.send_email(mailbox(task, "b_desk"), "房态价格总价查询", {"stay_dates": fields["stay_dates"]})
+        price = api.send_email(mailbox(task, "b_desk"), 'Room availability and total price inquiry', {"stay_dates": fields["stay_dates"]})
         env.advance("2026-11-06T18:00:00+08:00")
         self.assertTrue(any(m["case_id"] == price["case_id"] and m["status"] == "reply" for m in env.messages))
         # Early measurement request: registration only, no evidence, no queue.
-        early = api.send_email(mailbox(task, "b_desk"), "无障碍复测", fields)
+        early = api.send_email(mailbox(task, "b_desk"), 'Accessibility remeasurement', fields)
         env.advance("2026-11-09T09:00:00+08:00")
         self.assertTrue(any(e["kind"] == "early_reply" and e["case_id"] == early["case_id"] for e in env.audit))
         early_case = env.cases[early["case_id"]]
         self.assertEqual(early_case["state"], "replied")
         self.assertFalse(any(m["case_id"] == early["case_id"] and m["receipts"] for m in env.messages))
         # In-window filing with a synonym unit spelling of the width admits.
-        filed = api.send_email(mailbox(task, "b_desk"), "无障碍复测",
+        filed = api.send_email(mailbox(task, "b_desk"), 'Accessibility remeasurement',
                                {**fields, "wheelchair_width": "78厘米"})
         while env.cases[filed["case_id"]]["state"] != "waiting_internal" and env.events:
             env.advance(env.events[0][0])
@@ -310,17 +310,17 @@ class EnvironmentTests(unittest.TestCase):
         api2 = env2.tools()
         api2.visit_page("https://wuzhangzhusu.bench/contact")
         env2.advance("2026-11-09T09:30:00+08:00")
-        bad = api2.send_email(mailbox(task, "b_desk"), "无障碍复测", {**fields, "wheelchair_width": "90cm"})
+        bad = api2.send_email(mailbox(task, "b_desk"), 'Accessibility remeasurement', {**fields, "wheelchair_width": "90cm"})
         env2.advance("2026-11-09T17:00:00+08:00")
         text = next(m["text"] for m in env2.messages if m["case_id"] == bad["case_id"])
-        self.assertIn("与登记情况不一致", text)
-        self.assertNotIn("有效凭证", text)
+        self.assertIn('does not match the registered information', text)
+        self.assertNotIn('valid evidence', text)
 
     def test_wait_wakes_for_agent_delivery_not_private_transition(self):
         task = load(2)
         env = Environment(task)
         api = env.tools()
-        api.send_email(mailbox(task, "landlord"), "咨询宠物入住", task["public"]["user_fields"])
+        api.send_email(mailbox(task, "landlord"), 'Inquire about pet move-in', task["public"]["user_fields"])
         reply = api.wait_until(load(2)["deadline_at"])
         self.assertTrue(reply["messages"])
         # The wake happens exactly at the reply's delivery, whenever the
@@ -373,16 +373,16 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://yuancheng.bench/contact")
-        front = api.send_email(mailbox(task, "forwarder"), "查询货件状态", task["public"]["user_fields"])
+        front = api.send_email(mailbox(task, "forwarder"), 'Query shipment status', task["public"]["user_fields"])
         while env.cases[front["case_id"]]["state"] != "replied":
             api.wait_until(task["deadline_at"])
         env.advance("2026-11-25T10:00:00+08:00")
-        doc = api.send_email(mailbox(task, "exporter"), "取得首轮更正申报资料", {"tracking": "PK-608"})
+        doc = api.send_email(mailbox(task, "exporter"), 'Obtain first round corrected declaration materials', {"tracking": "PK-608"})
         while env.cases[doc["case_id"]]["state"] != "replied":
             api.wait_until(task["deadline_at"])
         self.assertTrue(any(e["agent_visible"] and e["fact_id"] == "declaration" for e in env.evidence.values()))
         env.advance("2027-04-01T09:00:00+08:00")
-        case = api.send_email(mailbox(task, "customsdesk"), "申请初审登记", {"tracking": "PK-608", "declaration_version": "DEC-608-v2"})
+        case = api.send_email(mailbox(task, "customsdesk"), 'Request preliminary review registration', {"tracking": "PK-608", "declaration_version": "DEC-608-v2"})
         while env.cases[case["case_id"]]["state"] == "new" and env.events:
             env.advance(env.events[0][0])
         self.assertEqual(env.cases[case["case_id"]]["state"], "needs_information")
@@ -405,10 +405,10 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://yuancheng.bench/contact")
-        front = api.send_email(mailbox(task, "forwarder"), "查询货件状态", task["public"]["user_fields"])
+        front = api.send_email(mailbox(task, "forwarder"), 'Query shipment status', task["public"]["user_fields"])
         while env.cases[front["case_id"]]["state"] != "replied":
             api.wait_until(task["deadline_at"])
-        early = api.send_email(mailbox(task, "exporter"), "请补发首轮更正申报资料", {"tracking": "PK-608"})
+        early = api.send_email(mailbox(task, "exporter"), 'Please reissue first-round corrected declaration materials', {"tracking": "PK-608"})
         env.advance("2026-12-01T10:00:00+08:00")
         case = env.cases[early["case_id"]]
         self.assertEqual(case["state"], "replied")
@@ -417,7 +417,7 @@ class EnvironmentTests(unittest.TestCase):
         self.assertFalse(any(e["fact_id"] == "declaration" for e in env.evidence.values()))
         self.assertTrue(any(e["kind"] == "early_reply" for e in env.audit))
         # Filing again inside the window opens a normal case with an ETA receipt.
-        again = api.send_email(mailbox(task, "exporter"), "请补发首轮更正申报资料", {"tracking": "PK-608"})
+        again = api.send_email(mailbox(task, "exporter"), 'Please reissue first-round corrected declaration materials', {"tracking": "PK-608"})
         while env.cases[again["case_id"]]["state"] != "replied":
             api.wait_until(task["deadline_at"])
         self.assertTrue(any(e["agent_visible"] and e["fact_id"] == "declaration" for e in env.evidence.values()))
@@ -429,10 +429,10 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://yuancheng.bench/contact")
-        misrouted = api.send_email(mailbox(task, "forwarder"), "请问航班时刻表", {"tracking": "PK-608"})
+        misrouted = api.send_email(mailbox(task, "forwarder"), 'What is the flight timetable', {"tracking": "PK-608"})
         while env.cases[misrouted["case_id"]]["state"] != "replied":
             api.wait_until(task["deadline_at"])
-        result = api.send_email(mailbox(task, "forwarder"), "请问该找谁办理？", case_id=misrouted["case_id"])
+        result = api.send_email(mailbox(task, "forwarder"), 'Who should handle this?', case_id=misrouted["case_id"])
         self.assertEqual(result["status"], "received")
 
     def test_wrong_pending_stage_does_not_count_as_completed_followthrough(self):
@@ -447,7 +447,7 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://beiting.bench/contact")
-        reply = api.send_email(mailbox(task, "archive"), "申请数字化交付", {"archive_id": "ARC-71", "exhibition_permission": True})
+        reply = api.send_email(mailbox(task, "archive"), 'Request digitized delivery', {"archive_id": "ARC-71", "exhibition_permission": True})
         while env.events:
             env.advance(env.events[0][0])
         self.assertEqual(env.cases[reply["case_id"]]["state"], "needs_information")
@@ -458,7 +458,7 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://xingzhou.bench/contact")
-        case = api.send_email(mailbox(task, "maintainer"), "确认兼容问题与补丁", task["public"]["user_fields"])
+        case = api.send_email(mailbox(task, "maintainer"), 'Confirm compatibility issue and patch', task["public"]["user_fields"])
         while env.cases[case["case_id"]]["state"] != "replied":
             api.wait_until(task["deadline_at"])
         self.assertTrue(any(ev["agent_visible"] and ev["fact_id"] == "workaround" for ev in env.evidence.values()))
@@ -472,13 +472,13 @@ class EnvironmentTests(unittest.TestCase):
             return {"workflow_id": "main"}
         env = Environment(load(1), LLMRecipient(callback))
         env.tools().visit_page("https://heanhuiguan.bench/contact")
-        env.tools().send_email(mailbox(load(1), "reception"), "请帮我找到合适的人")
+        env.tools().send_email(mailbox(load(1), "reception"), 'Please help me find the right person')
         self.assertNotIn("facts", views[0])
         self.assertNotIn("actors", views[0])
         bad = Environment(load(1), LLMRecipient(lambda _: {"workflow_id": "secret"}))
         bad.tools().visit_page("https://heanhuiguan.bench/contact")
         with self.assertRaises(ValueError):
-            bad.tools().send_email(mailbox(load(1), "reception"), "查询")
+            bad.tools().send_email(mailbox(load(1), "reception"), 'inquiry')
 
     def test_each_actor_has_an_independent_default_recipient(self):
         env = Environment(load(1))
@@ -502,7 +502,7 @@ class EnvironmentTests(unittest.TestCase):
             {"id": 1, "tool": "observe", "arguments": {}},
             {"id": 2, "tool": "recall_task", "arguments": {}},
             {"id": 3, "tool": "visit_page", "arguments": {"url": "https://heanhuiguan.bench/contact"}},
-            {"id": 4, "tool": "send_email", "arguments": {"recipient": mailbox(load(1), "reception"), "text": "活动联系入口"}},
+            {"id": 4, "tool": "send_email", "arguments": {"recipient": mailbox(load(1), "reception"), "text": 'Event contact channel'}},
             {"id": 5, "tool": "wait_until", "arguments": {"until": "2026-11-10T18:00:00+08:00"}},
             {"id": 6, "tool": "execute_tool", "arguments": {}},
         ]
@@ -531,7 +531,7 @@ class EnvironmentTests(unittest.TestCase):
             api.wait_until("2026-11-01T00:00:00+08:00")
         env.advance(task["deadline_at"])
         with self.assertRaises(ValueError):
-            api.send_email(mailbox(task, "reception"), "活动")
+            api.send_email(mailbox(task, "reception"), 'event')
 
     def test_browser_search_and_visit_are_two_levels(self):
         env = Environment(load(1))
@@ -539,17 +539,17 @@ class EnvironmentTests(unittest.TestCase):
         # The task brief carries no pages and no contacts: discovery is the
         # agent's job through web_search and visit_page.
         brief = json.dumps(api.recall_task(), ensure_ascii=False)
-        self.assertNotIn("旧版简介", brief)
+        self.assertNotIn('Old introduction', brief)
         self.assertNotIn("reception", brief)
         self.assertEqual(api.recall_task(), api.recall_task())
         self.assertEqual(set(api.observe()), {"now", "tools", "unread_messages"})
         self.assertEqual(api.observe()["unread_messages"], 0)
-        links = api.web_search("禾岸会馆")["results"]
+        links = api.web_search('Hean Hall')["results"]
         self.assertTrue(links)
         # Search results are URLs, never internal ids or page bodies.
         self.assertTrue(all(set(l) == {"url", "title", "snippet"} for l in links))
         self.assertTrue(all(l["url"].startswith("https://") and ".bench/" in l["url"] for l in links))
-        self.assertNotIn("reception", json.dumps(api.web_search("联系方式"), ensure_ascii=False))
+        self.assertNotIn("reception", json.dumps(api.web_search('contacts'), ensure_ascii=False))
         # Empty queries and terms that match nothing return no links at all,
         # but the hint still reports how many pages remain undiscovered.
         total = len(load(1)["public"]["pages"])
@@ -557,7 +557,7 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(empty["results"], [])
         self.assertEqual(empty["hint"]["undiscovered_pages"], total - len({l["url"] for l in links}))
         self.assertEqual(api.web_search("   ")["results"], [])
-        self.assertEqual(api.web_search("完全不相关的查询词")["results"], [])
+        self.assertEqual(api.web_search('completely unrelated query words')["results"], [])
         # Only proper page addresses are accepted; ids and foreign URLs are not.
         with self.assertRaises(ValueError):
             api.visit_page("venue")
@@ -567,7 +567,7 @@ class EnvironmentTests(unittest.TestCase):
             api.visit_page("https://heanhuiguan.bench/nowhere")
         venue = api.visit_page("https://heanhuiguan.bench/contact")
         self.assertNotIn("id", venue)
-        self.assertIn("旧版简介", api.visit_page("https://heanhuiguan.bench/intro")["text"])
+        self.assertIn('Old introduction', api.visit_page("https://heanhuiguan.bench/intro")["text"])
         self.assertEqual({c["id"] for c in venue["contact_details"]}, {"reception"})
         card = venue["contact_details"][0]
         self.assertTrue(card["contact_details"]["email"].endswith("@bench.example"))
@@ -579,17 +579,17 @@ class EnvironmentTests(unittest.TestCase):
         task = load(1)
         api = Environment(task).tools()
         with self.assertRaises(ValueError):
-            api.send_email("reception", "咨询")
+            api.send_email("reception", 'inquiry')
         with self.assertRaises(ValueError):
-            api.send_email("not-an-address", "咨询")
+            api.send_email("not-an-address", 'inquiry')
         with self.assertRaises(ValueError):
-            api.send_email("@bench.example", "咨询")
+            api.send_email("@bench.example", 'inquiry')
 
     def test_unknown_mailbox_acknowledges_but_never_replies(self):
         task = load(1)
         env = Environment(task)
         api = env.tools()
-        result = api.send_email("nobody@bench.example", "联系活动场地")
+        result = api.send_email("nobody@bench.example", 'Contact event venue')
         # The receipt is indistinguishable from a delivered mail and consumes
         # budget, but no case exists and nothing ever arrives.
         self.assertEqual(result["status"], "received")
@@ -605,14 +605,14 @@ class EnvironmentTests(unittest.TestCase):
         api = env.tools()
         api.visit_page("https://heanhuiguan.bench/contact")
         # reception only routes venue contact inquiries, not price questions.
-        result = api.send_email(mailbox(task, "reception"), "请提供报价和取消条款")
+        result = api.send_email(mailbox(task, "reception"), 'Please provide quote and cancellation terms')
         self.assertEqual(result["status"], "received")
         # Nothing is answered at send time; the referral lands during work hours.
         self.assertEqual(env.cases[result["case_id"]]["state"], "new")
         inbox = api.wait_until(task["deadline_at"])
         referral = next(m for m in inbox["messages"] if m["case_id"] == result["case_id"])
         self.assertEqual(referral["status"], "referral")
-        self.assertIn("不属于我负责的范围", referral["text"])
+        self.assertIn('outside my remit', referral["text"])
         self.assertNotIn("\n", referral["text"])
         self.assertEqual(env.cases[result["case_id"]]["state"], "replied")
 
@@ -621,7 +621,7 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://lengchuan.bench/contact")
-        first = api.send_email(mailbox(task, "sales"), "初次报价", {"quantity": 500, "spec": "M26-Q7"})
+        first = api.send_email(mailbox(task, "sales"), 'Initial quote', {"quantity": 500, "spec": "M26-Q7"})
         # First quote has been replied; drain the queue instead of guessing
         # the exact (jittered) reply time.
         while env.cases[first["case_id"]]["state"] != "replied" and env.events:
@@ -629,7 +629,7 @@ class EnvironmentTests(unittest.TestCase):
         self.assertEqual(env.cases[first["case_id"]]["state"], "replied")
         # A follow-up on the replied case that names a new request is re-routed
         # as a fresh case: it cannot restart or skip the original one.
-        reopened = api.send_email(mailbox(task, "sales"), "旧报价已过期，请重新确认报价",
+        reopened = api.send_email(mailbox(task, "sales"), 'The old quote has expired; please reconfirm quote',
                                   {"quantity": 500, "spec": "M26-Q7"}, case_id=first["case_id"])
         self.assertNotEqual(reopened["case_id"], first["case_id"])
         self.assertEqual(env.cases[reopened["case_id"]]["workflow"]["id"], "refresh")
@@ -638,7 +638,7 @@ class EnvironmentTests(unittest.TestCase):
                             for e in env.audit))
         # An unmatched follow-up stays an acknowledgement and opens nothing.
         before = len(env.cases)
-        ack = api.send_email(mailbox(task, "sales"), "谢谢，辛苦了", case_id=first["case_id"])
+        ack = api.send_email(mailbox(task, "sales"), 'Thank you for your help', case_id=first["case_id"])
         self.assertEqual(ack["case_id"], first["case_id"])
         self.assertEqual(len(env.cases), before)
         api.wait_until(task["deadline_at"])
@@ -654,7 +654,7 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://heanhuiguan.bench/contact")
-        result = api.send_email(mailbox(task, "reception"), "联系活动场地")
+        result = api.send_email(mailbox(task, "reception"), 'Contact event venue')
         # Admission is deferred: nothing is routed at send time, and the reply
         # lands inside work hours after at least the task's minimum reply delay.
         self.assertEqual(env.cases[result["case_id"]]["state"], "new")
@@ -669,11 +669,11 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://heanhuiguan.bench/contact")
-        api.send_email(mailbox(task, "reception"), "联系活动场地")
+        api.send_email(mailbox(task, "reception"), 'Contact event venue')
         inbox = api.wait_until(task["deadline_at"])
         for message in inbox["messages"]:
             self.assertNotIn("\n", message["text"])
-            self.assertTrue(message["text"].startswith("您好，我是"))
+            self.assertTrue(message["text"].startswith('Hello, I am '))
 
     def test_messages_carry_no_structured_contacts(self):
         # Referrals speak names and mailboxes in prose only: no contact cards
@@ -684,17 +684,17 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://heanhuiguan.bench/contact")
-        api.send_email(mailbox(task, "reception"), "联系活动场地")
+        api.send_email(mailbox(task, "reception"), 'Contact event venue')
         inbox = api.wait_until(task["deadline_at"])
         reply = inbox["messages"][-1]
         self.assertEqual(reply["from"], mailbox(task, "reception"))
         self.assertNotIn("contacts", reply)
-        self.assertIn("姚岚（" + mailbox(task, "sales") + "）", reply["text"])
-        self.assertIn("赵航（" + mailbox(task, "operations") + "）", reply["text"])
+        self.assertIn('Yao Lan (' + mailbox(task, "sales") + ")", reply["text"])
+        self.assertIn('Zhao Hang (' + mailbox(task, "operations") + ")", reply["text"])
         # The contact page only knows the reception desk; the two specialists
         # become addressable through the referral, not through the directory.
         self.assertEqual(env.known_contacts, set(["reception", "sales", "operations"]))
-        followup = api.send_email(mailbox(task, "sales"), "请发报价和取消条款",
+        followup = api.send_email(mailbox(task, "sales"), 'Please provide a quotation and cancellation terms',
                                   {"event_date": "2026-11-13", "headcount": 80})
         self.assertEqual(followup["status"], "received")
 
@@ -706,14 +706,14 @@ class EnvironmentTests(unittest.TestCase):
         task = load(2)
         env = Environment(task)
         api = env.tools()
-        filed = api.send_email(mailbox(task, "landlord"), "咨询租房宠物搬入",
+        filed = api.send_email(mailbox(task, "landlord"), 'Inquire about rental, pets, and move-in',
                                 task["public"]["user_fields"])
         env.advance("2026-11-06T21:00:00+08:00")
         self.assertEqual(env.cases[filed["case_id"]]["state"], "waiting_internal")
         agent_cases_before = [c for c in env.cases.values()
                               if c.get("origin") == "agent" and not c.get("parent")]
         # Alias-less ping and alias-matched ping both land on the open case.
-        for text in ("请问进度如何？", "请问租房事项的进度如何？"):
+        for text in ('How is progress?', 'How is the rental matter progressing?'):
             ping = api.send_email(mailbox(task, "landlord"), text)
             self.assertEqual(ping["case_id"], filed["case_id"])
         agent_cases_after = [c for c in env.cases.values()
@@ -734,15 +734,15 @@ class EnvironmentTests(unittest.TestCase):
         task = load(2)
         env = Environment(task)
         api = env.tools()
-        filed = api.send_email(mailbox(task, "landlord"), "咨询租房宠物搬入",
+        filed = api.send_email(mailbox(task, "landlord"), 'Inquire about rental, pets, and move-in',
                                 task["public"]["user_fields"])
         env.advance("2026-11-09T21:00:00+08:00")
-        api.send_email(mailbox(task, "landlord"), "请问进度如何？")
+        api.send_email(mailbox(task, "landlord"), 'How is progress?')
         env.advance(task["deadline_at"])
         acks = [m for m in env.messages if m["case_id"] == filed["case_id"]
                 and m["status"] == "acknowledgement"]
         import re
-        promised = [re.search(r"预计最早将于(.+?)（当地时间）办结", m["text"]).group(1) for m in acks]
+        promised = [re.search('The earliest expected completion is (.+?) local time, followed', m["text"]).group(1) for m in acks]
         final = next(m for m in env.messages if m["case_id"] == filed["case_id"] and m["status"] == "reply")
         # Every promise is conservative: the reply never lands after the
         # promised minute (an agent may safely wait until it), and never more
@@ -763,12 +763,12 @@ class EnvironmentTests(unittest.TestCase):
             env = Environment(task, seed=seed)
             api = env.tools()
             api.visit_page("https://nanyu.bench/contact")
-            api.send_email(mailbox(task, "labdesk"), "测量仪器联系")
+            api.send_email(mailbox(task, "labdesk"), 'Measurement instrument contact')
             # The labdesk referral names the safety officer and the instrument
             # keeper; only then are they addressable. File before the Friday
             # 14:00 training batch so the certificate is in hand.
             env.advance("2026-11-05T17:00:00+08:00")
-            api.send_email(mailbox(task, "safety"), "培训安全记录", {"person_name": "顾晓"})
+            api.send_email(mailbox(task, "safety"), 'Safety training record', {"person_name": 'Gu Xiao'})
             while not any(m["status"] == "reply" and m["from"] == mailbox(task, "safety")
                           for m in env.messages):
                 env.advance(env.events[0][0] if env.events else parse(task["deadline_at"]))
@@ -776,15 +776,15 @@ class EnvironmentTests(unittest.TestCase):
             # the training-record system, which issues the certificate only after
             # the batch has been processed.
             api.discover_tools("nanyu_training_record")
-            api.nanyu_training_record(fields={"person_name": "顾晓", "training_date": "2026-11-13"})
+            api.nanyu_training_record(fields={"person_name": 'Gu Xiao', "training_date": "2026-11-13"})
             env.advance("2026-11-13T16:30:00+08:00")
-            api.send_email(mailbox(task, "instrument"), "核实测量校准费用",
+            api.send_email(mailbox(task, "instrument"), 'Verify measurement calibration and fees',
                            {"sample_id": "S-482", "safety_certificate": "SAFE-NOV06-482"})
             env.advance(task["deadline_at"])
             ack = next(m for m in env.messages if m["status"] == "acknowledgement"
-                       and "杜和" in m["text"])
-            reply = next(m for m in env.messages if m["status"] == "reply" and "杜和" in m["text"])
-            promised = re.search(r"预计最早将于(.+?)（当地时间）办结", ack["text"]).group(1)
+                       and 'Du He' in m["text"])
+            reply = next(m for m in env.messages if m["status"] == "reply" and 'Du He' in m["text"])
+            promised = re.search('The earliest expected completion is (.+?) local time, followed', ack["text"]).group(1)
             self.assertGreaterEqual(parse(promised + "+08:00"), parse(reply["at"]),
                                     f"seed {seed}: promise {promised} beaten by {reply['at']}")
 
@@ -806,23 +806,23 @@ class EnvironmentTests(unittest.TestCase):
             "kind": "document", "facts": ["actual", "hotshoe"],
             "delay": {"mode": "business", "minutes": 30}}
         friend["workflows"][0]["steps"][1] = {
-            "id": "main_2", "label": "出具书面验机记录",
+            "id": "main_2", "label": 'Issue written inspection record',
             "tool": "friend.main.2.document", "delay": {"mode": "business", "minutes": 30}}
         env = Environment(task, seed=0)
         api = env.tools()
-        filed = api.send_email(mailbox(task, "seller"), "咨询CAM-402：实测快门数、热靴、价格、退货条件、取件。",
-                               {"serial": "CAM-402", "pickup_area": "桥溪东区"})
+        filed = api.send_email(mailbox(task, "seller"), 'Inquire about CAM-402: measured shutter count, hot shoe, price, returns, and pickup.',
+                               {"serial": "CAM-402", "pickup_area": 'Qiaoxi East District'})
         env.advance("2026-11-06T21:00:00+08:00")
-        api.call("seller", "再次咨询CAM-402：实测快门数、热靴、价格、退货条件。",
-                 {"serial": "CAM-402", "pickup_area": "桥溪东区"})
+        api.call("seller", 'Ask again about CAM-402: measured shutter count, hot shoe, price, and returns.',
+                 {"serial": "CAM-402", "pickup_area": 'Qiaoxi East District'})
         env.advance(task["deadline_at"])
         revisions = [m for m in env.messages if m["case_id"] == filed["case_id"]
-                     and "办理进度更新" in m["text"]]
+                     and 'Progress update' in m["text"]]
         self.assertEqual(len(revisions), 1)
         promised = next(m for m in env.messages if m["case_id"] == filed["case_id"]
-                        and "预计最早将于" in m["text"])
-        promised_at = parse(re.search(r"预计最早将于(.+?)（当地时间）办结", promised["text"]).group(1) + "+08:00")
-        revised_at = parse(re.search(r"办结时间调整为(.+?)（当地时间）", revisions[0]["text"]).group(1) + "+08:00")
+                        and 'The earliest expected completion is ' in m["text"])
+        promised_at = parse(re.search('The earliest expected completion is (.+?) local time, followed', promised["text"]).group(1) + "+08:00")
+        revised_at = parse(re.search('earliest expected completion is now (.+?) local time', revisions[0]["text"]).group(1) + "+08:00")
         self.assertGreater(revised_at, promised_at + timedelta(days=1))
         # The revision stays conservative versus the raw engine projection:
         # directly past the deadline, the document step already sits a week
@@ -837,21 +837,21 @@ class EnvironmentTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://heanhuiguan.bench/contact")
-        api.send_email(mailbox(task, "reception"), "联系活动场地")
+        api.send_email(mailbox(task, "reception"), 'Contact event venue')
         # The two specialists are only discoverable through the reception
         # desk's referral, which arrives after the task's reply delay.
         while "sales" not in env.known_contacts:
             api.wait_until(task["deadline_at"])
         # sales is email-only: there is no number to dial.
         with self.assertRaises(ValueError):
-            api.call("sales", "请报价格")
+            api.call("sales", 'Please quote the price')
         # Outside the reception desk's work hours nobody picks up.
         env.advance("2026-11-07T10:00:00+08:00")
-        self.assertEqual(api.call("reception", "请转接销售")["status"], "no_answer")
+        self.assertEqual(api.call("reception", 'Please connect me to sales')["status"], "no_answer")
         # Within work hours a quick referral completes during the call, but a
         # spoken answer attaches no receipts.
         env.advance("2026-11-09T09:30:00+08:00")
-        result = api.call("reception", "联系活动场地")
+        result = api.call("reception", 'Contact event venue')
         self.assertEqual(result["status"], "answered")
         message = next(m for m in env.messages if m["case_id"] == result["case_id"])
         self.assertEqual(message["channel"], "phone")
@@ -867,28 +867,28 @@ class ComplexityMechanismTests(unittest.TestCase):
         api = env.tools()
         url = "https://heanhuiguan.bench/intro"
         before = api.visit_page(url)
-        self.assertIn("旧版简介", before["text"])
+        self.assertIn('Old introduction', before["text"])
         # The update lands at its authored virtual time; nothing changes before.
         env.advance("2026-11-07T09:59:00+08:00")
-        self.assertIn("旧版简介", api.visit_page(url)["text"])
+        self.assertIn('Old introduction', api.visit_page(url)["text"])
         env.advance("2026-11-07T10:01:00+08:00")
         after = api.visit_page(url)
-        self.assertNotIn("旧版简介", after["text"])
-        self.assertIn("已停用作废", after["text"])
+        self.assertNotIn('Old introduction', after["text"])
+        self.assertIn('invalid', after["text"])
         self.assertGreaterEqual(parse(after["last_updated"]), parse("2026-11-07T10:00:00+08:00"))
         self.assertTrue(any(e["kind"] == "page_updated" for e in env.audit))
         # The stale snippet also stops matching the way it used to.
-        self.assertIn("最新价目", api.web_search("价目")["results"][0]["snippet"])
+        self.assertIn('latest pricing', api.web_search('pricing')["results"][0]["snippet"])
 
     def test_suggest_emits_vague_reply_and_exposes_guesses(self):
         task = load(9)
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://qinggang.bench/contact")
-        api.send_email(mailbox(task, "service"), "请核实活动办理管辖",
-                       {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"})
+        api.send_email(mailbox(task, "service"), 'Please verify jurisdiction for event processing',
+                       {"location": 'Qinggang North Square', "sound_equipment": 'Use two amplified-sound speakers'})
         env.advance("2026-11-04T17:00:00+08:00")
-        vague = next((m for m in env.messages if "记不很准" in m["text"]), None)
+        vague = next((m for m in env.messages if 'cannot clearly recall' in m["text"]), None)
         self.assertIsNotNone(vague, "expected the service desk's vague guess reply")
         # The guessed colleagues become addressable even though the reply is vague.
         self.assertIn("land", env.known_contacts)
@@ -898,13 +898,13 @@ class ComplexityMechanismTests(unittest.TestCase):
         task = load(2)
         env = Environment(task)
         api = env.tools()
-        api.send_email(mailbox(task, "landlord"), "咨询租房、宠物及搬入条件",
+        api.send_email(mailbox(task, "landlord"), 'Inquire about rent, pets, and move-in conditions',
                        task["public"]["user_fields"])
         # The evening window is short; the transfer letter may land the next
         # evening. Drain events until the case is waiting on the manager.
         while env.cases and not any(c.get("state") == "waiting_internal" for c in env.cases.values()) and env.events:
             env.advance(env.events[0][0])
-        interim = [m for m in env.messages if "物业" in m["text"] and m["status"] == "acknowledgement"]
+        interim = [m for m in env.messages if 'management' in m["text"] and m["status"] == "acknowledgement"]
         self.assertTrue(interim, "expected the landlord's interim consult letter")
         env.advance(task["deadline_at"])
         final = [m for m in env.messages if m["status"] == "reply"]
@@ -922,12 +922,12 @@ class ComplexityMechanismTests(unittest.TestCase):
         # document only exists after the page update publishes it.
         url = "https://lengchuan.bench/intro"
         initial = api.visit_page(url).get("documents", [])
-        self.assertEqual([d["title"] for d in initial], ["500件M26批次价目.pdf"])
+        self.assertEqual([d["title"] for d in initial], ['500-unit M26 batch price list.pdf'])
         with self.assertRaises(ValueError):
             api.fetch_document("https://lengchuan.bench/files/supplier-quote-2026-12.pdf")
         env.advance("2026-12-07T10:01:00+08:00")
         documents = api.visit_page(url)["documents"]
-        self.assertEqual(documents[0]["title"], "12月批次价目文件.pdf")
+        self.assertEqual(documents[0]["title"], 'December batch price list.pdf')
         fetched = api.fetch_document(documents[0]["url"])
         self.assertIn(18600, fetched["receipts"][0]["fields"].values())
         # The fetched price file's fact is agent-visible on the director.
@@ -945,15 +945,15 @@ class ComplexityMechanismTests(unittest.TestCase):
         task = load(1)
         api = Environment(task).tools()
         api.visit_page("https://heanhuiguan.bench/contact")
-        result = api.request_callback("reception", "报价")
+        result = api.request_callback("reception", 'quotation')
         self.assertEqual(result["status"], "registered")
         with self.assertRaises(PermissionError):
-            api.request_callback("technician", "还未发现的联系人")
+            api.request_callback("technician", 'Undiscovered contact')
         # DSB-03 offers no leave_note (DSB-01 gained it as an added decoy).
         other = Environment(load(3)).tools()
         other.visit_page("https://chengchuan.bench/contact")
         with self.assertRaises(PermissionError):
-            other.leave_note("records", "本任务未提供留言工具")
+            other.leave_note("records", 'Notes are unavailable in this task')
 
 
 if __name__ == "__main__":

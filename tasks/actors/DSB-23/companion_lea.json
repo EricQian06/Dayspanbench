@@ -56,7 +56,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "companion_lea.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -74,7 +74,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "companion_lea.main.3.document",
             "delay": {
               "mode": "business",
@@ -83,7 +83,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "companion_lea.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -113,7 +113,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Travel companion·Lea Bernard，负责animal supervision during the trip。May stay with Nino and acknowledges supervision only for the itinerary shown to her; an acknowledgement for an older arrival time does not carry over after a delay. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Travel companion·Lea Bernard, responsible for animal supervision during the trip. May stay with Nino and acknowledges supervision only for the itinerary shown to her; an acknowledgement for an older arrival time does not carry over after a delay. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:companion_supervision_acknowledged"

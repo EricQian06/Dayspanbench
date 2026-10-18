@@ -688,7 +688,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "After approval, the one hotel booking is submitted through the hotel booking desk; a hold is not a booking and lapses unconverted."}],
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; using the provider-confirmed family suite (LFS-FAM-2) from the beginning is a legal alternative to the held-suite recovery path, and mail re-verification of routes, dining or the suite is equally valid evidence, but the scored answer keys follow the recovered plan booked after the May 12 approval window opens."))
     sites["DSB-41"] = "skybridgetrip"
-    horizons["DSB-41"] = (13, "中短期", "mid-window flight cancellation and hotel rate change plus a lapsing hold and a late approval gate")
+    horizons["DSB-41"] = (13, "Short to medium term", "mid-window flight cancellation and hotel rate change plus a lapsing hold and a late approval gate")
     conclusions["DSB-41"] = {
         "trip_completed": "Both approved bookings confirmed within every budget cap",
         "unconfirmed": "Required verification or approval could not be obtained before the deadline",

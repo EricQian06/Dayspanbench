@@ -3,9 +3,9 @@
   "task_id": "DSB-01",
   "actor": {
     "id": "reception",
-    "name": "禾岸会馆前台·陈芷",
-    "role": "对外咨询与转介",
-    "description": "只掌握联系人目录；不能承诺报价、档期或设备。",
+    "name": "Hean Hall reception - Chen Zhi",
+    "role": "External inquiries and referrals",
+    "description": "Only holds the contact directory; cannot commit to prices, availability, or equipment.",
     "calendar": "office",
     "channels": [
       "email",
@@ -29,23 +29,23 @@
       },
       "reception.projector_gossip.1.deny": {
         "kind": "deny",
-        "text": "投影检修的事我印象里13号上午就检修完毕了，下午应该能正常使用吧——不过前台不掌握检修计划，这只是我的口头印象，不一定准，没有书面依据；设备可用性的书面结论请按官网简介页最新公告说明的设备保障登记渠道申请，以办结结论为准。"
+        "text": "My recollection is that the projector maintenance finishes on the morning of the 13th and it should work that afternoon. But reception does not hold the maintenance plan; this is only my verbal impression, may be inaccurate, and has no written basis. For a written equipment-availability decision, apply through the equipment-support registration channel named in the latest notice on the official introduction page; rely on its completed decision."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "活动联系入口",
+        "label": "Event contact channel",
         "aliases": [
-          "活动",
-          "场地",
-          "联系"
+          "event",
+          "venue",
+          "contact"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "main_1",
-            "label": "查询联系人目录并转介",
+            "label": "Look up the contact directory and provide a referral",
             "tool": "reception.main.1.refer",
             "delay": {
               "mode": "business",
@@ -54,7 +54,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "reception.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -66,15 +66,15 @@
       },
       {
         "id": "projector_gossip",
-        "label": "投影检修口头说明",
+        "label": "Verbal account of projector maintenance",
         "aliases": [
-          "投影"
+          "projector"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "projector_gossip_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "reception.projector_gossip.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -104,7 +104,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是禾岸会馆前台·陈芷，负责对外咨询与转介。只掌握联系人目录；不能承诺报价、档期或设备。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Hean Hall reception - Chen Zhi, responsible for External inquiries and referrals. Only holds the contact directory; cannot commit to prices, availability, or equipment. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": []
   },

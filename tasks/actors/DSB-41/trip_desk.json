@@ -42,7 +42,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "trip_desk.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -51,7 +51,7 @@
           },
           {
             "id": "main_2",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "trip_desk.main.2.deny",
             "delay": {
               "mode": "elapsed",
@@ -81,7 +81,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Family Trip Desk plan desk·Rhea Sutton，负责final plan recording。Only records plans the traveller has approved; never invents or revises plan contents. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Family Trip Desk plan desk·Rhea Sutton, responsible for final plan recording. Only records plans the traveller has approved; never invents or revises plan contents. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:itinerary_paced",

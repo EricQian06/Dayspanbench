@@ -3,9 +3,9 @@
   "task_id": "DSB-09",
   "actor": {
     "id": "land",
-    "name": "公共空间管理联络员·吴弈",
-    "role": "场地管辖核对",
-    "description": "每周四10点复核共享场地边界清单。",
+    "name": "Public space management liaison - Wu Yi",
+    "role": "Site jurisdiction verification",
+    "description": "The shared-site boundary list is reviewed every Thursday at 10:00.",
     "calendar": "office",
     "channels": [
       "email"
@@ -36,10 +36,10 @@
     "workflows": [
       {
         "id": "main",
-        "label": "管辖材料复核",
+        "label": "Jurisdiction document review",
         "aliases": [
-          "管辖",
-          "场地"
+          "jurisdiction",
+          "venue"
         ],
         "required_fields": [
           "location"
@@ -47,7 +47,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "land.main.1.lookup",
             "delay": {
               "mode": "weekly",
@@ -58,7 +58,7 @@
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "land.main.2.document",
             "delay": {
               "mode": "business",
@@ -67,7 +67,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "land.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -97,7 +97,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是公共空间管理联络员·吴弈，负责场地管辖核对。每周四10点复核共享场地边界清单。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Public space management liaison - Wu Yi, responsible for Site jurisdiction verification. The shared-site boundary list is reviewed every Thursday at 10:00. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:responsible_office"
@@ -125,14 +125,14 @@
   },
   "local_facts": {
     "jurisdiction": {
-      "value": "街区公共空间管理处",
-      "text": "拟用地点属于街区公共空间管理处管辖；不是私人场地。",
+      "value": "Neighborhood Public Space Management Office",
+      "text": "The proposed location falls under the Neighborhood Public Space Management Office; it is not private property.",
       "attributes": {
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "responsible_office"

@@ -3,9 +3,9 @@
   "task_id": "DSB-06",
   "actor": {
     "id": "support",
-    "name": "霁光电器客服·孟竹",
-    "role": "保修材料受理",
-    "description": "没有凭证不能判定覆盖；拿到诊断和库存后才报告可用时段。",
+    "name": "Jiguang Appliances customer service - Meng Zhu",
+    "role": "Warranty document intake",
+    "description": "Coverage cannot be determined without proof of purchase; report available slots only after diagnosis and stock confirmation.",
     "calendar": "office",
     "channels": [
       "email",
@@ -30,7 +30,7 @@
       },
       "support.main.3.suggest": {
         "kind": "suggest",
-        "text": "根据您的描述，机身接缝漏水常见原因是密封件老化，也可能是水路主板渗漏，具体原因要等工程师诊断才能确认；这类密封圈配件我记得好像要自费260元，不过我也就随口一说，供您参考，费用以核实结论为准。上门时段的书面结论走哪个渠道我也记不准，可能要问工程师，也可能零件库那边留了登记渠道。我先把设备情况转给工程师。",
+        "text": "Based on your description, leakage at the housing seam often comes from an aging seal, but it could also be leakage at the water circuit board; an engineer must diagnose it. I seem to remember that this sealing ring costs CNY 260 out of pocket, but that is only a casual recollection for reference; use the verified fee determination. I also cannot recall the channel for a written home visit slot determination. The engineer may know, or the parts store may have the registration channel. I will forward the device details to the engineer.",
         "guesses": [
           "engineer",
           "parts"
@@ -52,11 +52,11 @@
     "workflows": [
       {
         "id": "main",
-        "label": "保修及维修时间咨询",
+        "label": "Warranty and repair timing inquiry",
         "aliases": [
-          "保修",
-          "维修",
-          "配件"
+          "warranty",
+          "maintenance",
+          "parts"
         ],
         "required_fields": [
           "serial",
@@ -65,7 +65,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "support.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -74,7 +74,7 @@
           },
           {
             "id": "main_2",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "support.main.2.acknowledge",
             "delay": {
               "mode": "elapsed",
@@ -83,7 +83,7 @@
           },
           {
             "id": "main_3",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "support.main.3.suggest",
             "delay": {
               "mode": "business",
@@ -92,7 +92,7 @@
           },
           {
             "id": "main_4",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "support.main.4.delegate",
             "delay": {
               "mode": "business",
@@ -101,7 +101,7 @@
           },
           {
             "id": "main_5",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "support.main.5.reply",
             "delay": {
               "mode": "business",
@@ -131,7 +131,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是霁光电器客服·孟竹，负责保修材料受理。没有凭证不能判定覆盖；拿到诊断和库存后才报告可用时段。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Jiguang Appliances customer service - Meng Zhu, responsible for Warranty document intake. Coverage cannot be determined without proof of purchase; report available slots only after diagnosis and stock confirmation. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:covered"
@@ -160,14 +160,14 @@
   "local_facts": {
     "covered": {
       "value": true,
-      "text": "设备SN-A731仍在本次合成保修条款覆盖范围内。",
+      "text": "Device SN-A731 remains covered by the synthetic warranty terms in this scenario.",
       "attributes": {
         "subject": {
           "task": "DSB-06",
           "case": {
             "serial": "SN-A731",
             "receipt": "R-731",
-            "symptom": "机身接缝漏水"
+            "symptom": "Leakage at the housing seam"
           }
         },
         "predicate": "covered"

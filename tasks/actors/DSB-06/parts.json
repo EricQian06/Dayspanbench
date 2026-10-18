@@ -3,9 +3,9 @@
   "task_id": "DSB-06",
   "actor": {
     "id": "parts",
-    "name": "霁光零件库·纪桐",
-    "role": "配件与费用",
-    "description": "原厂补货批次11月13日到库，需16个工作小时核验；周六办公、周日关闭。",
+    "name": "Jiguang parts store - Ji Tong",
+    "role": "Parts and fees",
+    "description": "The factory replenishment batch arrives on November 13 and requires 16 working hours of verification. Open Saturdays, closed Sundays.",
     "calendar": "factory",
     "channels": [
       "email"
@@ -30,10 +30,10 @@
     "workflows": [
       {
         "id": "main",
-        "label": "零件库存复核",
+        "label": "Parts stock verification",
         "aliases": [
-          "库存",
-          "配件"
+          "stock",
+          "parts"
         ],
         "required_fields": [
           "serial"
@@ -41,7 +41,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "parts.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -51,7 +51,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "parts.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -84,7 +84,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是霁光零件库·纪桐，负责配件与费用。原厂补货批次11月13日到库，需16个工作小时核验；周六办公、周日关闭。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Jiguang parts store - Ji Tong, responsible for Parts and fees. The factory replenishment batch arrives on November 13 and requires 16 working hours of verification. Open Saturdays, closed Sundays. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:part_cost"
@@ -114,14 +114,14 @@
   "local_facts": {
     "cost": {
       "value": 0,
-      "text": "本次更换配件费用为0元。",
+      "text": "The replacement part costs CNY 0 in this case.",
       "attributes": {
         "subject": {
           "task": "DSB-06",
           "case": {
             "serial": "SN-A731",
             "receipt": "R-731",
-            "symptom": "机身接缝漏水"
+            "symptom": "Leakage at the housing seam"
           }
         },
         "predicate": "part_cost"

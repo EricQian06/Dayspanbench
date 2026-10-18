@@ -55,7 +55,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "ana.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -73,7 +73,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "ana.main.3.document",
             "delay": {
               "mode": "business",
@@ -82,7 +82,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "ana.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -112,7 +112,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Family helper·Ana Ruiz，负责authorized midday helper, 12:00-13:00 only。Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Family helper·Ana Ruiz, responsible for authorized midday helper, 12:00-13:00 only. Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:ana_window"

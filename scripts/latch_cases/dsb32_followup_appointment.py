@@ -324,7 +324,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The approved appointment has been confirmed against live inventory; the confirmation is read back through the booking desk, never pushed."}],
         alternate_paths="Any legal order of dialogue, searches, consent and approval is accepted if every goal's evidence conditions hold; slot-103 with its own 275 USD estimate and a matching exact approval is a legal alternative, but the scored answer keys follow the slot-102 plan."))
     sites["DSB-32"] = "cedarendocrine"
-    horizons["DSB-32"] = (2, "短期", "referral review window plus midday slot inventory change")
+    horizons["DSB-32"] = (2, "Short term", "referral review window plus midday slot inventory change")
     conclusions["DSB-32"] = {
         "appointment_confirmed": "One approved eligible appointment confirmed with the consented minimal intake packet",
         "unconfirmed": "Referral review, consent or approval could not be obtained in time",

@@ -24,11 +24,11 @@ def obtain_rights_confirmation(task, env, api):
     """Walk the DSB-07 front desk -> rights holder path until the
     physical/online permission attestations are in the agent's inbox."""
     api.visit_page("https://beiting.bench/contact")
-    api.send_email(mailbox(task, "archive"), "咨询档案费用与权利联系人",
-                   {"archive_id": "ARC-71", "usage": "非商业实体展览及展览网站"})
+    api.send_email(mailbox(task, "archive"), 'Inquire about archive fees and rights contacts',
+                   {"archive_id": "ARC-71", "usage": 'Noncommercial physical exhibition and exhibition website'})
     drain(env)
-    api.send_email(mailbox(task, "rights"), "请确认ARC-71两种用途的权利授权",
-                   {"archive_id": "ARC-71", "usage": "非商业实体展览及展览网站"})
+    api.send_email(mailbox(task, "rights"), 'Please confirm rights authorization for both ARC-71 uses',
+                   {"archive_id": "ARC-71", "usage": 'Noncommercial physical exhibition and exhibition website'})
     drain(env)
     # v0.5: established facts live on the director; the written reply made
     # them agent-visible.
@@ -61,26 +61,26 @@ class ComprehensionUnitTests(unittest.TestCase):
         # The exact failure of the recorded gpt-5.4 episode: the rights
         # holder's written confirmation restated as prose.
         self.assertTrue(self.check(
-            "图像ARC-71获准用于本次非商业实体展览，并授权展览网站、社交媒体公开发布"))
+            'Image ARC-71 is approved for this noncommercial physical exhibition and for public exhibition website and social media publication'))
 
     def test_receipt_text_quotation_admits(self):
         # v0.5: EV-id citation is retired; quoting the receipt's own wording
         # (the written confirmation the agent actually received) still admits.
         fact = self.env.director.facts[self.exhibit_ids[0]]
-        self.assertTrue(self.check("已获权利方书面确认", ["随信附上确认结论：" + fact["text"]]))
+        self.assertTrue(self.check('Written rights-holder confirmation obtained', ['Confirmation attached: ' + fact["text"]]))
 
 
     def test_prose_restatement_admits(self):
-        self.assertTrue(self.check("权利方已确认：实体展览用途获准"))
+        self.assertTrue(self.check('Rights holder confirmed: physical exhibition use approved'))
 
     def test_opposite_polarity_does_not_admit(self):
-        self.assertFalse(self.check("实体展览用途未获准"))
+        self.assertFalse(self.check('Physical exhibition use not approved'))
 
     def test_claim_without_evidence_anchor_does_not_admit(self):
         # Same prose, but no issued evidence exists at all (fresh environment).
         fresh = Environment(load(7))
         requirement = self.requirement
-        self.assertEqual(understood_evidence("权利方已确认：实体展览用途获准", [],
+        self.assertEqual(understood_evidence('Rights holder confirmed: physical exhibition use approved', [],
                                              requirement, fresh.evidence, fresh.now), [])
 
 
@@ -96,9 +96,9 @@ class ComprehensionAdmissionTests(unittest.TestCase):
         # be admitted and eventually deliver the scan specification.
         result = self.api.send_email(
             mailbox(self.task, "archive"),
-            "权利方已确认ARC-71用于本次非商业实体展览，现申请数字化交付并确认扫描规格。",
+            'The rights holder has confirmed ARC-71 for this noncommercial physical exhibition. Please arrange digitized delivery and confirm scan specifications.',
             {"archive_id": "ARC-71",
-             "exhibition_permission": "图像ARC-71获准用于本次非商业实体展览，并授权展览网站、社交媒体公开发布"})
+             "exhibition_permission": 'Image ARC-71 is approved for this noncommercial physical exhibition and for public exhibition website and social media publication'})
         drain(self.env)
         case = self.env.cases[result["case_id"]]
         self.assertNotEqual(case["state"], "needs_information")
@@ -116,8 +116,8 @@ class ComprehensionAdmissionTests(unittest.TestCase):
         api = env.tools()
         api.visit_page("https://beiting.bench/contact")
         result = api.send_email(
-            mailbox(task, "archive"), "申请数字化交付并确认扫描规格",
-            {"archive_id": "ARC-71", "exhibition_permission": "实体展览用途获准"})
+            mailbox(task, "archive"), 'Request digitized delivery and confirm scan specifications',
+            {"archive_id": "ARC-71", "exhibition_permission": 'Physical exhibition use approved'})
         drain(env)
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
 

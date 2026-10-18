@@ -268,7 +268,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The one approved meal order has been processed; the confirmation receipt is with the agent and nothing further was ordered."}],
         alternate_paths="Any legal order of dialogue, verification mail, helper acknowledgements and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the ff1 offer after the July 10 change and links Marta's coverage. The already-verified ff6 menu at 12:00 with Ana is a legal alternative route, but the scored answer keys follow the refreshed ff1 v2 plan."))
     sites["DSB-17"] = "familymeal"
-    horizons["DSB-17"] = (2, "短期", "mid-week delivery-time rewrite invalidating helper coverage plus mail verification turnaround")
+    horizons["DSB-17"] = (2, "Short term", "mid-week delivery-time rewrite invalidating helper coverage plus mail verification turnaround")
     conclusions["DSB-17"] = {
         "meal_covered": "One approved six-portion meal order linked to a helper covering the full meal window, with written controls within budget",
         "unconfirmed": "Controls or helper coverage could not be confirmed in time",

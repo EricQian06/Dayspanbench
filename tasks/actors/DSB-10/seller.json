@@ -3,9 +3,9 @@
   "task_id": "DSB-10",
   "actor": {
     "id": "seller",
-    "name": "相机卖家·沈栖",
-    "role": "二手相机信息",
-    "description": "只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测；书面验机结果须经登记渠道取得。",
+    "name": "Camera seller - Shen Qi",
+    "role": "Used camera information",
+    "description": "Handles messages only from 20:00 to 22:00. Has no reader and must ask a friend with weekend equipment for testing; written results require the registration channel.",
     "calendar": "evening",
     "channels": [
       "email",
@@ -23,7 +23,7 @@
     "tools": {
       "seller.main.1.suggest": {
         "kind": "suggest",
-        "text": "验机的书面结果我不直接掌握：朋友柯闻周末有读取器，测完可能直接答复；书面结论走哪个渠道我记不准，也可能桥溪快运取件咨询台能代查登记，建议您分别去信确认。另外这台机器我印象里快门也就一万次上下，不过不一定准，我随口一说，供您参考，实测以验机办结为准。",
+        "text": "I do not directly hold the written inspection results. My friend Ke Wen has a reader on weekends and may reply after testing. I cannot recall the written-results channel; Qiaoxi Express pickup inquiries may also look up registrations. Please write to both. I also seem to remember this camera has around 10000 actuations, but that is an uncertain casual impression for reference; use the completed inspection.",
         "guesses": [
           "friend",
           "courier"
@@ -47,7 +47,7 @@
         "forward_fields": [
           "serial"
         ],
-        "text": "我自己没有读取器，快门和热靴要先转给周末有设备的朋友实测，测完我把结果告诉您。"
+        "text": "I do not have a reader. I must ask a friend with weekend equipment to measure the shutter count and test the hot shoe, then relay the results."
       },
       "seller.main.5.refer": {
         "kind": "refer",
@@ -62,12 +62,12 @@
     "workflows": [
       {
         "id": "main",
-        "label": "相机实测与条款",
+        "label": "Camera measurements and terms",
         "aliases": [
-          "相机",
-          "快门",
-          "热靴",
-          "实测"
+          "camera",
+          "shutter",
+          "hot shoe",
+          "measurement"
         ],
         "required_fields": [
           "serial"
@@ -75,7 +75,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "seller.main.1.suggest",
             "delay": {
               "mode": "business",
@@ -84,7 +84,7 @@
           },
           {
             "id": "main_2",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "seller.main.2.lookup",
             "delay": {
               "mode": "business",
@@ -93,7 +93,7 @@
           },
           {
             "id": "main_3",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "seller.main.3.acknowledge",
             "delay": {
               "mode": "business",
@@ -102,7 +102,7 @@
           },
           {
             "id": "main_4",
-            "label": "内部咨询后答复",
+            "label": "Consult internally before replying",
             "tool": "seller.main.4.consult",
             "delay": {
               "mode": "elapsed",
@@ -111,7 +111,7 @@
           },
           {
             "id": "main_5",
-            "label": "查询联系人目录并转介",
+            "label": "Look up the contact directory and provide a referral",
             "tool": "seller.main.5.refer",
             "delay": {
               "mode": "business",
@@ -120,7 +120,7 @@
           },
           {
             "id": "main_6",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "seller.main.6.reply",
             "delay": {
               "mode": "business",
@@ -150,7 +150,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是相机卖家·沈栖，负责二手相机信息。只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测；书面验机结果须经登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Camera seller - Shen Qi, responsible for Used camera information. Handles messages only from 20:00 to 22:00. Has no reader and must ask a friend with weekend equipment for testing; written results require the registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:asking_price",
@@ -179,13 +179,13 @@
   "local_facts": {
     "asking": {
       "value": 3200,
-      "text": "卖方询价3200元，未承诺保留商品。",
+      "text": "The seller's asking price is CNY 3200; no promise has been made to hold the item.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "asking_price"
@@ -193,27 +193,27 @@
     },
     "estimate": {
       "value": 10000,
-      "text": "卖方回忆快门约一万次，未经读取，不应视为实测。",
+      "text": "The seller recalls roughly 10000 shutter actuations, but no reading was taken; this is not a measured count.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "estimate"
       }
     },
     "returns": {
-      "value": "不支持退货",
-      "text": "卖方说明按现状转让，不支持退货。",
+      "value": "No returns",
+      "text": "The seller states that the camera is sold as is, with no returns.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "return_policy"

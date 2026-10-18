@@ -904,8 +904,8 @@
       "not_feasible": "No current listing and financing combination satisfies the hard constraints"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1075,7 +1075,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "fulfillment_desk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1093,7 +1093,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "fulfillment_desk.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1102,7 +1102,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "fulfillment_desk.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1132,7 +1132,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Test Appliance Cooperative fulfillment desk·Sam Rivers，负责measured fit, doorway route and delivery verification。Confirms measured installation fit, unpack-at-door handling, recycling and the current delivery date in writing; financing and orders go through the order desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Test Appliance Cooperative fulfillment desk·Sam Rivers, responsible for measured fit, doorway route and delivery verification. Confirms measured installation fit, unpack-at-door handling, recycling and the current delivery date in writing; financing and orders go through the order desk. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:delivery_date",
@@ -1205,7 +1205,7 @@
             },
             {
               "id": "quote_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "store_desk.quote.2.document",
               "delay": {
                 "mode": "business",
@@ -1214,7 +1214,7 @@
             },
             {
               "id": "quote_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "store_desk.quote.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1244,7 +1244,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Test Appliance Cooperative order desk·Dana Fields，负责merchandise offers, financing terms and orders。Quotes current financed totals and installment schedules; promo terms can expire and be replaced with fee-bearing versions, so quotes are revalidated at order time. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Test Appliance Cooperative order desk·Dana Fields, responsible for merchandise offers, financing terms and orders. Quotes current financed totals and installment schedules; promo terms can expire and be replaced with fee-bearing versions, so quotes are revalidated at order time. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:delivery_date",
@@ -1556,7 +1556,7 @@
   "alternate_paths": "Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the sf-A plan was legal only before the June 8 promo expiry, but the scored answer keys follow the current sf-B plan.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "mid-episode promo expiry plus installment approval gate",
     "distribution": "manually stratified approximately logarithmic"
   }

@@ -51,7 +51,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "course_assessor.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -60,7 +60,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "course_assessor.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -90,7 +90,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Course provider and assessor·Dr. Ada Vaughn，负责course records, role briefs, assessed artifacts and the application desk。Issues only the fixture's verified records and service acknowledgements: current course listings, the recruiter-confirmed role brief, and assessed artifact records that appear only after the enrolled course actually completes; never accepts agent-authored assessment claims. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Course provider and assessor·Dr. Ada Vaughn, responsible for course records, role briefs, assessed artifacts and the application desk. Issues only the fixture's verified records and service acknowledgements: current course listings, the recruiter-confirmed role brief, and assessed artifact records that appear only after the enrolled course actually completes; never accepts agent-authored assessment claims. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:application_received",

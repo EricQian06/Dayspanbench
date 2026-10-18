@@ -3,9 +3,9 @@
   "task_id": "DSB-01",
   "actor": {
     "id": "technician",
-    "name": "禾岸会馆设备主管·周敏",
-    "role": "设备维修计划",
-    "description": "只有本岗位知道维修窗口；书面结论须经登记渠道申请，不随邮件发放。",
+    "name": "Hean Hall equipment supervisor - Zhou Min",
+    "role": "Equipment maintenance plan",
+    "description": "Only this role knows the maintenance window; written decisions require an application through the registration channel and are not issued by email.",
     "calendar": "office",
     "channels": [
       "email"
@@ -23,16 +23,16 @@
       },
       "technician.main.2.deny": {
         "kind": "deny",
-        "text": "投影设备的检修安排我只能口头说明：11月13日全天安排检修。书面结论不随邮件出具，须通过会馆设备保障登记渠道（hean_equip_apply）申请，受理说明见官网简介页最新公告。"
+        "text": "I can only describe the projector maintenance verbally: it is scheduled for all of November 13. Written decisions are not issued by email; apply through the hall's equipment-support registration channel (hean_equip_apply). The latest notice on the official introduction page explains acceptance."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "核对维修窗口",
+        "label": "Check the maintenance window",
         "aliases": [
-          "投影",
-          "维修"
+          "projector",
+          "maintenance"
         ],
         "required_fields": [
           "event_date"
@@ -40,7 +40,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "核对检修计划窗口（仅口头说明）",
+            "label": "Check the maintenance-plan window (verbal information only)",
             "tool": "technician.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -49,7 +49,7 @@
           },
           {
             "id": "main_2",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "technician.main.2.deny",
             "delay": {
               "mode": "elapsed",
@@ -79,7 +79,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是禾岸会馆设备主管·周敏，负责设备维修计划。只有本岗位知道维修窗口；书面结论须经登记渠道申请，不随邮件发放。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Hean Hall equipment supervisor - Zhou Min, responsible for Equipment maintenance plan. Only this role knows the maintenance window; written decisions require an application through the registration channel and are not issued by email. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:projector_available"
@@ -108,7 +108,7 @@
   "local_facts": {
     "projector": {
       "value": false,
-      "text": "投影设备11月13日全天维修，场地方也不能提供替代投影设备。",
+      "text": "The projector is under maintenance throughout November 13; the venue cannot provide a replacement projector either.",
       "attributes": {
         "subject": {
           "task": "DSB-01",

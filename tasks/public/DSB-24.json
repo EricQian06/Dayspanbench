@@ -78,8 +78,8 @@
     "not_feasible": "No allocation fits the current cutoff and protected calendar"
   },
   "answer_format": {
-    "conclusion": "选择conclusion_options中的一个键",
-    "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+    "conclusion": "Choose one key from conclusion_options",
+    "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
   },
   "start_at": "2027-10-04T09:00:00-05:00",
   "deadline_at": "2027-10-06T17:00:00-05:00"

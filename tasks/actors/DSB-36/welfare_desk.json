@@ -56,7 +56,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "welfare_desk.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -74,7 +74,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "welfare_desk.main.3.document",
             "delay": {
               "mode": "business",
@@ -83,7 +83,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "welfare_desk.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -113,7 +113,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Harbour Festival welfare desk·Tom Okafor，负责minor-accompaniment confirmations for under-16 attendees。Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Harbour Festival welfare desk·Tom Okafor, responsible for minor-accompaniment confirmations for under-16 attendees. Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:minor_confirmed"

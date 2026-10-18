@@ -290,7 +290,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The exact dropped partner share has been restored with no broadening; the real state should be audited after reconciliation."}],
         alternate_paths="Any legal order of dialogue, inventory reads and attestations is accepted if every goal's evidence conditions hold; the revocation may precede or follow the share restoration after recovery, but the proof must precede recovery, approval must precede the commitments, and the audit must follow the provider reconciliation."))
     sites["DSB-27"] = "cloudrecovery"
-    horizons["DSB-27"] = (2, "短期", "mid-day owner proof, delayed provider share migration and post-reconciliation audit")
+    horizons["DSB-27"] = (2, "Short term", "mid-day owner proof, delayed provider share migration and post-reconciliation audit")
     conclusions["DSB-27"] = {
         "recovered_scoped": "Account recovered with only WIN-FRA-09 revoked and the partner's exact share restored after reconciliation",
         "unconfirmed": "Proof, reconciliation or audit could not be established in time",

@@ -47,7 +47,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "pathway_adviser.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -56,7 +56,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "pathway_adviser.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -86,7 +86,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Certificate program adviser·Rosa Kim，负责pathway verification, prerequisite sequencing and first-stage reservations。Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Certificate program adviser·Rosa Kim, responsible for pathway verification, prerequisite sequencing and first-stage reservations. Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:first_stage_reserved",

@@ -3,9 +3,9 @@
   "task_id": "DSB-08",
   "actor": {
     "id": "b_tech",
-    "name": "B酒店设施主管·郑砚",
-    "role": "指定房型现场尺寸",
-    "description": "指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。",
+    "name": "Hotel B facilities supervisor - Zheng Yan",
+    "role": "On-site dimensions of the designated room type",
+    "description": "The designated room can only be entered for remeasurement on November 11 at 10:00. Other rooms on the same floor cannot substitute.",
     "calendar": "office",
     "channels": [
       "email"
@@ -37,16 +37,16 @@
       },
       "b_tech.a_query.1.deny": {
         "kind": "deny",
-        "text": "我这里只有B酒店指定房间的量测记录，A旅舍的尺寸不归我管；请向A旅舍前台确认。"
+        "text": "I only have measurement records for Hotel B's designated room. Hostel A's dimensions are outside my remit; please confirm with Hostel A reception."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "指定房间量测",
+        "label": "Designated room measurement",
         "aliases": [
-          "尺寸",
-          "测量"
+          "dimensions",
+          "measurement"
         ],
         "required_fields": [
           "wheelchair_width"
@@ -54,7 +54,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "b_tech.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -64,7 +64,7 @@
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "b_tech.main.2.document",
             "delay": {
               "mode": "business",
@@ -73,7 +73,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "b_tech.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -85,15 +85,15 @@
       },
       {
         "id": "a_query",
-        "label": "A旅舍询问回绝",
+        "label": "Refusal of Hostel A inquiry",
         "aliases": [
-          "A旅舍"
+          "Hostel A"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "a_query_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "b_tech.a_query.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -123,7 +123,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是B酒店设施主管·郑砚，负责指定房型现场尺寸。指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Hotel B facilities supervisor - Zheng Yan, responsible for On-site dimensions of the designated room type. The designated room can only be entered for remeasurement on November 11 at 10:00. Other rooms on the same floor cannot substitute. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:b_bathroom_cm",
@@ -153,7 +153,7 @@
   "local_facts": {
     "b_bath": {
       "value": 85,
-      "text": "B酒店浴室通行净宽85cm。",
+      "text": "Hotel B's clear bathroom access width is 85cm.",
       "attributes": {
         "subject": {
           "task": "DSB-08",
@@ -167,7 +167,7 @@
     },
     "b_door": {
       "value": 92,
-      "text": "B酒店指定无障碍房净门宽92cm。",
+      "text": "Hotel B's designated accessible room has a clear doorway width of 92cm.",
       "attributes": {
         "subject": {
           "task": "DSB-08",

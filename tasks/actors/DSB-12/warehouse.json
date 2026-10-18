@@ -3,9 +3,9 @@
   "task_id": "DSB-12",
   "actor": {
     "id": "warehouse",
-    "name": "始发仓查件员·施瑾",
-    "role": "仓内扫描核对",
-    "description": "周末无人工查件；核对后出具扫描记录。",
+    "name": "Origin warehouse tracking clerk - Shi Jin",
+    "role": "Warehouse scan verification",
+    "description": "No manual shipment tracking on weekends; issues scan records after verification.",
     "calendar": "office",
     "channels": [
       "email"
@@ -34,16 +34,16 @@
       },
       "warehouse.release_gossip.1.deny": {
         "kind": "deny",
-        "text": "放行的事我印象里这批货好像今年年初就放行了，货说不定早都提走了，不过我不敢说准——查件员不掌握放行状态，这只是口头印象，没有书面依据；放行状态须由单证联络按流程发起长期复核后确认，任何回执也不是放行证明。"
+        "text": "I seem to recall this batch was released early this year and may already have been collected, but I cannot be sure. Tracking clerks do not control release status; this is only a verbal impression without written evidence. Release must be confirmed after the document liaison initiates long-term review under the process; no receipt constitutes proof of release."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "入库扫描查证",
+        "label": "Intake scan verification",
         "aliases": [
-          "扫描",
-          "入库"
+          "scan",
+          "warehouse intake"
         ],
         "required_fields": [
           "tracking"
@@ -51,7 +51,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "warehouse.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -60,7 +60,7 @@
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "warehouse.main.2.document",
             "delay": {
               "mode": "business",
@@ -69,7 +69,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "warehouse.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -81,16 +81,16 @@
       },
       {
         "id": "release_gossip",
-        "label": "放行状态口头印象",
+        "label": "Verbal impression of release status",
         "aliases": [
-          "放行",
-          "提货"
+          "release",
+          "collection"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "release_gossip_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "warehouse.release_gossip.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -120,7 +120,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是始发仓查件员·施瑾，负责仓内扫描核对。周末无人工查件；核对后出具扫描记录。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Origin warehouse tracking clerk - Shi Jin, responsible for Warehouse scan verification. No manual shipment tracking on weekends; issues scan records after verification. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:initial_warehouse_record"
@@ -148,8 +148,8 @@
   },
   "local_facts": {
     "warehouse": {
-      "value": "2026年11月已完成始发仓入库扫描",
-      "text": "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
+      "value": "Origin warehouse intake scan completed in November 2026",
+      "text": "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.",
       "attributes": {
         "subject": {
           "task": "DSB-12",

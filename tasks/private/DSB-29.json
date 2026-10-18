@@ -805,8 +805,8 @@
       "not_feasible": "No authorized caregiver combination covers all five slots"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -940,7 +940,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "clinician.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -958,7 +958,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "clinician.main.3.document",
               "delay": {
                 "mode": "business",
@@ -967,7 +967,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "clinician.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -997,7 +997,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Care clinician·Dr. Lena Park，负责clinical plan versions and scoped instruction packets。Releases only the clinician-confirmed plan and its scoped instruction packets exactly as issued; never interprets doses and does not accept agent-authored clinical content. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Care clinician·Dr. Lena Park, responsible for clinical plan versions and scoped instruction packets. Releases only the clinician-confirmed plan and its scoped instruction packets exactly as issued; never interprets doses and does not accept agent-authored clinical content. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:clinician_plan_current"
@@ -1058,7 +1058,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "care_desk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1076,7 +1076,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "care_desk.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1085,7 +1085,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "care_desk.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1115,7 +1115,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Care coordination desk·Noa Field，负责caregiver roster, access shares and handoff dispatch。Keeps the caregiver roster, access shares and standing services; share revocations go through the access service (revoke_share) and scoped handoffs through the handoff service (handoff_send); the driver never receives clinical material. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Care coordination desk·Noa Field, responsible for caregiver roster, access shares and handoff dispatch. Keeps the caregiver roster, access shares and standing services; share revocations go through the access service (revoke_share) and scoped handoffs through the handoff service (handoff_send); the driver never receives clinical material. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:driver_packets_logistics_only",
@@ -1388,7 +1388,7 @@
   "alternate_paths": "Any legal order of dialogue, roster reading, revocation and clinician inquiry is accepted if every goal's evidence conditions hold; revocation and the clinician request may occur in either order. The reference path revokes first, then obtains the plan v2 release, then sends the approved five-assignment handoff.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "clinician plan release, access revocation and fixed-time caregiver acknowledgements across days",
     "distribution": "manually stratified approximately logarithmic"
   }

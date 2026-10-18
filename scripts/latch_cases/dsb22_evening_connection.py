@@ -279,7 +279,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "Two seats for the 21:00 jazz set have been confirmed against the reserved transport; the evening plan is fully reserved."}],
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the routes after the 17:00 cancellation and reserves transport before both shows, but any order honoring those gates scores the same."))
     sites["DSB-22"] = "riversideevening"
-    horizons["DSB-22"] = (2, "短期", "mid-evening return-route cancellation plus transport-before-shows gate")
+    horizons["DSB-22"] = (2, "Short term", "mid-evening return-route cancellation plus transport-before-shows gate")
     conclusions["DSB-22"] = {
         "evening_confirmed": "Transport bundle and both show reservations confirmed with a current return",
         "unconfirmed": "Official timing or a current return could not be verified in time",

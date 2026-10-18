@@ -959,8 +959,8 @@
       "not_feasible": "The protected calendar demonstrably cannot fit 1200 focus minutes"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1055,7 +1055,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "review_coordinator.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1064,7 +1064,7 @@
             },
             {
               "id": "main_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "review_coordinator.main.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1094,7 +1094,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Review coordinator·Priya Shah，负责confirmed meeting times, the weekly calendar service and the request inbox。Publishes only the review's confirmed time and runs the calendar and inbox services; sees redacted free/busy only, never family details, and never sends replies or accepts meetings on the user's behalf. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Review coordinator·Priya Shah, responsible for confirmed meeting times, the weekly calendar service and the request inbox. Publishes only the review's confirmed time and runs the calendar and inbox services; sees redacted free/busy only, never family details, and never sends replies or accepts meetings on the user's behalf. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:ceo_reply_drafted_unsent",
@@ -1347,7 +1347,7 @@
   "alternate_paths": "Any legal order of dialogue, calendar reads, drafting and checkpoint waiting is accepted if every goal's evidence conditions hold; any feasible arrangement of at least 1200 focus minutes is as valid as the reference blocks, and the draft may be prepared before or after the checkpoint.",
   "horizon_design": {
     "reference_days": 3,
-    "stratum": "中短期",
+    "stratum": "Short to medium term",
     "mechanism": "CEO request arrival, a weekend gap and the Monday checkpoint revision gating the applied plan",
     "distribution": "manually stratified approximately logarithmic"
   }

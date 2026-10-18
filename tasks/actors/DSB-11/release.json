@@ -3,9 +3,9 @@
   "task_id": "DSB-11",
   "actor": {
     "id": "release",
-    "name": "星舟发布协调员·唐泊",
-    "role": "候选版发布状态",
-    "description": "每季度上游兼容窗口核对候选版；稳定版状态须向上游委员会查证，不能自行答复。",
+    "name": "Xingzhou release coordinator - Tang Bo",
+    "role": "Release candidate status",
+    "description": "Checks release candidates at each quarterly upstream compatibility window. Stable-version status requires verification with the upstream committee and cannot be answered independently.",
     "calendar": "release",
     "channels": [
       "email"
@@ -38,10 +38,10 @@
     "workflows": [
       {
         "id": "main",
-        "label": "候选版核对",
+        "label": "Release candidate check",
         "aliases": [
-          "发布",
-          "候选版"
+          "release",
+          "release candidate"
         ],
         "required_fields": [
           "version"
@@ -49,7 +49,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "release.main.1.lookup",
             "delay": {
               "mode": "weekly",
@@ -61,7 +61,7 @@
           },
           {
             "id": "main_2",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "release.main.2.delegate",
             "delay": {
               "mode": "business",
@@ -70,7 +70,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "release.main.3.reply",
             "delay": {
               "mode": "business",
@@ -100,7 +100,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是星舟发布协调员·唐泊，负责候选版发布状态。每季度上游兼容窗口核对候选版；稳定版状态须向上游委员会查证，不能自行答复。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Xingzhou release coordinator - Tang Bo, responsible for Release candidate status. Checks release candidates at each quarterly upstream compatibility window. Stable-version status requires verification with the upstream committee and cannot be answered independently. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:candidate_version"
@@ -122,7 +122,7 @@
   "local_facts": {
     "candidate": {
       "value": "1.4.2-rc1",
-      "text": "发布负责人确认当前仅有候选版1.4.2-rc1。",
+      "text": "The release lead confirms that only release candidate 1.4.2-rc1 is currently available.",
       "available_at": "2027-02-09T20:00:00+08:00",
       "attributes": {
         "subject": {

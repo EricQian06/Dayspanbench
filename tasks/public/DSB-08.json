@@ -1,7 +1,7 @@
 {
   "id": "DSB-08",
-  "title": "无障碍住宿：两家机构比较与延后的现场测量",
-  "brief": "在A旅舍和B酒店中选择11月14—16日两晚住宿，预算2600元。轮椅宽78cm，房门和浴室净宽均须至少80cm。获取实测尺寸，并确认合适酒店的房态和总价，不预订。",
+  "title": "Accessible lodging: compare two providers and wait for on-site measurement",
+  "brief": "Choose between Hostel A and Hotel B for two nights, November 14-16, with a CNY 2600 budget. The wheelchair is 78cm wide; both the doorway and bathroom clear widths must be at least 80cm. Obtain measured dimensions and confirm the suitable hotel's availability and total price. Do not book.",
   "user_fields": {
     "wheelchair_width": "78cm",
     "stay_dates": "2026-11-14/2026-11-16"
@@ -10,15 +10,15 @@
   "pages": [
     {
       "id": "hotels-intro",
-      "title": "候选住宿简介",
-      "text": "A旅舍旧网页称门宽88cm；B酒店也有无障碍房。两家的前台每天办公，设施人员另有工作时段；B酒店指定房型的无障碍复测按临近入住统一排期。本页另挂有B酒店无障碍房型说明等文件。",
+      "title": "Candidate accommodation overview",
+      "text": "Hostel A's old webpage claims an 88cm doorway; Hotel B also has accessible rooms. Both receptions work daily, while facilities staff have separate schedules. Hotel B schedules accessibility remeasurement for the designated room type close to arrival. Hotel B's accessible room description and other documents are attached to this page.",
       "contacts": [],
-      "snippet": "两家候选住宿概况与现场测量安排。",
+      "snippet": "Overview of both accommodation candidates and on-site measurement arrangements.",
       "documents": [
         {
           "id": "hotels-b-door-ref",
-          "title": "B酒店无障碍房型说明.pdf",
-          "text": "B酒店无障碍房型说明：据留存方了解，B酒店无障碍房净门宽96cm。（留存方整理）",
+          "title": "Hotel B accessible room description.pdf",
+          "text": "Hotel B accessible room description: according to the record holder's understanding, the clear doorway width is 96cm. (Compiled by the record holder.)",
           "facts": [
             "b_door_ref"
           ],
@@ -30,39 +30,39 @@
     },
     {
       "id": "hotels",
-      "title": "候选住宿联系方式",
-      "text": "A旅舍前台蓝心；B酒店预订咨询米禾。现场测量分别由两家设施人员处理。",
+      "title": "Candidate accommodation contacts",
+      "text": "Lan Xin at Hostel A reception; Mi He for Hotel B booking inquiries. Each property's facilities staff handle on-site measurements.",
       "contacts": [
         "a_desk",
         "b_desk"
       ],
-      "snippet": "两家前台对接说明。",
+      "snippet": "Contact information for both receptions.",
       "url": "https://wuzhangzhusu.bench/contact"
     },
     {
       "id": "hotels-entry",
-      "title": "无障碍住宿预订入口",
-      "text": "无障碍住宿预订说明：确认A旅舍或B酒店的无障碍房型需提供轮椅宽度与入住日期；通行尺寸以现场复测为准；B酒店指定日期的房态与总价通过本页登记表单申请后取得。本页面仅说明材料，不能在线预订。",
+      "title": "Accessible accommodation booking portal",
+      "text": "Accessible accommodation booking information: provide wheelchair width and stay dates to confirm an accessible room at Hostel A or Hotel B. Access dimensions require on-site remeasurement. Obtain Hotel B's date-specific availability and total price through this page's registration form. This page only explains requirements and cannot book online.",
       "contacts": [],
-      "snippet": "A旅舍与B酒店无障碍房确认材料说明；不支持在线预订。",
+      "snippet": "Hostel A and Hotel B accessible room confirmation requirements; no online booking.",
       "form": {
         "id": "rate_form",
-        "title": "指定日期房态与报价核对登记",
+        "title": "Date-specific room availability and quote check registration",
         "fields": [
           {
             "name": "stay_dates",
-            "label": "入住日期",
+            "label": "Stay dates",
             "required": true,
             "hidden": false
           },
           {
             "name": "room_type",
-            "label": "房型",
+            "label": "Room type",
             "required": false,
             "hidden": false
           }
         ],
-        "submit_instructions": "本表单不能在线直接提交：须通过酒店房态报价核对渠道办理；渠道名称与受理安排以官网简介页最新公告为准。"
+        "submit_instructions": "This form cannot be submitted directly online. Use the hotel room availability and quote check channel; see the latest official overview page notice for the channel name and acceptance schedule."
       },
       "url": "https://wuzhangzhusu.bench/entry"
     }
@@ -83,7 +83,7 @@
     "fetch_document",
     "leave_note"
   ],
-  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
   "answer_keys": [
     "a_door_cm",
     "a_bathroom_cm",
@@ -97,44 +97,44 @@
       "type": "number",
       "units": {
         "cm": 1,
-        "厘米": 1,
+        "centimeters": 1,
         "m": 100,
-        "米": 100,
+        "meters": 100,
         "mm": 0.1,
-        "毫米": 0.1
+        "millimeters": 0.1
       }
     },
     "a_bathroom_cm": {
       "type": "number",
       "units": {
         "cm": 1,
-        "厘米": 1,
+        "centimeters": 1,
         "m": 100,
-        "米": 100,
+        "meters": 100,
         "mm": 0.1,
-        "毫米": 0.1
+        "millimeters": 0.1
       }
     },
     "b_door_cm": {
       "type": "number",
       "units": {
         "cm": 1,
-        "厘米": 1,
+        "centimeters": 1,
         "m": 100,
-        "米": 100,
+        "meters": 100,
         "mm": 0.1,
-        "毫米": 0.1
+        "millimeters": 0.1
       }
     },
     "b_bathroom_cm": {
       "type": "number",
       "units": {
         "cm": 1,
-        "厘米": 1,
+        "centimeters": 1,
         "m": 100,
-        "米": 100,
+        "meters": 100,
         "mm": 0.1,
-        "毫米": 0.1
+        "millimeters": 0.1
       }
     },
     "b_available": {
@@ -143,22 +143,22 @@
     "b_total_price": {
       "type": "number",
       "units": {
-        "元": 1,
+        "yuan": 1,
         "CNY": 1,
-        "人民币": 1
+        "RMB": 1
       }
     }
   },
   "conclusion_options": {
-    "choose_a": "A符合要求",
-    "choose_b": "B符合要求",
-    "both_suitable": "两家均符合",
-    "neither_suitable": "两家均不符合",
-    "unconfirmed": "信息不足"
+    "choose_a": "A meets requirements",
+    "choose_b": "B meets requirements",
+    "both_suitable": "Both meet requirements",
+    "neither_suitable": "Neither meets requirements",
+    "unconfirmed": "Insufficient information"
   },
   "answer_format": {
-    "conclusion": "选择conclusion_options中的一个键",
-    "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+    "conclusion": "Choose one key from conclusion_options",
+    "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
   },
   "start_at": "2026-11-06T13:30:00+08:00",
   "deadline_at": "2026-11-13T18:00:00+08:00"

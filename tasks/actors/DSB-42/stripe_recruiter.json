@@ -44,7 +44,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "stripe_recruiter.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -53,7 +53,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "stripe_recruiter.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -83,7 +83,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Stripe recruiter desk·Jordan Blake，负责Stripe final interview scheduling only。Handles only the Stripe interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Stripe recruiter desk·Jordan Blake, responsible for Stripe final interview scheduling only. Handles only the Stripe interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:stripe_offer_confirmed",

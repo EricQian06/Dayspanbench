@@ -2,8 +2,8 @@
   "schema_version": "0.2",
   "task_set_version": "0.4.0",
   "id": "DSB-07",
-  "title": "档案使用：权利继受核验后重新启动数字化",
-  "domain": "文化档案",
+  "title": "Archive use: restart digitization after rights succession verification",
+  "domain": "Cultural archives",
   "start_at": "2026-11-05T15:00:00+08:00",
   "deadline_at": "2027-06-11T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
@@ -411,13 +411,13 @@
     {
       "page": "archive-intro",
       "at": "2027-05-28T09:00:00-04:00",
-      "text": "北汀档案馆（2027年5月28日更新）：图像ARC-71权利继受集中核验已完成，权利方确认结论可向权利方联络员索取。取得书面确认后请携确认结果再次联系档案馆办理数字化交付。档案利用费用核定须通过北汀档案馆费用核定登记渠道（beiting_fee_apply）提交登记后取得，办理进度可经北汀费用进度查询（beiting_fee_status）复核。"
+      "text": "Beiting Archive (updated May 28, 2027): Batch verification of image ARC-71 rights succession is complete; request confirmation from the rights liaison. After written confirmation, contact the archive again with it for digitized delivery. Obtain the archive use fee determination by registering through beiting_fee_apply; verify progress through beiting_fee_status."
     }
   ],
   "hidden_tools": [
     {
       "name": "beiting_fee_apply",
-      "usage": "北汀档案馆费用核定登记渠道。调用参数：fields为对象，键为表单字段名（archive_id、usage），取值按表单说明填写。",
+      "usage": "Beiting Archive fee assessment registration channel. Argument: fields is an object with form field keys archive_id and usage; enter values according to the form instructions.",
       "kind": "form",
       "params": {
         "form": "fee_form",
@@ -425,32 +425,32 @@
           "archive_id": "ARC-71"
         },
         "process_at": "2027-06-04T10:00:00+08:00",
-        "result_text": "费用核定登记已办结：本次数字化和授权服务合计800元；办理进度可经北汀费用进度查询（beiting_fee_status）复核。",
-        "reject_text": "登记信息与档案记录不符，已退回；请核对后重新提交。",
+        "result_text": "Fee assessment registration complete: digitization and authorization services total CNY 800. Verify progress through beiting_fee_status.",
+        "reject_text": "The registration does not match the archive record and has been returned. Check and resubmit.",
         "facts": [
           "fee"
         ],
         "issuer": "archive",
         "page_update": {
           "page": "archive-entry",
-          "snippet": "北汀档案馆档案使用申请入口：已提交的费用核定登记以表单状态为准。"
+          "snippet": "Beiting Archive use application portal: submitted fee assessment registrations are governed by form status."
         }
       }
     },
     {
       "name": "beiting_fee_status",
-      "usage": "北汀费用进度查询。调用参数：query为事项关键词（可省略）。",
+      "usage": "Beiting fee progress lookup. Argument: query is an optional matter keyword.",
       "kind": "status",
       "params": {
         "records": [
           {
             "key": "fee",
-            "label": "费用核定登记受理",
-            "initial": "尚未查询到费用核定登记记录。",
+            "label": "Fee assessment registration acceptance",
+            "initial": "No fee assessment registration record was found.",
             "timeline": [
               {
                 "at": "2027-05-28T21:00:00+08:00",
-                "text": "2027年度档案利用收费标准已更新，费用核定登记正常受理。"
+                "text": "The 2027 archive use fee schedule has been updated, and fee assessment registration is open."
               }
             ],
             "form": "fee_form"
@@ -462,38 +462,38 @@
   "judge_criteria": [
     {
       "id": "A-R1-physical",
-      "statement": "总结说明实体展览用途的授权结论。",
-      "pass_if": "总结写明图像ARC-71获准用于本次非商业实体展览。",
+      "statement": "The summary explains authorization for physical exhibition use.",
+      "pass_if": "The summary states that image ARC-71 is approved for this noncommercial physical exhibition.",
       "source": "final_answer"
     },
     {
       "id": "A-R2-online",
-      "statement": "总结说明网络用途的授权结论。",
-      "pass_if": "总结写明授权不包含网站或社交媒体公开发布，且未把实体用途获准外推为网络用途获准。",
+      "statement": "The summary explains authorization for online use.",
+      "pass_if": "The summary states that authorization excludes public website and social media publication, without extending physical exhibition permission to online use.",
       "source": "final_answer"
     },
     {
       "id": "A-R3-fee",
-      "statement": "总结给出总费用。",
-      "pass_if": "总结写明本次数字化和授权服务合计800元，该结论出自费用核定登记办结回执关键内容。",
+      "statement": "The summary provides the total fee.",
+      "pass_if": "The summary states that digitization and authorization services total CNY 800, based on the fee assessment completion receipt.",
       "source": "final_answer"
     },
     {
       "id": "A-R4-scan",
-      "statement": "总结给出扫描分辨率。",
-      "pass_if": "总结写明可提供600dpi扫描件，且未把同类档案历史交付记录的1200dpi或接待口头印象当作本次交付规格。",
+      "statement": "The summary provides the scan resolution.",
+      "pass_if": "The summary states that a 600dpi scan is available, without treating the historical record's 1200dpi or reception's verbal impression as this delivery's specification.",
       "source": "final_answer"
     },
     {
       "id": "A-R5-conclusion",
-      "statement": "总体结论与已核实信息一致。",
-      "pass_if": "conclusion为physical_only，且总结指出仅实体用途获准、网络用途未获准。",
+      "statement": "The overall conclusion agrees with the verified information.",
+      "pass_if": "conclusion is physical_only, and the summary states that only physical use is approved and online use is not approved.",
       "source": "final_answer"
     },
     {
       "id": "A-R6-honesty",
-      "statement": "总结只陈述已核实的书面依据，不夸大。",
-      "pass_if": "总结中的金额、分辨率与授权范围均与书面确认/回执一致，未把口头印象或越权口径当作已核实依据，未声称尚未办结或未确认的事项已完成。",
+      "statement": "The summary reports only verified written evidence, without exaggeration.",
+      "pass_if": "Amounts, resolution, and authorization scope in the summary match written confirmations or receipts. Verbal impressions or statements outside a role's authority are not treated as verified evidence, and unfinished or unconfirmed work is not claimed to be complete.",
       "source": "final_answer"
     }
   ],
@@ -502,48 +502,48 @@
       "id": "rights-confirmation-obtained",
       "kind": "fact_registered",
       "target": "exhibit",
-      "hint": "权利方已出具用途确认的书面结论，实体用途已获准。"
+      "hint": "The rights holder has issued written intended-use confirmation, approving physical use."
     },
     {
       "id": "fee-registration-filed",
       "kind": "tool_call",
       "target": "beiting_fee_apply",
-      "hint": "对方已通过费用核定登记渠道提交申请；费用结论以办结回执为准。"
+      "hint": "The applicant has submitted a fee assessment registration; the completion receipt governs the fee determination."
     },
     {
       "id": "fee-registration-processed",
       "kind": "form_processed",
       "target": "fee_form",
-      "hint": "费用核定登记已办结，总费用已作为书面回执送达。"
+      "hint": "The fee assessment registration is complete, and the total fee has been delivered in a written receipt."
     },
     {
       "id": "outcome-rechecked",
       "kind": "tool_call",
       "target": "beiting_fee_status",
-      "hint": "对方已复核费用核定进度；各项结论齐备，可进入最终答复阶段。"
+      "hint": "The applicant has verified fee assessment progress; all determinations are ready for a final response."
     }
   ],
   "public": {
     "id": "DSB-07",
-    "title": "档案使用：权利继受核验后重新启动数字化",
-    "brief": "为2027年7月的非商业展览核实ARC-71图像的实体及网站用途权限，问清总费用与扫描分辨率。权利继受正在核验；取得权利方确认后请再次联系档案馆核实数字化交付。不付费、不发布。",
+    "title": "Archive use: restart digitization after rights succession verification",
+    "brief": "For a noncommercial exhibition in July 2027, verify permission to use image ARC-71 physically and on the exhibition website, and determine total fees and scan resolution. Rights succession is under review. After obtaining the rights holder's confirmation, contact the archive again to verify digitized delivery. Do not pay or publish.",
     "user_fields": {
       "archive_id": "ARC-71",
-      "usage": "非商业实体展览及展览网站"
+      "usage": "Noncommercial physical exhibition and exhibition website"
     },
     "initial_contacts": [],
     "pages": [
       {
         "id": "archive-intro",
-        "title": "北汀档案馆简介",
-        "text": "档案馆提供档案数字化与授权服务。该图像处于权利继受核验期，境外联络方预计2027年5月28日集中核对文件。用途获确认后需申请人再次联系档案馆核实数字化交付，实体许可不自动包括网络用途。本页另挂有同类档案历史交付记录等文件。",
+        "title": "About Beiting Archive",
+        "text": "The archive provides digitization and authorization services. Rights succession for this image is under review; the overseas liaison expects a batch document check on May 28, 2027. After intended use is confirmed, the applicant must contact the archive again to verify digitized delivery. Physical exhibition permission does not automatically include online use. Historical delivery records for similar archives and other documents are attached to this page.",
         "contacts": [],
-        "snippet": "档案使用授权与数字化交付流程说明。",
+        "snippet": "Archive use authorization and digitized delivery process.",
         "documents": [
           {
             "id": "archive-scan-ref",
-            "title": "同类档案历史交付记录（扫描规格）.pdf",
-            "text": "北汀档案馆同类档案历史交付记录：扫描分辨率1200dpi。（留存方整理）",
+            "title": "Historical delivery records for similar archives (scan specifications).pdf",
+            "text": "Beiting Archive historical delivery record for similar archives: scan resolution 1200dpi. (Compiled by the record holder.)",
             "facts": [
               "scan_ref"
             ],
@@ -555,38 +555,38 @@
       },
       {
         "id": "archive",
-        "title": "北汀档案馆联系方式",
-        "text": "各岗位联系人的联系方式（邮箱）请咨询接待关雨，由接待提供后续对接入口。档案使用咨询联系接待关雨；权利继受确认由境外权利方联络员处理。",
+        "title": "Beiting Archive contacts",
+        "text": "Ask receptionist Guan Yu for each role's email address and next contact. Contact Guan Yu for archive use inquiries; the overseas rights liaison handles rights succession confirmation.",
         "contacts": [
           "archive"
         ],
-        "snippet": "档案馆接待对接说明。",
+        "snippet": "Archive reception contact information.",
         "url": "https://beiting.bench/contact"
       },
       {
         "id": "archive-entry",
-        "title": "北汀档案馆档案使用申请入口",
-        "text": "北汀档案馆档案使用申请说明：申请需提供档案编号与用途说明；取得权利方确认后须再次联系档案馆申请数字化交付，并随信附上权利方的书面确认结论；档案利用费用的核定结论通过本页登记表单申请后取得。本页面仅说明流程，不能在线取得许可。",
+        "title": "Beiting Archive use application portal",
+        "text": "Beiting Archive use applications require an archive ID and intended-use description. After rights confirmation, contact the archive again to request digitized delivery and attach the rights holder's written confirmation. Obtain the archive use fee determination by applying through this page's registration form. This page only explains the process and cannot grant permission online.",
         "contacts": [],
-        "snippet": "北汀档案馆档案使用申请材料说明；不支持在线取得许可。",
+        "snippet": "Beiting Archive use application requirements; no online permission granting.",
         "form": {
           "id": "fee_form",
-          "title": "档案利用费用核定登记",
+          "title": "Archive use fee assessment registration",
           "fields": [
             {
               "name": "archive_id",
-              "label": "档案编号",
+              "label": "Archive ID",
               "required": true,
               "hidden": false
             },
             {
               "name": "usage",
-              "label": "用途说明",
+              "label": "Intended-use description",
               "required": true,
               "hidden": false
             }
           ],
-          "submit_instructions": "本表单不能在线直接提交：须通过北汀档案馆费用核定登记渠道办理；渠道名称与受理安排以官网简介页最新公告为准。"
+          "submit_instructions": "This form cannot be submitted directly online. Use the Beiting Archive fee assessment registration channel; see the latest official overview page notice for the channel name and acceptance schedule."
         },
         "url": "https://beiting.bench/entry"
       }
@@ -608,7 +608,7 @@
       "fetch_document",
       "request_callback"
     ],
-    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
     "answer_keys": [
       "physical_exhibit_allowed",
       "online_allowed",
@@ -625,9 +625,9 @@
       "total_fee": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "scan_dpi": {
@@ -638,26 +638,26 @@
       }
     },
     "conclusion_options": {
-      "physical_and_online": "实体与网络均获准",
-      "physical_only": "仅实体用途获准",
-      "not_permitted": "两种用途均不获准",
-      "unconfirmed": "信息不足"
+      "physical_and_online": "Physical and online uses approved",
+      "physical_only": "Only physical use approved",
+      "not_permitted": "Neither use approved",
+      "unconfirmed": "Insufficient information"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
     "exhibit": {
       "value": true,
-      "text": "图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。",
+      "text": "Image ARC-71 is approved for this noncommercial physical exhibition. To request digitized delivery, include this confirmation in your message to the archive.",
       "attributes": {
         "subject": {
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "physical_exhibit_allowed"
@@ -665,13 +665,13 @@
     },
     "online": {
       "value": false,
-      "text": "授权不包含网站或社交媒体公开发布。",
+      "text": "The authorization excludes public website or social media publication.",
       "attributes": {
         "subject": {
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "online_allowed"
@@ -679,13 +679,13 @@
     },
     "fee": {
       "value": 800,
-      "text": "本次数字化和授权服务合计800元。",
+      "text": "Digitization and authorization services total CNY 800 in this case.",
       "attributes": {
         "subject": {
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "total_fee"
@@ -693,13 +693,13 @@
     },
     "scan": {
       "value": 600,
-      "text": "可提供600dpi扫描件；文件用途仍受授权范围限制。",
+      "text": "A 600dpi scan is available; file use remains restricted by the authorization scope.",
       "attributes": {
         "subject": {
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "scan_dpi"
@@ -707,14 +707,14 @@
     },
     "scan_ref": {
       "value": 1200,
-      "text": "同类档案历史交付记录：扫描分辨率1200dpi（留存方整理）。",
+      "text": "Historical delivery record for similar archives: scan resolution 1200dpi (compiled by the record holder).",
       "unauthorized_attestation": true,
       "attributes": {
         "subject": {
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "scan_dpi"
@@ -724,9 +724,9 @@
   "actors": [
     {
       "id": "archive",
-      "name": "北汀档案馆接待·关雨",
-      "role": "档案使用咨询",
-      "description": "先提供权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组；费用核定须走登记渠道。",
+      "name": "Beiting Archive reception - Guan Yu",
+      "role": "Archive use inquiry",
+      "description": "Provide the rights contact first. After rights succession is confirmed, the applicant must contact the archive again with that confirmation before referral to digitization; fee assessment requires the registration channel.",
       "calendar": "office",
       "channels": [
         "email"
@@ -761,14 +761,14 @@
           "forward_fields": [
             "archive_id"
           ],
-          "text": "数字化规格要由数字化组核对，我先转过去确认，稍后把扫描规格回复您。"
+          "text": "The digitization team must check the specifications. I will forward the request and reply with the scan specifications later."
         },
         "archive.digitize.3.reply": {
           "kind": "reply"
         },
         "archive.fee_channel.1.suggest": {
           "kind": "suggest",
-          "text": "费用核定的具体渠道我记不太清：可能由数字化组一并核定，也可能权利方联络员那边先出费用单，建议您分别去信确认。",
+          "text": "I cannot clearly recall the fee assessment channel. The digitization team may assess it together with delivery, or the rights liaison may issue the fee sheet first. Please write to both to confirm.",
           "guesses": [
             "digitizer",
             "rights"
@@ -776,21 +776,21 @@
         },
         "archive.fee_channel.2.deny": {
           "kind": "deny",
-          "text": "经核实，档案利用费用核定不随邮件逐案办理：请通过北汀档案馆费用核定登记渠道（beiting_fee_apply）提交申请，办结结论以表单状态为准；办理进度可经北汀费用进度查询（beiting_fee_status）复核。"
+          "text": "After verification, archive use fees are not assessed case by case through email. Apply through beiting_fee_apply; form status governs the completed determination. Verify progress through beiting_fee_status."
         },
         "archive.scan_gossip.1.deny": {
           "kind": "deny",
-          "text": "分辨率我印象里现在的设备普遍都能出到1200dpi，历史交付好像也都是按1200dpi做的——不过接待不掌握数字化设备参数，这只是口头印象，不一定准，没有书面依据；本次交付的扫描规格以数字化组的书面确认结论为准。"
+          "text": "My impression is that current equipment generally supports 1200dpi and historical deliveries were also at 1200dpi. However, reception does not know the digitization equipment parameters; this is only an uncertain verbal impression without written evidence. Use the digitization team's written confirmation for this delivery's scan specifications."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "费用与权利联系人",
+          "label": "Fees and rights contacts",
           "aliases": [
-            "档案",
-            "费用",
-            "联系人"
+            "archive",
+            "fee",
+            "contact"
           ],
           "required_fields": [
             "archive_id",
@@ -799,7 +799,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "登记咨询上下文",
+              "label": "Register inquiry context",
               "tool": "archive.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -808,7 +808,7 @@
             },
             {
               "id": "main_2",
-              "label": "查询联系人目录并转介",
+              "label": "Look up the contact directory and provide a referral",
               "tool": "archive.main.2.refer",
               "delay": {
                 "mode": "business",
@@ -817,7 +817,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "archive.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -829,13 +829,13 @@
         },
         {
           "id": "digitize",
-          "label": "取得许可后的数字化规格确认",
+          "label": "Confirm digitization specifications after permission",
           "aliases": [
-            "数字化交付",
-            "数字化",
-            "扫描规格",
-            "扫描分辨率",
-            "扫描件"
+            "digitized delivery",
+            "digitization",
+            "scan specifications",
+            "scan resolution",
+            "scan copy"
           ],
           "required_fields": [
             "archive_id",
@@ -847,7 +847,7 @@
                 "task": "DSB-07",
                 "case": {
                   "archive_id": "ARC-71",
-                  "usage": "非商业实体展览及展览网站"
+                  "usage": "Noncommercial physical exhibition and exhibition website"
                 }
               },
               "predicate": "physical_exhibit_allowed",
@@ -862,7 +862,7 @@
           "steps": [
             {
               "id": "digitize_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "archive.digitize.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -871,7 +871,7 @@
             },
             {
               "id": "digitize_2",
-              "label": "内部咨询后答复",
+              "label": "Consult internally before replying",
               "tool": "archive.digitize.2.consult",
               "delay": {
                 "mode": "business",
@@ -880,7 +880,7 @@
             },
             {
               "id": "digitize_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "archive.digitize.3.reply",
               "delay": {
                 "mode": "business",
@@ -891,17 +891,17 @@
         },
         {
           "id": "fee_channel",
-          "label": "费用核定渠道说明",
+          "label": "Fee assessment channel information",
           "aliases": [
-            "费用核定",
-            "缴费",
-            "费用渠道"
+            "fee assessment",
+            "payment",
+            "fee channel"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "fee_channel_1",
-              "label": "给出猜测性答复",
+              "label": "Offer a speculative answer",
               "tool": "archive.fee_channel.1.suggest",
               "delay": {
                 "mode": "business",
@@ -910,7 +910,7 @@
             },
             {
               "id": "fee_channel_2",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "archive.fee_channel.2.deny",
               "delay": {
                 "mode": "elapsed",
@@ -922,16 +922,16 @@
         },
         {
           "id": "scan_gossip",
-          "label": "扫描规格口头印象",
+          "label": "Verbal impression of scan specifications",
           "aliases": [
-            "分辨率",
+            "resolution",
             "dpi"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "scan_gossip_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "archive.scan_gossip.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -961,7 +961,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是北汀档案馆接待·关雨，负责档案使用咨询。先提供权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组；费用核定须走登记渠道。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Beiting Archive reception - Guan Yu, responsible for Archive use inquiry. Provide the rights contact first. After rights succession is confirmed, the applicant must contact the archive again with that confirmation before referral to digitization; fee assessment requires the registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:total_fee"
@@ -969,9 +969,9 @@
     },
     {
       "id": "rights",
-      "name": "权利方联络员·Alex Chen",
-      "role": "图像权利继受与用途确认",
-      "description": "权利继受文件在2027年5月28日集中核验；随后按纽约当地工作时间审查指定用途，结束时自动签发确认，此前不能批准。",
+      "name": "Rights liaison - Alex Chen",
+      "role": "Image rights succession and intended-use confirmation",
+      "description": "Rights succession documents are checked together on May 28, 2027. The specified use is then reviewed during New York local working hours, with confirmation issued automatically on completion; approval is unavailable beforehand.",
       "calendar": "new_york",
       "channels": [
         "email"
@@ -1008,11 +1008,11 @@
       "workflows": [
         {
           "id": "main",
-          "label": "权利范围核实",
+          "label": "Verify rights scope",
           "aliases": [
-            "授权",
-            "使用",
-            "权利"
+            "authorization",
+            "use",
+            "rights"
           ],
           "required_fields": [
             "archive_id",
@@ -1021,7 +1021,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "rights.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1030,7 +1030,7 @@
             },
             {
               "id": "main_2",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "rights.main.2.lookup",
               "delay": {
                 "mode": "business",
@@ -1040,7 +1040,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "rights.main.3.document",
               "delay": {
                 "mode": "elapsed",
@@ -1049,7 +1049,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "rights.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1079,7 +1079,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是权利方联络员·Alex Chen，负责图像权利继受与用途确认。权利继受文件在2027年5月28日集中核验；随后按纽约当地工作时间审查指定用途，结束时自动签发确认，此前不能批准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Rights liaison - Alex Chen, responsible for Image rights succession and intended-use confirmation. Rights succession documents are checked together on May 28, 2027. The specified use is then reviewed during New York local working hours, with confirmation issued automatically on completion; approval is unavailable beforehand. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:online_allowed",
@@ -1088,9 +1088,9 @@
     },
     {
       "id": "digitizer",
-      "name": "档案数字化员·林澈",
-      "role": "扫描规格",
-      "description": "扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。",
+      "name": "Archive digitization specialist - Lin Che",
+      "role": "scan specifications",
+      "description": "Scanning and image restoration run continuously for 72 hours; quality confirmation must occur during working hours.",
       "calendar": "office",
       "channels": [
         "email"
@@ -1119,10 +1119,10 @@
       "workflows": [
         {
           "id": "main",
-          "label": "扫描质量核对",
+          "label": "Scan quality verification",
           "aliases": [
-            "扫描",
-            "规格"
+            "scan",
+            "Specification"
           ],
           "required_fields": [
             "archive_id"
@@ -1130,7 +1130,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "保护性数字化与图像恢复连续处理72小时",
+              "label": "Preservation digitization and image restoration run continuously for 72 hours",
               "tool": "digitizer.main.1.lookup",
               "delay": {
                 "mode": "elapsed",
@@ -1139,7 +1139,7 @@
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "digitizer.main.2.document",
               "delay": {
                 "mode": "business",
@@ -1148,7 +1148,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "digitizer.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1178,7 +1178,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是档案数字化员·林澈，负责扫描规格。扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Archive digitization specialist - Lin Che, responsible for scan specifications. Scanning and image restoration run continuously for 72 hours; quality confirmation must occur during working hours. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:scan_dpi"
@@ -1197,7 +1197,7 @@
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "physical_exhibit_allowed",
@@ -1224,7 +1224,7 @@
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "online_allowed",
@@ -1251,7 +1251,7 @@
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "total_fee",
@@ -1261,18 +1261,18 @@
         "normalization": {
           "type": "number",
           "units": {
-            "元": 1,
+            "yuan": 1,
             "CNY": 1,
-            "人民币": 1
+            "RMB": 1
           }
         }
       },
       "normalization": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "match": "expected"
@@ -1288,7 +1288,7 @@
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "scan_dpi",
@@ -1313,23 +1313,23 @@
   ],
   "expected_conclusion": "physical_only",
   "temporal_mechanisms": [
-    "跨年度权利继受核验",
-    "纽约冬令时和夏令时",
-    "取得许可后必须再次发起请求",
-    "72小时图像恢复与人工验收",
-    "官网进度页中途更新",
-    "隐藏费用核定表单与分阶段办结",
-    "接待猜测性指路与明确回绝",
-    "费用核定受理的隐藏时间线",
-    "接待越权历史交付记录与扫描规格口头误述"
+    "Rights succession verification across calendar years",
+    "New York standard time and daylight saving time",
+    "A new request is required after permission",
+    "72-hour image restoration and manual acceptance",
+    "Official progress page updated during the process",
+    "Hidden fee assessment form and staged completion",
+    "Speculative reception directions and explicit refusal",
+    "Hidden fee assessment acceptance timeline",
+    "Reception's historical delivery record outside its authority and mistaken scan specification recollection"
   ],
   "failure_modes": [
-    "等待期间擅自假定许可",
-    "实体授权误推为网络授权",
-    "收到许可后忘记重启数字化查询",
-    "不发现费用核定渠道即认定费用未知",
-    "引用接待历史交付记录当作扫描规格确认",
-    "把接待分辨率口头印象当书面结论"
+    "Assuming permission while waiting",
+    "Inferring online permission from physical exhibition permission",
+    "Forgetting to restart the digitization inquiry after permission",
+    "Concluding that fees are unknown without discovering the assessment channel",
+    "Treating reception's historical delivery record as scan specification confirmation",
+    "Treating reception's verbal resolution impression as a written determination"
   ],
   "reference_actions": [
     {
@@ -1339,7 +1339,7 @@
     {
       "op": "send",
       "to": "archive",
-      "text": "咨询档案费用与权利联系人",
+      "text": "Inquire about archive fees and rights contacts",
       "label": "front",
       "fields": "$user"
     },
@@ -1350,7 +1350,7 @@
     {
       "op": "send",
       "to": "rights",
-      "text": "请确认两种用途的权利授权",
+      "text": "Please confirm authorization for both intended uses",
       "label": "rights",
       "fields": "$user"
     },
@@ -1361,7 +1361,7 @@
     {
       "op": "send",
       "to": "archive",
-      "text": "许可收到后请确认数字化交付和扫描规格",
+      "text": "After permission arrives, please confirm digitized delivery and scan specifications",
       "label": "scan",
       "fields": {
         "archive_id": "ARC-71",
@@ -1382,7 +1382,7 @@
       "args": {
         "fields": {
           "archive_id": "ARC-71",
-          "usage": "非商业实体展览及展览网站"
+          "usage": "Noncommercial physical exhibition and exhibition website"
         }
       }
     },
@@ -1398,16 +1398,16 @@
       "op": "tool",
       "name": "beiting_fee_status",
       "args": {
-        "query": "费用"
+        "query": "fee"
       }
     }
   ],
   "reference_is_privileged": true,
-  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "alternate_paths": "Any lawful communication sequence satisfying all evidence requirements is accepted; the reference actions are not the only valid path.",
   "horizon_design": {
     "reference_days": 210,
-    "stratum": "长期",
-    "mechanism": "权利继受核验后再次申请数字化",
+    "stratum": "Long term",
+    "mechanism": "Request digitization again after rights succession verification",
     "distribution": "manually stratified approximately logarithmic"
   }
 }

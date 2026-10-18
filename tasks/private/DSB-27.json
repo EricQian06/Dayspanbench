@@ -873,8 +873,8 @@
       "not_feasible": "No official recovery path satisfies the approved scope"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1027,7 +1027,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "support_desk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1045,7 +1045,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "support_desk.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1054,7 +1054,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "support_desk.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1084,7 +1084,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Cloud account support desk·Ravi Kulkarni，负责official recovery, owner proof attestations and reconciliation status。Issues only the fixture's service attestations and receipts; the owner completes authentication personally in the official service, and no secret is ever collected or relayed. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Cloud account support desk·Ravi Kulkarni, responsible for official recovery, owner proof attestations and reconciliation status. Issues only the fixture's service attestations and receipts; the owner completes authentication personally in the official service, and no secret is ever collected or relayed. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:account_recovered",
@@ -1152,7 +1152,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "access_desk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1170,7 +1170,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "access_desk.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1179,7 +1179,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "access_desk.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1209,7 +1209,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Sessions and sharing desk·Priya Nair，负责session inventory, revocations and share restoration。Attests the preserved trusted state and unchanged unrelated shares; session revocations and share restorations go through the scoped services (session_revoke, share_restore) and need the owner's exact approval. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Sessions and sharing desk·Priya Nair, responsible for session inventory, revocations and share restoration. Attests the preserved trusted state and unchanged unrelated shares; session revocations and share restorations go through the scoped services (session_revoke, share_restore) and need the owner's exact approval. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:contractor_share_unchanged",
@@ -1540,7 +1540,7 @@
   "alternate_paths": "Any legal order of dialogue, inventory reads and attestations is accepted if every goal's evidence conditions hold; the revocation may precede or follow the share restoration after recovery, but the proof must precede recovery, approval must precede the commitments, and the audit must follow the provider reconciliation.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "mid-day owner proof, delayed provider share migration and post-reconciliation audit",
     "distribution": "manually stratified approximately logarithmic"
   }

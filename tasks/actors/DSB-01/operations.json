@@ -3,9 +3,9 @@
   "task_id": "DSB-01",
   "actor": {
     "id": "operations",
-    "name": "禾岸会馆运营·赵航",
-    "role": "档期核对和设备协调",
-    "description": "能够查档期；投影问题必须转给设备负责人。",
+    "name": "Hean Hall operations - Zhao Hang",
+    "role": "Availability checks and equipment coordination",
+    "description": "Can check venue availability; must hand projector questions to the equipment supervisor.",
     "calendar": "office",
     "channels": [
       "email"
@@ -42,12 +42,12 @@
     "workflows": [
       {
         "id": "main",
-        "label": "档期与投影确认",
+        "label": "Availability and projector confirmation",
         "aliases": [
-          "档期",
-          "投影",
-          "设备",
-          "可用"
+          "availability",
+          "projector",
+          "equipment",
+          "available"
         ],
         "required_fields": [
           "event_date",
@@ -56,7 +56,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "operations.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -65,7 +65,7 @@
           },
           {
             "id": "main_2",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "operations.main.2.acknowledge",
             "delay": {
               "mode": "business",
@@ -74,7 +74,7 @@
           },
           {
             "id": "main_3",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "operations.main.3.delegate",
             "delay": {
               "mode": "business",
@@ -83,7 +83,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "operations.main.4.reply",
             "delay": {
               "mode": "business",
@@ -113,7 +113,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是禾岸会馆运营·赵航，负责档期核对和设备协调。能够查档期；投影问题必须转给设备负责人。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Hean Hall operations - Zhao Hang, responsible for Availability checks and equipment coordination. Can check venue availability; must hand projector questions to the equipment supervisor. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:slot_available"
@@ -142,7 +142,7 @@
   "local_facts": {
     "slot": {
       "value": true,
-      "text": "11月13日18—21点场地有空档，80人容量可满足。",
+      "text": "The venue has availability on November 13, 18:00-21:00, and can accommodate 80 attendees.",
       "attributes": {
         "subject": {
           "task": "DSB-01",

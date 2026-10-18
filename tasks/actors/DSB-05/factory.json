@@ -3,9 +3,9 @@
   "task_id": "DSB-05",
   "actor": {
     "id": "factory",
-    "name": "棱川制造排产员·苏渝",
-    "role": "原料与排产核对",
-    "description": "工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。",
+    "name": "Lengchuan Manufacturing scheduler - Su Yu",
+    "role": "Raw material and scheduling checks",
+    "description": "The factory works Monday through Saturday, eight working hours a day. Scheduling checks take 24 working hours; request the dispatch precheck determination through the registration channel.",
     "calendar": "factory",
     "channels": [
       "email"
@@ -29,15 +29,15 @@
       },
       "factory.dispatch_channel.1.deny": {
         "kind": "deny",
-        "text": "出库的书面预核结论不随邮件出具：请通过棱川出库预核登记渠道（lengchuan_dispatch_apply）提交登记，办结结论以表单状态为准；办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。"
+        "text": "Written dispatch precheck determinations are not issued by email. Submit a registration through lengchuan_dispatch_apply; form status governs the completed determination. Verify progress through lengchuan_dispatch_status."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "排产可行性",
+        "label": "Scheduling feasibility",
         "aliases": [
-          "排产"
+          "scheduling"
         ],
         "required_fields": [
           "quantity",
@@ -46,7 +46,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "factory.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -55,7 +55,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "factory.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -67,16 +67,16 @@
       },
       {
         "id": "dispatch_channel",
-        "label": "出库结论渠道",
+        "label": "Dispatch determination channel",
         "aliases": [
-          "出库",
-          "预核"
+          "dispatch",
+          "precheck"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "dispatch_channel_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "factory.dispatch_channel.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -106,7 +106,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是棱川制造排产员·苏渝，负责原料与排产核对。工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Lengchuan Manufacturing scheduler - Su Yu, responsible for Raw material and scheduling checks. The factory works Monday through Saturday, eight working hours a day. Scheduling checks take 24 working hours; request the dispatch precheck determination through the registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:earliest_dispatch",
@@ -137,7 +137,7 @@
   "local_facts": {
     "dispatch": {
       "value": "2026-12-09",
-      "text": "如按有效报价下单，最早可于12月9日出库；本次尚未下单。",
+      "text": "If ordered under a valid quote, the earliest dispatch date is December 9; no order has been placed.",
       "attributes": {
         "subject": {
           "task": "DSB-05",
@@ -151,7 +151,7 @@
     },
     "moq": {
       "value": 500,
-      "text": "该规格最小订单量为500件。",
+      "text": "The minimum order quantity for this specification is 500 units.",
       "attributes": {
         "subject": {
           "task": "DSB-05",

@@ -3,9 +3,9 @@
   "task_id": "DSB-06",
   "actor": {
     "id": "engineer",
-    "name": "霁光工程师·韩则",
-    "role": "诊断与维修窗口",
-    "description": "仅周二、周四处理远程诊断和排期；周四14点集中诊断，补货后需复核型号和上门窗口。",
+    "name": "Jiguang engineer - Han Ze",
+    "role": "Diagnosis and repair windows",
+    "description": "Remote diagnosis and scheduling are handled only on Tuesdays and Thursdays. Diagnoses are processed together on Thursday at 14:00; after replenishment, the model and home visit window must be rechecked.",
     "calendar": "engineer",
     "channels": [
       "email"
@@ -31,23 +31,23 @@
         "forward_fields": [
           "serial"
         ],
-        "text": "配件补货批次要到零件库核实，我先去问一下库存和费用，稍后回复您。"
+        "text": "The parts store must verify the replenishment batch. I will ask about stock and fees and reply later."
       },
       "engineer.main.3.reply": {
         "kind": "reply"
       },
       "engineer.visit_channel.1.deny": {
         "kind": "deny",
-        "text": "上门时段的书面结论不随邮件出具：请通过霁光上门时段登记渠道（jiguang_visit_register）提交预核登记，办结结论以表单状态为准；办理进度可经霁光上门进度查询（jiguang_visit_status）复核。"
+        "text": "Written home visit slot determinations are not issued by email. Submit a precheck registration through jiguang_visit_register; form status governs the completed determination. Verify progress through jiguang_visit_status."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "诊断故障",
+        "label": "Diagnose the fault",
         "aliases": [
-          "诊断",
-          "维修"
+          "diagnosis",
+          "maintenance"
         ],
         "required_fields": [
           "serial",
@@ -56,7 +56,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "engineer.main.1.lookup",
             "delay": {
               "mode": "weekly",
@@ -67,7 +67,7 @@
           },
           {
             "id": "main_2",
-            "label": "内部咨询后答复",
+            "label": "Consult internally before replying",
             "tool": "engineer.main.2.consult",
             "delay": {
               "mode": "business",
@@ -76,7 +76,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "engineer.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -92,15 +92,15 @@
       },
       {
         "id": "visit_channel",
-        "label": "上门结论渠道",
+        "label": "Home visit determination channel",
         "aliases": [
-          "上门"
+          "home visit"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "visit_channel_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "engineer.visit_channel.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -130,7 +130,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是霁光工程师·韩则，负责诊断与维修窗口。仅周二、周四处理远程诊断和排期；周四14点集中诊断，补货后需复核型号和上门窗口。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Jiguang engineer - Han Ze, responsible for Diagnosis and repair windows. Remote diagnosis and scheduling are handled only on Tuesdays and Thursdays. Diagnoses are processed together on Thursday at 14:00; after replenishment, the model and home visit window must be rechecked. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:earliest_visit",
@@ -156,15 +156,15 @@
   },
   "local_facts": {
     "part": {
-      "value": "G-42密封圈",
-      "text": "工程师诊断需要更换G-42密封圈。",
+      "value": "G-42 sealing ring",
+      "text": "The engineer's diagnosis requires replacement of the G-42 sealing ring.",
       "attributes": {
         "subject": {
           "task": "DSB-06",
           "case": {
             "serial": "SN-A731",
             "receipt": "R-731",
-            "symptom": "机身接缝漏水"
+            "symptom": "Leakage at the housing seam"
           }
         },
         "predicate": "replacement_part"
@@ -172,14 +172,14 @@
     },
     "visit": {
       "value": "2026-11-18T10:00:00+08:00",
-      "text": "核实返厂补货批次后，最早可上门时段为11月18日10点，尚未预约。",
+      "text": "After verifying the factory replenishment batch, the earliest home visit slot is November 18 at 10:00; it has not been booked.",
       "attributes": {
         "subject": {
           "task": "DSB-06",
           "case": {
             "serial": "SN-A731",
             "receipt": "R-731",
-            "symptom": "机身接缝漏水"
+            "symptom": "Leakage at the housing seam"
           }
         },
         "predicate": "earliest_visit"

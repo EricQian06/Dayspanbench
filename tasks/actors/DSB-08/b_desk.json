@@ -3,9 +3,9 @@
   "task_id": "DSB-08",
   "actor": {
     "id": "b_desk",
-    "name": "B酒店预订咨询·米禾",
-    "role": "房态与费用",
-    "description": "房态与价格可以先查询，是否可通行须现场量测；无障碍复测按临近入住的排期受理。",
+    "name": "Hotel B booking inquiries - Mi He",
+    "role": "Room availability and fees",
+    "description": "Availability and prices can be queried first, but access requires on-site measurement. Accessibility remeasurement intake follows the schedule close to arrival.",
     "calendar": "daily",
     "channels": [
       "email",
@@ -26,7 +26,7 @@
       },
       "b_desk.main.2.deny": {
         "kind": "deny",
-        "text": "指定日期的房态与总价不随邮件逐案答复：请通过酒店房态报价核对渠道（wuzhang_rate_check）提交登记，办结后返回可售状态与两晚总价；办理进度可经无障碍住宿进度查询（wuzhang_lodging_status）复核。"
+        "text": "Date-specific availability and total prices are not answered case by case by email. Register through wuzhang_rate_check to obtain availability and the two-night total after completion. Verify progress through wuzhang_lodging_status."
       },
       "b_desk.measure.1.acknowledge": {
         "kind": "acknowledge"
@@ -44,19 +44,19 @@
       },
       "b_desk.a_query.1.deny": {
         "kind": "deny",
-        "text": "A旅舍的测量记录与通行尺寸不归B酒店查询范围，我处只处理本酒店指定房型的咨询；请向A旅舍前台确认。"
+        "text": "Hostel A's measurements and access dimensions are outside Hotel B's inquiry scope. We only handle our designated room types; please confirm with Hostel A reception."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "房态与费用查询",
+        "label": "Room availability and fee inquiry",
         "aliases": [
-          "房态",
-          "价格",
-          "费用",
-          "房价",
-          "总价"
+          "room availability",
+          "price",
+          "fee",
+          "room rate",
+          "total price"
         ],
         "required_fields": [
           "stay_dates"
@@ -64,7 +64,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "登记房态核对请求",
+            "label": "Register room availability check request",
             "tool": "b_desk.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -73,7 +73,7 @@
           },
           {
             "id": "main_2",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "b_desk.main.2.deny",
             "delay": {
               "mode": "elapsed",
@@ -85,24 +85,24 @@
       },
       {
         "id": "measure",
-        "label": "无障碍复测确认",
+        "label": "Accessibility remeasurement confirmation",
         "aliases": [
-          "无障碍",
-          "轮椅",
-          "尺寸",
-          "复测",
-          "测量"
+          "accessibility",
+          "wheelchair",
+          "dimensions",
+          "remeasurement",
+          "measurement"
         ],
         "required_fields": [
           "wheelchair_width",
           "stay_dates"
         ],
         "accept_after": "2026-11-09T09:00:00+08:00",
-        "early_reply": "指定房型的无障碍复测要按临近入住的排期统一安排，目前还未开始受理，您的来信我先登记。临近入住时再来信即可，届时按流程安排现场测量。",
+        "early_reply": "Accessibility remeasurement for the designated room type is scheduled together close to the stay date. Intake has not opened, so I will register your message first. Write again closer to arrival for on-site measurement under the process.",
         "steps": [
           {
             "id": "measure_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "b_desk.measure.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -111,7 +111,7 @@
           },
           {
             "id": "measure_2",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "b_desk.measure.2.delegate",
             "delay": {
               "mode": "business",
@@ -120,7 +120,7 @@
           },
           {
             "id": "measure_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "b_desk.measure.3.reply",
             "delay": {
               "mode": "business",
@@ -132,15 +132,15 @@
       },
       {
         "id": "a_query",
-        "label": "A旅舍询问回绝",
+        "label": "Refusal of Hostel A inquiry",
         "aliases": [
-          "A旅舍"
+          "Hostel A"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "a_query_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "b_desk.a_query.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -170,7 +170,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是B酒店预订咨询·米禾，负责房态与费用。房态与价格可以先查询，是否可通行须现场量测；无障碍复测按临近入住的排期受理。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Hotel B booking inquiries - Mi He, responsible for Room availability and fees. Availability and prices can be queried first, but access requires on-site measurement. Accessibility remeasurement intake follows the schedule close to arrival. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:b_available",
@@ -202,7 +202,7 @@
   "local_facts": {
     "b_available": {
       "value": true,
-      "text": "11月14—16日指定无障碍房有可售房，尚未预订。",
+      "text": "The designated accessible room is available for November 14-16 and has not been booked.",
       "attributes": {
         "subject": {
           "task": "DSB-08",
@@ -216,7 +216,7 @@
     },
     "b_price": {
       "value": 2360,
-      "text": "11月14—16日两晚总房费2360元。",
+      "text": "The total room fee for two nights, November 14-16, is CNY 2360.",
       "attributes": {
         "subject": {
           "task": "DSB-08",

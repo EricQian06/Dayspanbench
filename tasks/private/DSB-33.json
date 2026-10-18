@@ -839,8 +839,8 @@
       "blocked": "The tenant refused the exact appointment"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1025,7 +1025,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "landlord.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1043,7 +1043,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "landlord.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1052,7 +1052,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "landlord.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1082,7 +1082,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Juniper Heights landlord·Grace Whitfield，负责inspection authority and cost responsibility。Confirms inspection cost responsibility, the approved providers and the inspection-only scope in writing; bookings go through the dispatch board's booking desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Juniper Heights landlord·Grace Whitfield, responsible for inspection authority and cost responsibility. Confirms inspection cost responsibility, the approved providers and the inspection-only scope in writing; bookings go through the dispatch board's booking desk. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:landlord_pays",
@@ -1132,7 +1132,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "dispatch.main.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -1162,7 +1162,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Metro Plumbing dispatch desk·Sam Ortiz，负责the slot board and inspection bookings。Runs the slot board; appointments are booked only through the booking desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Metro Plumbing dispatch desk·Sam Ortiz, responsible for the slot board and inspection bookings. Runs the slot board; appointments are booked only through the booking desk. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:fee_usd",
@@ -1537,7 +1537,7 @@
   "alternate_paths": "Any legal order of dialogue, landlord mail and slot searches is accepted if every goal's evidence conditions hold; the reference path books after the June 11 slot move, and the scored answer keys follow the live h02 plan. Slots outside the window, unverified providers, repair scope or over-cap fees cannot pass.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "landlord authorization turnaround plus a mid-case slot inventory change",
     "distribution": "manually stratified approximately logarithmic"
   }

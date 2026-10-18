@@ -3,9 +3,9 @@
   "task_id": "DSB-03",
   "actor": {
     "id": "dean_office",
-    "name": "澄川学院院办教务处·柳汀",
-    "role": "成绩与学籍材料、文件存档查询",
-    "description": "只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。",
+    "name": "Chengchuan College dean's office academic affairs - Liu Ting",
+    "role": "Grades, enrollment materials, and document archive inquiries",
+    "description": "Only accepts transcript and enrollment-material requests; syllabuses are outside the archive scope. Misrouted requests receive suggestions to verify separately.",
     "calendar": "office",
     "channels": [
       "email"
@@ -24,7 +24,7 @@
       },
       "dean_office.archive_search.1.suggest": {
         "kind": "suggest",
-        "text": "签章大纲的下落我记不准：可能在课程负责人梅芮处，也可能当时是教务唐宁经手送审的；建议您分别去信确认。另外我印象里CS204按认定口径能转4学分，不过我也就随口一说，具体您再核实下，以委员会审议为准。",
+        "text": "I do not remember exactly where the signed syllabus is: course lead Mei Rui may have it, or registrar Tang Ning may have submitted it for review. Please write to both to verify. I also vaguely recall CS204 counting as 4 credits, but that is just an offhand impression. Please verify and rely on the committee review.",
         "guesses": [
           "lecturer",
           "records"
@@ -32,17 +32,17 @@
       },
       "dean_office.archive_search.2.deny": {
         "kind": "deny",
-        "text": "经核实，院办存档范围只有成绩与学籍材料，课程大纲不在其中，我处无法出具；请以课程负责人或教务的答复为准。"
+        "text": "We checked: the dean's archives cover only grades and enrollment materials, not course syllabuses. We cannot issue one; rely on the course lead or registrar's response."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "成绩与学籍材料受理",
+        "label": "Accept grade and enrollment-material requests",
         "aliases": [
-          "成绩单",
-          "学籍",
-          "成绩"
+          "transcript",
+          "enrollment",
+          "grades"
         ],
         "required_fields": [
           "student_name"
@@ -50,7 +50,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "登记材料请求",
+            "label": "Register the material request",
             "tool": "dean_office.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -59,7 +59,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "dean_office.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -71,17 +71,17 @@
       },
       {
         "id": "archive_search",
-        "label": "文件存档查询",
+        "label": "Document archive inquiry",
         "aliases": [
-          "文件",
-          "存档",
-          "大纲"
+          "document",
+          "archive",
+          "syllabus"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "archive_search_1",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "dean_office.archive_search.1.suggest",
             "delay": {
               "mode": "business",
@@ -90,7 +90,7 @@
           },
           {
             "id": "archive_search_2",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "dean_office.archive_search.2.deny",
             "delay": {
               "mode": "elapsed",
@@ -120,7 +120,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是澄川学院院办教务处·柳汀，负责成绩与学籍材料、文件存档查询。只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Chengchuan College dean's office academic affairs - Liu Ting, responsible for Grades, enrollment materials, and document archive inquiries. Only accepts transcript and enrollment-material requests; syllabuses are outside the archive scope. Misrouted requests receive suggestions to verify separately. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": []
   },

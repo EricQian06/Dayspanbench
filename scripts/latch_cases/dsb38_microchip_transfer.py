@@ -285,7 +285,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The shelter release has been authorized after the matching license; the authorization is paperwork only - physical pickup stays future."}],
         alternate_paths="Any legal order of dialogue, record reads and mail is accepted if every goal's evidence conditions hold; the user fee may settle before or after the registry transfer once the packet is approved, but the scan must precede the transfer, the fee receipt the license, and the license the release."))
     sites["DSB-38"] = "pettransfer"
-    horizons["DSB-38"] = (2, "短期", "late-morning clinic scan, next-day adopter fee receipt and a three-stage service chain")
+    horizons["DSB-38"] = (2, "Short term", "late-morning clinic scan, next-day adopter fee receipt and a three-stage service chain")
     conclusions["DSB-38"] = {
         "transfer_complete": "Registry, license and release all match the same animal and adopter, with the fee user-paid",
         "unconfirmed": "Scan, consent, fee or a stage record could not be established in time",

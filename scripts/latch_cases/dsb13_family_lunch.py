@@ -252,7 +252,7 @@ def build(A, tasks, sites, horizons, conclusions):
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the Garden offer after the July 10 change, and the already-verified Harbor Family Table is a legal alternative, but the scored answer keys follow the refreshed Garden plan."))
     next(h for h in tasks[-1]["hidden_tools"] if h["name"] == "family_dialogue")["params"]["state_tools"] = ["reserve_table"]
     sites["DSB-13"] = "riverdale"
-    horizons["DSB-13"] = (2, "短期", "mid-episode offer rewrite plus organizer approval window")
+    horizons["DSB-13"] = (2, "Short term", "mid-episode offer rewrite plus organizer approval window")
     conclusions["DSB-13"] = {
         "reserved_verified": "One approved reservation with verified access and written sesame controls within budget",
         "unconfirmed": "Access or controls could not be verified in time",

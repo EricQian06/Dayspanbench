@@ -230,7 +230,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The approved replacement bundle has been confirmed against live inventory; the confirmation is read back through the booking desk, never pushed."}],
         alternate_paths="Any legal order of dialogue, bike-policy mail and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the inventory after the 15:05 delay and books the m02 coach bundle."))
     sites["DSB-37"] = "readingrecovery"
-    horizons["DSB-37"] = (2, "短期", "live rail delay plus accompanied-bike evidence window")
+    horizons["DSB-37"] = (2, "Short term", "live rail delay plus accompanied-bike evidence window")
     conclusions["DSB-37"] = {
         "recovery_confirmed": "One approved replacement bundle with accompanied-bike evidence confirmed",
         "unconfirmed": "Bike acceptance or a current journey could not be verified in time",

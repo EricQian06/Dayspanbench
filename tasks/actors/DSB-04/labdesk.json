@@ -3,9 +3,9 @@
   "task_id": "DSB-04",
   "actor": {
     "id": "labdesk",
-    "name": "南屿共享实验室前台·叶青",
-    "role": "使用条件与联系人",
-    "description": "先说明安全培训要求，再提供仪器管理员入口。",
+    "name": "Nanyu Shared Laboratory reception - Ye Qing",
+    "role": "Use conditions and contacts",
+    "description": "First explain safety-training requirements, then provide the instrument manager's contact channel.",
     "calendar": "office",
     "channels": [
       "email",
@@ -19,7 +19,7 @@
     "tools": {
       "labdesk.main.1.suggest": {
         "kind": "suggest",
-        "text": "培训记录归谁管我说不准：可能是安全员温遥，也可能仪器管理员杜和那边留了登记，或者耗材库宋野能查到；建议您分别去信确认。另外我印象里这批进口滤芯好像11月10日就到库了，不过我不太确定，供您参考，到货情况请以耗材库核实为准。",
+        "text": "I cannot say who manages training records: perhaps safety officer Wen Yao, instrument manager Du He may have a registration, or stockroom manager Song Ye may be able to check. Please write to each to verify. I also vaguely recall these imported filters arriving November 10, but I am unsure; confirm receipt with the stockroom.",
         "guesses": [
           "safety",
           "instrument",
@@ -40,17 +40,17 @@
     "workflows": [
       {
         "id": "main",
-        "label": "测量咨询入口",
+        "label": "Measurement inquiry channel",
         "aliases": [
-          "测量",
-          "仪器",
-          "联系"
+          "measurement",
+          "instrument",
+          "contact"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "main_1",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "labdesk.main.1.suggest",
             "delay": {
               "mode": "business",
@@ -59,7 +59,7 @@
           },
           {
             "id": "main_2",
-            "label": "查询联系人目录并转介",
+            "label": "Look up the contact directory and provide a referral",
             "tool": "labdesk.main.2.refer",
             "delay": {
               "mode": "business",
@@ -68,7 +68,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "labdesk.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -98,7 +98,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是南屿共享实验室前台·叶青，负责使用条件与联系人。先说明安全培训要求，再提供仪器管理员入口。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Nanyu Shared Laboratory reception - Ye Qing, responsible for Use conditions and contacts. First explain safety-training requirements, then provide the instrument manager's contact channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": []
   },

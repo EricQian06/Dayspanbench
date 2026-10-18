@@ -77,7 +77,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "hotel_desk.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -95,7 +95,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "hotel_desk.main.3.document",
             "delay": {
               "mode": "business",
@@ -104,7 +104,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "hotel_desk.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -129,7 +129,7 @@
         "steps": [
           {
             "id": "extension_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "hotel_desk.extension.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -147,7 +147,7 @@
           },
           {
             "id": "extension_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "hotel_desk.extension.3.document",
             "delay": {
               "mode": "business",
@@ -156,7 +156,7 @@
           },
           {
             "id": "extension_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "hotel_desk.extension.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -186,7 +186,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Villa des Roses hotel desk·Marc Aubert，负责written pet acceptance, parking terms and late check-in extensions。Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Villa des Roses hotel desk·Marc Aubert, responsible for written pet acceptance, parking terms and late check-in extensions. Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:late_checkin_deadline",

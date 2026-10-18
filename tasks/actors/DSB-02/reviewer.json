@@ -3,9 +3,9 @@
   "task_id": "DSB-02",
   "actor": {
     "id": "reviewer",
-    "name": "青栎公寓规则审核员·丁悦",
-    "role": "宠物规则复核",
-    "description": "每周五14点集中复核材料；错过批次进入下一周。",
+    "name": "Qingli Apartments rules reviewer - Ding Yue",
+    "role": "Pet-rule review",
+    "description": "Materials are reviewed together every Friday at 14:00; missing the batch means waiting until the following week.",
     "calendar": "office",
     "channels": [
       "email"
@@ -30,10 +30,10 @@
     "workflows": [
       {
         "id": "main",
-        "label": "周五规则审核",
+        "label": "Friday rules review",
         "aliases": [
-          "宠物",
-          "规则"
+          "pet",
+          "rules"
         ],
         "required_fields": [
           "pet_weight"
@@ -41,7 +41,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "reviewer.main.1.lookup",
             "delay": {
               "mode": "weekly",
@@ -52,7 +52,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "reviewer.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -82,7 +82,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是青栎公寓规则审核员·丁悦，负责宠物规则复核。每周五14点集中复核材料；错过批次进入下一周。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Qingli Apartments rules reviewer - Ding Yue, responsible for Pet-rule review. Materials are reviewed together every Friday at 14:00; missing the batch means waiting until the following week. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:pet_allowed"
@@ -111,7 +111,7 @@
   "local_facts": {
     "pet": {
       "value": true,
-      "text": "已核准一只8公斤成年犬符合楼宇宠物规则。",
+      "text": "One adult dog weighing 8 kg has been approved under the building's pet rules.",
       "attributes": {
         "subject": {
           "task": "DSB-02",

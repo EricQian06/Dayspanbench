@@ -3,9 +3,9 @@
   "task_id": "DSB-12",
   "actor": {
     "id": "broker",
-    "name": "境外代理·Morgan Lee",
-    "role": "原型设备归类与技术意见复核",
-    "description": "纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。",
+    "name": "Overseas agent - Morgan Lee",
+    "role": "Prototype equipment classification and technical opinion review",
+    "description": "Works New York weekdays. Preliminary review window: February 4, 2027; batch technical opinion review window: September 10. Manufacturing archives must be supplied before acceptance. This is not continuous months-long work, and there is no release commitment.",
     "calendar": "new_york",
     "channels": [
       "email"
@@ -52,10 +52,10 @@
     "workflows": [
       {
         "id": "preliminary",
-        "label": "归类初审",
+        "label": "Preliminary classification review",
         "aliases": [
-          "初审",
-          "归类"
+          "preliminary review",
+          "classification"
         ],
         "required_fields": [
           "tracking",
@@ -64,7 +64,7 @@
         "steps": [
           {
             "id": "preliminary_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "broker.preliminary.1.lookup",
             "delay": {
               "mode": "business",
@@ -74,7 +74,7 @@
           },
           {
             "id": "preliminary_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "broker.preliminary.2.document",
             "delay": {
               "mode": "elapsed",
@@ -83,7 +83,7 @@
           },
           {
             "id": "preliminary_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "broker.preliminary.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -95,10 +95,10 @@
       },
       {
         "id": "main",
-        "label": "长期技术复核",
+        "label": "Long-term technical review",
         "aliases": [
-          "长期复核",
-          "放行"
+          "long-term review",
+          "release"
         ],
         "required_fields": [
           "tracking",
@@ -109,7 +109,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "broker.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -119,7 +119,7 @@
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "broker.main.2.document",
             "delay": {
               "mode": "business",
@@ -128,7 +128,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "broker.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -155,8 +155,8 @@
               "type": "text",
               "aliases": {
                 "DEC-608-v3": [
-                  "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-                  "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+                  "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+                  "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
                 ]
               }
             }
@@ -176,8 +176,8 @@
               "type": "text",
               "aliases": {
                 "HOLD-608-9": [
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
                 ]
               }
             }
@@ -197,8 +197,8 @@
               "type": "text",
               "aliases": {
                 "TRACE-M608-2027": [
-                  "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-                  "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+                  "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+                  "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
                 ]
               }
             }
@@ -225,7 +225,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是境外代理·Morgan Lee，负责原型设备归类与技术意见复核。纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Overseas agent - Morgan Lee, responsible for Prototype equipment classification and technical opinion review. Works New York weekdays. Preliminary review window: February 4, 2027; batch technical opinion review window: September 10. Manufacturing archives must be supplied before acceptance. This is not continuous months-long work, and there is no release commitment. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:release",
@@ -250,8 +250,8 @@
   },
   "local_facts": {
     "release": {
-      "value": "技术复核结果已返回，实际放行仍需另行确认",
-      "text": "2027年9月中旬技术复核窗口处理完成后，仅返回技术意见；该未来结果在本题截止前不可见。",
+      "value": "Technical review results returned; actual release still requires separate confirmation",
+      "text": "After the mid-September 2027 technical review window, only a technical opinion is returned; this future result is unavailable before the task deadline.",
       "attributes": {
         "subject": {
           "task": "DSB-12",
@@ -264,7 +264,7 @@
     },
     "review_case": {
       "value": "HOLD-608-9",
-      "text": "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
+      "text": "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
       "attributes": {
         "subject": {
           "task": "DSB-12",

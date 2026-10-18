@@ -896,8 +896,8 @@
       "not_feasible": "No caregiver and trip combination satisfies the coverage, buffer and budget constraints"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1071,7 +1071,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "care_desk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1089,7 +1089,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "care_desk.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1098,7 +1098,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "care_desk.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1125,7 +1125,7 @@
           "steps": [
             {
               "id": "staffing_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "care_desk.staffing.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1143,7 +1143,7 @@
             },
             {
               "id": "staffing_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "care_desk.staffing.3.document",
               "delay": {
                 "mode": "business",
@@ -1152,7 +1152,7 @@
             },
             {
               "id": "staffing_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "care_desk.staffing.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1182,7 +1182,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Vetted care coordination desk·Nadia Ochoa，负责caregiver vetting, staffing reviews and care reservations。Runs vetting and the final staffing review, and reserves named caregivers only under the parent's individual approval; a withdrawn caregiver's bookings and approvals are cancelled and a replacement must be reapproved before travel is booked. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Vetted care coordination desk·Nadia Ochoa, responsible for caregiver vetting, staffing reviews and care reservations. Runs vetting and the final staffing review, and reserves named caregivers only under the parent's individual approval; a withdrawn caregiver's bookings and approvals are cancelled and a replacement must be reapproved before travel is booked. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:care_reserved",
@@ -1246,7 +1246,7 @@
             },
             {
               "id": "main_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "travel_desk.main.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1276,7 +1276,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Conference travel desk·Owen Pratt，负责trip offers, quotes and travel bookings。Quotes the trip offers and books travel only against an active, approved linked care reservation after the final staffing review; no payment is taken. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Conference travel desk·Owen Pratt, responsible for trip offers, quotes and travel bookings. Quotes the trip offers and books travel only against an active, approved linked care reservation after the final staffing review; no payment is taken. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:total_cost",
@@ -1603,7 +1603,7 @@
   "alternate_paths": "Any legal order of dialogue, option reads and mail is accepted if every goal's evidence conditions hold; the user may collect facts in one or several turns, but vetting must precede named approval, replacement approval must precede the replacement reservation, and the final staffing review plus active linked care must precede the trip booking.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "overnight vetting review, deadline-morning withdrawal and a care-gated travel booking",
     "distribution": "manually stratified approximately logarithmic"
   }

@@ -314,7 +314,7 @@ def build(A, tasks, sites, horizons, conclusions):
     for actor in tasks[-1]["actors"]:
         actor["calendar"] = "paris_trip_evening"
     sites["DSB-23"] = "lyonpetstay"
-    horizons["DSB-23"] = (2, "短期", "evening train delay, same-evening written extension and supervision rebound before booking")
+    horizons["DSB-23"] = (2, "Short term", "evening train delay, same-evening written extension and supervision rebound before booking")
     conclusions["DSB-23"] = {
         "stay_booked": "One approved pet stay with written acceptance, a fitting late-arrival extension and named supervision within budget",
         "unconfirmed": "Pet acceptance, the arrival fit or supervision could not be confirmed in time",

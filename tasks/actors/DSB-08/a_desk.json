@@ -3,9 +3,9 @@
   "task_id": "DSB-08",
   "actor": {
     "id": "a_desk",
-    "name": "A旅舍前台·蓝心",
-    "role": "无障碍房咨询",
-    "description": "每天营业，但不能用旧网页尺寸替代现场复测。",
+    "name": "Hostel A reception - Lan Xin",
+    "role": "Accessible room inquiry",
+    "description": "Open daily, but old webpage dimensions cannot replace on-site remeasurement.",
     "calendar": "daily",
     "channels": [
       "email",
@@ -19,7 +19,7 @@
     "tools": {
       "a_desk.main.1.suggest": {
         "kind": "suggest",
-        "text": "净宽具体多少我说不准，旧网页的88cm好像也包含门框；现场测量可能要问我们的设施员蒋延，也可能当时和B酒店那边一起复测过，或者B酒店设施主管郑砚那边留了记录，您可以直接去信问问。另外B酒店那个无障碍房我印象里净门宽好像有96cm，不过我不太确定，供您参考，具体以他们复测为准。",
+        "text": "I cannot give the exact clear width; the old webpage's 88cm seems to include the frame. Ask our facilities officer Jiang Yan about on-site measurements; there may have been a joint remeasurement with Hotel B, or Hotel B's facilities supervisor Zheng Yan may have records. Please write to them directly. I also seem to remember Hotel B's accessible room has a clear doorway width of 96cm, but I am unsure; use their remeasurement.",
         "guesses": [
           "a_tech",
           "b_desk",
@@ -41,11 +41,11 @@
     "workflows": [
       {
         "id": "main",
-        "label": "通行尺寸确认",
+        "label": "Access dimension confirmation",
         "aliases": [
-          "无障碍",
-          "轮椅",
-          "尺寸"
+          "accessibility",
+          "wheelchair",
+          "dimensions"
         ],
         "required_fields": [
           "wheelchair_width",
@@ -54,7 +54,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "a_desk.main.1.suggest",
             "delay": {
               "mode": "business",
@@ -63,7 +63,7 @@
           },
           {
             "id": "main_2",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "a_desk.main.2.delegate",
             "delay": {
               "mode": "business",
@@ -72,7 +72,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "a_desk.main.3.reply",
             "delay": {
               "mode": "business",
@@ -102,7 +102,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是A旅舍前台·蓝心，负责无障碍房咨询。每天营业，但不能用旧网页尺寸替代现场复测。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Hostel A reception - Lan Xin, responsible for Accessible room inquiry. Open daily, but old webpage dimensions cannot replace on-site remeasurement. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": []
   },

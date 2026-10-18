@@ -3,9 +3,9 @@
   "task_id": "DSB-10",
   "actor": {
     "id": "courier",
-    "name": "桥溪快运取件咨询·曾澜",
-    "role": "取件时段查询",
-    "description": "咨询台周末照常工作，只查询取件时段，不创建运单；验机报告不在受理范围。",
+    "name": "Qiaoxi Express pickup inquiries - Zeng Lan",
+    "role": "Pickup slot inquiry",
+    "description": "The desk works weekends, only queries pickup slots, and does not create waybills. Inspection reports are outside its scope.",
     "calendar": "daily",
     "channels": [
       "email",
@@ -30,16 +30,16 @@
       },
       "courier.inspection_query.1.deny": {
         "kind": "deny",
-        "text": "我这里只查询取件时段，验机书面报告不归咨询台管；请向卖家沈栖或其朋友确认，或按官网说明的验机登记渠道申请。"
+        "text": "I only look up pickup slots; written inspection reports are outside this desk's remit. Confirm with seller Shen Qi or the seller's friend, or apply through the inspection registration channel described on the official website."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "最早取件时间",
+        "label": "Earliest pickup time",
         "aliases": [
-          "取件",
-          "快递"
+          "pickup",
+          "courier"
         ],
         "required_fields": [
           "pickup_area"
@@ -47,7 +47,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "courier.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -56,7 +56,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "courier.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -68,16 +68,16 @@
       },
       {
         "id": "inspection_query",
-        "label": "验机报告询问回绝",
+        "label": "Refusal of inspection report inquiry",
         "aliases": [
-          "验机",
-          "报告"
+          "inspection",
+          "report"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "inspection_query_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "courier.inspection_query.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -107,7 +107,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是桥溪快运取件咨询·曾澜，负责取件时段查询。咨询台周末照常工作，只查询取件时段，不创建运单；验机报告不在受理范围。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Qiaoxi Express pickup inquiries - Zeng Lan, responsible for Pickup slot inquiry. The desk works weekends, only queries pickup slots, and does not create waybills. Inspection reports are outside its scope. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:earliest_pickup"
@@ -138,13 +138,13 @@
   "local_facts": {
     "pickup": {
       "value": "2026-11-09T14:00:00+08:00",
-      "text": "若交易成立，最早可取件时间为11月9日14点；本次仅查询。",
+      "text": "If a transaction is agreed, the earliest pickup is November 9 at 14:00; this is only an inquiry.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "earliest_pickup"

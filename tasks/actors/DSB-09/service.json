@@ -3,9 +3,9 @@
   "task_id": "DSB-09",
   "actor": {
     "id": "service",
-    "name": "晴港政务咨询台·谢茵",
-    "role": "事项识别与管辖分流",
-    "description": "只能进行预咨询，不生成许可；先核实管辖再转专门岗位。",
+    "name": "Qinggang public service consultation desk - Xie Yin",
+    "role": "Matter identification and jurisdiction routing",
+    "description": "Preliminary consultation only; no permit is generated. Verify jurisdiction before referring to specialists.",
     "calendar": "office",
     "channels": [
       "email",
@@ -23,7 +23,7 @@
       },
       "service.main.2.suggest": {
         "kind": "suggest",
-        "text": "北广场这类开放场地的管辖我记不很准：可能归街区公共空间管理处，也可能要走活动环境咨询那边的口径，建议您分别去函确认。另外北广场带两只音箱的活动我印象里按一般户外活动备案登记应该就行吧，不过我也就随口一说，具体以联合复核结论为准。",
+        "text": "I cannot clearly recall jurisdiction over open spaces like North Square. It may be the Neighborhood Public Space Management Office, or the event environmental consultation team may determine the route. Please write to both. I also seem to remember an event with two speakers at North Square can simply be filed as a general outdoor event, but that is only a casual impression; use the joint review determination.",
         "guesses": [
           "land",
           "sound"
@@ -50,11 +50,11 @@
     "workflows": [
       {
         "id": "main",
-        "label": "活动事项咨询",
+        "label": "Event processing inquiry",
         "aliases": [
-          "活动",
-          "办理",
-          "管辖"
+          "event",
+          "processing",
+          "jurisdiction"
         ],
         "required_fields": [
           "location",
@@ -63,7 +63,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "登记咨询上下文",
+            "label": "Register inquiry context",
             "tool": "service.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -72,7 +72,7 @@
           },
           {
             "id": "main_2",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "service.main.2.suggest",
             "delay": {
               "mode": "business",
@@ -81,7 +81,7 @@
           },
           {
             "id": "main_3",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "service.main.3.delegate",
             "delay": {
               "mode": "business",
@@ -90,7 +90,7 @@
           },
           {
             "id": "main_4",
-            "label": "查询联系人目录并转介",
+            "label": "Look up the contact directory and provide a referral",
             "tool": "service.main.4.refer",
             "delay": {
               "mode": "business",
@@ -99,7 +99,7 @@
           },
           {
             "id": "main_5",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "service.main.5.reply",
             "delay": {
               "mode": "elapsed",
@@ -129,7 +129,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是晴港政务咨询台·谢茵，负责事项识别与管辖分流。只能进行预咨询，不生成许可；先核实管辖再转专门岗位。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Qinggang public service consultation desk - Xie Yin, responsible for Matter identification and jurisdiction routing. Preliminary consultation only; no permit is generated. Verify jurisdiction before referring to specialists. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": []
   },

@@ -259,7 +259,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The one approved order on the current financed plan has been processed; the receipt is with the agent and delivery and payments remain pending."}],
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the sf-A plan was legal only before the June 8 promo expiry, but the scored answer keys follow the current sf-B plan."))
     sites["DSB-25"] = "installmentgate"
-    horizons["DSB-25"] = (2, "短期", "mid-episode promo expiry plus installment approval gate")
+    horizons["DSB-25"] = (2, "Short term", "mid-episode promo expiry plus installment approval gate")
     conclusions["DSB-25"] = {
         "order_financed": "One approved order on a current existing-card installment plan within the dated budget",
         "unconfirmed": "Fit, financing or approval could not be verified in time",

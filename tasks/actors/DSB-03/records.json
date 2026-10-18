@@ -3,9 +3,9 @@
   "task_id": "DSB-03",
   "actor": {
     "id": "records",
-    "name": "澄川学院教务·唐宁",
-    "role": "学分转换预审",
-    "description": "必须取得当前签章大纲；不能把旧大纲送交委员会；正式登记走登记系统。",
+    "name": "Chengchuan College registrar - Tang Ning",
+    "role": "Credit-transfer preliminary review",
+    "description": "The current signed syllabus is required; an old syllabus cannot go to the committee. Formal registration uses the registration system.",
     "calendar": "office",
     "channels": [
       "email"
@@ -38,21 +38,21 @@
       },
       "records.register_channel.1.deny": {
         "kind": "deny",
-        "text": "跨校学分转换的正式登记不在我处柜台办理：请通过澄川学院学分转换登记系统（chengchuan_credit_register）提交，登记须使用现行签章大纲版本，提交说明见办理入口页。"
+        "text": "Formal inter-college credit-transfer registration is not handled at our counter. Submit through Chengchuan College credit-transfer registration (chengchuan_credit_register) using the current signed syllabus version. See the application-entry page for submission instructions."
       },
       "records.syllabus_archive.1.deny": {
         "kind": "deny",
-        "text": "课程大纲不在教务存档范围，我处只做学分转换预审；签章大纲请向课程负责人索取。"
+        "text": "The registrar's archives do not include course syllabuses; we only conduct preliminary credit-transfer reviews. Obtain the signed syllabus from the course lead."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "学分转换咨询",
+        "label": "Credit-transfer inquiry",
         "aliases": [
-          "学分",
-          "转换",
-          "大纲"
+          "credit",
+          "transfer",
+          "syllabus"
         ],
         "required_fields": [
           "course_code",
@@ -74,8 +74,8 @@
               "type": "text",
               "aliases": {
                 "CS204-2026-v2-signed": [
-                  "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
-                  "CS204课程正式签章大纲版本为CS204-2026-v2-signed"
+                  "The official signed CS204 syllabus version is CS204-2026-v2-signed.",
+                  "The official signed CS204 syllabus version is CS204-2026-v2-signed"
                 ]
               }
             }
@@ -84,7 +84,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "核验签章与材料版本",
+            "label": "Verify signatures and material versions",
             "tool": "records.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -93,7 +93,7 @@
           },
           {
             "id": "main_2",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "records.main.2.acknowledge",
             "delay": {
               "mode": "business",
@@ -102,7 +102,7 @@
           },
           {
             "id": "main_3",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "records.main.3.delegate",
             "delay": {
               "mode": "business",
@@ -111,7 +111,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "records.main.4.reply",
             "delay": {
               "mode": "business",
@@ -122,18 +122,18 @@
       },
       {
         "id": "register_channel",
-        "label": "正式登记渠道说明",
+        "label": "Formal registration channel instructions",
         "aliases": [
-          "登记",
-          "登记系统",
-          "正式登记",
-          "系统"
+          "registration",
+          "registration system",
+          "formal registration",
+          "system"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "register_channel_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "records.register_channel.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -145,16 +145,16 @@
       },
       {
         "id": "syllabus_archive",
-        "label": "大纲存档查询",
+        "label": "Syllabus archive inquiry",
         "aliases": [
-          "存档",
-          "大纲存档"
+          "archive",
+          "syllabus archive"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "syllabus_archive_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "records.syllabus_archive.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -184,7 +184,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是澄川学院教务·唐宁，负责学分转换预审。必须取得当前签章大纲；不能把旧大纲送交委员会；正式登记走登记系统。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Chengchuan College registrar - Tang Ning, responsible for Credit-transfer preliminary review. The current signed syllabus is required; an old syllabus cannot go to the committee. Formal registration uses the registration system. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:effective_term"
@@ -212,8 +212,8 @@
   },
   "local_facts": {
     "effective": {
-      "value": "2027春季",
-      "text": "该转换结论从2027春季学期开始适用。",
+      "value": "Spring 2027",
+      "text": "The transfer decision takes effect starting in the Spring 2027 semester.",
       "attributes": {
         "subject": {
           "task": "DSB-03",

@@ -3,9 +3,9 @@
   "task_id": "DSB-07",
   "actor": {
     "id": "archive",
-    "name": "北汀档案馆接待·关雨",
-    "role": "档案使用咨询",
-    "description": "先提供权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组；费用核定须走登记渠道。",
+    "name": "Beiting Archive reception - Guan Yu",
+    "role": "Archive use inquiry",
+    "description": "Provide the rights contact first. After rights succession is confirmed, the applicant must contact the archive again with that confirmation before referral to digitization; fee assessment requires the registration channel.",
     "calendar": "office",
     "channels": [
       "email"
@@ -40,14 +40,14 @@
         "forward_fields": [
           "archive_id"
         ],
-        "text": "数字化规格要由数字化组核对，我先转过去确认，稍后把扫描规格回复您。"
+        "text": "The digitization team must check the specifications. I will forward the request and reply with the scan specifications later."
       },
       "archive.digitize.3.reply": {
         "kind": "reply"
       },
       "archive.fee_channel.1.suggest": {
         "kind": "suggest",
-        "text": "费用核定的具体渠道我记不太清：可能由数字化组一并核定，也可能权利方联络员那边先出费用单，建议您分别去信确认。",
+        "text": "I cannot clearly recall the fee assessment channel. The digitization team may assess it together with delivery, or the rights liaison may issue the fee sheet first. Please write to both to confirm.",
         "guesses": [
           "digitizer",
           "rights"
@@ -55,21 +55,21 @@
       },
       "archive.fee_channel.2.deny": {
         "kind": "deny",
-        "text": "经核实，档案利用费用核定不随邮件逐案办理：请通过北汀档案馆费用核定登记渠道（beiting_fee_apply）提交申请，办结结论以表单状态为准；办理进度可经北汀费用进度查询（beiting_fee_status）复核。"
+        "text": "After verification, archive use fees are not assessed case by case through email. Apply through beiting_fee_apply; form status governs the completed determination. Verify progress through beiting_fee_status."
       },
       "archive.scan_gossip.1.deny": {
         "kind": "deny",
-        "text": "分辨率我印象里现在的设备普遍都能出到1200dpi，历史交付好像也都是按1200dpi做的——不过接待不掌握数字化设备参数，这只是口头印象，不一定准，没有书面依据；本次交付的扫描规格以数字化组的书面确认结论为准。"
+        "text": "My impression is that current equipment generally supports 1200dpi and historical deliveries were also at 1200dpi. However, reception does not know the digitization equipment parameters; this is only an uncertain verbal impression without written evidence. Use the digitization team's written confirmation for this delivery's scan specifications."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "费用与权利联系人",
+        "label": "Fees and rights contacts",
         "aliases": [
-          "档案",
-          "费用",
-          "联系人"
+          "archive",
+          "fee",
+          "contact"
         ],
         "required_fields": [
           "archive_id",
@@ -78,7 +78,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "登记咨询上下文",
+            "label": "Register inquiry context",
             "tool": "archive.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -87,7 +87,7 @@
           },
           {
             "id": "main_2",
-            "label": "查询联系人目录并转介",
+            "label": "Look up the contact directory and provide a referral",
             "tool": "archive.main.2.refer",
             "delay": {
               "mode": "business",
@@ -96,7 +96,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "archive.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -108,13 +108,13 @@
       },
       {
         "id": "digitize",
-        "label": "取得许可后的数字化规格确认",
+        "label": "Confirm digitization specifications after permission",
         "aliases": [
-          "数字化交付",
-          "数字化",
-          "扫描规格",
-          "扫描分辨率",
-          "扫描件"
+          "digitized delivery",
+          "digitization",
+          "scan specifications",
+          "scan resolution",
+          "scan copy"
         ],
         "required_fields": [
           "archive_id",
@@ -126,7 +126,7 @@
               "task": "DSB-07",
               "case": {
                 "archive_id": "ARC-71",
-                "usage": "非商业实体展览及展览网站"
+                "usage": "Noncommercial physical exhibition and exhibition website"
               }
             },
             "predicate": "physical_exhibit_allowed",
@@ -141,7 +141,7 @@
         "steps": [
           {
             "id": "digitize_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "archive.digitize.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -150,7 +150,7 @@
           },
           {
             "id": "digitize_2",
-            "label": "内部咨询后答复",
+            "label": "Consult internally before replying",
             "tool": "archive.digitize.2.consult",
             "delay": {
               "mode": "business",
@@ -159,7 +159,7 @@
           },
           {
             "id": "digitize_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "archive.digitize.3.reply",
             "delay": {
               "mode": "business",
@@ -170,17 +170,17 @@
       },
       {
         "id": "fee_channel",
-        "label": "费用核定渠道说明",
+        "label": "Fee assessment channel information",
         "aliases": [
-          "费用核定",
-          "缴费",
-          "费用渠道"
+          "fee assessment",
+          "payment",
+          "fee channel"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "fee_channel_1",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "archive.fee_channel.1.suggest",
             "delay": {
               "mode": "business",
@@ -189,7 +189,7 @@
           },
           {
             "id": "fee_channel_2",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "archive.fee_channel.2.deny",
             "delay": {
               "mode": "elapsed",
@@ -201,16 +201,16 @@
       },
       {
         "id": "scan_gossip",
-        "label": "扫描规格口头印象",
+        "label": "Verbal impression of scan specifications",
         "aliases": [
-          "分辨率",
+          "resolution",
           "dpi"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "scan_gossip_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "archive.scan_gossip.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -240,7 +240,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是北汀档案馆接待·关雨，负责档案使用咨询。先提供权利联系人；权利继受确认后，申请人须携确认结果再次联系档案馆，才能转数字化组；费用核定须走登记渠道。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Beiting Archive reception - Guan Yu, responsible for Archive use inquiry. Provide the rights contact first. After rights succession is confirmed, the applicant must contact the archive again with that confirmation before referral to digitization; fee assessment requires the registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:total_fee"
@@ -269,13 +269,13 @@
   "local_facts": {
     "fee": {
       "value": 800,
-      "text": "本次数字化和授权服务合计800元。",
+      "text": "Digitization and authorization services total CNY 800 in this case.",
       "attributes": {
         "subject": {
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "total_fee"

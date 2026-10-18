@@ -268,7 +268,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The approved Shopify replacement with its current rotated link is confirmed at its own desk; nothing is withdrawn."}],
         alternate_paths="Any legal order of dialogue, board reads and recruiter mail is accepted if every goal's evidence conditions hold; either employer may be rescheduled first, and the rotated Shopify link must be refreshed before its desk accepts a slot."))
     sites["DSB-42"] = "interviewdesk"
-    horizons["DSB-42"] = (2, "短期", "recruiter offer confirmation, a mid-morning link rotation and two separate per-employer desks")
+    horizons["DSB-42"] = (2, "Short term", "recruiter offer confirmation, a mid-morning link rotation and two separate per-employer desks")
     conclusions["DSB-42"] = {
         "both_rescheduled": "Both interviews confirmed at their replacements with current links and no disclosure",
         "unconfirmed": "Recruiter offers, approval or the rotated link could not be obtained in time",

@@ -111,7 +111,7 @@ class EvaluationTests(unittest.TestCase):
             def complete(self, **kwargs):
                 raise SimulatorError("Simulator HTTP failure (400)")
         agent = ScriptedAgent([{"tool": "visit_page", "arguments": {"url": "https://heanhuiguan.bench/contact"}},
-                               {"tool": "send_email", "arguments": {"recipient": mailbox(task(), "reception"), "text": "活动"}}])
+                               {"tool": "send_email", "arguments": {"recipient": mailbox(task(), "reception"), "text": 'event'}}])
         with tempfile.TemporaryDirectory() as folder:
             result = run_episode(task(), agent, TOOLS, Path(folder) / "run", simulator_client=BrokenSimulator())
         self.assertFalse(result["valid_episode"])

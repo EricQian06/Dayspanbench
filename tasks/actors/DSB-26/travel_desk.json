@@ -56,7 +56,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "travel_desk.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -86,7 +86,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Conference travel desk·Owen Pratt，负责trip offers, quotes and travel bookings。Quotes the trip offers and books travel only against an active, approved linked care reservation after the final staffing review; no payment is taken. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Conference travel desk·Owen Pratt, responsible for trip offers, quotes and travel bookings. Quotes the trip offers and books travel only against an active, approved linked care reservation after the final staffing review; no payment is taken. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:total_cost",

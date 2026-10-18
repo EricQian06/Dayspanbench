@@ -3,9 +3,9 @@
   "task_id": "DSB-10",
   "actor": {
     "id": "friend",
-    "name": "卖家朋友·柯闻",
-    "role": "相机读取与热靴测试",
-    "description": "周末才能接触读取器；测试只对CAM-402有效；书面结果须经验机登记渠道取得。",
+    "name": "Seller's friend - Ke Wen",
+    "role": "Camera reading and hot-shoe test",
+    "description": "Can access the reader only on weekends. Tests apply only to CAM-402; written results require the inspection registration channel.",
     "calendar": "weekend",
     "channels": [
       "email"
@@ -24,16 +24,16 @@
       },
       "friend.main.2.deny": {
         "kind": "deny",
-        "text": "实测数据不随邮件出具：请通过二手相机验机登记渠道（ershoushangji_inspection_apply）提交申请，办结结论以表单状态为准；办理进度可经二手验机进度查询（ershoushangji_inspection_status）复核。"
+        "text": "Measured data is not issued by email. Apply through ershoushangji_inspection_apply; form status governs the completed determination. Verify progress through ershoushangji_inspection_status."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "读取相机与测试",
+        "label": "Read and test the camera",
         "aliases": [
-          "相机",
-          "实测"
+          "camera",
+          "measurement"
         ],
         "required_fields": [
           "serial"
@@ -41,7 +41,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "周末读取相机与热靴测试（仅口头说明）",
+            "label": "Weekend camera reading and hot-shoe test (verbal explanation only)",
             "tool": "friend.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -51,7 +51,7 @@
           },
           {
             "id": "main_2",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "friend.main.2.deny",
             "delay": {
               "mode": "elapsed",
@@ -81,7 +81,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是卖家朋友·柯闻，负责相机读取与热靴测试。周末才能接触读取器；测试只对CAM-402有效；书面结果须经验机登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Seller's friend - Ke Wen, responsible for Camera reading and hot-shoe test. Can access the reader only on weekends. Tests apply only to CAM-402; written results require the inspection registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:hotshoe_works",
@@ -108,13 +108,13 @@
   "local_facts": {
     "actual": {
       "value": 42731,
-      "text": "对序列号CAM-402读取的实际快门次数为42731。",
+      "text": "The measured shutter count for serial CAM-402 is 42731.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "measured_shutter"
@@ -122,13 +122,13 @@
     },
     "hotshoe": {
       "value": false,
-      "text": "CAM-402热靴触发测试失败，当前不能正常使用外置闪光灯。",
+      "text": "CAM-402 failed the hot-shoe trigger test and currently cannot use an external flash normally.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "hotshoe_works"

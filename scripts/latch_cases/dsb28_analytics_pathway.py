@@ -223,7 +223,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The one approved c02 seat reservation has been processed; read the outcome back through the desk, never pushed."}],
         alternate_paths="Any legal order of dialogue, catalog searches and adviser mail is accepted if every goal's evidence conditions hold; the reference path reads the catalog before and after the August 25 schedule change and reserves only after the adviser verification and the learner's approval."))
     sites["DSB-28"] = "analyticspath"
-    horizons["DSB-28"] = (2, "短期", "adviser verification turnaround plus a mid-case course schedule rewrite")
+    horizons["DSB-28"] = (2, "Short term", "adviser verification turnaround plus a mid-case course schedule rewrite")
     conclusions["DSB-28"] = {
         "first_stage_reserved": "Verified conditional pathway with one approved first-stage reservation",
         "unconfirmed": "Adviser verification or approval could not be obtained in time",

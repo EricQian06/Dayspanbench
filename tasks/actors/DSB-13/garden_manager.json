@@ -72,7 +72,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "garden_manager.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -90,7 +90,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "garden_manager.main.3.document",
             "delay": {
               "mode": "business",
@@ -99,7 +99,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "garden_manager.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -134,7 +134,7 @@
           },
           {
             "id": "offer_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "garden_manager.offer.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -164,7 +164,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Garden Ramp Bistro manager·Alex Chen，负责provider verification, exact menu quotes and reservations。Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Garden Ramp Bistro manager·Alex Chen, responsible for provider verification, exact menu quotes and reservations. Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:access_verified",

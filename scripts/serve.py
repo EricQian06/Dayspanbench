@@ -92,9 +92,9 @@ def main(argv=None):
         if final_answer is not None:
             (args.run_dir / "final_answer.json").write_text(json.dumps(final_answer, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if not args.quiet:
-        print(f"[DaySpanBench] {args.task} 环境已就绪，人物模拟模式：{args.simulator}。\n"
-              "正在等待stdin中的单行JSON请求；服务不会自动运行任务，尚未调用人物模型。\n"
-              '可先输入：{"id":1,"tool":"observe","arguments":{}}', file=sys.stderr, flush=True)
+        print(f"[DaySpanBench] {args.task} Environment ready; character simulator: {args.simulator}.\n"
+              "Waiting for stdin requests as single-line JSON. The server does not run tasks automatically; no character model has been called.\n"
+              'Try: {"id":1,"tool":"observe","arguments":{}}', file=sys.stderr, flush=True)
     for line_number, line in enumerate(sys.stdin, 1):
         if not line.strip():
             continue
@@ -108,7 +108,7 @@ def main(argv=None):
             if tool not in ALLOWED and tool not in HIDDEN:
                 raise PermissionError("Tool not exposed to evaluated agents")
             if not args.quiet and args.simulator == "llm" and tool in {"send_email", "call", "wait_until"}:
-                print(f"[DaySpanBench] 正在处理 {tool}；如触发人物交互，将等待模拟器API返回。", file=sys.stderr, flush=True)
+                print(f"[DaySpanBench] Processing {tool}; character interactions wait for the simulator API response.", file=sys.stderr, flush=True)
             result = getattr(api, tool)(**request.get("arguments", {}))
             response = {"id": request.get("id"), "result": result}
             if tool == "submit_answer":
@@ -119,7 +119,7 @@ def main(argv=None):
                 "type": "JSONDecodeError",
                 "message": f"Invalid JSON request on stdin line {line_number}: {error.msg}",
                 "line": line_number, "column": error.colno,
-                "hint": '每行输入一个完整JSON对象（JSONL），不要分多行或粘贴Markdown代码围栏。例如：{"id":1,"tool":"observe","arguments":{}}',
+                "hint": 'Enter one complete JSON object per line (JSONL), without line breaks or Markdown fences. Example: {"id":1,"tool":"observe","arguments":{}}',
             }}
         except SimulatorError as error:
             response = {"id": request.get("id"), "error": {"type": "SimulatorError", "message": str(error), "terminal": True}}

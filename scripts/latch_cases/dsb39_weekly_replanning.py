@@ -297,7 +297,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The approved focus plan has been applied around the protected entries; the applied plan is read back through the apply service, never pushed."}],
         alternate_paths="Any legal order of dialogue, calendar reads, drafting and checkpoint waiting is accepted if every goal's evidence conditions hold; any feasible arrangement of at least 1200 focus minutes is as valid as the reference blocks, and the draft may be prepared before or after the checkpoint."))
     sites["DSB-39"] = "weekreplan"
-    horizons["DSB-39"] = (3, "中短期", "CEO request arrival, a weekend gap and the Monday checkpoint revision gating the applied plan")
+    horizons["DSB-39"] = (3, "Short to medium term", "CEO request arrival, a weekend gap and the Monday checkpoint revision gating the applied plan")
     conclusions["DSB-39"] = {
         "plan_applied": "Approved 20-hour focus plan applied after the checkpoint with an unsent CEO reply draft",
         "unconfirmed": "The checkpoint revision or user approval could not be obtained in time",

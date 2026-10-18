@@ -66,7 +66,7 @@
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "issuer_desk.main.2.document",
             "delay": {
               "mode": "business",
@@ -75,7 +75,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "issuer_desk.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -105,7 +105,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Card issuer service desk·Avery Fox，负责card status, tokens and dispute intake。Verifies card status, payment schedules and service tokens; containment and dispute actions each need their own exact approval, and neither authorizes a card freeze. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Card issuer service desk·Avery Fox, responsible for card status, tokens and dispute intake. Verifies card status, payment schedules and service tokens; containment and dispute actions each need their own exact approval, and neither authorizes a card freeze. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:card_active",

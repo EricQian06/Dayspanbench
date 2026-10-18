@@ -3,9 +3,9 @@
   "task_id": "DSB-02",
   "actor": {
     "id": "landlord",
-    "name": "房东·林霁",
-    "role": "出租房源咨询",
-    "description": "白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。",
+    "name": "Landlord - Lin Ji",
+    "role": "Rental-property inquiries",
+    "description": "Works during the day and handles messages only 19:00-21:00; cannot approve pets or elevator use on behalf of management.",
     "calendar": "landlord",
     "channels": [
       "email",
@@ -38,25 +38,25 @@
           "pet_weight",
           "move_date"
         ],
-        "text": "宠物规则和货梯时段要问物业，我先向青栎公寓物业转过去核实，稍后把结果回复您。"
+        "text": "Property management must confirm pet rules and freight-elevator slots. I will forward this to Qingli Apartments management for verification and reply later with the results."
       },
       "landlord.main.4.reply": {
         "kind": "reply"
       },
       "landlord.elevator_gossip.1.deny": {
         "kind": "deny",
-        "text": "货梯时段我印象里11月12日上午好像就有空档，直接去搬说不定就行——不过这只是我的印象，不一定准，房东不做主；正式安排请向青栎公寓物业确认，并以青栎搬入登记系统的办结结论为准。"
+        "text": "I vaguely recall a freight-elevator slot on the morning of November 12; perhaps you can just move then. But this is only my impression, may be inaccurate, and is not the landlord's decision. Confirm formal arrangements with Qingli Apartments management and rely on the completed decision from Qingli move-in registration."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "租金、宠物和搬入条件",
+        "label": "Rent, pets, and move-in conditions",
         "aliases": [
-          "租房",
-          "宠物",
-          "入住",
-          "搬入"
+          "rental",
+          "pet",
+          "occupancy",
+          "move-in"
         ],
         "required_fields": [
           "pet_weight",
@@ -65,7 +65,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "landlord.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -74,7 +74,7 @@
           },
           {
             "id": "main_2",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "landlord.main.2.acknowledge",
             "delay": {
               "mode": "business",
@@ -83,7 +83,7 @@
           },
           {
             "id": "main_3",
-            "label": "内部咨询后答复",
+            "label": "Consult internally before replying",
             "tool": "landlord.main.3.consult",
             "delay": {
               "mode": "business",
@@ -92,7 +92,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "landlord.main.4.reply",
             "delay": {
               "mode": "business",
@@ -104,16 +104,16 @@
       },
       {
         "id": "elevator_gossip",
-        "label": "货梯时段口头印象",
+        "label": "Verbal recollection of freight-elevator availability",
         "aliases": [
-          "货梯",
-          "电梯"
+          "freight elevator",
+          "elevator"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "elevator_gossip_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "landlord.elevator_gossip.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -143,7 +143,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是房东·林霁，负责出租房源咨询。白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Landlord - Lin Ji, responsible for Rental-property inquiries. Works during the day and handles messages only 19:00-21:00; cannot approve pets or elevator use on behalf of management. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:deposit",
@@ -171,7 +171,7 @@
   "local_facts": {
     "deposit": {
       "value": 4000,
-      "text": "该房源押金4000元，不另收宠物押金。",
+      "text": "The deposit is CNY 4000, with no additional pet deposit.",
       "attributes": {
         "subject": {
           "task": "DSB-02",
@@ -185,7 +185,7 @@
     },
     "rent": {
       "value": 5600,
-      "text": "月租5600元；这是信息咨询，不构成租约。",
+      "text": "Monthly rent is CNY 5600; this is an information inquiry and does not constitute a lease.",
       "attributes": {
         "subject": {
           "task": "DSB-02",

@@ -64,7 +64,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "evening_desk.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -82,7 +82,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "evening_desk.main.3.document",
             "delay": {
               "mode": "business",
@@ -91,7 +91,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "evening_desk.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -121,7 +121,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Riverside Evening Services desk·Sam Okafor，负责cinema, jazz venue and booked-shuttle operator records。Confirms official film start and end times in writing; programme listings can lag; tickets and the transport bundle go through the desks named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Riverside Evening Services desk·Sam Okafor, responsible for cinema, jazz venue and booked-shuttle operator records. Confirms official film start and end times in writing; programme listings can lag; tickets and the transport bundle go through the desks named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:film_end",

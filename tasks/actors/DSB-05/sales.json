@@ -3,9 +3,9 @@
   "task_id": "DSB-05",
   "actor": {
     "id": "sales",
-    "name": "棱川制造销售·罗岑",
-    "role": "批次报价",
-    "description": "初次报价有有效期；质检完成后若已过期，需重新确认。",
+    "name": "Lengchuan Manufacturing sales - Luo Cen",
+    "role": "Batch quotation",
+    "description": "The initial quote has an expiry date; reconfirm it after quality inspection if it has expired.",
     "calendar": "office",
     "channels": [
       "email"
@@ -20,7 +20,7 @@
     "tools": {
       "sales.main.1.suggest": {
         "kind": "suggest",
-        "text": "出库和排产的事我不直接管：排产核对归排产员苏渝。出库的书面预核结论走哪个渠道我记不准，可能要问排产员，也可能质检傅黎那边留了登记渠道，建议您分别去信确认。另外这个规格我记得好像300件起就可以订了，不过我不太确定，供您参考，起订量请以排产核对为准。",
+        "text": "I do not directly handle dispatch or production scheduling. Su Yu handles scheduling checks. I cannot recall the channel for written dispatch prechecks; the scheduler may know, or quality inspector Fu Li may have the registration channel. Please write to both to confirm. I also seem to remember a minimum order of 300 units for this specification, but I am unsure. This is only for reference; use the scheduling check for the minimum quantity.",
         "guesses": [
           "factory",
           "qa"
@@ -79,11 +79,11 @@
     "workflows": [
       {
         "id": "main",
-        "label": "初次报价",
+        "label": "Initial quote",
         "aliases": [
-          "初次报价",
-          "询价",
-          "报价"
+          "Initial quote",
+          "quotation inquiry",
+          "quotation"
         ],
         "required_fields": [
           "quantity",
@@ -92,7 +92,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "sales.main.1.suggest",
             "delay": {
               "mode": "business",
@@ -101,7 +101,7 @@
           },
           {
             "id": "main_2",
-            "label": "整理批次需求",
+            "label": "Compile batch requirements",
             "tool": "sales.main.2.lookup",
             "delay": {
               "mode": "business",
@@ -110,7 +110,7 @@
           },
           {
             "id": "main_3",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "sales.main.3.acknowledge",
             "delay": {
               "mode": "business",
@@ -119,7 +119,7 @@
           },
           {
             "id": "main_4",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "sales.main.4.delegate",
             "delay": {
               "mode": "business",
@@ -128,7 +128,7 @@
           },
           {
             "id": "main_5",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "sales.main.5.lookup",
             "delay": {
               "mode": "business",
@@ -137,7 +137,7 @@
           },
           {
             "id": "main_6",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "sales.main.6.document",
             "delay": {
               "mode": "business",
@@ -146,7 +146,7 @@
           },
           {
             "id": "main_7",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "sales.main.7.reply",
             "delay": {
               "mode": "elapsed",
@@ -158,19 +158,19 @@
       },
       {
         "id": "refresh",
-        "label": "刷新过期报价",
+        "label": "Refresh expired quote",
         "aliases": [
-          "重新确认报价",
-          "刷新报价",
-          "更新报价",
-          "重新询价",
-          "重新报价",
-          "新报价",
-          "再次报价",
-          "有效报价",
-          "当前有效",
-          "报价过期",
-          "报价已过期"
+          "Reconfirm quote",
+          "refresh quote",
+          "update quote",
+          "repeat inquiry",
+          "requote",
+          "new quote",
+          "quote again",
+          "valid quote",
+          "currently valid",
+          "quote expiry",
+          "quote has expired"
         ],
         "required_fields": [
           "quantity",
@@ -179,7 +179,7 @@
         "steps": [
           {
             "id": "refresh_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "sales.refresh.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -188,7 +188,7 @@
           },
           {
             "id": "refresh_2",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "sales.refresh.2.lookup",
             "delay": {
               "mode": "business",
@@ -198,7 +198,7 @@
           },
           {
             "id": "refresh_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "sales.refresh.3.document",
             "delay": {
               "mode": "business",
@@ -207,7 +207,7 @@
           },
           {
             "id": "refresh_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "sales.refresh.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -237,7 +237,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是棱川制造销售·罗岑，负责批次报价。初次报价有有效期；质检完成后若已过期，需重新确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Lengchuan Manufacturing sales - Luo Cen, responsible for Batch quotation. The initial quote has an expiry date; reconfirm it after quality inspection if it has expired. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:current_total"
@@ -266,7 +266,7 @@
   "local_facts": {
     "quote_new": {
       "value": 18600,
-      "text": "500件批次重新确认的总报价18600元，有效至12月11日16点。",
+      "text": "The reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00.",
       "available_at": "2026-12-07T10:00:00+08:00",
       "valid_until": "2026-12-11T16:00:00+08:00",
       "attributes": {
@@ -282,7 +282,7 @@
     },
     "quote_old": {
       "value": 18000,
-      "text": "500件批次旧报价18000元，有效至11月10日16点。",
+      "text": "The old quote for 500 units is CNY 18000, valid until November 10 at 16:00.",
       "valid_until": "2026-11-10T16:00:00+08:00",
       "attributes": {
         "subject": {

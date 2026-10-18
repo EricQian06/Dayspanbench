@@ -68,12 +68,12 @@ _UNIT_LOOKUP = {unit: canon for canon, synonyms in UNIT_SYNONYMS for unit in syn
 # v0.5 milestone 2, dialogue-mode LLM: the engine injects the canonical fact
 # (the matched rule's answer or the authored default); the model contributes
 # only the persona's wording and continuity with the prior dialogue.
-DIALOGUE_PROMPT = """你是基准环境中的一名对话者，按persona设定回答Agent的一个问题。
-canonical_fact是引擎确定的权威事实，必须完整传达：其中的全部数字、编号、带引号的专名必须原样保留，不得改动或省略，也不得添加canonical_fact之外的任何事实或承诺。
-role_facts是本角色当前可知资料，current_state是实际办理状态；二者优先于历史对话和Agent的推测。不得沿用过期的未完成状态，不得把申请或批准说成已办理成功。
-可以结合prior_dialogue组织措辞，但不得自行添加忘记或拒绝等设定。审批意见须依据role_facts中的授权条件和current_state；不得因历史错误回复而拒绝已满足条件的计划，也不得把批准说成已经办理成功。不得提及评分或内部进度结构。
-matched_topic为false时，canonical_fact是引导性默认答复：按persona口吻说明没有更多可补充的内容，可引导Agent换个话题提问。
-只输出符合Schema的JSON，不输出解释或思维过程。"""
+DIALOGUE_PROMPT = """You are a dialogue participant in a benchmark environment. Answer one Agent question according to persona, in English.
+canonical_fact is the authoritative fact determined by the engine. Convey it fully: preserve every number, identifier, and quoted proper name exactly, without omission or modification. Add no facts or commitments beyond canonical_fact.
+role_facts contains the information currently available to this role; current_state is the actual processing state. Both take precedence over historical dialogue and Agent speculation. Do not retain outdated incomplete states or describe an application or approval as successfully executed.
+You may use prior_dialogue for phrasing, but do not invent forgetfulness or refusal. Base approval on authorization conditions in role_facts and current_state. Do not reject a qualifying plan because of an incorrect historical response, or describe approval as successful execution. Do not mention scoring or internal progress structures.
+When matched_topic is false, canonical_fact is a guiding default reply: explain in persona that there is nothing further to add, and optionally invite a different question.
+Output only schema-compliant JSON, without explanation or reasoning."""
 
 
 def normalize_field_value(value):
@@ -389,8 +389,7 @@ class Environment:
                     "error": "answer is empty or not a string"
                              if not isinstance(answer, str) or not answer.strip()
                              else "answer lost required key tokens: " + ", ".join(missing),
-                    "requirements": ("answer必须是非空字符串，且把canonical_fact中的全部数字、编号、"
-                                     "带引号专名原样保留，在此基础上重新组织措辞。")}
+                    "requirements": "answer must be a nonempty string rephrasing canonical_fact while preserving all numbers, identifiers, and quoted proper names exactly."}
         # The persona rephrase is wording only; the canonical fact is
         # engine-determined. Two failed phrasings fall back to the canonical
         # text verbatim — the agent loses no information, so the episode stays
@@ -479,7 +478,7 @@ class Environment:
 
     def contact_mentions(self, actor_ids):
         """Names plus mailboxes in prose: the only channel contact details travel."""
-        return "、".join(f"{self.actors[c].spec['name']}（{self.actors[c].spec['contact_details']['email']}）"
+        return ", ".join(f"{self.actors[c].spec['name']} ({self.actors[c].spec['contact_details']['email']})"
                          for c in actor_ids)
 
     def reply_referral(self, case):
@@ -488,10 +487,10 @@ class Environment:
         referred = list(dict.fromkeys(self.referral_names(actor)))
         mentions = self.contact_mentions(referred)
         if mentions:
-            body = f"您咨询的事项不属于我负责的范围，我无法直接办理；建议您联系{mentions}，由他们继续为您处理。"
+            body = f"Your request is outside my remit, so I cannot process it directly. Please contact {mentions} for further assistance. "
         else:
-            body = "您咨询的事项不属于我负责的范围，我无法直接办理；建议您通过公开渠道找到相应事项的对接人后再来信。"
-        text = f"您好，我是{actor.spec['name']}。{body}如有其他问题，欢迎随时来信。"
+            body = 'Your request is outside my remit, so I cannot process it directly. Please find the relevant contact through public channels and write to them.'
+        text = f"Hello, I am {actor.spec['name']}. {body} Please write again if you have other questions."
         # The misrouted mail walks the same visible lifecycle as a processed one.
         self.transition(case, "queued")
         self.transition(case, "working")
@@ -512,7 +511,7 @@ class Environment:
             return
         if submission["accepted"]:
             submission["status"] = "processed"
-            submission["result_text"] = params.get("result_text") or "您提交的申请已受理办结。"
+            submission["result_text"] = params.get("result_text") or 'Your application has been accepted and completed.'
             available = []
             for fact_id in params.get("facts", []):
                 fact = self.task["facts"][fact_id]
@@ -524,17 +523,17 @@ class Environment:
                 available.append(fact_id)
             if available:
                 submission["receipts"].append(self.issue_receipt(
-                    params.get("receipt_title") or f"表单{form_id}办结回执",
+                    params.get("receipt_title") or f"Form {form_id} completion receipt",
                     available, params["issuer"], submission["result_text"],
                     params.get("expect")))
         else:
             submission["status"] = "rejected"
-            submission["result_text"] = params.get("reject_text") or "您提交的信息与登记情况不符，已退回；请核对后重新提交。"
+            submission["result_text"] = params.get("reject_text") or 'Your submission does not match the registered information and has been returned. Check and resubmit.'
             # Name the fields that did not match the registered record, so a
             # correct submission is never rejected without a fixable pointer.
             mismatched = submission.get("mismatched") or list((params.get("expect") or {}))
             if mismatched:
-                submission["result_text"] += " 不符合的字段：" + "、".join(mismatched) + "。"
+                submission["result_text"] += ' Mismatched fields: ' + ", ".join(mismatched) + "."
         update = params.get("page_update")
         if update:
             page = next((p for p in self.task["public"]["pages"] if p["id"] == update["page"]), None)
@@ -590,7 +589,7 @@ class Environment:
                 available.append(fact_id)
             if available:
                 selection["receipts"].append(self.issue_receipt(
-                    params.get("receipt_title") or f"{tool_name}确认回执",
+                    params.get("receipt_title") or f"{tool_name} confirmation receipt",
                     available, params["issuer"], selection["result_text"],
                     params.get("expect")))
         else:
@@ -623,12 +622,12 @@ class Environment:
             self.transition(case, "replied")
             self.record("early_reply", case_id=case["id"], actor=case["actor"],
                         accept_after=workflow["accept_after"])
-            body = workflow.get("early_reply") or "您咨询的事项还未开始受理，暂时无法办理，请稍后再来。"
-            self.emit(case, f"您好，我是{self.actors[case['actor']].spec['name']}。{body}如有其他问题，欢迎随时来信。")
+            body = workflow.get("early_reply") or 'Intake for this matter has not opened. Please return later.'
+            self.emit(case, f"Hello, I am {self.actors[case['actor']].spec['name']}. {body} Please write again if you have other questions.")
             return
         if workflow.get("accept_before") and self.now >= parse(workflow["accept_before"]):
             self.transition(case, "failed")
-            self.complete_failure(case, "该轮受理截止时间已过，无法按原时间完成。")
+            self.complete_failure(case, 'The acceptance deadline for this round has passed; completion on the original schedule is unavailable.')
             return
         missing = [key for key in workflow.get("required_fields", []) if case["fields"].get(key) is None or case["fields"].get(key) == ""]
         # Scenario-specific identifiers must correspond to the user's actual case.
@@ -657,23 +656,23 @@ class Environment:
             if obtained:
                 self.record("material_understood", case_id=case["id"], field=key, evidence=obtained)
             else:
-                missing.append(key + "（须先取得有效可核验凭证）")
+                missing.append(key + '(valid verifiable evidence required first)')
         if missing or mismatched:
-            missing += [key + "（与任务信息不符）" for key in mismatched]
+            missing += [key + '(does not match task information)' for key in mismatched]
             if case["state"] == "new":
                 self.transition(case, "needs_information")
             if case.get("parent"):
                 self.transition(case, "failed")
-                self.complete_failure(case, "内部转交缺少材料：" + ", ".join(missing))
+                self.complete_failure(case, 'Internal handoff is missing materials: ' + ", ".join(missing))
             else:
-                absent = [item for item in missing if "（" not in item]
-                unverifiable = [item.split("（")[0] for item in missing if item.endswith("（须先取得有效可核验凭证）")]
-                body = "您提交的材料尚不完整，请补充以下信息后我们再继续处理：" + ", ".join(absent) + "。" if absent else ""
+                absent = [item for item in missing if "(" not in item]
+                unverifiable = [item.split("(")[0] for item in missing if item.endswith('(valid verifiable evidence required first)')]
+                body = 'Your materials are incomplete. Supply the following before we continue: ' + ", ".join(absent) + ". " if absent else ""
                 if mismatched:
-                    body += "您提供的" + ", ".join(mismatched) + "与登记情况不一致，请核对相关信息后重新提交。"
+                    body += 'The supplied ' + ", ".join(mismatched) + ' does not match the registered information. Check and resubmit.'
                 if unverifiable:
-                    body += "您提供的" + ", ".join(unverifiable) + "未能与有效凭证核对，请随信附上对方的书面确认原文或其编号后再提交。"
-                self.emit(case, f"您好，我是{self.actors[case['actor']].spec['name']}。{body}如有其他问题，欢迎随时来信。", status="needs_information")
+                    body += 'The supplied ' + ", ".join(unverifiable) + " could not be verified against valid evidence. Resubmit with the other party's original written confirmation or its identifier."
+                self.emit(case, f"Hello, I am {self.actors[case['actor']].spec['name']}. {body} Please write again if you have other questions.", status="needs_information")
             return
         case["admitted_at"] = stamp(self.now)
         case["admission_evidence"] = admission_evidence
@@ -694,7 +693,7 @@ class Environment:
                     self.transition(case, "waiting_internal")
                     self.record("case_linked", case_id=case["id"], existing=existing["id"])
                     if not case.get("parent"):
-                        self.emit(case, "同一事项已在办理，已关联原有进度；结果办结后回复。",
+                        self.emit(case, 'This matter is already in progress and has been linked to the existing process. A reply will follow completion.',
                                   status="acknowledgement")
                     return
         self.schedule_step(case)
@@ -816,8 +815,8 @@ class Environment:
         # contention inserting work ahead of this chain) can be retracted.
         case["promised_eta"] = stamp(eta)
         case["eta_slip_notified"] = False
-        return (f"预计最早将于{local.strftime('%Y-%m-%d %H:%M')}（当地时间）办结并书面回复您；"
-                "该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。")
+        return (f"The earliest expected completion is {local.strftime('%Y-%m-%d %H:%M')} local time, followed by a written reply. "
+                "This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.")
 
     def notify_eta_slip(self, case):
         """Retract promises the schedule has outgrown.
@@ -843,9 +842,9 @@ class Environment:
             local = completion.astimezone(actor.calendar.zone)
             self.record("eta_revised", case_id=member["id"], actor=member["actor"],
                         promised=member["promised_eta"], revised=stamp(completion))
-            self.emit(member, f"您好，我是{actor.spec['name']}。您此前已受理事项的办理进度更新：因受理安排调整，"
-                              f"预计最早办结时间调整为{local.strftime('%Y-%m-%d %H:%M')}（当地时间）。"
-                              "处理顺序不因催办提前，可待回复送达后再联系。", status="acknowledgement")
+            self.emit(member, f"Hello, I am {actor.spec['name']}. Progress update for your accepted matter: due to an intake schedule change, "
+                              f"the earliest expected completion is now {local.strftime('%Y-%m-%d %H:%M')} local time. "
+                              "Reminders do not change queue order; wait for the reply before contacting us again.", status="acknowledgement")
 
     def jittered_delay(self, case, delay):
         """Agent-initiated email never gets instant handling: business delays get a
@@ -979,7 +978,7 @@ class Environment:
             # waits promise an earliest completion time so the agent can plan
             # instead of probing with follow-up mail.
             eta = self.eta_clause(case)
-            self.emit(case, f"您好，我是{actor.spec['name']}。您提交的材料已核验齐全，本事项已受理并按流程转办。{eta or '办结后会书面回复您。'}",
+            self.emit(case, f"Hello, I am {actor.spec['name']}. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. {eta or 'A written reply will follow completion.'}",
                       status="acknowledgement")
         elif tool["kind"] == "suggest":
             # A vague or guess-laden reply: the recipient answers from memory,
@@ -1004,9 +1003,9 @@ class Environment:
             self.new_case(tool["target"], tool["workflow"],
                           {k: case["fields"][k] for k in tool["forward_fields"] if k in case["fields"]},
                           parent=case["id"], origin=case.get("origin"))
-            text = tool.get("text") or f"我先向{target.spec['name']}核实相关情况，核实后再书面回复您。"
+            text = tool.get("text") or f"I will first ask {target.spec['name']} to verify the details, then reply in writing."
             eta = self.eta_clause(case)
-            self.emit(case, f"您好，我是{actor.spec['name']}。{text}{eta}", status="acknowledgement", internal_ok=True)
+            self.emit(case, f"Hello, I am {actor.spec['name']}. {text}{eta}", status="acknowledgement", internal_ok=True)
             return "waiting"
         elif tool["kind"] == "deny":
             # A dead-end "不知道/不归我管" reply: the recipient plainly states
@@ -1021,7 +1020,7 @@ class Environment:
                 parent["step"] += 1
                 self.schedule_step(parent)
             else:
-                self.emit(case, f"您好，我是{actor.spec['name']}。{text}")
+                self.emit(case, f"Hello, I am {actor.spec['name']}. {text}")
             return "done"
         elif tool["kind"] == "reply":
             self.transition(case, "replied")
@@ -1034,7 +1033,7 @@ class Environment:
                 self.schedule_step(parent)
             else:
                 # One natural-language email paragraph, assembled deterministically.
-                parts = [f"您好，我是{actor.spec['name']}。"]
+                parts = [f"Hello, I am {actor.spec['name']}. "]
                 receipt = None
                 if case["facts"]:
                     # The canonical result text plus a receipt artifact: the
@@ -1042,18 +1041,18 @@ class Environment:
                     # its final summary itself. The facts were already attested
                     # under their original issuers; do not re-attest them here.
                     receipt = self.issue_receipt(
-                        f"{case['workflow'].get('label', case['workflow']['id'])}书面核实回执",
+                        f"{case['workflow'].get('label', case['workflow']['id'])}Written verification receipt",
                         case["facts"], case["actor"], reregister=False)
-                    parts.append("您咨询的事项已经核实，具体情况如下：")
+                    parts.append('Your inquiry has been verified. Details: ')
                     parts.extend(record["text"] for record in
                                  (self.director.facts[f] for f in case["facts"]))
-                    parts.append("以上为正式书面核实结论；随信附办结回执"
-                                 f"（回执号{receipt['receipt_no']}），该回执的关键内容（编号、数量、日期）须记入最终总结。")
+                    parts.append("These are the formal written verification determinations. A completion receipt is attached "
+                                 f"(receipt number {receipt['receipt_no']}); include its key identifiers, quantities, and dates in the final summary.")
                 else:
-                    parts.append("您咨询的事项已经按流程处理完毕。")
+                    parts.append('Your matter has been completed under the process.')
                 if case["contacts"]:
-                    parts.append(f"此外，相关事项建议您联系{self.contact_mentions(dict.fromkeys(case['contacts']))}，他们可以继续为您处理。")
-                parts.append("如有其他问题，欢迎随时来信。")
+                    parts.append(f"For related matters, please also contact {self.contact_mentions(dict.fromkeys(case['contacts']))} for further assistance.")
+                parts.append(' Please write again if you have other questions.')
                 # Spoken answers carry information but never written receipts.
                 self.emit(case, "".join(parts), list(dict.fromkeys(case["contacts"])),
                           receipts=None if case.get("origin") == "phone" else
@@ -1081,7 +1080,7 @@ class Environment:
             self.transition(parent, "failed")
             self.complete_failure(parent, reason)
         else:
-            self.emit(case, f"您好，我是{self.actors[case['actor']].spec['name']}。很抱歉，{reason}如有疑问欢迎再来信。", status="failed")
+            self.emit(case, f"Hello, I am {self.actors[case['actor']].spec['name']}. Unfortunately, {reason} Please write again with any questions.", status="failed")
 
     def process_event(self, event):
         at, _, kind, case_id = event
@@ -1229,11 +1228,11 @@ class AgentTools:
         if tool is None:
             env.record("agent_discover_tools", name=name, found=False)
             return {"found": False,
-                    "text": "未找到该工具。工具名称以往来信件或网页正文中的原文为准，可核对后重试。"}
+                    "text": 'Tool not found. Check the exact tool name in correspondence or webpage text and retry.'}
         env.unlocked_tools.add(tool["name"])
         env.record("agent_discover_tools", name=tool["name"], found=True, tool_kind=tool["kind"])
         return {"found": True, "name": tool["name"], "usage": tool["usage"],
-                "note": "该工具已解锁：现在出现在observe()返回的工具列表中，可按上述用法调用。"}
+                "note": 'Tool unlocked. It now appears in observe() and can be called using the usage above.'}
 
     def observe(self):
         env = self._env
@@ -1314,16 +1313,16 @@ class AgentTools:
             if submission is not None:
                 form["submitted_at"] = submission["submitted_at"]
                 if submission["status"] == "pending":
-                    form["status"] = "已提交，待处理"
+                    form["status"] = 'Submitted, pending processing'
                 else:
-                    form["status"] = "已办结" if submission["status"] == "processed" else "已退回"
+                    form["status"] = 'Completed' if submission["status"] == "processed" else 'Returned'
                     form["result_text"] = submission["result_text"]
                     if submission["receipts"]:
                         # Positive confirmation: the processed form is an official
                         # conclusion channel and the receipt is the written voucher.
                         form["receipts"] = deepcopy(submission["receipts"])
-                        form["receipt_note"] = ("本表单办结结论为正式办结凭证，回执已随页面送达；"
-                                                 "该回执的关键内容（编号、数量、日期）须记入最终总结。")
+                        form["receipt_note"] = ("This completed form provides formal completion evidence. Its receipt is delivered with this page; "
+                                                 "include key identifiers, quantities, and dates in the final summary.")
             visible["form"] = form
         # Pages can be revised during the episode; this is when the returned
         # content last changed (the task start for never-updated pages).
@@ -1441,7 +1440,7 @@ class AgentTools:
                             or any(k not in case["fields"] for k in new_fields))
                 if not material:
                     eta = env.eta_clause(case)
-                    env.emit(case, f"您好，我是{actor.spec['name']}。您的事项已在办理中，受理时间和处理顺序保持不变。{eta or '办结后会书面回复。'}如有其他问题，欢迎随时来信。",
+                    env.emit(case, f"Hello, I am {actor.spec['name']}. Your matter is in progress; acceptance time and queue order are unchanged. {eta or 'A written reply will follow completion.'} Please write again if you have other questions.",
                              status="acknowledgement")
                     return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
                 reopened = env.new_case(actor_id, workflow_id, fields or {}, origin="agent")
@@ -1450,7 +1449,7 @@ class AgentTools:
                 return {"case_id": reopened["id"], "status": "received", "at": stamp(env.now)}
             else:
                 # Following up is observable, but does not skip an internal queue.
-                env.emit(case, f"您好，我是{actor.spec['name']}。已收到您的跟进邮件；原事项的受理时间和处理顺序保持不变。{env.eta_clause(case, case['step'])}这封邮件未匹配到我需处理的新事项；如需办理其他业务，请在邮件中说明具体内容。如有其他问题，欢迎随时来信。",
+                env.emit(case, f"Hello, I am {actor.spec['name']}. Your follow-up email has been received; the original acceptance time and queue order are unchanged. {env.eta_clause(case, case['step'])}This email did not match a new matter within my remit. For other services, explain the specific request in your email. Please write again if you have other questions.",
                          status="acknowledgement")
             return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
         if workflow_id is None:
@@ -1490,14 +1489,14 @@ class AgentTools:
         env.record("agent_call", recipient=recipient, text=text, fields=fields or {})
         if not actor.calendar.is_open(env.now):
             return {"status": "no_answer", "recipient": recipient, "at": stamp(env.now),
-                    "text": "电话无人接听：当前不在对方的接听时段。"}
+                    "text": "No answer: outside the contact's phone hours."}
         view = {"actor_id": recipient, "name": actor.spec["name"], "role": actor.spec["role"],
-                "instructions": actor.spec["recipient"]["instructions"], "message": "[电话] " + text,
+                "instructions": actor.spec["recipient"]["instructions"], "message": '[Phone] ' + text,
                 "fields": deepcopy(fields or {}), "now": stamp(env.now), "history": deepcopy(actor.history),
                 "existing_workflow_id": None,
                 "workflows": [{k: deepcopy(w[k]) for k in ("id", "label", "aliases", "required_fields", "accept_after", "accept_before") if k in w} for w in actor.spec["workflows"]],
                 "local_cases": [{"id": cid, "state": env.cases[cid]["state"]} for cid in actor.cases]}
-        actor.history.append({"role": "agent", "text": "[电话] " + text, "fields": deepcopy(fields or {}),
+        actor.history.append({"role": "agent", "text": '[Phone] ' + text, "fields": deepcopy(fields or {}),
                               "case_id": None, "at": stamp(env.now)})
         if hasattr(actor.recipient, "route"):
             decision = env.recipient_call(actor, "route", view)
@@ -1507,13 +1506,13 @@ class AgentTools:
             workflow_id = env.recipient_call(actor, "choose", view)
             fields = env.canonicalize_fields(fields)
         if workflow_id is None:
-            prompt = "请说明要办理的事项：" + "；".join(w["label"] for w in actor.spec["workflows"])
+            prompt = 'Please specify the matter: ' + "; ".join(w["label"] for w in actor.spec["workflows"])
             actor.history.append({"role": "recipient", "text": prompt, "at": stamp(env.now)})
             return {"status": "clarification_needed", "text": prompt}
         if workflow_id not in {w["id"] for w in actor.spec["workflows"]}:
             raise PermissionError("Undeclared workflow")
         case = env.new_case(recipient, workflow_id, fields or {}, origin="phone")
-        case["correspondence"].append("[电话] " + text)
+        case["correspondence"].append('[Phone] ' + text)
         limit = min(env.now + timedelta(minutes=60), env.deadline)
         before = len(env.messages)
         while case["state"] not in {"replied", "failed"} and not any(m["case_id"] == case["id"] for m in env.messages):
@@ -1522,10 +1521,10 @@ class AgentTools:
             env.advance(min(env.events[0][0], limit), wake_on_message=True)
         result = {"status": "answered", "case_id": case["id"], "at": message["at"], "text": message["text"]} if (message := next((m for m in env.messages if m["case_id"] == case["id"]), None)) else {
             "status": "processing", "case_id": case["id"], "at": stamp(env.now),
-            "text": "对方已记录事项并受理；处理结果稍后另行回复，请留意收件箱。"}
+            "text": 'The contact has recorded and accepted the matter. Results will follow separately; check your inbox.'}
         if len(env.messages) > before:
             result["new_messages"] = len(env.messages) - before
-            result["new_message_hint"] = "通话期间另有新邮件到达，建议调用 read_inbox 查看。"
+            result["new_message_hint"] = 'New email arrived during the call. Use read_inbox to read it.'
         return result
 
     def read_inbox(self, after=0):
@@ -1604,17 +1603,17 @@ class AgentTools:
                   "at": stamp(env.now), "receipts": []}
         if document.get("facts"):
             result["receipts"].append(env.issue_receipt(
-                f"《{document['title']}》书面材料回执", document["facts"], document["issuer"]))
+                f"{document['title']} - written document receipt", document["facts"], document["issuer"]))
         if result["receipts"]:
             # Written material with an attached receipt. The note deliberately
             # stays neutral and identical for formal and reference documents:
             # the environment never labels attestation authority per file —
             # the agent must check issuers itself (contract section on oral /
             # uncertain information states the general rule).
-            result["note"] = ("书面材料已下载，随附载明本文件内容的回执；"
-                              "该回执的关键内容（编号、数量、日期）须记入最终总结。")
+            result["note"] = ("Document downloaded with a receipt stating its contents. "
+                              "Include key identifiers, quantities, and dates in the final summary.")
         else:
-            result["note"] = "本文件为普通说明材料，不随下载签发书面凭证。"
+            result["note"] = 'This is an informational document; downloading it does not issue a written credential.'
         env.record("agent_fetch_document", url=url, facts=document.get("facts", []))
         return result
 
@@ -1663,7 +1662,7 @@ class AgentTools:
                 results.append(env.contact(actor["id"]))
         env.record("agent_lookup_directory", query=query, matches=[r["id"] for r in results])
         return {"results": results,
-                "note": "机构公开通讯录检索结果；未命中时不代表对方不存在，可更换关键词再试。"}
+                "note": 'Public organization directory results. No match does not establish absence; try different keywords.'}
 
     def request_callback(self, contact, topic=None):
         """Register a callback request. No callback time is promised and the
@@ -1675,7 +1674,7 @@ class AgentTools:
         self._budgeted()
         env.record("agent_request_callback", contact=contact, topic=topic)
         return {"status": "registered", "at": stamp(env.now),
-                "text": "回拨请求已登记，工作人员将在方便时与您联系；本渠道不承诺具体回电时间，也不影响邮件事项的办理进度。"}
+                "text": 'Callback request registered. Staff will contact you when convenient; no callback time is promised, and email processing progress is unaffected.'}
 
     def leave_note(self, contact, text):
         """Leave a note for a contact. Notes are recorded but are not answered
@@ -1689,7 +1688,7 @@ class AgentTools:
         self._budgeted()
         env.record("agent_leave_note", contact=contact, text=text)
         return {"status": "recorded", "at": stamp(env.now),
-                "text": "留言已记录；留言不作为正式来件处理，也不会获得单独回复。"}
+                "text": 'Note recorded. Notes are not formal submissions and receive no separate reply.'}
 
     # ---- Hidden per-task tools ---------------------------------------------------
     # Unlocked through discover_tools; behavior is parameterized entirely by
@@ -1714,7 +1713,7 @@ class AgentTools:
         """Submit a web form: required fields are validated against the form's
         own field list; an authored `expect` mapping decides accept/reject (any
         value passes for keys it omits). Processing completes later at an
-        authored virtual time; until then the page shows 已提交，待处理."""
+        authored virtual time; until then the page shows Submitted, pending processing."""
         env = self._env
         if set(kwargs) != {"fields"} or not isinstance(kwargs.get("fields"), dict):
             raise ValueError("hidden form tool takes a single object argument: fields")
@@ -1723,12 +1722,12 @@ class AgentTools:
         _, form = env.forms[form_id]
         submission = env.form_submissions.get(form_id)
         if submission and submission["status"] in {"pending", "processed"}:
-            raise ValueError("该表单此前已提交，不能重复提交；处理结果请重访页面或查询状态确认。")
+            raise ValueError('This form was already submitted and cannot be submitted again. Revisit the page or check status for the result.')
         values = kwargs["fields"]
         missing = [f["label"] for f in form["fields"]
                    if f.get("required") and values.get(f["name"]) in (None, "")]
         if missing:
-            raise ValueError("表单必填字段缺失：" + "、".join(missing))
+            raise ValueError('Missing required form fields: ' + ", ".join(missing))
         expect = params.get("expect") or {}
         mismatched = [key for key, expected in expect.items()
                       if not field_value_equivalent(values.get(key), expected)]
@@ -1745,7 +1744,7 @@ class AgentTools:
         env.record("agent_form_submitted", tool=name, form=form_id, accepted=accepted)
         env.enqueue(at, "form_processed", form_id)
         return {"status": "submitted", "form": form_id, "at": stamp(env.now),
-                "text": "表单已提交，等待处理；处理结果不会主动推送。办结后重访相关页面或查询状态，均可取得办结结论与书面凭证。"}
+                "text": 'Form submitted, pending processing. Results are not pushed automatically. After completion, revisit the relevant page or check status for the determination and written evidence.'}
 
     def _hidden_status(self, name, spec, kwargs):
         """Query an authored external status record (permit/parcel/registration
@@ -1762,10 +1761,10 @@ class AgentTools:
                    keys=[r["key"] for r in records])
         if not records:
             return {"records": [], "now": stamp(env.now),
-                    "note": "未查询到相关记录；可核对事项编号或关键词后重试。"}
+                    "note": 'No matching record found. Check the matter ID or keywords and retry.'}
         results = []
         for record in records:
-            state = record.get("initial") or "暂无记录。"
+            state = record.get("initial") or 'No records yet.'
             for entry in record.get("timeline", []):
                 if parse(entry["at"]) <= env.now:
                     state = entry["text"]
@@ -1774,7 +1773,7 @@ class AgentTools:
                        "state": state, "now": stamp(env.now)}
             if submission is not None:
                 if submission["status"] == "pending":
-                    outcome["state"] = f"该事项已提交，待处理（提交时间{submission['submitted_at']}）。"
+                    outcome["state"] = f"Submitted, pending processing (submitted at {submission['submitted_at']}). "
                 else:
                     outcome["state"] = submission["result_text"]
                     # A processed status query is an official confirmation channel
@@ -1784,8 +1783,8 @@ class AgentTools:
                         outcome["receipts"] = deepcopy(submission["receipts"])
                         # Positive confirmation: the processed status query is an
                         # official channel and the receipt is the written voucher.
-                        outcome["receipt_note"] = ("本查询为正式办结渠道，回执已随本查询送达；"
-                                                   "该回执的关键内容（编号、数量、日期）须记入最终总结。")
+                        outcome["receipt_note"] = ("This lookup is a formal completion channel. Its receipt is delivered with this result; "
+                                                   "include key identifiers, quantities, and dates in the final summary.")
             results.append(outcome)
         return {"records": results, "now": stamp(env.now)}
 
@@ -1803,24 +1802,24 @@ class AgentTools:
             if needle else (records if len(records) == 1 else [])
         if not matches:
             env.record("agent_hidden_record", tool=name, key=key, found=False)
-            return {"found": False, "records": [], "note": "未查询到该记录；可核对记录编号后重试。"}
+            return {"found": False, "records": [], "note": 'Record not found. Check the record ID and retry.'}
         results = []
         for record in matches:
             if record.get("available_at") and env.now < parse(record["available_at"]):
                 results.append({"key": record["key"], "found": False,
-                                "text": "该记录尚未生成，请稍后再查。"})
+                                "text": 'This record has not been generated. Check again later.'})
                 continue
             submission = env.form_submissions.get(record["requires_form"]) if record.get("requires_form") else None
             if submission is None or submission["status"] != "processed":
                 results.append({"key": record["key"], "found": False,
-                                "text": "该记录尚未生成或暂不可查询，请稍后再查。"})
+                                "text": 'This record is not yet generated or temporarily unavailable. Check again later.'})
                 continue
             entry = {"key": record["key"], "found": True, "title": record["title"],
                      "text": record["text"], "at": stamp(env.now), "receipts": []}
             if record.get("facts"):
                 entry["receipts"].append(env.issue_receipt(
                     record["title"], record["facts"], record["issuer"], record["text"]))
-                entry["receipt_note"] = "本记录为正式渠道出具的书面材料；该回执的关键内容（编号、数量、日期）须记入最终总结。"
+                entry["receipt_note"] = 'This record is written material issued through an official channel. Include its key identifiers, quantities, and dates in the final summary.'
             results.append(entry)
         env.record("agent_hidden_record", tool=name, key=key,
                    found=[r["key"] for r in results if r["found"]])

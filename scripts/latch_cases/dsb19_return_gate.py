@@ -293,7 +293,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The approved post-release return leg has been processed; both legs are booked and no payment was taken."}],
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the reference books the outbound on September 2 and the return after the 11:20 release, but any order honoring the release gate scores the same."))
     sites["DSB-19"] = "accessride"
-    horizons["DSB-19"] = (2, "短期", "fleet verification rewrite plus clinic release gating the return leg")
+    horizons["DSB-19"] = (2, "Short term", "fleet verification rewrite plus clinic release gating the return leg")
     conclusions["DSB-19"] = {
         "both_legs_booked": "Accessible outbound and post-release return both booked within budget",
         "unconfirmed": "Vehicle access verification or the clinic release could not be obtained in time",

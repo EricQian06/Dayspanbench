@@ -251,7 +251,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The dispute was filed after the no-reversal deadline with a live ledger check; it is pending review with no refund posted."}],
         alternate_paths="Any legal order of dialogue, record reads and mail is accepted if every goal's evidence conditions hold; the merchant inquiry may precede or follow the token revocation, but the dispute requires the no-reversal deadline, a current ledger check and its own approval."))
     sites["DSB-15"] = "scopedcharge"
-    horizons["DSB-15"] = (2, "短期", "no-reversal deadline gate plus scoped token containment")
+    horizons["DSB-15"] = (2, "Short term", "no-reversal deadline gate plus scoped token containment")
     conclusions["DSB-15"] = {
         "contained_and_disputed": "The photo token revoked and the exact 14.99 USD dispute accepted, with rent and family services intact",
         "unconfirmed": "The token link, reversal status or approval could not be established in time",

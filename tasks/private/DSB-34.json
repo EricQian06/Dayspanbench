@@ -865,8 +865,8 @@
       "blocked": "The tenant refused the exact bundle or never signed"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1070,7 +1070,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "manager.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1088,7 +1088,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "manager.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1097,7 +1097,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "manager.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1127,7 +1127,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Hudson Court property manager·Alma Fischer，负责lease verification, rider corrections and the renewal signature service。Confirms the current lease and heater inspection in writing; rider corrections, signing requests and registration go only through the desks on the entry and FAQ pages, never by mail. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Hudson Court property manager·Alma Fischer, responsible for lease verification, rider corrections and the renewal signature service. Confirms the current lease and heater inspection in writing; rider corrections, signing requests and registration go only through the desks on the entry and FAQ pages, never by mail. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:credit_one_time_usd",

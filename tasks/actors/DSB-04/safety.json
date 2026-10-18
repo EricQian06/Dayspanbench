@@ -3,9 +3,9 @@
   "task_id": "DSB-04",
   "actor": {
     "id": "safety",
-    "name": "南屿实验室安全员·温遥",
-    "role": "安全培训与合格记录",
-    "description": "每周五14点培训；合格记录须经培训记录系统申请，不随邮件发放。",
+    "name": "Nanyu Laboratory safety officer - Wen Yao",
+    "role": "Safety training and completion records",
+    "description": "Training is every Friday at 14:00; request completion records through the training-record system, not email.",
     "calendar": "office",
     "channels": [
       "email"
@@ -24,17 +24,17 @@
       },
       "safety.main.2.deny": {
         "kind": "deny",
-        "text": "本期批次培训已结束，合格记录不随邮件发放：请通过南屿培训记录系统（nanyu_training_record）提交记录申请，批次安排与申请说明见官网安全培训安排细则文件。"
+        "text": "This training batch has ended. Completion records are not issued by email: apply through Nanyu training records (nanyu_training_record). See the official site's detailed safety-training arrangements document for batch and application instructions."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "培训记录确认",
+        "label": "Training-record confirmation",
         "aliases": [
-          "培训",
-          "安全",
-          "记录"
+          "training",
+          "safety",
+          "record"
         ],
         "required_fields": [
           "person_name"
@@ -42,7 +42,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "完成培训批次",
+            "label": "Complete the training batch",
             "tool": "safety.main.1.lookup",
             "delay": {
               "mode": "weekly",
@@ -54,7 +54,7 @@
           },
           {
             "id": "main_2",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "safety.main.2.deny",
             "delay": {
               "mode": "elapsed",
@@ -84,7 +84,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是南屿实验室安全员·温遥，负责安全培训与合格记录。每周五14点培训；合格记录须经培训记录系统申请，不随邮件发放。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Nanyu Laboratory safety officer - Wen Yao, responsible for Safety training and completion records. Training is every Friday at 14:00; request completion records through the training-record system, not email. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:safety_certificate"
@@ -113,14 +113,14 @@
   "local_facts": {
     "cert_ref": {
       "value": "SAFE-OCT30-215",
-      "text": "上月（10月30日批次）安全培训合格记录SAFE-OCT30-215，有效期至2026年11月3日。",
+      "text": "Last month's safety-training completion record (October 30 batch), SAFE-OCT30-215, is valid through November 3, 2026.",
       "valid_until": "2026-11-03T23:59:00+08:00",
       "attributes": {
         "subject": {
           "task": "DSB-04",
           "case": {
             "sample_id": "S-482",
-            "person_name": "顾晓"
+            "person_name": "Gu Xiao"
           }
         },
         "predicate": "safety_certificate"
@@ -128,13 +128,13 @@
     },
     "certificate": {
       "value": "SAFE-NOV06-482",
-      "text": "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
+      "text": "Personnel safety training is complete, record SAFE-NOV06-482, usable for this instrument-use inquiry.",
       "attributes": {
         "subject": {
           "task": "DSB-04",
           "case": {
             "sample_id": "S-482",
-            "person_name": "顾晓"
+            "person_name": "Gu Xiao"
           }
         },
         "predicate": "safety_certificate"

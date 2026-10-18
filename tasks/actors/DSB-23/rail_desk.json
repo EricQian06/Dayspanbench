@@ -54,7 +54,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "rail_desk.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -72,7 +72,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "rail_desk.main.3.document",
             "delay": {
               "mode": "business",
@@ -81,7 +81,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "rail_desk.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -111,7 +111,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Rail service desk·Julien Fabre，负责current train arrival and delay status。Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Rail service desk·Julien Fabre, responsible for current train arrival and delay status. Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:train_arrival_current"

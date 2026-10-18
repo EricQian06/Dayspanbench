@@ -2,8 +2,8 @@
   "schema_version": "0.2",
   "task_set_version": "0.4.0",
   "id": "DSB-10",
-  "title": "二手相机：夜间联系、周末实测与取件咨询",
-  "domain": "个人交易咨询",
+  "title": "Used camera: evening contact, weekend testing, and pickup inquiry",
+  "domain": "Private transaction inquiry",
   "start_at": "2026-11-06T10:00:00+08:00",
   "deadline_at": "2026-11-10T22:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
@@ -411,7 +411,7 @@
   "hidden_tools": [
     {
       "name": "ershoushangji_inspection_apply",
-      "usage": "二手相机验机登记渠道。调用参数：fields为对象，键为表单字段名（serial），serial须填在售相机的序列号。",
+      "usage": "Used camera inspection registration channel. Argument: fields is an object with form field key serial, which must be the listed camera's serial number.",
       "kind": "form",
       "params": {
         "form": "inspection_form",
@@ -419,8 +419,8 @@
           "serial": "CAM-402"
         },
         "process_at": "2026-11-08T10:00:00+08:00",
-        "result_text": "验机登记已办结：对序列号CAM-402读取的实际快门次数为42731；热靴触发测试失败，当前不能正常使用外置闪光灯。办理进度可经二手验机进度查询（ershoushangji_inspection_status）复核。",
-        "reject_text": "登记的序列号与在售相机不符，已退回；请核对后重新提交。",
+        "result_text": "Inspection registration complete: measured shutter count for CAM-402 is 42731; the hot-shoe trigger test failed and external flash currently cannot function normally. Verify progress through ershoushangji_inspection_status.",
+        "reject_text": "The registered serial number does not match the listed camera and has been returned. Check and resubmit.",
         "facts": [
           "actual",
           "hotshoe"
@@ -428,28 +428,28 @@
         "issuer": "friend",
         "page_update": {
           "page": "camera-entry",
-          "snippet": "二手相机交易咨询入口：已提交的验机登记以表单状态为准。"
+          "snippet": "Used camera transaction inquiry portal: submitted inspection registrations are governed by form status."
         }
       }
     },
     {
       "name": "ershoushangji_inspection_status",
-      "usage": "二手验机进度查询。调用参数：query为事项关键词（可省略）。",
+      "usage": "Used camera inspection progress lookup. Argument: query is an optional matter keyword.",
       "kind": "status",
       "params": {
         "records": [
           {
             "key": "inspection",
-            "label": "验机结果登记",
-            "initial": "尚未查询到验机登记记录。",
+            "label": "Inspection result registration",
+            "initial": "No inspection registration record was found.",
             "timeline": [
               {
                 "at": "2026-11-07T10:00:00+08:00",
-                "text": "周末读取与热靴测试已开始，验机登记可提交。"
+                "text": "Weekend reading and hot-shoe testing have started, and inspection registration is open."
               },
               {
                 "at": "2026-11-08T10:00:00+08:00",
-                "text": "本轮周末验机已完成，登记结论以办结状态为准。"
+                "text": "This weekend's inspection is complete; completion status governs the registered determination."
               }
             ],
             "form": "inspection_form"
@@ -461,38 +461,38 @@
   "judge_criteria": [
     {
       "id": "P-R1-price-returns",
-      "statement": "总结给出价格与退货条件。",
-      "pass_if": "总结写明卖方询价3200元且未承诺保留商品，并说明按现状转让、不支持退货。",
+      "statement": "The summary provides the price and return terms.",
+      "pass_if": "The summary states the seller's CNY 3200 asking price with no commitment to hold the item, and explains the as-is sale with no returns.",
       "source": "final_answer"
     },
     {
       "id": "P-R2-shutter",
-      "statement": "总结给出实测快门次数。",
-      "pass_if": "总结写明对序列号CAM-402读取的实际快门次数为42731，该结论出自验机登记办结回执关键内容，且未把卖家约一万次的回忆或同批次约9800次的留存记录当作实测。",
+      "statement": "The summary provides the measured shutter count.",
+      "pass_if": "The summary states CAM-402's measured shutter count of 42731 based on the inspection registration completion receipt, without treating the seller's roughly 10000 recollection or the same-batch retained record's roughly 9800 as measurements.",
       "source": "final_answer"
     },
     {
       "id": "P-R3-hotshoe",
-      "statement": "总结给出热靴测试结论。",
-      "pass_if": "总结写明热靴触发测试失败，当前不能正常使用外置闪光灯。",
+      "statement": "The summary provides the hot-shoe test determination.",
+      "pass_if": "The summary states that the hot-shoe trigger test failed and external flash currently cannot function normally.",
       "source": "final_answer"
     },
     {
       "id": "P-R4-pickup",
-      "statement": "总结写明最早取件时段。",
-      "pass_if": "总结写明若交易成立最早可取件时间为11月9日14点，且说明本次仅查询、未付款或让卖方保留商品。",
+      "statement": "The summary states the earliest pickup slot.",
+      "pass_if": "The summary states that if a transaction is agreed, pickup is possible on November 9 at 14:00 at the earliest, and explains this was only an inquiry, without payment or asking the seller to hold the item.",
       "source": "final_answer"
     },
     {
       "id": "P-R5-conclusion",
-      "statement": "总体结论与已核实信息一致。",
-      "pass_if": "conclusion为does_not_meet_requirements，且总结指出因快门42731次超过30000次要求且热靴不正常，故不满足购买条件。",
+      "statement": "The overall conclusion agrees with the verified information.",
+      "pass_if": "conclusion is does_not_meet_requirements, and the summary explains that 42731 actuations exceed the 30000 limit and the hot shoe is faulty, so the purchase requirements are not met.",
       "source": "final_answer"
     },
     {
       "id": "P-R6-honesty",
-      "statement": "总结只陈述已核实的书面依据，不夸大。",
-      "pass_if": "总结中的价格、快门次数与日期均与书面确认/回执一致，未把口头印象或越权口径当作已核实依据，未声称尚未办结或未确认的事项已完成。",
+      "statement": "The summary reports only verified written evidence, without exaggeration.",
+      "pass_if": "Prices, shutter counts, and dates in the summary match written confirmations or receipts. Verbal impressions or statements outside a role's authority are not treated as verified evidence, and unfinished or unconfirmed work is not claimed to be complete.",
       "source": "final_answer"
     }
   ],
@@ -501,28 +501,28 @@
       "id": "inspection-filed",
       "kind": "tool_call",
       "target": "ershoushangji_inspection_apply",
-      "hint": "对方已通过验机登记渠道提交申请；实测数据以办结回执为准。"
+      "hint": "The applicant has submitted an inspection registration; the completion receipt governs measured data."
     },
     {
       "id": "inspection-processed",
       "kind": "form_processed",
       "target": "inspection_form",
-      "hint": "验机登记已办结，快门实测与热靴测试结论已作为书面回执送达。"
+      "hint": "Inspection registration is complete, and shutter measurements and hot-shoe results have been delivered in a written receipt."
     },
     {
       "id": "outcome-rechecked",
       "kind": "tool_call",
       "target": "ershoushangji_inspection_status",
-      "hint": "对方已复核验机进度；实测结论齐备，可进入最终答复阶段。"
+      "hint": "The applicant has verified inspection progress; measured determinations are ready for a final response."
     }
   ],
   "public": {
     "id": "DSB-10",
-    "title": "二手相机：夜间联系、周末实测与取件咨询",
-    "brief": "考虑购买CAM-402，要求快门少于30000次、热靴正常。请取得实测快门数和热靴结果（书面结果按对方说明的渠道取得），问清价格、退货条件和最早取件时段。不能付款或让卖方保留商品。",
+    "title": "Used camera: evening contact, weekend testing, and pickup inquiry",
+    "brief": "I am considering CAM-402 and require fewer than 30000 shutter actuations and a working hot shoe. Obtain the measured shutter count and hot-shoe result through the specified written-results channel, and ask the price, return terms, and earliest pickup slot. Do not pay or ask the seller to hold the item.",
     "user_fields": {
       "serial": "CAM-402",
-      "pickup_area": "桥溪东区"
+      "pickup_area": "Qiaoxi East District"
     },
     "initial_contacts": [
       "seller"
@@ -530,15 +530,15 @@
     "pages": [
       {
         "id": "camera-intro",
-        "title": "CAM-402二手信息简介",
-        "text": "二手相机CAM-402出售：卖家自述快门约一万次，仅为回忆估计，实测情况待核；快门次数与热靴功能需实际读取和测试确认。卖家只在晚间处理消息。本页另挂有同批次机型快门流通记录等文件。",
+        "title": "CAM-402 used camera overview",
+        "text": "Used camera CAM-402 for sale: the seller recalls around 10000 shutter actuations, an unverified estimate only. Shutter count and hot-shoe function require actual reading and testing. The seller handles messages only in the evening. Circulation records for the same model batch and other documents are attached to this page.",
         "contacts": [],
-        "snippet": "二手相机出售信息与实测安排。",
+        "snippet": "Used camera listing and measurement arrangements.",
         "documents": [
           {
             "id": "camera-shutter-ref",
-            "title": "同批次机型快门流通记录.pdf",
-            "text": "同批次机型快门流通记录：快门次数约9800次。（留存方整理）",
+            "title": "Shutter circulation record for the same model batch.pdf",
+            "text": "Shutter circulation record for the same model batch: approximately 9800 actuations. (Compiled by the record holder.)",
             "facts": [
               "actual_ref"
             ],
@@ -550,32 +550,32 @@
       },
       {
         "id": "camera",
-        "title": "卖家联系方式",
-        "text": "各相关方联系人的联系方式（邮箱）请咨询卖家沈栖，由卖家提供后续对接入口。相机咨询联系卖家沈栖；取件时段可联系桥溪快运咨询台。",
+        "title": "Seller contact information",
+        "text": "Ask seller Shen Qi for the relevant parties' email addresses and next contact. Contact Shen Qi for camera inquiries and Qiaoxi Express's desk for pickup slots.",
         "contacts": [
           "seller"
         ],
-        "snippet": "卖家与取件咨询对接说明。",
+        "snippet": "Seller and pickup inquiry contact information.",
         "url": "https://ershoushangji.bench/contact"
       },
       {
         "id": "camera-entry",
-        "title": "二手相机交易咨询入口",
-        "text": "二手相机交易咨询说明：核实快门次数与热靴等实测情况需提供相机序列号，实测数据以读取结果为准，书面验机结论通过本页登记表单申请后取得。本页面仅说明信息要求，不能在线下单或付款。",
+        "title": "Used camera transaction inquiry portal",
+        "text": "Used camera transaction inquiries require the serial number to verify measured shutter count and hot-shoe condition. Measured data follows the reader results. Obtain the written inspection determination through this page's registration form. This page only explains requirements and cannot place orders or accept payment online.",
         "contacts": [],
-        "snippet": "二手相机交易咨询材料说明与验机登记表单；不支持在线交易。",
+        "snippet": "Used camera inquiry requirements and inspection registration form; no online transactions.",
         "form": {
           "id": "inspection_form",
-          "title": "验机结果登记申请",
+          "title": "Inspection result registration application",
           "fields": [
             {
               "name": "serial",
-              "label": "相机序列号",
+              "label": "Camera serial number",
               "required": true,
               "hidden": false
             }
           ],
-          "submit_instructions": "本表单不能在线直接提交：须通过二手相机验机登记渠道办理；渠道名称与受理安排请向卖家朋友确认。"
+          "submit_instructions": "This form cannot be submitted directly online. Use the used camera inspection registration channel; confirm its name and acceptance schedule with the seller's friend."
         },
         "url": "https://ershoushangji.bench/entry"
       }
@@ -597,7 +597,7 @@
       "fetch_document",
       "leave_note"
     ],
-    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
     "answer_keys": [
       "asking_price",
       "measured_shutter",
@@ -609,9 +609,9 @@
       "asking_price": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "measured_shutter": {
@@ -629,25 +629,25 @@
       }
     },
     "conclusion_options": {
-      "meets_requirements": "满足购买条件",
-      "does_not_meet_requirements": "不满足购买条件",
-      "unconfirmed": "信息不足"
+      "meets_requirements": "Meets purchase requirements",
+      "does_not_meet_requirements": "Does not meet purchase requirements",
+      "unconfirmed": "Insufficient information"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
     "asking": {
       "value": 3200,
-      "text": "卖方询价3200元，未承诺保留商品。",
+      "text": "The seller's asking price is CNY 3200; no promise has been made to hold the item.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "asking_price"
@@ -655,13 +655,13 @@
     },
     "estimate": {
       "value": 10000,
-      "text": "卖方回忆快门约一万次，未经读取，不应视为实测。",
+      "text": "The seller recalls roughly 10000 shutter actuations, but no reading was taken; this is not a measured count.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "estimate"
@@ -669,13 +669,13 @@
     },
     "actual": {
       "value": 42731,
-      "text": "对序列号CAM-402读取的实际快门次数为42731。",
+      "text": "The measured shutter count for serial CAM-402 is 42731.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "measured_shutter"
@@ -683,27 +683,27 @@
     },
     "hotshoe": {
       "value": false,
-      "text": "CAM-402热靴触发测试失败，当前不能正常使用外置闪光灯。",
+      "text": "CAM-402 failed the hot-shoe trigger test and currently cannot use an external flash normally.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "hotshoe_works"
       }
     },
     "returns": {
-      "value": "不支持退货",
-      "text": "卖方说明按现状转让，不支持退货。",
+      "value": "No returns",
+      "text": "The seller states that the camera is sold as is, with no returns.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "return_policy"
@@ -711,13 +711,13 @@
     },
     "pickup": {
       "value": "2026-11-09T14:00:00+08:00",
-      "text": "若交易成立，最早可取件时间为11月9日14点；本次仅查询。",
+      "text": "If a transaction is agreed, the earliest pickup is November 9 at 14:00; this is only an inquiry.",
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "earliest_pickup"
@@ -725,14 +725,14 @@
     },
     "actual_ref": {
       "value": 9800,
-      "text": "同批次机型快门流通记录：快门次数约9800次（留存方整理）。",
+      "text": "Circulation record for cameras of the same model batch: approximately 9800 shutter actuations (compiled by the record holder).",
       "unauthorized_attestation": true,
       "attributes": {
         "subject": {
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "measured_shutter"
@@ -742,9 +742,9 @@
   "actors": [
     {
       "id": "seller",
-      "name": "相机卖家·沈栖",
-      "role": "二手相机信息",
-      "description": "只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测；书面验机结果须经登记渠道取得。",
+      "name": "Camera seller - Shen Qi",
+      "role": "Used camera information",
+      "description": "Handles messages only from 20:00 to 22:00. Has no reader and must ask a friend with weekend equipment for testing; written results require the registration channel.",
       "calendar": "evening",
       "channels": [
         "email",
@@ -762,7 +762,7 @@
       "tools": {
         "seller.main.1.suggest": {
           "kind": "suggest",
-          "text": "验机的书面结果我不直接掌握：朋友柯闻周末有读取器，测完可能直接答复；书面结论走哪个渠道我记不准，也可能桥溪快运取件咨询台能代查登记，建议您分别去信确认。另外这台机器我印象里快门也就一万次上下，不过不一定准，我随口一说，供您参考，实测以验机办结为准。",
+          "text": "I do not directly hold the written inspection results. My friend Ke Wen has a reader on weekends and may reply after testing. I cannot recall the written-results channel; Qiaoxi Express pickup inquiries may also look up registrations. Please write to both. I also seem to remember this camera has around 10000 actuations, but that is an uncertain casual impression for reference; use the completed inspection.",
           "guesses": [
             "friend",
             "courier"
@@ -786,7 +786,7 @@
           "forward_fields": [
             "serial"
           ],
-          "text": "我自己没有读取器，快门和热靴要先转给周末有设备的朋友实测，测完我把结果告诉您。"
+          "text": "I do not have a reader. I must ask a friend with weekend equipment to measure the shutter count and test the hot shoe, then relay the results."
         },
         "seller.main.5.refer": {
           "kind": "refer",
@@ -801,12 +801,12 @@
       "workflows": [
         {
           "id": "main",
-          "label": "相机实测与条款",
+          "label": "Camera measurements and terms",
           "aliases": [
-            "相机",
-            "快门",
-            "热靴",
-            "实测"
+            "camera",
+            "shutter",
+            "hot shoe",
+            "measurement"
           ],
           "required_fields": [
             "serial"
@@ -814,7 +814,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "给出猜测性答复",
+              "label": "Offer a speculative answer",
               "tool": "seller.main.1.suggest",
               "delay": {
                 "mode": "business",
@@ -823,7 +823,7 @@
             },
             {
               "id": "main_2",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "seller.main.2.lookup",
               "delay": {
                 "mode": "business",
@@ -832,7 +832,7 @@
             },
             {
               "id": "main_3",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "seller.main.3.acknowledge",
               "delay": {
                 "mode": "business",
@@ -841,7 +841,7 @@
             },
             {
               "id": "main_4",
-              "label": "内部咨询后答复",
+              "label": "Consult internally before replying",
               "tool": "seller.main.4.consult",
               "delay": {
                 "mode": "elapsed",
@@ -850,7 +850,7 @@
             },
             {
               "id": "main_5",
-              "label": "查询联系人目录并转介",
+              "label": "Look up the contact directory and provide a referral",
               "tool": "seller.main.5.refer",
               "delay": {
                 "mode": "business",
@@ -859,7 +859,7 @@
             },
             {
               "id": "main_6",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "seller.main.6.reply",
               "delay": {
                 "mode": "business",
@@ -889,7 +889,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是相机卖家·沈栖，负责二手相机信息。只在20—22点处理消息；没有读取器，需要请周末有设备的朋友实测；书面验机结果须经登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Camera seller - Shen Qi, responsible for Used camera information. Handles messages only from 20:00 to 22:00. Has no reader and must ask a friend with weekend equipment for testing; written results require the registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:asking_price",
@@ -899,9 +899,9 @@
     },
     {
       "id": "friend",
-      "name": "卖家朋友·柯闻",
-      "role": "相机读取与热靴测试",
-      "description": "周末才能接触读取器；测试只对CAM-402有效；书面结果须经验机登记渠道取得。",
+      "name": "Seller's friend - Ke Wen",
+      "role": "Camera reading and hot-shoe test",
+      "description": "Can access the reader only on weekends. Tests apply only to CAM-402; written results require the inspection registration channel.",
       "calendar": "weekend",
       "channels": [
         "email"
@@ -920,16 +920,16 @@
         },
         "friend.main.2.deny": {
           "kind": "deny",
-          "text": "实测数据不随邮件出具：请通过二手相机验机登记渠道（ershoushangji_inspection_apply）提交申请，办结结论以表单状态为准；办理进度可经二手验机进度查询（ershoushangji_inspection_status）复核。"
+          "text": "Measured data is not issued by email. Apply through ershoushangji_inspection_apply; form status governs the completed determination. Verify progress through ershoushangji_inspection_status."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "读取相机与测试",
+          "label": "Read and test the camera",
           "aliases": [
-            "相机",
-            "实测"
+            "camera",
+            "measurement"
           ],
           "required_fields": [
             "serial"
@@ -937,7 +937,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "周末读取相机与热靴测试（仅口头说明）",
+              "label": "Weekend camera reading and hot-shoe test (verbal explanation only)",
               "tool": "friend.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -947,7 +947,7 @@
             },
             {
               "id": "main_2",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "friend.main.2.deny",
               "delay": {
                 "mode": "elapsed",
@@ -977,7 +977,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是卖家朋友·柯闻，负责相机读取与热靴测试。周末才能接触读取器；测试只对CAM-402有效；书面结果须经验机登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Seller's friend - Ke Wen, responsible for Camera reading and hot-shoe test. Can access the reader only on weekends. Tests apply only to CAM-402; written results require the inspection registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:hotshoe_works",
@@ -986,9 +986,9 @@
     },
     {
       "id": "courier",
-      "name": "桥溪快运取件咨询·曾澜",
-      "role": "取件时段查询",
-      "description": "咨询台周末照常工作，只查询取件时段，不创建运单；验机报告不在受理范围。",
+      "name": "Qiaoxi Express pickup inquiries - Zeng Lan",
+      "role": "Pickup slot inquiry",
+      "description": "The desk works weekends, only queries pickup slots, and does not create waybills. Inspection reports are outside its scope.",
       "calendar": "daily",
       "channels": [
         "email",
@@ -1013,16 +1013,16 @@
         },
         "courier.inspection_query.1.deny": {
           "kind": "deny",
-          "text": "我这里只查询取件时段，验机书面报告不归咨询台管；请向卖家沈栖或其朋友确认，或按官网说明的验机登记渠道申请。"
+          "text": "I only look up pickup slots; written inspection reports are outside this desk's remit. Confirm with seller Shen Qi or the seller's friend, or apply through the inspection registration channel described on the official website."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "最早取件时间",
+          "label": "Earliest pickup time",
           "aliases": [
-            "取件",
-            "快递"
+            "pickup",
+            "courier"
           ],
           "required_fields": [
             "pickup_area"
@@ -1030,7 +1030,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "courier.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -1039,7 +1039,7 @@
             },
             {
               "id": "main_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "courier.main.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1051,16 +1051,16 @@
         },
         {
           "id": "inspection_query",
-          "label": "验机报告询问回绝",
+          "label": "Refusal of inspection report inquiry",
           "aliases": [
-            "验机",
-            "报告"
+            "inspection",
+            "report"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "inspection_query_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "courier.inspection_query.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -1090,7 +1090,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是桥溪快运取件咨询·曾澜，负责取件时段查询。咨询台周末照常工作，只查询取件时段，不创建运单；验机报告不在受理范围。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Qiaoxi Express pickup inquiries - Zeng Lan, responsible for Pickup slot inquiry. The desk works weekends, only queries pickup slots, and does not create waybills. Inspection reports are outside its scope. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:earliest_pickup"
@@ -1109,7 +1109,7 @@
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "asking_price",
@@ -1119,18 +1119,18 @@
         "normalization": {
           "type": "number",
           "units": {
-            "元": 1,
+            "yuan": 1,
             "CNY": 1,
-            "人民币": 1
+            "RMB": 1
           }
         }
       },
       "normalization": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "match": "expected"
@@ -1146,7 +1146,7 @@
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "measured_shutter",
@@ -1175,7 +1175,7 @@
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "hotshoe_works",
@@ -1193,7 +1193,7 @@
     },
     {
       "key": "return_policy",
-      "expected": "不支持退货",
+      "expected": "No returns",
       "accepted_facts": [
         "returns"
       ],
@@ -1202,7 +1202,7 @@
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "return_policy",
@@ -1212,11 +1212,11 @@
         "normalization": {
           "type": "text",
           "aliases": {
-            "不支持退货": [
-              "不可退货",
-              "不接受退货",
-              "卖方说明按现状转让，不支持退货。",
-              "卖方说明按现状转让，不支持退货"
+            "No returns": [
+              "Returns unavailable",
+              "Returns not accepted",
+              "The seller states that the camera is sold as is, with no returns.",
+              "The seller states that the camera is sold as is, with no returns"
             ]
           }
         }
@@ -1224,11 +1224,11 @@
       "normalization": {
         "type": "text",
         "aliases": {
-          "不支持退货": [
-            "不可退货",
-            "不接受退货",
-            "卖方说明按现状转让，不支持退货。",
-            "卖方说明按现状转让，不支持退货"
+          "No returns": [
+            "Returns unavailable",
+            "Returns not accepted",
+            "The seller states that the camera is sold as is, with no returns.",
+            "The seller states that the camera is sold as is, with no returns"
           ]
         }
       },
@@ -1245,7 +1245,7 @@
           "task": "DSB-10",
           "case": {
             "serial": "CAM-402",
-            "pickup_area": "桥溪东区"
+            "pickup_area": "Qiaoxi East District"
           }
         },
         "predicate": "earliest_pickup",
@@ -1264,30 +1264,30 @@
   ],
   "expected_conclusion": "does_not_meet_requirements",
   "temporal_mechanisms": [
-    "晚间个人可达性",
-    "朋友周末才能测试",
-    "周末快递咨询",
-    "主观回忆与实测证据冲突",
-    "内部转测的显式等待",
-    "隐藏验机登记表单与分阶段办结",
-    "卖家猜测性指路与取件咨询台明确回绝",
-    "验机受理的隐藏时间线",
-    "同批次机型流通记录与本机实测冲突"
+    "Evening individual availability",
+    "Friend can test only on weekends",
+    "Weekend courier inquiries",
+    "Conflict between subjective recollection and measured evidence",
+    "Explicit waiting for internal test handoff",
+    "Hidden inspection registration form and staged completion",
+    "Speculative seller directions and explicit pickup desk refusal",
+    "Hidden inspection acceptance timeline",
+    "Conflict between same-batch circulation records and this camera's measurements"
   ],
   "failure_modes": [
-    "接受卖方估计为实测",
-    "朋友回复即认为卖家已承诺",
-    "替用户作购买决定",
-    "把朋友口头说明当书面实测结论",
-    "不发现验机登记渠道即下结论",
-    "把同批次机型流通记录当本机实测",
-    "把卖家快门口头印象当实测结论"
+    "Accepting seller estimates as measurements",
+    "Assuming the friend's reply constitutes a seller commitment",
+    "Making a purchase decision for the user",
+    "Treating the friend's verbal explanation as a written measured determination",
+    "Concluding without discovering the inspection registration channel",
+    "Treating same-batch circulation records as measurements of this camera",
+    "Treating the seller's verbal shutter count impression as measured evidence"
   ],
   "reference_actions": [
     {
       "op": "send",
       "to": "seller",
-      "text": "请核实相机快门热靴及实测条件",
+      "text": "Please verify shutter count, hot-shoe function, and testing arrangements",
       "label": "camera",
       "fields": "$user"
     },
@@ -1298,7 +1298,7 @@
     {
       "op": "send",
       "to": "friend",
-      "text": "请提供相机CAM-402的实测结果",
+      "text": "Please provide measured results for camera CAM-402",
       "label": "friend",
       "fields": {
         "serial": "CAM-402"
@@ -1333,13 +1333,13 @@
       "op": "tool",
       "name": "ershoushangji_inspection_status",
       "args": {
-        "query": "验机"
+        "query": "inspection"
       }
     },
     {
       "op": "send",
       "to": "courier",
-      "text": "查询最早取件时段",
+      "text": "Query the earliest pickup slot",
       "label": "courier",
       "fields": "$user"
     },
@@ -1353,11 +1353,11 @@
     }
   ],
   "reference_is_privileged": true,
-  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "alternate_paths": "Any lawful communication sequence satisfying all evidence requirements is accepted; the reference actions are not the only valid path.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
-    "mechanism": "夜间个人联系与周末实测",
+    "stratum": "Short term",
+    "mechanism": "Evening individual contact and weekend measurement",
     "distribution": "manually stratified approximately logarithmic"
   }
 }

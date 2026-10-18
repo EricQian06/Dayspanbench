@@ -1,24 +1,24 @@
 {
   "id": "DSB-07",
-  "title": "档案使用：权利继受核验后重新启动数字化",
-  "brief": "为2027年7月的非商业展览核实ARC-71图像的实体及网站用途权限，问清总费用与扫描分辨率。权利继受正在核验；取得权利方确认后请再次联系档案馆核实数字化交付。不付费、不发布。",
+  "title": "Archive use: restart digitization after rights succession verification",
+  "brief": "For a noncommercial exhibition in July 2027, verify permission to use image ARC-71 physically and on the exhibition website, and determine total fees and scan resolution. Rights succession is under review. After obtaining the rights holder's confirmation, contact the archive again to verify digitized delivery. Do not pay or publish.",
   "user_fields": {
     "archive_id": "ARC-71",
-    "usage": "非商业实体展览及展览网站"
+    "usage": "Noncommercial physical exhibition and exhibition website"
   },
   "initial_contacts": [],
   "pages": [
     {
       "id": "archive-intro",
-      "title": "北汀档案馆简介",
-      "text": "档案馆提供档案数字化与授权服务。该图像处于权利继受核验期，境外联络方预计2027年5月28日集中核对文件。用途获确认后需申请人再次联系档案馆核实数字化交付，实体许可不自动包括网络用途。本页另挂有同类档案历史交付记录等文件。",
+      "title": "About Beiting Archive",
+      "text": "The archive provides digitization and authorization services. Rights succession for this image is under review; the overseas liaison expects a batch document check on May 28, 2027. After intended use is confirmed, the applicant must contact the archive again to verify digitized delivery. Physical exhibition permission does not automatically include online use. Historical delivery records for similar archives and other documents are attached to this page.",
       "contacts": [],
-      "snippet": "档案使用授权与数字化交付流程说明。",
+      "snippet": "Archive use authorization and digitized delivery process.",
       "documents": [
         {
           "id": "archive-scan-ref",
-          "title": "同类档案历史交付记录（扫描规格）.pdf",
-          "text": "北汀档案馆同类档案历史交付记录：扫描分辨率1200dpi。（留存方整理）",
+          "title": "Historical delivery records for similar archives (scan specifications).pdf",
+          "text": "Beiting Archive historical delivery record for similar archives: scan resolution 1200dpi. (Compiled by the record holder.)",
           "facts": [
             "scan_ref"
           ],
@@ -30,38 +30,38 @@
     },
     {
       "id": "archive",
-      "title": "北汀档案馆联系方式",
-      "text": "各岗位联系人的联系方式（邮箱）请咨询接待关雨，由接待提供后续对接入口。档案使用咨询联系接待关雨；权利继受确认由境外权利方联络员处理。",
+      "title": "Beiting Archive contacts",
+      "text": "Ask receptionist Guan Yu for each role's email address and next contact. Contact Guan Yu for archive use inquiries; the overseas rights liaison handles rights succession confirmation.",
       "contacts": [
         "archive"
       ],
-      "snippet": "档案馆接待对接说明。",
+      "snippet": "Archive reception contact information.",
       "url": "https://beiting.bench/contact"
     },
     {
       "id": "archive-entry",
-      "title": "北汀档案馆档案使用申请入口",
-      "text": "北汀档案馆档案使用申请说明：申请需提供档案编号与用途说明；取得权利方确认后须再次联系档案馆申请数字化交付，并随信附上权利方的书面确认结论；档案利用费用的核定结论通过本页登记表单申请后取得。本页面仅说明流程，不能在线取得许可。",
+      "title": "Beiting Archive use application portal",
+      "text": "Beiting Archive use applications require an archive ID and intended-use description. After rights confirmation, contact the archive again to request digitized delivery and attach the rights holder's written confirmation. Obtain the archive use fee determination by applying through this page's registration form. This page only explains the process and cannot grant permission online.",
       "contacts": [],
-      "snippet": "北汀档案馆档案使用申请材料说明；不支持在线取得许可。",
+      "snippet": "Beiting Archive use application requirements; no online permission granting.",
       "form": {
         "id": "fee_form",
-        "title": "档案利用费用核定登记",
+        "title": "Archive use fee assessment registration",
         "fields": [
           {
             "name": "archive_id",
-            "label": "档案编号",
+            "label": "Archive ID",
             "required": true,
             "hidden": false
           },
           {
             "name": "usage",
-            "label": "用途说明",
+            "label": "Intended-use description",
             "required": true,
             "hidden": false
           }
         ],
-        "submit_instructions": "本表单不能在线直接提交：须通过北汀档案馆费用核定登记渠道办理；渠道名称与受理安排以官网简介页最新公告为准。"
+        "submit_instructions": "This form cannot be submitted directly online. Use the Beiting Archive fee assessment registration channel; see the latest official overview page notice for the channel name and acceptance schedule."
       },
       "url": "https://beiting.bench/entry"
     }
@@ -83,7 +83,7 @@
     "fetch_document",
     "request_callback"
   ],
-  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
   "answer_keys": [
     "physical_exhibit_allowed",
     "online_allowed",
@@ -100,9 +100,9 @@
     "total_fee": {
       "type": "number",
       "units": {
-        "元": 1,
+        "yuan": 1,
         "CNY": 1,
-        "人民币": 1
+        "RMB": 1
       }
     },
     "scan_dpi": {
@@ -113,14 +113,14 @@
     }
   },
   "conclusion_options": {
-    "physical_and_online": "实体与网络均获准",
-    "physical_only": "仅实体用途获准",
-    "not_permitted": "两种用途均不获准",
-    "unconfirmed": "信息不足"
+    "physical_and_online": "Physical and online uses approved",
+    "physical_only": "Only physical use approved",
+    "not_permitted": "Neither use approved",
+    "unconfirmed": "Insufficient information"
   },
   "answer_format": {
-    "conclusion": "选择conclusion_options中的一个键",
-    "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+    "conclusion": "Choose one key from conclusion_options",
+    "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
   },
   "start_at": "2026-11-05T15:00:00+08:00",
   "deadline_at": "2027-06-11T17:00:00+08:00"

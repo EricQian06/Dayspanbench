@@ -241,7 +241,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The approved attended inspection has been booked from a live board row; the confirmation is read back through the booking desk, never pushed."}],
         alternate_paths="Any legal order of dialogue, landlord mail and slot searches is accepted if every goal's evidence conditions hold; the reference path books after the June 11 slot move, and the scored answer keys follow the live h02 plan. Slots outside the window, unverified providers, repair scope or over-cap fees cannot pass."))
     sites["DSB-33"] = "juniperheights"
-    horizons["DSB-33"] = (2, "短期", "landlord authorization turnaround plus a mid-case slot inventory change")
+    horizons["DSB-33"] = (2, "Short term", "landlord authorization turnaround plus a mid-case slot inventory change")
     conclusions["DSB-33"] = {
         "inspection_booked": "One approved attended inspection confirmed inside the window with no repair authorized",
         "unconfirmed": "The appointment or landlord authorization could not be confirmed in time",

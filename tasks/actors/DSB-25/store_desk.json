@@ -66,7 +66,7 @@
           },
           {
             "id": "quote_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "store_desk.quote.2.document",
             "delay": {
               "mode": "business",
@@ -75,7 +75,7 @@
           },
           {
             "id": "quote_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "store_desk.quote.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -105,7 +105,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Test Appliance Cooperative order desk·Dana Fields，负责merchandise offers, financing terms and orders。Quotes current financed totals and installment schedules; promo terms can expire and be replaced with fee-bearing versions, so quotes are revalidated at order time. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Test Appliance Cooperative order desk·Dana Fields, responsible for merchandise offers, financing terms and orders. Quotes current financed totals and installment schedules; promo terms can expire and be replaced with fee-bearing versions, so quotes are revalidated at order time. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:delivery_date",

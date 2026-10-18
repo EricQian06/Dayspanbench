@@ -3,9 +3,9 @@
   "task_id": "DSB-05",
   "actor": {
     "id": "qa",
-    "name": "棱川制造质检·傅黎",
-    "role": "材料检测报告",
-    "description": "样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。",
+    "name": "Lengchuan Manufacturing quality inspector - Fu Li",
+    "role": "Material test report",
+    "description": "Samples require a 28-day durability test, followed by report review at the next Monday 10:00 session.",
     "calendar": "office",
     "channels": [
       "email"
@@ -41,16 +41,16 @@
       },
       "qa.dispatch_query.1.deny": {
         "kind": "deny",
-        "text": "出库与排产安排不归质检管，我处只出具材料检测报告；出库预核请向排产员苏渝确认，或通过棱川出库预核登记渠道（lengchuan_dispatch_apply）申请。"
+        "text": "Dispatch and scheduling are outside quality inspection's remit; I only issue material test reports. Ask scheduler Su Yu about the dispatch precheck or apply through lengchuan_dispatch_apply."
       }
     },
     "workflows": [
       {
         "id": "main",
-        "label": "材料Q7报告",
+        "label": "Material Q7 report",
         "aliases": [
-          "质检",
-          "报告",
+          "quality inspection",
+          "report",
           "Q7"
         ],
         "required_fields": [
@@ -59,7 +59,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "qa.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -68,7 +68,7 @@
           },
           {
             "id": "main_2",
-            "label": "28天耐久性测试",
+            "label": "28-day durability test",
             "tool": "qa.main.2.lookup",
             "delay": {
               "mode": "elapsed",
@@ -77,7 +77,7 @@
           },
           {
             "id": "main_3",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "qa.main.3.lookup",
             "delay": {
               "mode": "weekly",
@@ -88,7 +88,7 @@
           },
           {
             "id": "main_4",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "qa.main.4.document",
             "delay": {
               "mode": "business",
@@ -97,7 +97,7 @@
           },
           {
             "id": "main_5",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "qa.main.5.reply",
             "delay": {
               "mode": "elapsed",
@@ -109,16 +109,16 @@
       },
       {
         "id": "dispatch_query",
-        "label": "出库询问",
+        "label": "Dispatch inquiry",
         "aliases": [
-          "出库",
-          "预核"
+          "dispatch",
+          "precheck"
         ],
         "required_fields": [],
         "steps": [
           {
             "id": "dispatch_query_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "qa.dispatch_query.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -148,7 +148,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是棱川制造质检·傅黎，负责材料检测报告。样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Lengchuan Manufacturing quality inspector - Fu Li, responsible for Material test report. Samples require a 28-day durability test, followed by report review at the next Monday 10:00 session. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:qa_pass"
@@ -177,7 +177,7 @@
   "local_facts": {
     "qa": {
       "value": true,
-      "text": "材料M26批次符合用户要求的Q7检测规范，报告已复核。",
+      "text": "Material batch M26 meets the user's Q7 testing standard, and the report has been reviewed.",
       "attributes": {
         "subject": {
           "task": "DSB-05",

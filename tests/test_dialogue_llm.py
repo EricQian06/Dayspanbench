@@ -141,29 +141,29 @@ class DialogueLLMTests(unittest.TestCase):
 
 class RenderLLMTests(unittest.TestCase):
     def reply_view(self):
-        return {"actor_id": "test", "name": "测试联系人", "role": "信息查询",
-                "persona": "耐心且正式的窗口职员",
+        return {"actor_id": "test", "name": 'Test contact', "role": 'Information inquiry',
+                "persona": 'Patient and formal desk clerk',
                 "status": "reply",
-                "canonical_text": "您咨询的事项已经核实，具体情况如下：回执号R-0001已登记。",
+                "canonical_text": 'Your inquiry is verified: receipt R-0001 is registered.',
                 "case_id": "CASE-0001", "case_state": "replied", "now": "2026-11-06T09:00:00+08:00",
-                "history": [{"role": "agent", "text": "请核实回执", "fields": {}, "case_id": None,
+                "history": [{"role": "agent", "text": 'Please verify the receipt', "fields": {}, "case_id": None,
                              "at": "2026-11-06T08:00:00+08:00"}],
                 "stage_hint": None,
-                "contacts": [{"id": "ops", "name": "运营部",
+                "contacts": [{"id": "ops", "name": 'Operations department',
                               "contact_details": {"email": "ops@heanhuiguan.bench"}}],
-                "facts": [{"id": "f1", "text": "活动总价10500元，须在11月13日前付清。",
+                "facts": [{"id": "f1", "text": 'The total event fee is CNY 10500, payable in full by November 13.',
                            "value": 10500, "issuer": "reception", "valid_until": None}],
-                "receipts": [{"receipt_no": "R-0001", "title": "核实回执",
-                              "text": "回执号R-0001，总额247.80 USD。",
+                "receipts": [{"receipt_no": "R-0001", "title": 'Verify receipt',
+                              "text": 'Receipt R-0001, total 247.80 USD.',
                               "fields": {}, "issuer": "reception",
                               "issued_at": "2026-11-06T09:00:00+08:00"}]}
 
     def test_reply_letter_is_model_written_and_tokens_survive(self):
         def letter(view):
             return {"tone": "polite",
-                    "text": "您好，我是测试联系人。核实结果：活动总价10500元，"
-                            "须在11月13日前付清；回执号R-0001，总额247.80 USD。"
-                            "另请联系运营部（ops@heanhuiguan.bench）。"}
+                    "text": 'Hello, I am Test contact. Verified result: the total event fee is CNY 10500, '
+                            'payable in full by November 13; receipt R-0001, total 247.80 USD.'
+                            'Also contact Operations department (ops@heanhuiguan.bench).'}
         client = FixtureClient(reply=letter)
         text = LLMSimulator(client, "test").render(self.reply_view())
         self.assertIn("10500", text)
@@ -171,13 +171,13 @@ class RenderLLMTests(unittest.TestCase):
         self.assertIn("ops@heanhuiguan.bench", text)
         self.assertEqual(len(client.calls), 1)
         view = client.calls[0]["view"]
-        self.assertEqual(view["persona"], "耐心且正式的窗口职员")
+        self.assertEqual(view["persona"], 'Patient and formal desk clerk')
 
     def test_render_retries_once_on_token_loss_then_fails_invalid(self):
-        answers = [{"tone": "polite", "text": "全部办好了，请查收。"},
-                   {"tone": "polite", "text": "活动总价10500元，须在11月13日前付清；"
-                                              "回执号R-0001，总额247.80 USD；"
-                                              "请联系运营部（ops@heanhuiguan.bench）。"}]
+        answers = [{"tone": "polite", "text": 'Everything is complete; please check.'},
+                   {"tone": "polite", "text": 'The total event fee is CNY 10500, payable in full by November 13; '
+                                              'Receipt R-0001, total 247.80 USD; '
+                                              'Please contact Operations department (ops@heanhuiguan.bench).'}]
         client = FixtureClient(reply=lambda view: answers.pop(0))
         text = LLMSimulator(client, "test").render(self.reply_view())
         self.assertIn("247.80", text)
@@ -186,7 +186,7 @@ class RenderLLMTests(unittest.TestCase):
         # v0.5.1: persistently losing the anchors falls back to the canonical
         # text verbatim (information is engine-determined, wording is not),
         # audited via .fallbacks — never an invalid episode.
-        stubborn = FixtureClient(reply=lambda view: {"tone": "polite", "text": "办好了。"})
+        stubborn = FixtureClient(reply=lambda view: {"tone": "polite", "text": 'Done.'})
         sim = LLMSimulator(stubborn, "test")
         view = self.reply_view()
         text = sim.render(view)
@@ -199,7 +199,7 @@ class RenderLLMTests(unittest.TestCase):
         client = FixtureClient()
         view = self.reply_view()
         view["status"] = "needs_information"
-        view["canonical_text"] = "您提交的材料尚不完整，请补充以下信息：编号。"
+        view["canonical_text"] = 'Your materials are incomplete. Supply the identifier.'
         text = LLMSimulator(client, "test").render(view)
         self.assertEqual(text, view["canonical_text"])
         self.assertEqual(client.calls, [])  # no model call for acceptance semantics

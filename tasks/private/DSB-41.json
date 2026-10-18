@@ -1757,8 +1757,8 @@
       "not_feasible": "No combination of current options satisfies the family's hard constraints"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -2049,7 +2049,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "lakefront_desk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -2067,7 +2067,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "lakefront_desk.main.3.document",
               "delay": {
                 "mode": "business",
@@ -2076,7 +2076,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "lakefront_desk.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -2109,7 +2109,7 @@
             },
             {
               "id": "rates_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "lakefront_desk.rates.2.document",
               "delay": {
                 "mode": "business",
@@ -2118,7 +2118,7 @@
             },
             {
               "id": "rates_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "lakefront_desk.rates.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -2148,7 +2148,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Lakefront Suites Seattle accessibility desk·Dana Rowe，负责hotel accessibility verification, exact-room records and hold terms。Confirms exact-room accessibility and hold terms in writing; rates can change without notice; bookings go through the hotel booking desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Lakefront Suites Seattle accessibility desk·Dana Rowe, responsible for hotel accessibility verification, exact-room records and hold terms. Confirms exact-room accessibility and hold terms in writing; rates can change without notice; bookings go through the hotel booking desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:hotel_301_accessible",
@@ -2200,7 +2200,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "skybridge_desk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -2209,7 +2209,7 @@
             },
             {
               "id": "main_2",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "skybridge_desk.main.2.deny",
               "delay": {
                 "mode": "elapsed",
@@ -2239,7 +2239,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Skybridge Air inventory desk·Marcus Vaughn，负责flight inventory and booking records。Never quotes inventory by mail; the portal search service and the booking desk are the only flight channels. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Skybridge Air inventory desk·Marcus Vaughn, responsible for flight inventory and booking records. Never quotes inventory by mail; the portal search service and the booking desk are the only flight channels. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:flight_booked",
@@ -2302,7 +2302,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "safeplate_desk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -2320,7 +2320,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "safeplate_desk.main.3.document",
               "delay": {
                 "mode": "business",
@@ -2329,7 +2329,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "safeplate_desk.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -2359,7 +2359,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是SafePlate Directory verification desk·Priya Nair，负责restaurant allergen verification records。Confirms recorded cross-contact protocols in writing; a vegetarian label or an old menu is not a current verification. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are SafePlate Directory verification desk·Priya Nair, responsible for restaurant allergen verification records. Confirms recorded cross-contact protocols in writing; a vegetarian label or an old menu is not a current verification. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:dining_shellfish_safe"
@@ -2425,7 +2425,7 @@
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "citystep_desk.main.2.document",
               "delay": {
                 "mode": "business",
@@ -2434,7 +2434,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "citystep_desk.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -2464,7 +2464,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是CityStep Access route desk·Tomas Iglesias，负责route accessibility verification records。Confirms current step-free routes in writing; stale or unverifiable routes are reported as such. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are CityStep Access route desk·Tomas Iglesias, responsible for route accessibility verification records. Confirms current step-free routes in writing; stale or unverifiable routes are reported as such. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:routes_step_free"
@@ -2511,7 +2511,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "trip_desk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -2520,7 +2520,7 @@
             },
             {
               "id": "main_2",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "trip_desk.main.2.deny",
               "delay": {
                 "mode": "elapsed",
@@ -2550,7 +2550,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Family Trip Desk plan desk·Rhea Sutton，负责final plan recording。Only records plans the traveller has approved; never invents or revises plan contents. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Family Trip Desk plan desk·Rhea Sutton, responsible for final plan recording. Only records plans the traveller has approved; never invents or revises plan contents. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:itinerary_paced",
@@ -3148,7 +3148,7 @@
   "alternate_paths": "Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; using the provider-confirmed family suite (LFS-FAM-2) from the beginning is a legal alternative to the held-suite recovery path, and mail re-verification of routes, dining or the suite is equally valid evidence, but the scored answer keys follow the recovered plan booked after the May 12 approval window opens.",
   "horizon_design": {
     "reference_days": 13,
-    "stratum": "中短期",
+    "stratum": "Short to medium term",
     "mechanism": "mid-window flight cancellation and hotel rate change plus a lapsing hold and a late approval gate",
     "distribution": "manually stratified approximately logarithmic"
   }

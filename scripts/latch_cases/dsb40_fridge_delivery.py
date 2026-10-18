@@ -54,7 +54,7 @@ def build(A, tasks, sites, horizons, conclusions):
         # 但整理方不具备本店报价签发权限，引用该证据会被评分拒绝；真值仍以
         # 库存台/订单台出具的书面确认为准。
         "total_ref": fact(1099.0,
-                          "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling (留存方整理).",
+                          "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling (compiled by the record holder).",
                           unauthorized_attestation=True),
     }
     a = [
@@ -149,7 +149,7 @@ def build(A, tasks, sites, horizons, conclusions):
               "Synthetic appliance listings for the test district; listing claims alone do not establish fit, eligibility or a confirmed delivery slot. Current listings are found through the store's product search service (product_search), and uncommitted delivery routes can change without notice, so re-check the live slot before ordering. Household space, access, address and approval facts can be clarified through the household desk (householder_dialogue). Measured fit, unpack-at-door and recycling confirmations come from the delivery specialist by mail; all-in totals come from the store's own desks in writing.",
               [], "Test Appliance Cooperative: refrigerator listings and household requirements desk.",
               [doc("price-comparison", "price-comparison.pdf",
-                   "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling; COOL-17-A all-in 1040.00 USD. (留存方整理)",
+                   "Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling; COOL-17-A all-in 1040.00 USD. (compiled by the record holder)",
                    facts=["total_ref"], issuer="building_manager")]),
          page("store-contact", "Store contacts",
               "The delivery specialist (Morgan Hale) verifies measured installation fit, the doorway route, unpack-at-door handling and recycling; the inventory desk (Riley Carter) quotes current all-in totals and delivery slots; the building manager (Jolene Fischer) books the service elevator for 18 Example Court. All answer daily during business hours.",
@@ -275,7 +275,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The building manager confirms in writing: lift booking L-0906, service elevator reserved 2027-06-09 09:30-10:00 for the refrigerator delivery."}],
         alternate_paths="Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; ordering COOL-17-A was legal only before the June 8 12:00 slot change, but the scored answer keys follow the COOL-16-B plan."))
     sites["DSB-40"] = "fridgedelivery"
-    horizons["DSB-40"] = (2, "短期", "mid-episode delivery-slot rewrite plus approval window")
+    horizons["DSB-40"] = (2, "Short term", "mid-episode delivery-slot rewrite plus approval window")
     conclusions["DSB-40"] = {
         "order_confirmed": "One approved pay-on-delivery order with verified fit and a deadline-meeting slot",
         "unconfirmed": "Fit, slot or approval could not be verified in time",

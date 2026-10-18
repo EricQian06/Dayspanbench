@@ -63,7 +63,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "hotel_billing.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -81,7 +81,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "hotel_billing.main.3.document",
             "delay": {
               "mode": "business",
@@ -90,7 +90,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "hotel_billing.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -120,7 +120,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Harbor Test Hotel billing·Priya Noland，负责stay receipts and duplicate-charge investigation。Confirms in writing which posted reference belongs to the stay and whether any reversal was posted; equal amounts alone do not identify the duplicate. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Harbor Test Hotel billing·Priya Noland, responsible for stay receipts and duplicate-charge investigation. Confirms in writing which posted reference belongs to the stay and whether any reversal was posted; equal amounts alone do not identify the duplicate. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:duplicate_amount",

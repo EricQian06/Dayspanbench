@@ -56,7 +56,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "care_desk.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -74,7 +74,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "care_desk.main.3.document",
             "delay": {
               "mode": "business",
@@ -83,7 +83,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "care_desk.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -113,7 +113,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Care coordination desk·Noa Field，负责caregiver roster, access shares and handoff dispatch。Keeps the caregiver roster, access shares and standing services; share revocations go through the access service (revoke_share) and scoped handoffs through the handoff service (handoff_send); the driver never receives clinical material. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Care coordination desk·Noa Field, responsible for caregiver roster, access shares and handoff dispatch. Keeps the caregiver roster, access shares and standing services; share revocations go through the access service (revoke_share) and scoped handoffs through the handoff service (handoff_send); the driver never receives clinical material. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:driver_packets_logistics_only",

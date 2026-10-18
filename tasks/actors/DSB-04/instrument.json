@@ -3,9 +3,9 @@
   "task_id": "DSB-04",
   "actor": {
     "id": "instrument",
-    "name": "仪器管理员·杜和",
-    "role": "耗材、校准和使用窗口",
-    "description": "须核实培训凭证；耗材到库后才启动连续7天稳定性校准。",
+    "name": "Instrument manager - Du He",
+    "role": "Consumables, calibration, and use windows",
+    "description": "Training credentials must be verified; continuous 7-day stability calibration starts only after consumables arrive.",
     "calendar": "office",
     "channels": [
       "email"
@@ -54,12 +54,12 @@
     "workflows": [
       {
         "id": "main",
-        "label": "测量可用时间与费用",
+        "label": "Measurement availability and fees",
         "aliases": [
-          "测量",
-          "仪器",
-          "校准",
-          "费用"
+          "measurement",
+          "instrument",
+          "calibration",
+          "fee"
         ],
         "required_fields": [
           "sample_id",
@@ -68,7 +68,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "instrument.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -77,7 +77,7 @@
           },
           {
             "id": "main_2",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "instrument.main.2.delegate",
             "delay": {
               "mode": "business",
@@ -86,7 +86,7 @@
           },
           {
             "id": "main_3",
-            "label": "连续7天稳定性校准，可跨夜运行",
+            "label": "Continuous 7-day stability calibration, including overnight operation",
             "tool": "instrument.main.3.lookup",
             "delay": {
               "mode": "elapsed",
@@ -95,7 +95,7 @@
           },
           {
             "id": "main_4",
-            "label": "核对校准结果和使用窗口",
+            "label": "Check calibration results and the use window",
             "tool": "instrument.main.4.lookup",
             "delay": {
               "mode": "business",
@@ -104,7 +104,7 @@
           },
           {
             "id": "main_5",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "instrument.main.5.document",
             "delay": {
               "mode": "business",
@@ -113,7 +113,7 @@
           },
           {
             "id": "main_6",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "instrument.main.6.reply",
             "delay": {
               "mode": "elapsed",
@@ -127,7 +127,7 @@
               "task": "DSB-04",
               "case": {
                 "sample_id": "S-482",
-                "person_name": "顾晓"
+                "person_name": "Gu Xiao"
               }
             },
             "predicate": "safety_certificate",
@@ -138,8 +138,8 @@
               "type": "text",
               "aliases": {
                 "SAFE-NOV06-482": [
-                  "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询。",
-                  "人员安全培训已完成，记录号SAFE-NOV06-482，可用于本次仪器使用咨询"
+                  "Personnel safety training is complete, record SAFE-NOV06-482, usable for this instrument-use inquiry.",
+                  "Personnel safety training is complete, record SAFE-NOV06-482, usable for this instrument-use inquiry"
                 ]
               }
             }
@@ -166,7 +166,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是仪器管理员·杜和，负责耗材、校准和使用窗口。须核实培训凭证；耗材到库后才启动连续7天稳定性校准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Instrument manager - Du He, responsible for Consumables, calibration, and use windows. Training credentials must be verified; continuous 7-day stability calibration starts only after consumables arrive. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:earliest_measurement",
@@ -196,13 +196,13 @@
   "local_facts": {
     "price": {
       "value": 1800,
-      "text": "该样品批次测量报价1800元，尚未预约或扣费。",
+      "text": "The measurement quotation for this sample batch is CNY 1800; no booking or charge has been made.",
       "attributes": {
         "subject": {
           "task": "DSB-04",
           "case": {
             "sample_id": "S-482",
-            "person_name": "顾晓"
+            "person_name": "Gu Xiao"
           }
         },
         "predicate": "price"
@@ -210,17 +210,17 @@
     },
     "window": {
       "value": "2026-11-25T13:00:00+08:00",
-      "text": "最早可用时间由实际连续7天校准及人工复核完成时间确定，以本次办结回执为准。",
+      "text": "The earliest available time depends on actual completion of seven continuous days of calibration and manual review, as stated in the current completion receipt.",
       "computed": {
         "tool": "instrument.main.4.lookup",
-        "text": "连续7天稳定性校准及人工复核已完成，最早可用时间为{value}；尚未预约仪器。"
+        "text": "Seven continuous days of stability calibration and manual review are complete. The earliest available time is {value}; the instrument has not been booked."
       },
       "attributes": {
         "subject": {
           "task": "DSB-04",
           "case": {
             "sample_id": "S-482",
-            "person_name": "顾晓"
+            "person_name": "Gu Xiao"
           }
         },
         "predicate": "earliest_measurement"

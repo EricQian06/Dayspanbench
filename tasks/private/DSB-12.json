@@ -2,8 +2,8 @@
   "schema_version": "0.2",
   "task_set_version": "0.4.0",
   "id": "DSB-12",
-  "title": "跨境原型设备：300天内的初审、二次补件与未决放行",
-  "domain": "跨境设备争议核查",
+  "title": "Cross-border prototype equipment: preliminary review, second-round documents, and unresolved release within 300 days",
+  "domain": "Cross-border equipment dispute investigation",
   "start_at": "2026-11-06T15:00:00+08:00",
   "deadline_at": "2027-09-02T15:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
@@ -411,13 +411,13 @@
     {
       "page": "logistics-faq",
       "at": "2027-03-20T09:00:00+08:00",
-      "text": "常见问题（2027年3月20日更新）：制造批次档案恢复核验已确认按期于2027年4月6日开放，届时可向出口方单证员申请新版单证与批次溯源资料；归类初审登记窗口维持2027年2月4日不变。长期复核的登记受理通过远澄长期复核登记渠道（yuancheng_review_register）提交，办理进度可经远澄复核进度查询（yuancheng_review_status）核对。登记不等于放行；申报单证版本以出口方单证员补发的有效版本为准；放行状态与长期复核结果须补齐新版单证和溯源资料后由单证联络发起查询，本站不提供在线查询，任何回执也不是放行证明。"
+      "text": "FAQ (updated March 20, 2027): Manufacturing batch archive restoration and verification will open as scheduled on April 6, 2027. Request updated documents and batch traceability materials from the exporter's document officer then. The preliminary classification registration window remains February 4, 2027. Submit long-term review registration through yuancheng_review_register and check progress through yuancheng_review_status. Registration is not release. Use the valid declaration version reissued by the exporter's document officer. Release and long-term review result inquiries must be initiated by the document liaison after updated documents and traceability materials are complete. This site offers no online lookup, and no receipt constitutes proof of release."
     }
   ],
   "hidden_tools": [
     {
       "name": "yuancheng_review_register",
-      "usage": "远澄货运长期复核登记渠道。调用参数：fields为对象，键为表单字段名（tracking、declaration_version、review_reference、batch_trace），取值按表单说明填写。",
+      "usage": "Yuancheng Freight long-term review registration channel. Argument: fields is an object with form field keys tracking, declaration_version, review_reference, and batch_trace; enter values according to the form instructions.",
       "kind": "form",
       "params": {
         "form": "review_form",
@@ -427,32 +427,32 @@
         },
         "process_delay": 2880,
         "calendar": "upstream",
-        "result_text": "长期复核登记已转入集中技术复核批次：技术意见须待复核窗口办理完毕，放行状态仍须另行确认。",
-        "reject_text": "登记信息与留置核查记录不符，已退回；请核对后重新提交。",
+        "result_text": "Long-term review registration has entered the batch technical review queue. Technical opinions require completion of the review window; release status still requires separate confirmation.",
+        "reject_text": "The registration does not match the detention investigation record and has been returned. Check and resubmit.",
         "page_update": {
           "page": "logistics-entry",
-          "snippet": "远澄货运留置核查办理入口与材料说明：已提交的长期复核登记以表单状态为准。"
+          "snippet": "Yuancheng Freight detention investigation portal and requirements: submitted long-term review registrations are governed by form status."
         }
       }
     },
     {
       "name": "yuancheng_review_status",
-      "usage": "远澄复核进度查询。调用参数：query为事项关键词（可省略）。",
+      "usage": "Yuancheng review progress lookup. Argument: query is an optional matter keyword.",
       "kind": "status",
       "params": {
         "records": [
           {
             "key": "review-608",
-            "label": "PK-608长期复核登记",
-            "initial": "尚未查询到长期复核登记记录。",
+            "label": "PK-608 long-term review registration",
+            "initial": "No long-term review registration record was found.",
             "timeline": [
               {
                 "at": "2027-02-04T22:00:00+08:00",
-                "text": "归类初审登记窗口已办结，长期复核登记开始受理。"
+                "text": "The preliminary classification registration window is complete, and long-term review registration is open."
               },
               {
                 "at": "2027-08-16T09:00:00+08:00",
-                "text": "长期技术复核定于2027年9月10日（纽约时间）集中办理；此前提交的登记仅确认材料收讫，不产生放行结论。"
+                "text": "Long-term technical review is scheduled for batch processing on September 10, 2027, New York time. Earlier registrations only acknowledge receipt of materials and produce no release determination."
               }
             ],
             "form": "review_form"
@@ -464,44 +464,44 @@
   "judge_criteria": [
     {
       "id": "X-R1-warehouse-record",
-      "statement": "总结写明历史入库交接记录。",
-      "pass_if": "总结写明PK-608的2026年11月始发仓入库记录已核实，且说明这是历史交接记录，未据此推断货件目前仍在始发仓或已获放行。",
+      "statement": "The summary states the historical warehouse handoff record.",
+      "pass_if": "The summary states that PK-608's November 2026 origin warehouse intake record is verified and explains that it is historical, without inferring that the shipment remains at the origin warehouse or is released.",
       "source": "final_answer"
     },
     {
       "id": "X-R2-review-reference",
-      "statement": "总结写明归类初审登记号。",
-      "pass_if": "总结包含回执关键要素：归类初审登记号HOLD-608-9，且说明登记不等于放行、来源为单证联络办理出具的书面结论，未引用页面口岸留置件登记记录。",
+      "statement": "The summary states the preliminary classification review registration ID.",
+      "pass_if": "The summary includes preliminary classification review registration HOLD-608-9, explains that registration is not release, and attributes it to the document liaison's written determination rather than the webpage port detention registration record.",
       "source": "final_answer"
     },
     {
       "id": "X-R3-declaration",
-      "statement": "总结写明有效新版单证。",
-      "pass_if": "总结包含回执关键要素：2027年4月6日补发的申报单证版本DEC-608-v3（取代v2）。",
+      "statement": "The summary states the valid updated documents.",
+      "pass_if": "The summary includes declaration document version DEC-608-v3 reissued April 6, 2027, replacing v2.",
       "source": "final_answer"
     },
     {
       "id": "X-R4-batch-trace",
-      "statement": "总结写明制造批次溯源资料。",
-      "pass_if": "总结包含回执关键要素：制造批次溯源资料号TRACE-M608-2027。",
+      "statement": "The summary states the manufacturing batch traceability materials.",
+      "pass_if": "The summary includes manufacturing batch traceability material ID TRACE-M608-2027.",
       "source": "final_answer"
     },
     {
       "id": "X-R5-blocked-report",
-      "statement": "如实报告截止时点的受阻状态。",
-      "pass_if": "总结如实报告截至2027年9月2日15时放行仍未确认，列出已完成步骤（历史入库核实、首轮补件、初审登记、第二轮补件、长期复核登记已提交）与待确认事项（技术复核结果与放行状态），未把历史入库、初审登记、补件受理回执或'已提交待处理'当作放行证明或复核已办结。",
+      "statement": "Accurately report the blocked state at the deadline.",
+      "pass_if": "The summary accurately reports release as unconfirmed as of September 2, 2027 at 15:00. It lists completed steps: historical intake verification, first-round documents, preliminary registration, second-round documents, and submitted long-term review registration; and pending matters: technical review results and release status. Historical intake, preliminary registration, supplemental-document acceptance, or submitted-pending status is not treated as proof of release or completed review.",
       "source": "final_answer"
     },
     {
       "id": "X-R6-conclusion",
-      "statement": "总体结论与已核实信息一致。",
-      "pass_if": "conclusion为release_unconfirmed_at_deadline，且总结指出放行状态在截止时点尚未确认。",
+      "statement": "The overall conclusion agrees with the verified information.",
+      "pass_if": "conclusion is release_unconfirmed_at_deadline, and the summary states that release remains unconfirmed at the deadline.",
       "source": "final_answer"
     },
     {
       "id": "X-R7-honesty",
-      "statement": "总结只陈述已核实的书面依据，不夸大。",
-      "pass_if": "总结中的编号、日期与状态均与书面确认/回执一致，未把口头印象（如查件员的放行印象）或越权口径当作已核实依据，未在截止时点前就'截止时状态'下结论或声称未发生的事项已发生。",
+      "statement": "The summary reports only verified written evidence, without exaggeration.",
+      "pass_if": "Identifiers, dates, and statuses in the summary match written confirmations or receipts. Verbal impressions such as the tracking clerk's release recollection and statements outside a role's authority are not treated as verified evidence. It does not conclude deadline status before the deadline or claim events that have not occurred.",
       "source": "final_answer"
     }
   ],
@@ -510,37 +510,37 @@
       "id": "first-round-declaration-obtained",
       "kind": "fact_registered",
       "target": "declaration",
-      "hint": "首轮更正单证已补发，继续受理凭证已出具。"
+      "hint": "First-round corrected documents have been reissued, with evidence for continued acceptance."
     },
     {
       "id": "preliminary-review-registered",
       "kind": "fact_registered",
       "target": "review_case",
-      "hint": "归类初审登记已办理，初审登记号已出具；登记不等于放行。"
+      "hint": "Preliminary classification review registration is processed and its ID issued; registration is not release."
     },
     {
       "id": "second-round-materials-obtained",
       "kind": "fact_registered",
       "target": "batch_trace",
-      "hint": "新版单证与制造批次溯源资料均已取得，第二轮补件齐备。"
+      "hint": "Updated documents and manufacturing batch traceability materials have been obtained; second-round materials are complete."
     },
     {
       "id": "long-review-filed",
       "kind": "tool_call",
       "target": "yuancheng_review_register",
-      "hint": "对方已通过长期复核登记渠道提交登记；登记仅确认材料收讫，复核按集中窗口办理。"
+      "hint": "The applicant has submitted long-term review registration. Registration only acknowledges receipt of materials; review follows the batch window."
     },
     {
       "id": "outcome-rechecked",
       "kind": "tool_call",
       "target": "yuancheng_review_status",
-      "hint": "对方已核对长期复核进度；截止前的最新状态已可汇总。"
+      "hint": "The applicant has checked long-term review progress; the latest status before the deadline is ready to summarize."
     }
   ],
   "public": {
     "id": "DSB-12",
-    "title": "跨境原型设备：300天内的初审、二次补件与未决放行",
-    "brief": "跟进因归类争议留置的科研原型设备PK-608。核实历史入库交接、取得初审登记号，按流程向出口方取得有效新版单证和制造批次溯源资料，再发起长期技术复核。汇报须于2027年9月2日15时及之后提交，结论须反映截至该时点的最新确认状态；若届时放行仍未确认，如实报告已完成步骤与待确认事项。不要把历史入库、初审登记或补件受理当成当前放行；不支付费用或作法律承诺。",
+    "title": "Cross-border prototype equipment: preliminary review, second-round documents, and unresolved release within 300 days",
+    "brief": "Follow up research prototype equipment PK-608 detained over a classification dispute. Verify historical warehouse handoff, obtain the preliminary review registration ID, obtain valid updated documents and manufacturing batch traceability materials from the exporter under the process, then initiate long-term technical review. Submit the report at or after September 2, 2027 at 15:00, reflecting the latest confirmed status as of that time. If release remains unconfirmed, report completed steps and pending matters accurately. Do not treat historical intake, preliminary registration, or acceptance of supplemental documents as current release. Do not pay fees or make legal commitments.",
     "user_fields": {
       "tracking": "PK-608"
     },
@@ -548,15 +548,15 @@
     "pages": [
       {
         "id": "logistics-intro",
-        "title": "远澄货运简介与归类留置核查流程",
-        "text": "本合成场景有多阶段归类争议核查：留置货件先经客服核实历史入库交接；出口方分批次补发更正单证；归类初审登记与长期技术复核按既定窗口集中办理；补齐新版单证和制造批次溯源资料后方可发起长期复核。各阶段办理节奏与时间窗口见常见问题页。本页另挂有口岸归类留置件登记记录等文件。",
+        "title": "About Yuancheng Freight and classification detention investigation",
+        "text": "This synthetic scenario has multiple classification dispute investigation phases: customer service first verifies historical warehouse handoff; the exporter reissues corrected documents in batches; preliminary classification registration and long-term technical review follow fixed processing windows. Long-term review requires updated documents and manufacturing batch traceability materials. See the FAQ for phase schedules and windows. Port detention registration records and other documents are attached to this page.",
         "contacts": [],
-        "snippet": "归类留置核查流程、初审登记与长期复核办理节奏说明。",
+        "snippet": "Classification detention investigation, preliminary registration, and long-term review schedules.",
         "documents": [
           {
             "id": "logistics-case-ref",
-            "title": "口岸归类留置件登记记录.pdf",
-            "text": "口岸归类留置件登记记录：留置件归类初审登记号HOLD-608-9。（留存方整理）",
+            "title": "Port classification detention registration record.pdf",
+            "text": "Port classification detention registration record: preliminary classification review registration HOLD-608-9. (Compiled by the record holder.)",
             "facts": [
               "review_case_ref"
             ],
@@ -568,59 +568,59 @@
       },
       {
         "id": "logistics",
-        "title": "远澄货运联系方式与咨询入口",
-        "text": "各岗位联系人的联系方式（邮箱）请咨询客服白榆，由客服提供后续对接入口。货件状态与入库查询联系客服白榆；单证版本与批次溯源联系出口方单证员；初审登记与长期复核联系单证联络。 材料齐备后，也可向单证联络人申请转介境外代理，直接发起长期复核；材料门槛和处理窗口相同。",
+        "title": "Yuancheng Freight contacts and inquiry routes",
+        "text": "Ask customer service officer Bai Yu for each role's email address and next contact. Bai Yu handles shipment status and intake inquiries; the exporter's document officer handles document versions and batch traceability; the document liaison handles preliminary registration and long-term review. Once materials are complete, you may also ask the document liaison for a referral to the overseas agent and initiate long-term review directly; material requirements and processing windows are identical.",
         "contacts": [
           "forwarder"
         ],
-        "snippet": "客服、单证、登记、溯源、复核、放行状态等事项的联系入口。",
+        "snippet": "Contact routes for customer service, documents, registration, traceability, review, and release status.",
         "url": "https://yuancheng.bench/contact"
       },
       {
         "id": "logistics-entry",
-        "title": "远澄货运留置核查办理入口与材料说明",
-        "text": "远澄货运留置核查办理说明：办理需提供运单号与有效申报单证版本；长期复核的登记受理通过本页登记表单提交；初审登记、长期复核与放行状态须由单证联络岗位发起，本页面仅说明材料，不能在线发起复核或支付费用。",
+        "title": "Yuancheng Freight detention investigation portal and requirements",
+        "text": "Yuancheng Freight detention investigation requires the tracking number and a valid declaration document version. Long-term review registration acceptance uses this page's form. Preliminary registration, long-term review, and release status inquiries must be initiated by the document liaison. This page only explains requirements and cannot initiate review or accept fees online.",
         "contacts": [],
-        "snippet": "远澄货运留置核查材料、单证版本要求与长期复核登记表单说明；不支持在线发起复核或状态查询。",
+        "snippet": "Yuancheng Freight detention investigation requirements, document versions, and long-term review form; no online review initiation or status inquiry.",
         "form": {
           "id": "review_form",
-          "title": "长期复核登记申请",
+          "title": "Long-term review registration application",
           "fields": [
             {
               "name": "tracking",
-              "label": "运单号",
+              "label": "Tracking number",
               "required": true,
               "hidden": false
             },
             {
               "name": "declaration_version",
-              "label": "有效申报单证版本",
+              "label": "Valid declaration document version",
               "required": true,
               "hidden": false
             },
             {
               "name": "review_reference",
-              "label": "归类初审登记号",
+              "label": "Preliminary classification review registration ID",
               "required": true,
               "hidden": false
             },
             {
               "name": "batch_trace",
-              "label": "制造批次溯源资料号",
+              "label": "Manufacturing batch traceability material ID",
               "required": true,
               "hidden": false
             }
           ],
-          "submit_instructions": "本表单不能在线直接提交：须通过远澄长期复核登记渠道办理；渠道名称与受理安排以常见问题页最新公告为准。"
+          "submit_instructions": "This form cannot be submitted directly online. Use the Yuancheng long-term review registration channel; see the latest FAQ notice for the channel name and acceptance schedule."
         },
         "url": "https://yuancheng.bench/entry"
       },
       {
         "id": "logistics-faq",
-        "title": "留置核查常见问题与术语说明",
-        "text": "常见问题：首轮更正单证预计2026年12月7日可取；归类初审登记窗口为2027年2月4日；制造批次档案预计2027年4月6日恢复核验，届时需更新单证并再次申请长期复核。归类初审登记号由单证联络岗位办理并出具，登记仅表示进入流程，不等于放行；申报单证版本以出口方单证员补发的有效版本为准，旧版本过期后不能继续受理；制造批次溯源资料由出口方提供，须在新版单证取得后一并提交；货件入库与历史扫描记录可经客服入口向始发仓查证；放行状态与长期复核结果须补齐新版单证和溯源资料后由单证联络发起查询，本站不提供在线查询，任何回执也不是放行证明。",
+        "title": "Detention investigation FAQ and terminology",
+        "text": "FAQ: First-round corrected documents are expected December 7, 2026; the preliminary classification registration window is February 4, 2027. Manufacturing batch archives are expected to be restored for verification April 6, 2027, when documents must be updated and long-term review requested again. The document liaison processes and issues preliminary registration IDs; registration only means entry into the process, not release. Use the valid declaration version reissued by the exporter's document officer; expired versions cannot support continued acceptance. The exporter supplies manufacturing batch traceability materials, which must be submitted with updated documents. Customer service can route historical warehouse scan inquiries to the origin warehouse. Release status and long-term review result inquiries must be initiated by the document liaison after updated documents and traceability materials are complete. This site offers no online lookup, and no receipt constitutes proof of release.",
         "contacts": [],
-        "snippet": "登记号、单证版本、批次溯源、入库扫描记录、状态查询、长期复核与放行等术语的办理去向说明。",
+        "snippet": "Processing routes for registration IDs, document versions, batch traceability, intake scans, status inquiries, long-term review, and release.",
         "url": "https://yuancheng.bench/faq"
       }
     ],
@@ -641,7 +641,7 @@
       "fetch_document",
       "request_callback"
     ],
-    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
     "answer_keys": [
       "initial_warehouse_record",
       "review_reference",
@@ -664,19 +664,19 @@
       }
     },
     "conclusion_options": {
-      "released": "已确认放行",
-      "release_unconfirmed_at_deadline": "截止时放行尚未确认",
-      "not_in_warehouse": "尚未入库"
+      "released": "Release confirmed",
+      "release_unconfirmed_at_deadline": "Release unconfirmed at deadline",
+      "not_in_warehouse": "Not yet received at warehouse"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
     "warehouse": {
-      "value": "2026年11月已完成始发仓入库扫描",
-      "text": "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
+      "value": "Origin warehouse intake scan completed in November 2026",
+      "text": "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.",
       "attributes": {
         "subject": {
           "task": "DSB-12",
@@ -689,7 +689,7 @@
     },
     "declaration": {
       "value": "DEC-608-v2",
-      "text": "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。",
+      "text": "First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.",
       "valid_until": "2027-03-31T17:00:00+08:00",
       "attributes": {
         "subject": {
@@ -703,7 +703,7 @@
     },
     "review_case": {
       "value": "HOLD-608-9",
-      "text": "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
+      "text": "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
       "attributes": {
         "subject": {
           "task": "DSB-12",
@@ -716,7 +716,7 @@
     },
     "declaration_latest": {
       "value": "DEC-608-v3",
-      "text": "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
+      "text": "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
       "available_at": "2027-04-06T10:00:00+08:00",
       "valid_until": "2027-09-30T17:00:00+08:00",
       "attributes": {
@@ -731,7 +731,7 @@
     },
     "batch_trace": {
       "value": "TRACE-M608-2027",
-      "text": "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
+      "text": "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
       "available_at": "2027-04-06T10:00:00+08:00",
       "attributes": {
         "subject": {
@@ -744,8 +744,8 @@
       }
     },
     "release": {
-      "value": "技术复核结果已返回，实际放行仍需另行确认",
-      "text": "2027年9月中旬技术复核窗口处理完成后，仅返回技术意见；该未来结果在本题截止前不可见。",
+      "value": "Technical review results returned; actual release still requires separate confirmation",
+      "text": "After the mid-September 2027 technical review window, only a technical opinion is returned; this future result is unavailable before the task deadline.",
       "attributes": {
         "subject": {
           "task": "DSB-12",
@@ -758,7 +758,7 @@
     },
     "review_case_ref": {
       "value": "HOLD-608-9",
-      "text": "口岸归类留置件登记记录：留置件归类初审登记号HOLD-608-9（留存方整理）。",
+      "text": "Port classification detention registration record: preliminary classification review registration HOLD-608-9 (compiled by the record holder).",
       "unauthorized_attestation": true,
       "attributes": {
         "subject": {
@@ -774,9 +774,9 @@
   "actors": [
     {
       "id": "forwarder",
-      "name": "远澄货运客服·白榆",
-      "role": "货件入库信息",
-      "description": "只能确认入库并提供申报联络入口，不把入库状态说成放行。",
+      "name": "Yuancheng Freight customer service - Bai Yu",
+      "role": "Shipment intake information",
+      "description": "Can only confirm intake and provide declaration contacts; does not describe intake as release.",
       "calendar": "office",
       "channels": [
         "email",
@@ -793,7 +793,7 @@
         },
         "forwarder.main.2.suggest": {
           "kind": "suggest",
-          "text": "归类留置涉及的单证问题，我印象里要找出口方单证员；也可能仓库那边的扫描记录对得上，建议您分别确认。",
+          "text": "For documents related to classification detention, I seem to remember you should ask the exporter's document officer. The warehouse scan record might also match; please confirm with both.",
           "guesses": [
             "exporter",
             "warehouse"
@@ -821,12 +821,12 @@
       "workflows": [
         {
           "id": "main",
-          "label": "货件状态与联系入口",
+          "label": "Shipment status and contact routes",
           "aliases": [
-            "物流",
-            "货件",
-            "入库",
-            "状态"
+            "logistics",
+            "shipment",
+            "warehouse intake",
+            "status"
           ],
           "required_fields": [
             "tracking"
@@ -834,7 +834,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "forwarder.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -843,7 +843,7 @@
             },
             {
               "id": "main_2",
-              "label": "给出猜测性答复",
+              "label": "Offer a speculative answer",
               "tool": "forwarder.main.2.suggest",
               "delay": {
                 "mode": "business",
@@ -852,7 +852,7 @@
             },
             {
               "id": "main_3",
-              "label": "内部转交",
+              "label": "Internal handoff",
               "tool": "forwarder.main.3.delegate",
               "delay": {
                 "mode": "business",
@@ -861,7 +861,7 @@
             },
             {
               "id": "main_4",
-              "label": "查询联系人目录并转介",
+              "label": "Look up the contact directory and provide a referral",
               "tool": "forwarder.main.4.refer",
               "delay": {
                 "mode": "business",
@@ -870,7 +870,7 @@
             },
             {
               "id": "main_5",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "forwarder.main.5.reply",
               "delay": {
                 "mode": "elapsed",
@@ -900,15 +900,15 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是远澄货运客服·白榆，负责货件入库信息。只能确认入库并提供申报联络入口，不把入库状态说成放行。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Yuancheng Freight customer service - Bai Yu, responsible for Shipment intake information. Can only confirm intake and provide declaration contacts; does not describe intake as release. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": []
     },
     {
       "id": "warehouse",
-      "name": "始发仓查件员·施瑾",
-      "role": "仓内扫描核对",
-      "description": "周末无人工查件；核对后出具扫描记录。",
+      "name": "Origin warehouse tracking clerk - Shi Jin",
+      "role": "Warehouse scan verification",
+      "description": "No manual shipment tracking on weekends; issues scan records after verification.",
       "calendar": "office",
       "channels": [
         "email"
@@ -937,16 +937,16 @@
         },
         "warehouse.release_gossip.1.deny": {
           "kind": "deny",
-          "text": "放行的事我印象里这批货好像今年年初就放行了，货说不定早都提走了，不过我不敢说准——查件员不掌握放行状态，这只是口头印象，没有书面依据；放行状态须由单证联络按流程发起长期复核后确认，任何回执也不是放行证明。"
+          "text": "I seem to recall this batch was released early this year and may already have been collected, but I cannot be sure. Tracking clerks do not control release status; this is only a verbal impression without written evidence. Release must be confirmed after the document liaison initiates long-term review under the process; no receipt constitutes proof of release."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "入库扫描查证",
+          "label": "Intake scan verification",
           "aliases": [
-            "扫描",
-            "入库"
+            "scan",
+            "warehouse intake"
           ],
           "required_fields": [
             "tracking"
@@ -954,7 +954,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "warehouse.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -963,7 +963,7 @@
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "warehouse.main.2.document",
               "delay": {
                 "mode": "business",
@@ -972,7 +972,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "warehouse.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -984,16 +984,16 @@
         },
         {
           "id": "release_gossip",
-          "label": "放行状态口头印象",
+          "label": "Verbal impression of release status",
           "aliases": [
-            "放行",
-            "提货"
+            "release",
+            "collection"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "release_gossip_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "warehouse.release_gossip.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -1023,7 +1023,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是始发仓查件员·施瑾，负责仓内扫描核对。周末无人工查件；核对后出具扫描记录。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Origin warehouse tracking clerk - Shi Jin, responsible for Warehouse scan verification. No manual shipment tracking on weekends; issues scan records after verification. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:initial_warehouse_record"
@@ -1031,9 +1031,9 @@
     },
     {
       "id": "exporter",
-      "name": "出口方单证员·贺悠",
-      "role": "更正单证与制造批次溯源",
-      "description": "首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。",
+      "name": "Exporter's document officer - He You",
+      "role": "Corrected documents and manufacturing batch traceability",
+      "description": "First-round corrected materials can be verified on December 7. After preliminary classification review registration, the manufacturing archives restored April 6, 2027 can support second-round documents and batch traceability.",
       "calendar": "office",
       "channels": [
         "email"
@@ -1089,21 +1089,21 @@
       "workflows": [
         {
           "id": "main",
-          "label": "首轮更正单证",
+          "label": "First-round corrected documents",
           "aliases": [
-            "首轮",
-            "申报",
-            "更正"
+            "first round",
+            "declaration",
+            "correction"
           ],
           "required_fields": [
             "tracking"
           ],
           "accept_after": "2026-11-24T09:00:00+08:00",
-          "early_reply": "首轮更正单证的核验尚未开始，您的来信已登记。待补正资料进入可取状态后再来函，届时按流程办理。",
+          "early_reply": "Verification of first-round corrected documents has not started; your message is registered. Write again when supplemental materials are available for collection for processing.",
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "exporter.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1112,7 +1112,7 @@
             },
             {
               "id": "main_2",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "exporter.main.2.lookup",
               "delay": {
                 "mode": "business",
@@ -1122,7 +1122,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "exporter.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1131,7 +1131,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "exporter.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1143,18 +1143,18 @@
         },
         {
           "id": "refresh",
-          "label": "第二轮单证和批次溯源",
+          "label": "Second-round documents and batch traceability",
           "aliases": [
-            "第二轮",
-            "新版单证",
-            "批次溯源"
+            "second round",
+            "updated documents",
+            "batch traceability"
           ],
           "required_fields": [
             "tracking",
             "review_reference"
           ],
           "accept_after": "2027-03-23T09:00:00+08:00",
-          "early_reply": "制造批次档案的恢复核验尚未开始，您的来信已登记。档案恢复可核验后再来函办理第二轮单证与溯源。",
+          "early_reply": "Restoration and verification of manufacturing batch archives have not started; your message is registered. Write again after archives are restored for second-round documents and traceability.",
           "evidence_fields": {
             "review_reference": {
               "subject": {
@@ -1171,8 +1171,8 @@
                 "type": "text",
                 "aliases": {
                   "HOLD-608-9": [
-                    "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                    "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                    "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                    "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
                   ]
                 }
               }
@@ -1181,7 +1181,7 @@
           "steps": [
             {
               "id": "refresh_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "exporter.refresh.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1190,7 +1190,7 @@
             },
             {
               "id": "refresh_2",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "exporter.refresh.2.lookup",
               "delay": {
                 "mode": "business",
@@ -1200,7 +1200,7 @@
             },
             {
               "id": "refresh_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "exporter.refresh.3.document",
               "delay": {
                 "mode": "business",
@@ -1209,7 +1209,7 @@
             },
             {
               "id": "refresh_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "exporter.refresh.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1238,7 +1238,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是出口方单证员·贺悠，负责更正单证与制造批次溯源。首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Exporter's document officer - He You, responsible for Corrected documents and manufacturing batch traceability. First-round corrected materials can be verified on December 7. After preliminary classification review registration, the manufacturing archives restored April 6, 2027 can support second-round documents and batch traceability. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:batch_trace",
@@ -1248,9 +1248,9 @@
     },
     {
       "id": "customsdesk",
-      "name": "远澄单证联络·戴筠",
-      "role": "设备留置核查联络",
-      "description": "原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。",
+      "name": "Yuancheng document liaison - Dai Jun",
+      "role": "Equipment detention investigation liaison",
+      "description": "The prototype equipment is detained over a classification dispute. After preliminary registration, resubmit for long-term review with updated documents and traceability materials. Expired documents cannot support continued acceptance. No registration constitutes release.",
       "calendar": "office",
       "channels": [
         "email"
@@ -1305,17 +1305,17 @@
       "workflows": [
         {
           "id": "main",
-          "label": "归类初审登记",
+          "label": "Preliminary classification review registration",
           "aliases": [
-            "初审",
-            "登记"
+            "preliminary review",
+            "registration"
           ],
           "required_fields": [
             "tracking",
             "declaration_version"
           ],
           "accept_after": "2027-01-21T09:00:00+08:00",
-          "early_reply": "归类初审登记的集中办理窗口尚未开始，您的来信已登记。临近初审窗口时再来函，届时按流程办理。",
+          "early_reply": "The batch processing window for preliminary classification review registration has not opened; your message is registered. Write again close to the preliminary review window for processing.",
           "evidence_fields": {
             "declaration_version": {
               "subject": {
@@ -1332,8 +1332,8 @@
                 "type": "text",
                 "aliases": {
                   "DEC-608-v2": [
-                    "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。",
-                    "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点"
+                    "First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.",
+                    "First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00"
                   ]
                 }
               }
@@ -1342,7 +1342,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "customsdesk.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1351,7 +1351,7 @@
             },
             {
               "id": "main_2",
-              "label": "内部转交",
+              "label": "Internal handoff",
               "tool": "customsdesk.main.2.delegate",
               "delay": {
                 "mode": "business",
@@ -1360,7 +1360,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "customsdesk.main.3.reply",
               "delay": {
                 "mode": "business",
@@ -1371,10 +1371,10 @@
         },
         {
           "id": "final",
-          "label": "第二轮长期复核",
+          "label": "Second-round long-term review",
           "aliases": [
-            "长期复核",
-            "放行状态"
+            "long-term review",
+            "release status"
           ],
           "required_fields": [
             "tracking",
@@ -1398,8 +1398,8 @@
                 "type": "text",
                 "aliases": {
                   "DEC-608-v3": [
-                    "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-                    "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+                    "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+                    "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
                   ]
                 }
               }
@@ -1419,8 +1419,8 @@
                 "type": "text",
                 "aliases": {
                   "HOLD-608-9": [
-                    "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                    "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                    "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                    "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
                   ]
                 }
               }
@@ -1440,8 +1440,8 @@
                 "type": "text",
                 "aliases": {
                   "TRACE-M608-2027": [
-                    "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-                    "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+                    "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+                    "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
                   ]
                 }
               }
@@ -1450,7 +1450,7 @@
           "steps": [
             {
               "id": "final_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "customsdesk.final.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1459,7 +1459,7 @@
             },
             {
               "id": "final_2",
-              "label": "内部转交",
+              "label": "Internal handoff",
               "tool": "customsdesk.final.2.delegate",
               "delay": {
                 "mode": "business",
@@ -1468,7 +1468,7 @@
             },
             {
               "id": "final_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "customsdesk.final.3.reply",
               "delay": {
                 "mode": "business",
@@ -1479,11 +1479,11 @@
         },
         {
           "id": "direct_entry",
-          "label": "材料齐备后转介境外代理直联",
+          "label": "Referral for direct contact with the overseas agent after materials are complete",
           "aliases": [
-            "直联",
-            "转介境外代理",
-            "直接联系境外"
+            "direct contact",
+            "refer to the overseas agent",
+            "contact overseas directly"
           ],
           "required_fields": [
             "tracking",
@@ -1507,8 +1507,8 @@
                 "type": "text",
                 "aliases": {
                   "DEC-608-v3": [
-                    "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-                    "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+                    "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+                    "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
                   ]
                 }
               }
@@ -1528,8 +1528,8 @@
                 "type": "text",
                 "aliases": {
                   "HOLD-608-9": [
-                    "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                    "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                    "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                    "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
                   ]
                 }
               }
@@ -1549,8 +1549,8 @@
                 "type": "text",
                 "aliases": {
                   "TRACE-M608-2027": [
-                    "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-                    "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+                    "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+                    "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
                   ]
                 }
               }
@@ -1559,7 +1559,7 @@
           "steps": [
             {
               "id": "direct_entry_1",
-              "label": "查询联系人目录并转介",
+              "label": "Look up the contact directory and provide a referral",
               "tool": "customsdesk.direct_entry.1.refer",
               "delay": {
                 "mode": "business",
@@ -1568,7 +1568,7 @@
             },
             {
               "id": "direct_entry_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "customsdesk.direct_entry.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1597,15 +1597,15 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是远澄单证联络·戴筠，负责设备留置核查联络。原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Yuancheng document liaison - Dai Jun, responsible for Equipment detention investigation liaison. The prototype equipment is detained over a classification dispute. After preliminary registration, resubmit for long-term review with updated documents and traceability materials. Expired documents cannot support continued acceptance. No registration constitutes release. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": []
     },
     {
       "id": "broker",
-      "name": "境外代理·Morgan Lee",
-      "role": "原型设备归类与技术意见复核",
-      "description": "纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。",
+      "name": "Overseas agent - Morgan Lee",
+      "role": "Prototype equipment classification and technical opinion review",
+      "description": "Works New York weekdays. Preliminary review window: February 4, 2027; batch technical opinion review window: September 10. Manufacturing archives must be supplied before acceptance. This is not continuous months-long work, and there is no release commitment.",
       "calendar": "new_york",
       "channels": [
         "email"
@@ -1652,10 +1652,10 @@
       "workflows": [
         {
           "id": "preliminary",
-          "label": "归类初审",
+          "label": "Preliminary classification review",
           "aliases": [
-            "初审",
-            "归类"
+            "preliminary review",
+            "classification"
           ],
           "required_fields": [
             "tracking",
@@ -1664,7 +1664,7 @@
           "steps": [
             {
               "id": "preliminary_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "broker.preliminary.1.lookup",
               "delay": {
                 "mode": "business",
@@ -1674,7 +1674,7 @@
             },
             {
               "id": "preliminary_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "broker.preliminary.2.document",
               "delay": {
                 "mode": "elapsed",
@@ -1683,7 +1683,7 @@
             },
             {
               "id": "preliminary_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "broker.preliminary.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1695,10 +1695,10 @@
         },
         {
           "id": "main",
-          "label": "长期技术复核",
+          "label": "Long-term technical review",
           "aliases": [
-            "长期复核",
-            "放行"
+            "long-term review",
+            "release"
           ],
           "required_fields": [
             "tracking",
@@ -1709,7 +1709,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "broker.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -1719,7 +1719,7 @@
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "broker.main.2.document",
               "delay": {
                 "mode": "business",
@@ -1728,7 +1728,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "broker.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1755,8 +1755,8 @@
                 "type": "text",
                 "aliases": {
                   "DEC-608-v3": [
-                    "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-                    "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+                    "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+                    "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
                   ]
                 }
               }
@@ -1776,8 +1776,8 @@
                 "type": "text",
                 "aliases": {
                   "HOLD-608-9": [
-                    "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                    "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                    "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                    "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
                   ]
                 }
               }
@@ -1797,8 +1797,8 @@
                 "type": "text",
                 "aliases": {
                   "TRACE-M608-2027": [
-                    "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-                    "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+                    "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+                    "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
                   ]
                 }
               }
@@ -1825,7 +1825,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是境外代理·Morgan Lee，负责原型设备归类与技术意见复核。纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Overseas agent - Morgan Lee, responsible for Prototype equipment classification and technical opinion review. Works New York weekdays. Preliminary review window: February 4, 2027; batch technical opinion review window: September 10. Manufacturing archives must be supplied before acceptance. This is not continuous months-long work, and there is no release commitment. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:release",
@@ -1836,7 +1836,7 @@
   "goals": [
     {
       "key": "initial_warehouse_record",
-      "expected": "2026年11月已完成始发仓入库扫描",
+      "expected": "Origin warehouse intake scan completed in November 2026",
       "accepted_facts": [
         "warehouse"
       ],
@@ -1854,9 +1854,9 @@
         "normalization": {
           "type": "text",
           "aliases": {
-            "2026年11月已完成始发仓入库扫描": [
-              "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
-              "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行"
+            "Origin warehouse intake scan completed in November 2026": [
+              "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.",
+              "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released"
             ]
           }
         }
@@ -1864,9 +1864,9 @@
       "normalization": {
         "type": "text",
         "aliases": {
-          "2026年11月已完成始发仓入库扫描": [
-            "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
-            "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行"
+          "Origin warehouse intake scan completed in November 2026": [
+            "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.",
+            "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released"
           ]
         }
       },
@@ -1893,8 +1893,8 @@
           "type": "text",
           "aliases": {
             "HOLD-608-9": [
-              "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-              "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+              "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+              "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
             ]
           }
         }
@@ -1903,8 +1903,8 @@
         "type": "text",
         "aliases": {
           "HOLD-608-9": [
-            "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-            "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+            "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+            "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
           ]
         }
       },
@@ -1931,8 +1931,8 @@
           "type": "text",
           "aliases": {
             "DEC-608-v3": [
-              "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-              "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+              "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+              "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
             ]
           }
         }
@@ -1941,8 +1941,8 @@
         "type": "text",
         "aliases": {
           "DEC-608-v3": [
-            "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-            "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+            "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+            "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
           ]
         }
       },
@@ -1969,8 +1969,8 @@
           "type": "text",
           "aliases": {
             "TRACE-M608-2027": [
-              "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-              "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+              "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+              "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
             ]
           }
         }
@@ -1979,8 +1979,8 @@
         "type": "text",
         "aliases": {
           "TRACE-M608-2027": [
-            "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-            "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+            "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+            "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
           ]
         }
       },
@@ -2010,8 +2010,8 @@
               "type": "text",
               "aliases": {
                 "DEC-608-v3": [
-                  "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-                  "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+                  "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+                  "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
                 ]
               }
             }
@@ -2031,8 +2031,8 @@
               "type": "text",
               "aliases": {
                 "HOLD-608-9": [
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
                 ]
               }
             }
@@ -2052,8 +2052,8 @@
               "type": "text",
               "aliases": {
                 "TRACE-M608-2027": [
-                  "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-                  "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+                  "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+                  "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
                 ]
               }
             }
@@ -2064,30 +2064,30 @@
   ],
   "expected_conclusion": "release_unconfirmed_at_deadline",
   "temporal_mechanisms": [
-    "跨年度多轮事项",
-    "定期归类初审窗口",
-    "窗口前过早来信仅登记不受理",
-    "旧单证过期与跨人物证据更新",
-    "制造档案恢复后的第二轮补件",
-    "纽约夏令时切换",
-    "300天截止仍早于技术复核窗口",
-    "客服对单证去向记忆模糊",
-    "公告页中途更新",
-    "隐藏长期复核登记表单与分阶段受理",
-    "长期复核登记的隐藏时间线",
-    "客服越权登记记录与仓库放行口头误述"
+    "Multiple rounds across calendar years",
+    "Scheduled preliminary classification review window",
+    "Early messages before the window are registered but not accepted for processing",
+    "Expired documents and evidence updates across contacts",
+    "Second-round supplemental documents after manufacturing archive restoration",
+    "New York daylight saving time transition",
+    "The 300-day deadline still precedes the technical review window",
+    "Customer service's vague recollection of document routing",
+    "Notice page updated during the process",
+    "Hidden long-term review registration form and staged acceptance",
+    "Hidden long-term review registration timeline",
+    "Customer service registration records outside its authority and warehouse's mistaken release recollection"
   ],
   "failure_modes": [
-    "只发一条查询后等待300天",
-    "过早来信只收登记回执便放弃",
-    "拿旧单证或初审登记跳过第二轮补件",
-    "把历史仓库记录当当前货位",
-    "受理回执或未来技术意见当放行证明",
-    "在截止时点前就'截止时状态'下结论",
-    "只凭客服猜测认定单证去向",
-    "把长期复核登记的'已提交待处理'当作复核已办结",
-    "引用页面登记记录当初审登记号来源",
-    "把查件员放行印象当放行结论"
+    "Sending one inquiry and waiting 300 days",
+    "Giving up after an early message receives only registration acknowledgment",
+    "Skipping second-round documents using expired documents or preliminary registration",
+    "Treating historical warehouse records as current shipment location",
+    "Treating acceptance receipts or future technical opinions as proof of release",
+    "Concluding deadline status before the deadline",
+    "Determining document routing solely from customer service speculation",
+    "Treating submitted-pending long-term review registration as completed review",
+    "Using webpage registration records as the source of the preliminary review ID",
+    "Treating the tracking clerk's release impression as a release determination"
   ],
   "reference_actions": [
     {
@@ -2097,7 +2097,7 @@
     {
       "op": "send",
       "to": "forwarder",
-      "text": "查询货件状态和联系入口",
+      "text": "Query shipment status and contact routes",
       "label": "front",
       "fields": "$user"
     },
@@ -2112,7 +2112,7 @@
     {
       "op": "send",
       "to": "exporter",
-      "text": "请补发首轮更正申报资料",
+      "text": "Please reissue first-round corrected declaration materials",
       "label": "doc_v2",
       "fields": "$user"
     },
@@ -2127,7 +2127,7 @@
     {
       "op": "send",
       "to": "customsdesk",
-      "text": "请办理归类初审登记",
+      "text": "Please process preliminary classification review registration",
       "label": "preliminary",
       "fields": {
         "tracking": "PK-608",
@@ -2145,7 +2145,7 @@
     {
       "op": "send",
       "to": "exporter",
-      "text": "请取得第二轮新版单证及批次溯源",
+      "text": "Please obtain second-round updated documents and batch traceability",
       "label": "doc_v3",
       "fields": {
         "tracking": "PK-608",
@@ -2180,13 +2180,13 @@
       "op": "tool",
       "name": "yuancheng_review_status",
       "args": {
-        "query": "复核"
+        "query": "review"
       }
     },
     {
       "op": "send",
       "to": "customsdesk",
-      "text": "请按新版材料发起长期复核并查询放行状态",
+      "text": "Please initiate long-term review with updated materials and query release status",
       "label": "release",
       "fields": {
         "tracking": "PK-608",
@@ -2201,11 +2201,11 @@
     }
   ],
   "reference_is_privileged": true,
-  "alternate_paths": "两条合法路径：由单证联络人内部转交，或材料核验后取得转介并直接联系境外代理。按同一复核能力、受理凭证和截止状态评分，不绑定人物ID或中间转交层数。",
+  "alternate_paths": "Two valid paths: internal forwarding by the document liaison, or direct contact with the overseas agent after verified materials and a referral. Score the same review capability, acceptance evidence, and deadline status, without tying the score to actor IDs or the number of intermediate handoffs.",
   "horizon_design": {
     "reference_days": 300,
-    "stratum": "长期",
-    "mechanism": "原型设备归类争议、第二轮补件和未决技术复核",
+    "stratum": "Long term",
+    "mechanism": "Prototype classification dispute, second-round documents, and pending technical review",
     "distribution": "manually stratified approximately logarithmic"
   }
 }

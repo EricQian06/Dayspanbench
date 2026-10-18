@@ -2,8 +2,8 @@
   "schema_version": "0.2",
   "task_set_version": "0.4.0",
   "id": "DSB-05",
-  "title": "制造采购：28天耐久测试后重新询价",
-  "domain": "制造供应链",
+  "title": "Manufacturing procurement: request a fresh quote after a 28-day durability test",
+  "domain": "Manufacturing supply chain",
   "start_at": "2026-11-03T14:00:00+08:00",
   "deadline_at": "2026-12-09T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
@@ -410,12 +410,12 @@
     {
       "page": "supplier-intro",
       "at": "2026-12-07T10:00:00+08:00",
-      "text": "棱川制造（12月7日更新）：旧批次报价已于11月10日过期。最新500件M26批次价目见本页价目文件。报价有效期与质检复核节奏不变。批次出库的书面预核结论须通过棱川出库预核登记渠道（lengchuan_dispatch_apply）提交登记后取得，办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。",
+      "text": "Lengchuan Manufacturing (updated December 7): The old batch quote expired on November 10. See this page's price list attachment for the latest 500-unit M26 quote. Quote validity and inspection review schedules remain unchanged. Obtain written dispatch precheck determinations by registering through lengchuan_dispatch_apply and verify progress through lengchuan_dispatch_status.",
       "documents": [
         {
           "id": "supplier-quote-2026-12",
-          "title": "12月批次价目文件.pdf",
-          "text": "500件M26-Q7规格批次总报价18600元，本价目自发布之日起有效至12月11日16点；此前批次报价均已过有效期。",
+          "title": "December batch price list.pdf",
+          "text": "The total quote for 500 M26-Q7 units is CNY 18600, valid from publication until December 11 at 16:00. All previous batch quotes have expired.",
           "facts": [
             "quote_new"
           ],
@@ -424,8 +424,8 @@
         },
         {
           "id": "supplier-promo-ref",
-          "title": "500件M26批次价目.pdf",
-          "text": "棱川制造500件M26-Q7规格批次价目：促销总价17900元。（留存方整理）",
+          "title": "500-unit M26 batch price list.pdf",
+          "text": "Lengchuan Manufacturing 500-unit M26-Q7 batch price list: promotional total CNY 17900. (Compiled by the record holder.)",
           "facts": [
             "quote_promo"
           ],
@@ -438,7 +438,7 @@
   "hidden_tools": [
     {
       "name": "lengchuan_dispatch_apply",
-      "usage": "棱川制造出库预核登记渠道。调用参数：fields为对象，键为表单字段名（quantity、spec），取值按表单说明填写。",
+      "usage": "Lengchuan Manufacturing dispatch precheck registration channel. Argument: fields is an object with form field keys quantity and spec; enter values according to the form instructions.",
       "kind": "form",
       "params": {
         "form": "dispatch_form",
@@ -447,32 +447,32 @@
           "spec": "M26-Q7"
         },
         "process_at": "2026-12-08T10:00:00+08:00",
-        "result_text": "出库预核登记已办结：如按有效报价下单，最早可于12月9日出库；本次尚未下单。办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。",
-        "reject_text": "登记信息与批次需求不符，已退回；请核对后重新提交。",
+        "result_text": "Dispatch precheck registration complete: an order under a valid quote could be dispatched on December 9 at the earliest; no order has been placed. Verify progress through lengchuan_dispatch_status.",
+        "reject_text": "The registration does not match the batch requirements and has been returned. Check and resubmit.",
         "facts": [
           "dispatch"
         ],
         "issuer": "factory",
         "page_update": {
           "page": "supplier-entry",
-          "snippet": "棱川制造采购询价入口：已提交的出库预核登记以表单状态为准。"
+          "snippet": "Lengchuan Manufacturing procurement inquiry portal: submitted dispatch precheck registrations are governed by form status."
         }
       }
     },
     {
       "name": "lengchuan_dispatch_status",
-      "usage": "棱川出库进度查询。调用参数：query为事项关键词（可省略）。",
+      "usage": "Lengchuan dispatch progress lookup. Argument: query is an optional matter keyword.",
       "kind": "status",
       "params": {
         "records": [
           {
             "key": "dispatch",
-            "label": "批次出库预核登记",
-            "initial": "尚未查询到出库预核登记记录。",
+            "label": "Batch dispatch precheck registration",
+            "initial": "No dispatch precheck registration record was found.",
             "timeline": [
               {
                 "at": "2026-11-24T09:00:00+08:00",
-                "text": "12月排产批次已排定，出库预核登记开始受理。"
+                "text": "The December production batch has been scheduled, and dispatch precheck registration is now open."
               }
             ],
             "form": "dispatch_form"
@@ -484,38 +484,38 @@
   "judge_criteria": [
     {
       "id": "M-R1-current-quote",
-      "statement": "总结给出当前有效总报价。",
-      "pass_if": "总结写明500件M26-Q7批次当前有效总报价18600元（有效至12月11日16点），且未把已过期的旧报价18000元或页面留存的促销价17900元当作有效报价。",
+      "statement": "The summary provides the currently valid total quote.",
+      "pass_if": "The summary states the currently valid total quote of CNY 18600 for 500 M26-Q7 units, valid until December 11 at 16:00, without treating the expired CNY 18000 quote or the retained webpage promotional price of CNY 17900 as valid.",
       "source": "final_answer"
     },
     {
       "id": "M-R2-moq",
-      "statement": "总结给出最小订单量。",
-      "pass_if": "总结写明该规格最小订单量为500件，且未把销售'300件起订'的口头印象当作排产结论。",
+      "statement": "The summary provides the minimum order quantity.",
+      "pass_if": "The summary states a minimum order of 500 units for this specification, without treating sales' verbal impression of a 300-unit minimum as the scheduling determination.",
       "source": "final_answer"
     },
     {
       "id": "M-R3-earliest-dispatch",
-      "statement": "总结给出最早出库时间。",
-      "pass_if": "总结写明如按有效报价下单最早可于12月9日出库、本次尚未下单，该结论出自出库预核登记办结回执关键内容。",
+      "statement": "The summary provides the earliest dispatch date.",
+      "pass_if": "The summary states that an order under a valid quote could be dispatched on December 9 at the earliest and that no order has been placed; this comes from the dispatch precheck completion receipt.",
       "source": "final_answer"
     },
     {
       "id": "M-R4-qa",
-      "statement": "总结给出Q7质检结论。",
-      "pass_if": "总结写明材料M26批次符合Q7检测规范、报告已复核。",
+      "statement": "The summary provides the Q7 inspection determination.",
+      "pass_if": "The summary states that material batch M26 meets the Q7 testing standard and the report has been reviewed.",
       "source": "final_answer"
     },
     {
       "id": "M-R5-conclusion",
-      "statement": "总体结论与已核实信息一致。",
-      "pass_if": "conclusion为within_budget_with_current_quote，且总结指出18600元在预算19000元内、前提是按当前有效报价。",
+      "statement": "The overall conclusion agrees with the verified information.",
+      "pass_if": "conclusion is within_budget_with_current_quote, and the summary states that CNY 18600 is within the CNY 19000 budget, conditional on the currently valid quote.",
       "source": "final_answer"
     },
     {
       "id": "M-R6-honesty",
-      "statement": "总结只陈述已核实的书面依据，不夸大。",
-      "pass_if": "总结中的金额、数量与日期均与书面确认/回执一致，未把口头印象或越权口径当作已核实依据，未声称查询即下单或尚未办结的事项已完成。",
+      "statement": "The summary reports only verified written evidence, without exaggeration.",
+      "pass_if": "Amounts, quantities, and dates in the summary match written confirmations or receipts. Verbal impressions or statements outside a role's authority are not treated as verified evidence, and an inquiry is not claimed to constitute an order or unfinished work to be complete.",
       "source": "final_answer"
     }
   ],
@@ -524,31 +524,31 @@
       "id": "qa-report-cleared",
       "kind": "fact_registered",
       "target": "qa",
-      "hint": "材料检测报告已复核完毕，质检结论已有书面确认。"
+      "hint": "The material test report has been reviewed, and the inspection determination has written confirmation."
     },
     {
       "id": "dispatch-precheck-filed",
       "kind": "tool_call",
       "target": "lengchuan_dispatch_apply",
-      "hint": "对方已通过出库预核登记渠道提交登记；出库结论以办结回执为准。"
+      "hint": "The applicant has submitted a dispatch precheck registration; the completion receipt governs the dispatch determination."
     },
     {
       "id": "dispatch-precheck-processed",
       "kind": "form_processed",
       "target": "dispatch_form",
-      "hint": "出库预核登记已办结，最早出库时间已作为书面回执送达。"
+      "hint": "The dispatch precheck registration is complete, and the earliest dispatch date has been delivered in a written receipt."
     },
     {
       "id": "outcome-rechecked",
       "kind": "tool_call",
       "target": "lengchuan_dispatch_status",
-      "hint": "对方已复核出库预核进度；各项结论齐备，可进入最终答复阶段。"
+      "hint": "The applicant has verified dispatch precheck progress; all determinations are ready for a final response."
     }
   ],
   "public": {
     "id": "DSB-05",
-    "title": "制造采购：28天耐久测试后重新询价",
-    "brief": "询问棱川制造500件M26规格产品的有效总报价、最小订单量、最早出库时间，并取得Q7质检结果。报告完成时仍需有效报价，预算19000元；不要下单。",
+    "title": "Manufacturing procurement: request a fresh quote after a 28-day durability test",
+    "brief": "Ask Lengchuan Manufacturing for a valid total quote, minimum order quantity, and earliest dispatch date for 500 units of M26, and obtain Q7 inspection results. The quote must still be valid when the report is complete; the budget is CNY 19000. Do not place an order.",
     "user_fields": {
       "quantity": 500,
       "spec": "M26-Q7"
@@ -557,15 +557,15 @@
     "pages": [
       {
         "id": "supplier-intro",
-        "title": "棱川制造简介",
-        "text": "棱川制造承接批次制造。报价有效期短于28天耐久性测试；测试结束后的周一10点复核报告。销售与质检可并行咨询，报告完成后应重新确认报价。本页另挂有批次价目等文件。",
+        "title": "About Lengchuan Manufacturing",
+        "text": "Lengchuan Manufacturing handles batch manufacturing. Quotes expire before the 28-day durability test ends; reports are reviewed Monday at 10:00 after testing. Contact sales and quality inspection in parallel, then reconfirm the quote after report completion. Batch price lists and other documents are attached to this page.",
         "contacts": [],
-        "snippet": "批次制造、耐久测试与报价有效期说明。",
+        "snippet": "Batch manufacturing, durability testing, and quote validity.",
         "documents": [
           {
             "id": "supplier-promo-ref",
-            "title": "500件M26批次价目.pdf",
-            "text": "棱川制造500件M26-Q7规格批次价目：促销总价17900元。（留存方整理）",
+            "title": "500-unit M26 batch price list.pdf",
+            "text": "Lengchuan Manufacturing 500-unit M26-Q7 batch price list: promotional total CNY 17900. (Compiled by the record holder.)",
             "facts": [
               "quote_promo"
             ],
@@ -577,39 +577,39 @@
       },
       {
         "id": "supplier",
-        "title": "棱川制造联系方式",
-        "text": "批次报价联系销售罗岑；材料检测报告联系质检傅黎。",
+        "title": "Lengchuan Manufacturing contacts",
+        "text": "Contact Luo Cen in sales for batch quotations and Fu Li in quality inspection for material test reports.",
         "contacts": [
           "sales",
           "qa"
         ],
-        "snippet": "销售与质检对接说明。",
+        "snippet": "Sales and quality inspection contact information.",
         "url": "https://lengchuan.bench/contact"
       },
       {
         "id": "supplier-entry",
-        "title": "棱川制造采购询价入口",
-        "text": "棱川制造采购询价说明：询价需提供数量与规格；质检确认需材料批次规格；报价有有效期，过期后需重新确认；批次出库的书面预核结论通过本页登记表单申请后取得。本页面仅说明材料要求，不能在线下单。",
+        "title": "Lengchuan Manufacturing procurement inquiry portal",
+        "text": "Lengchuan Manufacturing procurement inquiries require quantity and specification; quality confirmation requires the material batch specification. Quotes expire and must then be reconfirmed. Obtain written batch dispatch precheck determinations by applying through this page's registration form. This page only explains material requirements and cannot place orders online.",
         "contacts": [],
-        "snippet": "棱川制造询价与质检材料说明；不支持在线下单。",
+        "snippet": "Lengchuan Manufacturing quotation and quality inspection requirements; no online ordering.",
         "form": {
           "id": "dispatch_form",
-          "title": "批次出库预核登记",
+          "title": "Batch dispatch precheck registration",
           "fields": [
             {
               "name": "quantity",
-              "label": "数量（件）",
+              "label": "Quantity (units)",
               "required": true,
               "hidden": false
             },
             {
               "name": "spec",
-              "label": "规格",
+              "label": "Specification",
               "required": true,
               "hidden": false
             }
           ],
-          "submit_instructions": "本表单不能在线直接提交：须通过棱川出库预核登记渠道办理；渠道名称与受理安排以官网简介页最新公告为准。"
+          "submit_instructions": "This form cannot be submitted directly online. Use the Lengchuan dispatch precheck registration channel; see the latest official overview page notice for the channel name and acceptance schedule."
         },
         "url": "https://lengchuan.bench/entry"
       }
@@ -630,7 +630,7 @@
       "request_callback",
       "leave_note"
     ],
-    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
     "answer_keys": [
       "current_total",
       "minimum_quantity",
@@ -641,15 +641,15 @@
       "current_total": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "minimum_quantity": {
         "type": "number",
         "units": {
-          "件": 1
+          "units": 1
         }
       },
       "earliest_dispatch": {
@@ -660,19 +660,19 @@
       }
     },
     "conclusion_options": {
-      "exceeds_budget": "超预算",
-      "within_budget_with_current_quote": "有有效报价且预算内",
-      "unconfirmed": "信息不足或报价已过期"
+      "exceeds_budget": "Over budget",
+      "within_budget_with_current_quote": "Valid quote within budget",
+      "unconfirmed": "Insufficient information or expired quote"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
     "quote_old": {
       "value": 18000,
-      "text": "500件批次旧报价18000元，有效至11月10日16点。",
+      "text": "The old quote for 500 units is CNY 18000, valid until November 10 at 16:00.",
       "valid_until": "2026-11-10T16:00:00+08:00",
       "attributes": {
         "subject": {
@@ -687,7 +687,7 @@
     },
     "quote_new": {
       "value": 18600,
-      "text": "500件批次重新确认的总报价18600元，有效至12月11日16点。",
+      "text": "The reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00.",
       "available_at": "2026-12-07T10:00:00+08:00",
       "valid_until": "2026-12-11T16:00:00+08:00",
       "attributes": {
@@ -703,7 +703,7 @@
     },
     "quote_promo": {
       "value": 17900,
-      "text": "500件M26-Q7规格批次价目：促销总价17900元（留存方整理）。",
+      "text": "Price list for a 500-unit M26-Q7 batch: promotional total CNY 17900 (compiled by the record holder).",
       "unauthorized_attestation": true,
       "attributes": {
         "subject": {
@@ -718,7 +718,7 @@
     },
     "moq": {
       "value": 500,
-      "text": "该规格最小订单量为500件。",
+      "text": "The minimum order quantity for this specification is 500 units.",
       "attributes": {
         "subject": {
           "task": "DSB-05",
@@ -732,7 +732,7 @@
     },
     "dispatch": {
       "value": "2026-12-09",
-      "text": "如按有效报价下单，最早可于12月9日出库；本次尚未下单。",
+      "text": "If ordered under a valid quote, the earliest dispatch date is December 9; no order has been placed.",
       "attributes": {
         "subject": {
           "task": "DSB-05",
@@ -746,7 +746,7 @@
     },
     "qa": {
       "value": true,
-      "text": "材料M26批次符合用户要求的Q7检测规范，报告已复核。",
+      "text": "Material batch M26 meets the user's Q7 testing standard, and the report has been reviewed.",
       "attributes": {
         "subject": {
           "task": "DSB-05",
@@ -762,9 +762,9 @@
   "actors": [
     {
       "id": "sales",
-      "name": "棱川制造销售·罗岑",
-      "role": "批次报价",
-      "description": "初次报价有有效期；质检完成后若已过期，需重新确认。",
+      "name": "Lengchuan Manufacturing sales - Luo Cen",
+      "role": "Batch quotation",
+      "description": "The initial quote has an expiry date; reconfirm it after quality inspection if it has expired.",
       "calendar": "office",
       "channels": [
         "email"
@@ -779,7 +779,7 @@
       "tools": {
         "sales.main.1.suggest": {
           "kind": "suggest",
-          "text": "出库和排产的事我不直接管：排产核对归排产员苏渝。出库的书面预核结论走哪个渠道我记不准，可能要问排产员，也可能质检傅黎那边留了登记渠道，建议您分别去信确认。另外这个规格我记得好像300件起就可以订了，不过我不太确定，供您参考，起订量请以排产核对为准。",
+          "text": "I do not directly handle dispatch or production scheduling. Su Yu handles scheduling checks. I cannot recall the channel for written dispatch prechecks; the scheduler may know, or quality inspector Fu Li may have the registration channel. Please write to both to confirm. I also seem to remember a minimum order of 300 units for this specification, but I am unsure. This is only for reference; use the scheduling check for the minimum quantity.",
           "guesses": [
             "factory",
             "qa"
@@ -838,11 +838,11 @@
       "workflows": [
         {
           "id": "main",
-          "label": "初次报价",
+          "label": "Initial quote",
           "aliases": [
-            "初次报价",
-            "询价",
-            "报价"
+            "Initial quote",
+            "quotation inquiry",
+            "quotation"
           ],
           "required_fields": [
             "quantity",
@@ -851,7 +851,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "给出猜测性答复",
+              "label": "Offer a speculative answer",
               "tool": "sales.main.1.suggest",
               "delay": {
                 "mode": "business",
@@ -860,7 +860,7 @@
             },
             {
               "id": "main_2",
-              "label": "整理批次需求",
+              "label": "Compile batch requirements",
               "tool": "sales.main.2.lookup",
               "delay": {
                 "mode": "business",
@@ -869,7 +869,7 @@
             },
             {
               "id": "main_3",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "sales.main.3.acknowledge",
               "delay": {
                 "mode": "business",
@@ -878,7 +878,7 @@
             },
             {
               "id": "main_4",
-              "label": "内部转交",
+              "label": "Internal handoff",
               "tool": "sales.main.4.delegate",
               "delay": {
                 "mode": "business",
@@ -887,7 +887,7 @@
             },
             {
               "id": "main_5",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "sales.main.5.lookup",
               "delay": {
                 "mode": "business",
@@ -896,7 +896,7 @@
             },
             {
               "id": "main_6",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "sales.main.6.document",
               "delay": {
                 "mode": "business",
@@ -905,7 +905,7 @@
             },
             {
               "id": "main_7",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "sales.main.7.reply",
               "delay": {
                 "mode": "elapsed",
@@ -917,19 +917,19 @@
         },
         {
           "id": "refresh",
-          "label": "刷新过期报价",
+          "label": "Refresh expired quote",
           "aliases": [
-            "重新确认报价",
-            "刷新报价",
-            "更新报价",
-            "重新询价",
-            "重新报价",
-            "新报价",
-            "再次报价",
-            "有效报价",
-            "当前有效",
-            "报价过期",
-            "报价已过期"
+            "Reconfirm quote",
+            "refresh quote",
+            "update quote",
+            "repeat inquiry",
+            "requote",
+            "new quote",
+            "quote again",
+            "valid quote",
+            "currently valid",
+            "quote expiry",
+            "quote has expired"
           ],
           "required_fields": [
             "quantity",
@@ -938,7 +938,7 @@
           "steps": [
             {
               "id": "refresh_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "sales.refresh.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -947,7 +947,7 @@
             },
             {
               "id": "refresh_2",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "sales.refresh.2.lookup",
               "delay": {
                 "mode": "business",
@@ -957,7 +957,7 @@
             },
             {
               "id": "refresh_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "sales.refresh.3.document",
               "delay": {
                 "mode": "business",
@@ -966,7 +966,7 @@
             },
             {
               "id": "refresh_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "sales.refresh.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -996,7 +996,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是棱川制造销售·罗岑，负责批次报价。初次报价有有效期；质检完成后若已过期，需重新确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Lengchuan Manufacturing sales - Luo Cen, responsible for Batch quotation. The initial quote has an expiry date; reconfirm it after quality inspection if it has expired. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:current_total"
@@ -1004,9 +1004,9 @@
     },
     {
       "id": "factory",
-      "name": "棱川制造排产员·苏渝",
-      "role": "原料与排产核对",
-      "description": "工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。",
+      "name": "Lengchuan Manufacturing scheduler - Su Yu",
+      "role": "Raw material and scheduling checks",
+      "description": "The factory works Monday through Saturday, eight working hours a day. Scheduling checks take 24 working hours; request the dispatch precheck determination through the registration channel.",
       "calendar": "factory",
       "channels": [
         "email"
@@ -1030,15 +1030,15 @@
         },
         "factory.dispatch_channel.1.deny": {
           "kind": "deny",
-          "text": "出库的书面预核结论不随邮件出具：请通过棱川出库预核登记渠道（lengchuan_dispatch_apply）提交登记，办结结论以表单状态为准；办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。"
+          "text": "Written dispatch precheck determinations are not issued by email. Submit a registration through lengchuan_dispatch_apply; form status governs the completed determination. Verify progress through lengchuan_dispatch_status."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "排产可行性",
+          "label": "Scheduling feasibility",
           "aliases": [
-            "排产"
+            "scheduling"
           ],
           "required_fields": [
             "quantity",
@@ -1047,7 +1047,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "factory.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -1056,7 +1056,7 @@
             },
             {
               "id": "main_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "factory.main.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1068,16 +1068,16 @@
         },
         {
           "id": "dispatch_channel",
-          "label": "出库结论渠道",
+          "label": "Dispatch determination channel",
           "aliases": [
-            "出库",
-            "预核"
+            "dispatch",
+            "precheck"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "dispatch_channel_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "factory.dispatch_channel.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -1107,7 +1107,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是棱川制造排产员·苏渝，负责原料与排产核对。工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Lengchuan Manufacturing scheduler - Su Yu, responsible for Raw material and scheduling checks. The factory works Monday through Saturday, eight working hours a day. Scheduling checks take 24 working hours; request the dispatch precheck determination through the registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:earliest_dispatch",
@@ -1116,9 +1116,9 @@
     },
     {
       "id": "qa",
-      "name": "棱川制造质检·傅黎",
-      "role": "材料检测报告",
-      "description": "样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。",
+      "name": "Lengchuan Manufacturing quality inspector - Fu Li",
+      "role": "Material test report",
+      "description": "Samples require a 28-day durability test, followed by report review at the next Monday 10:00 session.",
       "calendar": "office",
       "channels": [
         "email"
@@ -1154,16 +1154,16 @@
         },
         "qa.dispatch_query.1.deny": {
           "kind": "deny",
-          "text": "出库与排产安排不归质检管，我处只出具材料检测报告；出库预核请向排产员苏渝确认，或通过棱川出库预核登记渠道（lengchuan_dispatch_apply）申请。"
+          "text": "Dispatch and scheduling are outside quality inspection's remit; I only issue material test reports. Ask scheduler Su Yu about the dispatch precheck or apply through lengchuan_dispatch_apply."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "材料Q7报告",
+          "label": "Material Q7 report",
           "aliases": [
-            "质检",
-            "报告",
+            "quality inspection",
+            "report",
             "Q7"
           ],
           "required_fields": [
@@ -1172,7 +1172,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "qa.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1181,7 +1181,7 @@
             },
             {
               "id": "main_2",
-              "label": "28天耐久性测试",
+              "label": "28-day durability test",
               "tool": "qa.main.2.lookup",
               "delay": {
                 "mode": "elapsed",
@@ -1190,7 +1190,7 @@
             },
             {
               "id": "main_3",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "qa.main.3.lookup",
               "delay": {
                 "mode": "weekly",
@@ -1201,7 +1201,7 @@
             },
             {
               "id": "main_4",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "qa.main.4.document",
               "delay": {
                 "mode": "business",
@@ -1210,7 +1210,7 @@
             },
             {
               "id": "main_5",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "qa.main.5.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1222,16 +1222,16 @@
         },
         {
           "id": "dispatch_query",
-          "label": "出库询问",
+          "label": "Dispatch inquiry",
           "aliases": [
-            "出库",
-            "预核"
+            "dispatch",
+            "precheck"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "dispatch_query_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "qa.dispatch_query.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -1261,7 +1261,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是棱川制造质检·傅黎，负责材料检测报告。样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Lengchuan Manufacturing quality inspector - Fu Li, responsible for Material test report. Samples require a 28-day durability test, followed by report review at the next Monday 10:00 session. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:qa_pass"
@@ -1290,18 +1290,18 @@
         "normalization": {
           "type": "number",
           "units": {
-            "元": 1,
+            "yuan": 1,
             "CNY": 1,
-            "人民币": 1
+            "RMB": 1
           }
         }
       },
       "normalization": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       },
       "match": "expected"
@@ -1327,14 +1327,14 @@
         "normalization": {
           "type": "number",
           "units": {
-            "件": 1
+            "units": 1
           }
         }
       },
       "normalization": {
         "type": "number",
         "units": {
-          "件": 1
+          "units": 1
         }
       },
       "match": "expected"
@@ -1396,24 +1396,24 @@
   ],
   "expected_conclusion": "within_budget_with_current_quote",
   "temporal_mechanisms": [
-    "六天工厂日历与五天销售日历",
-    "28天耐久测试与周一批次",
-    "报价过期",
-    "并行查询后再次联系",
-    "新价目以官网页面文件形式发布",
-    "隐藏出库预核表单与分阶段办结",
-    "销售猜测性指路与质检明确回绝",
-    "出库预核受理的隐藏时间线",
-    "开局页面批次价目与销售起订量口头误述"
+    "Six-day factory calendar and five-day sales calendar",
+    "28-day durability test and Monday review batch",
+    "quote expiry",
+    "Follow-up contact after parallel inquiries",
+    "New price list published as an official webpage attachment",
+    "Hidden dispatch precheck form and staged completion",
+    "Speculative sales directions and explicit refusal by quality inspection",
+    "Hidden timeline of dispatch precheck acceptance",
+    "Initial webpage batch price list and sales' mistaken verbal minimum quantity"
   ],
   "failure_modes": [
-    "用18000元旧报价给结论",
-    "等待质检期间不追踪有效期",
-    "误以为查询等于下单",
-    "不复查官网错过新价目文件",
-    "不发现出库预核渠道即下结论",
-    "引用开局页面批次价目当作有效报价",
-    "把销售起订量印象当排产结论"
+    "Using the old CNY 18000 quote in the conclusion",
+    "Losing track of quote validity while waiting for inspection",
+    "Mistaking an inquiry for an order",
+    "Missing the new price list by failing to revisit the official website",
+    "Concluding without discovering the dispatch precheck channel",
+    "Treating the initial webpage batch price list as a valid quote",
+    "Treating sales' minimum quantity impression as a scheduling determination"
   ],
   "reference_actions": [
     {
@@ -1423,14 +1423,14 @@
     {
       "op": "send",
       "to": "sales",
-      "text": "请给初次报价",
+      "text": "Please provide an initial quote",
       "label": "old",
       "fields": "$user"
     },
     {
       "op": "send",
       "to": "qa",
-      "text": "请确认Q7质检报告",
+      "text": "Please confirm the Q7 inspection report",
       "label": "qa",
       "fields": "$user"
     },
@@ -1445,7 +1445,7 @@
     {
       "op": "send",
       "to": "sales",
-      "text": "请重新确认报价，旧报价已过期",
+      "text": "Please reconfirm the quote; the old quote has expired",
       "label": "new",
       "fields": "$user"
     },
@@ -1479,16 +1479,16 @@
       "op": "tool",
       "name": "lengchuan_dispatch_status",
       "args": {
-        "query": "出库"
+        "query": "dispatch"
       }
     }
   ],
   "reference_is_privileged": true,
-  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "alternate_paths": "Any lawful communication sequence satisfying all evidence requirements is accepted; the reference actions are not the only valid path.",
   "horizon_design": {
     "reference_days": 34,
-    "stratum": "中长期",
-    "mechanism": "28天耐久性测试、周审和过期报价更新",
+    "stratum": "Medium to long term",
+    "mechanism": "28-day durability test, weekly review, and expired quote refresh",
     "distribution": "manually stratified approximately logarithmic"
   }
 }

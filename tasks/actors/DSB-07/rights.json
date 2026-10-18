@@ -3,9 +3,9 @@
   "task_id": "DSB-07",
   "actor": {
     "id": "rights",
-    "name": "权利方联络员·Alex Chen",
-    "role": "图像权利继受与用途确认",
-    "description": "权利继受文件在2027年5月28日集中核验；随后按纽约当地工作时间审查指定用途，结束时自动签发确认，此前不能批准。",
+    "name": "Rights liaison - Alex Chen",
+    "role": "Image rights succession and intended-use confirmation",
+    "description": "Rights succession documents are checked together on May 28, 2027. The specified use is then reviewed during New York local working hours, with confirmation issued automatically on completion; approval is unavailable beforehand.",
     "calendar": "new_york",
     "channels": [
       "email"
@@ -42,11 +42,11 @@
     "workflows": [
       {
         "id": "main",
-        "label": "权利范围核实",
+        "label": "Verify rights scope",
         "aliases": [
-          "授权",
-          "使用",
-          "权利"
+          "authorization",
+          "use",
+          "rights"
         ],
         "required_fields": [
           "archive_id",
@@ -55,7 +55,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "rights.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -64,7 +64,7 @@
           },
           {
             "id": "main_2",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "rights.main.2.lookup",
             "delay": {
               "mode": "business",
@@ -74,7 +74,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "rights.main.3.document",
             "delay": {
               "mode": "elapsed",
@@ -83,7 +83,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "rights.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -113,7 +113,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是权利方联络员·Alex Chen，负责图像权利继受与用途确认。权利继受文件在2027年5月28日集中核验；随后按纽约当地工作时间审查指定用途，结束时自动签发确认，此前不能批准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Rights liaison - Alex Chen, responsible for Image rights succession and intended-use confirmation. Rights succession documents are checked together on May 28, 2027. The specified use is then reviewed during New York local working hours, with confirmation issued automatically on completion; approval is unavailable beforehand. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:online_allowed",
@@ -139,13 +139,13 @@
   "local_facts": {
     "exhibit": {
       "value": true,
-      "text": "图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。",
+      "text": "Image ARC-71 is approved for this noncommercial physical exhibition. To request digitized delivery, include this confirmation in your message to the archive.",
       "attributes": {
         "subject": {
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "physical_exhibit_allowed"
@@ -153,13 +153,13 @@
     },
     "online": {
       "value": false,
-      "text": "授权不包含网站或社交媒体公开发布。",
+      "text": "The authorization excludes public website or social media publication.",
       "attributes": {
         "subject": {
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "online_allowed"

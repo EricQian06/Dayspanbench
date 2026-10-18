@@ -240,7 +240,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The same approved allocation has been committed to the work board with neutral titles only; the deliverable stays not_started."}],
         alternate_paths="Any legal order of dialogue, work-board searches and manager mail is accepted if every goal's evidence conditions hold; any custom allocation that fits the current cutoff, busy intervals, daily limits and exactly eight hours is as valid as the reference blocks."))
     sites["DSB-24"] = "deadlinereplan"
-    horizons["DSB-24"] = (2, "短期", "written estimate turnaround plus a mid-morning review move that invalidates the first plan")
+    horizons["DSB-24"] = (2, "Short term", "written estimate turnaround plus a mid-morning review move that invalidates the first plan")
     conclusions["DSB-24"] = {
         "plan_committed": "Eight reserved focus hours before the moved cutoff with an acknowledged work-board plan",
         "unconfirmed": "Written estimate, current review timing or approval could not be obtained in time",

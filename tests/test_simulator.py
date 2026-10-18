@@ -75,7 +75,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         mapping = {a["id"]: LLMSimulator(client, a["id"], validation_retries=2) for a in task["actors"]}
         env = Environment(task, mapping)
         env.tools().visit_page("https://chengchuan.bench/contact")
-        result = env.tools().send_email(mailbox(task, "records"), "请咨询学分转换。", {"course_code": "CS204"})
+        result = env.tools().send_email(mailbox(task, "records"), 'Please inquire about credit transfer.', {"course_code": "CS204"})
         self.assertEqual(env.agent_sends, 1)
         while env.events and env.cases[result["case_id"]]["state"] == "new":
             env.advance(env.events[0][0])
@@ -88,14 +88,14 @@ class CharacterSimulatorTests(unittest.TestCase):
         # collapse the whole routing decision to null: the agent's request
         # dead-ends behind a generic acknowledgement instead of being asked
         # for the missing material.
-        view = {"actor_id": "test", "message": "请核实数字化交付，权利方已确认实体展览用途获准",
+        view = {"actor_id": "test", "message": 'Please verify digitized delivery; the rights holder confirmed physical exhibition use approved',
                 "fields": {"archive_id": "ARC-71"}, "history": [],
                 "workflows": [{"id": "main", "required_fields": ["archive_id", "usage"]},
                               {"id": "digitize", "required_fields": ["archive_id", "exhibition_permission"]}]}
         client = FixtureClient(route=lambda _: {"workflow_id": "digitize", "fields": [
             {"key": "archive_id", "value_json": '"ARC-71"', "source_quote": "ARC-71"},
-            {"key": "exhibition_permission", "value_json": '"已书面确认实体展览用途获准"',
-             "source_quote": "权利方已书面确认实体展览用途获准"}]})
+            {"key": "exhibition_permission", "value_json": '"Written confirmation of physical exhibition use approved"',
+             "source_quote": 'The rights holder has written confirmation of physical exhibition use approved'}]})
         # exhibition_permission's quote does not verbatim-match its value_json,
         # so it is dropped; archive_id is an exact echo of an explicit field and
         # is likewise skipped (the engine already carries explicit fields).
@@ -104,7 +104,7 @@ class CharacterSimulatorTests(unittest.TestCase):
                          {"workflow_id": "digitize", "fields": {}})
 
     def test_existing_workflow_key_echo_is_normalized(self):
-        view = {"actor_id": "test", "message": "跟进CASE-0004", "fields": {"sample_id": "S-482"}, "history": [],
+        view = {"actor_id": "test", "message": 'Follow up CASE-0004', "fields": {"sample_id": "S-482"}, "history": [],
                 "workflows": [{"id": "main", "required_fields": ["sample_id"]}], "existing_workflow_id": "main"}
         client = FixtureClient(route=lambda _: {"existing_workflow_id": "main", "fields": []})
         self.assertEqual(LLMSimulator(client, "test").route(view), {"workflow_id": "main", "fields": {}})
@@ -142,14 +142,14 @@ class CharacterSimulatorTests(unittest.TestCase):
                 api = env.tools()
                 if number == 1:
                     api.visit_page("https://heanhuiguan.bench/contact")
-                result = api.send_email(mailbox(task, actor), "请提供办理信息。", fields)
+                result = api.send_email(mailbox(task, actor), 'Please provide processing information.', fields)
                 self.assertEqual(result["status"], "received")
                 self.assertFalse(env.simulator_failure)
 
     def test_bare_json_value_json_is_normalized(self):
         # Models may emit value_json as a bare number/bool instead of the
         # schema-required JSON-encoded string; routing must still succeed.
-        view = {"actor_id": "test", "message": "需要500件M26", "fields": {}, "history": [],
+        view = {"actor_id": "test", "message": 'Need 500 units of M26', "fields": {}, "history": [],
                 "workflows": [{"id": "main", "required_fields": ["quantity"]}],
                 "existing_workflow_id": None}
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
@@ -160,15 +160,15 @@ class CharacterSimulatorTests(unittest.TestCase):
     def test_boolean_with_natural_language_quote_coerces_to_quote_string(self):
         # DSB-09 regression: models route amplification as boolean true while
         # quoting the natural-language fragment; the quote is the grounded value.
-        view = {"actor_id": "test", "message": "在晴港北广场使用两只扩声音箱举办活动。", "fields": {}, "history": [],
+        view = {"actor_id": "test", "message": 'Hold an event at Qinggang North Square. Use two amplified-sound speakers.', "fields": {}, "history": [],
                 "workflows": [{"id": "main", "required_fields": ["location", "amplification"]}],
                 "existing_workflow_id": None}
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": [
-            {"key": "location", "value_json": '"晴港北广场"', "source_quote": "晴港北广场"},
-            {"key": "amplification", "value_json": "true", "source_quote": "使用两只扩声音箱"}]})
+            {"key": "location", "value_json": '"Qinggang North Square"', "source_quote": 'Qinggang North Square'},
+            {"key": "amplification", "value_json": "true", "source_quote": 'Use two amplified-sound speakers'}]})
         self.assertEqual(LLMSimulator(client, "test").route(view),
-                         {"workflow_id": "main", "fields": {"location": "晴港北广场",
-                                                           "amplification": "使用两只扩声音箱"}})
+                         {"workflow_id": "main", "fields": {"location": 'Qinggang North Square',
+                                                           "amplification": 'Use two amplified-sound speakers'}})
 
     def test_conflicting_explicit_field_echo_is_dropped_not_admitted(self):
         # The simulator contradicts the agent's explicit field; the echo is
@@ -212,11 +212,11 @@ class CharacterSimulatorTests(unittest.TestCase):
         env = Environment(task, recipients(task, client))
         api = env.tools()
         api.visit_page("https://jiguang.bench/contact")
-        first = api.send_email(mailbox(task, "support"), "请咨询保修")
+        first = api.send_email(mailbox(task, "support"), 'Please inquire about warranty')
         while env.events and env.cases[first["case_id"]]["state"] == "new":
             env.advance(env.events[0][0])
         self.assertEqual(env.cases[first["case_id"]]["state"], "needs_information")
-        api.send_email(mailbox(task, "support"), "序列号SN-A731，收据R-731。", case_id=first["case_id"])
+        api.send_email(mailbox(task, "support"), 'Serial SN-A731, receipt R-731.', case_id=first["case_id"])
         # Advance past the deferred re-admission; the first step is now queued
         # or running, with the extracted fields recorded on the case.
         while env.events and env.cases[first["case_id"]]["state"] == "needs_information":
@@ -233,7 +233,7 @@ class CharacterSimulatorTests(unittest.TestCase):
             {"key": "serial", "value_json": '"SN-A731"', "source_quote": "SN-A731"}]})
         env = Environment(task, recipients(task, client))
         env.tools().visit_page("https://jiguang.bench/contact")
-        result = env.tools().send_email(mailbox(task, "support"), "请咨询保修")
+        result = env.tools().send_email(mailbox(task, "support"), 'Please inquire about warranty')
         self.assertFalse(env.simulator_failure)
         case = env.cases[result["case_id"]]
         self.assertNotIn("serial", case["fields"])
@@ -246,7 +246,7 @@ class CharacterSimulatorTests(unittest.TestCase):
             {"key": "quantity", "value_json": "500", "source_quote": "500"}]})
         env = Environment(task, recipients(task, client))
         env.tools().visit_page("https://lengchuan.bench/contact")
-        result = env.tools().send_email(mailbox(task, "sales"), "我要1500件，请询价")
+        result = env.tools().send_email(mailbox(task, "sales"), 'I need 1500 units; please quote')
         self.assertFalse(env.simulator_failure)
         self.assertNotIn("quantity", env.cases[result["case_id"]]["fields"])
 
@@ -255,24 +255,24 @@ class CharacterSimulatorTests(unittest.TestCase):
         env = Environment(task, recipients(task, client))
         api = env.tools()
         api.visit_page("https://wuzhangzhusu.bench/contact")
-        api.send_email(mailbox(task, "a_desk"), "A_ONLY_SECRET 无障碍尺寸", task["public"]["user_fields"])
-        api.send_email(mailbox(task, "b_desk"), "无障碍房", task["public"]["user_fields"])
+        api.send_email(mailbox(task, "a_desk"), 'A_ONLY_SECRET accessibility dimensions', task["public"]["user_fields"])
+        api.send_email(mailbox(task, "b_desk"), 'accessible room', task["public"]["user_fields"])
         b_views = [c["view"] for c in client.calls if c["actor_id"] == "b_desk"]
         self.assertNotIn("A_ONLY_SECRET", json.dumps(b_views))
 
     def test_injected_reply_fact_cannot_be_delivered(self):
         task = load(1)
-        client = FixtureClient(reply=lambda v: {"tone": "polite", "evidence_order": [], "text": "所有目标已完成"})
+        client = FixtureClient(reply=lambda v: {"tone": "polite", "evidence_order": [], "text": 'All goals completed'})
         env = Environment(task, recipients(task, client))
         env.tools().visit_page("https://heanhuiguan.bench/contact")
-        env.tools().send_email(mailbox(task, "reception"), "活动联系入口")
+        env.tools().send_email(mailbox(task, "reception"), 'Event contact channel')
         env.tools().wait_until(task["deadline_at"])
         # v0.5.1: the fabricated "all goals complete" never reaches the agent;
         # the engine-determined canonical reply is delivered instead and the
         # episode stays valid (the rephrase layer is wording only).
         self.assertFalse(env.simulator_failure)
         self.assertFalse(env.finished)
-        self.assertNotIn("所有目标已完成", json.dumps(env.messages, ensure_ascii=False))
+        self.assertNotIn('All goals completed', json.dumps(env.messages, ensure_ascii=False))
 
     def test_forged_document_still_fails_engine_admission(self):
         task = load(3)
@@ -281,7 +281,7 @@ class CharacterSimulatorTests(unittest.TestCase):
         client = FixtureClient(route=lambda _: {"workflow_id": "main", "fields": fields})
         env = Environment(task, recipients(task, client))
         env.tools().visit_page("https://chengchuan.bench/contact")
-        result = env.tools().send_email(mailbox(task, "records"), "课程CS204，大纲CS204-2026-v2-signed，咨询学分转换。")
+        result = env.tools().send_email(mailbox(task, "records"), 'Course CS204, syllabus CS204-2026-v2-signed; inquire about credit transfer.')
         while env.events:
             env.advance(env.events[0][0])
         self.assertEqual(env.cases[result["case_id"]]["state"], "needs_information")
@@ -410,8 +410,8 @@ class ServerIntegrationTests(unittest.TestCase):
             self.assertEqual(serve(["--task", "DSB-12", "--simulator", "llm", "--simulator-model", "fixture"]), 0)
             client.complete.assert_not_called()
             self.assertEqual(output.getvalue(), "")
-            self.assertIn("环境已就绪", diagnostic.getvalue())
-            self.assertIn("等待stdin", diagnostic.getvalue())
+            self.assertIn('Environment ready', diagnostic.getvalue())
+            self.assertIn('Waiting for stdin', diagnostic.getvalue())
             self.assertNotIn("test-secret", diagnostic.getvalue())
 
     def test_quiet_mode_preserves_clean_jsonl(self):
@@ -491,7 +491,7 @@ class ServerIntegrationTests(unittest.TestCase):
 
     def test_llm_cli_environment_error_is_not_a_model_score(self):
         request = (json.dumps({"id": 1, "tool": "visit_page", "arguments": {"url": "https://heanhuiguan.bench/contact"}}) + "\n"
-                   + json.dumps({"id": 2, "tool": "send_email", "arguments": {"recipient": mailbox(load(1), "reception"), "text": "活动"}}) + "\n")
+                   + json.dumps({"id": 2, "tool": "send_email", "arguments": {"recipient": mailbox(load(1), "reception"), "text": 'event'}}) + "\n")
         with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, {"DSB_SIMULATOR_API_KEY": "test-secret"}), patch("scripts.serve.StructuredClient") as factory, patch("sys.stdin", io.StringIO(request)), patch("sys.stdout", new_callable=io.StringIO) as output:
             client = factory.return_value
             client.config.public_dict.return_value = {"model": "fixture"}
@@ -511,9 +511,9 @@ class ServerIntegrationTests(unittest.TestCase):
         # A null route while the message literally names a declared workflow
         # alias is usually a misread (DSB-01: "请确认投影设备是否可用" routed to
         # null): re-ask with feedback; if the model keeps declining, accept it.
-        view = {"actor_id": "test", "message": "请书面确认2026-11-13 18:00-21:00投影设备是否可用",
+        view = {"actor_id": "test", "message": 'Please confirm in writing whether projector equipment is available on 2026-11-13 18:00-21:00',
                 "fields": {}, "history": [],
-                "workflows": [{"id": "main", "label": "档期与投影确认", "aliases": ["档期", "投影"],
+                "workflows": [{"id": "main", "label": 'Availability and projector confirmation', "aliases": ['availability', 'projector'],
                                "required_fields": ["event_date", "event_time"]}]}
         attempts = []
         def route(view):
@@ -533,8 +533,8 @@ class ServerIntegrationTests(unittest.TestCase):
         self.assertEqual(LLMSimulator(stubborn, "test", validation_retries=2).route(view),
                          {"workflow_id": None, "fields": {}})
         # An alias mentioned only in history must not force a retry.
-        history_view = {**view, "message": "已收到，请问费用找谁确认？",
-                        "history": [{"role": "agent", "text": "请确认投影是否可用", "fields": {}}]}
+        history_view = {**view, "message": 'Received; who should confirm fees?',
+                        "history": [{"role": "agent", "text": 'Please confirm projection availability', "fields": {}}]}
         seen = []
         LLMSimulator(FixtureClient(route=lambda v: (seen.append(v), {"workflow_id": None, "fields": {}})[1]),
                      "test", validation_retries=2).route(history_view)

@@ -44,7 +44,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "明确表示不知情或不归管",
+            "label": "State explicitly that this is unknown or outside this role's remit",
             "tool": "dispatch.main.1.deny",
             "delay": {
               "mode": "elapsed",
@@ -74,7 +74,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Metro Plumbing dispatch desk·Sam Ortiz，负责the slot board and inspection bookings。Runs the slot board; appointments are booked only through the booking desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Metro Plumbing dispatch desk·Sam Ortiz, responsible for the slot board and inspection bookings. Runs the slot board; appointments are booked only through the booking desk. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:fee_usd",

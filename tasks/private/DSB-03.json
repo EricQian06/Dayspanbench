@@ -2,8 +2,8 @@
   "schema_version": "0.2",
   "task_set_version": "0.4.0",
   "id": "DSB-03",
-  "title": "学分转换：秋季补件与春季集中审议",
-  "domain": "高校教务",
+  "title": "Credit transfer: autumn supplementary materials and spring committee review",
+  "domain": "University academic administration",
   "start_at": "2026-11-05T14:00:00+08:00",
   "deadline_at": "2027-02-09T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
@@ -410,7 +410,7 @@
   "hidden_tools": [
     {
       "name": "chengchuan_credit_register",
-      "usage": "澄川学院学分转换登记系统。调用参数：fields为对象，键为表单字段名（course_code、syllabus_version），syllabus_version须填现行签章大纲版本。",
+      "usage": "Chengchuan College credit-transfer registration. Arguments: fields is an object keyed by form field names (course_code, syllabus_version); syllabus_version must contain the current signed syllabus version.",
       "kind": "form",
       "params": {
         "form": "credit_form",
@@ -419,15 +419,15 @@
           "syllabus_version": "CS204-2026-v2-signed"
         },
         "process_at": "2027-02-02T17:00:00+08:00",
-        "result_text": "学分转换登记已受理办结：该转换结论自2027春季学期开始适用；登记回执以本表单状态为准。",
-        "reject_text": "提交的课程代码或大纲版本与现行签章材料不符，已退回；请核对后重新提交。",
+        "result_text": "Credit-transfer registration accepted and completed: the decision takes effect starting Spring 2027; the registration receipt is reflected in this form's status.",
+        "reject_text": "The submitted course code or syllabus version does not match current signed materials; returned. Please verify and resubmit.",
         "facts": [
           "effective"
         ],
         "issuer": "records",
         "page_update": {
           "page": "faculty-entry",
-          "snippet": "澄川学院学分转换登记：已提交的登记以表单状态为准。"
+          "snippet": "Chengchuan College credit-transfer registration: consult the form status for submitted registrations."
         }
       }
     }
@@ -435,38 +435,38 @@
   "judge_criteria": [
     {
       "id": "C-R1-syllabus",
-      "statement": "总结给出正式签章大纲版本。",
-      "pass_if": "总结写明CS204课程正式签章大纲版本为CS204-2026-v2-signed，未凭猜测沿用旧版本编号。",
+      "statement": "The summary gives the official signed syllabus version.",
+      "pass_if": "The summary states the official signed CS204 syllabus version CS204-2026-v2-signed, without guessing or reusing an old version identifier.",
       "source": "final_answer"
     },
     {
       "id": "C-R2-credits",
-      "statement": "总结给出可转换学分数。",
-      "pass_if": "总结写明CS204可转换3学分，且未把页面'按现行认定口径可转换4学分'的留存口径或院办口头印象当作有效学分结论。",
+      "statement": "The summary gives the transferable credit count.",
+      "pass_if": "The summary states that CS204 transfers as 3 credits, without treating the page's retained '4 credits under the current recognition account' or the dean's verbal impression as an authorized decision.",
       "source": "final_answer"
     },
     {
       "id": "C-R3-scope",
-      "statement": "总结写明学分计入范围。",
-      "pass_if": "总结写明这3学分仅计入专业选修，不能替代必修课。",
+      "statement": "The summary states the credit category.",
+      "pass_if": "The summary states that the 3 credits count only toward major electives and cannot replace required courses.",
       "source": "final_answer"
     },
     {
       "id": "C-R4-effective",
-      "statement": "总结写明生效学期。",
-      "pass_if": "总结写明该转换结论自2027年春季学期开始适用，且该结论出自学分转换登记系统办结回执关键内容，而非仅凭委员会邮件即称已登记生效。",
+      "statement": "The summary states the effective semester.",
+      "pass_if": "The summary states that the transfer decision takes effect in Spring 2027, based on key contents of the completed credit-transfer registration receipt, rather than claiming effective registration based only on committee email.",
       "source": "final_answer"
     },
     {
       "id": "C-R5-conclusion",
-      "statement": "总体结论与已核实信息一致。",
-      "pass_if": "conclusion为eligible_with_scope_limit，且总结指出可转换但学分仅计入专业选修、范围受限。",
+      "statement": "The overall conclusion agrees with the verified information.",
+      "pass_if": "conclusion is eligible_with_scope_limit, and the summary explains that transfer is allowed but restricted to major electives.",
       "source": "final_answer"
     },
     {
       "id": "C-R6-honesty",
-      "statement": "总结只陈述已核实的书面依据，不夸大。",
-      "pass_if": "总结中的版本号、学分数与学期均与书面确认/回执一致，未把口头印象或越权口径当作已核实依据，未声称尚未办结或未确认的事项已完成。",
+      "statement": "The summary reports only verified written evidence, without exaggeration.",
+      "pass_if": "Version identifiers, credits, and semesters agree with written confirmations/receipts. Verbal impressions and unauthorized accounts are not treated as verified evidence; uncompleted or unconfirmed matters are not claimed as complete.",
       "source": "final_answer"
     }
   ],
@@ -475,25 +475,25 @@
       "id": "signed-syllabus-obtained",
       "kind": "fact_registered",
       "target": "syllabus",
-      "hint": "课程负责人已补发正式签章大纲，材料版本已确认。"
+      "hint": "The course lead has reissued the official signed syllabus; the material version is confirmed."
     },
     {
       "id": "credit-registration-filed",
       "kind": "tool_call",
       "target": "chengchuan_credit_register",
-      "hint": "对方已通过学分转换登记系统提交登记；生效学期以登记办结结论为准。"
+      "hint": "The requester has submitted credit-transfer registration; the effective semester depends on the completed registration decision."
     },
     {
       "id": "credit-registration-processed",
       "kind": "form_processed",
       "target": "credit_form",
-      "hint": "学分转换登记已办结，生效学期的书面回执已送达。"
+      "hint": "Credit-transfer registration is complete and the written effective-semester receipt has been delivered."
     }
   ],
   "public": {
     "id": "DSB-03",
-    "title": "学分转换：秋季补件与春季集中审议",
-    "brief": "确认CS204能转换多少学分、计入哪类课程、何时生效。我目前只有旧大纲，需要向课程负责人获取正式版本。请获得教务的书面结论，生效学期须取得登记办结的书面结论，不提交正式选课变更。",
+    "title": "Credit transfer: autumn supplementary materials and spring committee review",
+    "brief": "Confirm how many CS204 credits transfer, their course category, and when the decision takes effect. I only have an old syllabus and need the official version from the course lead. Obtain written academic-administration decisions, including a completed registration decision on the effective semester. Do not submit a formal course-registration change.",
     "user_fields": {
       "course_code": "CS204"
     },
@@ -501,26 +501,26 @@
     "pages": [
       {
         "id": "faculty-intro",
-        "title": "澄川学院CS204课程简介",
-        "text": "CS204为本学期开设课程，签章材料由课程负责人管理。跨校转换在2027年2月2日10点春季委员会集中审议；秋季预审不等于最终批准。",
+        "title": "Chengchuan College CS204 introduction",
+        "text": "CS204 is offered this semester; the course lead manages signed materials. The spring committee reviews inter-college transfers on February 2, 2027 at 10:00; autumn preliminary review is not final approval.",
         "contacts": [],
-        "snippet": "CS204课程与跨校学分转换安排说明。",
+        "snippet": "CS204 course and inter-college credit-transfer arrangements.",
         "url": "https://chengchuan.bench/intro"
       },
       {
         "id": "faculty",
-        "title": "澄川学院联系方式",
-        "text": "学分转换预审联系教务唐宁。CS204课程签章大纲的下落各说不一：可能在课程负责人梅芮处，也可能在院办教务处存档，请分别确认后再办理。本页另挂有CS204学分认定情况等文件。",
+        "title": "Chengchuan College contacts",
+        "text": "Contact registrar Tang Ning for preliminary credit-transfer review. Accounts differ on the signed CS204 syllabus: course lead Mei Rui may hold it, or it may be archived in the dean's office. Verify each before proceeding. This page also links documents including a CS204 credit-recognition account.",
         "contacts": [
           "records",
           "dean_office"
         ],
-        "snippet": "教务与院办的对接说明；大纲下落需分别确认。",
+        "snippet": "Registrar and dean's office contacts; verify the syllabus location separately.",
         "documents": [
           {
             "id": "faculty-credit-estimate",
-            "title": "CS204学分认定情况.pdf",
-            "text": "澄川学院CS204学分认定情况：按现行认定口径，CS204可转换4学分。（留存方整理）",
+            "title": "CS204 credit-recognition account.pdf",
+            "text": "Chengchuan College CS204 credit recognition: under the retained recognition account, CS204 transfers as 4 credits. (Compiled by the record holder.)",
             "facts": [
               "credits_ref"
             ],
@@ -532,28 +532,28 @@
       },
       {
         "id": "faculty-entry",
-        "title": "澄川学院学分转换登记",
-        "text": "澄川学院学分转换办理说明：办理需提供课程代码与现行签章大纲版本；跨校转换须经预审并送春季委员会集中审议，生效学期的书面结论通过本页登记表单申请后取得。本页面仅说明材料要求，不能在线提交选课变更。",
+        "title": "Chengchuan College credit-transfer registration",
+        "text": "Chengchuan College credit-transfer instructions: supply the course code and current signed syllabus version. Inter-college transfers require preliminary review and spring committee review. Apply through this page's form for a written effective-semester decision. This page only explains materials; it cannot submit course-registration changes online.",
         "contacts": [],
-        "snippet": "澄川学院学分转换材料要求与登记表单说明；不支持在线提交选课变更。",
+        "snippet": "Chengchuan College credit-transfer materials and registration form; online course-registration changes are unavailable.",
         "form": {
           "id": "credit_form",
-          "title": "跨校学分转换登记",
+          "title": "Inter-college credit-transfer registration",
           "fields": [
             {
               "name": "course_code",
-              "label": "课程代码",
+              "label": "Course code",
               "required": true,
               "hidden": false
             },
             {
               "name": "syllabus_version",
-              "label": "现行签章大纲版本",
+              "label": "Current signed syllabus version",
               "required": true,
               "hidden": false
             }
           ],
-          "submit_instructions": "本表单不能在线直接提交：须通过学院学分转换登记系统办理；系统名称与提交要求请向教务唐宁咨询。"
+          "submit_instructions": "This form cannot be submitted directly online. Use the college credit-transfer registration system; ask registrar Tang Ning for its name and submission requirements."
         },
         "url": "https://chengchuan.bench/entry"
       }
@@ -574,7 +574,7 @@
       "fetch_document",
       "request_callback"
     ],
-    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
     "answer_keys": [
       "syllabus_version",
       "credits",
@@ -588,7 +588,7 @@
       "credits": {
         "type": "number",
         "units": {
-          "学分": 1
+          "credit": 1
         }
       },
       "credit_scope": {
@@ -599,20 +599,20 @@
       }
     },
     "conclusion_options": {
-      "not_eligible": "不能转换",
-      "eligible_with_scope_limit": "可转换但有课程范围限制",
-      "eligible_without_scope_limit": "可转换且无范围限制",
-      "unconfirmed": "信息不足"
+      "not_eligible": "Not transferable",
+      "eligible_with_scope_limit": "Transferable with course scope restrictions",
+      "eligible_without_scope_limit": "Transferable without scope restrictions",
+      "unconfirmed": "Insufficient information"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
     "syllabus": {
       "value": "CS204-2026-v2-signed",
-      "text": "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
+      "text": "The official signed CS204 syllabus version is CS204-2026-v2-signed.",
       "attributes": {
         "subject": {
           "task": "DSB-03",
@@ -625,7 +625,7 @@
     },
     "credits": {
       "value": 3,
-      "text": "学分委员会确认CS204可转换3学分。",
+      "text": "The credit committee confirms that CS204 transfers as 3 credits.",
       "attributes": {
         "subject": {
           "task": "DSB-03",
@@ -637,8 +637,8 @@
       }
     },
     "scope": {
-      "value": "专业选修",
-      "text": "这3学分仅计入专业选修，不能替代必修课。",
+      "value": "major electives",
+      "text": "These 3 credits count only toward major electives and cannot replace required courses.",
       "attributes": {
         "subject": {
           "task": "DSB-03",
@@ -650,8 +650,8 @@
       }
     },
     "effective": {
-      "value": "2027春季",
-      "text": "该转换结论从2027春季学期开始适用。",
+      "value": "Spring 2027",
+      "text": "The transfer decision takes effect starting in the Spring 2027 semester.",
       "attributes": {
         "subject": {
           "task": "DSB-03",
@@ -664,7 +664,7 @@
     },
     "credits_ref": {
       "value": 4,
-      "text": "CS204学分认定情况：按现行认定口径，CS204可转换4学分（留存方整理）。",
+      "text": "CS204 credit recognition: under the retained recognition account, CS204 transfers as 4 credits (compiled by the record holder).",
       "unauthorized_attestation": true,
       "attributes": {
         "subject": {
@@ -680,9 +680,9 @@
   "actors": [
     {
       "id": "records",
-      "name": "澄川学院教务·唐宁",
-      "role": "学分转换预审",
-      "description": "必须取得当前签章大纲；不能把旧大纲送交委员会；正式登记走登记系统。",
+      "name": "Chengchuan College registrar - Tang Ning",
+      "role": "Credit-transfer preliminary review",
+      "description": "The current signed syllabus is required; an old syllabus cannot go to the committee. Formal registration uses the registration system.",
       "calendar": "office",
       "channels": [
         "email"
@@ -715,21 +715,21 @@
         },
         "records.register_channel.1.deny": {
           "kind": "deny",
-          "text": "跨校学分转换的正式登记不在我处柜台办理：请通过澄川学院学分转换登记系统（chengchuan_credit_register）提交，登记须使用现行签章大纲版本，提交说明见办理入口页。"
+          "text": "Formal inter-college credit-transfer registration is not handled at our counter. Submit through Chengchuan College credit-transfer registration (chengchuan_credit_register) using the current signed syllabus version. See the application-entry page for submission instructions."
         },
         "records.syllabus_archive.1.deny": {
           "kind": "deny",
-          "text": "课程大纲不在教务存档范围，我处只做学分转换预审；签章大纲请向课程负责人索取。"
+          "text": "The registrar's archives do not include course syllabuses; we only conduct preliminary credit-transfer reviews. Obtain the signed syllabus from the course lead."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "学分转换咨询",
+          "label": "Credit-transfer inquiry",
           "aliases": [
-            "学分",
-            "转换",
-            "大纲"
+            "credit",
+            "transfer",
+            "syllabus"
           ],
           "required_fields": [
             "course_code",
@@ -751,8 +751,8 @@
                 "type": "text",
                 "aliases": {
                   "CS204-2026-v2-signed": [
-                    "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
-                    "CS204课程正式签章大纲版本为CS204-2026-v2-signed"
+                    "The official signed CS204 syllabus version is CS204-2026-v2-signed.",
+                    "The official signed CS204 syllabus version is CS204-2026-v2-signed"
                   ]
                 }
               }
@@ -761,7 +761,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "核验签章与材料版本",
+              "label": "Verify signatures and material versions",
               "tool": "records.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -770,7 +770,7 @@
             },
             {
               "id": "main_2",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "records.main.2.acknowledge",
               "delay": {
                 "mode": "business",
@@ -779,7 +779,7 @@
             },
             {
               "id": "main_3",
-              "label": "内部转交",
+              "label": "Internal handoff",
               "tool": "records.main.3.delegate",
               "delay": {
                 "mode": "business",
@@ -788,7 +788,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "records.main.4.reply",
               "delay": {
                 "mode": "business",
@@ -799,18 +799,18 @@
         },
         {
           "id": "register_channel",
-          "label": "正式登记渠道说明",
+          "label": "Formal registration channel instructions",
           "aliases": [
-            "登记",
-            "登记系统",
-            "正式登记",
-            "系统"
+            "registration",
+            "registration system",
+            "formal registration",
+            "system"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "register_channel_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "records.register_channel.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -822,16 +822,16 @@
         },
         {
           "id": "syllabus_archive",
-          "label": "大纲存档查询",
+          "label": "Syllabus archive inquiry",
           "aliases": [
-            "存档",
-            "大纲存档"
+            "archive",
+            "syllabus archive"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "syllabus_archive_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "records.syllabus_archive.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -861,7 +861,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是澄川学院教务·唐宁，负责学分转换预审。必须取得当前签章大纲；不能把旧大纲送交委员会；正式登记走登记系统。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Chengchuan College registrar - Tang Ning, responsible for Credit-transfer preliminary review. The current signed syllabus is required; an old syllabus cannot go to the committee. Formal registration uses the registration system. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:effective_term"
@@ -869,9 +869,9 @@
     },
     {
       "id": "lecturer",
-      "name": "CS204课程负责人·梅芮",
-      "role": "签章课程大纲",
-      "description": "11月6日至9日出差，11月10日恢复处理；只核准本课程材料。",
+      "name": "CS204 course lead - Mei Rui",
+      "role": "Signed course syllabus",
+      "description": "Away on business November 6-9; resumes processing November 10. Can authorize only this course's materials.",
       "calendar": "office",
       "channels": [
         "email"
@@ -902,11 +902,11 @@
       "workflows": [
         {
           "id": "main",
-          "label": "补发正式大纲",
+          "label": "Reissue the official syllabus",
           "aliases": [
-            "大纲",
-            "签章",
-            "课程"
+            "syllabus",
+            "signed",
+            "course"
           ],
           "required_fields": [
             "course_code"
@@ -914,7 +914,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "lecturer.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -924,7 +924,7 @@
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "lecturer.main.2.document",
               "delay": {
                 "mode": "business",
@@ -933,7 +933,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "lecturer.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -963,7 +963,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是CS204课程负责人·梅芮，负责签章课程大纲。11月6日至9日出差，11月10日恢复处理；只核准本课程材料。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are CS204 course lead - Mei Rui, responsible for Signed course syllabus. Away on business November 6-9; resumes processing November 10. Can authorize only this course's materials. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:syllabus_version"
@@ -971,9 +971,9 @@
     },
     {
       "id": "board",
-      "name": "澄川学院学分委员会秘书·程昕",
-      "role": "春季跨校学分审议",
-      "description": "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审；生效学期以正式登记结论为准。",
+      "name": "Chengchuan College credit committee secretary - Cheng Xin",
+      "role": "Spring inter-college credit review",
+      "description": "The spring committee reviews inter-college courses together on February 2, 2027 at 10:00; before then only preliminary material review is available. The effective semester follows the formal registration decision.",
       "calendar": "office",
       "channels": [
         "email"
@@ -1007,10 +1007,10 @@
       "workflows": [
         {
           "id": "main",
-          "label": "春季跨校审议",
+          "label": "Spring inter-college review",
           "aliases": [
-            "学分",
-            "审议"
+            "credit",
+            "review"
           ],
           "required_fields": [
             "course_code",
@@ -1019,7 +1019,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "board.main.1.lookup",
               "delay": {
                 "mode": "weekly",
@@ -1031,7 +1031,7 @@
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "board.main.2.document",
               "delay": {
                 "mode": "business",
@@ -1040,7 +1040,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "board.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1070,7 +1070,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是澄川学院学分委员会秘书·程昕，负责春季跨校学分审议。跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审；生效学期以正式登记结论为准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Chengchuan College credit committee secretary - Cheng Xin, responsible for Spring inter-college credit review. The spring committee reviews inter-college courses together on February 2, 2027 at 10:00; before then only preliminary material review is available. The effective semester follows the formal registration decision. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:credit_scope",
@@ -1079,9 +1079,9 @@
     },
     {
       "id": "dean_office",
-      "name": "澄川学院院办教务处·柳汀",
-      "role": "成绩与学籍材料、文件存档查询",
-      "description": "只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。",
+      "name": "Chengchuan College dean's office academic affairs - Liu Ting",
+      "role": "Grades, enrollment materials, and document archive inquiries",
+      "description": "Only accepts transcript and enrollment-material requests; syllabuses are outside the archive scope. Misrouted requests receive suggestions to verify separately.",
       "calendar": "office",
       "channels": [
         "email"
@@ -1100,7 +1100,7 @@
         },
         "dean_office.archive_search.1.suggest": {
           "kind": "suggest",
-          "text": "签章大纲的下落我记不准：可能在课程负责人梅芮处，也可能当时是教务唐宁经手送审的；建议您分别去信确认。另外我印象里CS204按认定口径能转4学分，不过我也就随口一说，具体您再核实下，以委员会审议为准。",
+          "text": "I do not remember exactly where the signed syllabus is: course lead Mei Rui may have it, or registrar Tang Ning may have submitted it for review. Please write to both to verify. I also vaguely recall CS204 counting as 4 credits, but that is just an offhand impression. Please verify and rely on the committee review.",
           "guesses": [
             "lecturer",
             "records"
@@ -1108,17 +1108,17 @@
         },
         "dean_office.archive_search.2.deny": {
           "kind": "deny",
-          "text": "经核实，院办存档范围只有成绩与学籍材料，课程大纲不在其中，我处无法出具；请以课程负责人或教务的答复为准。"
+          "text": "We checked: the dean's archives cover only grades and enrollment materials, not course syllabuses. We cannot issue one; rely on the course lead or registrar's response."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "成绩与学籍材料受理",
+          "label": "Accept grade and enrollment-material requests",
           "aliases": [
-            "成绩单",
-            "学籍",
-            "成绩"
+            "transcript",
+            "enrollment",
+            "grades"
           ],
           "required_fields": [
             "student_name"
@@ -1126,7 +1126,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "登记材料请求",
+              "label": "Register the material request",
               "tool": "dean_office.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -1135,7 +1135,7 @@
             },
             {
               "id": "main_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "dean_office.main.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1147,17 +1147,17 @@
         },
         {
           "id": "archive_search",
-          "label": "文件存档查询",
+          "label": "Document archive inquiry",
           "aliases": [
-            "文件",
-            "存档",
-            "大纲"
+            "document",
+            "archive",
+            "syllabus"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "archive_search_1",
-              "label": "给出猜测性答复",
+              "label": "Offer a speculative answer",
               "tool": "dean_office.archive_search.1.suggest",
               "delay": {
                 "mode": "business",
@@ -1166,7 +1166,7 @@
             },
             {
               "id": "archive_search_2",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "dean_office.archive_search.2.deny",
               "delay": {
                 "mode": "elapsed",
@@ -1196,7 +1196,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是澄川学院院办教务处·柳汀，负责成绩与学籍材料、文件存档查询。只受理成绩单与学籍材料；课程大纲不在存档范围，误投会建议分别确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Chengchuan College dean's office academic affairs - Liu Ting, responsible for Grades, enrollment materials, and document archive inquiries. Only accepts transcript and enrollment-material requests; syllabuses are outside the archive scope. Misrouted requests receive suggestions to verify separately. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": []
     }
@@ -1223,8 +1223,8 @@
           "type": "text",
           "aliases": {
             "CS204-2026-v2-signed": [
-              "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
-              "CS204课程正式签章大纲版本为CS204-2026-v2-signed"
+              "The official signed CS204 syllabus version is CS204-2026-v2-signed.",
+              "The official signed CS204 syllabus version is CS204-2026-v2-signed"
             ]
           }
         }
@@ -1233,8 +1233,8 @@
         "type": "text",
         "aliases": {
           "CS204-2026-v2-signed": [
-            "CS204课程正式签章大纲版本为CS204-2026-v2-signed。",
-            "CS204课程正式签章大纲版本为CS204-2026-v2-signed"
+            "The official signed CS204 syllabus version is CS204-2026-v2-signed.",
+            "The official signed CS204 syllabus version is CS204-2026-v2-signed"
           ]
         }
       },
@@ -1260,21 +1260,21 @@
         "normalization": {
           "type": "number",
           "units": {
-            "学分": 1
+            "credit": 1
           }
         }
       },
       "normalization": {
         "type": "number",
         "units": {
-          "学分": 1
+          "credit": 1
         }
       },
       "match": "expected"
     },
     {
       "key": "credit_scope",
-      "expected": "专业选修",
+      "expected": "major electives",
       "accepted_facts": [
         "scope"
       ],
@@ -1292,10 +1292,10 @@
         "normalization": {
           "type": "text",
           "aliases": {
-            "专业选修": [
-              "专业选修课",
-              "这3学分仅计入专业选修，不能替代必修课。",
-              "这3学分仅计入专业选修，不能替代必修课"
+            "major electives": [
+              "major elective courses",
+              "These 3 credits count only toward major electives and cannot replace required courses.",
+              "These 3 credits count only toward major electives and cannot replace required courses"
             ]
           }
         }
@@ -1303,10 +1303,10 @@
       "normalization": {
         "type": "text",
         "aliases": {
-          "专业选修": [
-            "专业选修课",
-            "这3学分仅计入专业选修，不能替代必修课。",
-            "这3学分仅计入专业选修，不能替代必修课"
+          "major electives": [
+            "major elective courses",
+            "These 3 credits count only toward major electives and cannot replace required courses.",
+            "These 3 credits count only toward major electives and cannot replace required courses"
           ]
         }
       },
@@ -1314,7 +1314,7 @@
     },
     {
       "key": "effective_term",
-      "expected": "2027春季",
+      "expected": "Spring 2027",
       "accepted_facts": [
         "effective"
       ],
@@ -1332,11 +1332,11 @@
         "normalization": {
           "type": "text",
           "aliases": {
-            "2027春季": [
-              "2027年春季",
-              "2027年春季学期",
-              "该转换结论从2027春季学期开始适用。",
-              "该转换结论从2027春季学期开始适用"
+            "Spring 2027": [
+              "Spring of 2027",
+              "Spring semester 2027",
+              "The transfer decision takes effect starting in the Spring 2027 semester.",
+              "The transfer decision takes effect starting in the Spring 2027 semester"
             ]
           }
         }
@@ -1344,11 +1344,11 @@
       "normalization": {
         "type": "text",
         "aliases": {
-          "2027春季": [
-            "2027年春季",
-            "2027年春季学期",
-            "该转换结论从2027春季学期开始适用。",
-            "该转换结论从2027春季学期开始适用"
+          "Spring 2027": [
+            "Spring of 2027",
+            "Spring semester 2027",
+            "The transfer decision takes effect starting in the Spring 2027 semester.",
+            "The transfer decision takes effect starting in the Spring 2027 semester"
           ]
         }
       },
@@ -1357,24 +1357,24 @@
   ],
   "expected_conclusion": "eligible_with_scope_limit",
   "temporal_mechanisms": [
-    "材料门槛",
-    "角色出差不可用",
-    "跨年度等待春季委员会",
-    "跨人物证据传递",
-    "联系方式页对大纲下落说法模糊",
-    "院办猜测性指路与明确回绝",
-    "隐藏登记系统与分阶段办结",
-    "院办越权认定口径与口头误述"
+    "Material prerequisites",
+    "Role unavailable during business travel",
+    "Cross-year wait for the spring committee",
+    "Evidence transfer between roles",
+    "Contact page gives an ambiguous syllabus location",
+    "Speculative dean's office directions and explicit refusal",
+    "Hidden registration system and staged completion",
+    "Unauthorized dean's office recognition account and misleading verbal claims"
   ],
   "failure_modes": [
-    "猜测签章编号",
-    "沿用2024年旧材料",
-    "把材料预审当作春季批准",
-    "只问一处就认定大纲下落",
-    "把委员会结论当作已登记生效",
-    "不发现登记渠道即认定无法登记",
-    "引用院办学分认定口径当作有效学分结论",
-    "把院办口头学分印象当结论"
+    "Guessing signed-document identifiers",
+    "Reusing outdated 2024 materials",
+    "Treating preliminary material review as spring approval",
+    "Assuming the syllabus location after asking only one office",
+    "Treating the committee decision as effective completed registration",
+    "Assuming registration is impossible without discovering its channel",
+    "Citing the dean's credit-recognition account as an authorized credit decision",
+    "Treating the dean's verbal credit impression as a decision"
   ],
   "reference_actions": [
     {
@@ -1384,14 +1384,14 @@
     {
       "op": "send",
       "to": "records",
-      "text": "咨询CS204学分转换",
+      "text": "Inquire about CS204 credit transfer",
       "label": "credit",
       "fields": "$user"
     },
     {
       "op": "send",
       "to": "dean_office",
-      "text": "请查询CS204课程签章大纲存档",
+      "text": "Please check the signed CS204 syllabus archive",
       "label": "dean",
       "fields": "$user"
     },
@@ -1402,7 +1402,7 @@
     {
       "op": "send",
       "to": "lecturer",
-      "text": "请补发正式签章大纲",
+      "text": "Please reissue the official signed syllabus",
       "label": "syllabus",
       "fields": "$user"
     },
@@ -1413,7 +1413,7 @@
     {
       "op": "send",
       "to": "records",
-      "text": "补充正式大纲继续办理学分咨询",
+      "text": "Supply the official syllabus to continue the credit inquiry",
       "label": "credit",
       "fields": {
         "course_code": "CS204",
@@ -1428,7 +1428,7 @@
     {
       "op": "send",
       "to": "records",
-      "text": "请告知正式登记渠道",
+      "text": "Please identify the formal registration channel",
       "label": "register",
       "fields": "$user"
     },
@@ -1456,11 +1456,11 @@
     }
   ],
   "reference_is_privileged": true,
-  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "alternate_paths": "Any lawful communication sequence satisfying all evidence requirements is accepted; the reference actions are not the only valid path.",
   "horizon_design": {
     "reference_days": 89,
-    "stratum": "中长期",
-    "mechanism": "秋季材料预审与春季学分委员会",
+    "stratum": "Medium to long term",
+    "mechanism": "Autumn document screening and spring credit committee",
     "distribution": "manually stratified approximately logarithmic"
   }
 }

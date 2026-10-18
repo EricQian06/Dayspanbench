@@ -3,9 +3,9 @@
   "task_id": "DSB-12",
   "actor": {
     "id": "forwarder",
-    "name": "远澄货运客服·白榆",
-    "role": "货件入库信息",
-    "description": "只能确认入库并提供申报联络入口，不把入库状态说成放行。",
+    "name": "Yuancheng Freight customer service - Bai Yu",
+    "role": "Shipment intake information",
+    "description": "Can only confirm intake and provide declaration contacts; does not describe intake as release.",
     "calendar": "office",
     "channels": [
       "email",
@@ -22,7 +22,7 @@
       },
       "forwarder.main.2.suggest": {
         "kind": "suggest",
-        "text": "归类留置涉及的单证问题，我印象里要找出口方单证员；也可能仓库那边的扫描记录对得上，建议您分别确认。",
+        "text": "For documents related to classification detention, I seem to remember you should ask the exporter's document officer. The warehouse scan record might also match; please confirm with both.",
         "guesses": [
           "exporter",
           "warehouse"
@@ -50,12 +50,12 @@
     "workflows": [
       {
         "id": "main",
-        "label": "货件状态与联系入口",
+        "label": "Shipment status and contact routes",
         "aliases": [
-          "物流",
-          "货件",
-          "入库",
-          "状态"
+          "logistics",
+          "shipment",
+          "warehouse intake",
+          "status"
         ],
         "required_fields": [
           "tracking"
@@ -63,7 +63,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "forwarder.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -72,7 +72,7 @@
           },
           {
             "id": "main_2",
-            "label": "给出猜测性答复",
+            "label": "Offer a speculative answer",
             "tool": "forwarder.main.2.suggest",
             "delay": {
               "mode": "business",
@@ -81,7 +81,7 @@
           },
           {
             "id": "main_3",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "forwarder.main.3.delegate",
             "delay": {
               "mode": "business",
@@ -90,7 +90,7 @@
           },
           {
             "id": "main_4",
-            "label": "查询联系人目录并转介",
+            "label": "Look up the contact directory and provide a referral",
             "tool": "forwarder.main.4.refer",
             "delay": {
               "mode": "business",
@@ -99,7 +99,7 @@
           },
           {
             "id": "main_5",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "forwarder.main.5.reply",
             "delay": {
               "mode": "elapsed",
@@ -129,7 +129,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是远澄货运客服·白榆，负责货件入库信息。只能确认入库并提供申报联络入口，不把入库状态说成放行。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Yuancheng Freight customer service - Bai Yu, responsible for Shipment intake information. Can only confirm intake and provide declaration contacts; does not describe intake as release. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": []
   },

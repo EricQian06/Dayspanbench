@@ -1019,8 +1019,8 @@
       "not_feasible": "No current slot satisfies the date, availability, specialty and cost constraints"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1171,7 +1171,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "clinic_scheduler.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1189,7 +1189,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "clinic_scheduler.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1219,7 +1219,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Cedar Endocrine Test Clinic scheduling·Rosa Kim，负责specialist slot inventory, referral review status and intake acknowledgement。Answers scheduling and intake questions; slots, referral review status and intake packets are handled through the portal services named on the entry page. Clinical questions stay with clinicians; the clinic never asks for unrelated notes or insurance cards. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Cedar Endocrine Test Clinic scheduling·Rosa Kim, responsible for specialist slot inventory, referral review status and intake acknowledgement. Answers scheduling and intake questions; slots, referral review status and intake packets are handled through the portal services named on the entry page. Clinical questions stay with clinicians; the clinic never asks for unrelated notes or insurance cards. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:appointment_confirmed",
@@ -1601,7 +1601,7 @@
   "alternate_paths": "Any legal order of dialogue, searches, consent and approval is accepted if every goal's evidence conditions hold; slot-103 with its own 275 USD estimate and a matching exact approval is a legal alternative, but the scored answer keys follow the slot-102 plan.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "referral review window plus midday slot inventory change",
     "distribution": "manually stratified approximately logarithmic"
   }

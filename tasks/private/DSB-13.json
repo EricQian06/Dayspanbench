@@ -811,8 +811,8 @@
       "not_feasible": "No listing satisfies the hard constraints"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1054,7 +1054,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "garden_manager.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1072,7 +1072,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "garden_manager.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1081,7 +1081,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "garden_manager.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1116,7 +1116,7 @@
             },
             {
               "id": "offer_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "garden_manager.offer.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1146,7 +1146,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Garden Ramp Bistro manager·Alex Chen，负责provider verification, exact menu quotes and reservations。Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Garden Ramp Bistro manager·Alex Chen, responsible for provider verification, exact menu quotes and reservations. Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:access_verified",
@@ -1213,7 +1213,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "harbor_manager.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -1222,7 +1222,7 @@
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "harbor_manager.main.2.document",
               "delay": {
                 "mode": "business",
@@ -1231,7 +1231,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "harbor_manager.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1261,7 +1261,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Harbor Family Table manager·Robin Diaz，负责confirmed alternative restaurant status。Only confirms the r106 menu and reservation terms; access and allergen evidence already verified (verify-F106). 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Harbor Family Table manager·Robin Diaz, responsible for confirmed alternative restaurant status. Only confirms the r106 menu and reservation terms; access and allergen evidence already verified (verify-F106). Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:harbor_address",
@@ -1597,7 +1597,7 @@
   "alternate_paths": "Any legal order of dialogue, verification mail and searches is accepted if every goal's evidence conditions hold; the reference path refreshes the Garden offer after the July 10 change, and the already-verified Harbor Family Table is a legal alternative, but the scored answer keys follow the refreshed Garden plan.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "mid-episode offer rewrite plus organizer approval window",
     "distribution": "manually stratified approximately logarithmic"
   }

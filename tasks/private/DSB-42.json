@@ -839,8 +839,8 @@
       "not_feasible": "No slot pair fits the availability and duration constraints"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -951,7 +951,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "stripe_recruiter.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -960,7 +960,7 @@
             },
             {
               "id": "main_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "stripe_recruiter.main.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -990,7 +990,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Stripe recruiter desk·Jordan Blake，负责Stripe final interview scheduling only。Handles only the Stripe interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Stripe recruiter desk·Jordan Blake, responsible for Stripe final interview scheduling only. Handles only the Stripe interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:stripe_offer_confirmed",
@@ -1040,7 +1040,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "shopify_recruiter.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1049,7 +1049,7 @@
             },
             {
               "id": "main_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "shopify_recruiter.main.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1079,7 +1079,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Shopify recruiter desk·Sam Ortiz，负责Shopify final interview scheduling only。Handles only the Shopify interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Shopify recruiter desk·Sam Ortiz, responsible for Shopify final interview scheduling only. Handles only the Shopify interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:shopify_offer_confirmed",
@@ -1344,7 +1344,7 @@
   "alternate_paths": "Any legal order of dialogue, board reads and recruiter mail is accepted if every goal's evidence conditions hold; either employer may be rescheduled first, and the rotated Shopify link must be refreshed before its desk accepts a slot.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "recruiter offer confirmation, a mid-morning link rotation and two separate per-employer desks",
     "distribution": "manually stratified approximately logarithmic"
   }

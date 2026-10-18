@@ -818,8 +818,8 @@
       "not_feasible": "No current pathway satisfies the availability, hours and budget constraints"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -902,7 +902,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "pathway_adviser.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -911,7 +911,7 @@
             },
             {
               "id": "main_2",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "pathway_adviser.main.2.reply",
               "delay": {
                 "mode": "elapsed",
@@ -941,7 +941,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Certificate program adviser·Rosa Kim，负责pathway verification, prerequisite sequencing and first-stage reservations。Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Certificate program adviser·Rosa Kim, responsible for pathway verification, prerequisite sequencing and first-stage reservations. Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:first_stage_reserved",
@@ -1107,7 +1107,7 @@
   "alternate_paths": "Any legal order of dialogue, catalog searches and adviser mail is accepted if every goal's evidence conditions hold; the reference path reads the catalog before and after the August 25 schedule change and reserves only after the adviser verification and the learner's approval.",
   "horizon_design": {
     "reference_days": 2,
-    "stratum": "短期",
+    "stratum": "Short term",
     "mechanism": "adviser verification turnaround plus a mid-case course schedule rewrite",
     "distribution": "manually stratified approximately logarithmic"
   }

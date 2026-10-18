@@ -101,9 +101,9 @@ def _mechanical_summary(env, task):
         add(receipt.get("text"))
         fields = receipt.get("fields") or {}
         if fields:
-            add(f"{receipt.get('title') or '回执'}关键要素："
+            add(f"{receipt.get('title') or 'Receipt'} key details: "
                 + json.dumps(fields, ensure_ascii=False))
     for goal in task.get("goals", []):
         if goal.get("status") == "unconfirmed":
-            lines.append(f"截至截止时间，{goal['key']}尚无权威确认。")
+            lines.append(f"As of the deadline, {goal['key']} has no authoritative confirmation.")
     return "\n".join(lines)

@@ -302,7 +302,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The linked trip has been booked after the staffing review; no payment was taken and no travel has occurred."}],
         alternate_paths="Any legal order of dialogue, option reads and mail is accepted if every goal's evidence conditions hold; the user may collect facts in one or several turns, but vetting must precede named approval, replacement approval must precede the replacement reservation, and the final staffing review plus active linked care must precede the trip booking."))
     sites["DSB-26"] = "caregate"
-    horizons["DSB-26"] = (2, "短期", "overnight vetting review, deadline-morning withdrawal and a care-gated travel booking")
+    horizons["DSB-26"] = (2, "Short term", "overnight vetting review, deadline-morning withdrawal and a care-gated travel booking")
     conclusions["DSB-26"] = {
         "care_gated_trip": "One active named caregiver and one linked conference trip confirmed within the combined cap",
         "unconfirmed": "Vetting, staffing or caregiver confirmation could not be established in time",

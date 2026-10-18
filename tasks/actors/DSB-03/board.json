@@ -3,9 +3,9 @@
   "task_id": "DSB-03",
   "actor": {
     "id": "board",
-    "name": "澄川学院学分委员会秘书·程昕",
-    "role": "春季跨校学分审议",
-    "description": "跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审；生效学期以正式登记结论为准。",
+    "name": "Chengchuan College credit committee secretary - Cheng Xin",
+    "role": "Spring inter-college credit review",
+    "description": "The spring committee reviews inter-college courses together on February 2, 2027 at 10:00; before then only preliminary material review is available. The effective semester follows the formal registration decision.",
     "calendar": "office",
     "channels": [
       "email"
@@ -39,10 +39,10 @@
     "workflows": [
       {
         "id": "main",
-        "label": "春季跨校审议",
+        "label": "Spring inter-college review",
         "aliases": [
-          "学分",
-          "审议"
+          "credit",
+          "review"
         ],
         "required_fields": [
           "course_code",
@@ -51,7 +51,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "board.main.1.lookup",
             "delay": {
               "mode": "weekly",
@@ -63,7 +63,7 @@
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "board.main.2.document",
             "delay": {
               "mode": "business",
@@ -72,7 +72,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "board.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -102,7 +102,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是澄川学院学分委员会秘书·程昕，负责春季跨校学分审议。跨校课程在2027年2月2日10点春季委员会集中审议，此前只做材料预审；生效学期以正式登记结论为准。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Chengchuan College credit committee secretary - Cheng Xin, responsible for Spring inter-college credit review. The spring committee reviews inter-college courses together on February 2, 2027 at 10:00; before then only preliminary material review is available. The effective semester follows the formal registration decision. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:credit_scope",
@@ -132,7 +132,7 @@
   "local_facts": {
     "credits": {
       "value": 3,
-      "text": "学分委员会确认CS204可转换3学分。",
+      "text": "The credit committee confirms that CS204 transfers as 3 credits.",
       "attributes": {
         "subject": {
           "task": "DSB-03",
@@ -144,8 +144,8 @@
       }
     },
     "scope": {
-      "value": "专业选修",
-      "text": "这3学分仅计入专业选修，不能替代必修课。",
+      "value": "major electives",
+      "text": "These 3 credits count only toward major electives and cannot replace required courses.",
       "attributes": {
         "subject": {
           "task": "DSB-03",

@@ -29,7 +29,7 @@ def _as_text(value):
     if value is None:
         return ""
     if isinstance(value, bool):
-        return "是" if value else "否"
+        return "true" if value else "false"
     if isinstance(value, (int, float)):
         return str(value)
     return value if isinstance(value, str) else str(value)
@@ -68,7 +68,7 @@ def _restated_value(material, material_keyed, evidence, normalization):
         # Any affirmative occurrence whose polarity matches the attested value.
         words = "|".join(re.escape(w) for w in AFFIRMATIVE)
         for match in re.finditer(words, material_keyed):
-            prefix = material_keyed[max(0, match.start() - 2):match.start()]
+            prefix = material_keyed[max(0, match.start() - 3):match.start()]
             polarity = not any(n in prefix for n in NEGATIVE if n.strip())
             if polarity == value:
                 return True
@@ -97,6 +97,15 @@ def _restates(field_value, material, material_keyed, evidence, normalization):
     cited = {token.casefold() for token in EVIDENCE_ID.findall(material)}
     if evidence["id"].casefold() in cited:
         return True
+    # An English negation such as "not approved" shares a long substring
+    # with "approved". Check its polarity before accepting a partial quote.
+    if normalization.get("type") == "boolean":
+        words = "|".join(re.escape(w) for w in AFFIRMATIVE)
+        polarities = [not any(n in material_keyed[max(0, m.start()-3):m.start()]
+                             for n in NEGATIVE)
+                      for m in re.finditer(words, material_keyed)]
+        if polarities and evidence["value"] not in polarities:
+            return False
     # Layer 2: the applicant quotes the attestation's own wording.
     if _quoted_fact_text(material_keyed, evidence):
         return True

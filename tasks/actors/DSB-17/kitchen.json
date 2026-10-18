@@ -69,7 +69,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "kitchen.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -87,7 +87,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "kitchen.main.3.document",
             "delay": {
               "mode": "business",
@@ -96,7 +96,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "kitchen.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -130,7 +130,7 @@
           },
           {
             "id": "status_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "kitchen.status.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -160,7 +160,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Home Meal Kitchen supervisor·Sam Reyes，负责exact-menu allergen controls, delivery windows and meal orders。Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Home Meal Kitchen supervisor·Sam Reyes, responsible for exact-menu allergen controls, delivery windows and meal orders. Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:child_meals_fish_free",

@@ -3,9 +3,9 @@
   "task_id": "DSB-02",
   "actor": {
     "id": "manager",
-    "name": "青栎公寓物业·许乔",
-    "role": "楼宇规则与货梯时段",
-    "description": "收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。",
+    "name": "Qingli Apartments management - Xu Qiao",
+    "role": "Building rules and freight-elevator slots",
+    "description": "Submit the landlord's referral for Friday review; move-in slots follow the completed registration decision, without verbal commitments by email.",
     "calendar": "office",
     "channels": [
       "email"
@@ -36,10 +36,10 @@
     "workflows": [
       {
         "id": "main",
-        "label": "宠物与搬入复核",
+        "label": "Pet and move-in review",
         "aliases": [
-          "宠物",
-          "搬入"
+          "pet",
+          "move-in"
         ],
         "required_fields": [
           "pet_weight",
@@ -48,7 +48,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "manager.main.1.delegate",
             "delay": {
               "mode": "business",
@@ -57,7 +57,7 @@
           },
           {
             "id": "main_2",
-            "label": "登记搬入并核对新一期货梯表",
+            "label": "Register move-in and check the new freight-elevator schedule",
             "tool": "manager.main.2.lookup",
             "delay": {
               "mode": "business",
@@ -67,7 +67,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "manager.main.3.reply",
             "delay": {
               "mode": "business",
@@ -97,7 +97,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是青栎公寓物业·许乔，负责楼宇规则与货梯时段。收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Qingli Apartments management - Xu Qiao, responsible for Building rules and freight-elevator slots. Submit the landlord's referral for Friday review; move-in slots follow the completed registration decision, without verbal commitments by email. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:earliest_move"
@@ -126,7 +126,7 @@
   "local_facts": {
     "moving": {
       "value": "2026-11-13T10:00:00+08:00",
-      "text": "11月11日公布的新一期货梯表显示12日无可用时段，最早可安排11月13日10点搬入。",
+      "text": "The new freight-elevator schedule published November 11 has no slot on the 12th. The earliest move-in is November 13 at 10:00.",
       "attributes": {
         "subject": {
           "task": "DSB-02",

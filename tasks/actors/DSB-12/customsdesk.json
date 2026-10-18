@@ -3,9 +3,9 @@
   "task_id": "DSB-12",
   "actor": {
     "id": "customsdesk",
-    "name": "远澄单证联络·戴筠",
-    "role": "设备留置核查联络",
-    "description": "原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。",
+    "name": "Yuancheng document liaison - Dai Jun",
+    "role": "Equipment detention investigation liaison",
+    "description": "The prototype equipment is detained over a classification dispute. After preliminary registration, resubmit for long-term review with updated documents and traceability materials. Expired documents cannot support continued acceptance. No registration constitutes release.",
     "calendar": "office",
     "channels": [
       "email"
@@ -60,17 +60,17 @@
     "workflows": [
       {
         "id": "main",
-        "label": "归类初审登记",
+        "label": "Preliminary classification review registration",
         "aliases": [
-          "初审",
-          "登记"
+          "preliminary review",
+          "registration"
         ],
         "required_fields": [
           "tracking",
           "declaration_version"
         ],
         "accept_after": "2027-01-21T09:00:00+08:00",
-        "early_reply": "归类初审登记的集中办理窗口尚未开始，您的来信已登记。临近初审窗口时再来函，届时按流程办理。",
+        "early_reply": "The batch processing window for preliminary classification review registration has not opened; your message is registered. Write again close to the preliminary review window for processing.",
         "evidence_fields": {
           "declaration_version": {
             "subject": {
@@ -87,8 +87,8 @@
               "type": "text",
               "aliases": {
                 "DEC-608-v2": [
-                  "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。",
-                  "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点"
+                  "First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.",
+                  "First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00"
                 ]
               }
             }
@@ -97,7 +97,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "customsdesk.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -106,7 +106,7 @@
           },
           {
             "id": "main_2",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "customsdesk.main.2.delegate",
             "delay": {
               "mode": "business",
@@ -115,7 +115,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "customsdesk.main.3.reply",
             "delay": {
               "mode": "business",
@@ -126,10 +126,10 @@
       },
       {
         "id": "final",
-        "label": "第二轮长期复核",
+        "label": "Second-round long-term review",
         "aliases": [
-          "长期复核",
-          "放行状态"
+          "long-term review",
+          "release status"
         ],
         "required_fields": [
           "tracking",
@@ -153,8 +153,8 @@
               "type": "text",
               "aliases": {
                 "DEC-608-v3": [
-                  "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-                  "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+                  "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+                  "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
                 ]
               }
             }
@@ -174,8 +174,8 @@
               "type": "text",
               "aliases": {
                 "HOLD-608-9": [
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
                 ]
               }
             }
@@ -195,8 +195,8 @@
               "type": "text",
               "aliases": {
                 "TRACE-M608-2027": [
-                  "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-                  "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+                  "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+                  "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
                 ]
               }
             }
@@ -205,7 +205,7 @@
         "steps": [
           {
             "id": "final_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "customsdesk.final.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -214,7 +214,7 @@
           },
           {
             "id": "final_2",
-            "label": "内部转交",
+            "label": "Internal handoff",
             "tool": "customsdesk.final.2.delegate",
             "delay": {
               "mode": "business",
@@ -223,7 +223,7 @@
           },
           {
             "id": "final_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "customsdesk.final.3.reply",
             "delay": {
               "mode": "business",
@@ -234,11 +234,11 @@
       },
       {
         "id": "direct_entry",
-        "label": "材料齐备后转介境外代理直联",
+        "label": "Referral for direct contact with the overseas agent after materials are complete",
         "aliases": [
-          "直联",
-          "转介境外代理",
-          "直接联系境外"
+          "direct contact",
+          "refer to the overseas agent",
+          "contact overseas directly"
         ],
         "required_fields": [
           "tracking",
@@ -262,8 +262,8 @@
               "type": "text",
               "aliases": {
                 "DEC-608-v3": [
-                  "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-                  "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+                  "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+                  "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
                 ]
               }
             }
@@ -283,8 +283,8 @@
               "type": "text",
               "aliases": {
                 "HOLD-608-9": [
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
                 ]
               }
             }
@@ -304,8 +304,8 @@
               "type": "text",
               "aliases": {
                 "TRACE-M608-2027": [
-                  "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-                  "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+                  "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+                  "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
                 ]
               }
             }
@@ -314,7 +314,7 @@
         "steps": [
           {
             "id": "direct_entry_1",
-            "label": "查询联系人目录并转介",
+            "label": "Look up the contact directory and provide a referral",
             "tool": "customsdesk.direct_entry.1.refer",
             "delay": {
               "mode": "business",
@@ -323,7 +323,7 @@
           },
           {
             "id": "direct_entry_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "customsdesk.direct_entry.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -352,7 +352,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是远澄单证联络·戴筠，负责设备留置核查联络。原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Yuancheng document liaison - Dai Jun, responsible for Equipment detention investigation liaison. The prototype equipment is detained over a classification dispute. After preliminary registration, resubmit for long-term review with updated documents and traceability materials. Expired documents cannot support continued acceptance. No registration constitutes release. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": []
   },

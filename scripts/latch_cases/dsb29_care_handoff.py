@@ -254,7 +254,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The approved five-assignment handoff has been dispatched; acknowledgements arrive at their fixed time and are read back through the service."}],
         alternate_paths="Any legal order of dialogue, roster reading, revocation and clinician inquiry is accepted if every goal's evidence conditions hold; revocation and the clinician request may occur in either order. The reference path revokes first, then obtains the plan v2 release, then sends the approved five-assignment handoff."))
     sites["DSB-29"] = "carehandoff"
-    horizons["DSB-29"] = (2, "短期", "clinician plan release, access revocation and fixed-time caregiver acknowledgements across days")
+    horizons["DSB-29"] = (2, "Short term", "clinician plan release, access revocation and fixed-time caregiver acknowledgements across days")
     conclusions["DSB-29"] = {
         "handoff_accepted": "All five role-scoped assignments dispatched and accepted with the old driver link revoked",
         "unconfirmed": "Clinician instructions or caregiver acknowledgements could not be obtained in time",

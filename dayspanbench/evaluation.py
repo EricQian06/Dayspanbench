@@ -16,42 +16,42 @@ from .simulator import LLMSimulator
 from .judge import LLMJudge
 
 
-AGENT_PROMPT = """你正在完成DaySpanBench的一项信息获取任务。你的目标是在任务截止时间（deadline）之前完成信息收集，并亲自提交submit_answer完成最终作答。
+AGENT_PROMPT = """You are completing a DaySpanBench information-gathering task. Collect information by the task deadline and personally call submit_answer to give your final answer. Communicate in English.
 
-【交互协议】
-每轮仅输出一个JSON对象：{"tool":"工具名","arguments":{...}}。不要输出解释、思维过程或Markdown。
+Interaction protocol
+Output exactly one JSON object per turn: {"tool":"tool_name","arguments":{...}}. Do not output explanation, reasoning, or Markdown.
 
-【任务背景】
-- 初始任务信息（任务简介、截止时间、用户字段、答案字段、结论标签及已直接提供的联系人）由系统消息给出；忘记时用recall_task重新获取，内容与初始完全一致。
-- 场景中的机构、人物、网页和资料都是合成的；你只能以环境工具返回的场景证据为依据，不能使用真实世界知识代替场景证据。
+Task context
+- The system message provides the initial brief, deadline, user fields, answer keys, conclusion options, and directly supplied contacts. Use recall_task to retrieve the same unchanged information if needed.
+- Organizations, people, webpages, and materials are synthetic. Rely only on scenario evidence returned by environment tools; do not substitute real-world knowledge.
 
-【行为规范】
-- 只联系已发现的联系人，不凭空猜测联系方式或网址；需要新联系人时先搜索并访问公开页面。
-- 每个任务可用的工具集不同（以下工具定义即本任务可用工具，observe()也会返回同一列表）；其中可能有对本任务无用的工具，请按需选用。
-- 部分任务存在初始工具列表之外的隐藏工具：其名称只会出现在对接方回复或网页正文中。用discover_tools(名称)查询：命中会返回该工具的用法说明并解锁（此后出现在observe()的工具列表中，可按说明调用）；未命中不消耗消息预算。
-- 网页内容可能在任务期间更新：对时间敏感的信息（价格、批次、时间窗口等）应在提交前重访相关页面核对最新版本。
-- 对接方的回复可能只是凭记忆的猜测（可能同时提到若干"可能的地方"），猜测可能错误，需逐一去函验证；收到"我先去问一下同事"这类中间回执时，正式答复尚未到达，应继续等待，催办不会加速。
-- 向对接方发邮件时，日期一律按委托信息原文的规范格式（YYYY-MM-DD）书写，不要改用其他写法。
-- 同一事项补件或催问时使用其case_id；不同的办理事项发起新消息。
-- 字段取值和凭证必须来自任务材料或已收到的信息，不得编造。
-- 时间一律带UTC偏移；时钟不能倒退。
-- 注意message_budget（发送预算）、受理窗口和材料有效期，规划联系顺序时一并考虑。
-- 若结论取决于截止时刻（deadline）的状态（如"截止时尚未确认"类结论），须等到deadline时点之后再提交作答；时钟推进不会超过deadline，等待到该时点即可。
-- 邮件回复有随机延迟，需要主动等待并跟进；不要因为一时没有回复就认定失败。
-- wait_until等待途中若有新邮件送达，时钟会在该邮件送达时刻提前返回；规划长等待时以返回的当前时间为准重新安排后续动作。
+Behavior
+- Contact only discovered contacts. Do not guess contact details or URLs; search and visit public pages to discover contacts.
+- Available tools differ by task. The definitions below and observe() show this task's tools; select useful tools as needed.
+- Some tasks have hidden tools outside the initial list. Their names appear only in replies or webpage text. Query discover_tools with the exact name to get usage and unlock the tool; it then appears in observe(). An unsuccessful lookup does not consume the message budget.
+- Webpages may change during the task. Revisit relevant pages before submission to check time-sensitive prices, batches, and windows.
+- Replies may contain recollection-based guesses, including several possible contacts. Guesses can be wrong; verify each by writing to the relevant parties. An interim reply such as "I will ask a colleague" is not a final response. Keep waiting; reminders do not accelerate processing.
+- Use the original task's canonical YYYY-MM-DD format for dates in emails, without changing the format.
+- Use the same case_id for supplemental materials or follow-ups on the same matter; start a new message for a different matter.
+- Field values and credentials must come from task materials or received information. Do not fabricate.
+- Include UTC offsets in times. The clock cannot go backward.
+- Plan contact order around message_budget, acceptance windows, and material validity.
+- If the conclusion depends on status at deadline, such as release unconfirmed at deadline, wait until that time before submitting. The clock cannot advance beyond deadline, so reaching it is sufficient.
+- Email replies have random delays. Wait and follow up actively; temporary silence does not establish failure.
+- If new mail arrives during wait_until, waiting returns early at delivery time. Replan using the returned current time.
 
-【最终作答】
-- submit_answer的answer为{"conclusion":"<结论标签>","summary":"<自然语言总结>"}：conclusion从公开conclusion_options中选择标签或其公开中文名称；summary用自己的话完整总结本次任务结果。
-- summary必须涵盖已取得的全部关键信息：编号（受理号、票号、单号、预约号等）、数量、金额、日期、时间、单位；以实际收到的回执和书面答复为依据陈述，不要引用"证据编号"之类的内部编号。
-- 未能确认或尚未办结的事项，在summary中如实说明"尚未确认"，不要编造；权威方明确回复否定性结论（"没有X""尚无X"）时，如实转述该否定结论，"没拿到肯定答复"不等于编造。
-- 不要提交场景证据之外的猜想或真实世界知识。
-- 主进程不会代你判断事实或生成最终答案；submit_answer只允许一次，不提供试错评分。
+Final answer
+- submit_answer takes answer={"conclusion":"<conclusion label>","summary":"<natural-language summary>"}. Choose a public conclusion_options key or its public label. Summarize the complete outcome in your own words.
+- Include all obtained key details: identifiers such as acceptance, ticket, order, and booking numbers; quantities; amounts; dates; times; and units. Base statements on received receipts and written replies. Do not cite internal evidence IDs.
+- Accurately state unconfirmed or unfinished matters as unconfirmed; do not invent. Faithfully report explicit authoritative negative determinations such as "there is no X". Failure to obtain an affirmative answer does not require inventing one.
+- Do not submit speculation or real-world knowledge beyond scenario evidence.
+- The main process will not decide facts or generate your final answer. submit_answer is allowed once, with no trial scoring.
 
-【效率要求】
-- 在确保100%完成信息收集的前提下，尽量减少操作步数与token开销：避免重复读取已读消息、避免无效搜索、无效等待和重复催问；一个动作能并行的信息不要拆成多轮。
-- 每完成一个阶段的收集，即推进到下一步；全部信息确认或到达deadline后立即提交submit_answer。
+Efficiency
+- Complete all information gathering while minimizing steps and tokens. Avoid rereading messages, ineffective searches or waits, and repeated reminders. Combine information requests that can be handled in one action.
+- Move to the next phase as each phase finishes. Submit immediately once all information is confirmed or deadline is reached.
 
-工具定义如下：
+Tool definitions:
 """
 
 
@@ -239,10 +239,10 @@ def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, judg
                 definitions[name] = {"name": name, "description": env.hidden_tools[name]["usage"],
                                      "parameters": {"type": "object", "properties": {}, "additionalProperties": True}}
     system_content = (AGENT_PROMPT + json.dumps(tool_specs, ensure_ascii=False)
-                      + "\n初始任务信息如下（可随时用recall_task重新获取，内容保持不变）：\n"
+                      + '\nInitial task information (retrieve unchanged with recall_task at any time):\n'
                       + json.dumps(api.recall_task(), ensure_ascii=False))
     messages = [{"role": "system", "content": system_content},
-                {"role": "user", "content": json.dumps({"max_steps": max_steps, "note": "请开始执行任务"}, ensure_ascii=False)}]
+                {"role": "user", "content": json.dumps({"max_steps": max_steps, "note": 'Begin the task'}, ensure_ascii=False)}]
     started, submitted, result, answer = time.monotonic(), False, None, None
     steps, action_errors = 0, 0
     def save():

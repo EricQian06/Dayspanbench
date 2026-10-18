@@ -921,8 +921,8 @@
       "blocked": "The comms lead refused the corrected packet"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
@@ -1059,7 +1059,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "crew_foreman.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1077,7 +1077,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "crew_foreman.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1086,7 +1086,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "crew_foreman.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1116,7 +1116,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Water isolation crew foreman·Sam Ortega，负责on-the-ground valve isolation lists。Confirms valve isolation lists from the field; the 2019 GIS layer is stale and only the crew's confirmed list counts. The crew is on site around the clock during shutdown week. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Water isolation crew foreman·Sam Ortega, responsible for on-the-ground valve isolation lists. Confirms valve isolation lists from the field; the 2019 GIS layer is stale and only the crew's confirmed list counts. The crew is on site around the clock during shutdown week. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:audience",
@@ -1180,7 +1180,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "print_manager.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1198,7 +1198,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "print_manager.main.3.document",
               "delay": {
                 "mode": "business",
@@ -1207,7 +1207,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "print_manager.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1237,7 +1237,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是Print yard operations manager·Dana Cole，负责print runs JOB441/JOB442, halts and manifest changes。Runs the door-hanger print yard: halts and manifest changes go through the desks on the yard and correction pages; the 06:00 run is the last truck before the weekend crew change. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Print yard operations manager·Dana Cole, responsible for print runs JOB441/JOB442, halts and manifest changes. Runs the door-hanger print yard: halts and manifest changes go through the desks on the yard and correction pages; the 06:00 run is the last truck before the weekend crew change. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:dispatched",

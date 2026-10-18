@@ -1,24 +1,24 @@
 {
   "id": "DSB-09",
-  "title": "公共活动咨询：意见征集与年末联合复核",
-  "brief": "为2027年1月晴港北广场的小型扩声活动询问主管机构、事项分类、应备材料和最早办理窗口。跟进意见征集并携回执再次申请联合复核，书面复核结论按对方说明的渠道取得。只做预咨询，不能写成已获许可；场景规则均为合成。",
+  "title": "Public event consultation: comment collection and year-end joint review",
+  "brief": "For a small amplified-sound event at Qinggang North Square in January 2027, ask for the responsible authority, classification, required documents, and earliest processing window. Follow up the consultation and use its receipt to request joint review again; obtain the written review determination through the specified channel. Preliminary consultation only: do not claim permission has been granted. All scenario rules are synthetic.",
   "user_fields": {
-    "location": "晴港北广场",
-    "sound_equipment": "使用两只扩声音箱"
+    "location": "Qinggang North Square",
+    "sound_equipment": "Use two amplified-sound speakers"
   },
   "initial_contacts": [],
   "pages": [
     {
       "id": "service-intro",
-      "title": "晴港公共活动咨询简介",
-      "text": "拟办活动先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。本页另挂有北广场活动事项办理口径等文件。",
+      "title": "About Qinggang public event consultation",
+      "text": "Verify jurisdiction first. This consultation round is compiled on December 3; use its receipt to request the December 28 joint review. Confirm the formal processing window separately. North Square event processing guidance and other documents are attached to this page.",
       "contacts": [],
-      "snippet": "公共活动预咨询流程与时间安排。",
+      "snippet": "Public event preliminary consultation process and schedule.",
       "documents": [
         {
           "id": "service-category-ref",
-          "title": "北广场活动事项办理口径.pdf",
-          "text": "北广场活动事项办理口径：扩声类活动按一般户外活动备案口径登记。（留存方整理）",
+          "title": "North Square event processing guidance.pdf",
+          "text": "North Square event processing guidance: register amplified-sound events as general outdoor event filings. (Compiled by the record holder.)",
           "facts": [
             "category_ref"
           ],
@@ -30,44 +30,44 @@
     },
     {
       "id": "service",
-      "title": "晴港公共活动咨询联系方式",
-      "text": "各岗位联系人的联系方式（邮箱）请咨询咨询台谢茵，由咨询台提供后续对接入口。事项识别与管辖分流联系咨询台谢茵；扩声事项分类与材料联系活动环境咨询员。",
+      "title": "Qinggang public event consultation contacts",
+      "text": "Ask consultation desk officer Xie Yin for each role's email address and next contact. Xie Yin handles matter identification and jurisdiction routing; the event environmental consultant handles amplified-sound classification and document requirements.",
       "contacts": [
         "service"
       ],
-      "snippet": "政务咨询台对接说明。",
+      "snippet": "Public service consultation desk contact information.",
       "url": "https://qinggang.bench/contact"
     },
     {
       "id": "service-entry",
-      "title": "晴港活动预咨询入口",
-      "text": "晴港公共活动预咨询说明：办理需提供活动地点与扩声设备说明；联合分类复核的书面结论通过本页登记表单申请后取得，登记须附意见征集回执编号。本页面为预咨询说明，不构成许可申请入口，许可须另行按正式流程申请。",
+      "title": "Qinggang event preliminary consultation portal",
+      "text": "Qinggang public event preliminary consultation requires the location and sound equipment description. Obtain written joint classification review determinations through this page's registration form, including the consultation receipt number. This page explains preliminary consultation and is not a permit application portal; apply for permission separately through the formal process.",
       "contacts": [],
-      "snippet": "晴港公共活动预咨询材料说明与联合复核登记表单；不支持在线申请许可。",
+      "snippet": "Qinggang public event preliminary consultation requirements and joint review form; no online permit applications.",
       "form": {
         "id": "review_form",
-        "title": "联合分类复核登记",
+        "title": "Joint classification review registration",
         "fields": [
           {
             "name": "location",
-            "label": "活动地点",
+            "label": "Event location",
             "required": true,
             "hidden": false
           },
           {
             "name": "sound_equipment",
-            "label": "扩声设备说明",
+            "label": "Sound equipment description",
             "required": true,
             "hidden": false
           },
           {
             "name": "consultation_receipt",
-            "label": "意见征集回执编号",
+            "label": "Consultation receipt number",
             "required": true,
             "hidden": false
           }
         ],
-        "submit_instructions": "本表单不能在线直接提交：须通过晴港联合复核登记渠道办理；渠道名称与受理安排请向活动环境咨询员确认。"
+        "submit_instructions": "This form cannot be submitted directly online. Use the Qinggang joint review registration channel; confirm its name and acceptance schedule with the event environmental consultant."
       },
       "url": "https://qinggang.bench/entry"
     }
@@ -88,7 +88,7 @@
     "fetch_document",
     "lookup_directory"
   ],
-  "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+  "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
   "answer_keys": [
     "responsible_office",
     "consultation_receipt",
@@ -114,13 +114,13 @@
     }
   },
   "conclusion_options": {
-    "consultation_only_not_approval": "已获咨询结论，未获许可",
-    "formal_approval_received": "已获正式许可",
-    "unconfirmed": "信息不足"
+    "consultation_only_not_approval": "Consultation determination obtained; no permission granted",
+    "formal_approval_received": "Formal permission granted",
+    "unconfirmed": "Insufficient information"
   },
   "answer_format": {
-    "conclusion": "选择conclusion_options中的一个键",
-    "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+    "conclusion": "Choose one key from conclusion_options",
+    "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
   },
   "start_at": "2026-11-03T15:00:00+08:00",
   "deadline_at": "2027-01-05T17:00:00+08:00"

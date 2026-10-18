@@ -3,9 +3,9 @@
   "task_id": "DSB-11",
   "actor": {
     "id": "upstream",
-    "name": "上游发布委员会·秘书处",
-    "role": "稳定版状态归档",
-    "description": "每周四20—22点集中查证归档；不对项目外部直接受理；稳定版的书面结论须经登记渠道取得。",
+    "name": "Upstream release committee - secretariat",
+    "role": "Stable-version status archive",
+    "description": "Checks archives together every Thursday from 20:00 to 22:00. Does not accept direct external project requests; written stable-version determinations require the registration channel.",
     "calendar": "upstream",
     "channels": [
       "email"
@@ -28,9 +28,9 @@
     "workflows": [
       {
         "id": "main",
-        "label": "稳定版状态查证",
+        "label": "Stable-version status verification",
         "aliases": [
-          "稳定版"
+          "stable version"
         ],
         "required_fields": [
           "version"
@@ -38,7 +38,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "集中查证稳定版归档状态（仅口头说明）",
+            "label": "Batch verification of archived stable-version status (verbal explanation only)",
             "tool": "upstream.main.1.lookup",
             "delay": {
               "mode": "weekly",
@@ -49,7 +49,7 @@
           },
           {
             "id": "main_2",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "upstream.main.2.reply",
             "delay": {
               "mode": "elapsed",
@@ -79,7 +79,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是上游发布委员会·秘书处，负责稳定版状态归档。每周四20—22点集中查证归档；不对项目外部直接受理；稳定版的书面结论须经登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Upstream release committee - secretariat, responsible for Stable-version status archive. Checks archives together every Thursday from 20:00 to 22:00. Does not accept direct external project requests; written stable-version determinations require the registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:stable_release_date"
@@ -99,8 +99,8 @@
   },
   "local_facts": {
     "stable": {
-      "value": "尚无承诺日期",
-      "text": "正式稳定版没有承诺发布日期；候选版不能标为稳定版。",
+      "value": "No committed date yet",
+      "text": "There is no committed release date for the official stable version; a release candidate cannot be labeled stable.",
       "available_at": "2027-02-09T20:00:00+08:00",
       "attributes": {
         "subject": {

@@ -237,7 +237,7 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "The corrected final statement has published and the issuer's payment comparison is in hand: the required payment checked against the unchanged autopay schedule."}],
         alternate_paths="Any legal order of dialogue, ledger reads and mail is accepted if every goal's evidence conditions hold; the dispute may be filed before or after the statement correction, but the payment check must use the corrected final statement."))
     sites["DSB-30"] = "chargedispute"
-    horizons["DSB-30"] = (4, "中短期", "merchant finding turnaround plus statement correction")
+    horizons["DSB-30"] = (4, "Short to medium term", "merchant finding turnaround plus statement correction")
     conclusions["DSB-30"] = {
         "dispute_filed_payment_verified": "One approved dispute acknowledged and the corrected statement verified against the unchanged autopay",
         "unconfirmed": "The duplicate, approval or final payment requirement could not be established in time",

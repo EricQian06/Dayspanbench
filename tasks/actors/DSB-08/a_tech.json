@@ -3,9 +3,9 @@
   "task_id": "DSB-08",
   "actor": {
     "id": "a_tech",
-    "name": "A旅舍设施员·蒋延",
-    "role": "现场测量",
-    "description": "周末不在岗；测量记录区分净宽与含框宽度。",
+    "name": "Hostel A facilities officer - Jiang Yan",
+    "role": "On-site measurement",
+    "description": "Not on duty on weekends; measurement records distinguish clear width from width including frames.",
     "calendar": "office",
     "channels": [
       "email"
@@ -39,10 +39,10 @@
     "workflows": [
       {
         "id": "main",
-        "label": "现场通行测量",
+        "label": "On-site access measurement",
         "aliases": [
-          "尺寸",
-          "测量"
+          "dimensions",
+          "measurement"
         ],
         "required_fields": [
           "wheelchair_width"
@@ -50,7 +50,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "a_tech.main.1.lookup",
             "delay": {
               "mode": "business",
@@ -59,7 +59,7 @@
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "a_tech.main.2.document",
             "delay": {
               "mode": "business",
@@ -68,7 +68,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "a_tech.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -98,7 +98,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是A旅舍设施员·蒋延，负责现场测量。周末不在岗；测量记录区分净宽与含框宽度。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Hostel A facilities officer - Jiang Yan, responsible for On-site measurement. Not on duty on weekends; measurement records distinguish clear width from width including frames. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:a_bathroom_cm",
@@ -128,7 +128,7 @@
   "local_facts": {
     "a_bath": {
       "value": 68,
-      "text": "A旅舍浴室通行净宽68cm。",
+      "text": "Hostel A's clear bathroom access width is 68cm.",
       "attributes": {
         "subject": {
           "task": "DSB-08",
@@ -142,7 +142,7 @@
     },
     "a_door": {
       "value": 72,
-      "text": "A旅舍现场复测净门宽72cm，旧网页88cm包含门框。",
+      "text": "Hostel A's on-site remeasurement gives a clear doorway width of 72cm; the old webpage's 88cm includes the frame.",
       "attributes": {
         "subject": {
           "task": "DSB-08",

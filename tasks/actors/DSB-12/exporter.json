@@ -3,9 +3,9 @@
   "task_id": "DSB-12",
   "actor": {
     "id": "exporter",
-    "name": "出口方单证员·贺悠",
-    "role": "更正单证与制造批次溯源",
-    "description": "首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。",
+    "name": "Exporter's document officer - He You",
+    "role": "Corrected documents and manufacturing batch traceability",
+    "description": "First-round corrected materials can be verified on December 7. After preliminary classification review registration, the manufacturing archives restored April 6, 2027 can support second-round documents and batch traceability.",
     "calendar": "office",
     "channels": [
       "email"
@@ -61,21 +61,21 @@
     "workflows": [
       {
         "id": "main",
-        "label": "首轮更正单证",
+        "label": "First-round corrected documents",
         "aliases": [
-          "首轮",
-          "申报",
-          "更正"
+          "first round",
+          "declaration",
+          "correction"
         ],
         "required_fields": [
           "tracking"
         ],
         "accept_after": "2026-11-24T09:00:00+08:00",
-        "early_reply": "首轮更正单证的核验尚未开始，您的来信已登记。待补正资料进入可取状态后再来函，届时按流程办理。",
+        "early_reply": "Verification of first-round corrected documents has not started; your message is registered. Write again when supplemental materials are available for collection for processing.",
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "exporter.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -84,7 +84,7 @@
           },
           {
             "id": "main_2",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "exporter.main.2.lookup",
             "delay": {
               "mode": "business",
@@ -94,7 +94,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "exporter.main.3.document",
             "delay": {
               "mode": "business",
@@ -103,7 +103,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "exporter.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -115,18 +115,18 @@
       },
       {
         "id": "refresh",
-        "label": "第二轮单证和批次溯源",
+        "label": "Second-round documents and batch traceability",
         "aliases": [
-          "第二轮",
-          "新版单证",
-          "批次溯源"
+          "second round",
+          "updated documents",
+          "batch traceability"
         ],
         "required_fields": [
           "tracking",
           "review_reference"
         ],
         "accept_after": "2027-03-23T09:00:00+08:00",
-        "early_reply": "制造批次档案的恢复核验尚未开始，您的来信已登记。档案恢复可核验后再来函办理第二轮单证与溯源。",
+        "early_reply": "Restoration and verification of manufacturing batch archives have not started; your message is registered. Write again after archives are restored for second-round documents and traceability.",
         "evidence_fields": {
           "review_reference": {
             "subject": {
@@ -143,8 +143,8 @@
               "type": "text",
               "aliases": {
                 "HOLD-608-9": [
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                  "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                  "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
                 ]
               }
             }
@@ -153,7 +153,7 @@
         "steps": [
           {
             "id": "refresh_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "exporter.refresh.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -162,7 +162,7 @@
           },
           {
             "id": "refresh_2",
-            "label": "查询业务记录",
+            "label": "Look up business records",
             "tool": "exporter.refresh.2.lookup",
             "delay": {
               "mode": "business",
@@ -172,7 +172,7 @@
           },
           {
             "id": "refresh_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "exporter.refresh.3.document",
             "delay": {
               "mode": "business",
@@ -181,7 +181,7 @@
           },
           {
             "id": "refresh_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "exporter.refresh.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -210,7 +210,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是出口方单证员·贺悠，负责更正单证与制造批次溯源。首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Exporter's document officer - He You, responsible for Corrected documents and manufacturing batch traceability. First-round corrected materials can be verified on December 7. After preliminary classification review registration, the manufacturing archives restored April 6, 2027 can support second-round documents and batch traceability. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:batch_trace",
@@ -241,7 +241,7 @@
   "local_facts": {
     "batch_trace": {
       "value": "TRACE-M608-2027",
-      "text": "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
+      "text": "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
       "available_at": "2027-04-06T10:00:00+08:00",
       "attributes": {
         "subject": {
@@ -255,7 +255,7 @@
     },
     "declaration": {
       "value": "DEC-608-v2",
-      "text": "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。",
+      "text": "First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.",
       "valid_until": "2027-03-31T17:00:00+08:00",
       "attributes": {
         "subject": {
@@ -269,7 +269,7 @@
     },
     "declaration_latest": {
       "value": "DEC-608-v3",
-      "text": "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
+      "text": "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
       "available_at": "2027-04-06T10:00:00+08:00",
       "valid_until": "2027-09-30T17:00:00+08:00",
       "attributes": {

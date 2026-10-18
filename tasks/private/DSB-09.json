@@ -2,8 +2,8 @@
   "schema_version": "0.2",
   "task_set_version": "0.4.0",
   "id": "DSB-09",
-  "title": "公共活动咨询：意见征集与年末联合复核",
-  "domain": "公共服务",
+  "title": "Public event consultation: comment collection and year-end joint review",
+  "domain": "Public services",
   "start_at": "2026-11-03T15:00:00+08:00",
   "deadline_at": "2027-01-05T17:00:00+08:00",
   "display_timezone": "Asia/Shanghai",
@@ -410,13 +410,13 @@
     {
       "page": "service-intro",
       "at": "2026-12-03T09:00:00+08:00",
-      "text": "晴港公共活动咨询（12月3日更新）：本轮30天跨部门意见征集已汇总结束。回执可向活动环境咨询员申请取得；取得回执后须于12月28日申请联合分类复核，复核书面结论须经登记渠道取得。正式办理窗口另行确认。"
+      "text": "Qinggang public event consultation (updated December 3): This round's 30-day interdepartmental consultation is compiled and complete. Request a receipt from the event environmental consultant, then use it to request joint classification review on December 28. Obtain the written review determination through the registration channel. Confirm the formal processing window separately."
     }
   ],
   "hidden_tools": [
     {
       "name": "qinggang_review_register",
-      "usage": "晴港联合复核登记渠道。调用参数：fields为对象，键为表单字段名（location、sound_equipment、consultation_receipt），consultation_receipt须填本轮意见征集的回执编号。",
+      "usage": "Qinggang joint review registration channel. Argument: fields is an object with form field keys location, sound_equipment, and consultation_receipt. consultation_receipt must contain this round's consultation receipt number.",
       "kind": "form",
       "params": {
         "form": "review_form",
@@ -424,8 +424,8 @@
           "consultation_receipt": "CONSULT-DEC03-19"
         },
         "process_at": "2026-12-28T15:00:00+08:00",
-        "result_text": "联合复核登记已办结：拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请；需准备平面图、时段说明和声设备清单；按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日。办理进度可经晴港复核进度查询（qinggang_review_status）复核。",
-        "reject_text": "登记信息与意见征集记录不符，已退回；请核对回执编号后重新提交。",
+        "result_text": "Joint review registration complete: the event is classified for preliminary consultation as a temporary amplified-sound activity; no formal application has been accepted. Prepare a site plan, time-slot description, and sound equipment list. Under the annual schedule, the earliest subsequent formal processing date is January 4, 2027. Verify progress through qinggang_review_status.",
+        "reject_text": "The registration does not match the consultation record and has been returned. Check the receipt number and resubmit.",
         "facts": [
           "category",
           "documents",
@@ -434,28 +434,28 @@
         "issuer": "sound",
         "page_update": {
           "page": "service-entry",
-          "snippet": "晴港活动预咨询入口：已提交的联合复核登记以表单状态为准。"
+          "snippet": "Qinggang event preliminary consultation portal: submitted joint review registrations are governed by form status."
         }
       }
     },
     {
       "name": "qinggang_review_status",
-      "usage": "晴港复核进度查询。调用参数：query为事项关键词（可省略）。",
+      "usage": "Qinggang review progress lookup. Argument: query is an optional matter keyword.",
       "kind": "status",
       "params": {
         "records": [
           {
             "key": "review",
-            "label": "联合分类复核登记",
-            "initial": "尚未查询到联合复核登记记录。",
+            "label": "Joint classification review registration",
+            "initial": "No joint review registration record was found.",
             "timeline": [
               {
                 "at": "2026-12-03T09:00:00+08:00",
-                "text": "本轮30天跨部门意见征集已汇总结束，联合复核登记开始受理。"
+                "text": "This round's 30-day interdepartmental consultation is compiled and complete, and joint review registration is open."
               },
               {
                 "at": "2026-12-28T10:00:00+08:00",
-                "text": "12月28日联合分类复核批次已办理，复核结论以登记办结状态为准。"
+                "text": "The December 28 joint classification review batch has been processed; registration completion status governs the determination."
               }
             ],
             "form": "review_form"
@@ -467,44 +467,44 @@
   "judge_criteria": [
     {
       "id": "G-R1-jurisdiction",
-      "statement": "总结写明主管机构。",
-      "pass_if": "总结写明拟用地点属于街区公共空间管理处管辖、不是私人场地，且该结论经管辖核对确认而非仅凭咨询台猜测。",
+      "statement": "The summary identifies the responsible authority.",
+      "pass_if": "The summary states that the site is under the Neighborhood Public Space Management Office and is not private property, based on jurisdiction verification rather than desk speculation alone.",
       "source": "final_answer"
     },
     {
       "id": "G-R2-receipt",
-      "statement": "总结写明意见征集回执编号。",
-      "pass_if": "总结包含回执关键要素：本轮意见征集回执编号CONSULT-DEC03-19。",
+      "statement": "The summary states the consultation receipt number.",
+      "pass_if": "The summary includes this round's consultation receipt number CONSULT-DEC03-19.",
       "source": "final_answer"
     },
     {
       "id": "G-R3-category",
-      "statement": "总结给出事项分类结论。",
-      "pass_if": "总结写明拟议活动按临时扩声活动进行预咨询分类，该结论出自联合复核登记办结回执关键内容，且未把页面'一般户外活动备案'口径当作正式分类。",
+      "statement": "The summary provides the classification determination.",
+      "pass_if": "The summary classifies the event for preliminary consultation as a temporary amplified-sound activity based on the joint review completion receipt, without treating the webpage's general outdoor event filing guidance as formal classification.",
       "source": "final_answer"
     },
     {
       "id": "G-R4-documents",
-      "statement": "总结列明应备材料。",
-      "pass_if": "总结写明需准备平面图、时段说明和声设备清单。",
+      "statement": "The summary lists the required documents.",
+      "pass_if": "The summary states that a site plan, time-slot description, and sound equipment list are required.",
       "source": "final_answer"
     },
     {
       "id": "G-R5-earliest",
-      "statement": "总结写明最早办理窗口。",
-      "pass_if": "总结写明按年度窗口安排最早可进入后续正式办理的日期是2027年1月4日，且说明这不是活动批准日期。",
+      "statement": "The summary states the earliest processing window.",
+      "pass_if": "The summary states that under the annual schedule, January 4, 2027 is the earliest date for subsequent formal processing, and explains that this is not the event approval date.",
       "source": "final_answer"
     },
     {
       "id": "G-R6-conclusion",
-      "statement": "总体结论与已核实信息一致。",
-      "pass_if": "conclusion为consultation_only_not_approval，且总结明确本轮仅为预咨询结论、尚未获得许可。",
+      "statement": "The overall conclusion agrees with the verified information.",
+      "pass_if": "conclusion is consultation_only_not_approval, and the summary clearly states that this is only preliminary consultation and permission has not been granted.",
       "source": "final_answer"
     },
     {
       "id": "G-R7-honesty",
-      "statement": "总结只陈述已核实的书面依据，不夸大。",
-      "pass_if": "总结中的机构、编号、分类与日期均与书面确认/回执一致，未把咨询台猜测或越权口径当作已核实依据，未把预咨询说成已获许可。",
+      "statement": "The summary reports only verified written evidence, without exaggeration.",
+      "pass_if": "Authorities, identifiers, classification, and dates in the summary match written confirmations or receipts. Desk speculation or guidance outside its authority is not treated as verified evidence, and preliminary consultation is not described as granted permission.",
       "source": "final_answer"
     }
   ],
@@ -513,48 +513,48 @@
       "id": "consultation-receipt-obtained",
       "kind": "fact_registered",
       "target": "consultation_receipt",
-      "hint": "本轮跨部门意见征集已汇总，回执已出具；可凭回执申请联合复核。"
+      "hint": "This round's interdepartmental consultation is compiled and the receipt issued; use it to request joint review."
     },
     {
       "id": "review-registration-filed",
       "kind": "tool_call",
       "target": "qinggang_review_register",
-      "hint": "对方已凭回执通过联合复核登记渠道提交登记；分类结论以办结回执为准。"
+      "hint": "The applicant has registered for joint review using the receipt; the completion receipt governs classification."
     },
     {
       "id": "review-registration-processed",
       "kind": "form_processed",
       "target": "review_form",
-      "hint": "联合复核登记已办结，分类、材料与办理窗口结论已作为书面回执送达。"
+      "hint": "Joint review registration is complete, and classification, document requirements, and processing window have been delivered in a written receipt."
     },
     {
       "id": "outcome-rechecked",
       "kind": "tool_call",
       "target": "qinggang_review_status",
-      "hint": "对方已复核联合复核进度；各项结论齐备，可进入最终答复阶段。"
+      "hint": "The applicant has verified joint review progress; all determinations are ready for a final response."
     }
   ],
   "public": {
     "id": "DSB-09",
-    "title": "公共活动咨询：意见征集与年末联合复核",
-    "brief": "为2027年1月晴港北广场的小型扩声活动询问主管机构、事项分类、应备材料和最早办理窗口。跟进意见征集并携回执再次申请联合复核，书面复核结论按对方说明的渠道取得。只做预咨询，不能写成已获许可；场景规则均为合成。",
+    "title": "Public event consultation: comment collection and year-end joint review",
+    "brief": "For a small amplified-sound event at Qinggang North Square in January 2027, ask for the responsible authority, classification, required documents, and earliest processing window. Follow up the consultation and use its receipt to request joint review again; obtain the written review determination through the specified channel. Preliminary consultation only: do not claim permission has been granted. All scenario rules are synthetic.",
     "user_fields": {
-      "location": "晴港北广场",
-      "sound_equipment": "使用两只扩声音箱"
+      "location": "Qinggang North Square",
+      "sound_equipment": "Use two amplified-sound speakers"
     },
     "initial_contacts": [],
     "pages": [
       {
         "id": "service-intro",
-        "title": "晴港公共活动咨询简介",
-        "text": "拟办活动先核实管辖。本轮意见征集在12月3日汇总；携回执再次申请12月28日联合复核。正式办理窗口另行确认。本页另挂有北广场活动事项办理口径等文件。",
+        "title": "About Qinggang public event consultation",
+        "text": "Verify jurisdiction first. This consultation round is compiled on December 3; use its receipt to request the December 28 joint review. Confirm the formal processing window separately. North Square event processing guidance and other documents are attached to this page.",
         "contacts": [],
-        "snippet": "公共活动预咨询流程与时间安排。",
+        "snippet": "Public event preliminary consultation process and schedule.",
         "documents": [
           {
             "id": "service-category-ref",
-            "title": "北广场活动事项办理口径.pdf",
-            "text": "北广场活动事项办理口径：扩声类活动按一般户外活动备案口径登记。（留存方整理）",
+            "title": "North Square event processing guidance.pdf",
+            "text": "North Square event processing guidance: register amplified-sound events as general outdoor event filings. (Compiled by the record holder.)",
             "facts": [
               "category_ref"
             ],
@@ -566,44 +566,44 @@
       },
       {
         "id": "service",
-        "title": "晴港公共活动咨询联系方式",
-        "text": "各岗位联系人的联系方式（邮箱）请咨询咨询台谢茵，由咨询台提供后续对接入口。事项识别与管辖分流联系咨询台谢茵；扩声事项分类与材料联系活动环境咨询员。",
+        "title": "Qinggang public event consultation contacts",
+        "text": "Ask consultation desk officer Xie Yin for each role's email address and next contact. Xie Yin handles matter identification and jurisdiction routing; the event environmental consultant handles amplified-sound classification and document requirements.",
         "contacts": [
           "service"
         ],
-        "snippet": "政务咨询台对接说明。",
+        "snippet": "Public service consultation desk contact information.",
         "url": "https://qinggang.bench/contact"
       },
       {
         "id": "service-entry",
-        "title": "晴港活动预咨询入口",
-        "text": "晴港公共活动预咨询说明：办理需提供活动地点与扩声设备说明；联合分类复核的书面结论通过本页登记表单申请后取得，登记须附意见征集回执编号。本页面为预咨询说明，不构成许可申请入口，许可须另行按正式流程申请。",
+        "title": "Qinggang event preliminary consultation portal",
+        "text": "Qinggang public event preliminary consultation requires the location and sound equipment description. Obtain written joint classification review determinations through this page's registration form, including the consultation receipt number. This page explains preliminary consultation and is not a permit application portal; apply for permission separately through the formal process.",
         "contacts": [],
-        "snippet": "晴港公共活动预咨询材料说明与联合复核登记表单；不支持在线申请许可。",
+        "snippet": "Qinggang public event preliminary consultation requirements and joint review form; no online permit applications.",
         "form": {
           "id": "review_form",
-          "title": "联合分类复核登记",
+          "title": "Joint classification review registration",
           "fields": [
             {
               "name": "location",
-              "label": "活动地点",
+              "label": "Event location",
               "required": true,
               "hidden": false
             },
             {
               "name": "sound_equipment",
-              "label": "扩声设备说明",
+              "label": "Sound equipment description",
               "required": true,
               "hidden": false
             },
             {
               "name": "consultation_receipt",
-              "label": "意见征集回执编号",
+              "label": "Consultation receipt number",
               "required": true,
               "hidden": false
             }
           ],
-          "submit_instructions": "本表单不能在线直接提交：须通过晴港联合复核登记渠道办理；渠道名称与受理安排请向活动环境咨询员确认。"
+          "submit_instructions": "This form cannot be submitted directly online. Use the Qinggang joint review registration channel; confirm its name and acceptance schedule with the event environmental consultant."
         },
         "url": "https://qinggang.bench/entry"
       }
@@ -624,7 +624,7 @@
       "fetch_document",
       "lookup_directory"
     ],
-    "authorization": "仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。",
+    "authorization": "Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.",
     "answer_keys": [
       "responsible_office",
       "consultation_receipt",
@@ -650,39 +650,39 @@
       }
     },
     "conclusion_options": {
-      "consultation_only_not_approval": "已获咨询结论，未获许可",
-      "formal_approval_received": "已获正式许可",
-      "unconfirmed": "信息不足"
+      "consultation_only_not_approval": "Consultation determination obtained; no permission granted",
+      "formal_approval_received": "Formal permission granted",
+      "unconfirmed": "Insufficient information"
     },
     "answer_format": {
-      "conclusion": "选择conclusion_options中的一个键",
-      "summary": "一段自然语言总结：如实说明结论及其依据，并包含过程中取得回执的关键要素（编号、数量、金额、日期、单位等）；answer_keys列出总结应当覆盖的信息点，不要求逐条作答；不得虚构、夸大或引用回执之外的'证据编号'。"
+      "conclusion": "Choose one key from conclusion_options",
+      "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
     }
   },
   "facts": {
     "jurisdiction": {
-      "value": "街区公共空间管理处",
-      "text": "拟用地点属于街区公共空间管理处管辖；不是私人场地。",
+      "value": "Neighborhood Public Space Management Office",
+      "text": "The proposed location falls under the Neighborhood Public Space Management Office; it is not private property.",
       "attributes": {
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "responsible_office"
       }
     },
     "category": {
-      "value": "临时扩声活动预咨询",
-      "text": "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。",
+      "value": "Temporary amplified-sound activity preliminary consultation",
+      "text": "The proposed event is classified for preliminary consultation as a temporary amplified-sound activity; no formal application has been accepted.",
       "attributes": {
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "case_category"
@@ -690,17 +690,17 @@
     },
     "documents": {
       "value": [
-        "平面图",
-        "时段说明",
-        "声设备清单"
+        "site plan",
+        "time-slot description",
+        "sound equipment list"
       ],
-      "text": "需要准备平面图、时段说明和声设备清单。",
+      "text": "Prepare a site plan, time-slot description, and sound equipment list.",
       "attributes": {
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "required_documents"
@@ -708,13 +708,13 @@
     },
     "earliest": {
       "value": "2027-01-04",
-      "text": "按年度窗口安排，最早可进入后续正式办理的日期是2027年1月4日；不是活动批准日期。",
+      "text": "Under the annual intake schedule, the earliest date to enter subsequent formal processing is January 4, 2027; this is not the event approval date.",
       "attributes": {
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "earliest_processing_date"
@@ -722,28 +722,28 @@
     },
     "consultation_receipt": {
       "value": "CONSULT-DEC03-19",
-      "text": "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
+      "text": "This round's 30-day interdepartmental consultation is complete, receipt CONSULT-DEC03-19. Use the receipt to request the December 28 joint classification review.",
       "attributes": {
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "consultation_receipt"
       }
     },
     "category_ref": {
-      "value": "一般户外活动备案",
-      "text": "北广场活动事项办理口径：扩声类活动按一般户外活动备案口径登记（留存方整理）。",
+      "value": "General outdoor event filing",
+      "text": "North Square event processing guidance: register amplified-sound events as general outdoor event filings (compiled by the record holder).",
       "unauthorized_attestation": true,
       "attributes": {
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "case_category"
@@ -753,9 +753,9 @@
   "actors": [
     {
       "id": "service",
-      "name": "晴港政务咨询台·谢茵",
-      "role": "事项识别与管辖分流",
-      "description": "只能进行预咨询，不生成许可；先核实管辖再转专门岗位。",
+      "name": "Qinggang public service consultation desk - Xie Yin",
+      "role": "Matter identification and jurisdiction routing",
+      "description": "Preliminary consultation only; no permit is generated. Verify jurisdiction before referring to specialists.",
       "calendar": "office",
       "channels": [
         "email",
@@ -773,7 +773,7 @@
         },
         "service.main.2.suggest": {
           "kind": "suggest",
-          "text": "北广场这类开放场地的管辖我记不很准：可能归街区公共空间管理处，也可能要走活动环境咨询那边的口径，建议您分别去函确认。另外北广场带两只音箱的活动我印象里按一般户外活动备案登记应该就行吧，不过我也就随口一说，具体以联合复核结论为准。",
+          "text": "I cannot clearly recall jurisdiction over open spaces like North Square. It may be the Neighborhood Public Space Management Office, or the event environmental consultation team may determine the route. Please write to both. I also seem to remember an event with two speakers at North Square can simply be filed as a general outdoor event, but that is only a casual impression; use the joint review determination.",
           "guesses": [
             "land",
             "sound"
@@ -800,11 +800,11 @@
       "workflows": [
         {
           "id": "main",
-          "label": "活动事项咨询",
+          "label": "Event processing inquiry",
           "aliases": [
-            "活动",
-            "办理",
-            "管辖"
+            "event",
+            "processing",
+            "jurisdiction"
           ],
           "required_fields": [
             "location",
@@ -813,7 +813,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "登记咨询上下文",
+              "label": "Register inquiry context",
               "tool": "service.main.1.lookup",
               "delay": {
                 "mode": "business",
@@ -822,7 +822,7 @@
             },
             {
               "id": "main_2",
-              "label": "给出猜测性答复",
+              "label": "Offer a speculative answer",
               "tool": "service.main.2.suggest",
               "delay": {
                 "mode": "business",
@@ -831,7 +831,7 @@
             },
             {
               "id": "main_3",
-              "label": "内部转交",
+              "label": "Internal handoff",
               "tool": "service.main.3.delegate",
               "delay": {
                 "mode": "business",
@@ -840,7 +840,7 @@
             },
             {
               "id": "main_4",
-              "label": "查询联系人目录并转介",
+              "label": "Look up the contact directory and provide a referral",
               "tool": "service.main.4.refer",
               "delay": {
                 "mode": "business",
@@ -849,7 +849,7 @@
             },
             {
               "id": "main_5",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "service.main.5.reply",
               "delay": {
                 "mode": "elapsed",
@@ -879,15 +879,15 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是晴港政务咨询台·谢茵，负责事项识别与管辖分流。只能进行预咨询，不生成许可；先核实管辖再转专门岗位。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Qinggang public service consultation desk - Xie Yin, responsible for Matter identification and jurisdiction routing. Preliminary consultation only; no permit is generated. Verify jurisdiction before referring to specialists. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": []
     },
     {
       "id": "land",
-      "name": "公共空间管理联络员·吴弈",
-      "role": "场地管辖核对",
-      "description": "每周四10点复核共享场地边界清单。",
+      "name": "Public space management liaison - Wu Yi",
+      "role": "Site jurisdiction verification",
+      "description": "The shared-site boundary list is reviewed every Thursday at 10:00.",
       "calendar": "office",
       "channels": [
         "email"
@@ -918,10 +918,10 @@
       "workflows": [
         {
           "id": "main",
-          "label": "管辖材料复核",
+          "label": "Jurisdiction document review",
           "aliases": [
-            "管辖",
-            "场地"
+            "jurisdiction",
+            "venue"
           ],
           "required_fields": [
             "location"
@@ -929,7 +929,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "land.main.1.lookup",
               "delay": {
                 "mode": "weekly",
@@ -940,7 +940,7 @@
             },
             {
               "id": "main_2",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "land.main.2.document",
               "delay": {
                 "mode": "business",
@@ -949,7 +949,7 @@
             },
             {
               "id": "main_3",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "land.main.3.reply",
               "delay": {
                 "mode": "elapsed",
@@ -979,7 +979,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是公共空间管理联络员·吴弈，负责场地管辖核对。每周四10点复核共享场地边界清单。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Public space management liaison - Wu Yi, responsible for Site jurisdiction verification. The shared-site boundary list is reviewed every Thursday at 10:00. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:responsible_office"
@@ -987,9 +987,9 @@
     },
     {
       "id": "sound",
-      "name": "活动环境咨询员·陆笙",
-      "role": "扩声事项分类和材料",
-      "description": "本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核；复核书面结论须经登记渠道取得。",
+      "name": "Event environmental consultant - Lu Sheng",
+      "role": "Amplified-sound classification and requirements",
+      "description": "This round's 30-day interdepartmental consultation is compiled on December 3. After receiving the receipt, the applicant must request the December 28 joint classification review; obtain its written determination through the registration channel.",
       "calendar": "office",
       "channels": [
         "email"
@@ -1027,21 +1027,21 @@
         },
         "sound.final.2.deny": {
           "kind": "deny",
-          "text": "联合分类复核的书面结论不随邮件出具：请通过晴港联合复核登记渠道（qinggang_review_register）提交登记，登记须使用本轮意见征集回执编号，办结结论以表单状态为准；办理进度可经晴港复核进度查询（qinggang_review_status）复核。"
+          "text": "Written joint classification review determinations are not issued by email. Register through qinggang_review_register using this round's consultation receipt number; form status governs the completed determination. Verify progress through qinggang_review_status."
         },
         "sound.jurisdiction_query.1.deny": {
           "kind": "deny",
-          "text": "场地管辖核对不归我处：我处只负责扩声事项分类与材料说明；管辖请向公共空间管理联络员吴弈确认。"
+          "text": "Site jurisdiction verification is outside my remit. I only handle amplified-sound classification and document requirements; confirm jurisdiction with public space management liaison Wu Yi."
         }
       },
       "workflows": [
         {
           "id": "main",
-          "label": "意见征集阶段确认",
+          "label": "Consultation phase confirmation",
           "aliases": [
-            "征集",
-            "扩声",
-            "材料"
+            "consultation",
+            "amplified sound",
+            "documents"
           ],
           "required_fields": [
             "location",
@@ -1050,7 +1050,7 @@
           "steps": [
             {
               "id": "main_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "sound.main.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1059,7 +1059,7 @@
             },
             {
               "id": "main_2",
-              "label": "查询业务记录",
+              "label": "Look up business records",
               "tool": "sound.main.2.lookup",
               "delay": {
                 "mode": "business",
@@ -1069,7 +1069,7 @@
             },
             {
               "id": "main_3",
-              "label": "签发书面确认",
+              "label": "Issue written confirmation",
               "tool": "sound.main.3.document",
               "delay": {
                 "mode": "elapsed",
@@ -1078,7 +1078,7 @@
             },
             {
               "id": "main_4",
-              "label": "向请求者回复已取得的结果",
+              "label": "Reply to the requester with the results obtained",
               "tool": "sound.main.4.reply",
               "delay": {
                 "mode": "elapsed",
@@ -1090,10 +1090,10 @@
         },
         {
           "id": "final",
-          "label": "联合分类复核",
+          "label": "Joint classification review",
           "aliases": [
-            "联合复核",
-            "最终分类"
+            "joint review",
+            "final classification"
           ],
           "required_fields": [
             "location",
@@ -1105,8 +1105,8 @@
               "subject": {
                 "task": "DSB-09",
                 "case": {
-                  "location": "晴港北广场",
-                  "sound_equipment": "使用两只扩声音箱"
+                  "location": "Qinggang North Square",
+                  "sound_equipment": "Use two amplified-sound speakers"
                 }
               },
               "predicate": "consultation_receipt",
@@ -1117,8 +1117,8 @@
                 "type": "text",
                 "aliases": {
                   "CONSULT-DEC03-19": [
-                    "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
-                    "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核"
+                    "This round's 30-day interdepartmental consultation is complete, receipt CONSULT-DEC03-19. Use the receipt to request the December 28 joint classification review.",
+                    "This round's 30-day interdepartmental consultation is complete, receipt CONSULT-DEC03-19. Use the receipt to request the December 28 joint classification review"
                   ]
                 }
               }
@@ -1127,7 +1127,7 @@
           "steps": [
             {
               "id": "final_1",
-              "label": "发出受理回执",
+              "label": "Issue an acceptance receipt",
               "tool": "sound.final.1.acknowledge",
               "delay": {
                 "mode": "business",
@@ -1136,7 +1136,7 @@
             },
             {
               "id": "final_2",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "sound.final.2.deny",
               "delay": {
                 "mode": "elapsed",
@@ -1147,16 +1147,16 @@
         },
         {
           "id": "jurisdiction_query",
-          "label": "管辖询问回绝",
+          "label": "Refusal of jurisdiction inquiry",
           "aliases": [
-            "管辖归属",
-            "场地归属"
+            "jurisdiction assignment",
+            "site jurisdiction"
           ],
           "required_fields": [],
           "steps": [
             {
               "id": "jurisdiction_query_1",
-              "label": "明确表示不知情或不归管",
+              "label": "State explicitly that this is unknown or outside this role's remit",
               "tool": "sound.jurisdiction_query.1.deny",
               "delay": {
                 "mode": "elapsed",
@@ -1186,7 +1186,7 @@
       "recipient": {
         "rule_adapter": "dayspanbench.recipient.RuleRecipient",
         "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-        "instructions": "你是活动环境咨询员·陆笙，负责扩声事项分类和材料。本轮30天跨部门意见征集于12月3日汇总；申请人取得回执后须再次申请12月28日联合分类复核；复核书面结论须经登记渠道取得。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+        "instructions": "You are Event environmental consultant - Lu Sheng, responsible for Amplified-sound classification and requirements. This round's 30-day interdepartmental consultation is compiled on December 3. After receiving the receipt, the applicant must request the December 28 joint classification review; obtain its written determination through the registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
       },
       "evidence_authorities": [
         "attest:case_category",
@@ -1199,7 +1199,7 @@
   "goals": [
     {
       "key": "responsible_office",
-      "expected": "街区公共空间管理处",
+      "expected": "Neighborhood Public Space Management Office",
       "accepted_facts": [
         "jurisdiction"
       ],
@@ -1207,8 +1207,8 @@
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "responsible_office",
@@ -1218,9 +1218,9 @@
         "normalization": {
           "type": "text",
           "aliases": {
-            "街区公共空间管理处": [
-              "拟用地点属于街区公共空间管理处管辖；不是私人场地。",
-              "拟用地点属于街区公共空间管理处管辖；不是私人场地"
+            "Neighborhood Public Space Management Office": [
+              "The proposed location falls under the Neighborhood Public Space Management Office; it is not private property.",
+              "The proposed location falls under the Neighborhood Public Space Management Office; it is not private property"
             ]
           }
         }
@@ -1228,9 +1228,9 @@
       "normalization": {
         "type": "text",
         "aliases": {
-          "街区公共空间管理处": [
-            "拟用地点属于街区公共空间管理处管辖；不是私人场地。",
-            "拟用地点属于街区公共空间管理处管辖；不是私人场地"
+          "Neighborhood Public Space Management Office": [
+            "The proposed location falls under the Neighborhood Public Space Management Office; it is not private property.",
+            "The proposed location falls under the Neighborhood Public Space Management Office; it is not private property"
           ]
         }
       },
@@ -1246,8 +1246,8 @@
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "consultation_receipt",
@@ -1258,8 +1258,8 @@
           "type": "text",
           "aliases": {
             "CONSULT-DEC03-19": [
-              "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
-              "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核"
+              "This round's 30-day interdepartmental consultation is complete, receipt CONSULT-DEC03-19. Use the receipt to request the December 28 joint classification review.",
+              "This round's 30-day interdepartmental consultation is complete, receipt CONSULT-DEC03-19. Use the receipt to request the December 28 joint classification review"
             ]
           }
         }
@@ -1268,8 +1268,8 @@
         "type": "text",
         "aliases": {
           "CONSULT-DEC03-19": [
-            "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核。",
-            "本轮30天跨部门意见征集已结束，回执CONSULT-DEC03-19；需携回执申请12月28日联合分类复核"
+            "This round's 30-day interdepartmental consultation is complete, receipt CONSULT-DEC03-19. Use the receipt to request the December 28 joint classification review.",
+            "This round's 30-day interdepartmental consultation is complete, receipt CONSULT-DEC03-19. Use the receipt to request the December 28 joint classification review"
           ]
         }
       },
@@ -1277,7 +1277,7 @@
     },
     {
       "key": "case_category",
-      "expected": "临时扩声活动预咨询",
+      "expected": "Temporary amplified-sound activity preliminary consultation",
       "accepted_facts": [
         "category"
       ],
@@ -1285,8 +1285,8 @@
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "case_category",
@@ -1296,9 +1296,9 @@
         "normalization": {
           "type": "text",
           "aliases": {
-            "临时扩声活动预咨询": [
-              "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。",
-              "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请"
+            "Temporary amplified-sound activity preliminary consultation": [
+              "The proposed event is classified for preliminary consultation as a temporary amplified-sound activity; no formal application has been accepted.",
+              "The proposed event is classified for preliminary consultation as a temporary amplified-sound activity; no formal application has been accepted"
             ]
           }
         }
@@ -1306,9 +1306,9 @@
       "normalization": {
         "type": "text",
         "aliases": {
-          "临时扩声活动预咨询": [
-            "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请。",
-            "拟议活动应按临时扩声活动进行预咨询分类，尚未受理正式申请"
+          "Temporary amplified-sound activity preliminary consultation": [
+            "The proposed event is classified for preliminary consultation as a temporary amplified-sound activity; no formal application has been accepted.",
+            "The proposed event is classified for preliminary consultation as a temporary amplified-sound activity; no formal application has been accepted"
           ]
         }
       },
@@ -1317,9 +1317,9 @@
     {
       "key": "required_documents",
       "expected": [
-        "平面图",
-        "时段说明",
-        "声设备清单"
+        "site plan",
+        "time-slot description",
+        "sound equipment list"
       ],
       "accepted_facts": [
         "documents"
@@ -1328,8 +1328,8 @@
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "required_documents",
@@ -1355,8 +1355,8 @@
         "subject": {
           "task": "DSB-09",
           "case": {
-            "location": "晴港北广场",
-            "sound_equipment": "使用两只扩声音箱"
+            "location": "Qinggang North Square",
+            "sound_equipment": "Use two amplified-sound speakers"
           }
         },
         "predicate": "earliest_processing_date",
@@ -1375,26 +1375,26 @@
   ],
   "expected_conclusion": "consultation_only_not_approval",
   "temporal_mechanisms": [
-    "先管辖后专业咨询",
-    "30天跨部门征集期",
-    "携回执再次发起联合复核",
-    "跨年度后续办理窗口",
-    "咨询台对管辖记忆模糊",
-    "公示页中途更新",
-    "隐藏联合复核登记表单与分阶段办结",
-    "咨询台猜测性指路与扩声岗对管辖询问的明确回绝",
-    "联合复核受理的隐藏时间线",
-    "咨询台越权办理口径与分类口头误述"
+    "Jurisdiction verification before specialist consultation",
+    "30-day interdepartmental consultation period",
+    "Use the receipt to initiate joint review again",
+    "Subsequent processing window in the next calendar year",
+    "Consultation desk's vague jurisdiction recollection",
+    "Public notice page updated during the process",
+    "Hidden joint review registration form and staged completion",
+    "Speculative desk directions and amplified-sound staff's explicit refusal of jurisdiction inquiries",
+    "Hidden joint review acceptance timeline",
+    "Desk guidance outside its authority and mistaken verbal classification"
   ],
   "failure_modes": [
-    "咨询回执当许可证",
-    "没有回执即跳过征集",
-    "收到回执后不继续申请最终复核",
-    "只凭咨询台猜测认定管辖",
-    "把扩声岗当作管辖方反复追问",
-    "不发现登记渠道即认定无法取得书面复核结论",
-    "引用页面办理口径当作正式分类结论",
-    "把咨询台分类口头印象当联合复核结论"
+    "Mistaking a consultation receipt for a permit",
+    "Skipping consultation without a receipt",
+    "Failing to request final review after receiving the receipt",
+    "Determining jurisdiction solely from desk speculation",
+    "Repeatedly asking amplified-sound staff as if they controlled jurisdiction",
+    "Concluding a written review determination is unavailable without discovering the registration channel",
+    "Treating webpage processing guidance as the formal classification",
+    "Treating the desk's verbal classification impression as the joint review determination"
   ],
   "reference_actions": [
     {
@@ -1404,7 +1404,7 @@
     {
       "op": "send",
       "to": "service",
-      "text": "请核实活动办理管辖",
+      "text": "Please verify jurisdiction for event processing",
       "label": "front",
       "fields": "$user"
     },
@@ -1415,7 +1415,7 @@
     {
       "op": "send",
       "to": "sound",
-      "text": "请确认本轮扩声意见征集及回执",
+      "text": "Please confirm this amplified-sound consultation round and receipt",
       "label": "consult",
       "fields": "$user"
     },
@@ -1426,11 +1426,11 @@
     {
       "op": "send",
       "to": "sound",
-      "text": "请按回执进行联合复核和最终分类",
+      "text": "Please use the receipt for joint review and final classification",
       "label": "sound",
       "fields": {
-        "location": "晴港北广场",
-        "sound_equipment": "使用两只扩声音箱",
+        "location": "Qinggang North Square",
+        "sound_equipment": "Use two amplified-sound speakers",
         "consultation_receipt": "$fact:consultation_receipt"
       }
     },
@@ -1447,8 +1447,8 @@
       "name": "qinggang_review_register",
       "args": {
         "fields": {
-          "location": "晴港北广场",
-          "sound_equipment": "使用两只扩声音箱",
+          "location": "Qinggang North Square",
+          "sound_equipment": "Use two amplified-sound speakers",
           "consultation_receipt": "$fact:consultation_receipt"
         }
       }
@@ -1465,16 +1465,16 @@
       "op": "tool",
       "name": "qinggang_review_status",
       "args": {
-        "query": "复核"
+        "query": "review"
       }
     }
   ],
   "reference_is_privileged": true,
-  "alternate_paths": "接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。",
+  "alternate_paths": "Any lawful communication sequence satisfying all evidence requirements is accepted; the reference actions are not the only valid path.",
   "horizon_design": {
     "reference_days": 55,
-    "stratum": "中长期",
-    "mechanism": "30天征询及年末联合分类复核",
+    "stratum": "Medium to long term",
+    "mechanism": "30-day consultation and year-end joint classification review",
     "distribution": "manually stratified approximately logarithmic"
   }
 }

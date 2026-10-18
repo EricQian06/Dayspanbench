@@ -3,9 +3,9 @@
   "task_id": "DSB-07",
   "actor": {
     "id": "digitizer",
-    "name": "档案数字化员·林澈",
-    "role": "扫描规格",
-    "description": "扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。",
+    "name": "Archive digitization specialist - Lin Che",
+    "role": "scan specifications",
+    "description": "Scanning and image restoration run continuously for 72 hours; quality confirmation must occur during working hours.",
     "calendar": "office",
     "channels": [
       "email"
@@ -34,10 +34,10 @@
     "workflows": [
       {
         "id": "main",
-        "label": "扫描质量核对",
+        "label": "Scan quality verification",
         "aliases": [
-          "扫描",
-          "规格"
+          "scan",
+          "Specification"
         ],
         "required_fields": [
           "archive_id"
@@ -45,7 +45,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "保护性数字化与图像恢复连续处理72小时",
+            "label": "Preservation digitization and image restoration run continuously for 72 hours",
             "tool": "digitizer.main.1.lookup",
             "delay": {
               "mode": "elapsed",
@@ -54,7 +54,7 @@
           },
           {
             "id": "main_2",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "digitizer.main.2.document",
             "delay": {
               "mode": "business",
@@ -63,7 +63,7 @@
           },
           {
             "id": "main_3",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "digitizer.main.3.reply",
             "delay": {
               "mode": "elapsed",
@@ -93,7 +93,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是档案数字化员·林澈，负责扫描规格。扫描与图像恢复连续处理72小时，质量确认必须在工作时间完成。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Archive digitization specialist - Lin Che, responsible for scan specifications. Scanning and image restoration run continuously for 72 hours; quality confirmation must occur during working hours. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:scan_dpi"
@@ -122,13 +122,13 @@
   "local_facts": {
     "scan": {
       "value": 600,
-      "text": "可提供600dpi扫描件；文件用途仍受授权范围限制。",
+      "text": "A 600dpi scan is available; file use remains restricted by the authorization scope.",
       "attributes": {
         "subject": {
           "task": "DSB-07",
           "case": {
             "archive_id": "ARC-71",
-            "usage": "非商业实体展览及展览网站"
+            "usage": "Noncommercial physical exhibition and exhibition website"
           }
         },
         "predicate": "scan_dpi"

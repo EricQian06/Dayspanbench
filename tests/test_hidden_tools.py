@@ -16,32 +16,32 @@ def form_task():
     a form submitter, an external status query, and a gated record."""
     task = deepcopy(load(1))
     entry = next(p for p in task["public"]["pages"] if p["id"] == "venue-entry")
-    entry["form"] = {"id": "venue-form", "title": "活动场地预约登记",
-                     "fields": [{"name": "event_date", "label": "活动日期", "required": True},
-                                {"name": "headcount", "label": "人数", "required": True},
-                                {"name": "event_time", "label": "活动时段", "required": False}],
-                     "submit_instructions": "请通过会馆预约登记系统（heanhuiguan_booking）提交。"}
+    entry["form"] = {"id": "venue-form", "title": 'Event venue booking registration',
+                     "fields": [{"name": "event_date", "label": 'Event date', "required": True},
+                                {"name": "headcount", "label": 'Headcount', "required": True},
+                                {"name": "event_time", "label": 'Event time slot', "required": False}],
+                     "submit_instructions": 'Submit through the hall booking registration system (heanhuiguan_booking).'}
     task["hidden_tools"] = [
         {"name": "heanhuiguan_booking", "usage":
-            "禾岸会馆预约登记系统。调用参数：fields为对象，键为表单字段名（event_date、headcount、event_time）。",
+            'Hean Hall booking registration system. Argument: fields is an object with form field keys event_date, headcount, and event_time.',
          "kind": "form", "params": {
              "form": "venue-form",
              "expect": {"event_date": "2026-11-13"},
              "process_delay": 120,
              "calendar": "office",
-             "result_text": "登记信息已核对无误，预约登记完成。",
-             "reject_text": "登记日期与档期安排不符，已退回。",
+             "result_text": 'Registration information verified; booking registration complete.',
+             "reject_text": 'The registered date does not match availability; returned.',
              "facts": ["price"], "issuer": "sales"}},
         {"name": "heanhuiguan_progress", "usage":
-            "禾岸会馆办理进度查询。调用参数：query为事项关键词（可省略）。",
+            'Hean Hall processing-status inquiry. Arguments: query is an optional matter keyword.',
          "kind": "status", "params": {"records": [
-             {"key": "booking", "label": "预约登记", "initial": "尚未查询到预约登记记录。",
-              "timeline": [{"at": "2026-11-06T12:00:00+08:00", "text": "系统升级，预约登记暂时不可用。"}],
+             {"key": "booking", "label": 'Booking registration', "initial": 'No booking registration record was found.',
+              "timeline": [{"at": "2026-11-06T12:00:00+08:00", "text": 'System upgrade; booking registration is temporarily unavailable.'}],
               "form": "venue-form"}]}},
         {"name": "heanhuiguan_archive", "usage":
-            "禾岸会馆书面凭证档案查询。调用参数：key为记录编号（可省略）。",
+            'Hean Hall written credential archive lookup. Argument: key is an optional record ID.',
          "kind": "record", "params": {"records": [
-             {"key": "booking-receipt", "title": "预约登记回执", "text": "预约登记回执：材料已核收。",
+             {"key": "booking-receipt", "title": 'Booking registration receipt', "text": 'Booking registration receipt: materials received.',
               "facts": ["cancel"], "issuer": "sales", "requires_form": "venue-form"}]}},
     ]
     # The fixture swaps the entry-page form and hidden tools wholesale, so the
@@ -49,9 +49,9 @@ def form_task():
     # own channel to keep the private stage graph referentially valid.
     task["stages"] = [
         {"id": "booking-filed", "kind": "tool_call", "target": "heanhuiguan_booking",
-         "hint": "预约登记已提交；结论只在办结后出具。"},
+         "hint": 'Booking registration submitted; the determination is issued only after completion.'},
         {"id": "booking-processed", "kind": "form_processed", "target": "venue-form",
-         "hint": "预约登记已办结，回执已随页面送达。"}]
+         "hint": 'Booking registration complete; the receipt is delivered with the page.'}]
     return task
 
 
@@ -64,13 +64,13 @@ def deny_task():
     sound = next(a for a in task["actors"] if a["id"] == "sound")
     flow = sound["workflows"][0]
     sound["tools"]["sound.main.1.suggest"] = {
-        "kind": "suggest", "text": "北广场的活动我记不清归谁管，可能是场馆运营那边，您再问问。",
+        "kind": "suggest", "text": 'I cannot recall who handles North Square events. It may be venue operations; please ask them.',
         "guesses": []}
     sound["tools"]["sound.main.2.deny"] = {
-        "kind": "deny", "text": "经核实，该事项不归我处管理，我处也没有相关信息，无法为您办理。"}
+        "kind": "deny", "text": 'After verification, this matter is outside our remit and we have no relevant information or ability to handle it.'}
     flow["steps"] = [
-        {"id": "main_1", "label": "再次猜测", "tool": "sound.main.1.suggest", "delay": {"mode": "business", "minutes": 30}},
-        {"id": "main_2", "label": "明确回绝", "tool": "sound.main.2.deny", "delay": {"mode": "elapsed", "minutes": 0}},
+        {"id": "main_1", "label": 'Another guess', "tool": "sound.main.1.suggest", "delay": {"mode": "business", "minutes": 30}},
+        {"id": "main_2", "label": 'Explicit refusal', "tool": "sound.main.2.deny", "delay": {"mode": "elapsed", "minutes": 0}},
     ]
     return task
 
@@ -85,7 +85,7 @@ class HiddenToolTests(unittest.TestCase):
         self.assertEqual(validate_task(self.task), [])
 
     def test_discover_tools_miss_does_not_leak(self):
-        result = self.api.discover_tools("不存在的工具")
+        result = self.api.discover_tools('nonexistent_tool')
         self.assertFalse(result["found"])
         self.assertNotIn("heanhuiguan_booking", json.dumps(result))
         self.assertNotIn("heanhuiguan_booking", self.api.tool_list())
@@ -103,7 +103,7 @@ class HiddenToolTests(unittest.TestCase):
     def test_discover_tools_charges_no_budget(self):
         before = self.env.agent_sends
         self.api.discover_tools("heanhuiguan_booking")
-        self.api.discover_tools("错过")
+        self.api.discover_tools('missed')
         self.assertEqual(self.env.agent_sends, before)
 
 
@@ -117,7 +117,7 @@ class FormTests(unittest.TestCase):
 
     def test_visit_page_shows_form_and_status(self):
         page = self.api.visit_page(self.url)
-        self.assertEqual(page["form"]["title"], "活动场地预约登记")
+        self.assertEqual(page["form"]["title"], 'Event venue booking registration')
         self.assertEqual([f["name"] for f in page["form"]["fields"]],
                          ["event_date", "headcount", "event_time"])
         self.assertNotIn("status", page["form"])
@@ -130,15 +130,15 @@ class FormTests(unittest.TestCase):
         receipt = self.api.heanhuiguan_booking(
             fields={"event_date": "2026-11-13", "headcount": 80, "event_time": "18:00-21:00"})
         self.assertEqual(receipt["status"], "submitted")
-        self.assertEqual(self.api.visit_page(self.url)["form"]["status"], "已提交，待处理")
+        self.assertEqual(self.api.visit_page(self.url)["form"]["status"], 'Submitted, pending processing')
         # A pending submission blocks re-submission.
         with self.assertRaises(ValueError):
             self.api.heanhuiguan_booking(fields={"event_date": "2026-11-13", "headcount": 80})
         # 120 business minutes on the office calendar land the same working day.
         self.env.advance("2026-11-06T17:30:00+08:00")
         form = self.api.visit_page(self.url)["form"]
-        self.assertEqual(form["status"], "已办结")
-        self.assertEqual(form["result_text"], "登记信息已核对无误，预约登记完成。")
+        self.assertEqual(form["status"], 'Completed')
+        self.assertEqual(form["result_text"], 'Registration information verified; booking registration complete.')
         # The processed form hands the agent a receipt artifact whose key
         # fields carry the authored fact values.
         self.assertEqual(form["receipts"][0]["receipt_no"], "R-0001")
@@ -150,8 +150,8 @@ class FormTests(unittest.TestCase):
         self.api.heanhuiguan_booking(fields={"event_date": "2026-11-20", "headcount": 80})
         self.env.advance("2026-11-06T17:30:00+08:00")
         form = self.api.visit_page(self.url)["form"]
-        self.assertEqual(form["status"], "已退回")
-        self.assertEqual(form["result_text"], "登记日期与档期安排不符，已退回。 不符合的字段：event_date。")
+        self.assertEqual(form["status"], 'Returned')
+        self.assertEqual(form["result_text"], 'The registered date does not match availability; returned. Mismatched fields: event_date.')
         # A rejected submission may be corrected and re-submitted.
         receipt = self.api.heanhuiguan_booking(fields={"event_date": "2026-11-13", "headcount": 80})
         self.assertEqual(receipt["status"], "submitted")
@@ -167,20 +167,20 @@ class StatusAndRecordTests(unittest.TestCase):
 
     def test_status_stages_by_virtual_time(self):
         # Before the first timeline entry the initial state shows.
-        result = self.api.heanhuiguan_progress(query="预约")
-        self.assertEqual(result["records"][0]["state"], "尚未查询到预约登记记录。")
+        result = self.api.heanhuiguan_progress(query='booking')
+        self.assertEqual(result["records"][0]["state"], 'No booking registration record was found.')
         self.env.advance("2026-11-06T12:01:00+08:00")
         result = self.api.heanhuiguan_progress()
-        self.assertEqual(result["records"][0]["state"], "系统升级，预约登记暂时不可用。")
-        self.assertEqual(self.api.heanhuiguan_progress(query="无关词")["records"], [])
+        self.assertEqual(result["records"][0]["state"], 'System upgrade; booking registration is temporarily unavailable.')
+        self.assertEqual(self.api.heanhuiguan_progress(query='unrelated term')["records"], [])
 
     def test_status_follows_form_submission(self):
         self.api.heanhuiguan_booking(fields={"event_date": "2026-11-13", "headcount": 80})
         state = self.api.heanhuiguan_progress(query="booking")["records"][0]["state"]
-        self.assertIn("已提交，待处理", state)
+        self.assertIn('Submitted, pending processing', state)
         self.env.advance("2026-11-06T17:30:00+08:00")
         self.assertEqual(self.api.heanhuiguan_progress(query="booking")["records"][0]["state"],
-                         "登记信息已核对无误，预约登记完成。")
+                         'Registration information verified; booking registration complete.')
 
     def test_record_gated_on_processed_form(self):
         miss = self.api.heanhuiguan_archive()["records"][0]
@@ -189,7 +189,7 @@ class StatusAndRecordTests(unittest.TestCase):
         self.env.advance("2026-11-06T17:30:00+08:00")
         hit = self.api.heanhuiguan_archive(key="booking-receipt")["records"][0]
         self.assertTrue(hit["found"])
-        self.assertEqual(hit["receipts"][0]["fields"], {"cancel": "72小时内取消收取50%"})
+        self.assertEqual(hit["receipts"][0]["fields"], {"cancel": '50% cancellation charge within 72 hours'})
 
 
 class GuessChainDenyTests(unittest.TestCase):
@@ -199,19 +199,19 @@ class GuessChainDenyTests(unittest.TestCase):
         env = Environment(task)
         api = env.tools()
         api.visit_page("https://qinggang.bench/contact")
-        api.send_email(mailbox(task, "service"), "请核实活动办理管辖",
-                       {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"})
+        api.send_email(mailbox(task, "service"), 'Please verify jurisdiction for event processing',
+                       {"location": 'Qinggang North Square', "sound_equipment": 'Use two amplified-sound speakers'})
         env.advance("2026-11-04T17:00:00+08:00")
         self.assertIn("sound", env.known_contacts)  # exposed by the desk's suggest
-        case_id = api.send_email(mailbox(task, "sound"), "请确认北广场活动扩声设备的使用",
-                                 {"location": "晴港北广场", "sound_equipment": "使用两只扩声音箱"})["case_id"]
+        case_id = api.send_email(mailbox(task, "sound"), 'Please confirm use of amplified sound equipment at the North Square event',
+                                 {"location": 'Qinggang North Square', "sound_equipment": 'Use two amplified-sound speakers'})["case_id"]
         while env.cases[case_id]["state"] not in {"replied", "failed"} and env.events:
             env.advance(env.events[0][0])
         case = env.cases[case_id]
         self.assertEqual(case["state"], "replied")  # deny closes, no referral
         messages = [m for m in env.messages if m["case_id"] == case_id]
-        self.assertTrue(any("不归我处管理" in m["text"] for m in messages))
-        self.assertTrue(any("记不清" in m["text"] for m in messages))  # second-hop suggest
+        self.assertTrue(any('outside our remit' in m["text"] for m in messages))
+        self.assertTrue(any('cannot recall' in m["text"] for m in messages))  # second-hop suggest
 
 
 class MirrorTests(unittest.TestCase):

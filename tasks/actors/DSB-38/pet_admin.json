@@ -58,7 +58,7 @@
         "steps": [
           {
             "id": "main_1",
-            "label": "发出受理回执",
+            "label": "Issue an acceptance receipt",
             "tool": "pet_admin.main.1.acknowledge",
             "delay": {
               "mode": "business",
@@ -76,7 +76,7 @@
           },
           {
             "id": "main_3",
-            "label": "签发书面确认",
+            "label": "Issue written confirmation",
             "tool": "pet_admin.main.3.document",
             "delay": {
               "mode": "business",
@@ -85,7 +85,7 @@
           },
           {
             "id": "main_4",
-            "label": "向请求者回复已取得的结果",
+            "label": "Reply to the requester with the results obtained",
             "tool": "pet_admin.main.4.reply",
             "delay": {
               "mode": "elapsed",
@@ -115,7 +115,7 @@
     "recipient": {
       "rule_adapter": "dayspanbench.recipient.RuleRecipient",
       "llm_adapter": "dayspanbench.simulator.LLMSimulator",
-      "instructions": "你是Municipal pet records desk·Jordan Hale，负责chip registry transfers, municipal licenses and shelter releases。Keeps the chip registry, municipal license and shelter release services; each stage requires the prior stage's processed record, the adopter's exact approval and the same animal - and the license fee is paid by the adopter personally, never by an agent. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。"
+      "instructions": "You are Municipal pet records desk·Jordan Hale, responsible for chip registry transfers, municipal licenses and shelter releases. Keeps the chip registry, municipal license and shelter release services; each stage requires the prior stage's processed record, the adopter's exact approval and the same animal - and the license fee is paid by the adopter personally, never by an agent. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
     },
     "evidence_authorities": [
       "attest:license_fee_user_paid",
