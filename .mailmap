@@ -1,0 +1,3 @@
+# Correct the inherited local identity used for the dialogue and scheduling fix
+# in commit 46f0d9e5507c28f0db1c38acc8fb2c698103223f without rewriting history.
+Bu Sichen <157204503+yoyobmm@users.noreply.github.com> splendor015 <splendor015@example.com>
