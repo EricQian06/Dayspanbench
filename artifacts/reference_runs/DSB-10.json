@@ -3,7 +3,7 @@
   "task_id": "DSB-10",
   "answer": {
     "conclusion": "does_not_meet_requirements",
-    "summary": "卖方询价3200元，未承诺保留商品。\n卖方回忆快门约一万次，未经读取，不应视为实测。\n卖方说明按现状转让，不支持退货。\n对序列号CAM-402读取的实际快门次数为42731。\nCAM-402热靴触发测试失败，当前不能正常使用外置闪光灯。\n若交易成立，最早可取件时间为11月9日14点；本次仅查询。\n验机登记已办结：对序列号CAM-402读取的实际快门次数为42731；热靴触发测试失败，当前不能正常使用外置闪光灯。办理进度可经二手验机进度查询（ershoushangji_inspection_status）复核。\n对序列号CAM-402读取的实际快门次数为42731。\nCAM-402热靴触发测试失败，当前不能正常使用外置闪光灯。\n表单inspection_form办结回执关键要素：{\"actual\": 42731, \"hotshoe\": false, \"serial\": \"CAM-402\"}\n卖方询价3200元，未承诺保留商品。\n卖方回忆快门约一万次，未经读取，不应视为实测。\n卖方说明按现状转让，不支持退货。\n相机实测与条款书面核实回执关键要素：{\"asking\": 3200, \"estimate\": 10000, \"returns\": \"不支持退货\"}\n最早取件时间书面核实回执关键要素：{\"pickup\": \"2026-11-09T14:00:00+08:00\"}"
+    "summary": "The seller's asking price is CNY 3200; no promise has been made to hold the item.\nThe seller recalls roughly 10000 shutter actuations, but no reading was taken; this is not a measured count.\nThe seller states that the camera is sold as is, with no returns.\nThe measured shutter count for serial CAM-402 is 42731.\nCAM-402 failed the hot-shoe trigger test and currently cannot use an external flash normally.\nIf a transaction is agreed, the earliest pickup is November 9 at 14:00; this is only an inquiry.\nInspection registration complete: measured shutter count for CAM-402 is 42731; the hot-shoe trigger test failed and external flash currently cannot function normally. Verify progress through ershoushangji_inspection_status.\nThe measured shutter count for serial CAM-402 is 42731.\nCAM-402 failed the hot-shoe trigger test and currently cannot use an external flash normally.\nForm inspection_form completion receipt key details: {\"actual\": 42731, \"hotshoe\": false, \"serial\": \"CAM-402\"}\nThe seller's asking price is CNY 3200; no promise has been made to hold the item.\nThe seller recalls roughly 10000 shutter actuations, but no reading was taken; this is not a measured count.\nThe seller states that the camera is sold as is, with no returns.\nCamera measurements and termsWritten verification receipt key details: {\"asking\": 3200, \"estimate\": 10000, \"returns\": \"No returns\"}\nEarliest pickup timeWritten verification receipt key details: {\"pickup\": \"2026-11-09T14:00:00+08:00\"}"
   },
   "result": {
     "task_id": "DSB-10",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "验机的书面结果我不直接掌握：朋友柯闻周末有读取器，测完可能直接答复；书面结论走哪个渠道我记不准，也可能桥溪快运取件咨询台能代查登记，建议您分别去信确认。另外这台机器我印象里快门也就一万次上下，不过不一定准，我随口一说，供您参考，实测以验机办结为准。",
+      "text": "I do not directly hold the written inspection results. My friend Ke Wen has a reader on weekends and may reply after testing. I cannot recall the written-results channel; Qiaoxi Express pickup inquiries may also look up registrations. Please write to both. I also seem to remember this camera has around 10000 actuations, but that is an uncertain casual impression for reference; use the completed inspection.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是卖家朋友·柯闻。实测数据不随邮件出具：请通过二手相机验机登记渠道（ershoushangji_inspection_apply）提交申请，办结结论以表单状态为准；办理进度可经二手验机进度查询（ershoushangji_inspection_status）复核。",
+      "text": "Hello, I am Seller's friend - Ke Wen. Measured data is not issued by email. Apply through ershoushangji_inspection_apply; form status governs the completed determination. Verify progress through ershoushangji_inspection_status.",
       "receipts": []
     },
     {
@@ -72,7 +72,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是相机卖家·沈栖。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-08 21:35（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Camera seller - Shen Qi. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2026-11-08 21:35 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -82,7 +82,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是相机卖家·沈栖。我自己没有读取器，快门和热靴要先转给周末有设备的朋友实测，测完我把结果告诉您。预计最早将于2026-11-08 21:35（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Camera seller - Shen Qi. I do not have a reader. I must ask a friend with weekend equipment to measure the shutter count and test the hot shoe, then relay the results.The earliest expected completion is 2026-11-08 21:35 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -92,16 +92,16 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是相机卖家·沈栖。您咨询的事项已经核实，具体情况如下：卖方询价3200元，未承诺保留商品。卖方回忆快门约一万次，未经读取，不应视为实测。卖方说明按现状转让，不支持退货。以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。此外，相关事项建议您联系桥溪快运取件咨询·曾澜（zenglan@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Camera seller - Shen Qi. Your inquiry has been verified. Details: The seller's asking price is CNY 3200; no promise has been made to hold the item.The seller recalls roughly 10000 shutter actuations, but no reading was taken; this is not a measured count.The seller states that the camera is sold as is, with no returns.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0002); include its key identifiers, quantities, and dates in the final summary.For related matters, please also contact Qiaoxi Express pickup inquiries - Zeng Lan (zenglan@bench.example) for further assistance. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0002",
-          "title": "相机实测与条款书面核实回执",
-          "text": "卖方询价3200元，未承诺保留商品。\n卖方回忆快门约一万次，未经读取，不应视为实测。\n卖方说明按现状转让，不支持退货。",
+          "title": "Camera measurements and termsWritten verification receipt",
+          "text": "The seller's asking price is CNY 3200; no promise has been made to hold the item.\nThe seller recalls roughly 10000 shutter actuations, but no reading was taken; this is not a measured count.\nThe seller states that the camera is sold as is, with no returns.",
           "fields": {
             "asking": 3200,
             "estimate": 10000,
-            "returns": "不支持退货"
+            "returns": "No returns"
           },
           "issuer": "seller",
           "issued_at": "2026-11-08T13:15:00+00:00"
@@ -115,12 +115,12 @@
       "case_id": "CASE-0004",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是桥溪快运取件咨询·曾澜。您咨询的事项已经核实，具体情况如下：若交易成立，最早可取件时间为11月9日14点；本次仅查询。以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Qiaoxi Express pickup inquiries - Zeng Lan. Your inquiry has been verified. Details: If a transaction is agreed, the earliest pickup is November 9 at 14:00; this is only an inquiry.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0003); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0003",
-          "title": "最早取件时间书面核实回执",
-          "text": "若交易成立，最早可取件时间为11月9日14点；本次仅查询。",
+          "title": "Earliest pickup timeWritten verification receipt",
+          "text": "If a transaction is agreed, the earliest pickup is November 9 at 14:00; this is only an inquiry.",
           "fields": {
             "pickup": "2026-11-09T14:00:00+08:00"
           },
@@ -135,10 +135,10 @@
       "at": "2026-11-06T02:00:00+00:00",
       "kind": "agent_send",
       "recipient": "shenqi@bench.example",
-      "text": "请核实相机快门热靴及实测条件",
+      "text": "Please verify shutter count, hot-shoe function, and testing arrangements",
       "fields": {
         "serial": "CAM-402",
-        "pickup_area": "桥溪东区"
+        "pickup_area": "Qiaoxi East District"
       },
       "channel": "email"
     },
@@ -273,7 +273,7 @@
       "at": "2026-11-07T02:00:00+00:00",
       "kind": "agent_send",
       "recipient": "kewen@bench.example",
-      "text": "请提供相机CAM-402的实测结果",
+      "text": "Please provide measured results for camera CAM-402",
       "fields": {
         "serial": "CAM-402"
       },
@@ -498,7 +498,7 @@
       "kind": "form_processed",
       "form": "inspection_form",
       "accepted": true,
-      "result": "验机登记已办结：对序列号CAM-402读取的实际快门次数为42731；热靴触发测试失败，当前不能正常使用外置闪光灯。办理进度可经二手验机进度查询（ershoushangji_inspection_status）复核。"
+      "result": "Inspection registration complete: measured shutter count for CAM-402 is 42731; the hot-shoe trigger test failed and external flash currently cannot function normally. Verify progress through ershoushangji_inspection_status."
     },
     {
       "at": "2026-11-08T02:00:00+00:00",
@@ -601,7 +601,7 @@
       "at": "2026-11-08T12:00:00+00:00",
       "kind": "agent_hidden_status",
       "tool": "ershoushangji_inspection_status",
-      "query": "验机",
+      "query": "inspection",
       "keys": [
         "inspection"
       ]
@@ -610,10 +610,10 @@
       "at": "2026-11-08T12:00:00+00:00",
       "kind": "agent_send",
       "recipient": "zenglan@bench.example",
-      "text": "查询最早取件时段",
+      "text": "Query the earliest pickup slot",
       "fields": {
         "serial": "CAM-402",
-        "pickup_area": "桥溪东区"
+        "pickup_area": "Qiaoxi East District"
       },
       "channel": "email"
     },

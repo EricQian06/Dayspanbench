@@ -3,7 +3,7 @@
   "task_id": "DSB-07",
   "answer": {
     "conclusion": "physical_only",
-    "summary": "图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。\n可提供600dpi扫描件；文件用途仍受授权范围限制。\n本次数字化和授权服务合计800元。\n图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。\n图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。\n权利范围核实书面核实回执关键要素：{\"exhibit\": true, \"online\": false}\n取得许可后的数字化规格确认书面核实回执关键要素：{\"scan\": 600}\n费用核定登记已办结：本次数字化和授权服务合计800元；办理进度可经北汀费用进度查询（beiting_fee_status）复核。\n本次数字化和授权服务合计800元。\n表单fee_form办结回执关键要素：{\"fee\": 800, \"archive_id\": \"ARC-71\"}"
+    "summary": "Image ARC-71 is approved for this noncommercial physical exhibition. To request digitized delivery, include this confirmation in your message to the archive.\nThe authorization excludes public website or social media publication.\nA 600dpi scan is available; file use remains restricted by the authorization scope.\nDigitization and authorization services total CNY 800 in this case.\nImage ARC-71 is approved for this noncommercial physical exhibition. To request digitized delivery, include this confirmation in your message to the archive.\nThe authorization excludes public website or social media publication.\nImage ARC-71 is approved for this noncommercial physical exhibition. To request digitized delivery, include this confirmation in your message to the archive.\nThe authorization excludes public website or social media publication.\nVerify rights scopeWritten verification receipt key details: {\"exhibit\": true, \"online\": false}\nConfirm digitization specifications after permissionWritten verification receipt key details: {\"scan\": 600}\nFee assessment registration complete: digitization and authorization services total CNY 800. Verify progress through beiting_fee_status.\nDigitization and authorization services total CNY 800 in this case.\nForm fee_form completion receipt key details: {\"fee\": 800, \"archive_id\": \"ARC-71\"}"
   },
   "result": {
     "task_id": "DSB-07",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是北汀档案馆接待·关雨。您咨询的事项已经按流程处理完毕。此外，相关事项建议您联系权利方联络员·Alex Chen（alexchen@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Beiting Archive reception - Guan Yu. Your matter has been completed under the process.For related matters, please also contact Rights liaison - Alex Chen (alexchen@bench.example) for further assistance. Please write again if you have other questions.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0002",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是权利方联络员·Alex Chen。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-05-31 09:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Rights liaison - Alex Chen. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2027-05-31 09:55 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -72,12 +72,12 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是权利方联络员·Alex Chen。您咨询的事项已经核实，具体情况如下：图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。授权不包含网站或社交媒体公开发布。图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。授权不包含网站或社交媒体公开发布。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Rights liaison - Alex Chen. Your inquiry has been verified. Details: Image ARC-71 is approved for this noncommercial physical exhibition. To request digitized delivery, include this confirmation in your message to the archive.The authorization excludes public website or social media publication.Image ARC-71 is approved for this noncommercial physical exhibition. To request digitized delivery, include this confirmation in your message to the archive.The authorization excludes public website or social media publication.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "权利范围核实书面核实回执",
-          "text": "图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。\n图像ARC-71获准用于本次非商业实体展览。如需办理数字化交付，请将本确认结论随信提供给档案馆。\n授权不包含网站或社交媒体公开发布。",
+          "title": "Verify rights scopeWritten verification receipt",
+          "text": "Image ARC-71 is approved for this noncommercial physical exhibition. To request digitized delivery, include this confirmation in your message to the archive.\nThe authorization excludes public website or social media publication.\nImage ARC-71 is approved for this noncommercial physical exhibition. To request digitized delivery, include this confirmation in your message to the archive.\nThe authorization excludes public website or social media publication.",
           "fields": {
             "exhibit": true,
             "online": false
@@ -94,7 +94,7 @@
       "case_id": "CASE-0003",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是北汀档案馆接待·关雨。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-06-08 10:16（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Beiting Archive reception - Guan Yu. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2027-06-08 10:16 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -104,7 +104,7 @@
       "case_id": "CASE-0003",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是北汀档案馆接待·关雨。数字化规格要由数字化组核对，我先转过去确认，稍后把扫描规格回复您。预计最早将于2027-06-08 10:16（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Beiting Archive reception - Guan Yu. The digitization team must check the specifications. I will forward the request and reply with the scan specifications later.The earliest expected completion is 2027-06-08 10:16 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -114,12 +114,12 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是北汀档案馆接待·关雨。您咨询的事项已经核实，具体情况如下：可提供600dpi扫描件；文件用途仍受授权范围限制。以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Beiting Archive reception - Guan Yu. Your inquiry has been verified. Details: A 600dpi scan is available; file use remains restricted by the authorization scope.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0002); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0002",
-          "title": "取得许可后的数字化规格确认书面核实回执",
-          "text": "可提供600dpi扫描件；文件用途仍受授权范围限制。",
+          "title": "Confirm digitization specifications after permissionWritten verification receipt",
+          "text": "A 600dpi scan is available; file use remains restricted by the authorization scope.",
           "fields": {
             "scan": 600
           },
@@ -134,10 +134,10 @@
       "at": "2026-11-05T07:00:00+00:00",
       "kind": "agent_send",
       "recipient": "guanyu@bench.example",
-      "text": "咨询档案费用与权利联系人",
+      "text": "Inquire about archive fees and rights contacts",
       "fields": {
         "archive_id": "ARC-71",
-        "usage": "非商业实体展览及展览网站"
+        "usage": "Noncommercial physical exhibition and exhibition website"
       },
       "channel": "email"
     },
@@ -270,10 +270,10 @@
       "at": "2026-11-06T02:41:00+00:00",
       "kind": "agent_send",
       "recipient": "alexchen@bench.example",
-      "text": "请确认两种用途的权利授权",
+      "text": "Please confirm authorization for both intended uses",
       "fields": {
         "archive_id": "ARC-71",
-        "usage": "非商业实体展览及展览网站"
+        "usage": "Noncommercial physical exhibition and exhibition website"
       },
       "channel": "email"
     },
@@ -477,7 +477,7 @@
       "at": "2027-05-31T13:50:00+00:00",
       "kind": "agent_send",
       "recipient": "guanyu@bench.example",
-      "text": "许可收到后请确认数字化交付和扫描规格",
+      "text": "After permission arrives, please confirm digitized delivery and scan specifications",
       "fields": {
         "archive_id": "ARC-71",
         "exhibition_permission": true
@@ -802,7 +802,7 @@
       "kind": "form_processed",
       "form": "fee_form",
       "accepted": true,
-      "result": "费用核定登记已办结：本次数字化和授权服务合计800元；办理进度可经北汀费用进度查询（beiting_fee_status）复核。"
+      "result": "Fee assessment registration complete: digitization and authorization services total CNY 800. Verify progress through beiting_fee_status."
     },
     {
       "at": "2027-06-08T02:30:00+00:00",
@@ -815,7 +815,7 @@
       "at": "2027-06-08T02:30:00+00:00",
       "kind": "agent_hidden_status",
       "tool": "beiting_fee_status",
-      "query": "费用",
+      "query": "fee",
       "keys": [
         "fee"
       ]

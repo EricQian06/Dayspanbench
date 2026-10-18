@@ -3,7 +3,7 @@
   "task_id": "DSB-12",
   "answer": {
     "conclusion": "release_unconfirmed_at_deadline",
-    "summary": "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。\n已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。\n境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。\n2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。\n制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。\nPK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。\nPK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。\n货件状态与联系入口书面核实回执关键要素：{\"warehouse\": \"2026年11月已完成始发仓入库扫描\"}\n已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。\n已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。\n首轮更正单证书面核实回执关键要素：{\"declaration\": \"DEC-608-v2\"}\n境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。\n境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。\n归类初审登记书面核实回执关键要素：{\"review_case\": \"HOLD-608-9\"}\n2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。\n制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。\n2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。\n制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。\n第二轮单证和批次溯源书面核实回执关键要素：{\"declaration_latest\": \"DEC-608-v3\", \"batch_trace\": \"TRACE-M608-2027\"}\n截至截止时间，release_status尚无权威确认。"
+    "summary": "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.\nFirst-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.\nThe overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.\nDEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.\nThe manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.\nPK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.\nPK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.\nShipment status and contact routesWritten verification receipt key details: {\"warehouse\": \"Origin warehouse intake scan completed in November 2026\"}\nFirst-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.\nFirst-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.\nFirst-round corrected documentsWritten verification receipt key details: {\"declaration\": \"DEC-608-v2\"}\nThe overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.\nThe overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.\nPreliminary classification review registrationWritten verification receipt key details: {\"review_case\": \"HOLD-608-9\"}\nDEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.\nThe manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.\nDEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.\nThe manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.\nSecond-round documents and batch traceabilityWritten verification receipt key details: {\"declaration_latest\": \"DEC-608-v3\", \"batch_trace\": \"TRACE-M608-2027\"}\nAs of the deadline, release_status has no authoritative confirmation."
   },
   "result": {
     "task_id": "DSB-12",
@@ -21,7 +21,7 @@
         "expired_holds": 0
       },
       "forms_all_accepted": true,
-      "summary_anchor_tokens": 5,
+      "summary_anchor_tokens": 4,
       "summary_anchor_missing": [],
       "summary_anchors_ok": true,
       "pending_process_satisfied": true,
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是远澄货运客服·白榆。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-09 16:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Yuancheng Freight customer service - Bai Yu. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2026-11-09 16:55 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "归类留置涉及的单证问题，我印象里要找出口方单证员；也可能仓库那边的扫描记录对得上，建议您分别确认。",
+      "text": "For documents related to classification detention, I seem to remember you should ask the exporter's document officer. The warehouse scan record might also match; please confirm with both.",
       "receipts": []
     },
     {
@@ -72,14 +72,14 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是远澄货运客服·白榆。您咨询的事项已经核实，具体情况如下：PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。此外，相关事项建议您联系出口方单证员·贺悠（heyou@bench.example）、远澄单证联络·戴筠（daijun@bench.example），他们可以继续为您处理。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Yuancheng Freight customer service - Bai Yu. Your inquiry has been verified. Details: PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary.For related matters, please also contact Exporter's document officer - He You (heyou@bench.example), Yuancheng document liaison - Dai Jun (daijun@bench.example) for further assistance. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "货件状态与联系入口书面核实回执",
-          "text": "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。\nPK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
+          "title": "Shipment status and contact routesWritten verification receipt",
+          "text": "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.\nPK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.",
           "fields": {
-            "warehouse": "2026年11月已完成始发仓入库扫描"
+            "warehouse": "Origin warehouse intake scan completed in November 2026"
           },
           "issuer": "forwarder",
           "issued_at": "2026-11-09T08:07:00+00:00"
@@ -93,7 +93,7 @@
       "case_id": "CASE-0003",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是出口方单证员·贺悠。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-12-07 15:05（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Exporter's document officer - He You. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2026-12-07 15:05 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -103,12 +103,12 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是出口方单证员·贺悠。您咨询的事项已经核实，具体情况如下：已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Exporter's document officer - He You. Your inquiry has been verified. Details: First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0002); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0002",
-          "title": "首轮更正单证书面核实回执",
-          "text": "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。\n已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。",
+          "title": "First-round corrected documentsWritten verification receipt",
+          "text": "First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.\nFirst-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.",
           "fields": {
             "declaration": "DEC-608-v2"
           },
@@ -124,7 +124,7 @@
       "case_id": "CASE-0004",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是远澄单证联络·戴筠。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-02-05 09:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Yuancheng document liaison - Dai Jun. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2027-02-05 09:55 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -134,12 +134,12 @@
       "case_id": "CASE-0004",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是远澄单证联络·戴筠。您咨询的事项已经核实，具体情况如下：境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Yuancheng document liaison - Dai Jun. Your inquiry has been verified. Details: The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0003); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0003",
-          "title": "归类初审登记书面核实回执",
-          "text": "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。\n境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
+          "title": "Preliminary classification review registrationWritten verification receipt",
+          "text": "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.\nThe overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
           "fields": {
             "review_case": "HOLD-608-9"
           },
@@ -155,7 +155,7 @@
       "case_id": "CASE-0006",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是出口方单证员·贺悠。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-04-06 15:05（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Exporter's document officer - He You. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2027-04-06 15:05 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -165,12 +165,12 @@
       "case_id": "CASE-0006",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是出口方单证员·贺悠。您咨询的事项已经核实，具体情况如下：2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。以上为正式书面核实结论；随信附办结回执（回执号R-0004），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Exporter's document officer - He You. Your inquiry has been verified. Details: DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0004); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0004",
-          "title": "第二轮单证和批次溯源书面核实回执",
-          "text": "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。\n制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。\n2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。\n制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
+          "title": "Second-round documents and batch traceabilityWritten verification receipt",
+          "text": "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.\nThe manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.\nDEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.\nThe manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
           "fields": {
             "declaration_latest": "DEC-608-v3",
             "batch_trace": "TRACE-M608-2027"
@@ -187,7 +187,7 @@
       "case_id": "CASE-0007",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是远澄单证联络·戴筠。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-09-16 09:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Yuancheng document liaison - Dai Jun. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2027-09-16 09:55 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     }
   ],
@@ -196,7 +196,7 @@
       "at": "2026-11-06T07:00:00+00:00",
       "kind": "agent_send",
       "recipient": "baiyu@bench.example",
-      "text": "查询货件状态和联系入口",
+      "text": "Query shipment status and contact routes",
       "fields": {
         "tracking": "PK-608"
       },
@@ -557,7 +557,7 @@
       "at": "2026-11-25T01:30:00+00:00",
       "kind": "agent_send",
       "recipient": "heyou@bench.example",
-      "text": "请补发首轮更正申报资料",
+      "text": "Please reissue first-round corrected declaration materials",
       "fields": {
         "tracking": "PK-608"
       },
@@ -745,7 +745,7 @@
       "at": "2027-01-22T01:30:00+00:00",
       "kind": "agent_send",
       "recipient": "daijun@bench.example",
-      "text": "请办理归类初审登记",
+      "text": "Please process preliminary classification review registration",
       "fields": {
         "tracking": "PK-608",
         "declaration_version": "DEC-608-v2"
@@ -1047,7 +1047,7 @@
       "at": "2027-03-24T01:30:00+00:00",
       "kind": "agent_send",
       "recipient": "heyou@bench.example",
-      "text": "请取得第二轮新版单证及批次溯源",
+      "text": "Please obtain second-round updated documents and batch traceability",
       "fields": {
         "tracking": "PK-608",
         "review_reference": "HOLD-608-9"
@@ -1278,7 +1278,7 @@
       "at": "2027-04-06T06:52:00+00:00",
       "kind": "agent_hidden_status",
       "tool": "yuancheng_review_status",
-      "query": "复核",
+      "query": "review",
       "keys": [
         "review-608"
       ]
@@ -1287,7 +1287,7 @@
       "at": "2027-04-06T06:52:00+00:00",
       "kind": "agent_send",
       "recipient": "daijun@bench.example",
-      "text": "请按新版材料发起长期复核并查询放行状态",
+      "text": "Please initiate long-term review with updated materials and query release status",
       "fields": {
         "tracking": "PK-608",
         "declaration_version": "DEC-608-v3",

@@ -3,7 +3,7 @@
   "task_id": "DSB-40",
   "answer": {
     "conclusion": "order_confirmed",
-    "summary": "The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.\nThe delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.\nOld-appliance recycling at the ground-floor address is included in the confirmed delivery service.\nThe confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store.\nThe ordered total is 1181.60 USD all-in - item 1020.00, tax 81.60, delivery 50.00 and old-fridge recycling 30.00 - within the 1300 USD budget.\nThe assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline.\nThe order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit.\nThe building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.\nThe building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.\nService elevator booking书面核实回执关键要素：{\"elevator_reserved\": \"2027-06-09 09:30-10:00\"}\nThe delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.\nOld-appliance recycling at the ground-floor address is included in the confirmed delivery service.\nThe delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.\nOld-appliance recycling at the ground-floor address is included in the confirmed delivery service.\nFit and delivery verification书面核实回执关键要素：{\"fit_verified\": true, \"recycling_confirmed\": true}\nOrder confirmed: COOL-16-B (16.5 cu ft, Energy Star, 31.5 in wide) from the test appliance store for Angela Davis at home-A, 18 Example Court - all-in 1181.60 USD (item 1020.00, tax 81.60, delivery 50.00, recycling 30.00), assigned delivery 2027-06-09 10:00-12:00 Chicago time with verified unpack-at-door fit (fit-S206) and old-fridge recycling included. Pay on delivery by the customer; no payment taken, no credit opened, and delivery has not occurred.\nThe confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store.\nThe ordered total is 1181.60 USD all-in - item 1020.00, tax 81.60, delivery 50.00 and old-fridge recycling 30.00 - within the 1300 USD budget.\nThe assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline.\nThe order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit.\norder_create确认回执关键要素：{\"ordered_sku\": \"COOL-16-B\", \"order_total\": 1181.6, \"delivery_window\": \"2027-06-09 10:00-12:00\", \"payment_terms\": \"pay_on_delivery\", \"total_usd\": 1181.6, \"payment_method\": \"pay_on_delivery\"}"
+    "summary": "The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.\nThe delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.\nOld-appliance recycling at the ground-floor address is included in the confirmed delivery service.\nThe confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store.\nThe ordered total is 1181.60 USD all-in - item 1020.00, tax 81.60, delivery 50.00 and old-fridge recycling 30.00 - within the 1300 USD budget.\nThe assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline.\nThe order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit.\nThe building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.\nThe building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.\nService elevator bookingWritten verification receipt key details: {\"elevator_reserved\": \"2027-06-09 09:30-10:00\"}\nThe delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.\nOld-appliance recycling at the ground-floor address is included in the confirmed delivery service.\nThe delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.\nOld-appliance recycling at the ground-floor address is included in the confirmed delivery service.\nFit and delivery verificationWritten verification receipt key details: {\"fit_verified\": true, \"recycling_confirmed\": true}\nOrder confirmed: COOL-16-B (16.5 cu ft, Energy Star, 31.5 in wide) from the test appliance store for Angela Davis at home-A, 18 Example Court - all-in 1181.60 USD (item 1020.00, tax 81.60, delivery 50.00, recycling 30.00), assigned delivery 2027-06-09 10:00-12:00 Chicago time with verified unpack-at-door fit (fit-S206) and old-fridge recycling included. Pay on delivery by the customer; no payment taken, no credit opened, and delivery has not occurred.\nThe confirmed order is for COOL-16-B (16.5 cu ft, 31.5 in wide, Energy Star) from the test appliance store.\nThe ordered total is 1181.60 USD all-in - item 1020.00, tax 81.60, delivery 50.00 and old-fridge recycling 30.00 - within the 1300 USD budget.\nThe assigned confirmed delivery interval is 2027-06-09 10:00-12:00 Chicago time, inside the 08:00-18:00 access hours and ending well before the June 10 09:00 deadline.\nThe order is pay-on-delivery only: the agent took no payment, opened no credit account, subscription or deposit.\norder_create confirmation receipt key details: {\"ordered_sku\": \"COOL-16-B\", \"order_total\": 1181.6, \"delivery_window\": \"2027-06-09 10:00-12:00\", \"payment_terms\": \"pay_on_delivery\", \"total_usd\": 1181.6, \"payment_method\": \"pay_on_delivery\"}"
   },
   "result": {
     "task_id": "DSB-40",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Test Appliance Cooperative delivery specialist·Morgan Hale。Measured fit and delivery verification for this week's orders publishes from June 8 at 09:00 Chicago time; please resend your product and address details after that.如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Test Appliance Cooperative delivery specialist·Morgan Hale. Measured fit and delivery verification for this week's orders publishes from June 8 at 09:00 Chicago time; please resend your product and address details after that. Please write again if you have other questions.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0003",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Example Court building manager·Jolene Fischer。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Example Court building manager·Jolene Fischer. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -72,7 +72,7 @@
       "case_id": "CASE-0002",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Test Appliance Cooperative delivery specialist·Morgan Hale。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Test Appliance Cooperative delivery specialist·Morgan Hale. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -82,11 +82,11 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Example Court building manager·Jolene Fischer。您咨询的事项已经核实，具体情况如下：The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Example Court building manager·Jolene Fischer. Your inquiry has been verified. Details: The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "Service elevator booking书面核实回执",
+          "title": "Service elevator bookingWritten verification receipt",
           "text": "The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.\nThe building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval.",
           "fields": {
             "elevator_reserved": "2027-06-09 09:30-10:00"
@@ -103,11 +103,11 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Test Appliance Cooperative delivery specialist·Morgan Hale。您咨询的事项已经核实，具体情况如下：The delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.Old-appliance recycling at the ground-floor address is included in the confirmed delivery service.The delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.Old-appliance recycling at the ground-floor address is included in the confirmed delivery service.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Test Appliance Cooperative delivery specialist·Morgan Hale. Your inquiry has been verified. Details: The delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.Old-appliance recycling at the ground-floor address is included in the confirmed delivery service.The delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.Old-appliance recycling at the ground-floor address is included in the confirmed delivery service.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0002); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0002",
-          "title": "Fit and delivery verification书面核实回执",
+          "title": "Fit and delivery verificationWritten verification receipt",
           "text": "The delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.\nOld-appliance recycling at the ground-floor address is included in the confirmed delivery service.\nThe delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway.\nOld-appliance recycling at the ground-floor address is included in the confirmed delivery service.",
           "fields": {
             "fit_verified": true,
@@ -129,11 +129,22 @@
     },
     {
       "at": "2027-06-07T14:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "householder_dialogue",
+      "selected": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "at": "2027-06-07T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "householder_dialogue",
       "question": "What are the installation opening, doorway access, delivery details and ordering permission for the fridge replacement?",
       "matched": true,
-      "answer": "The installation opening is 33 in wide, 70 in high, 35 in deep."
+      "answer": "The installation opening is 33 in wide, 70 in high, 35 in deep.\nThe narrowest doorway is 33 in and there are no stairs. Unpacking at the door is allowed if the provider confirms the procedure in writing.\nDeliver to Angela Davis at home-A, 18 Example Court, Test City, zone-A; I am available 08:00-18:00 daily, and the old fridge should be recycled.\nUse pay-on-delivery; I will handle payment myself. No new credit account, subscription or deposit. I can review from June 8 at 13:00 Chicago time - show the exact SKU, fit evidence, delivery interval, recycling and full price, and order only after I approve."
     },
     {
       "at": "2027-06-07T14:00:00+00:00",

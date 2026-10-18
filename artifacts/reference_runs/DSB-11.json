@@ -3,7 +3,7 @@
   "task_id": "DSB-11",
   "answer": {
     "conclusion": "workaround_available_stable_uncommitted",
-    "summary": "提交的日志可重现在编译器C19下的兼容问题。\nCI在commit-7bc2上验证该兼容问题已修复。\n正式稳定版没有承诺发布日期；候选版不能标为稳定版。\n发布负责人确认当前仅有候选版1.4.2-rc1。\n提交的日志可重现在编译器C19下的兼容问题。\nCI在commit-7bc2上验证该兼容问题已修复。\nCI在commit-7bc2上验证该兼容问题已修复。\n兼容问题确认书面核实回执关键要素：{\"repro\": true, \"workaround\": \"commit-7bc2\"}\n发布状态登记已办结：正式稳定版没有承诺发布日期；候选版不能标为稳定版。办理进度可经星舟发布进度查询（xingzhou_release_status）复核。\n正式稳定版没有承诺发布日期；候选版不能标为稳定版。\n表单release_form办结回执关键要素：{\"stable\": \"尚无承诺日期\", \"version\": \"1.4.1\", \"verified_commit\": \"commit-7bc2\"}\n季度发布状态复核书面核实回执关键要素：{\"candidate\": \"1.4.2-rc1\"}"
+    "summary": "The submitted logs reproduce the compatibility problem under compiler C19.\nCI verified that commit-7bc2 fixes the compatibility problem.\nThere is no committed release date for the official stable version; a release candidate cannot be labeled stable.\nThe release lead confirms that only release candidate 1.4.2-rc1 is currently available.\nThe submitted logs reproduce the compatibility problem under compiler C19.\nCI verified that commit-7bc2 fixes the compatibility problem.\nCI verified that commit-7bc2 fixes the compatibility problem.\nCompatibility issue confirmationWritten verification receipt key details: {\"repro\": true, \"workaround\": \"commit-7bc2\"}\nRelease status registration complete: the official stable version has no committed release date; a release candidate cannot be labeled stable. Verify progress through xingzhou_release_status.\nThere is no committed release date for the official stable version; a release candidate cannot be labeled stable.\nForm release_form completion receipt key details: {\"stable\": \"No committed date yet\", \"version\": \"1.4.1\", \"verified_commit\": \"commit-7bc2\"}\nQuarterly release status reviewWritten verification receipt key details: {\"candidate\": \"1.4.2-rc1\"}"
   },
   "result": {
     "task_id": "DSB-11",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是星舟项目维护者·简川。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-18 20:20（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Xingzhou project maintainer - Jian Chuan. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2026-11-18 20:20 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -62,12 +62,12 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：提交的日志可重现在编译器C19下的兼容问题。CI在commit-7bc2上验证该兼容问题已修复。CI在commit-7bc2上验证该兼容问题已修复。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Xingzhou project maintainer - Jian Chuan. Your inquiry has been verified. Details: The submitted logs reproduce the compatibility problem under compiler C19.CI verified that commit-7bc2 fixes the compatibility problem.CI verified that commit-7bc2 fixes the compatibility problem.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "兼容问题确认书面核实回执",
-          "text": "提交的日志可重现在编译器C19下的兼容问题。\nCI在commit-7bc2上验证该兼容问题已修复。\nCI在commit-7bc2上验证该兼容问题已修复。",
+          "title": "Compatibility issue confirmationWritten verification receipt",
+          "text": "The submitted logs reproduce the compatibility problem under compiler C19.\nCI verified that commit-7bc2 fixes the compatibility problem.\nCI verified that commit-7bc2 fixes the compatibility problem.",
           "fields": {
             "repro": true,
             "workaround": "commit-7bc2"
@@ -84,7 +84,7 @@
       "case_id": "CASE-0003",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是星舟项目维护者·简川。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-02-24 20:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Xingzhou project maintainer - Jian Chuan. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2027-02-24 20:55 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -94,12 +94,12 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是星舟项目维护者·简川。您咨询的事项已经核实，具体情况如下：发布负责人确认当前仅有候选版1.4.2-rc1。以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Xingzhou project maintainer - Jian Chuan. Your inquiry has been verified. Details: The release lead confirms that only release candidate 1.4.2-rc1 is currently available.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0003); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0003",
-          "title": "季度发布状态复核书面核实回执",
-          "text": "发布负责人确认当前仅有候选版1.4.2-rc1。",
+          "title": "Quarterly release status reviewWritten verification receipt",
+          "text": "The release lead confirms that only release candidate 1.4.2-rc1 is currently available.",
           "fields": {
             "candidate": "1.4.2-rc1"
           },
@@ -114,7 +114,7 @@
       "at": "2026-11-07T12:30:00+00:00",
       "kind": "agent_send",
       "recipient": "jianchuan@bench.example",
-      "text": "请核实兼容问题与补丁",
+      "text": "Please verify the compatibility issue and patch",
       "fields": {
         "version": "1.4.1",
         "compiler": "C19",
@@ -496,7 +496,7 @@
       "at": "2027-01-27T12:30:00+00:00",
       "kind": "agent_send",
       "recipient": "jianchuan@bench.example",
-      "text": "请转交核实季度发布的候选版与稳定版状态",
+      "text": "Please forward a quarterly release inquiry about candidate and stable-version status",
       "fields": {
         "version": "1.4.1",
         "verified_commit": "commit-7bc2"
@@ -647,7 +647,7 @@
       "kind": "form_processed",
       "form": "release_form",
       "accepted": true,
-      "result": "发布状态登记已办结：正式稳定版没有承诺发布日期；候选版不能标为稳定版。办理进度可经星舟发布进度查询（xingzhou_release_status）复核。"
+      "result": "Release status registration complete: the official stable version has no committed release date; a release candidate cannot be labeled stable. Verify progress through xingzhou_release_status."
     },
     {
       "at": "2027-02-09T12:00:00+00:00",
@@ -911,7 +911,7 @@
       "at": "2027-02-26T12:30:00+00:00",
       "kind": "agent_hidden_status",
       "tool": "xingzhou_release_status",
-      "query": "发布",
+      "query": "release",
       "keys": [
         "release"
       ]

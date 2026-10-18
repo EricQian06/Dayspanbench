@@ -3,7 +3,7 @@
   "task_id": "DSB-03",
   "answer": {
     "conclusion": "eligible_with_scope_limit",
-    "summary": "CS204课程正式签章大纲版本为CS204-2026-v2-signed。\n学分委员会确认CS204可转换3学分。\n这3学分仅计入专业选修，不能替代必修课。\n该转换结论从2027春季学期开始适用。\nCS204课程正式签章大纲版本为CS204-2026-v2-signed。\nCS204课程正式签章大纲版本为CS204-2026-v2-signed。\n补发正式大纲书面核实回执关键要素：{\"syllabus\": \"CS204-2026-v2-signed\"}\n学分委员会确认CS204可转换3学分。\n这3学分仅计入专业选修，不能替代必修课。\n学分委员会确认CS204可转换3学分。\n这3学分仅计入专业选修，不能替代必修课。\n学分转换咨询书面核实回执关键要素：{\"credits\": 3, \"scope\": \"专业选修\"}\n学分转换登记已受理办结：该转换结论自2027春季学期开始适用；登记回执以本表单状态为准。\n该转换结论从2027春季学期开始适用。\n表单credit_form办结回执关键要素：{\"effective\": \"2027春季\", \"course_code\": \"CS204\", \"syllabus_version\": \"CS204-2026-v2-signed\"}"
+    "summary": "The official signed CS204 syllabus version is CS204-2026-v2-signed.\nThe credit committee confirms that CS204 transfers as 3 credits.\nThese 3 credits count only toward major electives and cannot replace required courses.\nThe transfer decision takes effect starting in the Spring 2027 semester.\nThe official signed CS204 syllabus version is CS204-2026-v2-signed.\nThe official signed CS204 syllabus version is CS204-2026-v2-signed.\nReissue the official syllabusWritten verification receipt key details: {\"syllabus\": \"CS204-2026-v2-signed\"}\nThe credit committee confirms that CS204 transfers as 3 credits.\nThese 3 credits count only toward major electives and cannot replace required courses.\nThe credit committee confirms that CS204 transfers as 3 credits.\nThese 3 credits count only toward major electives and cannot replace required courses.\nCredit-transfer inquiryWritten verification receipt key details: {\"credits\": 3, \"scope\": \"major electives\"}\nCredit-transfer registration accepted and completed: the decision takes effect starting Spring 2027; the registration receipt is reflected in this form's status.\nThe transfer decision takes effect starting in the Spring 2027 semester.\nForm credit_form completion receipt key details: {\"effective\": \"Spring 2027\", \"course_code\": \"CS204\", \"syllabus_version\": \"CS204-2026-v2-signed\"}"
   },
   "result": {
     "task_id": "DSB-03",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "needs_information",
       "channel": "email",
-      "text": "您好，我是澄川学院教务·唐宁。您提交的材料尚不完整，请补充以下信息后我们再继续处理：syllabus_version。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Chengchuan College registrar - Tang Ning. Your materials are incomplete. Supply the following before we continue: syllabus_version.  Please write again if you have other questions.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "签章大纲的下落我记不准：可能在课程负责人梅芮处，也可能当时是教务唐宁经手送审的；建议您分别去信确认。另外我印象里CS204按认定口径能转4学分，不过我也就随口一说，具体您再核实下，以委员会审议为准。",
+      "text": "I do not remember exactly where the signed syllabus is: course lead Mei Rui may have it, or registrar Tang Ning may have submitted it for review. Please write to both to verify. I also vaguely recall CS204 counting as 4 credits, but that is just an offhand impression. Please verify and rely on the committee review.",
       "receipts": []
     },
     {
@@ -72,7 +72,7 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是澄川学院院办教务处·柳汀。经核实，院办存档范围只有成绩与学籍材料，课程大纲不在其中，我处无法出具；请以课程负责人或教务的答复为准。",
+      "text": "Hello, I am Chengchuan College dean's office academic affairs - Liu Ting. We checked: the dean's archives cover only grades and enrollment materials, not course syllabuses. We cannot issue one; rely on the course lead or registrar's response.",
       "receipts": []
     },
     {
@@ -82,12 +82,12 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是CS204课程负责人·梅芮。您咨询的事项已经核实，具体情况如下：CS204课程正式签章大纲版本为CS204-2026-v2-signed。CS204课程正式签章大纲版本为CS204-2026-v2-signed。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am CS204 course lead - Mei Rui. Your inquiry has been verified. Details: The official signed CS204 syllabus version is CS204-2026-v2-signed.The official signed CS204 syllabus version is CS204-2026-v2-signed.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "补发正式大纲书面核实回执",
-          "text": "CS204课程正式签章大纲版本为CS204-2026-v2-signed。\nCS204课程正式签章大纲版本为CS204-2026-v2-signed。",
+          "title": "Reissue the official syllabusWritten verification receipt",
+          "text": "The official signed CS204 syllabus version is CS204-2026-v2-signed.\nThe official signed CS204 syllabus version is CS204-2026-v2-signed.",
           "fields": {
             "syllabus": "CS204-2026-v2-signed"
           },
@@ -103,7 +103,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是澄川学院教务·唐宁。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2027-02-02 15:20（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Chengchuan College registrar - Tang Ning. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2027-02-02 15:20 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -113,15 +113,15 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是澄川学院教务·唐宁。您咨询的事项已经核实，具体情况如下：学分委员会确认CS204可转换3学分。这3学分仅计入专业选修，不能替代必修课。学分委员会确认CS204可转换3学分。这3学分仅计入专业选修，不能替代必修课。以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Chengchuan College registrar - Tang Ning. Your inquiry has been verified. Details: The credit committee confirms that CS204 transfers as 3 credits.These 3 credits count only toward major electives and cannot replace required courses.The credit committee confirms that CS204 transfers as 3 credits.These 3 credits count only toward major electives and cannot replace required courses.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0002); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0002",
-          "title": "学分转换咨询书面核实回执",
-          "text": "学分委员会确认CS204可转换3学分。\n这3学分仅计入专业选修，不能替代必修课。\n学分委员会确认CS204可转换3学分。\n这3学分仅计入专业选修，不能替代必修课。",
+          "title": "Credit-transfer inquiryWritten verification receipt",
+          "text": "The credit committee confirms that CS204 transfers as 3 credits.\nThese 3 credits count only toward major electives and cannot replace required courses.\nThe credit committee confirms that CS204 transfers as 3 credits.\nThese 3 credits count only toward major electives and cannot replace required courses.",
           "fields": {
             "credits": 3,
-            "scope": "专业选修"
+            "scope": "major electives"
           },
           "issuer": "records",
           "issued_at": "2027-02-02T07:09:00+00:00"
@@ -135,7 +135,7 @@
       "case_id": "CASE-0005",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是澄川学院教务·唐宁。跨校学分转换的正式登记不在我处柜台办理：请通过澄川学院学分转换登记系统（chengchuan_credit_register）提交，登记须使用现行签章大纲版本，提交说明见办理入口页。",
+      "text": "Hello, I am Chengchuan College registrar - Tang Ning. Formal inter-college credit-transfer registration is not handled at our counter. Submit through Chengchuan College credit-transfer registration (chengchuan_credit_register) using the current signed syllabus version. See the application-entry page for submission instructions.",
       "receipts": []
     }
   ],
@@ -144,7 +144,7 @@
       "at": "2026-11-05T06:00:00+00:00",
       "kind": "agent_send",
       "recipient": "tangning@bench.example",
-      "text": "咨询CS204学分转换",
+      "text": "Inquire about CS204 credit transfer",
       "fields": {
         "course_code": "CS204"
       },
@@ -162,7 +162,7 @@
       "at": "2026-11-05T06:00:00+00:00",
       "kind": "agent_send",
       "recipient": "liuting@bench.example",
-      "text": "请查询CS204课程签章大纲存档",
+      "text": "Please check the signed CS204 syllabus archive",
       "fields": {
         "course_code": "CS204"
       },
@@ -285,7 +285,7 @@
       "at": "2026-11-05T07:47:00+00:00",
       "kind": "agent_send",
       "recipient": "meirui@bench.example",
-      "text": "请补发正式签章大纲",
+      "text": "Please reissue the official signed syllabus",
       "fields": {
         "course_code": "CS204"
       },
@@ -432,7 +432,7 @@
       "at": "2026-11-10T05:49:00+00:00",
       "kind": "agent_send",
       "recipient": "tangning@bench.example",
-      "text": "补充正式大纲继续办理学分咨询",
+      "text": "Supply the official syllabus to continue the credit inquiry",
       "fields": {
         "course_code": "CS204",
         "syllabus_version": "CS204-2026-v2-signed"
@@ -766,7 +766,7 @@
       "at": "2027-02-02T07:09:00+00:00",
       "kind": "agent_send",
       "recipient": "tangning@bench.example",
-      "text": "请告知正式登记渠道",
+      "text": "Please identify the formal registration channel",
       "fields": {
         "course_code": "CS204"
       },
@@ -861,7 +861,7 @@
       "kind": "form_processed",
       "form": "credit_form",
       "accepted": true,
-      "result": "学分转换登记已受理办结：该转换结论自2027春季学期开始适用；登记回执以本表单状态为准。"
+      "result": "Credit-transfer registration accepted and completed: the decision takes effect starting Spring 2027; the registration receipt is reflected in this form's status."
     }
   ],
   "pending_cases": []

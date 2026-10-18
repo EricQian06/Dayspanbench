@@ -3,7 +3,7 @@
   "task_id": "DSB-30",
   "answer": {
     "conclusion": "dispute_filed_payment_verified",
-    "summary": "Merchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.\nThe disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.\nNo reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.\nThe issuer acknowledged dispute dispute-D1 for tx302, 486.00 USD, reason duplicate_charge, supported by stay-441 v1 and finding-D1 v1; the dispute is under review and filing changed neither the required payment nor the scheduled autopay.\nThe corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.\nThe unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.\nMerchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.\nThe disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.\nNo reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.\nMerchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.\nThe disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.\nNo reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.\nDuplicate charge investigation书面核实回执关键要素：{\"duplicate_transaction\": \"tx302\", \"duplicate_amount\": 486.0, \"reversal_posted\": false}\nDispute received: dispute-D1 for tx302 (reference HH-441-B), 486.00 USD, reason duplicate_charge, evidence stay-441 v1 and finding-D1 v1 identifying tx301 as the legitimate payment with no posted reversal. Review status: under review; no refund or provisional credit posted, and the required payment and scheduled autopay are unchanged.\nThe issuer acknowledged dispute dispute-D1 for tx302, 486.00 USD, reason duplicate_charge, supported by stay-441 v1 and finding-D1 v1; the dispute is under review and filing changed neither the required payment nor the scheduled autopay.\ndispute_submit确认回执关键要素：{\"dispute_filed\": true, \"amount_usd\": 486, \"status\": \"posted\", \"cycle\": \"current\"}\nThe corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.\nThe unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.\nThe corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.\nThe unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.\nStatement and autopay check书面核实回执关键要素：{\"required_payment\": 75.0, \"autopay_covers\": true}"
+    "summary": "Merchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.\nThe disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.\nNo reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.\nThe issuer acknowledged dispute dispute-D1 for tx302, 486.00 USD, reason duplicate_charge, supported by stay-441 v1 and finding-D1 v1; the dispute is under review and filing changed neither the required payment nor the scheduled autopay.\nThe corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.\nThe unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.\nMerchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.\nThe disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.\nNo reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.\nMerchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.\nThe disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.\nNo reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.\nDuplicate charge investigationWritten verification receipt key details: {\"duplicate_transaction\": \"tx302\", \"duplicate_amount\": 486.0, \"reversal_posted\": false}\nDispute received: dispute-D1 for tx302 (reference HH-441-B), 486.00 USD, reason duplicate_charge, evidence stay-441 v1 and finding-D1 v1 identifying tx301 as the legitimate payment with no posted reversal. Review status: under review; no refund or provisional credit posted, and the required payment and scheduled autopay are unchanged.\nThe issuer acknowledged dispute dispute-D1 for tx302, 486.00 USD, reason duplicate_charge, supported by stay-441 v1 and finding-D1 v1; the dispute is under review and filing changed neither the required payment nor the scheduled autopay.\ndispute_submit confirmation receipt key details: {\"dispute_filed\": true, \"amount_usd\": 486, \"status\": \"posted\", \"cycle\": \"current\"}\nThe corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.\nThe unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.\nThe corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.\nThe unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.\nStatement and autopay checkWritten verification receipt key details: {\"required_payment\": 75.0, \"autopay_covers\": true}"
   },
   "result": {
     "task_id": "DSB-30",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Harbor Test Hotel billing·Priya Noland。Billing findings for July stays publish from Monday July 12 at 10:00 Chicago time; please resend your stay receipt and transaction references after that.如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Harbor Test Hotel billing·Priya Noland. Billing findings for July stays publish from Monday July 12 at 10:00 Chicago time; please resend your stay receipt and transaction references after that. Please write again if you have other questions.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0002",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Harbor Test Hotel billing·Priya Noland。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Harbor Test Hotel billing·Priya Noland. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -72,11 +72,11 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Harbor Test Hotel billing·Priya Noland。您咨询的事项已经核实，具体情况如下：Merchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.The disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.No reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.Merchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.The disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.No reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Harbor Test Hotel billing·Priya Noland. Your inquiry has been verified. Details: Merchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.The disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.No reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.Merchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.The disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.No reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "Duplicate charge investigation书面核实回执",
+          "title": "Duplicate charge investigationWritten verification receipt",
           "text": "Merchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.\nThe disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.\nNo reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.\nMerchant finding finding-D1 identifies posted current-cycle charge tx302 (reference HH-441-B, 486 USD) as the duplicate for stay-441; tx301 (HH-441-A) is the legitimate payment.\nThe disputed duplicate amount is 486.00 USD, matching the stay-441 invoice and both posted references.\nNo reversal had been posted for tx302 when the dispute was filed; the duplicate charge remains on the current cycle and no refund or provisional credit exists.",
           "fields": {
             "duplicate_transaction": "tx302",
@@ -95,11 +95,11 @@
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Card issuer service desk·Jordan Blake。您咨询的事项已经核实，具体情况如下：The corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.The unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.The corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.The unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Card issuer service desk·Jordan Blake. Your inquiry has been verified. Details: The corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.The unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.The corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.The unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0003); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0003",
-          "title": "Statement and autopay check书面核实回执",
+          "title": "Statement and autopay checkWritten verification receipt",
           "text": "The corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.\nThe unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.\nThe corrected final statement (statement-D v2, published 2027-07-14 09:00) requires 75.00 USD by 2027-07-20 17:00 Chicago time.\nThe unchanged 75.00 USD autopay (autopay-D v1, scheduled 2027-07-20 09:00) covers the corrected 75.00 USD requirement; scheduled is not executed, and no payment has run.",
           "fields": {
             "required_payment": 75.0,
@@ -121,11 +121,22 @@
     },
     {
       "at": "2027-07-10T14:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "cardholder_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "at": "2027-07-10T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "cardholder_dialogue",
       "question": "What are my account identity, stay evidence, filing authorization and payment preference for the duplicate charge?",
       "matched": true,
-      "answer": "Account card-D, card last four 4821, cardholder Denise Morgan. I never share passwords, one-time codes or the full card number."
+      "answer": "Account card-D, card last four 4821, cardholder Denise Morgan. I never share passwords, one-time codes or the full card number.\nOne stay at Harbor Test Hotel: receipt stay-441, check-in 2027-07-07, check-out 2027-07-08, invoice total 486 USD.\nKeep my existing 75 USD autopay unchanged. Check whether it still covers the current issuer-required amount and tell me if it does not. A scheduled payment is not proof it has executed.\nThe card shows two 486 USD charges from Harbor Test Hotel for one stay; payment is due 2027-07-20. I stayed once, so only the charge that does not match the receipt's recorded payment reference can be the duplicate."
     },
     {
       "at": "2027-07-10T14:00:00+00:00",

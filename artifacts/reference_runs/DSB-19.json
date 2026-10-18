@@ -3,7 +3,7 @@
   "task_id": "DSB-19",
   "answer": {
     "conclusion": "both_legs_booked",
-    "summary": "Provider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.\nThe booked outbound vehicle (out-B) picks up 09:00 and arrives at the clinic 09:25, inside the 09:30 arrival deadline for the 10:00 appointment.\nOne approved accessible outbound leg has been booked with written pickup and access instructions; no payment was taken.\nThe clinic's actual release (release-XHM) records the patient ready at 11:20 on September 3; the 11:00 estimate was never release evidence.\nOne approved accessible return leg has been booked after the actual clinic release, with written pickup instructions; no payment was taken.\nThe booked return vehicle (return-B) picks up 11:40, after the 11:20 clinic release, arriving home 12:10.\nThe combined fare for both booked legs is 85 USD (outbound 40 + return 45), within the 100 USD roundtrip cap.\nProvider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.\nProvider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.\nFleet access verification书面核实回执关键要素：{\"lift_verified\": true}\nProvider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.\nThe booked outbound vehicle (out-B) picks up 09:00 and arrives at the clinic 09:25, inside the 09:30 arrival deadline for the 10:00 appointment.\nout-B outbound v2 - verified关键要素：{\"lift_verified\": true, \"outbound_arrival\": \"09:25\"}\nOutbound confirmed: out-B, lift tested, securement and one companion seat verified, pickup 09:00, arrival 09:25 - inside the 09:30 deadline. Fare 40 USD; written pickup and access instructions issued. No payment taken.\nOne approved accessible outbound leg has been booked with written pickup and access instructions; no payment was taken.\nbook_outbound确认回执关键要素：{\"outbound_booked\": true, \"leg\": \"outbound\"}\nAppointment appt-HM v2 - released 11:20关键要素：{\"clinic_release\": \"11:20\"}\nReturn confirmed: return-B, lift tested, securement and one companion seat verified, pickup 11:40 - after the 11:20 clinic release - arriving home 12:10. Fare 45 USD; combined fare for both legs 85 USD; written pickup and access instructions issued. No payment taken.\nOne approved accessible return leg has been booked after the actual clinic release, with written pickup instructions; no payment was taken.\nThe booked return vehicle (return-B) picks up 11:40, after the 11:20 clinic release, arriving home 12:10.\nThe combined fare for both booked legs is 85 USD (outbound 40 + return 45), within the 100 USD roundtrip cap.\nbook_return确认回执关键要素：{\"return_booked\": true, \"return_pickup\": \"11:40\", \"total_fare\": 85, \"leg\": \"return\"}"
+    "summary": "Provider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.\nThe booked outbound vehicle (out-B) picks up 09:00 and arrives at the clinic 09:25, inside the 09:30 arrival deadline for the 10:00 appointment.\nOne approved accessible outbound leg has been booked with written pickup and access instructions; no payment was taken.\nThe clinic's actual release (release-XHM) records the patient ready at 11:20 on September 3; the 11:00 estimate was never release evidence.\nOne approved accessible return leg has been booked after the actual clinic release, with written pickup instructions; no payment was taken.\nThe booked return vehicle (return-B) picks up 11:40, after the 11:20 clinic release, arriving home 12:10.\nThe combined fare for both booked legs is 85 USD (outbound 40 + return 45), within the 100 USD roundtrip cap.\nProvider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.\nProvider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.\nFleet access verificationWritten verification receipt key details: {\"lift_verified\": true}\nProvider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.\nThe booked outbound vehicle (out-B) picks up 09:00 and arrives at the clinic 09:25, inside the 09:30 arrival deadline for the 10:00 appointment.\nout-B outbound v2 - verified key details: {\"lift_verified\": true, \"outbound_arrival\": \"09:25\"}\nOutbound confirmed: out-B, lift tested, securement and one companion seat verified, pickup 09:00, arrival 09:25 - inside the 09:30 deadline. Fare 40 USD; written pickup and access instructions issued. No payment taken.\nOne approved accessible outbound leg has been booked with written pickup and access instructions; no payment was taken.\nbook_outbound confirmation receipt key details: {\"outbound_booked\": true, \"leg\": \"outbound\"}\nAppointment appt-HM v2 - released 11:20 key details: {\"clinic_release\": \"11:20\"}\nReturn confirmed: return-B, lift tested, securement and one companion seat verified, pickup 11:40 - after the 11:20 clinic release - arriving home 12:10. Fare 45 USD; combined fare for both legs 85 USD; written pickup and access instructions issued. No payment taken.\nOne approved accessible return leg has been booked after the actual clinic release, with written pickup instructions; no payment was taken.\nThe booked return vehicle (return-B) picks up 11:40, after the 11:20 clinic release, arriving home 12:10.\nThe combined fare for both booked legs is 85 USD (outbound 40 + return 45), within the 100 USD roundtrip cap.\nbook_return confirmation receipt key details: {\"return_booked\": true, \"return_pickup\": \"11:40\", \"total_fare\": 85, \"leg\": \"return\"}"
   },
   "result": {
     "task_id": "DSB-19",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Access Ride dispatch·Dana Whitfield。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Access Ride dispatch·Dana Whitfield. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -62,11 +62,11 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Access Ride dispatch·Dana Whitfield。您咨询的事项已经核实，具体情况如下：Provider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.Provider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Access Ride dispatch·Dana Whitfield. Your inquiry has been verified. Details: Provider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.Provider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "Fleet access verification书面核实回执",
+          "title": "Fleet access verificationWritten verification receipt",
           "text": "Provider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.\nProvider dispatch evidence confirms the booked vehicles have a working tested lift, wheelchair securement and one companion seat on each leg.",
           "fields": {
             "lift_verified": true
@@ -87,11 +87,21 @@
     },
     {
       "at": "2027-09-02T13:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "patient_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2"
+      ]
+    },
+    {
+      "at": "2027-09-02T13:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "patient_dialogue",
       "question": "What are your access needs, limits and approval arrangements for the transport?",
       "matched": true,
-      "answer": "I remain in my wheelchair and cannot climb steps. The vehicle needs a working lift, wheelchair securement and one companion seat; written pickup instructions are required."
+      "answer": "I remain in my wheelchair and cannot climb steps. The vehicle needs a working lift, wheelchair securement and one companion seat; written pickup instructions are required.\nHome-HM to clinic-HM, roundtrip transport cap 100 USD. The appointment ends only when the clinic says I am ready, not at its estimated 11:00.\nApprove the exact vehicle and window for each leg with me before booking. Share pickup and access needs only, not my diagnosis or full medical records. No medication advice and no payment."
     },
     {
       "at": "2027-09-02T13:00:00+00:00",
@@ -365,6 +375,14 @@
     },
     {
       "at": "2027-09-02T16:05:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "patient_dialogue",
+      "selected": [
+        "2"
+      ]
+    },
+    {
+      "at": "2027-09-02T16:05:00+00:00",
       "kind": "agent_dialogue",
       "tool": "patient_dialogue",
       "question": "Do you approve the exact outbound plan: out-B, 09:00 pickup, 09:25 arrival, 40 USD?",
@@ -471,11 +489,21 @@
     },
     {
       "at": "2027-09-03T16:25:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "patient_dialogue",
+      "selected": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "at": "2027-09-03T16:25:00+00:00",
       "kind": "agent_dialogue",
       "tool": "patient_dialogue",
       "question": "The clinic released you at 11:20. Do you approve the exact return plan: return-B, 11:40 pickup, 45 USD?",
       "matched": true,
-      "answer": "Home-HM to clinic-HM, roundtrip transport cap 100 USD. The appointment ends only when the clinic says I am ready, not at its estimated 11:00."
+      "answer": "Home-HM to clinic-HM, roundtrip transport cap 100 USD. The appointment ends only when the clinic says I am ready, not at its estimated 11:00.\nApprove the exact vehicle and window for each leg with me before booking. Share pickup and access needs only, not my diagnosis or full medical records. No medication advice and no payment.\nSeptember 3, 2027 at 10:00; arrive 30 minutes early. Confirm the return only after the visit, once the clinic actually releases me."
     },
     {
       "at": "2027-09-03T16:25:00+00:00",

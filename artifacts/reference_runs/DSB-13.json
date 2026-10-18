@@ -3,7 +3,7 @@
   "task_id": "DSB-13",
   "answer": {
     "conclusion": "reserved_verified",
-    "summary": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nOne reservation for six at Garden Ramp Bistro on 2027-07-11 at 13:30 has been confirmed with the meal requirements acknowledged; no payment or automatic gratuity was taken.\nThe confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.\nThe reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.\nThe current pre-tip total for the six-meal plan is 247.80 USD including tax and mandatory service, within the 280 USD budget.\nProvider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nProvider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nAccess and sesame verification书面核实回执关键要素：{\"access\": true, \"controls\": true, \"fish_free\": true}\nReservation confirmed: Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district, 2027-07-11 at 13:30 New York time, six seats - four adult roast chicken and two fish-free child tomato pasta - with step-free access and written sesame controls acknowledged by the provider; pre-tip total 247.80 USD including tax and mandatory service; no payment taken. The controls are provider-reported, not a medical guarantee.\nOne reservation for six at Garden Ramp Bistro on 2027-07-11 at 13:30 has been confirmed with the meal requirements acknowledged; no payment or automatic gratuity was taken.\nThe confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.\nThe reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.\nThe current pre-tip total for the six-meal plan is 247.80 USD including tax and mandatory service, within the 280 USD budget.\nreserve_table确认回执关键要素：{\"reserved\": true, \"address\": \"12 Ramp Lane, Riverdale test district\", \"table_time\": \"13:30\", \"total_cost\": 247.8, \"party_size\": 6}"
+    "summary": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nOne reservation for six at Garden Ramp Bistro on 2027-07-11 at 13:30 has been confirmed with the meal requirements acknowledged; no payment or automatic gratuity was taken.\nThe confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.\nThe reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.\nThe current pre-tip total for the six-meal plan is 247.80 USD including tax and mandatory service, within the 280 USD budget.\nProvider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nProvider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nAccess and sesame verificationWritten verification receipt key details: {\"access\": true, \"controls\": true, \"fish_free\": true}\nReservation confirmed: Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district, 2027-07-11 at 13:30 New York time, six seats - four adult roast chicken and two fish-free child tomato pasta - with step-free access and written sesame controls acknowledged by the provider; pre-tip total 247.80 USD including tax and mandatory service; no payment taken. The controls are provider-reported, not a medical guarantee.\nOne reservation for six at Garden Ramp Bistro on 2027-07-11 at 13:30 has been confirmed with the meal requirements acknowledged; no payment or automatic gratuity was taken.\nThe confirmed reservation is at Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district.\nThe reserved table starts at 13:30 New York time on 2027-07-11, inside the 13:00-14:00 start window.\nThe current pre-tip total for the six-meal plan is 247.80 USD including tax and mandatory service, within the 280 USD budget.\nreserve_table confirmation receipt key details: {\"reserved\": true, \"address\": \"12 Ramp Lane, Riverdale test district\", \"table_time\": \"13:30\", \"total_cost\": 247.8, \"party_size\": 6}"
   },
   "result": {
     "task_id": "DSB-13",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Garden Ramp Bistro manager·Alex Chen。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Garden Ramp Bistro manager·Alex Chen. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -62,11 +62,11 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Garden Ramp Bistro manager·Alex Chen。您咨询的事项已经核实，具体情况如下：Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Garden Ramp Bistro manager·Alex Chen. Your inquiry has been verified. Details: Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.Written provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child meals (tomato pasta) on menu-101 v1 are prepared without fish.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "Access and sesame verification书面核实回执",
+          "title": "Access and sesame verificationWritten verification receipt",
           "text": "Provider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.\nProvider evidence verify-F101 confirms a continuous step-free ramp route to the table at Garden Ramp Bistro; no staff lifting and no cobblestone-only entrance.\nWritten provider controls for menu-101 v1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child meals (tomato pasta) on menu-101 v1 are prepared without fish.",
           "fields": {
             "access": true,
@@ -89,11 +89,23 @@
     },
     {
       "at": "2027-07-09T13:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "family_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "5"
+      ]
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "family_dialogue",
       "question": "What are the party size, accessibility needs, food requirements, budget and approval arrangements for the lunch?",
       "matched": true,
-      "answer": "Four adults and two children aged six and nine; the booking name is David Klein."
+      "answer": "Four adults and two children aged six and nine; the booking name is David Klein.\nOne adult uses a wheelchair: we need a real step-free route to the table. Staff lifting is not acceptable, and a cobblestone-only entrance is not acceptable.\nOne guest has a sesame allergy: obtain written ingredient and cross-contact controls for the exact menu, and do not infer safety from a menu label. Both child meals must have no fish.\nStay within 280 USD before any optional tip, including tax and mandatory service. No payment and no automatic gratuity.\nI can review the final plan from July 10 at 11:00 New York time. Show the restaurant address, current table time, six meals, written sesame controls, access evidence and full pre-tip cost. Reserve only after I approve; no payment or automatic gratuity."
     },
     {
       "at": "2027-07-09T13:00:00+00:00",
@@ -348,7 +360,7 @@
       ]
     },
     {
-      "at": "2027-07-10T14:30:00+00:00",
+      "at": "2027-07-10T15:30:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "restaurant_search",
       "query": "Garden Ramp Bistro",
@@ -361,52 +373,71 @@
       ]
     },
     {
-      "at": "2027-07-10T14:30:00+00:00",
+      "at": "2027-07-10T15:30:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "family_dialogue",
+      "selected": [
+        "1",
+        "2",
+        "3",
+        "5"
+      ]
+    },
+    {
+      "at": "2027-07-10T15:30:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "family_dialogue",
+      "question": "Do you approve this current plan: Garden Ramp Bistro, 12 Ramp Lane, Riverdale test district, July 11 at 13:30, four adult meals and two fish-free child meals, written sesame ingredient and cross-contact controls and verified step-free wheelchair access, total 247.80 USD before optional tip, no payment or automatic gratuity?",
+      "matched": true,
+      "answer": "One adult uses a wheelchair: we need a real step-free route to the table. Staff lifting is not acceptable, and a cobblestone-only entrance is not acceptable.\nOne guest has a sesame allergy: obtain written ingredient and cross-contact controls for the exact menu, and do not infer safety from a menu label. Both child meals must have no fish.\nStay within 280 USD before any optional tip, including tax and mandatory service. No payment and no automatic gratuity.\nI can review the final plan from July 10 at 11:00 New York time. Show the restaurant address, current table time, six meals, written sesame controls, access evidence and full pre-tip cost. Reserve only after I approve; no payment or automatic gratuity."
+    },
+    {
+      "at": "2027-07-10T15:30:00+00:00",
       "kind": "agent_discover_tools",
       "name": "reserve_table",
       "found": true,
       "tool_kind": "select"
     },
     {
-      "at": "2027-07-10T14:30:00+00:00",
+      "at": "2027-07-10T15:30:00+00:00",
       "kind": "agent_selection_submitted",
       "tool": "reserve_table",
       "entry": "r101-v2",
       "accepted": true
     },
     {
-      "at": "2027-07-10T16:30:00+00:00",
+      "at": "2027-07-10T17:30:00+00:00",
       "kind": "fact_registered",
       "fact": "reserved",
       "issuer": "garden_manager"
     },
     {
-      "at": "2027-07-10T16:30:00+00:00",
+      "at": "2027-07-10T17:30:00+00:00",
       "kind": "fact_registered",
       "fact": "address",
       "issuer": "garden_manager"
     },
     {
-      "at": "2027-07-10T16:30:00+00:00",
+      "at": "2027-07-10T17:30:00+00:00",
       "kind": "fact_registered",
       "fact": "table_time",
       "issuer": "garden_manager"
     },
     {
-      "at": "2027-07-10T16:30:00+00:00",
+      "at": "2027-07-10T17:30:00+00:00",
       "kind": "fact_registered",
       "fact": "total_cost",
       "issuer": "garden_manager"
     },
     {
-      "at": "2027-07-10T16:30:00+00:00",
+      "at": "2027-07-10T17:30:00+00:00",
       "kind": "page_updated",
       "page": "dining-entry",
       "url": "https://riverdale.bench/entry",
       "cause": "selection"
     },
     {
-      "at": "2027-07-10T16:30:00+00:00",
+      "at": "2027-07-10T17:30:00+00:00",
       "kind": "selection_processed",
       "tool": "reserve_table",
       "accepted": true,

@@ -3,7 +3,7 @@
   "task_id": "DSB-42",
   "answer": {
     "conclusion": "both_rescheduled",
-    "summary": "The Stripe recruiter separately confirmed replacement slot w01: Thursday September 16, 2027 10:00-12:00 Central time (08:00-10:00 UTC-07:00), two hours, meeting link link-stripe-current.\nThe Shopify recruiter separately confirmed replacement slot w02: Friday September 17, 2027 09:00-10:30 Central time (10:00-11:30 UTC-04:00), ninety minutes, initially with meeting link link-shopify-old.\nThe Stripe replacement was confirmed with the current link link-stripe-current (slot w01: Thursday September 16, 2027 10:00-12:00 Central, two hours); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nThe Shopify replacement was confirmed with the current link link-shopify-new (slot w02 version 2, after the September 15 09:30 rotation: Friday September 17, 2027 09:00-10:30 Central, ninety minutes); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nw01 - Stripe replacement slot (pending recruiter)关键要素：{\"stripe_offer\": true}\nw02 - Shopify replacement slot (pending recruiter, link v1)关键要素：{\"shopify_offer\": true}\nw02 - Shopify replacement slot (link rotated, v2)关键要素：{\"shopify_offer\": true}\nConfirmed: the Stripe final interview is Thursday September 16, 2027 10:00-12:00 Central time (08:00-10:00 UTC-07:00), two hours, at meeting link link-stripe-current. The old Wednesday invitation is superseded now that the replacement is confirmed; nothing was withdrawn.\nThe Stripe replacement was confirmed with the current link link-stripe-current (slot w01: Thursday September 16, 2027 10:00-12:00 Central, two hours); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nstripe_reschedule确认回执关键要素：{\"stripe_rescheduled\": true, \"company\": \"stripe\"}\nConfirmed: the Shopify final interview is Friday September 17, 2027 09:00-10:30 Central time (10:00-11:30 UTC-04:00), ninety minutes, at the current meeting link link-shopify-new (slot version 2 after the September 15 rotation). The old Wednesday invitation is superseded now that the replacement is confirmed; nothing was withdrawn.\nThe Shopify replacement was confirmed with the current link link-shopify-new (slot w02 version 2, after the September 15 09:30 rotation: Friday September 17, 2027 09:00-10:30 Central, ninety minutes); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nshopify_reschedule确认回执关键要素：{\"shopify_rescheduled\": true, \"company\": \"shopify\"}"
+    "summary": "The Stripe recruiter separately confirmed replacement slot w01: Thursday September 16, 2027 10:00-12:00 Central time (08:00-10:00 UTC-07:00), two hours, meeting link link-stripe-current.\nThe Shopify recruiter separately confirmed replacement slot w02: Friday September 17, 2027 09:00-10:30 Central time (10:00-11:30 UTC-04:00), ninety minutes, initially with meeting link link-shopify-old.\nThe Stripe replacement was confirmed with the current link link-stripe-current (slot w01: Thursday September 16, 2027 10:00-12:00 Central, two hours); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nThe Shopify replacement was confirmed with the current link link-shopify-new (slot w02 version 2, after the September 15 09:30 rotation: Friday September 17, 2027 09:00-10:30 Central, ninety minutes); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nw01 - Stripe replacement slot (pending recruiter) key details: {\"stripe_offer\": true}\nw02 - Shopify replacement slot (pending recruiter, link v1) key details: {\"shopify_offer\": true}\nw02 - Shopify replacement slot (link rotated, v2) key details: {\"shopify_offer\": true}\nConfirmed: the Stripe final interview is Thursday September 16, 2027 10:00-12:00 Central time (08:00-10:00 UTC-07:00), two hours, at meeting link link-stripe-current. The old Wednesday invitation is superseded now that the replacement is confirmed; nothing was withdrawn.\nThe Stripe replacement was confirmed with the current link link-stripe-current (slot w01: Thursday September 16, 2027 10:00-12:00 Central, two hours); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nstripe_reschedule confirmation receipt key details: {\"stripe_rescheduled\": true, \"company\": \"stripe\"}\nConfirmed: the Shopify final interview is Friday September 17, 2027 09:00-10:30 Central time (10:00-11:30 UTC-04:00), ninety minutes, at the current meeting link link-shopify-new (slot version 2 after the September 15 rotation). The old Wednesday invitation is superseded now that the replacement is confirmed; nothing was withdrawn.\nThe Shopify replacement was confirmed with the current link link-shopify-new (slot w02 version 2, after the September 15 09:30 rotation: Friday September 17, 2027 09:00-10:30 Central, ninety minutes); the old Wednesday invitation was superseded only after the replacement was confirmed, and nothing was withdrawn.\nshopify_reschedule confirmation receipt key details: {\"shopify_rescheduled\": true, \"company\": \"shopify\"}"
   },
   "result": {
     "task_id": "DSB-42",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Stripe recruiter desk·Jordan Blake。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Stripe recruiter desk·Jordan Blake. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Stripe recruiter desk·Jordan Blake。您咨询的事项已经按流程处理完毕。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Stripe recruiter desk·Jordan Blake. Your matter has been completed under the process. Please write again if you have other questions.",
       "receipts": []
     },
     {
@@ -72,7 +72,7 @@
       "case_id": "CASE-0002",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Shopify recruiter desk·Sam Ortiz。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Shopify recruiter desk·Sam Ortiz. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -82,7 +82,7 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Shopify recruiter desk·Sam Ortiz。您咨询的事项已经按流程处理完毕。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Shopify recruiter desk·Sam Ortiz. Your matter has been completed under the process. Please write again if you have other questions.",
       "receipts": []
     }
   ],
@@ -96,11 +96,22 @@
     },
     {
       "at": "2027-09-13T14:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "candidate_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "at": "2027-09-13T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "candidate_dialogue",
       "question": "What is your availability, privacy rule and approval requirement for rescheduling the two interviews?",
       "matched": true,
-      "answer": "September 15 13:00-17:00 Chicago is protected. I can interview September 16 10:00-12:00 and September 17 09:00-10:30."
+      "answer": "September 15 13:00-17:00 Chicago is protected. I can interview September 16 10:00-12:00 and September 17 09:00-10:30.\nNever mention the other employer or my father's medical details. Use a generic prior commitment - \"I have a prior commitment. Please confirm the alternative time discussed for your interview.\" - and my personal account only.\nShow both exact new slots and current links for my approval. Confirm each replacement before removing only its superseded invitation; no withdrawal.\nKeep both final interviews: the Stripe two-hour panel and the Shopify ninety-minute panel; both currently conflict on Wednesday."
     },
     {
       "at": "2027-09-13T14:00:00+00:00",
@@ -408,11 +419,21 @@
     },
     {
       "at": "2027-09-15T15:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "candidate_dialogue",
+      "selected": [
+        "0",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "at": "2027-09-15T15:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "candidate_dialogue",
       "question": "Stripe is Thursday September 16 10:00-12:00 Central at link-stripe-current, and Shopify is Friday September 17 09:00-10:30 Central at link-shopify-new. Do you approve rescheduling both to these exact slots?",
       "matched": true,
-      "answer": "September 15 13:00-17:00 Chicago is protected. I can interview September 16 10:00-12:00 and September 17 09:00-10:30."
+      "answer": "September 15 13:00-17:00 Chicago is protected. I can interview September 16 10:00-12:00 and September 17 09:00-10:30.\nShow both exact new slots and current links for my approval. Confirm each replacement before removing only its superseded invitation; no withdrawal.\nKeep both final interviews: the Stripe two-hour panel and the Shopify ninety-minute panel; both currently conflict on Wednesday."
     },
     {
       "at": "2027-09-15T15:00:00+00:00",

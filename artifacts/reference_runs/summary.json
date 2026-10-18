@@ -37,13 +37,13 @@
     "agent_messages": 3,
     "contacted_actors": 3,
     "as_of": "2026-11-10T09:30:00+00:00",
-    "title": "活动场地：跨周末确认设备与报价",
+    "title": "Event venue: confirming equipment and prices across a weekend",
     "actors": 4,
     "deadline": "2026-11-11T18:00:00+08:00",
     "horizon_design": {
       "reference_days": 3,
-      "stratum": "短期",
-      "mechanism": "周末关门与设备内部转交",
+      "stratum": "Short term",
+      "mechanism": "Weekend closure and internal equipment handoff",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -85,13 +85,13 @@
     "agent_messages": 1,
     "contacted_actors": 1,
     "as_of": "2026-11-12T02:30:00+00:00",
-    "title": "租房咨询：物业周审与新一期货梯表",
+    "title": "Rental inquiry: weekly management review and a new freight-elevator schedule",
     "actors": 3,
     "deadline": "2026-11-13T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 8,
-      "stratum": "中短期",
-      "mechanism": "宠物周审与下一期货梯安排",
+      "stratum": "Short to medium term",
+      "mechanism": "Weekly pet review and the next freight elevator slot",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -133,13 +133,13 @@
     "agent_messages": 5,
     "contacted_actors": 3,
     "as_of": "2027-02-03T01:30:00+00:00",
-    "title": "学分转换：秋季补件与春季集中审议",
+    "title": "Credit transfer: autumn supplementary materials and spring committee review",
     "actors": 4,
     "deadline": "2027-02-09T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 89,
-      "stratum": "中长期",
-      "mechanism": "秋季材料预审与春季学分委员会",
+      "stratum": "Medium to long term",
+      "mechanism": "Autumn document screening and spring credit committee",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -181,13 +181,13 @@
     "agent_messages": 3,
     "contacted_actors": 3,
     "as_of": "2026-11-25T02:50:00+00:00",
-    "title": "共享仪器：培训、进口耗材与七天稳定性校准",
+    "title": "Shared instrument: training, imported consumables, and seven-day stability calibration",
     "actors": 4,
     "deadline": "2026-11-27T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 21,
-      "stratum": "中短期",
-      "mechanism": "进口耗材批次与7天连续稳定性校准",
+      "stratum": "Short to medium term",
+      "mechanism": "Imported consumables batch and seven continuous days of stability calibration",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -229,13 +229,13 @@
     "agent_messages": 3,
     "contacted_actors": 2,
     "as_of": "2026-12-08T02:30:00+00:00",
-    "title": "制造采购：28天耐久测试后重新询价",
+    "title": "Manufacturing procurement: request a fresh quote after a 28-day durability test",
     "actors": 3,
     "deadline": "2026-12-09T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 34,
-      "stratum": "中长期",
-      "mechanism": "28天耐久性测试、周审和过期报价更新",
+      "stratum": "Medium to long term",
+      "mechanism": "28-day durability test, weekly review, and expired quote refresh",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -277,13 +277,13 @@
     "agent_messages": 2,
     "contacted_actors": 1,
     "as_of": "2026-11-18T00:30:00+00:00",
-    "title": "家电保修：等待原厂补货与工程师轮值",
+    "title": "Appliance warranty: wait for factory replenishment and engineer duty days",
     "actors": 3,
     "deadline": "2026-11-18T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 13,
-      "stratum": "中短期",
-      "mechanism": "原厂配件批次与每周两天的工程师轮值",
+      "stratum": "Short to medium term",
+      "mechanism": "Factory parts batch and engineers on duty two days a week",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -325,13 +325,13 @@
     "agent_messages": 3,
     "contacted_actors": 2,
     "as_of": "2027-06-08T02:30:00+00:00",
-    "title": "档案使用：权利继受核验后重新启动数字化",
+    "title": "Archive use: restart digitization after rights succession verification",
     "actors": 3,
     "deadline": "2027-06-11T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 210,
-      "stratum": "长期",
-      "mechanism": "权利继受核验后再次申请数字化",
+      "stratum": "Long term",
+      "mechanism": "Request digitization again after rights succession verification",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -373,13 +373,13 @@
     "agent_messages": 2,
     "contacted_actors": 2,
     "as_of": "2026-11-12T05:41:00+00:00",
-    "title": "无障碍住宿：两家机构比较与延后的现场测量",
+    "title": "Accessible lodging: compare two providers and wait for on-site measurement",
     "actors": 4,
     "deadline": "2026-11-13T18:00:00+08:00",
     "horizon_design": {
       "reference_days": 5,
-      "stratum": "短期",
-      "mechanism": "指定房间可进入时间与两机构交叉核实",
+      "stratum": "Short term",
+      "mechanism": "Designated room access time and cross-checking two providers",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -421,13 +421,13 @@
     "agent_messages": 3,
     "contacted_actors": 2,
     "as_of": "2026-12-28T08:00:00+00:00",
-    "title": "公共活动咨询：意见征集与年末联合复核",
+    "title": "Public event consultation: comment collection and year-end joint review",
     "actors": 3,
     "deadline": "2027-01-05T17:00:00+08:00",
     "horizon_design": {
       "reference_days": 55,
-      "stratum": "中长期",
-      "mechanism": "30天征询及年末联合分类复核",
+      "stratum": "Medium to long term",
+      "mechanism": "30-day consultation and year-end joint classification review",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -469,13 +469,13 @@
     "agent_messages": 3,
     "contacted_actors": 3,
     "as_of": "2026-11-09T03:03:00+00:00",
-    "title": "二手相机：夜间联系、周末实测与取件咨询",
+    "title": "Used camera: evening contact, weekend testing, and pickup inquiry",
     "actors": 3,
     "deadline": "2026-11-10T22:00:00+08:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
-      "mechanism": "夜间个人联系与周末实测",
+      "stratum": "Short term",
+      "mechanism": "Evening individual contact and weekend measurement",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -517,13 +517,13 @@
     "agent_messages": 2,
     "contacted_actors": 1,
     "as_of": "2027-02-26T12:30:00+00:00",
-    "title": "开源兼容性：补丁验证后按窗口复核发布状态",
+    "title": "Open-source compatibility: verify the patch, then review release status during the window",
     "actors": 4,
     "deadline": "2027-03-10T23:00:00+08:00",
     "horizon_design": {
       "reference_days": 109,
-      "stratum": "长期",
-      "mechanism": "短期修复后按季度受理窗口发起多级批次等待",
+      "stratum": "Long term",
+      "mechanism": "After a short-term fix, initiate multilevel batch waiting during the quarterly intake window",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -543,7 +543,7 @@
         "expired_holds": 0
       },
       "forms_all_accepted": true,
-      "summary_anchor_tokens": 5,
+      "summary_anchor_tokens": 4,
       "summary_anchor_missing": [],
       "summary_anchors_ok": true,
       "pending_process_satisfied": true,
@@ -565,13 +565,13 @@
     "agent_messages": 5,
     "contacted_actors": 3,
     "as_of": "2027-09-02T07:00:00+00:00",
-    "title": "跨境原型设备：300天内的初审、二次补件与未决放行",
+    "title": "Cross-border prototype equipment: preliminary review, second-round documents, and unresolved release within 300 days",
     "actors": 5,
     "deadline": "2027-09-02T15:00:00+08:00",
     "horizon_design": {
       "reference_days": 300,
-      "stratum": "长期",
-      "mechanism": "原型设备归类争议、第二轮补件和未决技术复核",
+      "stratum": "Long term",
+      "mechanism": "Prototype classification dispute, second-round documents, and pending technical review",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -618,7 +618,7 @@
     "deadline": "2027-07-11T12:00:00-04:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "mid-episode offer rewrite plus organizer approval window",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -714,7 +714,7 @@
     "deadline": "2027-04-05T09:00:00-06:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "no-reversal deadline gate plus scoped token containment",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -810,7 +810,7 @@
     "deadline": "2027-07-11T12:00:00-04:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "mid-week delivery-time rewrite invalidating helper coverage plus mail verification turnaround",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -906,7 +906,7 @@
     "deadline": "2027-09-04T12:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "fleet verification rewrite plus clinic release gating the return leg",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1050,7 +1050,7 @@
     "deadline": "2027-10-03T17:30:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "mid-evening return-route cancellation plus transport-before-shows gate",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1088,18 +1088,18 @@
     "required_fact_coverage": 1.0,
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 21.0,
-    "calendar_days": 0.875,
+    "calendar_hours": 5.98,
+    "calendar_days": 0.249306,
     "agent_messages": 3,
     "contacted_actors": 2,
-    "as_of": "2027-04-17T13:00:00+00:00",
+    "as_of": "2027-04-16T21:59:00+00:00",
     "title": "Lyon pet stay: delayed late arrival, written pet acceptance and supervision",
     "actors": 3,
     "deadline": "2027-04-18T18:00:00+02:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
-      "mechanism": "evening train delay, overnight written extension and supervision rebound before booking",
+      "stratum": "Short term",
+      "mechanism": "evening train delay, same-evening written extension and supervision rebound before booking",
       "distribution": "manually stratified approximately logarithmic"
     }
   },
@@ -1146,7 +1146,7 @@
     "deadline": "2027-10-06T17:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "written estimate turnaround plus a mid-morning review move that invalidates the first plan",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1194,7 +1194,7 @@
     "deadline": "2027-06-09T12:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "mid-episode promo expiry plus installment approval gate",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1242,7 +1242,7 @@
     "deadline": "2027-09-03T17:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "overnight vetting review, deadline-morning withdrawal and a care-gated travel booking",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1290,7 +1290,7 @@
     "deadline": "2027-01-14T12:00:00+05:30",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "mid-day owner proof, delayed provider share migration and post-reconciliation audit",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1338,7 +1338,7 @@
     "deadline": "2027-08-25T17:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "adviser verification turnaround plus a mid-case course schedule rewrite",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1386,7 +1386,7 @@
     "deadline": "2027-09-18T12:00:00-07:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "clinician plan release, access revocation and fixed-time caregiver acknowledgements across days",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1434,7 +1434,7 @@
     "deadline": "2027-07-14T17:00:00-05:00",
     "horizon_design": {
       "reference_days": 4,
-      "stratum": "中短期",
+      "stratum": "Short to medium term",
       "mechanism": "merchant finding turnaround plus statement correction",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1530,7 +1530,7 @@
     "deadline": "2027-05-12T17:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "referral review window plus midday slot inventory change",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1578,7 +1578,7 @@
     "deadline": "2027-06-12T12:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "landlord authorization turnaround plus a mid-case slot inventory change",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1722,7 +1722,7 @@
     "deadline": "2027-08-02T17:00:00-03:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "official show confirmation plus midday ferry lift outage",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1770,7 +1770,7 @@
     "deadline": "2027-10-09T15:20:00+01:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "live rail delay plus accompanied-bike evidence window",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1818,7 +1818,7 @@
     "deadline": "2027-03-24T17:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "late-morning clinic scan, next-day adopter fee receipt and a three-stage service chain",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1866,7 +1866,7 @@
     "deadline": "2027-05-10T17:00:00-05:00",
     "horizon_design": {
       "reference_days": 3,
-      "stratum": "中短期",
+      "stratum": "Short to medium term",
       "mechanism": "CEO request arrival, a weekend gap and the Monday checkpoint revision gating the applied plan",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1914,7 +1914,7 @@
     "deadline": "2027-06-09T12:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "mid-episode delivery-slot rewrite plus approval window",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -1962,7 +1962,7 @@
     "deadline": "2027-05-20T18:00:00-05:00",
     "horizon_design": {
       "reference_days": 13,
-      "stratum": "中短期",
+      "stratum": "Short to medium term",
       "mechanism": "mid-window flight cancellation and hotel rate change plus a lapsing hold and a late approval gate",
       "distribution": "manually stratified approximately logarithmic"
     }
@@ -2010,7 +2010,7 @@
     "deadline": "2027-09-15T17:00:00-05:00",
     "horizon_design": {
       "reference_days": 2,
-      "stratum": "短期",
+      "stratum": "Short term",
       "mechanism": "recruiter offer confirmation, a mid-morning link rotation and two separate per-employer desks",
       "distribution": "manually stratified approximately logarithmic"
     }

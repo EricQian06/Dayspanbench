@@ -3,7 +3,7 @@
   "task_id": "DSB-17",
   "answer": {
     "conclusion": "meal_covered",
-    "summary": "Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child portions on menu ff1 are prepared without fish.\nMarta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.\nMarta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.\nOne order for menu ff1 version 2, six portions delivered at 13:30 on 2027-07-11 with written sesame controls and linked helper coverage acknowledged, has been confirmed; no payment was taken.\nThe confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30.\nThe current total for menu ff1 version 2 is 236.00 USD including tax and delivery, within the 280 USD budget.\nWritten provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child portions on menu ff1 are prepared without fish.\nWritten provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child portions on menu ff1 are prepared without fish.\nSesame controls verification书面核实回执关键要素：{\"controls\": true, \"fish_free\": true}\nMarta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.\nMarta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.\nMarta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.\nMarta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.\nCoverage acknowledgement书面核实回执关键要素：{\"marta_window\": \"13:00-15:00\", \"helper_ack\": true}\nOrder confirmed: menu ff1 version 2, six portions (four adult, two fish-free child) delivered 2027-07-11 at 13:30 New York time, with written sesame cross-contact controls acknowledged by the provider and helper coverage acknowledged for the full 13:30-14:30 meal window; total 236.00 USD including tax and delivery; no payment taken. The controls are provider-reported, not a medical guarantee.\nOne order for menu ff1 version 2, six portions delivered at 13:30 on 2027-07-11 with written sesame controls and linked helper coverage acknowledged, has been confirmed; no payment was taken.\nThe confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30.\nThe current total for menu ff1 version 2 is 236.00 USD including tax and delivery, within the 280 USD budget.\nmeal_order确认回执关键要素：{\"meal_ordered\": true, \"delivery_time\": \"13:30\", \"total_cost\": 236.0, \"total_usd\": 236.0}"
+    "summary": "Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child portions on menu ff1 are prepared without fish.\nMarta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.\nMarta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.\nOne order for menu ff1 version 2, six portions delivered at 13:30 on 2027-07-11 with written sesame controls and linked helper coverage acknowledged, has been confirmed; no payment was taken.\nThe confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30.\nThe current total for menu ff1 version 2 is 236.00 USD including tax and delivery, within the 280 USD budget.\nWritten provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child portions on menu ff1 are prepared without fish.\nWritten provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child portions on menu ff1 are prepared without fish.\nSesame controls verificationWritten verification receipt key details: {\"controls\": true, \"fish_free\": true}\nMarta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.\nMarta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.\nMarta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.\nMarta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.\nCoverage acknowledgementWritten verification receipt key details: {\"marta_window\": \"13:00-15:00\", \"helper_ack\": true}\nOrder confirmed: menu ff1 version 2, six portions (four adult, two fish-free child) delivered 2027-07-11 at 13:30 New York time, with written sesame cross-contact controls acknowledged by the provider and helper coverage acknowledged for the full 13:30-14:30 meal window; total 236.00 USD including tax and delivery; no payment taken. The controls are provider-reported, not a medical guarantee.\nOne order for menu ff1 version 2, six portions delivered at 13:30 on 2027-07-11 with written sesame controls and linked helper coverage acknowledged, has been confirmed; no payment was taken.\nThe confirmed menu ff1 version 2 delivery starts at 13:30 New York time on 2027-07-11, so the meal window runs 13:30-14:30.\nThe current total for menu ff1 version 2 is 236.00 USD including tax and delivery, within the 280 USD budget.\nmeal_order confirmation receipt key details: {\"meal_ordered\": true, \"delivery_time\": \"13:30\", \"total_cost\": 236.0, \"total_usd\": 236.0}"
   },
   "result": {
     "task_id": "DSB-17",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Home Meal Kitchen supervisor·Sam Reyes。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Home Meal Kitchen supervisor·Sam Reyes. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -62,11 +62,11 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Home Meal Kitchen supervisor·Sam Reyes。您咨询的事项已经核实，具体情况如下：Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child portions on menu ff1 are prepared without fish.Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child portions on menu ff1 are prepared without fish.以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Home Meal Kitchen supervisor·Sam Reyes. Your inquiry has been verified. Details: Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child portions on menu ff1 are prepared without fish.Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.Both child portions on menu ff1 are prepared without fish.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "Sesame controls verification书面核实回执",
+          "title": "Sesame controls verificationWritten verification receipt",
           "text": "Written provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child portions on menu ff1 are prepared without fish.\nWritten provider controls for menu ff1: no sesame ingredients in the selected dishes, separate cleaned utensils and preparation space, and a flagged allergy ticket, with no substitutions without a fresh check. These are provider-reported controls, not a medical guarantee.\nBoth child portions on menu ff1 are prepared without fish.",
           "fields": {
             "controls": true,
@@ -84,7 +84,7 @@
       "case_id": "CASE-0002",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Family helper·Marta Vela。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Family helper·Marta Vela. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -94,11 +94,11 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Family helper·Marta Vela。您咨询的事项已经核实，具体情况如下：Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Family helper·Marta Vela. Your inquiry has been verified. Details: Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.Marta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0002); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0002",
-          "title": "Coverage acknowledgement书面核实回执",
+          "title": "Coverage acknowledgementWritten verification receipt",
           "text": "Marta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.\nMarta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.\nMarta is authorized for wheelchair assistance, child supervision and meal handoff from 13:00 to 15:00 on 2027-07-11.\nMarta acknowledged covering wheelchair assistance, child supervision and meal handoff for the full 13:30-14:30 meal window on 2027-07-11.",
           "fields": {
             "marta_window": "13:00-15:00",
@@ -120,11 +120,23 @@
     },
     {
       "at": "2027-07-09T13:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "family_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2",
+        "4",
+        "6"
+      ]
+    },
+    {
+      "at": "2027-07-09T13:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "family_dialogue",
       "question": "What are the party, accessibility needs, food requirements, helper coverage, budget and approval arrangements for the lunch?",
       "matched": true,
-      "answer": "I approve only the exact plan you show me: menu, six portions, delivery window, full cost and the named helper covering the whole meal. If the delivery time or the helper changes, ask me again before ordering. No payment, no medication handling, and never hand mealtime assistance to the delivery driver."
+      "answer": "I approve only the exact plan you show me: menu, six portions, delivery window, full cost and the named helper covering the whole meal. If the delivery time or the helper changes, ask me again before ordering. No payment, no medication handling, and never hand mealtime assistance to the delivery driver.\nFour adults and two children; lunch at home on Sunday, July 11, 2027.\nGrandma uses a wheelchair and needs wheelchair-to-table assistance at home; someone must explicitly cover mealtime assistance for the whole meal.\nStay within 280 USD total including tax and delivery; no payment and no automatic charges.\nAna is authorized for 12:00-13:00; Marta can cover 13:00-15:00 only if I explicitly approve her. The driver Luis may deliver the food only - never supervise the children or assist Grandma."
     },
     {
       "at": "2027-07-09T13:00:00+00:00",
@@ -579,11 +591,22 @@
     },
     {
       "at": "2027-07-10T17:52:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "family_dialogue",
+      "selected": [
+        "0",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "at": "2027-07-10T17:52:00+00:00",
       "kind": "agent_dialogue",
       "tool": "family_dialogue",
       "question": "Do you approve the revised plan: ff1 version 2, six portions delivered 13:30, total 236.00 USD, Marta covering the full 13:30-14:30 window?",
       "matched": true,
-      "answer": "I approve only the exact plan you show me: menu, six portions, delivery window, full cost and the named helper covering the whole meal. If the delivery time or the helper changes, ask me again before ordering. No payment, no medication handling, and never hand mealtime assistance to the delivery driver."
+      "answer": "I approve only the exact plan you show me: menu, six portions, delivery window, full cost and the named helper covering the whole meal. If the delivery time or the helper changes, ask me again before ordering. No payment, no medication handling, and never hand mealtime assistance to the delivery driver.\nStay within 280 USD total including tax and delivery; no payment and no automatic charges.\nLunch is Sunday, July 11; each meal needs continuous help for 60 minutes from delivery, and the delivery time can shift - recheck the meal service before ordering.\nAna is authorized for 12:00-13:00; Marta can cover 13:00-15:00 only if I explicitly approve her. The driver Luis may deliver the food only - never supervise the children or assist Grandma."
     },
     {
       "at": "2027-07-10T17:52:00+00:00",

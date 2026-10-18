@@ -3,7 +3,7 @@
   "task_id": "DSB-05",
   "answer": {
     "conclusion": "within_budget_with_current_quote",
-    "summary": "该规格最小订单量为500件。\n500件批次旧报价18000元，有效至11月10日16点。\n材料M26批次符合用户要求的Q7检测规范，报告已复核。\n500件批次重新确认的总报价18600元，有效至12月11日16点。\n如按有效报价下单，最早可于12月9日出库；本次尚未下单。\n该规格最小订单量为500件。\n500件批次旧报价18000元，有效至11月10日16点。\n500件批次旧报价18000元，有效至11月10日16点。\n初次报价书面核实回执关键要素：{\"moq\": 500, \"quote_old\": 18000}\n材料M26批次符合用户要求的Q7检测规范，报告已复核。\n材料M26批次符合用户要求的Q7检测规范，报告已复核。\n材料Q7报告书面核实回执关键要素：{\"qa\": true}\n500件批次重新确认的总报价18600元，有效至12月11日16点。\n500件批次重新确认的总报价18600元，有效至12月11日16点。\n刷新过期报价书面核实回执关键要素：{\"quote_new\": 18600}\n出库预核登记已办结：如按有效报价下单，最早可于12月9日出库；本次尚未下单。办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。\n如按有效报价下单，最早可于12月9日出库；本次尚未下单。\n表单dispatch_form办结回执关键要素：{\"dispatch\": \"2026-12-09\", \"quantity\": 500, \"spec\": \"M26-Q7\"}"
+    "summary": "The minimum order quantity for this specification is 500 units.\nThe old quote for 500 units is CNY 18000, valid until November 10 at 16:00.\nMaterial batch M26 meets the user's Q7 testing standard, and the report has been reviewed.\nThe reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00.\nIf ordered under a valid quote, the earliest dispatch date is December 9; no order has been placed.\nThe minimum order quantity for this specification is 500 units.\nThe old quote for 500 units is CNY 18000, valid until November 10 at 16:00.\nThe old quote for 500 units is CNY 18000, valid until November 10 at 16:00.\nInitial quoteWritten verification receipt key details: {\"moq\": 500, \"quote_old\": 18000}\nMaterial batch M26 meets the user's Q7 testing standard, and the report has been reviewed.\nMaterial batch M26 meets the user's Q7 testing standard, and the report has been reviewed.\nMaterial Q7 reportWritten verification receipt key details: {\"qa\": true}\nThe reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00.\nThe reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00.\nRefresh expired quoteWritten verification receipt key details: {\"quote_new\": 18600}\nDispatch precheck registration complete: an order under a valid quote could be dispatched on December 9 at the earliest; no order has been placed. Verify progress through lengchuan_dispatch_status.\nIf ordered under a valid quote, the earliest dispatch date is December 9; no order has been placed.\nForm dispatch_form completion receipt key details: {\"dispatch\": \"2026-12-09\", \"quantity\": 500, \"spec\": \"M26-Q7\"}"
   },
   "result": {
     "task_id": "DSB-05",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "出库和排产的事我不直接管：排产核对归排产员苏渝。出库的书面预核结论走哪个渠道我记不准，可能要问排产员，也可能质检傅黎那边留了登记渠道，建议您分别去信确认。另外这个规格我记得好像300件起就可以订了，不过我不太确定，供您参考，起订量请以排产核对为准。",
+      "text": "I do not directly handle dispatch or production scheduling. Su Yu handles scheduling checks. I cannot recall the channel for written dispatch prechecks; the scheduler may know, or quality inspector Fu Li may have the registration channel. Please write to both to confirm. I also seem to remember a minimum order of 300 units for this specification, but I am unsure. This is only for reference; use the scheduling check for the minimum quantity.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0002",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是棱川制造质检·傅黎。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-12-07 13:55（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Lengchuan Manufacturing quality inspector - Fu Li. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2026-12-07 13:55 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -72,7 +72,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是棱川制造销售·罗岑。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-09 14:05（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Lengchuan Manufacturing sales - Luo Cen. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2026-11-09 14:05 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -82,12 +82,12 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是棱川制造销售·罗岑。您咨询的事项已经核实，具体情况如下：该规格最小订单量为500件。500件批次旧报价18000元，有效至11月10日16点。500件批次旧报价18000元，有效至11月10日16点。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Lengchuan Manufacturing sales - Luo Cen. Your inquiry has been verified. Details: The minimum order quantity for this specification is 500 units.The old quote for 500 units is CNY 18000, valid until November 10 at 16:00.The old quote for 500 units is CNY 18000, valid until November 10 at 16:00.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "初次报价书面核实回执",
-          "text": "该规格最小订单量为500件。\n500件批次旧报价18000元，有效至11月10日16点。\n500件批次旧报价18000元，有效至11月10日16点。",
+          "title": "Initial quoteWritten verification receipt",
+          "text": "The minimum order quantity for this specification is 500 units.\nThe old quote for 500 units is CNY 18000, valid until November 10 at 16:00.\nThe old quote for 500 units is CNY 18000, valid until November 10 at 16:00.",
           "fields": {
             "moq": 500,
             "quote_old": 18000
@@ -104,12 +104,12 @@
       "case_id": "CASE-0002",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是棱川制造质检·傅黎。您咨询的事项已经核实，具体情况如下：材料M26批次符合用户要求的Q7检测规范，报告已复核。材料M26批次符合用户要求的Q7检测规范，报告已复核。以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Lengchuan Manufacturing quality inspector - Fu Li. Your inquiry has been verified. Details: Material batch M26 meets the user's Q7 testing standard, and the report has been reviewed.Material batch M26 meets the user's Q7 testing standard, and the report has been reviewed.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0002); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0002",
-          "title": "材料Q7报告书面核实回执",
-          "text": "材料M26批次符合用户要求的Q7检测规范，报告已复核。\n材料M26批次符合用户要求的Q7检测规范，报告已复核。",
+          "title": "Material Q7 reportWritten verification receipt",
+          "text": "Material batch M26 meets the user's Q7 testing standard, and the report has been reviewed.\nMaterial batch M26 meets the user's Q7 testing standard, and the report has been reviewed.",
           "fields": {
             "qa": true
           },
@@ -125,7 +125,7 @@
       "case_id": "CASE-0004",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是棱川制造销售·罗岑。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Lengchuan Manufacturing sales - Luo Cen. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -135,12 +135,12 @@
       "case_id": "CASE-0004",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是棱川制造销售·罗岑。您咨询的事项已经核实，具体情况如下：500件批次重新确认的总报价18600元，有效至12月11日16点。500件批次重新确认的总报价18600元，有效至12月11日16点。以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Lengchuan Manufacturing sales - Luo Cen. Your inquiry has been verified. Details: The reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00.The reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0003); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0003",
-          "title": "刷新过期报价书面核实回执",
-          "text": "500件批次重新确认的总报价18600元，有效至12月11日16点。\n500件批次重新确认的总报价18600元，有效至12月11日16点。",
+          "title": "Refresh expired quoteWritten verification receipt",
+          "text": "The reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00.\nThe reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00.",
           "fields": {
             "quote_new": 18600
           },
@@ -155,7 +155,7 @@
       "at": "2026-11-03T06:00:00+00:00",
       "kind": "agent_send",
       "recipient": "luocen@bench.example",
-      "text": "请给初次报价",
+      "text": "Please provide an initial quote",
       "fields": {
         "quantity": 500,
         "spec": "M26-Q7"
@@ -174,7 +174,7 @@
       "at": "2026-11-03T06:00:00+00:00",
       "kind": "agent_send",
       "recipient": "fuli@bench.example",
-      "text": "请确认Q7质检报告",
+      "text": "Please confirm the Q7 inspection report",
       "fields": {
         "quantity": 500,
         "spec": "M26-Q7"
@@ -786,7 +786,7 @@
       "at": "2026-12-07T05:46:00+00:00",
       "kind": "agent_send",
       "recipient": "luocen@bench.example",
-      "text": "请重新确认报价，旧报价已过期",
+      "text": "Please reconfirm the quote; the old quote has expired",
       "fields": {
         "quantity": 500,
         "spec": "M26-Q7"
@@ -1003,7 +1003,7 @@
       "kind": "form_processed",
       "form": "dispatch_form",
       "accepted": true,
-      "result": "出库预核登记已办结：如按有效报价下单，最早可于12月9日出库；本次尚未下单。办理进度可经棱川出库进度查询（lengchuan_dispatch_status）复核。"
+      "result": "Dispatch precheck registration complete: an order under a valid quote could be dispatched on December 9 at the earliest; no order has been placed. Verify progress through lengchuan_dispatch_status."
     },
     {
       "at": "2026-12-08T02:30:00+00:00",
@@ -1016,7 +1016,7 @@
       "at": "2026-12-08T02:30:00+00:00",
       "kind": "agent_hidden_status",
       "tool": "lengchuan_dispatch_status",
-      "query": "出库",
+      "query": "dispatch",
       "keys": [
         "dispatch"
       ]

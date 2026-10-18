@@ -3,7 +3,7 @@
   "task_id": "DSB-20",
   "answer": {
     "conclusion": "held_packet_delivered",
-    "summary": "Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nSigned inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.\nSigned repair report repair-A: professional remediation of unitA's bedroom completed August 20, 2027.\nSigned drying report dry-A: structural drying of unitA verified August 22, 2027, after the completed repair.\nSigned independent retest retest-A (August 23, 2027, after drying): pass for unitA under the specified protocol. This is not a universal health guarantee.\nA zero-fee hold (hold-XHH1) on unitA is active until 2027-08-25 17:00 Central time; no deposit and no signature were taken.\nThe exact lease packet (lease v1 with inspect-A, repair-A, dry-A and retest-A attached, packet-XHH1) was delivered to Jasmine Cooper's signing inbox.\nThe delivered lease preserves the landlord's repair obligations; nothing was waived.\nThe lease remains unsigned; signature and move-in stay pending Jasmine Cooper's personal review.\nMaple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nMaple Row unitA - two bedrooms, 2100 USD关键要素：{\"rent_usd\": 2100, \"bedrooms\": 2}\n《inspect-A.pdf》书面材料回执关键要素：{\"mold_reported\": true}\nMaple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nSigned inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.\nMaple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nSigned inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.\nListing and condition verification书面核实回执关键要素：{\"rent_usd\": 2100, \"bedrooms\": 2, \"mold_reported\": true}\nSigned repair report repair-A, unitA, completed 2027-08-20 16:00 Central: professional remediation of the bedroom mold completed by the remediation firm. Structural drying follows before any retest.\nSigned repair report repair-A: professional remediation of unitA's bedroom completed August 20, 2027.\nSigned repair report repair-A关键要素：{\"repair_completed\": true}\nSigned drying report dry-A, unitA, verified 2027-08-22 09:00 Central: structural drying verified after the completed repair. The independent retest follows after drying.\nSigned drying report dry-A: structural drying of unitA verified August 22, 2027, after the completed repair.\nSigned drying report dry-A关键要素：{\"drying_verified\": true}\nSigned independent retest retest-A, unitA, 2027-08-23 14:00 Central, performed after drying by the independent inspector: PASS for unitA under the specified protocol. The signed same-unit chain is complete and in order (inspect-A, repair-A, dry-A, retest-A). This is not a universal health guarantee.\nSigned independent retest retest-A (August 23, 2027, after drying): pass for unitA under the specified protocol. This is not a universal health guarantee.\nSigned independent retest retest-A关键要素：{\"retest_passed\": true}\nHold confirmed: hold-XHH1 on Maple Row unitA, 2100 USD per month, move-in 2027-09-01, zero hold fee, active until 2027-08-25 17:00 Central time. No deposit and no signature were taken; the hold rests on the complete signed report chain (inspect-A, repair-A, dry-A, retest-A).\nA zero-fee hold (hold-XHH1) on unitA is active until 2027-08-25 17:00 Central time; no deposit and no signature were taken.\nunit_hold_desk确认回执关键要素：{\"hold_active\": true, \"bedrooms\": 2, \"rent_usd\": 2100}\nPacket delivered: packet-XHH1, lease v1 for unitA at 2100 USD with exactly inspect-A, repair-A, dry-A and retest-A attached, repair duties preserved, delivered unsigned to Jasmine Cooper's signing inbox. Signature and move-in remain pending her personal review; no payment was taken.\nThe exact lease packet (lease v1 with inspect-A, repair-A, dry-A and retest-A attached, packet-XHH1) was delivered to Jasmine Cooper's signing inbox.\nThe delivered lease preserves the landlord's repair obligations; nothing was waived.\nThe lease remains unsigned; signature and move-in stay pending Jasmine Cooper's personal review.\n表单lease_packet_form办结回执关键要素：{\"packet_delivered\": true, \"repair_duties_preserved\": true, \"lease_unsigned\": true, \"unit_id\": \"unitA\", \"lease_version\": \"1\", \"attachments\": \"inspect-A, repair-A, dry-A, retest-A\", \"user_approval\": \"approved\"}"
+    "summary": "Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nSigned inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.\nSigned repair report repair-A: professional remediation of unitA's bedroom completed August 20, 2027.\nSigned drying report dry-A: structural drying of unitA verified August 22, 2027, after the completed repair.\nSigned independent retest retest-A (August 23, 2027, after drying): pass for unitA under the specified protocol. This is not a universal health guarantee.\nA zero-fee hold (hold-XHH1) on unitA is active until 2027-08-25 17:00 Central time; no deposit and no signature were taken.\nThe exact lease packet (lease v1 with inspect-A, repair-A, dry-A and retest-A attached, packet-XHH1) was delivered to Jasmine Cooper's signing inbox.\nThe delivered lease preserves the landlord's repair obligations; nothing was waived.\nThe lease remains unsigned; signature and move-in stay pending Jasmine Cooper's personal review.\nMaple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nMaple Row unitA - two bedrooms, 2100 USD key details: {\"rent_usd\": 2100, \"bedrooms\": 2}\ninspect-A.pdf - written document receipt key details: {\"mold_reported\": true}\nMaple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nSigned inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.\nMaple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nSigned inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.\nListing and condition verificationWritten verification receipt key details: {\"rent_usd\": 2100, \"bedrooms\": 2, \"mold_reported\": true}\nSigned repair report repair-A, unitA, completed 2027-08-20 16:00 Central: professional remediation of the bedroom mold completed by the remediation firm. Structural drying follows before any retest.\nSigned repair report repair-A: professional remediation of unitA's bedroom completed August 20, 2027.\nSigned repair report repair-A key details: {\"repair_completed\": true}\nSigned drying report dry-A, unitA, verified 2027-08-22 09:00 Central: structural drying verified after the completed repair. The independent retest follows after drying.\nSigned drying report dry-A: structural drying of unitA verified August 22, 2027, after the completed repair.\nSigned drying report dry-A key details: {\"drying_verified\": true}\nSigned independent retest retest-A, unitA, 2027-08-23 14:00 Central, performed after drying by the independent inspector: PASS for unitA under the specified protocol. The signed same-unit chain is complete and in order (inspect-A, repair-A, dry-A, retest-A). This is not a universal health guarantee.\nSigned independent retest retest-A (August 23, 2027, after drying): pass for unitA under the specified protocol. This is not a universal health guarantee.\nSigned independent retest retest-A key details: {\"retest_passed\": true}\nHold confirmed: hold-XHH1 on Maple Row unitA, 2100 USD per month, move-in 2027-09-01, zero hold fee, active until 2027-08-25 17:00 Central time. No deposit and no signature were taken; the hold rests on the complete signed report chain (inspect-A, repair-A, dry-A, retest-A).\nA zero-fee hold (hold-XHH1) on unitA is active until 2027-08-25 17:00 Central time; no deposit and no signature were taken.\nunit_hold_desk confirmation receipt key details: {\"hold_active\": true, \"bedrooms\": 2, \"rent_usd\": 2100}\nPacket delivered: packet-XHH1, lease v1 for unitA at 2100 USD with exactly inspect-A, repair-A, dry-A and retest-A attached, repair duties preserved, delivered unsigned to Jasmine Cooper's signing inbox. Signature and move-in remain pending her personal review; no payment was taken.\nThe exact lease packet (lease v1 with inspect-A, repair-A, dry-A and retest-A attached, packet-XHH1) was delivered to Jasmine Cooper's signing inbox.\nThe delivered lease preserves the landlord's repair obligations; nothing was waived.\nThe lease remains unsigned; signature and move-in stay pending Jasmine Cooper's personal review.\nForm lease_packet_form completion receipt key details: {\"packet_delivered\": true, \"repair_duties_preserved\": true, \"lease_unsigned\": true, \"unit_id\": \"unitA\", \"lease_version\": \"1\", \"attachments\": \"inspect-A, repair-A, dry-A, retest-A\", \"user_approval\": \"approved\"}"
   },
   "result": {
     "task_id": "DSB-20",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Maple Row Property Group manager·Dana Reyes。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Maple Row Property Group manager·Dana Reyes. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -62,11 +62,11 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Maple Row Property Group manager·Dana Reyes。您咨询的事项已经核实，具体情况如下：Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.unitA has two bedrooms.Signed inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.unitA has two bedrooms.Signed inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Maple Row Property Group manager·Dana Reyes. Your inquiry has been verified. Details: Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.unitA has two bedrooms.Signed inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.unitA has two bedrooms.Signed inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0003); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0003",
-          "title": "Listing and condition verification书面核实回执",
+          "title": "Listing and condition verificationWritten verification receipt",
           "text": "Maple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nSigned inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.\nMaple Row unitA rents at 2100 USD per month - two bedrooms, within the 2200 USD budget, available from 2027-09-01.\nunitA has two bedrooms.\nSigned inspection inspect-A (August 17, 2027) found visible bedroom mold in unitA: professional remediation is required before any rental commitment.",
           "fields": {
             "rent_usd": 2100,
@@ -89,11 +89,22 @@
     },
     {
       "at": "2027-08-18T14:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "jasmine_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "at": "2027-08-18T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "jasmine_dialogue",
       "question": "What are the rental requirements, the condition constraints on unitA, the signing scope and the approval arrangements?",
       "matched": true,
-      "answer": "Find a two-bedroom rental under 2200 USD for September 1. I like unitA, but its bedroom has visible mold."
+      "answer": "Find a two-bedroom rental under 2200 USD for September 1. I like unitA, but its bedroom has visible mold.\nNo deposit, lease signature or reservation until professional remediation, drying and an independent passing retest for that exact unit are documented, in that order. Photos or an unsigned test are insufficient.\nThe landlord funds repairs. I will sign personally after reviewing a lease that attaches the complete report chain; photos or an unsigned test are insufficient.\nOnce verified, ask me to approve a no-deposit hold and the exact signing packet. Do not sign, pay or waive repair obligations for me."
     },
     {
       "at": "2027-08-18T14:00:00+00:00",
@@ -470,11 +481,22 @@
     },
     {
       "at": "2027-08-23T19:30:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "jasmine_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "at": "2027-08-23T19:30:00+00:00",
       "kind": "agent_dialogue",
       "tool": "jasmine_dialogue",
       "question": "The full signed chain for unitA is complete: inspection, repair, drying and an independent passing retest. Do you approve a no-deposit hold on unitA at 2100 USD and delivery of the exact signing packet with the four attached reports?",
       "matched": true,
-      "answer": "Find a two-bedroom rental under 2200 USD for September 1. I like unitA, but its bedroom has visible mold."
+      "answer": "Find a two-bedroom rental under 2200 USD for September 1. I like unitA, but its bedroom has visible mold.\nNo deposit, lease signature or reservation until professional remediation, drying and an independent passing retest for that exact unit are documented, in that order. Photos or an unsigned test are insufficient.\nThe landlord funds repairs. I will sign personally after reviewing a lease that attaches the complete report chain; photos or an unsigned test are insufficient.\nOnce verified, ask me to approve a no-deposit hold and the exact signing packet. Do not sign, pay or waive repair obligations for me."
     },
     {
       "at": "2027-08-23T19:30:00+00:00",

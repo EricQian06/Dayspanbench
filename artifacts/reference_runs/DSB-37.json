@@ -3,7 +3,7 @@
   "task_id": "DSB-37",
   "answer": {
     "conclusion": "recovery_confirmed",
-    "summary": "Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nOne replacement bundle (coach plus local transfer entitlement, accompanied folded bike accepted) has been confirmed; no payment was taken.\nThe reserved replacement (m02 coach) departs Mereoak 15:30 and arrives Bristol Temple Meads 19:00, inside the 19:30 deadline.\nThe complete replacement bundle costs 18 GBP extra: coach fare 14 + local transfer 4 + bicycle fee 0, at the maximum allowed outlay.\nThe local transfer departs Reading 15:10 and reaches Mereoak 15:20, giving a ten-minute boarding buffer before the 15:30 coach.\nThe original return leg of ticket T-MOB is preserved unchanged; no compensation claim was made and no payment was taken.\nBike acceptance bike-MOB1 (m02)关键要素：{\"bike_accompanied\": true}\nProvider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nProvider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nBike policy confirmation书面核实回执关键要素：{\"bike_accompanied\": true}\nReplacement confirmed: m02 coach plus local transfer as one bundle - transfer departs Reading 15:10, arrives Mereoak 15:20 (ten-minute boarding buffer), coach departs 15:30, arrives Bristol Temple Meads 19:00. Extra outlay 18 GBP (fare 14 + transfer 4 + bike fee 0); accompanied folded bike accepted on both legs (bike-MOB1). Original return leg preserved; no payment taken and no compensation claim made.\nOne replacement bundle (coach plus local transfer entitlement, accompanied folded bike accepted) has been confirmed; no payment was taken.\nThe reserved replacement (m02 coach) departs Mereoak 15:30 and arrives Bristol Temple Meads 19:00, inside the 19:30 deadline.\nThe complete replacement bundle costs 18 GBP extra: coach fare 14 + local transfer 4 + bicycle fee 0, at the maximum allowed outlay.\nThe local transfer departs Reading 15:10 and reaches Mereoak 15:20, giving a ten-minute boarding buffer before the 15:30 coach.\nThe original return leg of ticket T-MOB is preserved unchanged; no compensation claim was made and no payment was taken.\nreserve_replacement确认回执关键要素：{\"replacement_reserved\": true, \"arrival\": \"19:00\", \"extra_cost\": 18, \"transfer_depart\": \"15:10\", \"return_preserved\": true, \"seats\": 2}"
+    "summary": "Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nOne replacement bundle (coach plus local transfer entitlement, accompanied folded bike accepted) has been confirmed; no payment was taken.\nThe reserved replacement (m02 coach) departs Mereoak 15:30 and arrives Bristol Temple Meads 19:00, inside the 19:30 deadline.\nThe complete replacement bundle costs 18 GBP extra: coach fare 14 + local transfer 4 + bicycle fee 0, at the maximum allowed outlay.\nThe local transfer departs Reading 15:10 and reaches Mereoak 15:20, giving a ten-minute boarding buffer before the 15:30 coach.\nThe original return leg of ticket T-MOB is preserved unchanged; no compensation claim was made and no payment was taken.\nBike acceptance bike-MOB1 (m02) key details: {\"bike_accompanied\": true}\nProvider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nProvider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nBike policy confirmationWritten verification receipt key details: {\"bike_accompanied\": true}\nReplacement confirmed: m02 coach plus local transfer as one bundle - transfer departs Reading 15:10, arrives Mereoak 15:20 (ten-minute boarding buffer), coach departs 15:30, arrives Bristol Temple Meads 19:00. Extra outlay 18 GBP (fare 14 + transfer 4 + bike fee 0); accompanied folded bike accepted on both legs (bike-MOB1). Original return leg preserved; no payment taken and no compensation claim made.\nOne replacement bundle (coach plus local transfer entitlement, accompanied folded bike accepted) has been confirmed; no payment was taken.\nThe reserved replacement (m02 coach) departs Mereoak 15:30 and arrives Bristol Temple Meads 19:00, inside the 19:30 deadline.\nThe complete replacement bundle costs 18 GBP extra: coach fare 14 + local transfer 4 + bicycle fee 0, at the maximum allowed outlay.\nThe local transfer departs Reading 15:10 and reaches Mereoak 15:20, giving a ten-minute boarding buffer before the 15:30 coach.\nThe original return leg of ticket T-MOB is preserved unchanged; no compensation claim was made and no payment was taken.\nreserve_replacement confirmation receipt key details: {\"replacement_reserved\": true, \"arrival\": \"19:00\", \"extra_cost\": 18, \"transfer_depart\": \"15:10\", \"return_preserved\": true, \"seats\": 2}"
   },
   "result": {
     "task_id": "DSB-37",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Rail recovery desk·Tom Ashby。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Rail recovery desk·Tom Ashby. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -62,11 +62,11 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Rail recovery desk·Tom Ashby。您咨询的事项已经核实，具体情况如下：Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Rail recovery desk·Tom Ashby. Your inquiry has been verified. Details: Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0002); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0002",
-          "title": "Bike policy confirmation书面核实回执",
+          "title": "Bike policy confirmationWritten verification receipt",
           "text": "Provider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.\nProvider evidence bike-MOB1 confirms both the local transfer and the coach accept the folded Brompton kept with the passenger, with no unattended storage and no extra bike fee.",
           "fields": {
             "bike_accompanied": true
@@ -87,11 +87,21 @@
     },
     {
       "at": "2027-10-07T13:30:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "traveler_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2"
+      ]
+    },
+    {
+      "at": "2027-10-07T13:30:00+00:00",
       "kind": "agent_dialogue",
       "tool": "traveler_dialogue",
       "question": "What are the bicycle, ticket and budget constraints, and what approval do you require?",
       "matched": true,
-      "answer": "The folded Brompton stays with me throughout; no unattended storage. The old bike reservation BR441 belonged only to the cancelled 1C27 and is invalid now."
+      "answer": "The folded Brompton stays with me throughout; no unattended storage. The old bike reservation BR441 belonged only to the cancelled 1C27 and is invalid now.\nOriginal ticket T-MOB is valid for this recovery. Extra outlay at most 18 GBP including station transfer and bicycle fees. No payment by you and no compensation claim.\nShow me the live journey, transfer buffer, folded-bike acceptance and total before reserving; I approve the exact current plan only. No payment and no cancellation of my original return leg."
     },
     {
       "at": "2027-10-07T13:30:00+00:00",
@@ -340,11 +350,20 @@
     },
     {
       "at": "2027-10-07T16:24:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "traveler_dialogue",
+      "selected": [
+        "0",
+        "2"
+      ]
+    },
+    {
+      "at": "2027-10-07T16:24:00+00:00",
       "kind": "agent_dialogue",
       "tool": "traveler_dialogue",
       "question": "Do you approve the exact plan: 15:10 transfer, 15:30 m02 coach, bike with you, 18 GBP extra?",
       "matched": true,
-      "answer": "The folded Brompton stays with me throughout; no unattended storage. The old bike reservation BR441 belonged only to the cancelled 1C27 and is invalid now."
+      "answer": "The folded Brompton stays with me throughout; no unattended storage. The old bike reservation BR441 belonged only to the cancelled 1C27 and is invalid now.\nShow me the live journey, transfer buffer, folded-bike acceptance and total before reserving; I approve the exact current plan only. No payment and no cancellation of my original return leg."
     },
     {
       "at": "2027-10-07T16:24:00+00:00",

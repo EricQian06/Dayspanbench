@@ -3,7 +3,7 @@
   "task_id": "DSB-06",
   "answer": {
     "conclusion": "covered_pending_booking",
-    "summary": "设备SN-A731仍在本次合成保修条款覆盖范围内。\n工程师诊断需要更换G-42密封圈。\n本次更换配件费用为0元。\n核实返厂补货批次后，最早可上门时段为11月18日10点，尚未预约。\n设备SN-A731仍在本次合成保修条款覆盖范围内。\n工程师诊断需要更换G-42密封圈。\n本次更换配件费用为0元。\n保修及维修时间咨询书面核实回执关键要素：{\"covered\": true, \"part\": \"G-42密封圈\", \"cost\": 0}\n上门时段预核登记已办结：核实返厂补货批次后，最早可上门时段为11月18日10点，尚未预约；办理进度可经霁光上门进度查询（jiguang_visit_status）复核。\n核实返厂补货批次后，最早可上门时段为11月18日10点，尚未预约。\n表单visit_form办结回执关键要素：{\"visit\": \"2026-11-18T10:00:00+08:00\", \"serial\": \"SN-A731\"}"
+    "summary": "Device SN-A731 remains covered by the synthetic warranty terms in this scenario.\nThe engineer's diagnosis requires replacement of the G-42 sealing ring.\nThe replacement part costs CNY 0 in this case.\nAfter verifying the factory replenishment batch, the earliest home visit slot is November 18 at 10:00; it has not been booked.\nDevice SN-A731 remains covered by the synthetic warranty terms in this scenario.\nThe engineer's diagnosis requires replacement of the G-42 sealing ring.\nThe replacement part costs CNY 0 in this case.\nWarranty and repair timing inquiryWritten verification receipt key details: {\"covered\": true, \"part\": \"G-42 sealing ring\", \"cost\": 0}\nHome visit slot precheck complete: after verifying the factory replenishment batch, the earliest home visit slot is November 18 at 10:00 and remains unbooked. Verify progress through jiguang_visit_status.\nAfter verifying the factory replenishment batch, the earliest home visit slot is November 18 at 10:00; it has not been booked.\nForm visit_form completion receipt key details: {\"visit\": \"2026-11-18T10:00:00+08:00\", \"serial\": \"SN-A731\"}"
   },
   "result": {
     "task_id": "DSB-06",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是霁光电器客服·孟竹。您提交的材料已核验齐全，本事项已受理并按流程转办。预计最早将于2026-11-16 10:50（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Jiguang Appliances customer service - Meng Zhu. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. The earliest expected completion is 2026-11-16 10:50 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "根据您的描述，机身接缝漏水常见原因是密封件老化，也可能是水路主板渗漏，具体原因要等工程师诊断才能确认；这类密封圈配件我记得好像要自费260元，不过我也就随口一说，供您参考，费用以核实结论为准。上门时段的书面结论走哪个渠道我也记不准，可能要问工程师，也可能零件库那边留了登记渠道。我先把设备情况转给工程师。",
+      "text": "Based on your description, leakage at the housing seam often comes from an aging seal, but it could also be leakage at the water circuit board; an engineer must diagnose it. I seem to remember that this sealing ring costs CNY 260 out of pocket, but that is only a casual recollection for reference; use the verified fee determination. I also cannot recall the channel for a written home visit slot determination. The engineer may know, or the parts store may have the registration channel. I will forward the device details to the engineer.",
       "receipts": []
     },
     {
@@ -72,7 +72,7 @@
       "case_id": "CASE-0002",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是霁光工程师·韩则。配件补货批次要到零件库核实，我先去问一下库存和费用，稍后回复您。预计最早将于2026-11-16 09:20（当地时间）办结并书面回复您；该事项办理周期较长，可待回复送达后再联系，处理顺序不因催办提前。",
+      "text": "Hello, I am Jiguang engineer - Han Ze. The parts store must verify the replenishment batch. I will ask about stock and fees and reply later.The earliest expected completion is 2026-11-16 09:20 local time, followed by a written reply. This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.",
       "receipts": []
     },
     {
@@ -82,15 +82,15 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是霁光电器客服·孟竹。您咨询的事项已经核实，具体情况如下：设备SN-A731仍在本次合成保修条款覆盖范围内。工程师诊断需要更换G-42密封圈。本次更换配件费用为0元。以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Jiguang Appliances customer service - Meng Zhu. Your inquiry has been verified. Details: Device SN-A731 remains covered by the synthetic warranty terms in this scenario.The engineer's diagnosis requires replacement of the G-42 sealing ring.The replacement part costs CNY 0 in this case.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "保修及维修时间咨询书面核实回执",
-          "text": "设备SN-A731仍在本次合成保修条款覆盖范围内。\n工程师诊断需要更换G-42密封圈。\n本次更换配件费用为0元。",
+          "title": "Warranty and repair timing inquiryWritten verification receipt",
+          "text": "Device SN-A731 remains covered by the synthetic warranty terms in this scenario.\nThe engineer's diagnosis requires replacement of the G-42 sealing ring.\nThe replacement part costs CNY 0 in this case.",
           "fields": {
             "covered": true,
-            "part": "G-42密封圈",
+            "part": "G-42 sealing ring",
             "cost": 0
           },
           "issuer": "support",
@@ -104,10 +104,10 @@
       "at": "2026-11-04T08:00:00+00:00",
       "kind": "agent_send",
       "recipient": "mengzhu@bench.example",
-      "text": "请核实保修和维修安排",
+      "text": "Please verify warranty coverage and repair arrangements",
       "fields": {
         "serial": "SN-A731",
-        "symptom": "机身接缝漏水"
+        "symptom": "Leakage at the housing seam"
       },
       "channel": "email"
     },
@@ -123,11 +123,11 @@
       "at": "2026-11-04T08:00:00+00:00",
       "kind": "agent_send",
       "recipient": "mengzhu@bench.example",
-      "text": "补充凭证后继续保修咨询",
+      "text": "Continue the warranty inquiry after providing the receipt",
       "fields": {
         "serial": "SN-A731",
         "receipt": "R-731",
-        "symptom": "机身接缝漏水"
+        "symptom": "Leakage at the housing seam"
       },
       "channel": "email"
     },
@@ -623,7 +623,7 @@
       "kind": "form_processed",
       "form": "visit_form",
       "accepted": true,
-      "result": "上门时段预核登记已办结：核实返厂补货批次后，最早可上门时段为11月18日10点，尚未预约；办理进度可经霁光上门进度查询（jiguang_visit_status）复核。"
+      "result": "Home visit slot precheck complete: after verifying the factory replenishment batch, the earliest home visit slot is November 18 at 10:00 and remains unbooked. Verify progress through jiguang_visit_status."
     },
     {
       "at": "2026-11-18T00:30:00+00:00",
@@ -636,7 +636,7 @@
       "at": "2026-11-18T00:30:00+00:00",
       "kind": "agent_hidden_status",
       "tool": "jiguang_visit_status",
-      "query": "上门",
+      "query": "home visit",
       "keys": [
         "visit"
       ]

@@ -3,7 +3,7 @@
   "task_id": "DSB-28",
   "answer": {
     "conclusion": "first_stage_reserved",
-    "summary": "Adviser reply-E1 verified the analytics certificate path c02 (Python Foundation) -> c03 (Applied Analytics) -> c04 (Certificate Capstone): sixteen weeks, six study hours weekly, 1900 USD total including the 100 USD assessment fee. Sequential completion is required with no exemption for spreadsheet skills, and later-stage seats are conditional, not guaranteed.\nOne first-stage c02 (Python Foundation) seat was reserved after the learner approved the exact whole-path plan; no payment was taken, the later stages remain unreserved and conditional, and no certificate has been awarded.\nAdviser pathway verification - cert-E (written)关键要素：{\"pathway_verified\": true}\nReservation confirmed: one c02 Python Foundation seat (four weeks, six hours weekly, 400 USD, asynchronous) is reserved for the learner. No payment was taken; c03 and c04 remain conditional future stages with no guaranteed seats, and no certificate has been awarded.\nOne first-stage c02 (Python Foundation) seat was reserved after the learner approved the exact whole-path plan; no payment was taken, the later stages remain unreserved and conditional, and no certificate has been awarded.\nreserve_first_stage确认回执关键要素：{\"first_stage_reserved\": true, \"price_usd\": 400}"
+    "summary": "Adviser reply-E1 verified the analytics certificate path c02 (Python Foundation) -> c03 (Applied Analytics) -> c04 (Certificate Capstone): sixteen weeks, six study hours weekly, 1900 USD total including the 100 USD assessment fee. Sequential completion is required with no exemption for spreadsheet skills, and later-stage seats are conditional, not guaranteed.\nOne first-stage c02 (Python Foundation) seat was reserved after the learner approved the exact whole-path plan; no payment was taken, the later stages remain unreserved and conditional, and no certificate has been awarded.\nAdviser pathway verification - cert-E (written) key details: {\"pathway_verified\": true}\nReservation confirmed: one c02 Python Foundation seat (four weeks, six hours weekly, 400 USD, asynchronous) is reserved for the learner. No payment was taken; c03 and c04 remain conditional future stages with no guaranteed seats, and no certificate has been awarded.\nOne first-stage c02 (Python Foundation) seat was reserved after the learner approved the exact whole-path plan; no payment was taken, the later stages remain unreserved and conditional, and no certificate has been awarded.\nreserve_first_stage confirmation receipt key details: {\"first_stage_reserved\": true, \"price_usd\": 400}"
   },
   "result": {
     "task_id": "DSB-28",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Certificate program adviser·Rosa Kim。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Certificate program adviser·Rosa Kim. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -62,7 +62,7 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Certificate program adviser·Rosa Kim。您咨询的事项已经按流程处理完毕。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Certificate program adviser·Rosa Kim. Your matter has been completed under the process. Please write again if you have other questions.",
       "receipts": []
     }
   ],
@@ -76,11 +76,22 @@
     },
     {
       "at": "2027-08-23T14:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "learner_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "at": "2027-08-23T14:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "learner_dialogue",
       "question": "What is your study availability, background and approval requirement for the analytics certificate?",
       "matched": true,
-      "answer": "I can study only Monday-Friday after 20:00 and Sunday 09:00-12:00 Chicago time, never Saturdays. Reserve Monday/Wednesday 20:00-22:00 and Sunday 09:00-11:00 if feasible."
+      "answer": "I can study only Monday-Friday after 20:00 and Sunday 09:00-12:00 Chicago time, never Saturdays. Reserve Monday/Wednesday 20:00-22:00 and Sunday 09:00-11:00 if feasible.\nI am a confident spreadsheet user with no Python credential. Do not claim a prerequisite is already completed.\nShow me the whole-path cost and sequencing, then ask before reserving the first stage only. No payment, subscription or enrollment into later stages with unmet prerequisites.\nPlan an analytics certificate within six months from September 6, 2027; maximum eight study hours weekly and 2500 USD all-in."
     },
     {
       "at": "2027-08-23T14:00:00+00:00",
@@ -258,11 +269,20 @@
     },
     {
       "at": "2027-08-25T14:30:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "learner_dialogue",
+      "selected": [
+        "0",
+        "2"
+      ]
+    },
+    {
+      "at": "2027-08-25T14:30:00+00:00",
       "kind": "agent_dialogue",
       "tool": "learner_dialogue",
       "question": "The verified path is c02 then c03 then c04, sixteen weeks at six hours weekly, 1900 USD including the assessment fee. Do you approve reserving only the first stage c02 now?",
       "matched": true,
-      "answer": "I can study only Monday-Friday after 20:00 and Sunday 09:00-12:00 Chicago time, never Saturdays. Reserve Monday/Wednesday 20:00-22:00 and Sunday 09:00-11:00 if feasible."
+      "answer": "I can study only Monday-Friday after 20:00 and Sunday 09:00-12:00 Chicago time, never Saturdays. Reserve Monday/Wednesday 20:00-22:00 and Sunday 09:00-11:00 if feasible.\nShow me the whole-path cost and sequencing, then ask before reserving the first stage only. No payment, subscription or enrollment into later stages with unmet prerequisites."
     },
     {
       "at": "2027-08-25T14:30:00+00:00",

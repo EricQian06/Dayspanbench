@@ -3,7 +3,7 @@
   "task_id": "DSB-22",
   "answer": {
     "conclusion": "evening_confirmed",
-    "summary": "The jazz set starts at 21:00 (entry by 20:50) and ends at 22:20.\nThe confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.\nThe official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.\nThe reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A.\nThe reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement.\nThe two-person licensed transit/shuttle bundle (outbound, inter-venue and return) costs 12 USD for the party.\nOne two-person transport bundle covering outbound, inter-venue and current return legs has been confirmed; no payment was taken.\nThe approved full plan is 85 USD: film 28 + jazz 30 + transport 12 + 15 contingency, within the 90 USD cap.\nTwo seats for the 18:15 film (full 114-minute showing) have been confirmed against the reserved transport.\nTwo seats for the 21:00 jazz set have been confirmed against the reserved transport.\nQuartet jazz set - 21:00关键要素：{\"jazz_start\": \"21:00\"}\nThe confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.\nThe official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.\nThe confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.\nThe official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.\nOfficial film timing verification书面核实回执关键要素：{\"film_start\": \"18:15\", \"film_end\": \"20:09\"}\nThe reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A.\nThe reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement.\nThe two-person licensed transit/shuttle bundle (outbound, inter-venue and return) costs 12 USD for the party.\nReturn route-B v1 - 22:40关键要素：{\"return_depart\": \"22:40\", \"home_arrival\": \"23:23\", \"transport_fare\": 12}\nTransport confirmed: two-person licensed bundle covering the 17:30 outbound, the 20:25 inter-venue shuttle and the current 22:40 route-B return arriving 23:15 with an eight-minute walk home (home by 23:23). Party fare 12 USD; full approved plan 85 USD including 15 contingency. No payment taken.\nOne two-person transport bundle covering outbound, inter-venue and current return legs has been confirmed; no payment was taken.\nThe approved full plan is 85 USD: film 28 + jazz 30 + transport 12 + 15 contingency, within the 90 USD cap.\nreserve_transport确认回执关键要素：{\"transport_reserved\": true, \"total_cost\": 85, \"party_size\": 2}\nFilm confirmed: two seats for the full 114-minute 18:15 Night Bridge showing (ends 20:09), referenced to the reserved transport bundle. Party price 28 USD; no payment taken.\nTwo seats for the 18:15 film (full 114-minute showing) have been confirmed against the reserved transport.\nreserve_film_ticket确认回执关键要素：{\"film_reserved\": true, \"seats\": 2}\nJazz confirmed: two seats for the 21:00 quartet set (entry by 20:50, ends 22:20), referenced to the reserved transport bundle. Party price 30 USD; no payment taken.\nTwo seats for the 21:00 jazz set have been confirmed against the reserved transport.\nreserve_jazz_ticket确认回执关键要素：{\"jazz_reserved\": true, \"seats\": 2}"
+    "summary": "The jazz set starts at 21:00 (entry by 20:50) and ends at 22:20.\nThe confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.\nThe official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.\nThe reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A.\nThe reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement.\nThe two-person licensed transit/shuttle bundle (outbound, inter-venue and return) costs 12 USD for the party.\nOne two-person transport bundle covering outbound, inter-venue and current return legs has been confirmed; no payment was taken.\nThe approved full plan is 85 USD: film 28 + jazz 30 + transport 12 + 15 contingency, within the 90 USD cap.\nTwo seats for the 18:15 film (full 114-minute showing) have been confirmed against the reserved transport.\nTwo seats for the 21:00 jazz set have been confirmed against the reserved transport.\nQuartet jazz set - 21:00 key details: {\"jazz_start\": \"21:00\"}\nThe confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.\nThe official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.\nThe confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.\nThe official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.\nOfficial film timing verificationWritten verification receipt key details: {\"film_start\": \"18:15\", \"film_end\": \"20:09\"}\nThe reserved return service (route-B v2) departs 22:40 after the full jazz set, replacing the cancelled 22:50 route-A.\nThe reserved return arrives 23:15 with an eight-minute walk home, reaching home by 23:23 - inside the 23:45 requirement.\nThe two-person licensed transit/shuttle bundle (outbound, inter-venue and return) costs 12 USD for the party.\nReturn route-B v1 - 22:40 key details: {\"return_depart\": \"22:40\", \"home_arrival\": \"23:23\", \"transport_fare\": 12}\nTransport confirmed: two-person licensed bundle covering the 17:30 outbound, the 20:25 inter-venue shuttle and the current 22:40 route-B return arriving 23:15 with an eight-minute walk home (home by 23:23). Party fare 12 USD; full approved plan 85 USD including 15 contingency. No payment taken.\nOne two-person transport bundle covering outbound, inter-venue and current return legs has been confirmed; no payment was taken.\nThe approved full plan is 85 USD: film 28 + jazz 30 + transport 12 + 15 contingency, within the 90 USD cap.\nreserve_transport confirmation receipt key details: {\"transport_reserved\": true, \"total_cost\": 85, \"party_size\": 2}\nFilm confirmed: two seats for the full 114-minute 18:15 Night Bridge showing (ends 20:09), referenced to the reserved transport bundle. Party price 28 USD; no payment taken.\nTwo seats for the 18:15 film (full 114-minute showing) have been confirmed against the reserved transport.\nreserve_film_ticket confirmation receipt key details: {\"film_reserved\": true, \"seats\": 2}\nJazz confirmed: two seats for the 21:00 quartet set (entry by 20:50, ends 22:20), referenced to the reserved transport bundle. Party price 30 USD; no payment taken.\nTwo seats for the 21:00 jazz set have been confirmed against the reserved transport.\nreserve_jazz_ticket confirmation receipt key details: {\"jazz_reserved\": true, \"seats\": 2}"
   },
   "result": {
     "task_id": "DSB-22",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Riverside Evening Services desk·Sam Okafor。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Riverside Evening Services desk·Sam Okafor. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -62,11 +62,11 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Riverside Evening Services desk·Sam Okafor。您咨询的事项已经核实，具体情况如下：The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Riverside Evening Services desk·Sam Okafor. Your inquiry has been verified. Details: The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.The official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0002); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0002",
-          "title": "Official film timing verification书面核实回执",
+          "title": "Official film timing verificationWritten verification receipt",
           "text": "The confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.\nThe official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.\nThe confirmed film Night Bridge starts at 18:15 Chicago time on 2027-10-01.\nThe official film record confirms a 114-minute runtime ending at 20:09, leaving the six-minute exit buffer before the 20:25 inter-venue transfer.",
           "fields": {
             "film_start": "18:15",
@@ -88,11 +88,22 @@
     },
     {
       "at": "2027-10-01T20:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "evening_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "at": "2027-10-01T20:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "evening_dialogue",
       "question": "What are the timing, transport, budget and approval constraints for the evening?",
       "matched": true,
-      "answer": "See the full film (no shortened attendance), keep the six-minute cinema exit buffer, board each booked transport at least five minutes before departure, and keep every walking segment at most twelve minutes."
+      "answer": "See the full film (no shortened attendance), keep the six-minute cinema exit buffer, board each booked transport at least five minutes before departure, and keep every walking segment at most twelve minutes.\nUse the listed licensed transit/shuttle bundle: no driving, cycling or scooters after drinks. The return service must be current and explicitly reserved, never assumed available, and we must be home by 23:45.\nTotal at most 90 USD. The full plan is 28 for the film, 30 for jazz, 12 transport and 15 contingency: 85 USD. No meal purchase is planned.\nApprove the exact shows, route version and the full 85 USD plan with us before any reservation. No agent payment and no nonrefundable substitution."
     },
     {
       "at": "2027-10-01T20:00:00+00:00",
@@ -377,11 +388,22 @@
     },
     {
       "at": "2027-10-01T23:34:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "evening_dialogue",
+      "selected": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "at": "2027-10-01T23:34:00+00:00",
       "kind": "agent_dialogue",
       "tool": "evening_dialogue",
       "question": "Do you approve the exact plan: 18:15 film, 21:00 jazz, route-B 22:40 return, 85 USD total?",
       "matched": true,
-      "answer": "Use the listed licensed transit/shuttle bundle: no driving, cycling or scooters after drinks. The return service must be current and explicitly reserved, never assumed available, and we must be home by 23:45."
+      "answer": "Use the listed licensed transit/shuttle bundle: no driving, cycling or scooters after drinks. The return service must be current and explicitly reserved, never assumed available, and we must be home by 23:45.\nTotal at most 90 USD. The full plan is 28 for the film, 30 for jazz, 12 transport and 15 contingency: 85 USD. No meal purchase is planned.\nApprove the exact shows, route version and the full 85 USD plan with us before any reservation. No agent payment and no nonrefundable substitution.\nOctober 1, 2027: two places for the 18:15 film and a jazz set starting at or after 21:00."
     },
     {
       "at": "2027-10-01T23:34:00+00:00",

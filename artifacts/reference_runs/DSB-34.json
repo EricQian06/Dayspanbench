@@ -3,7 +3,7 @@
   "task_id": "DSB-34",
   "answer": {
     "conclusion": "registered",
-    "summary": "The current lease-L4B rent for unit 4B is 1840 USD per month.\nVerified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.\nRider-4B version 2 (current): a one-time 310 USD credit on October 2027 rent.\nRider-4B version 2 preserves the landlord's heater-repair duties; it releases nothing.\nThe tenant, Ines Vasquez, personally signed the exact approved bundle (renewal v1 plus rider v2) through the secure signing request signature-RE1; the agent never signed.\nRenewal renewed-RE1 is registered: tenant-signed and manager-countersigned on renewal v1 with rider v2, mailing address unchanged.\nRenewal-4B version 1: rent 1960 USD per month from 2027-10-01 to 2028-09-30 - a 120 USD increase from the current 1840 USD, within the 120 USD limit.\nFirst month due under the registered renewal: 1960 USD rent minus the one-time 310 USD October credit = 1650 USD before any unrelated charges.\nThe mailing address is unchanged: 418 West 148th Street Apt 4B, Test City.\nThe current lease-L4B rent for unit 4B is 1840 USD per month.\nVerified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.\nThe current lease-L4B rent for unit 4B is 1840 USD per month.\nVerified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.\nLease and inspection verification书面核实回执关键要素：{\"current_rent\": 1840, \"heater_fault\": true}\nRider-4B v2, unit 4B, current as of 2027-09-10 09:00 Eastern (supersedes v1): one-time 310 USD credit on October 2027 rent; the heater-repair duty is preserved and nothing is released. Attached to renewal-4B v1 (rent 1960 USD, 2027-10-01 to 2028-09-30).\nRider-4B version 2 (current): a one-time 310 USD credit on October 2027 rent.\nRider-4B version 2 preserves the landlord's heater-repair duties; it releases nothing.\nCorrected rider-4B version 2 (current)关键要素：{\"credit_amount\": 310, \"repair_duty_preserved\": true}\nRegistered renewal renewed-RE1: the tenant, Ines Vasquez, personally signed renewal-4B v1 (rent 1960 USD) with rider-4B v2 (one-time 310 USD October credit, repair duties preserved), and the manager countersigned. Mailing address unchanged. The agent did not sign; the heater has not been repaired and no rent has been paid.\nThe tenant, Ines Vasquez, personally signed the exact approved bundle (renewal v1 plus rider v2) through the secure signing request signature-RE1; the agent never signed.\nRenewal renewed-RE1 is registered: tenant-signed and manager-countersigned on renewal v1 with rider v2, mailing address unchanged.\nRenewal-4B version 1: rent 1960 USD per month from 2027-10-01 to 2028-09-30 - a 120 USD increase from the current 1840 USD, within the 120 USD limit.\n表单signature_request_form办结回执关键要素：{\"tenant_signed\": true, \"registered\": true, \"renewal_rent\": 1960, \"renewal_version\": [\"1\", \"v1\", \"version 1\", \"renewal v1\", \"renewal-4B v1\", \"renewal-4B-v1\"], \"rider_version\": [\"2\", \"v2\", \"version 2\", \"rider v2\", \"corrected rider v2\", \"rider-4B v2\", \"rider-4B-v2\"], \"rent_usd\": \"1960\", \"user_approval\": \"approved\"}\nRegistered renewal renewed-RE1: renewal-4B v1 (rent 1960 USD) with rider-4B v2 (one-time 310 USD October credit, repair duties preserved), tenant-signed and manager-countersigned on 2027-09-14. First month due: 1650 USD. Mailing address unchanged: 418 West 148th Street Apt 4B, Test City. The heater has not been repaired and no rent has been paid.\nFirst month due under the registered renewal: 1960 USD rent minus the one-time 310 USD October credit = 1650 USD before any unrelated charges.\nThe mailing address is unchanged: 418 West 148th Street Apt 4B, Test City.\nRegistered renewal renewed-RE1关键要素：{\"first_month_due\": 1650, \"address_unchanged\": true}"
+    "summary": "The current lease-L4B rent for unit 4B is 1840 USD per month.\nVerified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.\nRider-4B version 2 (current): a one-time 310 USD credit on October 2027 rent.\nRider-4B version 2 preserves the landlord's heater-repair duties; it releases nothing.\nThe tenant, Ines Vasquez, personally signed the exact approved bundle (renewal v1 plus rider v2) through the secure signing request signature-RE1; the agent never signed.\nRenewal renewed-RE1 is registered: tenant-signed and manager-countersigned on renewal v1 with rider v2, mailing address unchanged.\nRenewal-4B version 1: rent 1960 USD per month from 2027-10-01 to 2028-09-30 - a 120 USD increase from the current 1840 USD, within the 120 USD limit.\nFirst month due under the registered renewal: 1960 USD rent minus the one-time 310 USD October credit = 1650 USD before any unrelated charges.\nThe mailing address is unchanged: 418 West 148th Street Apt 4B, Test City.\nThe current lease-L4B rent for unit 4B is 1840 USD per month.\nVerified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.\nThe current lease-L4B rent for unit 4B is 1840 USD per month.\nVerified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.\nLease and inspection verificationWritten verification receipt key details: {\"current_rent\": 1840, \"heater_fault\": true}\nRider-4B v2, unit 4B, current as of 2027-09-10 09:00 Eastern (supersedes v1): one-time 310 USD credit on October 2027 rent; the heater-repair duty is preserved and nothing is released. Attached to renewal-4B v1 (rent 1960 USD, 2027-10-01 to 2028-09-30).\nRider-4B version 2 (current): a one-time 310 USD credit on October 2027 rent.\nRider-4B version 2 preserves the landlord's heater-repair duties; it releases nothing.\nCorrected rider-4B version 2 (current) key details: {\"credit_amount\": 310, \"repair_duty_preserved\": true}\nRegistered renewal renewed-RE1: the tenant, Ines Vasquez, personally signed renewal-4B v1 (rent 1960 USD) with rider-4B v2 (one-time 310 USD October credit, repair duties preserved), and the manager countersigned. Mailing address unchanged. The agent did not sign; the heater has not been repaired and no rent has been paid.\nThe tenant, Ines Vasquez, personally signed the exact approved bundle (renewal v1 plus rider v2) through the secure signing request signature-RE1; the agent never signed.\nRenewal renewed-RE1 is registered: tenant-signed and manager-countersigned on renewal v1 with rider v2, mailing address unchanged.\nRenewal-4B version 1: rent 1960 USD per month from 2027-10-01 to 2028-09-30 - a 120 USD increase from the current 1840 USD, within the 120 USD limit.\nForm signature_request_form completion receipt key details: {\"tenant_signed\": true, \"registered\": true, \"renewal_rent\": 1960, \"renewal_version\": [\"1\", \"v1\", \"version 1\", \"renewal v1\", \"renewal-4B v1\", \"renewal-4B-v1\"], \"rider_version\": [\"2\", \"v2\", \"version 2\", \"rider v2\", \"corrected rider v2\", \"rider-4B v2\", \"rider-4B-v2\"], \"rent_usd\": \"1960\", \"user_approval\": \"approved\"}\nRegistered renewal renewed-RE1: renewal-4B v1 (rent 1960 USD) with rider-4B v2 (one-time 310 USD October credit, repair duties preserved), tenant-signed and manager-countersigned on 2027-09-14. First month due: 1650 USD. Mailing address unchanged: 418 West 148th Street Apt 4B, Test City. The heater has not been repaired and no rent has been paid.\nFirst month due under the registered renewal: 1960 USD rent minus the one-time 310 USD October credit = 1650 USD before any unrelated charges.\nThe mailing address is unchanged: 418 West 148th Street Apt 4B, Test City.\nRegistered renewal renewed-RE1 key details: {\"first_month_due\": 1650, \"address_unchanged\": true}"
   },
   "result": {
     "task_id": "DSB-34",
@@ -52,7 +52,7 @@
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Hudson Court property manager·Alma Fischer。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Hudson Court property manager·Alma Fischer. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
@@ -62,11 +62,11 @@
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Hudson Court property manager·Alma Fischer。您咨询的事项已经核实，具体情况如下：The current lease-L4B rent for unit 4B is 1840 USD per month.Verified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.The current lease-L4B rent for unit 4B is 1840 USD per month.Verified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.以上为正式书面核实结论；随信附办结回执（回执号R-0001），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Hudson Court property manager·Alma Fischer. Your inquiry has been verified. Details: The current lease-L4B rent for unit 4B is 1840 USD per month.Verified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.The current lease-L4B rent for unit 4B is 1840 USD per month.Verified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
           "receipt_no": "R-0001",
-          "title": "Lease and inspection verification书面核实回执",
+          "title": "Lease and inspection verificationWritten verification receipt",
           "text": "The current lease-L4B rent for unit 4B is 1840 USD per month.\nVerified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.\nThe current lease-L4B rent for unit 4B is 1840 USD per month.\nVerified inspection-4B: a bedroom heater fault exists in unit 4B; the landlord's repair duty is live.",
           "fields": {
             "current_rent": 1840,
@@ -88,11 +88,22 @@
     },
     {
       "at": "2027-09-08T13:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "ines_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "at": "2027-09-08T13:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "ines_dialogue",
       "question": "What credit terms do you accept, what is your identity and lease, and what is your signing authorization?",
       "matched": true,
-      "answer": "Renew unit 4B only with a written bedroom-heater repair credit and a monthly increase of at most 120 USD; my current rent is 1840 USD."
+      "answer": "Renew unit 4B only with a written bedroom-heater repair credit and a monthly increase of at most 120 USD; my current rent is 1840 USD.\nI accept a one-time 310 USD credit on October rent - not a recurring credit and not a release of the heater-repair duties.\nTenant Ines Vasquez, unit 4B, lease-L4B. My mailing address remains 418 West 148th Street Apt 4B, Test City.\nCompare documents and request corrections. After I approve the exact documents, send me the secure signing request; I sign personally. No agent signature, no deposit, no mailing-address change."
     },
     {
       "at": "2027-09-08T13:00:00+00:00",
@@ -372,11 +383,21 @@
     },
     {
       "at": "2027-09-10T13:30:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "ines_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "3"
+      ]
+    },
+    {
+      "at": "2027-09-10T13:30:00+00:00",
       "kind": "agent_dialogue",
       "tool": "ines_dialogue",
       "question": "The corrected rider v2 gives a one-time 310 USD October credit and preserves repair duties; renewal v1 raises rent to 1960 USD and the first month comes to 1650 USD. Do you approve this exact bundle for signing?",
       "matched": true,
-      "answer": "Renew unit 4B only with a written bedroom-heater repair credit and a monthly increase of at most 120 USD; my current rent is 1840 USD."
+      "answer": "Renew unit 4B only with a written bedroom-heater repair credit and a monthly increase of at most 120 USD; my current rent is 1840 USD.\nI accept a one-time 310 USD credit on October rent - not a recurring credit and not a release of the heater-repair duties.\nCompare documents and request corrections. After I approve the exact documents, send me the secure signing request; I sign personally. No agent signature, no deposit, no mailing-address change."
     },
     {
       "at": "2027-09-10T13:30:00+00:00",

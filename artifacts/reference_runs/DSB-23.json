@@ -3,7 +3,7 @@
   "task_id": "DSB-23",
   "answer": {
     "conclusion": "stay_booked",
-    "summary": "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nTrain train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nReservation stay-XPT1 confirms two nights at the Villa des Roses, 2027-04-16 to 2027-04-18, for Camille Moreau and Nino: written 28 kg pet acceptance, the extended 00:30 late check-in, open-air parking for the 2.05 m car and Lea's supervision linked; total 378 EUR; no payment taken.\nThe stay total is 378 EUR - 310 EUR room for two nights, 20 EUR pet fee and 48 EUR open-air parking for two nights - within the 420 EUR budget.\ntrain-XPT - DELAYED, arrival 23:40 (version 2)关键要素：{\"train_arrival\": \"23:40\"}\nWritten hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nWritten hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nPet and parking verification书面核实回执关键要素：{\"pet_accepted\": true}\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nSupervision acknowledgement书面核实回执关键要素：{\"companion_ack\": true}\nVilla des Roses - written extension, late check-in until 00:30关键要素：{\"late_extension\": \"00:30\"}\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nLate check-in extension书面核实回执关键要素：{\"late_extension\": \"00:30\"}\nStay confirmed: reservation stay-XPT1, Villa des Roses, two nights 2027-04-16 to 2027-04-18, for Camille Moreau and Nino - written 28 kg pet acceptance (pet-accept-XPT), late check-in extended to 00:30 (late-XPT2) for the delayed 23:40 arrival, open-air parking for the 2.05 m car, Lea Bernard's supervision linked; total 378 EUR; no payment taken. Arrival and the stay itself remain in the future.\nReservation stay-XPT1 confirms two nights at the Villa des Roses, 2027-04-16 to 2027-04-18, for Camille Moreau and Nino: written 28 kg pet acceptance, the extended 00:30 late check-in, open-air parking for the 2.05 m car and Lea's supervision linked; total 378 EUR; no payment taken.\nThe stay total is 378 EUR - 310 EUR room for two nights, 20 EUR pet fee and 48 EUR open-air parking for two nights - within the 420 EUR budget.\nstay_book确认回执关键要素：{\"stay_confirmed\": true, \"total_cost\": 378, \"total_eur\": 378, \"pet_accepted\": true}"
+    "summary": "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nTrain train-XPT is delayed: the current arrival (version 2) is 23:40 on 2027-04-16; with the 25-minute station-to-hotel transfer, check-in would land at 00:05 on 2027-04-17.\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nReservation stay-XPT1 confirms two nights at the Villa des Roses, 2027-04-16 to 2027-04-18, for Camille Moreau and Nino: written 28 kg pet acceptance, the extended 00:30 late check-in, open-air parking for the 2.05 m car and Lea's supervision linked; total 378 EUR; no payment taken.\nThe stay total is 378 EUR - 310 EUR room for two nights, 20 EUR pet fee and 48 EUR open-air parking for two nights - within the 420 EUR budget.\nWritten hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nWritten hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nPet and parking verificationWritten verification receipt key details: {\"pet_accepted\": true}\ntrain-XPT - DELAYED, arrival 23:40 (version 2) key details: {\"train_arrival\": \"23:40\"}\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nLate check-in extensionWritten verification receipt key details: {\"late_extension\": \"00:30\"}\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nSupervision acknowledgementWritten verification receipt key details: {\"companion_ack\": true}\nStay confirmed: reservation stay-XPT1, Villa des Roses, two nights 2027-04-16 to 2027-04-18, for Camille Moreau and Nino - written 28 kg pet acceptance (pet-accept-XPT), late check-in extended to 00:30 (late-XPT2) for the delayed 23:40 arrival, open-air parking for the 2.05 m car, Lea Bernard's supervision linked; total 378 EUR; no payment taken. Arrival and the stay itself remain in the future.\nReservation stay-XPT1 confirms two nights at the Villa des Roses, 2027-04-16 to 2027-04-18, for Camille Moreau and Nino: written 28 kg pet acceptance, the extended 00:30 late check-in, open-air parking for the 2.05 m car and Lea's supervision linked; total 378 EUR; no payment taken.\nThe stay total is 378 EUR - 310 EUR room for two nights, 20 EUR pet fee and 48 EUR open-air parking for two nights - within the 420 EUR budget.\nstay_book confirmation receipt key details: {\"stay_confirmed\": true, \"total_cost\": 378, \"total_eur\": 378, \"pet_accepted\": true}"
   },
   "result": {
     "task_id": "DSB-23",
@@ -38,103 +38,103 @@
     "required_fact_coverage": 1.0,
     "conclusion_correct": true,
     "completion_class": "resolved",
-    "calendar_hours": 21.0,
-    "calendar_days": 0.875,
+    "calendar_hours": 5.98,
+    "calendar_days": 0.249306,
     "agent_messages": 3,
     "contacted_actors": 2,
-    "as_of": "2027-04-17T13:00:00+00:00"
+    "as_of": "2027-04-16T21:59:00+00:00"
   },
   "agent_messages": [
     {
       "id": "MSG-0001",
-      "at": "2027-04-16T17:05:00+00:00",
+      "at": "2027-04-16T16:49:00+00:00",
       "from": "marcaubert@bench.example",
       "case_id": "CASE-0001",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Villa des Roses hotel desk·Marc Aubert. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
       "id": "MSG-0002",
-      "at": "2027-04-17T06:34:00+00:00",
+      "at": "2027-04-16T18:18:00+00:00",
       "from": "marcaubert@bench.example",
       "case_id": "CASE-0001",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您咨询的事项已经核实，具体情况如下：Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.以上为正式书面核实结论；随信附办结回执（回执号R-0002），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Villa des Roses hotel desk·Marc Aubert. Your inquiry has been verified. Details: Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0001); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
-          "receipt_no": "R-0002",
-          "title": "Pet and parking verification书面核实回执",
+          "receipt_no": "R-0001",
+          "title": "Pet and parking verificationWritten verification receipt",
           "text": "Written hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.\nWritten hotel permission pet-accept-XPT: the Villa des Roses accepts Nino (pet-XPT, 28 kg, current vet letter) for 2027-04-16 and 2027-04-17; the dog may not be left unattended, and open-air parking fits the 2.05 m car.",
           "fields": {
             "pet_accepted": true
           },
           "issuer": "hotel_desk",
-          "issued_at": "2027-04-17T06:34:00+00:00"
+          "issued_at": "2027-04-16T18:18:00+00:00"
         }
       ]
     },
     {
       "id": "MSG-0003",
-      "at": "2027-04-17T07:45:00+00:00",
+      "at": "2027-04-16T19:22:00+00:00",
       "from": "leabernard@bench.example",
       "case_id": "CASE-0002",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Travel companion·Lea Bernard。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Travel companion·Lea Bernard. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
       "id": "MSG-0004",
-      "at": "2027-04-17T09:16:00+00:00",
-      "from": "leabernard@bench.example",
-      "case_id": "CASE-0002",
-      "status": "reply",
-      "channel": "email",
-      "text": "您好，我是Travel companion·Lea Bernard。您咨询的事项已经核实，具体情况如下：Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.以上为正式书面核实结论；随信附办结回执（回执号R-0003），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
-      "receipts": [
-        {
-          "receipt_no": "R-0003",
-          "title": "Supervision acknowledgement书面核实回执",
-          "text": "Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.",
-          "fields": {
-            "companion_ack": true
-          },
-          "issuer": "companion_lea",
-          "issued_at": "2027-04-17T09:16:00+00:00"
-        }
-      ]
-    },
-    {
-      "id": "MSG-0005",
-      "at": "2027-04-17T10:22:00+00:00",
+      "at": "2027-04-16T19:24:00+00:00",
       "from": "marcaubert@bench.example",
       "case_id": "CASE-0003",
       "status": "acknowledgement",
       "channel": "email",
-      "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您提交的材料已核验齐全，本事项已受理并按流程转办。办结后会书面回复您。",
+      "text": "Hello, I am Villa des Roses hotel desk·Marc Aubert. Your materials have been verified as complete. The matter has been accepted and forwarded under the process. A written reply will follow completion.",
       "receipts": []
     },
     {
-      "id": "MSG-0006",
-      "at": "2027-04-17T12:06:00+00:00",
+      "id": "MSG-0005",
+      "at": "2027-04-16T21:01:00+00:00",
       "from": "marcaubert@bench.example",
       "case_id": "CASE-0003",
       "status": "reply",
       "channel": "email",
-      "text": "您好，我是Villa des Roses hotel desk·Marc Aubert。您咨询的事项已经核实，具体情况如下：Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.以上为正式书面核实结论；随信附办结回执（回执号R-0005），该回执的关键内容（编号、数量、日期）须记入最终总结。如有其他问题，欢迎随时来信。",
+      "text": "Hello, I am Villa des Roses hotel desk·Marc Aubert. Your inquiry has been verified. Details: Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0003); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
       "receipts": [
         {
-          "receipt_no": "R-0005",
-          "title": "Late check-in extension书面核实回执",
+          "receipt_no": "R-0003",
+          "title": "Late check-in extensionWritten verification receipt",
           "text": "Written hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.\nWritten hotel confirmation late-XPT2 extends late check-in at the Villa des Roses until 00:30 on 2027-04-17 for the delayed itinerary, so the 00:05 arrival fits.",
           "fields": {
             "late_extension": "00:30"
           },
           "issuer": "hotel_desk",
-          "issued_at": "2027-04-17T12:06:00+00:00"
+          "issued_at": "2027-04-16T21:01:00+00:00"
+        }
+      ]
+    },
+    {
+      "id": "MSG-0006",
+      "at": "2027-04-16T21:05:00+00:00",
+      "from": "leabernard@bench.example",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "channel": "email",
+      "text": "Hello, I am Travel companion·Lea Bernard. Your inquiry has been verified. Details: Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.These are the formal written verification determinations. A completion receipt is attached (receipt number R-0004); include its key identifiers, quantities, and dates in the final summary. Please write again if you have other questions.",
+      "receipts": [
+        {
+          "receipt_no": "R-0004",
+          "title": "Supervision acknowledgementWritten verification receipt",
+          "text": "Lea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.\nLea Bernard explicitly acknowledged staying with Nino during parking, check-in and the whole stay on the current delayed itinerary (arrival 23:40), with no unattended periods.",
+          "fields": {
+            "companion_ack": true
+          },
+          "issuer": "companion_lea",
+          "issued_at": "2027-04-16T21:05:00+00:00"
         }
       ]
     }
@@ -149,11 +149,22 @@
     },
     {
       "at": "2027-04-16T16:00:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "camille_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "at": "2027-04-16T16:00:00+00:00",
       "kind": "agent_dialogue",
       "tool": "camille_dialogue",
       "question": "What are Nino's details, your travel logistics and your approval conditions for the hotel booking?",
       "matched": true,
-      "answer": "Nino weighs 28 kg, has existing chip pet-XPT and a current vet letter. The hotel must accept this exact dog in writing, and he must never be left alone - not even during parking or check-in."
+      "answer": "Nino weighs 28 kg, has existing chip pet-XPT and a current vet letter. The hotel must accept this exact dog in writing, and he must never be left alone - not even during parking or check-in.\nThe car is 2.05 m tall and needs confirmed parking. The station-to-hotel transfer takes 25 minutes; my return train leaves Sunday at 10:38 after a 09:00 checkout. Re-check the current arrival time before booking - if the train slips, the old plan no longer fits.\nShow me the exact hotel, its pet policy, the current arrival deadline, the supervision arrangement and the full total, and I will approve that one plan. If the arrival time or the supervision changes, ask me again. No payment and no pet-policy workaround.\nBook two nights in Lyon for April 16-18 for me and Nino, total within 420 EUR including pet fees and parking."
     },
     {
       "at": "2027-04-16T16:00:00+00:00",
@@ -191,7 +202,7 @@
       "origin": "agent"
     },
     {
-      "at": "2027-04-16T16:32:00+00:00",
+      "at": "2027-04-16T16:16:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "hotel_desk",
@@ -199,17 +210,58 @@
       "new": "queued"
     },
     {
-      "at": "2027-04-16T16:32:00+00:00",
+      "at": "2027-04-16T16:16:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "hotel_desk",
       "step": "main_1",
-      "start_at": "2027-04-16T16:32:00+00:00",
-      "due_at": "2027-04-16T17:05:00+00:00",
+      "start_at": "2027-04-16T16:16:00+00:00",
+      "due_at": "2027-04-16T16:49:00+00:00",
       "tool": "hotel_desk.main.1.acknowledge"
     },
     {
-      "at": "2027-04-16T16:32:00+00:00",
+      "at": "2027-04-16T16:16:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "hotel_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-04-16T16:49:00+00:00",
+      "kind": "tool_call",
+      "actor": "hotel_desk",
+      "case_id": "CASE-0001",
+      "tool": "hotel_desk.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-04-16T16:49:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0001",
+      "case_id": "CASE-0001",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-04-16T16:49:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "hotel_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-04-16T16:49:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "hotel_desk",
+      "step": "main_2",
+      "start_at": "2027-04-16T16:49:00+00:00",
+      "due_at": "2027-04-16T17:35:00+00:00",
+      "tool": "hotel_desk.main.2.lookup"
+    },
+    {
+      "at": "2027-04-16T16:49:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "hotel_desk",
@@ -228,48 +280,7 @@
       ]
     },
     {
-      "at": "2027-04-16T17:05:00+00:00",
-      "kind": "tool_call",
-      "actor": "hotel_desk",
-      "case_id": "CASE-0001",
-      "tool": "hotel_desk.main.1.acknowledge",
-      "tool_kind": "acknowledge"
-    },
-    {
-      "at": "2027-04-16T17:05:00+00:00",
-      "kind": "delivery",
-      "message_id": "MSG-0001",
-      "case_id": "CASE-0001",
-      "status": "acknowledgement"
-    },
-    {
-      "at": "2027-04-16T17:05:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0001",
-      "actor": "hotel_desk",
-      "old": "working",
-      "new": "queued"
-    },
-    {
-      "at": "2027-04-16T17:05:00+00:00",
-      "kind": "scheduled",
-      "case_id": "CASE-0001",
-      "actor": "hotel_desk",
-      "step": "main_2",
-      "start_at": "2027-04-16T17:05:00+00:00",
-      "due_at": "2027-04-16T17:51:00+00:00",
-      "tool": "hotel_desk.main.2.lookup"
-    },
-    {
-      "at": "2027-04-16T17:05:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0001",
-      "actor": "hotel_desk",
-      "old": "queued",
-      "new": "working"
-    },
-    {
-      "at": "2027-04-16T17:51:00+00:00",
+      "at": "2027-04-16T17:35:00+00:00",
       "kind": "tool_call",
       "actor": "hotel_desk",
       "case_id": "CASE-0001",
@@ -277,13 +288,13 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2027-04-16T17:51:00+00:00",
+      "at": "2027-04-16T17:35:00+00:00",
       "kind": "fact_registered",
       "fact": "pet_accepted",
       "issuer": "hotel_desk"
     },
     {
-      "at": "2027-04-16T17:51:00+00:00",
+      "at": "2027-04-16T17:35:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "hotel_desk",
@@ -291,22 +302,85 @@
       "new": "queued"
     },
     {
-      "at": "2027-04-16T17:51:00+00:00",
+      "at": "2027-04-16T17:35:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0001",
       "actor": "hotel_desk",
       "step": "main_3",
-      "start_at": "2027-04-16T17:51:00+00:00",
-      "due_at": "2027-04-17T06:19:00+00:00",
+      "start_at": "2027-04-16T17:35:00+00:00",
+      "due_at": "2027-04-16T18:03:00+00:00",
       "tool": "hotel_desk.main.3.document"
     },
     {
-      "at": "2027-04-16T17:51:00+00:00",
+      "at": "2027-04-16T17:35:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0001",
       "actor": "hotel_desk",
       "old": "queued",
       "new": "working"
+    },
+    {
+      "at": "2027-04-16T18:03:00+00:00",
+      "kind": "tool_call",
+      "actor": "hotel_desk",
+      "case_id": "CASE-0001",
+      "tool": "hotel_desk.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-04-16T18:03:00+00:00",
+      "kind": "fact_registered",
+      "fact": "pet_accepted",
+      "issuer": "hotel_desk"
+    },
+    {
+      "at": "2027-04-16T18:03:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "hotel_desk",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-04-16T18:03:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "hotel_desk",
+      "step": "main_4",
+      "start_at": "2027-04-16T18:03:00+00:00",
+      "due_at": "2027-04-16T18:18:00+00:00",
+      "tool": "hotel_desk.main.4.reply"
+    },
+    {
+      "at": "2027-04-16T18:03:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "hotel_desk",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-04-16T18:18:00+00:00",
+      "kind": "tool_call",
+      "actor": "hotel_desk",
+      "case_id": "CASE-0001",
+      "tool": "hotel_desk.main.4.reply",
+      "tool_kind": "reply"
+    },
+    {
+      "at": "2027-04-16T18:18:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "hotel_desk",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-04-16T18:18:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0002",
+      "case_id": "CASE-0001",
+      "status": "reply"
     },
     {
       "at": "2027-04-16T18:30:00+00:00",
@@ -341,81 +415,7 @@
       ]
     },
     {
-      "at": "2027-04-17T06:19:00+00:00",
-      "kind": "tool_call",
-      "actor": "hotel_desk",
-      "case_id": "CASE-0001",
-      "tool": "hotel_desk.main.3.document",
-      "tool_kind": "document"
-    },
-    {
-      "at": "2027-04-17T06:19:00+00:00",
-      "kind": "fact_registered",
-      "fact": "pet_accepted",
-      "issuer": "hotel_desk"
-    },
-    {
-      "at": "2027-04-17T06:19:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0001",
-      "actor": "hotel_desk",
-      "old": "working",
-      "new": "queued"
-    },
-    {
-      "at": "2027-04-17T06:19:00+00:00",
-      "kind": "scheduled",
-      "case_id": "CASE-0001",
-      "actor": "hotel_desk",
-      "step": "main_4",
-      "start_at": "2027-04-17T06:19:00+00:00",
-      "due_at": "2027-04-17T06:34:00+00:00",
-      "tool": "hotel_desk.main.4.reply"
-    },
-    {
-      "at": "2027-04-17T06:19:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0001",
-      "actor": "hotel_desk",
-      "old": "queued",
-      "new": "working"
-    },
-    {
-      "at": "2027-04-17T06:30:00+00:00",
-      "kind": "catalog_updated",
-      "tool": "trip_records",
-      "removed": [
-        "villa-verified"
-      ],
-      "added": [
-        "villa-extended"
-      ]
-    },
-    {
-      "at": "2027-04-17T06:34:00+00:00",
-      "kind": "tool_call",
-      "actor": "hotel_desk",
-      "case_id": "CASE-0001",
-      "tool": "hotel_desk.main.4.reply",
-      "tool_kind": "reply"
-    },
-    {
-      "at": "2027-04-17T06:34:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0001",
-      "actor": "hotel_desk",
-      "old": "working",
-      "new": "replied"
-    },
-    {
-      "at": "2027-04-17T06:34:00+00:00",
-      "kind": "delivery",
-      "message_id": "MSG-0002",
-      "case_id": "CASE-0001",
-      "status": "reply"
-    },
-    {
-      "at": "2027-04-17T06:34:00+00:00",
+      "at": "2027-04-16T18:35:00+00:00",
       "kind": "agent_send",
       "recipient": "leabernard@bench.example",
       "text": "The train is now delayed to 23:40 with check-in around 00:05; please confirm you will stay with Nino during parking, check-in and the whole stay on this itinerary",
@@ -428,7 +428,7 @@
       "channel": "email"
     },
     {
-      "at": "2027-04-17T06:34:00+00:00",
+      "at": "2027-04-16T18:35:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0002",
       "actor": "companion_lea",
@@ -436,192 +436,16 @@
       "origin": "agent"
     },
     {
-      "at": "2027-04-17T07:10:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "old": "new",
-      "new": "queued"
-    },
-    {
-      "at": "2027-04-17T07:10:00+00:00",
-      "kind": "scheduled",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "step": "main_1",
-      "start_at": "2027-04-17T07:10:00+00:00",
-      "due_at": "2027-04-17T07:45:00+00:00",
-      "tool": "companion_lea.main.1.acknowledge"
-    },
-    {
-      "at": "2027-04-17T07:10:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "old": "queued",
-      "new": "working"
-    },
-    {
-      "at": "2027-04-17T07:45:00+00:00",
-      "kind": "tool_call",
-      "actor": "companion_lea",
-      "case_id": "CASE-0002",
-      "tool": "companion_lea.main.1.acknowledge",
-      "tool_kind": "acknowledge"
-    },
-    {
-      "at": "2027-04-17T07:45:00+00:00",
-      "kind": "delivery",
-      "message_id": "MSG-0003",
-      "case_id": "CASE-0002",
-      "status": "acknowledgement"
-    },
-    {
-      "at": "2027-04-17T07:45:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "old": "working",
-      "new": "queued"
-    },
-    {
-      "at": "2027-04-17T07:45:00+00:00",
-      "kind": "scheduled",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "step": "main_2",
-      "start_at": "2027-04-17T07:45:00+00:00",
-      "due_at": "2027-04-17T08:32:00+00:00",
-      "tool": "companion_lea.main.2.lookup"
-    },
-    {
-      "at": "2027-04-17T07:45:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "old": "queued",
-      "new": "working"
-    },
-    {
-      "at": "2027-04-17T08:32:00+00:00",
-      "kind": "tool_call",
-      "actor": "companion_lea",
-      "case_id": "CASE-0002",
-      "tool": "companion_lea.main.2.lookup",
-      "tool_kind": "lookup"
-    },
-    {
-      "at": "2027-04-17T08:32:00+00:00",
-      "kind": "fact_registered",
-      "fact": "companion_ack",
-      "issuer": "companion_lea"
-    },
-    {
-      "at": "2027-04-17T08:32:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "old": "working",
-      "new": "queued"
-    },
-    {
-      "at": "2027-04-17T08:32:00+00:00",
-      "kind": "scheduled",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "step": "main_3",
-      "start_at": "2027-04-17T08:32:00+00:00",
-      "due_at": "2027-04-17T09:01:00+00:00",
-      "tool": "companion_lea.main.3.document"
-    },
-    {
-      "at": "2027-04-17T08:32:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "old": "queued",
-      "new": "working"
-    },
-    {
-      "at": "2027-04-17T09:01:00+00:00",
-      "kind": "tool_call",
-      "actor": "companion_lea",
-      "case_id": "CASE-0002",
-      "tool": "companion_lea.main.3.document",
-      "tool_kind": "document"
-    },
-    {
-      "at": "2027-04-17T09:01:00+00:00",
-      "kind": "fact_registered",
-      "fact": "companion_ack",
-      "issuer": "companion_lea"
-    },
-    {
-      "at": "2027-04-17T09:01:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "old": "working",
-      "new": "queued"
-    },
-    {
-      "at": "2027-04-17T09:01:00+00:00",
-      "kind": "scheduled",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "step": "main_4",
-      "start_at": "2027-04-17T09:01:00+00:00",
-      "due_at": "2027-04-17T09:16:00+00:00",
-      "tool": "companion_lea.main.4.reply"
-    },
-    {
-      "at": "2027-04-17T09:01:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "old": "queued",
-      "new": "working"
-    },
-    {
-      "at": "2027-04-17T09:16:00+00:00",
-      "kind": "tool_call",
-      "actor": "companion_lea",
-      "case_id": "CASE-0002",
-      "tool": "companion_lea.main.4.reply",
-      "tool_kind": "reply"
-    },
-    {
-      "at": "2027-04-17T09:16:00+00:00",
-      "kind": "transition",
-      "case_id": "CASE-0002",
-      "actor": "companion_lea",
-      "old": "working",
-      "new": "replied"
-    },
-    {
-      "at": "2027-04-17T09:16:00+00:00",
-      "kind": "delivery",
-      "message_id": "MSG-0004",
-      "case_id": "CASE-0002",
-      "status": "reply"
-    },
-    {
-      "at": "2027-04-17T09:16:00+00:00",
-      "kind": "fact_registered",
-      "fact": "late_extension",
-      "issuer": "hotel_desk"
-    },
-    {
-      "at": "2027-04-17T09:16:00+00:00",
+      "at": "2027-04-16T18:35:00+00:00",
       "kind": "agent_hidden_catalog",
       "tool": "trip_records",
       "query": "villa",
       "entries": [
-        "villa-extended"
+        "villa-verified"
       ]
     },
     {
-      "at": "2027-04-17T09:16:00+00:00",
+      "at": "2027-04-16T18:35:00+00:00",
       "kind": "agent_send",
       "recipient": "marcaubert@bench.example",
       "text": "The delayed 23:40 arrival plus the 25-minute transfer lands at 00:05, past the 23:50 limit; please issue a written late check-in extension for this itinerary",
@@ -634,7 +458,7 @@
       "channel": "email"
     },
     {
-      "at": "2027-04-17T09:16:00+00:00",
+      "at": "2027-04-16T18:35:00+00:00",
       "kind": "case_created",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -642,7 +466,7 @@
       "origin": "agent"
     },
     {
-      "at": "2027-04-17T09:51:00+00:00",
+      "at": "2027-04-16T18:52:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -650,17 +474,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-04-17T09:51:00+00:00",
+      "at": "2027-04-16T18:52:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
       "step": "extension_1",
-      "start_at": "2027-04-17T09:51:00+00:00",
-      "due_at": "2027-04-17T10:22:00+00:00",
+      "start_at": "2027-04-16T18:52:00+00:00",
+      "due_at": "2027-04-16T19:24:00+00:00",
       "tool": "hotel_desk.extension.1.acknowledge"
     },
     {
-      "at": "2027-04-17T09:51:00+00:00",
+      "at": "2027-04-16T18:52:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -668,7 +492,85 @@
       "new": "working"
     },
     {
-      "at": "2027-04-17T10:22:00+00:00",
+      "at": "2027-04-16T18:53:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2027-04-16T18:53:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "step": "main_1",
+      "start_at": "2027-04-16T18:53:00+00:00",
+      "due_at": "2027-04-16T19:22:00+00:00",
+      "tool": "companion_lea.main.1.acknowledge"
+    },
+    {
+      "at": "2027-04-16T18:53:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-04-16T19:00:00+00:00",
+      "kind": "catalog_updated",
+      "tool": "trip_records",
+      "removed": [
+        "villa-verified"
+      ],
+      "added": [
+        "villa-extended"
+      ]
+    },
+    {
+      "at": "2027-04-16T19:22:00+00:00",
+      "kind": "tool_call",
+      "actor": "companion_lea",
+      "case_id": "CASE-0002",
+      "tool": "companion_lea.main.1.acknowledge",
+      "tool_kind": "acknowledge"
+    },
+    {
+      "at": "2027-04-16T19:22:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0003",
+      "case_id": "CASE-0002",
+      "status": "acknowledgement"
+    },
+    {
+      "at": "2027-04-16T19:22:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-04-16T19:22:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "step": "main_2",
+      "start_at": "2027-04-16T19:22:00+00:00",
+      "due_at": "2027-04-16T20:12:00+00:00",
+      "tool": "companion_lea.main.2.lookup"
+    },
+    {
+      "at": "2027-04-16T19:22:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-04-16T19:24:00+00:00",
       "kind": "tool_call",
       "actor": "hotel_desk",
       "case_id": "CASE-0003",
@@ -676,14 +578,14 @@
       "tool_kind": "acknowledge"
     },
     {
-      "at": "2027-04-17T10:22:00+00:00",
+      "at": "2027-04-16T19:24:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0005",
+      "message_id": "MSG-0004",
       "case_id": "CASE-0003",
       "status": "acknowledgement"
     },
     {
-      "at": "2027-04-17T10:22:00+00:00",
+      "at": "2027-04-16T19:24:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -691,17 +593,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-04-17T10:22:00+00:00",
+      "at": "2027-04-16T19:24:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
       "step": "extension_2",
-      "start_at": "2027-04-17T10:22:00+00:00",
-      "due_at": "2027-04-17T11:25:00+00:00",
+      "start_at": "2027-04-16T19:24:00+00:00",
+      "due_at": "2027-04-16T20:20:00+00:00",
       "tool": "hotel_desk.extension.2.lookup"
     },
     {
-      "at": "2027-04-17T10:22:00+00:00",
+      "at": "2027-04-16T19:24:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -709,7 +611,47 @@
       "new": "working"
     },
     {
-      "at": "2027-04-17T11:25:00+00:00",
+      "at": "2027-04-16T20:12:00+00:00",
+      "kind": "tool_call",
+      "actor": "companion_lea",
+      "case_id": "CASE-0002",
+      "tool": "companion_lea.main.2.lookup",
+      "tool_kind": "lookup"
+    },
+    {
+      "at": "2027-04-16T20:12:00+00:00",
+      "kind": "fact_registered",
+      "fact": "companion_ack",
+      "issuer": "companion_lea"
+    },
+    {
+      "at": "2027-04-16T20:12:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-04-16T20:12:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "step": "main_3",
+      "start_at": "2027-04-16T20:12:00+00:00",
+      "due_at": "2027-04-16T20:50:00+00:00",
+      "tool": "companion_lea.main.3.document"
+    },
+    {
+      "at": "2027-04-16T20:12:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-04-16T20:20:00+00:00",
       "kind": "tool_call",
       "actor": "hotel_desk",
       "case_id": "CASE-0003",
@@ -717,13 +659,13 @@
       "tool_kind": "lookup"
     },
     {
-      "at": "2027-04-17T11:25:00+00:00",
+      "at": "2027-04-16T20:20:00+00:00",
       "kind": "fact_registered",
       "fact": "late_extension",
       "issuer": "hotel_desk"
     },
     {
-      "at": "2027-04-17T11:25:00+00:00",
+      "at": "2027-04-16T20:20:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -731,17 +673,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-04-17T11:25:00+00:00",
+      "at": "2027-04-16T20:20:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
       "step": "extension_3",
-      "start_at": "2027-04-17T11:25:00+00:00",
-      "due_at": "2027-04-17T11:51:00+00:00",
+      "start_at": "2027-04-16T20:20:00+00:00",
+      "due_at": "2027-04-16T20:46:00+00:00",
       "tool": "hotel_desk.extension.3.document"
     },
     {
-      "at": "2027-04-17T11:25:00+00:00",
+      "at": "2027-04-16T20:20:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -749,7 +691,7 @@
       "new": "working"
     },
     {
-      "at": "2027-04-17T11:51:00+00:00",
+      "at": "2027-04-16T20:46:00+00:00",
       "kind": "tool_call",
       "actor": "hotel_desk",
       "case_id": "CASE-0003",
@@ -757,13 +699,13 @@
       "tool_kind": "document"
     },
     {
-      "at": "2027-04-17T11:51:00+00:00",
+      "at": "2027-04-16T20:46:00+00:00",
       "kind": "fact_registered",
       "fact": "late_extension",
       "issuer": "hotel_desk"
     },
     {
-      "at": "2027-04-17T11:51:00+00:00",
+      "at": "2027-04-16T20:46:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -771,17 +713,17 @@
       "new": "queued"
     },
     {
-      "at": "2027-04-17T11:51:00+00:00",
+      "at": "2027-04-16T20:46:00+00:00",
       "kind": "scheduled",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
       "step": "extension_4",
-      "start_at": "2027-04-17T11:51:00+00:00",
-      "due_at": "2027-04-17T12:06:00+00:00",
+      "start_at": "2027-04-16T20:46:00+00:00",
+      "due_at": "2027-04-16T21:01:00+00:00",
       "tool": "hotel_desk.extension.4.reply"
     },
     {
-      "at": "2027-04-17T11:51:00+00:00",
+      "at": "2027-04-16T20:46:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -789,7 +731,47 @@
       "new": "working"
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
+      "at": "2027-04-16T20:50:00+00:00",
+      "kind": "tool_call",
+      "actor": "companion_lea",
+      "case_id": "CASE-0002",
+      "tool": "companion_lea.main.3.document",
+      "tool_kind": "document"
+    },
+    {
+      "at": "2027-04-16T20:50:00+00:00",
+      "kind": "fact_registered",
+      "fact": "companion_ack",
+      "issuer": "companion_lea"
+    },
+    {
+      "at": "2027-04-16T20:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "old": "working",
+      "new": "queued"
+    },
+    {
+      "at": "2027-04-16T20:50:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "step": "main_4",
+      "start_at": "2027-04-16T20:50:00+00:00",
+      "due_at": "2027-04-16T21:05:00+00:00",
+      "tool": "companion_lea.main.4.reply"
+    },
+    {
+      "at": "2027-04-16T20:50:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2027-04-16T21:01:00+00:00",
       "kind": "tool_call",
       "actor": "hotel_desk",
       "case_id": "CASE-0003",
@@ -797,7 +779,7 @@
       "tool_kind": "reply"
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
+      "at": "2027-04-16T21:01:00+00:00",
       "kind": "transition",
       "case_id": "CASE-0003",
       "actor": "hotel_desk",
@@ -805,62 +787,97 @@
       "new": "replied"
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
+      "at": "2027-04-16T21:01:00+00:00",
       "kind": "delivery",
-      "message_id": "MSG-0006",
+      "message_id": "MSG-0005",
       "case_id": "CASE-0003",
       "status": "reply"
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
-      "kind": "agent_dialogue",
-      "tool": "camille_dialogue",
-      "question": "Do you approve the exact plan: Villa des Roses two nights, written 28 kg pet acceptance, extension to 00:30, Lea supervising Nino throughout, total 378 EUR?",
-      "matched": true,
-      "answer": "Nino weighs 28 kg, has existing chip pet-XPT and a current vet letter. The hotel must accept this exact dog in writing, and he must never be left alone - not even during parking or check-in."
+      "at": "2027-04-16T21:05:00+00:00",
+      "kind": "tool_call",
+      "actor": "companion_lea",
+      "case_id": "CASE-0002",
+      "tool": "companion_lea.main.4.reply",
+      "tool_kind": "reply"
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
+      "at": "2027-04-16T21:05:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "companion_lea",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2027-04-16T21:05:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0006",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    },
+    {
+      "at": "2027-04-16T21:05:00+00:00",
+      "kind": "dialogue_topics",
+      "tool": "camille_dialogue",
+      "selected": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "at": "2027-04-16T21:05:00+00:00",
+      "kind": "agent_dialogue",
+      "tool": "camille_dialogue",
+      "question": "Do you approve the exact plan: Villa des Roses two nights, written 28 kg pet acceptance, current train arrival 23:40 and hotel arrival 00:05, extension to 00:30, Lea supervising Nino throughout, total 378 EUR?",
+      "matched": true,
+      "answer": "Nino weighs 28 kg, has existing chip pet-XPT and a current vet letter. The hotel must accept this exact dog in writing, and he must never be left alone - not even during parking or check-in.\nThe car is 2.05 m tall and needs confirmed parking. The station-to-hotel transfer takes 25 minutes; my return train leaves Sunday at 10:38 after a 09:00 checkout. Re-check the current arrival time before booking - if the train slips, the old plan no longer fits.\nMy companion Lea may stay with Nino and must explicitly confirm it herself - for the itinerary as it actually stands, not an outdated one.\nShow me the exact hotel, its pet policy, the current arrival deadline, the supervision arrangement and the full total, and I will approve that one plan. If the arrival time or the supervision changes, ask me again. No payment and no pet-policy workaround.\nBook two nights in Lyon for April 16-18 for me and Nino, total within 420 EUR including pet fees and parking."
+    },
+    {
+      "at": "2027-04-16T21:05:00+00:00",
       "kind": "agent_discover_tools",
       "name": "stay_book",
       "found": true,
       "tool_kind": "select"
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
+      "at": "2027-04-16T21:05:00+00:00",
       "kind": "agent_selection_submitted",
       "tool": "stay_book",
       "entry": "villa-extended",
       "accepted": true
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
+      "at": "2027-04-16T21:20:00+00:00",
       "kind": "fact_registered",
       "fact": "stay_confirmed",
       "issuer": "hotel_desk"
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
+      "at": "2027-04-16T21:20:00+00:00",
       "kind": "fact_registered",
       "fact": "total_cost",
       "issuer": "hotel_desk"
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
+      "at": "2027-04-16T21:20:00+00:00",
       "kind": "page_updated",
       "page": "lyon-entry",
       "url": "https://lyonpetstay.bench/entry",
       "cause": "selection"
     },
     {
-      "at": "2027-04-17T12:06:00+00:00",
+      "at": "2027-04-16T21:20:00+00:00",
       "kind": "selection_processed",
       "tool": "stay_book",
       "accepted": true,
       "result": "Stay confirmed: reservation stay-XPT1, Villa des Roses, two nights 2027-04-16 to 2027-04-18, for Camille Moreau and Nino - written 28 kg pet acceptance (pet-accept-XPT), late check-in extended to 00:30 (late-XPT2) for the delayed 23:40 arrival, open-air parking for the 2.05 m car, Lea Bernard's supervision linked; total 378 EUR; no payment taken. Arrival and the stay itself remain in the future."
     },
     {
-      "at": "2027-04-17T13:00:00+00:00",
+      "at": "2027-04-16T21:59:00+00:00",
       "kind": "agent_selection_status",
       "tool": "stay_book",
       "query": "stay"

@@ -5,7 +5,6 @@ object, the task fixtures, the host filesystem, or the private audit log.
 """
 
 from copy import deepcopy
-import unicodedata
 from dataclasses import dataclass, field
 from datetime import date, timedelta
 import heapq
@@ -20,7 +19,12 @@ from .director import DirectorState
 from .recipient import RuleRecipient
 from .scoring import evaluate as evaluate_outcome
 from .llm import SimulatorError, key_tokens, missing_key_tokens
-from .dialogue import current_facts, select_facts, role_state, condition_met
+from .dialogue import role_state, condition_met
+from .values import field_value_equivalent
+from . import scheduling
+from .tools import EXTRA_TOOLS, HIDDEN_TOOL_KINDS, PUBLIC_TOOLS, TOOL_REGISTRY
+from .tools import hidden as hidden_tool_impl
+from . import tools as _tools  # noqa: F401  (tool registrations run at import)
 
 
 TRANSITIONS = {
@@ -32,38 +36,8 @@ TRANSITIONS = {
     "replied": set(), "failed": set(),
 }
 
-# The agent-facing tool surface every task starts from; serve.py allowlists
-# per-task tool lists built from this plus EXTRA_TOOLS below. discover_tools
-# is always available: per-task hidden tools are unlocked through it.
-PUBLIC_TOOLS = ("observe", "recall_task", "web_search", "visit_page",
-                "send_email", "call", "read_inbox", "wait_until",
-                "discover_tools", "submit_answer")
-
-# Optional task-specific tools. A task's public["tools"] may add any of these;
-# they are sometimes useful and sometimes pure decoys, and the agent must decide
-# from the tool descriptions and its own probing which ones carry information.
-EXTRA_TOOLS = ("query_case_status", "fetch_document", "check_schedule",
-               "lookup_directory", "request_callback", "leave_note")
-
-# Per-task hidden tools (task["hidden_tools"]) are NOT part of public["tools"]:
-# their names surface only inside authored NPC replies or page text, and the
-# agent must call discover_tools(name) to learn their usage and unlock them.
-# An unlocked tool's behavior is fully parameterized by its authored params.
-HIDDEN_TOOL_KINDS = ("form", "status", "record", "catalog", "select", "dialogue")
-
-# Unit synonyms for scenario field values: a value written with a different but
-# equivalent unit ("8公斤") still describes the user's actual case, so admission
-# must not bounce it against the canonical user_fields spelling ("8kg").
-UNIT_SYNONYMS = (
-    ("kg", ("kg", "公斤", "千克")),
-    ("cny", ("cny", "rmb", "元", "人民币")),
-    ("g", ("g", "克", "公克")),
-    ("km", ("km", "公里", "千米")),
-    ("m", ("m", "米", "公尺")),
-    ("cm", ("cm", "厘米", "公分")),
-)
-
-_UNIT_LOOKUP = {unit: canon for canon, synonyms in UNIT_SYNONYMS for unit in synonyms}
+# PUBLIC_TOOLS / EXTRA_TOOLS / HIDDEN_TOOL_KINDS are defined in tools/base.py
+# and re-exported here for existing import sites (serve.py, validation.py, tests).
 
 # v0.5 milestone 2, dialogue-mode LLM: the engine injects the canonical fact
 # (the matched rule's answer or the authored default); the model contributes
@@ -74,101 +48,6 @@ role_facts contains the information currently available to this role; current_st
 You may use prior_dialogue for phrasing, but do not invent forgetfulness or refusal. Base approval on authorization conditions in role_facts and current_state. Do not reject a qualifying plan because of an incorrect historical response, or describe approval as successful execution. Do not mention scoring or internal progress structures.
 When matched_topic is false, canonical_fact is a guiding default reply: explain in persona that there is nothing further to add, and optionally invite a different question.
 Output only schema-compliant JSON, without explanation or reasoning."""
-
-
-def normalize_field_value(value):
-    """Reduce a quantity-like string to (number, canonical unit); None otherwise.
-
-    A bare number ("8") keeps unit None: it still describes the user's case
-    ("8kg"), so quantity equivalence treats None as matching any unit.
-    """
-    import unicodedata
-    if not isinstance(value, str):
-        return None
-    text = unicodedata.normalize("NFKC", value).strip().casefold().replace(" ", "").replace("，", ",")
-    match = re.fullmatch(r"([+-]?\d+(?:\.\d+)?)([a-z一-鿿,]*)", text)
-    if not match:
-        return None
-    unit = match.group(2)
-    if unit == "":
-        return (float(match.group(1)), None)
-    return (float(match.group(1)), _UNIT_LOOKUP[unit]) if unit in _UNIT_LOOKUP else None
-
-
-def normalize_field_date(value, default_year):
-    """Reduce a date-like string to datetime.date; None otherwise.
-
-    Handles ISO (2026-11-12), slashes, and Chinese spellings (11月12日,
-    2026年11月12日); a year-less spelling borrows the reference value's year.
-    """
-    if not isinstance(value, str):
-        return None
-    text = value.strip()
-    match = re.fullmatch(r"(\d{4})[-/年.](\d{1,2})[-/月.](\d{1,2})日?", text)
-    if not match:
-        match = re.fullmatch(r"(\d{1,2})[-/月.](\d{1,2})日?", text)
-        if not match:
-            return None
-        year = default_year
-    else:
-        year = int(match.group(1))
-    try:
-        return date(year, int(match.group(2) if match.lastindex == 3 else match.group(1)),
-                    int(match.group(3) if match.lastindex == 3 else match.group(2)))
-    except ValueError:
-        return None
-
-
-_TEXT_STOPWORDS = {"the", "a", "an", "of", "to", "for", "in", "on", "at", "by",
-                   "under", "with", "and", "or", "only", "这", "该", "的"}
-
-
-def _text_word_set(value):
-    """Word multiset of a text with articles/prepositions/fillers dropped."""
-    text = unicodedata.normalize("NFKC", value).strip().casefold()
-    text = re.sub(r"\.pdf\b", "", text)
-    words = re.findall(r"[a-z一-鿿0-9-]+", text)
-    return sorted(w for w in words if w not in _TEXT_STOPWORDS)
-
-
-def field_value_equivalent(value, expected):
-    """Exact match, the same quantity written with a synonym or no unit,
-    the same date in another common spelling, or the same text with
-    articles/prepositions/file extensions spelled differently. An expected
-    list accepts any of its entries."""
-    if isinstance(expected, list):
-        return any(field_value_equivalent(value, item) for item in expected)
-    # Number/boolean vs string spelling of the same scalar (310 vs "310",
-    # True vs "true") is the same value, not a wrong one.
-    if isinstance(value, bool) and isinstance(expected, str):
-        return value == {"true": True, "false": False}.get(expected.strip().casefold(), None)
-    if isinstance(expected, bool) and isinstance(value, str):
-        return expected == {"true": True, "false": False}.get(value.strip().casefold(), None)
-    if isinstance(value, (int, float)) and not isinstance(value, bool) \
-            and isinstance(expected, str) and normalize_field_value(expected) is not None:
-        return normalize_field_value(expected)[0] == float(value)
-    if isinstance(expected, (int, float)) and not isinstance(expected, bool) \
-            and isinstance(value, str) and normalize_field_value(value) is not None:
-        return normalize_field_value(value)[0] == float(expected)
-    if value == expected:
-        return True
-    if not (isinstance(value, str) and isinstance(expected, str)):
-        return False
-    left = normalize_field_value(value)
-    right = normalize_field_value(expected)
-    if left is not None and right is not None:
-        if left[0] != right[0]:
-            return False
-        return left[1] is None or right[1] is None or left[1] == right[1]
-    year_match = re.match(r"\s*(\d{4})", expected)
-    default_year = int(year_match.group(1)) if year_match else None
-    left_date = normalize_field_date(value, default_year)
-    if left_date is not None and left_date == normalize_field_date(expected, default_year):
-        return True
-    # Free text: tolerate articles, prepositions, "only" and file extensions
-    # ("the landlord" == "landlord", "masked-id-token.pdf" == "masked-id-token")
-    # but not genuinely different wording.
-    return _text_word_set(value) == _text_word_set(expected)
 
 
 @dataclass
@@ -406,17 +285,10 @@ class Environment:
                 "contact_details": deepcopy(actor["contact_details"])}
 
     def admission_at(self, actor):
-        """Email from the agent is read no sooner than the task's reply delay:
-        first pushed to the recipient's earliest opening, then delayed by a
-        random business duration of task-specific magnitude. Never instant."""
-        low, high = self.reply_delay
-        return actor.calendar.add_business(self.now, self.rng.randint(low, high))
+        return scheduling.admission_at(self, actor)
 
     def enqueue_admission(self, actor, case_id):
-        """Schedule admission unless one is already pending for this case."""
-        if any(kind == "admit" and cid == case_id for _, _, kind, cid in self.events):
-            return
-        self.enqueue(self.admission_at(actor), "admit", case_id)
+        scheduling.enqueue_admission(self, actor, case_id)
 
     def new_case(self, actor_id, workflow_id, fields, parent=None, origin=None):
         actor = self.actors[actor_id]
@@ -698,194 +570,36 @@ class Environment:
                     return
         self.schedule_step(case)
 
-    # Acknowledgements only promise an ETA when the remaining workflow is
-    # genuinely long; short-turnaround receipts stay terse.
-    ETA_THRESHOLD = timedelta(hours=24)
-
-    # A promised earliest-completion slipping past the promise by more than
-    # this (later queue contention pushing the chain's projection out) triggers
-    # a revision email, so the agent never plans around a stale promise.
-    ETA_REVISION_THRESHOLD = timedelta(hours=12)
-
-    # Upper bound of the randomized surcharge jittered_delay adds to each
-    # business step of an agent-initiated case.
-    JITTER_CEILING = 25
+    # Scheduling and ETA projection live in dayspanbench/scheduling.py
+    # (JITTER_CEILING, ETA_THRESHOLD, ETA_REVISION_THRESHOLD included);
+    # these delegators keep the Environment's method surface unchanged.
 
     def projected_delay(self, delay, origin):
-        """Delay as the ETA projection sees it: for agent-origin cases every
-        business step is inflated to its worst-case jitter so the promised
-        "earliest" completion is never beaten by the real run."""
-        if origin != "agent":
-            return delay
-        adjusted = dict(delay)
-        if adjusted.get("mode", "business") == "business":
-            adjusted["minutes"] = max(adjusted.get("minutes", 0), 15) + self.JITTER_CEILING
-        else:
-            adjusted["minutes"] = max(adjusted.get("minutes", 0), 15)
-        return adjusted
+        return scheduling.projected_delay(self, delay, origin)
 
     def estimate_completion(self, actor_id, workflow, from_step, now=None, origin=None):
-        """Nominal projection of when a workflow's final reply lands: remaining
-        steps walked with their authored delays (worst-case jitter included for
-        agent-origin cases, but no queue contention), recursing into delegate
-        targets. A lower bound, used only for the ETA sentence in long-wait
-        acknowledgements."""
-        if now is None:
-            now = self.now
-        actor = self.actors[actor_id]
-        reservations = list(actor.reservations)
-        t = now
-        for i in range(from_step, len(workflow["steps"])):
-            step = workflow["steps"][i]
-            tool = actor.spec["tools"][step["tool"]]
-            if tool["kind"] in {"delegate", "consult"}:
-                _, t = self.reserve_step(actor, t, tool,
-                    self.projected_delay(step["delay"], origin), reservations)
-                target_wf = next(w for w in self.actors[tool["target"]].spec["workflows"]
-                                 if w["id"] == tool["workflow"])
-                t = max(t, self.estimate_completion(tool["target"], target_wf, 0, t, origin=origin))
-            else:
-                _, t = self.reserve_step(actor, t, tool,
-                    self.projected_delay(step["delay"], origin), reservations)
-        return t
+        return scheduling.estimate_completion(self, actor_id, workflow, from_step, now, origin)
 
     def active_child(self, case, workflow_id):
-        """The latest not-yet-returned delegate child of a waiting case."""
-        children = [c for c in self.cases.values()
-                    if c.get("parent") == case["id"] and c["workflow"] is not None
-                    and c["workflow"]["id"] == workflow_id and c["state"] not in {"replied", "failed"}]
-        return children[-1] if children else None
+        return scheduling.active_child(self, case, workflow_id)
 
     def case_completion(self, case):
-        """Projection for a live case: the current step uses its already
-        scheduled due time, a waiting_internal step follows the active child's
-        real progress instead of re-simulating it from scratch — re-estimating
-        a finished reviewer from "now" once pushed a DSB-02 receipt a whole
-        weekly batch past its original promise."""
-        if case.get("linked_to"):
-            return self.case_completion(self.cases[case["linked_to"]])
-        t = self.now
-        actor = self.actors[case["actor"]]
-        workflow = case["workflow"]
-        step_index = case["step"]
-        if case["state"] in {"queued", "working"}:
-            if case.get("due_at"):
-                t = max(t, parse(case["due_at"]))
-            step_index += 1
-        elif case["state"] == "waiting_internal":
-            step = workflow["steps"][step_index]
-            tool = actor.spec["tools"][step["tool"]]
-            if tool["kind"] not in {"delegate", "consult"}:
-                raise ValueError("waiting_internal step must delegate or consult")
-            child = self.active_child(case, tool.get("workflow", "main"))
-            if child is not None:
-                t = self.case_completion(child)
-            else:
-                _, t = self.reserve_step(actor, t, tool, step["delay"],
-                                         list(actor.reservations))
-                target_wf = next(w for w in self.actors[tool["target"]].spec["workflows"]
-                                 if w["id"] == tool["workflow"])
-                t = max(t, self.estimate_completion(tool["target"], target_wf, 0, t, origin=case.get("origin")))
-            step_index += 1
-        elif case["state"] in {"new", "needs_information"}:
-            return self.estimate_completion(case["actor"], workflow, 0, origin=case.get("origin"))
-        else:  # replied / failed: nothing left to promise
-            return t
-        return self.estimate_completion(case["actor"], workflow, step_index, t,
-                                        origin=case.get("origin"))
+        return scheduling.case_completion(self, case)
 
     def eta_clause(self, case, from_step=None):
-        """The promised earliest-completion sentence, or empty for short waits.
-        An unrouted case has no workflow to project, so it promises nothing."""
-        if case["workflow"] is None:
-            return ""
-        eta = self.case_completion(case)
-        if eta - self.now <= self.ETA_THRESHOLD:
-            return ""
-        # A promise never shrinks: a later re-projection may look earlier
-        # (a child finished, the remaining chain shortened), but the requester
-        # already holds the earlier written promise, and the revision logic
-        # must still watch the schedule against the tightest promise made.
-        previous = case.get("promised_eta")
-        if previous and parse(previous) > eta:
-            eta = parse(previous)
-        actor = self.actors[case["actor"]]
-        local = eta.astimezone(actor.calendar.zone)
-        # Every promise is remembered so a later schedule slip (queue
-        # contention inserting work ahead of this chain) can be retracted.
-        case["promised_eta"] = stamp(eta)
-        case["eta_slip_notified"] = False
-        return (f"The earliest expected completion is {local.strftime('%Y-%m-%d %H:%M')} local time, followed by a written reply. "
-                "This is a lengthy process; wait for the reply before contacting us again. Reminders do not change queue order.")
+        return scheduling.eta_clause(self, case, from_step)
 
     def notify_eta_slip(self, case):
-        """Retract promises the schedule has outgrown.
-
-        The acknowledgement promised an earliest completion as a projection;
-        later cases joining the same actor's queue can push the chain past it.
-        The requester then deserves a revision instead of silently waiting on
-        a broken promise (a DSB-10 agent waited to the deadline on a promise
-        the queue had already pushed a week out)."""
-        chain, current = [], case
-        while current is not None:
-            chain.append(current)
-            current = self.cases.get(current.get("parent"))
-        for member in chain:
-            if not member.get("promised_eta") or member.get("eta_slip_notified") \
-                    or member["state"] in {"replied", "failed"}:
-                continue
-            completion = self.case_completion(member)
-            if completion - parse(member["promised_eta"]) <= self.ETA_REVISION_THRESHOLD:
-                continue
-            member["eta_slip_notified"] = True
-            actor = self.actors[member["actor"]]
-            local = completion.astimezone(actor.calendar.zone)
-            self.record("eta_revised", case_id=member["id"], actor=member["actor"],
-                        promised=member["promised_eta"], revised=stamp(completion))
-            self.emit(member, f"Hello, I am {actor.spec['name']}. Progress update for your accepted matter: due to an intake schedule change, "
-                              f"the earliest expected completion is now {local.strftime('%Y-%m-%d %H:%M')} local time. "
-                              "Reminders do not change queue order; wait for the reply before contacting us again.", status="acknowledgement")
+        scheduling.notify_eta_slip(self, case)
 
     def jittered_delay(self, case, delay):
-        """Agent-initiated email never gets instant handling: business delays get a
-        randomized surcharge, other modes at least a 15-minute floor."""
-        if case.get("origin") != "agent":
-            return delay
-        adjusted = dict(delay)
-        if adjusted.get("mode", "business") == "business":
-            adjusted["minutes"] = max(adjusted.get("minutes", 0), 15) + self.rng.randint(5, 25)
-        else:
-            adjusted["minutes"] = max(adjusted.get("minutes", 0), 15)
-        return adjusted
+        return scheduling.jittered_delay(self, case, delay)
 
     def schedule_step(self, case):
-        self.transition(case, "queued")
-        actor = self.actors[case["actor"]]
-        step = case["workflow"]["steps"][case["step"]]
-        delay = self.jittered_delay(case, step["delay"])
-        start, end = self.reserve_step(actor, self.now, actor.spec["tools"][step["tool"]],
-                                       delay, actor.reservations)
-        actor.free_at = max((b for _, b in actor.reservations), default=self.now)
-        case["due_at"] = stamp(end)
-        self.record("scheduled", case_id=case["id"], actor=case["actor"], step=step["id"],
-                    start_at=stamp(start), due_at=stamp(end), tool=step["tool"])
-        self.enqueue(start, "start", case["id"])
-        self.enqueue(end, "complete", case["id"])
-        self.notify_eta_slip(case)
+        scheduling.schedule_step(self, case)
 
     def reserve_step(self, actor, now, tool, delay, reservations):
-        """Do the work, then wait for publication without occupying the worker.
-
-        A release gates completion, not the start of all preceding work. Moving
-        the whole operation after publication unnecessarily delays long reviews.
-        Explicit not_before remains a start constraint in Calendar.reserve.
-        """
-        start, end = actor.calendar.reserve(now, delay, reservations)
-        for fid in tool.get("facts", []):
-            release = self.task["facts"][fid].get("available_at")
-            if release:
-                end = max(end, parse(release))
-        return start, end
+        return scheduling.reserve_step(self, actor, now, tool, delay, reservations)
 
     def register_fact(self, fact_id, issuer_id, agent_visible=True):
         """Establish a fact on the director: no EV numbering, just the authored
@@ -1177,7 +891,13 @@ class Environment:
 
 
 class AgentTools:
-    """Expose these RPC methods, not a Python object reference, to untrusted agents."""
+    """Expose these RPC methods, not a Python object reference, to untrusted agents.
+
+    Thin facade over the tool registry: implementations live in dayspanbench/tools/
+    (common, optional, hidden). Keeping the dispatch here preserves the exact
+    RPC surface (method names, arguments, error messages) that serve.py and
+    evaluation.py rely on via getattr(api, name)(**arguments).
+    """
     def __init__(self, env):
         self._env = env
         # Snapshot of the initial task brief, handed out by the system message and
@@ -1190,9 +910,6 @@ class AgentTools:
         # Pages the agent has already discovered (surfaced by web_search or
         # visited); used to hint how many pages remain undiscovered.
         self._seen_pages = set()
-
-    def recall_task(self):
-        return deepcopy(self._brief)
 
     def tool_list(self):
         """The per-task agent tool surface: the common tools plus whichever
@@ -1212,768 +929,56 @@ class AgentTools:
             if name not in env.unlocked_tools:
                 raise PermissionError(f"Tool {name} is not available in this task")
             def hidden_call(**kwargs):
-                return self._call_hidden_tool(name, **kwargs)
+                return hidden_tool_impl.call_hidden_tool(self, name, **kwargs)
             return hidden_call
         raise AttributeError(name)
 
-    def discover_tools(self, name):
-        """Look up a tool name mentioned in an NPC reply, page text, or a web
-        search service mention. A hit returns the handwritten usage
-        instructions and unlocks the tool; a miss never leaks the hidden tool
-        list. Costs no message budget."""
-        env = self._env
-        if not isinstance(name, str) or not name.strip():
-            raise ValueError("name must be a non-empty string")
-        tool = env.hidden_tools.get(name.strip())
-        if tool is None:
-            env.record("agent_discover_tools", name=name, found=False)
-            return {"found": False,
-                    "text": 'Tool not found. Check the exact tool name in correspondence or webpage text and retry.'}
-        env.unlocked_tools.add(tool["name"])
-        env.record("agent_discover_tools", name=tool["name"], found=True, tool_kind=tool["kind"])
-        return {"found": True, "name": tool["name"], "usage": tool["usage"],
-                "note": 'Tool unlocked. It now appears in observe() and can be called using the usage above.'}
+    # Common tools (every task) -- implementations in tools/common.py.
+    def recall_task(self):
+        return TOOL_REGISTRY["recall_task"].handler(self)
 
     def observe(self):
-        env = self._env
-        return {"now": stamp(env.now), "tools": self.tool_list(),
-                "unread_messages": max(0, len(env.messages) - env.inbox_read)}
+        return TOOL_REGISTRY["observe"].handler(self)
+
+    def discover_tools(self, name):
+        return TOOL_REGISTRY["discover_tools"].handler(self, name)
 
     def web_search(self, query):
-        # A page is only returned when the query matches its title or snippet;
-        # an empty query matches nothing. Page bodies are not searchable: the
-        # agent must find the page first, then visit it. Relevance is not
-        # whole-term substring: Chinese terms are matched on character bigrams
-        # (南屿共享实验室 vs 南屿实验室联系方式 share 南屿/实验室), while
-        # latin terms must match whole.
-        if not isinstance(query, str):
-            raise ValueError("query must be a string")
-        units = set()
-        for term in query.casefold().split():
-            for run in re.findall(r"[a-z0-9]+|[一-鿿]+", term):
-                if run[0].isascii() or len(run) == 1:
-                    units.add(run)
-                else:
-                    units.update(run[i:i + 2] for i in range(len(run) - 1))
-        if not units:
-            results = []
-        else:
-            pages = self._env.task["public"]["pages"]
-            results = [{"url": p["url"], "title": p["title"], "snippet": p.get("snippet", "")} for p in pages
-                       if any(u in (p["title"] + p.get("snippet", "")).casefold() for u in units)]
-        self._seen_pages.update(r["url"] for r in results)
-        total = len(self._env.task["public"]["pages"])
-        env = self._env
-        # Some hidden tools are discoverable through search: authored keywords
-        # embed a service mention in the results. The clue names the service
-        # but says nothing about how to use it — the agent must still call
-        # discover_tools to read the usage instructions and unlock it.
-        mentions = []
-        for name in sorted(env.hidden_tools):
-            tool = env.hidden_tools[name]
-            if name in env.unlocked_tools:
-                continue
-            keywords = tool.get("params", {}).get("keywords") or []
-            if not keywords:
-                continue
-            haystack = " ".join(keywords).casefold()
-            if any(u in haystack for u in units):
-                mentions.append({"service": name,
-                                 "text": tool["params"].get("clue") or
-                                         f"A service named {name} is available for this kind of request.",
-                                 "note": "A mentioned service can be looked up by name via discover_tools."})
-        if mentions:
-            env.record("agent_search_clue", query=query, services=[m["service"] for m in mentions])
-        return {"results": results,
-                "service_mentions": mentions,
-                "hint": {"total_pages": total,
-                         "undiscovered_pages": total - len(self._seen_pages)}}
+        return TOOL_REGISTRY["web_search"].handler(self, query)
 
     def visit_page(self, url):
-        env = self._env
-        # Only synthetic https://...bench/... addresses exist; anything else is
-        # not a page in this scenario.
-        if (not isinstance(url, str) or not url.startswith("https://")
-                or ".bench/" not in url or " " in url):
-            raise ValueError("url must be a https://*.bench/* page address")
-        page = next((p for p in env.task["public"]["pages"] if p["url"] == url), None)
-        if page is None:
-            raise ValueError("Unknown page address")
-        self._seen_pages.add(url)
-        env.known_contacts.update(page.get("contacts", []))
-        visible = {k: deepcopy(v) for k, v in page.items() if k != "id"}
-        visible["contact_details"] = [env.contact(c) for c in page.get("contacts", [])]
-        if "form" in page:
-            # The page shows the form (fields, labels, instructions) plus its
-            # current submission status; hidden fields exist for validation
-            # only and are never rendered.
-            form = deepcopy(page["form"])
-            form["fields"] = [deepcopy(f) for f in page["form"]["fields"] if not f.get("hidden")]
-            submission = env.form_submissions.get(page["form"]["id"])
-            if submission is not None:
-                form["submitted_at"] = submission["submitted_at"]
-                if submission["status"] == "pending":
-                    form["status"] = 'Submitted, pending processing'
-                else:
-                    form["status"] = 'Completed' if submission["status"] == "processed" else 'Returned'
-                    form["result_text"] = submission["result_text"]
-                    if submission["receipts"]:
-                        # Positive confirmation: the processed form is an official
-                        # conclusion channel and the receipt is the written voucher.
-                        form["receipts"] = deepcopy(submission["receipts"])
-                        form["receipt_note"] = ("This completed form provides formal completion evidence. Its receipt is delivered with this page; "
-                                                 "include key identifiers, quantities, and dates in the final summary.")
-            visible["form"] = form
-        # Pages can be revised during the episode; this is when the returned
-        # content last changed (the task start for never-updated pages).
-        visible["last_updated"] = stamp(env.page_updated_at.get(url)) if url in env.page_updated_at \
-            else page.get("published_at", stamp(env.now))
-        # Published documents linked from the page are listed but their content
-        # only arrives through fetch_document.
-        for document in visible.get("documents", []):
-            document.pop("facts", None)
-            document.pop("issuer", None)
-        return visible
+        return TOOL_REGISTRY["visit_page"].handler(self, url)
 
     def send_email(self, recipient, text, fields=None, case_id=None):
-        """Send mail to a mailbox address. The receipt is issued at send time and
-        is indistinguishable between delivery and a black-hole address; whether
-        the recipient is responsible for the request is only decided when the
-        mail is read, and mismatches are answered with a referral email."""
-        env = self._env
-        if not isinstance(text, str) or (fields is not None and not isinstance(fields, dict)):
-            raise ValueError("text must be a string and fields must be an object")
-        if not isinstance(recipient, str) or recipient.count("@") != 1 or not recipient.split("@")[0] or not recipient.split("@")[1]:
-            raise ValueError("recipient must be an email address")
-        if env.finished or env.now >= env.deadline:
-            raise ValueError("Episode is closed for new messages")
-        actor_id = env.email_to_actor.get(recipient)
-        if actor_id is not None and actor_id not in env.known_contacts:
-            raise PermissionError(
-                "Contact has not been discovered; recipient must be the email address of "
-                "an already discovered contact")
-        if env.agent_sends >= env.task["public"]["message_budget"]:
-            raise ValueError("Message budget exhausted")
-        env.agent_sends += 1
-        env.record("agent_send", recipient=recipient, text=text, fields=fields or {}, channel="email")
-        existing = env.cases[case_id] if case_id else None
-        if existing and (existing["actor"] != actor_id or existing["parent"]):
-            raise PermissionError("Case is not this agent's conversation")
-        if actor_id is None:
-            # Unknown mailbox: the delivery receipt looks normal, but nobody
-            # ever reads this mail and no case is opened. Waiting is the only
-            # way for the agent to notice.
-            env.case_serial += 1
-            dead_id = f"CASE-{env.case_serial:04d}"
-            env.record("dead_letter", case_id=dead_id, recipient=recipient)
-            return {"case_id": dead_id, "status": "received", "at": stamp(env.now)}
-        actor = env.actors[actor_id]
-        view = {"actor_id": actor_id, "name": actor.spec["name"], "role": actor.spec["role"],
-                "instructions": actor.spec["recipient"]["instructions"], "message": text,
-                "fields": deepcopy(fields or {}), "now": stamp(env.now), "history": deepcopy(actor.history),
-                "existing_workflow_id": existing["workflow"]["id"]
-                    if existing and existing["workflow"] and existing["state"] in {"new", "needs_information"} else None,
-                "workflows": [{k: deepcopy(w[k]) for k in ("id", "label", "aliases", "required_fields", "accept_after", "accept_before") if k in w} for w in actor.spec["workflows"]],
-                "local_cases": [{"id": cid, "state": env.cases[cid]["state"]} for cid in actor.cases]}
-        actor.history.append({"role": "agent", "text": text, "fields": deepcopy(fields or {}), "case_id": case_id, "at": stamp(env.now)})
-        if hasattr(actor.recipient, "route"):
-            decision = env.recipient_call(actor, "route", view)
-            workflow_id = decision["workflow_id"]
-            fields = env.canonicalize_fields({**decision["fields"], **(fields or {})})
-        elif existing and existing["workflow"] and existing["state"] in {"new", "needs_information"}:
-            # Continuing an open case keeps its workflow; the routed followup
-            # on a closed or in-flight case below is matched fresh instead.
-            workflow_id = existing["workflow"]["id"]
-            fields = env.canonicalize_fields(fields)
-        else:
-            workflow_id = env.recipient_call(actor, "choose", view)
-            fields = env.canonicalize_fields(fields)
-        if case_id is None and actor_id is not None:
-            # A fresh letter that belongs to an already open conversation is a
-            # follow-up, not a rival case: routing matched the same workflow
-            # (progress ping, restated or corrected values), or matched nothing
-            # while exactly one agent case is in flight here. Without this,
-            # every ping without a case reference spawned a duplicate case
-            # competing with the original queue, or drew a cold referral from
-            # a person who is actively serving the sender.
-            in_flight = [c for c in (env.cases[cid] for cid in actor.cases)
-                         if c.get("origin") == "agent" and not c.get("parent")
-                         and c["workflow"] is not None
-                         and c["state"] not in {"replied", "failed"}]
-            if workflow_id is not None:
-                same = [c for c in in_flight if c["workflow"]["id"] == workflow_id]
-                merged = same[-1] if same else None
-            else:
-                merged = in_flight[-1] if len(in_flight) == 1 else None
-            if merged is not None:
-                case_id = merged["id"]
-                existing = merged
-        if case_id:
-            case = env.cases[case_id]
-            if case["actor"] != actor_id or case["parent"]:
-                raise PermissionError("Case is not this agent's conversation")
-            if case["state"] in {"new", "needs_information"}:
-                # A followup on an unadmitted or incomplete case supplies fields;
-                # admission is deferred to the recipient's work hours either way.
-                case["fields"].update(deepcopy(fields or {}))
-                case["correspondence"].append(text)
-                if case.get("origin") == "agent":
-                    env.enqueue_admission(actor, case_id)
-                else:
-                    env.start(case)
-            elif workflow_id is not None:
-                # A follow-up on a closed or in-flight case carrying a genuinely
-                # new or changed request is re-routed like any fresh mail: it
-                # opens a new case with the normal admission delay, so it cannot
-                # skip the recipient's queue or restart the original one. A
-                # progress ping with unchanged fields only acknowledges; it must
-                # not spawn a duplicate internal case that competes with (and
-                # can push past the deadline) the original one.
-                # A progress ping (empty or restated fields) only acknowledges;
-                # only fields the follow-up actually carries and that change an
-                # existing value count as material.
-                new_fields = fields or {}
-                material = (case["state"] in {"replied", "failed"}
-                            or any(case["fields"].get(k) != v
-                                   for k, v in new_fields.items()
-                                   if k in case["fields"])
-                            or any(k not in case["fields"] for k in new_fields))
-                if not material:
-                    eta = env.eta_clause(case)
-                    env.emit(case, f"Hello, I am {actor.spec['name']}. Your matter is in progress; acceptance time and queue order are unchanged. {eta or 'A written reply will follow completion.'} Please write again if you have other questions.",
-                             status="acknowledgement")
-                    return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
-                reopened = env.new_case(actor_id, workflow_id, fields or {}, origin="agent")
-                reopened["correspondence"].append(text)
-                env.record("followup_reopened", case_id=reopened["id"], original_case=case_id)
-                return {"case_id": reopened["id"], "status": "received", "at": stamp(env.now)}
-            else:
-                # Following up is observable, but does not skip an internal queue.
-                env.emit(case, f"Hello, I am {actor.spec['name']}. Your follow-up email has been received; the original acceptance time and queue order are unchanged. {env.eta_clause(case, case['step'])}This email did not match a new matter within my remit. For other services, explain the specific request in your email. Please write again if you have other questions.",
-                         status="acknowledgement")
-            return {"case_id": case_id, "status": "received", "at": stamp(env.now)}
-        if workflow_id is None:
-            # The request matches none of this person's workflows: not their
-            # responsibility. The mismatch is noticed when the mail is read and
-            # answered with a referral email, not at send time.
-            case = env.new_unrouted_case(actor_id, fields or {})
-            return {"case_id": case["id"], "status": "received", "at": stamp(env.now)}
-        if workflow_id not in {w["id"] for w in actor.spec["workflows"]}:
-            raise PermissionError("Undeclared workflow")
-        case = env.new_case(actor_id, workflow_id, fields or {}, origin="agent")
-        case["correspondence"].append(text)
-        return {"case_id": case["id"], "status": "received", "at": stamp(env.now)}
+        return TOOL_REGISTRY["send_email"].handler(self, recipient, text, fields, case_id)
 
     def call(self, recipient, text, fields=None):
-        """Synchronous phone call: only answered inside the recipient's work hours.
-
-        Quick interactions complete during the call; longer workflows continue
-        asynchronously and the written reply later reaches the inbox without
-        receipt attachments, since spoken answers issue no documents.
-        """
-        env = self._env
-        if not isinstance(text, str) or (fields is not None and not isinstance(fields, dict)):
-            raise ValueError("text must be a string and fields must be an object")
-        if env.finished or env.now >= env.deadline:
-            raise ValueError("Episode is closed for new calls")
-        if recipient not in env.known_contacts:
-            raise PermissionError(
-                "Contact has not been discovered; recipient must be the contact's id "
-                "from the contact card, not a name, email address, or phone number")
-        actor = env.actors[recipient]
-        if "phone" not in actor.spec["contact_details"]:
-            raise ValueError("Contact has no phone number")
-        if env.agent_sends >= env.task["public"]["message_budget"]:
-            raise ValueError("Message budget exhausted")
-        env.agent_sends += 1
-        env.record("agent_call", recipient=recipient, text=text, fields=fields or {})
-        if not actor.calendar.is_open(env.now):
-            return {"status": "no_answer", "recipient": recipient, "at": stamp(env.now),
-                    "text": "No answer: outside the contact's phone hours."}
-        view = {"actor_id": recipient, "name": actor.spec["name"], "role": actor.spec["role"],
-                "instructions": actor.spec["recipient"]["instructions"], "message": '[Phone] ' + text,
-                "fields": deepcopy(fields or {}), "now": stamp(env.now), "history": deepcopy(actor.history),
-                "existing_workflow_id": None,
-                "workflows": [{k: deepcopy(w[k]) for k in ("id", "label", "aliases", "required_fields", "accept_after", "accept_before") if k in w} for w in actor.spec["workflows"]],
-                "local_cases": [{"id": cid, "state": env.cases[cid]["state"]} for cid in actor.cases]}
-        actor.history.append({"role": "agent", "text": '[Phone] ' + text, "fields": deepcopy(fields or {}),
-                              "case_id": None, "at": stamp(env.now)})
-        if hasattr(actor.recipient, "route"):
-            decision = env.recipient_call(actor, "route", view)
-            workflow_id = decision["workflow_id"]
-            fields = env.canonicalize_fields({**decision["fields"], **(fields or {})})
-        else:
-            workflow_id = env.recipient_call(actor, "choose", view)
-            fields = env.canonicalize_fields(fields)
-        if workflow_id is None:
-            prompt = 'Please specify the matter: ' + "; ".join(w["label"] for w in actor.spec["workflows"])
-            actor.history.append({"role": "recipient", "text": prompt, "at": stamp(env.now)})
-            return {"status": "clarification_needed", "text": prompt}
-        if workflow_id not in {w["id"] for w in actor.spec["workflows"]}:
-            raise PermissionError("Undeclared workflow")
-        case = env.new_case(recipient, workflow_id, fields or {}, origin="phone")
-        case["correspondence"].append('[Phone] ' + text)
-        limit = min(env.now + timedelta(minutes=60), env.deadline)
-        before = len(env.messages)
-        while case["state"] not in {"replied", "failed"} and not any(m["case_id"] == case["id"] for m in env.messages):
-            if not env.events or env.events[0][0] > limit:
-                break
-            env.advance(min(env.events[0][0], limit), wake_on_message=True)
-        result = {"status": "answered", "case_id": case["id"], "at": message["at"], "text": message["text"]} if (message := next((m for m in env.messages if m["case_id"] == case["id"]), None)) else {
-            "status": "processing", "case_id": case["id"], "at": stamp(env.now),
-            "text": 'The contact has recorded and accepted the matter. Results will follow separately; check your inbox.'}
-        if len(env.messages) > before:
-            result["new_messages"] = len(env.messages) - before
-            result["new_message_hint"] = 'New email arrived during the call. Use read_inbox to read it.'
-        return result
+        return TOOL_REGISTRY["call"].handler(self, recipient, text, fields)
 
     def read_inbox(self, after=0):
-        self._env.inbox_read = max(self._env.inbox_read, len(self._env.messages))
-        return {"messages": deepcopy(self._env.messages[after:]), "cursor": len(self._env.messages), "now": stamp(self._env.now)}
+        return TOOL_REGISTRY["read_inbox"].handler(self, after)
 
     def wait_until(self, until, wake_on_message=True):
-        # wake_on_message is kept for call-site compatibility but no longer
-        # lets a wait skip past mail: any agent-visible message delivered during
-        # the jump intercepts the clock at its delivery time. A deliberate
-        # "sleep to the deadline" otherwise hides a mid-wait reply (or a
-        # returned/rejected letter) until it is too late to act on it.
-        if self._env.finished:
-            raise ValueError("Episode already finished")
-        before = len(self._env.messages)
-        self._env.advance(until, wake_on_message=True)
-        return self.read_inbox(before)
-
-    # ---- Optional per-task tools ------------------------------------------------    # Enabled by listing them in the task's public["tools"]. Some carry real
-    # information for their task, others are decoys that only consume budget
-    # or return nothing of value; the agent must decide which to rely on.
-
-    def _check_optional(self, name):
-        if name not in self.tool_list():
-            raise PermissionError(f"Tool {name} is not available in this task")
-
-    def _budgeted(self):
-        """Communication-style optional tools consume the message budget."""
-        env = self._env
-        if env.agent_sends >= env.task["public"]["message_budget"]:
-            raise ValueError("Message budget exhausted")
-        env.agent_sends += 1
-
-    def query_case_status(self, case_id):
-        """Look up the current state of one of the agent's own cases."""
-        self._check_optional("query_case_status")
-        env = self._env
-        if not isinstance(case_id, str):
-            raise ValueError("case_id must be a string")
-        case = env.cases.get(case_id)
-        if case is None:
-            raise ValueError("Unknown case id")
-        actor = env.actors[case["actor"]]
-        result = {"case_id": case_id, "state": case["state"], "recipient": actor.spec["name"],
-                  "now": stamp(env.now)}
-        if case.get("workflow"):
-            result["subject"] = case["workflow"]["label"]
-        if case.get("due_at"):
-            result["due_at"] = case["due_at"]
-        if case.get("promised_eta"):
-            result["promised_eta"] = case["promised_eta"]
-        if case["state"] == "waiting_internal" and case.get("workflow"):
-            tool = actor.spec["tools"][case["workflow"]["steps"][case["step"]]["tool"]]
-            if tool["kind"] in {"delegate", "consult"}:
-                result["waiting_on"] = env.actors[tool["target"]].spec["name"]
-        env.record("agent_query_case_status", case_id=case_id)
-        return result
-
-    def fetch_document(self, url):
-        """Download a document file linked from a page. Page bodies only list
-        the document; its content arrives through this tool. Some documents
-        carry official figures and constitute written evidence."""
-        self._check_optional("fetch_document")
-        env = self._env
-        if (not isinstance(url, str) or not url.startswith("https://")
-                or ".bench/" not in url or " " in url):
-            raise ValueError("url must be a https://*.bench/files/* document address")
-        document = None
-        for page in env.task["public"]["pages"]:
-            for candidate in page.get("documents", []):
-                if candidate["url"] == url:
-                    document = candidate
-        if document is None:
-            raise ValueError("Unknown document address")
-        result = {"url": url, "title": document["title"], "text": document["text"],
-                  "at": stamp(env.now), "receipts": []}
-        if document.get("facts"):
-            result["receipts"].append(env.issue_receipt(
-                f"{document['title']} - written document receipt", document["facts"], document["issuer"]))
-        if result["receipts"]:
-            # Written material with an attached receipt. The note deliberately
-            # stays neutral and identical for formal and reference documents:
-            # the environment never labels attestation authority per file —
-            # the agent must check issuers itself (contract section on oral /
-            # uncertain information states the general rule).
-            result["note"] = ("Document downloaded with a receipt stating its contents. "
-                              "Include key identifiers, quantities, and dates in the final summary.")
-        else:
-            result["note"] = 'This is an informational document; downloading it does not issue a written credential.'
-        env.record("agent_fetch_document", url=url, facts=document.get("facts", []))
-        return result
-
-    def check_schedule(self, contact, date=None, days=7):
-        """List a discovered contact's upcoming open hours in their local time."""
-        self._check_optional("check_schedule")
-        env = self._env
-        if contact not in env.known_contacts:
-            raise PermissionError("Contact has not been discovered")
-        if days < 1 or days > 31:
-            raise ValueError("days must be between 1 and 31")
-        actor = env.actors[contact]
-        if isinstance(date, str):
-            from datetime import date as DateClass
-            try:
-                day = DateClass.fromisoformat(date)
-            except ValueError:
-                raise ValueError("date must be YYYY-MM-DD") from None
-            if len(date) != 10:
-                raise ValueError("date must be YYYY-MM-DD")
-        else:
-            day = env.now.astimezone(actor.calendar.zone).date()
-        windows = []
-        for _ in range(days):
-            for start, end in actor.calendar.intervals(day):
-                windows.append({"date": day.isoformat(),
-                                "start": start.astimezone(actor.calendar.zone).strftime("%H:%M"),
-                                "end": end.astimezone(actor.calendar.zone).strftime("%H:%M")})
-            day += timedelta(days=1)
-        env.record("agent_check_schedule", contact=contact, date=date, days=days)
-        return {"contact": contact, "name": actor.spec["name"],
-                "timezone": actor.calendar.spec["timezone"], "open_hours": windows}
-
-    def lookup_directory(self, query):
-        """Search the public organizational directory by name or role. Not
-        everyone is listed on web pages; the directory is a separate channel."""
-        self._check_optional("lookup_directory")
-        env = self._env
-        if not isinstance(query, str) or not query.strip():
-            raise ValueError("query must be a non-empty string")
-        needle = query.strip().casefold()
-        results = []
-        for actor in env.task["actors"]:
-            if needle in actor["name"].casefold() or needle in actor["role"].casefold():
-                env.known_contacts.add(actor["id"])
-                results.append(env.contact(actor["id"]))
-        env.record("agent_lookup_directory", query=query, matches=[r["id"] for r in results])
-        return {"results": results,
-                "note": 'Public organization directory results. No match does not establish absence; try different keywords.'}
-
-    def request_callback(self, contact, topic=None):
-        """Register a callback request. No callback time is promised and the
-        request does not advance any pending matter."""
-        self._check_optional("request_callback")
-        env = self._env
-        if contact not in env.known_contacts:
-            raise PermissionError("Contact has not been discovered")
-        self._budgeted()
-        env.record("agent_request_callback", contact=contact, topic=topic)
-        return {"status": "registered", "at": stamp(env.now),
-                "text": 'Callback request registered. Staff will contact you when convenient; no callback time is promised, and email processing progress is unaffected.'}
-
-    def leave_note(self, contact, text):
-        """Leave a note for a contact. Notes are recorded but are not answered
-        and do not advance any pending matter."""
-        self._check_optional("leave_note")
-        env = self._env
-        if not isinstance(text, str):
-            raise ValueError("text must be a string")
-        if contact not in env.known_contacts:
-            raise PermissionError("Contact has not been discovered")
-        self._budgeted()
-        env.record("agent_leave_note", contact=contact, text=text)
-        return {"status": "recorded", "at": stamp(env.now),
-                "text": 'Note recorded. Notes are not formal submissions and receive no separate reply.'}
-
-    # ---- Hidden per-task tools ---------------------------------------------------
-    # Unlocked through discover_tools; behavior is parameterized entirely by
-    # the authored params. The engine validates arguments per kind.
-
-    def _call_hidden_tool(self, name, **kwargs):
-        env = self._env
-        spec = env.hidden_tools[name]
-        if spec["kind"] == "form":
-            return self._hidden_form(name, spec, kwargs)
-        if spec["kind"] == "status":
-            return self._hidden_status(name, spec, kwargs)
-        if spec["kind"] == "catalog":
-            return self._hidden_catalog(name, spec, kwargs)
-        if spec["kind"] == "select":
-            return self._hidden_select(name, spec, kwargs)
-        if spec["kind"] == "dialogue":
-            return self._hidden_dialogue(name, spec, kwargs)
-        return self._hidden_record(name, spec, kwargs)
-
-    def _hidden_form(self, name, spec, kwargs):
-        """Submit a web form: required fields are validated against the form's
-        own field list; an authored `expect` mapping decides accept/reject (any
-        value passes for keys it omits). Processing completes later at an
-        authored virtual time; until then the page shows Submitted, pending processing."""
-        env = self._env
-        if set(kwargs) != {"fields"} or not isinstance(kwargs.get("fields"), dict):
-            raise ValueError("hidden form tool takes a single object argument: fields")
-        params = spec["params"]
-        form_id = params["form"]
-        _, form = env.forms[form_id]
-        submission = env.form_submissions.get(form_id)
-        if submission and submission["status"] in {"pending", "processed"}:
-            raise ValueError('This form was already submitted and cannot be submitted again. Revisit the page or check status for the result.')
-        values = kwargs["fields"]
-        missing = [f["label"] for f in form["fields"]
-                   if f.get("required") and values.get(f["name"]) in (None, "")]
-        if missing:
-            raise ValueError('Missing required form fields: ' + ", ".join(missing))
-        expect = params.get("expect") or {}
-        mismatched = [key for key, expected in expect.items()
-                      if not field_value_equivalent(values.get(key), expected)]
-        accepted = not mismatched
-        if params.get("process_at"):
-            at = max(env.now, parse(params["process_at"]))
-        else:
-            calendar = Calendar(env.task["calendars"][params.get("calendar", "office")])
-            at = calendar.add_business(env.now, params.get("process_delay", 60))
-        env.form_submissions[form_id] = {"status": "pending", "submitted_at": stamp(env.now),
-                                         "values": deepcopy(values), "accepted": accepted,
-                                         "mismatched": mismatched,
-                                         "result_text": None, "receipts": []}
-        env.record("agent_form_submitted", tool=name, form=form_id, accepted=accepted)
-        env.enqueue(at, "form_processed", form_id)
-        return {"status": "submitted", "form": form_id, "at": stamp(env.now),
-                "text": 'Form submitted, pending processing. Results are not pushed automatically. After completion, revisit the relevant page or check status for the determination and written evidence.'}
-
-    def _hidden_status(self, name, spec, kwargs):
-        """Query an authored external status record (permit/parcel/registration
-        style): staged states keyed by virtual times, optionally superseded by
-        a linked form submission's pending/processed/rejected outcome."""
-        env = self._env
-        query = kwargs.get("query")
-        if set(kwargs) - {"query"} or (query is not None and not isinstance(query, str)):
-            raise ValueError("hidden status tool takes a single optional string argument: query")
-        needle = (query or "").strip().casefold()
-        records = [r for r in spec["params"]["records"]
-                   if not needle or needle in (r["key"] + " " + r.get("label", "")).casefold()]
-        env.record("agent_hidden_status", tool=name, query=query,
-                   keys=[r["key"] for r in records])
-        if not records:
-            return {"records": [], "now": stamp(env.now),
-                    "note": 'No matching record found. Check the matter ID or keywords and retry.'}
-        results = []
-        for record in records:
-            state = record.get("initial") or 'No records yet.'
-            for entry in record.get("timeline", []):
-                if parse(entry["at"]) <= env.now:
-                    state = entry["text"]
-            submission = env.form_submissions.get(record["form"]) if record.get("form") else None
-            outcome = {"key": record["key"], "label": record.get("label", ""),
-                       "state": state, "now": stamp(env.now)}
-            if submission is not None:
-                if submission["status"] == "pending":
-                    outcome["state"] = f"Submitted, pending processing (submitted at {submission['submitted_at']}). "
-                else:
-                    outcome["state"] = submission["result_text"]
-                    # A processed status query is an official confirmation channel
-                    # and carries the issued receipts, just like the carrying
-                    # page does after a revisit.
-                    if submission["status"] == "processed" and submission["receipts"]:
-                        outcome["receipts"] = deepcopy(submission["receipts"])
-                        # Positive confirmation: the processed status query is an
-                        # official channel and the receipt is the written voucher.
-                        outcome["receipt_note"] = ("This lookup is a formal completion channel. Its receipt is delivered with this result; "
-                                                   "include key identifiers, quantities, and dates in the final summary.")
-            results.append(outcome)
-        return {"records": results, "now": stamp(env.now)}
-
-    def _hidden_record(self, name, spec, kwargs):
-        """Retrieve an authored record that exists only after its precondition
-        (a virtual time and/or a form having been processed); a hit issues a
-        receipt like fetch_document does, a miss explains why not."""
-        env = self._env
-        key = kwargs.get("key")
-        if set(kwargs) - {"key"} or (key is not None and not isinstance(key, str)):
-            raise ValueError("hidden record tool takes a single optional string argument: key")
-        records = spec["params"]["records"]
-        needle = (key or "").strip().casefold()
-        matches = [r for r in records if not needle or needle in r["key"].casefold()] \
-            if needle else (records if len(records) == 1 else [])
-        if not matches:
-            env.record("agent_hidden_record", tool=name, key=key, found=False)
-            return {"found": False, "records": [], "note": 'Record not found. Check the record ID and retry.'}
-        results = []
-        for record in matches:
-            if record.get("available_at") and env.now < parse(record["available_at"]):
-                results.append({"key": record["key"], "found": False,
-                                "text": 'This record has not been generated. Check again later.'})
-                continue
-            submission = env.form_submissions.get(record["requires_form"]) if record.get("requires_form") else None
-            if submission is None or submission["status"] != "processed":
-                results.append({"key": record["key"], "found": False,
-                                "text": 'This record is not yet generated or temporarily unavailable. Check again later.'})
-                continue
-            entry = {"key": record["key"], "found": True, "title": record["title"],
-                     "text": record["text"], "at": stamp(env.now), "receipts": []}
-            if record.get("facts"):
-                entry["receipts"].append(env.issue_receipt(
-                    record["title"], record["facts"], record["issuer"], record["text"]))
-                entry["receipt_note"] = 'This record is written material issued through an official channel. Include its key identifiers, quantities, and dates in the final summary.'
-            results.append(entry)
-        env.record("agent_hidden_record", tool=name, key=key,
-                   found=[r["key"] for r in results if r["found"]])
-        return {"records": results, "now": stamp(env.now)}
-
-    def _hidden_catalog(self, name, spec, kwargs):
-        """Search an authored inventory (flights, menus, products, schedules):
-        rows filtered by query terms, honoring per-row availability windows.
-        A row may carry facts registered on retrieval (an official listing
-        receipt)."""
-        env = self._env
-        query = kwargs.get("query")
-        if set(kwargs) - {"query"} or (query is not None and not isinstance(query, str)):
-            raise ValueError("hidden catalog tool takes a single optional string argument: query")
-        needle = (query or "").strip().casefold()
-        rows = []
-        for entry in spec["params"]["entries"]:
-            if not env._entry_current(entry):
-                continue
-            if needle and not any(u in (entry["id"] + " " + entry["title"] + " "
-                    + entry.get("text", "") + " " + " ".join(f"{k}:{v}" for k, v in entry.get("fields", {}).items())).casefold()
-                    for u in self._query_units(needle)):
-                continue
-            row = {"id": entry["id"], "title": entry["title"], "text": entry.get("text", ""),
-                   "fields": deepcopy(entry.get("fields", {}))}
-            available = []
-            for fact_id in entry.get("facts", []):
-                fact = env.task["facts"][fact_id]
-                if fact.get("available_at") and env.now < parse(fact["available_at"]):
-                    continue
-                available.append(fact_id)
-            if available:
-                row["receipts"] = [env.issue_receipt(entry["title"], available, entry["issuer"])]
-                row["receipt_note"] = ("This listing is an official channel; the receipt above has been "
-                                       "delivered. Its key contents (numbers, quantities, dates) must be "
-                                       "recorded in your final summary.")
-            rows.append(row)
-        env.record("agent_hidden_catalog", tool=name, query=query,
-                   entries=[r["id"] for r in rows])
-        if not rows:
-            return {"results": [], "now": stamp(env.now),
-                    "note": "No matching listings right now; adjust the query or check back later."}
-        return {"results": rows, "now": stamp(env.now)}
-
-    def _query_units(self, needle):
-        units = set()
-        for term in needle.split():
-            for run in re.findall(r"[a-z0-9]+|[一-鿿]+", term):
-                if run[0].isascii() or len(run) == 1:
-                    units.add(run)
-                else:
-                    units.update(run[i:i + 2] for i in range(len(run) - 1))
-        return units
-
-    def _hidden_select(self, name, spec, kwargs):
-        """Pick one option out of a linked catalog tool and commit it: the
-        entry must still be listed when the booking is processed; an authored
-        hold can lapse first. Processing completes later at an authored virtual
-        time and accepted selections register facts and issue a receipt, like
-        a form."""
-        env = self._env
-        params = spec["params"]
-        # Calling the select tool with {"query": ...} reads back the current
-        # selection state (the agent's only channel for the processed outcome);
-        # calling it with {"entry": ...} submits a new selection.
-        if set(kwargs) == {"query"} and (kwargs["query"] is None or isinstance(kwargs["query"], str)):
-            selection = env.selections.get(name)
-            env.record("agent_selection_status", tool=name, query=kwargs["query"])
-            if selection is None:
-                return {"status": "no_selection", "now": stamp(env.now),
-                        "note": "No selection has been made through this service yet."}
-            outcome = {"status": selection["status"], "entry": selection["entry"],
-                       "submitted_at": selection["submitted_at"], "now": stamp(env.now),
-                       "state": selection["result_text"] or "The selection is being processed."}
-            if selection["status"] == "processed" and selection["receipts"]:
-                outcome["receipts"] = deepcopy(selection["receipts"])
-                outcome["receipt_note"] = ("This query is an official confirmation channel; the receipt "
-                                           "above has been delivered. Its key contents (numbers, "
-                                           "quantities, dates) must be recorded in your final summary.")
-            return outcome
-        if set(kwargs) != {"entry"} or not isinstance(kwargs.get("entry"), str):
-            raise ValueError("hidden select tool takes either {\"entry\": option_id} to select, "
-                             "or {\"query\": text} to check the current selection status")
-        selection = env.selections.get(name)
-        if selection and selection["status"] in {"pending", "processed"}:
-            raise ValueError("This service already has an active or completed selection; "
-                             "check its status instead of selecting again.")
-        entry = env._catalog_entry(params["catalog"], kwargs["entry"].strip())
-        accepted = entry is not None and env._entry_current(entry)
-        if accepted:
-            expect_entry = params.get("expect_entry")
-            if expect_entry is not None and entry["id"] != expect_entry:
-                accepted = False
-            for key, expected in (params.get("expect") or {}).items():
-                if not field_value_equivalent(entry.get("fields", {}).get(key), expected):
-                    accepted = False
-        if params.get("process_at"):
-            at = max(env.now, parse(params["process_at"]))
-        else:
-            calendar = Calendar(env.task["calendars"][params.get("calendar", "office")])
-            at = calendar.add_business(env.now, params.get("process_delay", 60))
-        if params.get("complete_before") and at >= parse(params["complete_before"]):
-            raise ValueError("This request cannot complete before the service deadline: "
-                             + params["complete_before"])
-        if not condition_met(env, params.get("requires", {})):
-            raise ValueError("Required current evidence or prior service completion is missing")
-        env.selections[name] = {"entry": kwargs["entry"].strip(), "catalog": params["catalog"],
-                                "status": "pending", "submitted_at": stamp(env.now),
-                                "accepted": accepted, "result_text": None, "receipts": [],
-                                "params": params}
-        env.record("agent_selection_submitted", tool=name, entry=kwargs["entry"], accepted=accepted)
-        env.enqueue(at, "selection_processed", name)
-        if params.get("hold_minutes"):
-            env.enqueue(env.now + timedelta(minutes=params["hold_minutes"]),
-                        "selection_expired", name)
-        hold_note = ""
-        if params.get("hold_minutes"):
-            hold_note = (f" The option is held until {stamp(env.now + timedelta(minutes=params['hold_minutes']))} "
-                         "and lapses if not confirmed by then.")
-        return {"status": "submitted", "service": name, "at": stamp(env.now),
-                "text": "The selection has been submitted and is being processed; "
-                        "the outcome will not be pushed. Query the service status or re-check later to "
-                        "obtain the conclusion and any written confirmation." + hold_note}
-
-    def _hidden_dialogue(self, name, spec, kwargs):
-        """Ask the task's principal (the user being assisted) a question.
-        All matching authored topics contribute facts, with semantic topic
-        selection in LLM mode. Conditional variants replace stale statements.
-        Only this role's current facts and explicitly scoped service state are
-        supplied; user statements remain information, not attested evidence."""
-        env = self._env
-        question = kwargs.get("question")
-        if set(kwargs) != {"question"} or not isinstance(question, str) or not question.strip():
-            raise ValueError("hidden dialogue tool takes a single string argument: question")
-        params = spec["params"]
-        facts = current_facts(env, params)
-        matched = select_facts(env, name, params, question, facts)
-        if not matched:
-            canonical = params.get("default") or \
-                "I don't have anything more to say about that; please work from what you already have."
-        else:
-            canonical = "\n".join(f["text"] for f in matched)
-        answer = canonical
-        if params.get("dialogue_mode") == "llm" and env.dialogue_client is not None:
-            answer = env.render_dialogue(name, params, question, canonical, bool(matched), facts)
-        else:
-            env.dialogue_history.setdefault(name, []).append({"question": question,
-                "answer": answer, "at": stamp(env.now)})
-        env.record("agent_dialogue", tool=name, question=question,
-                   matched=bool(matched), answer=answer)
-        return {"speaker": params.get("persona", "the user"), "answer": answer, "at": stamp(env.now)}
+        return TOOL_REGISTRY["wait_until"].handler(self, until, wake_on_message)
 
     def submit_answer(self, answer):
-        if self._env.finished:
-            raise ValueError("Only one final submission is allowed")
-        self._env.finished = True
-        return self._env.evaluate(answer)
+        return TOOL_REGISTRY["submit_answer"].handler(self, answer)
+
+    # Optional per-task tools -- implementations in tools/optional.py.
+    def query_case_status(self, case_id):
+        return TOOL_REGISTRY["query_case_status"].handler(self, case_id)
+
+    def fetch_document(self, url):
+        return TOOL_REGISTRY["fetch_document"].handler(self, url)
+
+    def check_schedule(self, contact, date=None, days=7):
+        return TOOL_REGISTRY["check_schedule"].handler(self, contact, date, days)
+
+    def lookup_directory(self, query):
+        return TOOL_REGISTRY["lookup_directory"].handler(self, query)
+
+    def request_callback(self, contact, topic=None):
+        return TOOL_REGISTRY["request_callback"].handler(self, contact, topic)
+
+    def leave_note(self, contact, text):
+        return TOOL_REGISTRY["leave_note"].handler(self, contact, text)
