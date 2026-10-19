@@ -308,16 +308,7 @@ def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, judg
         judge = LLMJudge(judge_client, validation_retries=judge_validation_retries)
         review = judge.judge(task, env, answer)
         result["llm_judge"] = review
-        # Anchor review (scoring 0.5.1): anchor tokens the literal check could
-        # not find go to a second judge pass for value-level equivalence; a
-        # graded confirmation lifts summary_anchors_ok, a denial or a pending
-        # (infrastructure) review keeps the deterministic verdict.
-        anchor_review = None
-        missing = (result.get("deterministic_checks") or {}).get("summary_anchor_missing")
-        if missing:
-            anchor_review = judge.review_anchors(task, env, answer, missing)
-            result["anchor_review_detail"] = anchor_review
-        result.update(score_with_judge(env, review, anchor_review=anchor_review))
+        result.update(score_with_judge(env, review))
         result["judge_pending"] = review["status"] == "pending"
         write_jsonl(run_dir / "judge_calls.jsonl", judge_client.calls)
         if review["status"] == "graded":
@@ -373,9 +364,6 @@ def render_report(summary, agent_model, simulator_model):
             checks = row.get("deterministic_checks") or {}
             if row.get("conclusion_correct") is False:
                 reasons.append("结论标签不正确")
-            missing = checks.get("summary_anchor_missing") or []
-            if missing:
-                reasons.append("总结缺失关键要素：" + "、".join(missing[:10]) + (f"（等{len(missing)}项）" if len(missing) > 10 else ""))
             if checks.get("forms_all_accepted") is False:
                 reasons.append("表单/选择未全部按expect办结")
             if checks.get("pending_process_satisfied") is False:

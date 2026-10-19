@@ -102,9 +102,11 @@ class DeterministicEvaluateTests(unittest.TestCase):
         self.assertFalse(result["conclusion_correct"])
         self.assertTrue(result["deterministic_checks"]["conclusion_label_legal"])
 
-    def test_summary_missing_an_anchor_element_fails(self):
+    def test_missing_anchor_element_is_reported_not_gating(self):
         env, answer, _ = run_reference(load(1))
-        # Drop anchor elements one by one until one is genuinely missed.
+        # Drop anchor elements one by one until one is genuinely missed: the
+        # missing list reports it (informational), but scoring 0.6 never lets a
+        # literal format miss gate success — value presence is the judge's call.
         token, result = None, None
         for candidate in sorted(key_tokens(answer["summary"])):
             stripped = answer["summary"].replace(candidate, "X")
@@ -113,8 +115,9 @@ class DeterministicEvaluateTests(unittest.TestCase):
                 token, result = candidate, attempt
                 break
         self.assertIsNotNone(token, "no anchor token could be dropped")
-        self.assertFalse(result["deterministic_anchors_ok"])
-        self.assertFalse(result["complete"])
+        self.assertFalse(result["deterministic_checks"].get("summary_anchors_ok", True) is False)
+        self.assertTrue(result["deterministic_anchors_ok"])
+        self.assertTrue(result["complete"])
 
     def test_malformed_answers_are_failures_not_crashes(self):
         env, _, _ = run_reference(load(1))
@@ -210,48 +213,16 @@ class ScoreWithJudgeTests(unittest.TestCase):
         self.assertFalse(result["resolved_success"])
         self.assertTrue(result["bounded_handling_success"])
 
-    def test_anchor_review_confirmation_lifts_missing_anchor(self):
-        # Simulate a format-level anchor miss (judge subparts all pass), then
-        # a graded anchor-review confirmation lifts summary_anchors_ok.
-        answer = deepcopy(self.answer)
-        base = self.env.evaluate(answer)
-        self.assertTrue(base["deterministic_anchors_ok"])  # reference passes first
-        checks = base["deterministic_checks"]
-        # Force a miss the way a "236.00 vs 236.0" episode would look.
-        checks["summary_anchor_missing"] = ["9999"]
-        checks["summary_anchors_ok"] = False
-        base["deterministic_anchors_ok"] = False
-        result = score_with_judge(self.env, review([True, True]), base=base,
-                                  anchor_review={"status": "graded", "confirmed": True, "tokens": []})
-        self.assertEqual(result["deterministic_checks"]["anchor_review_verdict"],
-                         "judge_confirmed_equivalent")
-        self.assertEqual(result["deterministic_checks"]["summary_anchor_missing"], [])
-        self.assertTrue(result["deterministic_anchors_ok"])
+    def test_format_level_anchor_miss_no_longer_blocks_judged_pass(self):
+        # Scoring 0.6: a summary that carries the values in another format
+        # (e.g. "236.00 USD" for 236.0) misses the literal token scan but
+        # never fails the process anchor — the judge subparts decide.
+        base = self.env.evaluate(deepcopy(self.answer))
+        base["deterministic_checks"]["summary_anchor_missing"] = ["9999"]
+        result = score_with_judge(self.env, review([True, True]), base=base)
+        self.assertEqual(result["scored_by"], "judge")
         self.assertTrue(result["complete"])
 
-    def test_anchor_review_denial_keeps_deterministic_failure(self):
-        base = self.env.evaluate(deepcopy(self.answer))
-        checks = base["deterministic_checks"]
-        checks["summary_anchor_missing"] = ["9999"]
-        checks["summary_anchors_ok"] = False
-        base["deterministic_anchors_ok"] = False
-        result = score_with_judge(self.env, review([True, True]), base=base,
-                                  anchor_review={"status": "graded", "confirmed": False, "tokens": []})
-        self.assertEqual(result["deterministic_checks"]["anchor_review_verdict"], "judge_denied")
-        self.assertFalse(result["deterministic_anchors_ok"])
-        self.assertFalse(result["complete"])
-
-    def test_pending_anchor_review_keeps_deterministic_verdict(self):
-        base = self.env.evaluate(deepcopy(self.answer))
-        checks = base["deterministic_checks"]
-        checks["summary_anchor_missing"] = ["9999"]
-        checks["summary_anchors_ok"] = False
-        base["deterministic_anchors_ok"] = False
-        result = score_with_judge(self.env, review([True, True]), base=base,
-                                  anchor_review={"status": "pending", "confirmed": False, "tokens": []})
-        self.assertFalse(result["deterministic_anchors_ok"])
-        self.assertFalse(result["complete"])
-        self.assertEqual(result["anchor_review"]["status"], "pending")
 
 
 class ValidationSmokeTests(unittest.TestCase):

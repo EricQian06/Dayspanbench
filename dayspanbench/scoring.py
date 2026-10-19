@@ -34,7 +34,7 @@ import unicodedata
 from .calendar import parse, stamp
 from .llm import key_tokens, missing_key_tokens
 
-SCORING_VERSION = "0.5.1"
+SCORING_VERSION = "0.6.0"
 
 
 def text_key(value):
@@ -270,10 +270,12 @@ def evaluate(env, answer):
     accepted = sum(1 for e in outcomes if e.get("accepted"))
     expired = sum(1 for e in env.audit if e["kind"] == "selection_expired")
 
+    # Informational only (scoring 0.6): the literal anchor scan no longer gates
+    # success — value-level presence is the judge's call — but the missing list
+    # stays in the report for eyeballing format drift.
     anchors = anchor_tokens(env)
     summary_tokens = frozenset(key_tokens(summary)) if isinstance(summary, str) else frozenset()
     missing = [t for t in sorted(anchors) if not token_present(summary, t, summary_tokens)]
-    summary_anchors_ok = not missing
 
     # Deadline-blocked tasks: the pending process must have been followed and
     # the clock must have reached the deadline before the verdict was filed.
@@ -283,7 +285,7 @@ def evaluate(env, answer):
 
     covered, fact_goal_count = _fact_goals_covered(env, task)
     anchors_ok = schema_valid and conclusion_correct and forms_ok \
-        and summary_anchors_ok and pending_ok and deadline_ok
+        and pending_ok and deadline_ok
     criteria = task.get("judge_criteria") or []
 
     deterministic_checks = {
@@ -294,7 +296,6 @@ def evaluate(env, answer):
         "forms_all_accepted": forms_ok,
         "summary_anchor_tokens": len(anchors),
         "summary_anchor_missing": missing,
-        "summary_anchors_ok": summary_anchors_ok,
         "pending_process_satisfied": pending_ok,
         "pending_deadline_reached": deadline_ok,
     }
@@ -330,42 +331,18 @@ def evaluate(env, answer):
     }
 
 
-def score_with_judge(env, review, base=None, anchor_review=None):
+def score_with_judge(env, review, base=None):
     """Compose the final score from an LLMJudge review
     ({"status": "graded"|"pending"|"skipped", "criteria": [...]}) on top of the
     deterministic evaluate() output. Pending reviews never count as passes and
     are reported explicitly (pending_criteria) so callers can drop the episode
-    from pass-rate denominators instead of scoring it as a failure.
-
-    anchor_review is the LLMJudge's second pass over anchor tokens the literal
-    check could not find in the summary ({"status": "graded"|"pending",
-    "confirmed": bool, "tokens": [...]}). A graded confirmation that the
-    summary carries the same values in equivalent formatting lifts
-    summary_anchors_ok — the deterministic check stays a format-level safety
-    net, the judge decides value-level equivalence. A denial or a pending
-    (infrastructure) review keeps the deterministic verdict."""
+    from pass-rate denominators instead of scoring it as a failure. Whether
+    the summary carries the graded key values is decided by the judge
+    criteria themselves; there is no separate anchor pass (scoring 0.6)."""
     task = env.task
     base = dict(base if base is not None else evaluate(env, getattr(env, "final_answer", None)))
     criteria = task.get("judge_criteria") or []
     base["subparts_total"] = len(criteria)
-    if anchor_review:
-        base["anchor_review"] = {"status": anchor_review.get("status"),
-                                  "confirmed": anchor_review.get("confirmed")}
-        checks = base["deterministic_checks"]
-        if (anchor_review.get("status") == "graded"
-                and anchor_review.get("confirmed") and checks.get("summary_anchor_missing")):
-            checks["summary_anchor_missing"] = []
-            checks["summary_anchors_ok"] = True
-            checks["anchor_review_verdict"] = "judge_confirmed_equivalent"
-            base["deterministic_anchors_ok"] = (
-                checks["conclusion_label_legal"] and checks["conclusion_correct"]
-                and checks["answer_schema_valid"] and checks["forms_all_accepted"]
-                and checks["summary_anchors_ok"]
-                and checks["pending_process_satisfied"] and checks["pending_deadline_reached"])
-            base["resolved_success"] = base["deterministic_anchors_ok"] and task["completion_class"] == "resolved"
-            base["bounded_handling_success"] = base["deterministic_anchors_ok"] and task["completion_class"] == "bounded_unresolved"
-        elif anchor_review.get("status") == "graded":
-            checks["anchor_review_verdict"] = "judge_denied"
     if not criteria or not review or review.get("status") == "skipped":
         base["scored_by"] = "deterministic_only"
         base["subparts_passed"], base["pending_criteria"] = 0, 0

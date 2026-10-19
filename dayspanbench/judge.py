@@ -72,14 +72,6 @@ JUDGE_SCHEMA = _object_schema({
         "reason": {"type": "string"}})}})
 
 
-ANCHOR_SCHEMA = _object_schema({
-    "tokens": {"type": "array", "items": _object_schema({
-        "token": {"type": "string"},
-        "present": {"type": "boolean"},
-        "quote": {"type": "string"},
-        "reason": {"type": "string"}})}})
-
-
 JUDGE_PROMPT = """You are an independent reviewer grading ONE completed agent episode in a dialogue benchmark.
 You grade only the criteria listed in the view, nothing else. Each criterion is a binary pass/fail claim about
 the agent's final answer (or its conduct in the recorded trace, when the criterion says so).
@@ -97,22 +89,6 @@ Rules:
 - Judge exactly the listed criterion ids, one verdict each. Do not add, drop or rename criteria.
 - Keep "reason" to one short evidence-based sentence.
 - Output only JSON matching the schema. No explanation outside the JSON."""
-
-
-ANCHOR_PROMPT = """You are an independent reviewer checking ONE final summary in a dialogue benchmark.
-A deterministic checker could not find certain key elements (numbers, ids, dates, time spans) verbatim in the
-summary; you decide whether the summary still carries each element's VALUE in an equivalent presentation.
-
-Rules:
-- Ground every verdict in the provided material only: the final answer and, for each missing token, the issued
-  fact or receipt value it comes from. Never use outside knowledge.
-- Equivalent presentations count: 236.00 USD / USD 236 / 236 (all satisfy 236.0), thousands separators,
-  a time range written in prose ("from 12:00 to 13:00" satisfies 12:00-13:00), a date spelled out.
-- present=true requires a short verbatim quote from the summary showing the value.
-- present=false only when the value is genuinely absent, contradicted, or misreported in the summary.
-- Judge exactly the listed missing tokens, one verdict each. Do not add, drop or rename tokens.
-- Keep "reason" to one short sentence. Output only JSON matching the schema."""
-
 
 def build_view(task, env, answer):
     """Compact, token-bounded judge view assembled from the environment state
@@ -287,83 +263,3 @@ class LLMJudge:
                               "evidence": by_id[c["id"]]["evidence"],
                               "evidence_synthesized": by_id[c["id"]].get("evidence_synthesized", False),
                               "reason": by_id[c["id"]]["reason"]} for c in criteria]}
-
-    # ---- anchor review: value-level equivalence for tokens the literal
-    # ---- summary-anchor check could not find (scoring 0.5.1).
-
-    def review_anchors(self, task, env, answer, missing):
-        """Second judge pass over anchor tokens the deterministic check marks
-        missing from the summary. The literal check is a format-level safety
-        net; this review decides whether the summary carries the same VALUE in
-        an equivalent presentation (236.00 USD for 236.0, "from 12:00 to
-        13:00" for 12:00-13:00). Returns {"status": "graded"|"pending",
-        "confirmed": bool, "tokens": [...]}; never raises — an infrastructure
-        failure grades as pending and the deterministic verdict stands."""
-        from .scoring import anchor_tokens
-        if not missing or not isinstance(answer, dict):
-            return {"status": "skipped", "confirmed": False, "tokens": []}
-        origins = anchor_tokens(env)
-        items = []
-        for token in missing:
-            origin = origins.get(token, "")
-            record = None
-            if origin.startswith("fact:"):
-                record = env.director.facts.get(origin[5:])
-            items.append({"token": token,
-                          "origin": origin,
-                          "fact_value": deepcopy(record.get("value")) if record else None,
-                          "fact_text": _clip(record.get("text"), 300) if record else None})
-        view = {"task_id": task["id"],
-                "final_answer": deepcopy(answer),
-                "missing_anchors": items,
-                "hint": ("Each missing_anchors entry is a key element (number, id, date or time span) that an "
-                         "issued fact or receipt carries and that the final summary should state. Decide per "
-                         "token whether the summary carries the same value in an equivalent presentation "
-                         "(trailing zeros, currency units, thousands separators, or a time range written in "
-                         "prose). Quote the summary passage that carries it; mark present=false only when the "
-                         "value is genuinely absent, contradicted, or misreported.")}
-        try:
-            result = self._validated_anchors(view, list(missing))
-        except (SimulatorError, ValueError):
-            return {"status": "pending", "confirmed": False,
-                    "tokens": [{"token": t, "present": None, "quote": "",
-                                "reason": "anchor review call failed; pending"} for t in missing]}
-        by_token = {v["token"]: v for v in result["tokens"]}
-        tokens = [{"token": t, "present": by_token[t]["present"], "quote": by_token[t]["quote"],
-                   "reason": by_token[t]["reason"]} for t in missing]
-        return {"status": "graded",
-                "confirmed": all(t["present"] is True for t in tokens),
-                "tokens": tokens}
-
-    def _validated_anchors(self, view, tokens):
-        current = deepcopy(view)
-        feedback = None
-        for _ in range(self.validation_retries + 1):
-            if feedback:
-                current["validation_feedback"] = feedback
-            result = self.client.complete(purpose="anchor_review", actor_id=view["task_id"],
-                                          system=ANCHOR_PROMPT, view=current, schema=ANCHOR_SCHEMA)
-            feedback = self._check_anchors(result, tokens)
-            if feedback is None:
-                return result
-            if self.client.calls:
-                self.client.calls[-1]["validation_error"] = feedback
-        raise ValueError(feedback)
-
-    @staticmethod
-    def _check_anchors(result, tokens):
-        verdicts = result.get("tokens")
-        if not isinstance(verdicts, list) or len(verdicts) != len(tokens):
-            return "Verdicts must cover exactly the listed missing tokens, one each."
-        seen = set()
-        for verdict in verdicts:
-            if set(verdict) != {"token", "present", "quote", "reason"}:
-                return "Each verdict has exactly token, present, quote, reason."
-            if verdict["token"] not in tokens or verdict["token"] in seen:
-                return "token must be one of the listed missing tokens, without duplicates."
-            seen.add(verdict["token"])
-            if not isinstance(verdict["present"], (bool, type(None))):
-                return "present must be a boolean."
-            if not verdict["quote"] and verdict["present"] is True:
-                return "present=true requires a quote from the summary."
-        return None

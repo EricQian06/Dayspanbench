@@ -335,7 +335,7 @@ v0.5口径（`SCORING_VERSION 0.5.0`）：
 - `scored_by`：本题分数由谁给出——`judge`（LLM评审官，主指标）、`judge_pending`（评审调用失败，标准记pending，不计入通过率分母）、`deterministic_only`（该题无`judge_criteria`，退化到纯确定性口径）、`awaiting_judge`（尚未评审）。
 - `subparts_passed` / `subparts_total`：LLM评审官逐子部分评分的通过数与总数；主分数即两者之比。
 - `pending_criteria`：因评审调用失败而pending的标准条数。
-- `deterministic_anchors_ok`：确定性锚点是否全部满足（结论标签合法、表单/选定按预期办结、关键回执要素出现在总结中、截止受阻题的待处理状态）。
+- `deterministic_anchors_ok`：确定性进程核对是否全部满足（结论标签合法、表单/选定按预期办结、截止受阻题的待处理状态）。v0.6起关键回执要素的字面锚点匹配不再作为通过条件（仅报告`summary_anchor_missing`），总结是否携带关键值由judge_criteria评定。
 - `complete`：全部子部分通过**且**确定性锚点满足。
 - 旧字段 `resolved_success` / `bounded_handling_success` / `information_sufficient` / `required_fact_coverage` 保留为兼容别名，语义已并入上述新口径（`resolved_success`等价于可解决题的`complete`；`bounded_handling_success`等价于截止受阻题的`complete`）。历史报告脚本可继续运行，但不应再按v0.4的字段语义解读。
 - `calendar_hours`、`calendar_days`、`agent_messages`、`contacted_actors`：模拟日历小时数及天数、Agent消息请求数和直接联系人数。一天按连续24小时折算，跨时区计算以UTC差值为准。内部角色不计入直接联系人数。

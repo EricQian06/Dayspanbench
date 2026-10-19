@@ -123,24 +123,13 @@ def main():
         if review["status"] != "graded":
             print(tid, "still pending after replay (validation)")
             continue
-        anchor_review = None
-        missing = (result.get("deterministic_checks") or {}).get("summary_anchor_missing")
-        if missing:
-            anchor_rows = [r for r in rows if r.get("purpose") == "anchor_review"]
-            if anchor_rows:
-                aclient = RecordedJudgeClient(anchor_rows)
-                ajudge = LLMJudge(aclient, validation_retries=1)
-                try:
-                    anchor_review = ajudge.review_anchors(task, env, answer, missing)
-                except Exception:  # noqa: BLE001
-                    anchor_review = None
         base = {k: v for k, v in result.items()
                 if k not in ("llm_judge", "scored_by", "score", "subparts_passed",
                              "subparts_total", "pending_criteria", "complete",
                              "resolved_success", "bounded_handling_success",
                              "information_sufficient", "required_fact_coverage",
                              "anchor_review", "anchor_review_detail")}
-        graded = score_with_judge(env, review, base=base, anchor_review=anchor_review)
+        graded = score_with_judge(env, review, base=base)
         graded["llm_judge"] = review
         graded["judge_pending"] = review["status"] == "pending"
         graded["rejudged"] = True

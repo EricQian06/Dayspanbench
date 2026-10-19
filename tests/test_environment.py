@@ -336,7 +336,8 @@ class EnvironmentTests(unittest.TestCase):
         old = next(e for e in env.evidence.values() if e["fact_id"] == "quote_old")
         for token in key_tokens(str(old["value"])):
             self.assertNotIn(token, result["deterministic_checks"]["summary_anchor_missing"])
-        # Dropping a current anchor element from the summary fails the anchors.
+        # Dropping a current anchor element is reported as missing but (scoring
+        # 0.6) no longer gates success — value presence is the judge's call.
         token, failed = None, None
         for candidate in sorted(key_tokens(answer["summary"])):
             stripped = answer["summary"].replace(candidate, "X")
@@ -345,7 +346,7 @@ class EnvironmentTests(unittest.TestCase):
                 token, failed = candidate, attempt
                 break
         self.assertIsNotNone(token, "no anchor token could be dropped")
-        self.assertFalse(failed["complete"])
+        self.assertTrue(failed["deterministic_anchors_ok"])
 
     def test_missing_summary_is_a_schema_failure(self):
         env, answer, _ = run_reference(load(1))

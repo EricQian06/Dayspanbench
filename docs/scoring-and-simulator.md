@@ -1,6 +1,6 @@
 # v0.5：LLM终审主评分与LLM人物模拟器
 
-v0.5把评分范式从"结构化claims+证据编号引用的确定性核对"改为"**LLM评审官为主、确定性锚点为辅**"（`SCORING_VERSION 0.5.1`）：每题作者编写子部分标准`judge_criteria`，Agent提交`{conclusion, summary}`自然语言总结，LLM评审官逐条评阅；引擎另做一层确定性锚点核对（结论标签、表单办结、回执要素是否在总结中字面出现、截止受阻题的待处理状态）。人物可以选择规则模式或实际调用LLM的模式；LLM不控制事实、时间和进程，NPC措辞由LLM生成。
+v0.5把评分范式从"结构化claims+证据编号引用的确定性核对"改为"**LLM评审官为主、确定性锚点为辅**"；v0.6（`SCORING_VERSION 0.6.0`）进一步取消锚点的全文匹配门槛：每题作者编写子部分标准`judge_criteria`，Agent提交`{conclusion, summary}`自然语言总结，LLM评审官逐条评阅；引擎另做一层确定性进程核对（结论标签、表单办结、截止受阻题的待处理状态）。人物可以选择规则模式或实际调用LLM的模式；LLM不控制事实、时间和进程，NPC措辞由LLM生成。
 
 **LLM终审（judge）是主评分指标。** episode结束、模拟器交互全部完成后，独立LLM评审官（`dayspanbench/judge.py`）依据私有`judge_criteria`评阅：
 - **输入**：各条标准（statement/pass_if/source）、Agent最终总结、Agent发出的信件，以及Agent可见的回执工件（receipts）、director已达成事实、审计轨迹摘要（工具调用、dialogue问答、表单办结结果）。看不到私有目标、隐藏事实或评分配置。
@@ -13,11 +13,11 @@ v0.5把评分范式从"结构化claims+证据编号引用的确定性核对"改�
 
 LLM评审官负责自然语言总结与信件的逐子部分评阅；确定性层只做进程锚点核对，二者合成最终分数：`complete := 全部子部分通过 AND deterministic_anchors_ok`。
 
-确定性锚点（`dayspanbench/scoring.py`）核对：
+确定性进程核对（`dayspanbench/scoring.py`）核对：
 - 答案对象结构（`{"conclusion": str, "summary": str}`）与结论标签合法性。
 - 表单/选定是否按作者预期办结（审计轨迹）。
-- 关键回执要素（受理号、票号、数量、金额、日期）是否在summary中字面或轻度归一化后出现；数值按值等价（`236.00`/`236 USD`满足`236.0`）。字面核对仍缺失的锚点会追加一次judge复核（anchor review）：judge确认总结以等价格式携带该值则放行并记录`anchor_review_verdict=judge_confirmed_equivalent`，judge否定或调用失败则维持确定性判定。
 - 截止受阻题（如DSB-12）的待处理事项状态。
+- （v0.6起仅报告）关键回执要素字面扫描仍会计算并输出`summary_anchor_missing`，供人工排查格式漂移，但**不再作为通过条件**——总结是否携带了关键值由judge_criteria逐条评定，等价格式（`236.00 USD` vs `236.0`、自然语言日期 vs ISO格式）由judge裁量。
 
 类型归一化（数值/单位/日期/集合/预设别名）保留用于引擎内部的材料受理与事实登记核对，不再出现在Agent答案结构中。
 
