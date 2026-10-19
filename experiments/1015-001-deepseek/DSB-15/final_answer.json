@@ -1,4 +1,0 @@
-{
-  "conclusion": "unconfirmed",
-  "summary": "截至截止时刻2027-04-05T15:00+00:00，已确认：PHOTOAPP-PRO 14.99美元未经授权charge（2027-04-03经token-photo扣款）的关联token-photo已被撤销（回执R-0001：仅撤销token-photo，卡片保持有效，token-cloud/token-music/token-print均保持有效，付款计划未变）；PHOTOAPP-PRO账单台Casey Lin书面确认调查仍在进行、截至回复时该笔charge尚无reversal（回执R-0002，2027-04-03T20:03+00:00）；deadline 2027-04-04 18:00丹佛时间过后账户记录确认该笔charge无reversal（ledger-XDF2快照）。家庭云9.99美元、音乐服务14.99美元均属合法并保持有效，2027-04-05 09:00丹佛时间的2410美元房租仍为scheduled状态，家庭共享权限（Carlos）保持active。争议的正式受理尚未确认：第一次以charge-photo提交被拒（需使用当前ledger记录charge-photo-final），随后于2027-04-05T15:00+00:00以charge-photo-final重新提交，状态为pending，截至截止时刻未收到受理回执，故dispute是否被接受尚未确认，不能认定为已受理。"
-}

@@ -1,4 +1,0 @@
-{
-  "conclusion": "held_packet_delivered",
-  "summary": "Maple Row unitA, a two-bedroom rental at 2100 USD per month (within the 2200 USD budget), move-in 2027-09-01, passed the remediation gate. Signed evidence chain in order: inspect-A signed 2027-08-17 found bedroom mold; repair-A signed, repair completed 2027-08-20 16:00 Central; dry-A signed, drying verified 2027-08-22 09:00 Central; retest-A signed by independent inspector, PASS on 2027-08-23 14:00 Central. Tenant Jasmine Cooper approved the no-deposit hold and exact packet. Hold hold-XHH1 confirmed: unitA, 2100 USD/month, move-in 2027-09-01, zero hold fee, active until 2027-08-25 17:00 Central, no deposit or signature taken. Exact unsigned signing packet delivered to tenant inbox: lease version 1 with attachments inspect-A, repair-A, dry-A, retest-A, preserving landlord repair duties; tenant confirmed receipt and exact match. Lease remains unsigned and no deposit paid."
-}

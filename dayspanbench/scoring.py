@@ -1,4 +1,4 @@
-"""v0.5 outcome scoring: deterministic process anchors + judge subparts.
+"""v0.6 outcome scoring: judge subparts + deterministic process checks.
 
 The LLM judge is the primary score (milestone 3): each task's authored
 ``judge_criteria`` are graded against the agent's natural-language final
@@ -6,13 +6,14 @@ summary. This module contributes only the deterministic layer:
 
 - ``evaluate(env, answer)`` checks process anchors: the answer object shape
   ({"conclusion": str, "summary": str}), the conclusion label, form/selection
-  outcomes recorded in the audit, whether the key receipt elements appear
-  (literally or lightly normalized) in the summary, and the pending-process
-  state for deadline-blocked tasks. These never decide success on their own
-  for judged tasks; they feed ``deterministic_anchors_ok`` and the legacy
-  alias fields.
+  outcomes recorded in the audit, and the pending-process state for
+  deadline-blocked tasks. Whether the key receipt VALUES appear in the
+  summary is the judge's call (scoring 0.6): the literal summary-anchor
+  tokens are still computed but reported informationally
+  (``summary_anchor_missing``) and never gate success — value presence in
+  equivalent formatting is exactly what judge_criteria grade.
 - ``score_with_judge(env, review)`` composes the final score from a judge
-  review: ``complete`` := all subparts passed AND anchors ok.
+  review: ``complete`` := all subparts passed AND process checks ok.
 
 Legacy field names (resolved_success, bounded_handling_success, complete,
 information_sufficient, required_fact_coverage) are kept as compatibility
