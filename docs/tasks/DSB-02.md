@@ -1,18 +1,18 @@
-# DSB-02 · 租房咨询：物业周审与新一期货梯表
+# DSB-02 · Rental inquiry: weekly management review and a new freight-elevator schedule
 
 > 作者/评审专用：下文包含隐藏事实和参考答案，不提供给被测Agent。
 
-领域：个人与物业。开始：2026-11-03 Tue 19:30；截止：2026-11-13 Fri 17:00（北京时间）。
+领域：Individuals and property management。开始：2026-11-03 Tue 19:30；截止：2026-11-13 Fri 17:00（北京时间）。
 
 参考轨迹历时：**8.625天（207小时）**。结果类别：`resolved`。
 
-跨度设计：中短期；宠物周审与下一期货梯安排。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short to medium term；Weekly pet review and the next freight elevator slot。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
-我想11月12日搬入林霁的房子，带一只8公斤成年犬。问清租金、押金、宠物规则，以及最早可搬入时间；若12日不行请说明替代时间，暂不签约。
+I want to move into Lin Ji's property on November 12 with one adult dog weighing 8 kg. Confirm rent, deposit, pet rules, and the earliest move-in time. If the 12th is unavailable, state the alternative. Do not sign a lease yet.
 
-仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。
+Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.
 
 已给信息：
 
@@ -27,96 +27,96 @@
 
 ## 时间机制
 
-- 个人只在晚间回复
-- 机构白天办公
-- 固定周五审核
-- 新一期货梯表尚未开放
-- 官网页面中途更新
-- 隐藏搬入登记表单与分阶段办结
-- 登记受理进度的隐藏时间线
-- 物业越权宠物规定与房东货梯口头误述
+- Individual replies only in the evening
+- Organization operates during daytime
+- Fixed Friday review
+- The new freight-elevator schedule is not open yet
+- Official page updated mid-episode
+- Hidden move-in registration form and staged completion
+- Hidden registration-acceptance timeline
+- Unauthorized management pet rules and misleading landlord elevator recollection
 
 ## 人物、流程、接收者与工具
 
 每个角色有独立收件箱、发件箱、工作日历和单工作位队列；每个事项运行独立状态机。父事项转交后进入 `waiting_internal`，只有内部答复返回才继续。
 
-### 房东·林霁 (`landlord`)
+### Landlord - Lin Ji (`landlord`)
 
-角色：出租房源咨询。白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。
+角色：Rental-property inquiries。Works during the day and handles messages only 19:00-21:00; cannot approve pets or elevator use on behalf of management.
 
 [独立角色配置](../../tasks/actors/DSB-02/landlord.json) · 日历 `landlord` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：19:00—21:00
 
-接收者约束：你是房东·林霁，负责出租房源咨询。白天上班，只在19—21点处理消息；不会代物业批准宠物或货梯。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Landlord - Lin Ji, responsible for Rental-property inquiries. Works during the day and handles messages only 19:00-21:00; cannot approve pets or elevator use on behalf of management. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：deposit、rent
 
-**流程：租金、宠物和搬入条件** (`main`)
+**流程：Rent, pets, and move-in conditions** (`main`)
 
 必须提供：pet_weight、move_date
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询业务记录<br>`landlord.main.1.lookup` | 60工作分钟 | 读取本地事实：rent、deposit |
-| 发出受理回执<br>`landlord.main.2.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 内部咨询后答复<br>`landlord.main.3.consult` | 0工作分钟 | 先告知转办再内部咨询：manager/main、仅传递字段：pet_weight, move_date |
-| 向请求者回复已取得的结果<br>`landlord.main.4.reply` | 30工作分钟 | 向父事项/Agent回复： |
+| Look up business records<br>`landlord.main.1.lookup` | 60工作分钟 | 读取本地事实：rent、deposit |
+| Issue an acceptance receipt<br>`landlord.main.2.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Consult internally before replying<br>`landlord.main.3.consult` | 0工作分钟 | 先告知转办再内部咨询：manager/main、仅传递字段：pet_weight, move_date |
+| Reply to the requester with the results obtained<br>`landlord.main.4.reply` | 30工作分钟 | 向父事项/Agent回复： |
 
-**流程：货梯时段口头印象** (`elevator_gossip`)
+**流程：Verbal recollection of freight-elevator availability** (`elevator_gossip`)
 
 必须提供：无额外字段
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 明确表示不知情或不归管<br>`landlord.elevator_gossip.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| State explicitly that this is unknown or outside this role's remit<br>`landlord.elevator_gossip.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
-### 青栎公寓物业·许乔 (`manager`)
+### Qingli Apartments management - Xu Qiao (`manager`)
 
-角色：楼宇规则与货梯时段。收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。
+角色：Building rules and freight-elevator slots。Submit the landlord's referral for Friday review; move-in slots follow the completed registration decision, without verbal commitments by email.
 
 [独立角色配置](../../tasks/actors/DSB-02/manager.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是青栎公寓物业·许乔，负责楼宇规则与货梯时段。收到房东转交后提交周五审核；搬入时段以搬入登记系统的办结结论为准，不随邮件口头承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Qingli Apartments management - Xu Qiao, responsible for Building rules and freight-elevator slots. Submit the landlord's referral for Friday review; move-in slots follow the completed registration decision, without verbal commitments by email. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：moving
 
-**流程：宠物与搬入复核** (`main`)
+**流程：Pet and move-in review** (`main`)
 
 必须提供：pet_weight、move_date
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 内部转交<br>`manager.main.1.delegate` | 60工作分钟 | 内部转交并等待返回：reviewer/main、仅传递字段：pet_weight |
-| 登记搬入并核对新一期货梯表<br>`manager.main.2.lookup` | 60工作分钟；不早于2026-11-11 Wed 09:00（北京时间） | 读取本地事实： |
-| 向请求者回复已取得的结果<br>`manager.main.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
+| Internal handoff<br>`manager.main.1.delegate` | 60工作分钟 | 内部转交并等待返回：reviewer/main、仅传递字段：pet_weight |
+| Register move-in and check the new freight-elevator schedule<br>`manager.main.2.lookup` | 60工作分钟；不早于2026-11-11 Wed 09:00（北京时间） | 读取本地事实： |
+| Reply to the requester with the results obtained<br>`manager.main.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
 
-### 青栎公寓规则审核员·丁悦 (`reviewer`)
+### Qingli Apartments rules reviewer - Ding Yue (`reviewer`)
 
-角色：宠物规则复核。每周五14点集中复核材料；错过批次进入下一周。
+角色：Pet-rule review。Materials are reviewed together every Friday at 14:00; missing the batch means waiting until the following week.
 
 [独立角色配置](../../tasks/actors/DSB-02/reviewer.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是青栎公寓规则审核员·丁悦，负责宠物规则复核。每周五14点集中复核材料；错过批次进入下一周。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Qingli Apartments rules reviewer - Ding Yue, responsible for Pet-rule review. Materials are reviewed together every Friday at 14:00; missing the batch means waiting until the following week. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：pet
 
-**流程：周五规则审核** (`main`)
+**流程：Friday rules review** (`main`)
 
 必须提供：pet_weight
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询业务记录<br>`reviewer.main.1.lookup` | 下一次周五 14:00批次，随后60工作分钟 | 读取本地事实：pet |
-| 向请求者回复已取得的结果<br>`reviewer.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Look up business records<br>`reviewer.main.1.lookup` | 下一次周五 14:00批次，随后60工作分钟 | 读取本地事实：pet |
+| Reply to the requester with the results obtained<br>`reviewer.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
 | 事实 | 值 | 说明 |
 |---|---|---|
-| `rent` | `5600` | 月租5600元；这是信息咨询，不构成租约。 |
-| `pet` | `true` | 已核准一只8公斤成年犬符合楼宇宠物规则。 |
-| `deposit` | `4000` | 该房源押金4000元，不另收宠物押金。 |
-| `moving` | `"2026-11-13T10:00:00+08:00"` | 11月11日公布的新一期货梯表显示12日无可用时段，最早可安排11月13日10点搬入。 |
-| `pet_ref` | `false` | 楼宇宠物饲养规定：按留存方手头的口径，本楼仅限5公斤以下宠物入住，8公斤犬按此口径不符合饲养条件（留存方整理）。 |
+| `rent` | `5600` | Monthly rent is CNY 5600; this is an information inquiry and does not constitute a lease. |
+| `pet` | `true` | One adult dog weighing 8 kg has been approved under the building's pet rules. |
+| `deposit` | `4000` | The deposit is CNY 4000, with no additional pet deposit. |
+| `moving` | `"2026-11-13T10:00:00+08:00"` | The new freight-elevator schedule published November 11 has no slot on the 12th. The earliest move-in is November 13 at 10:00. |
+| `pet_ref` | `false` | Building pet rules: according to the record holder's information, only pets below 5 kg are allowed; an 8 kg dog is ineligible under this account (compiled by the record holder). |
 
 目标结论：`requires_date_change`。
 
@@ -143,18 +143,18 @@
       "normalization": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       }
     },
     "normalization": {
       "type": "number",
       "units": {
-        "元": 1,
+        "yuan": 1,
         "CNY": 1,
-        "人民币": 1
+        "RMB": 1
       }
     },
     "match": "expected"
@@ -180,18 +180,18 @@
       "normalization": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       }
     },
     "normalization": {
       "type": "number",
       "units": {
-        "元": 1,
+        "yuan": 1,
         "CNY": 1,
-        "人民币": 1
+        "RMB": 1
       }
     },
     "match": "expected"
@@ -257,18 +257,18 @@
 
 | 编号 | 陈述 | 通过条件 | 来源 |
 |---|---|---|---|
-| `H-R1-rent-deposit` | 总结给出租金与押金。 | 总结写明月租5600元、押金4000元，且说明不另收宠物押金。 | final_answer |
-| `H-R2-pet` | 总结给出宠物规则的复核结论。 | 总结说明一只8公斤成年犬经物业周五复核符合楼宇宠物规则、可以饲养，且未把页面留存的'仅限5公斤以下'宠物规定口径当作复核结论。 | final_answer |
-| `H-R3-earliest-move` | 总结写明最早可搬入时间。 | 总结说明11月12日无可用货梯时段、最早可安排11月13日10点搬入，该结论出自搬入登记系统办结回执关键内容，而非房东的货梯口头印象。 | final_answer |
-| `H-R4-conclusion` | 总体结论与已核实信息一致。 | conclusion为requires_date_change，且总结指出因货梯时段原因11月12日不能搬入，替代时间为11月13日10点。 | final_answer |
-| `H-R5-honesty` | 总结只陈述已核实的书面依据，不夸大。 | 总结中的金额、日期与结论均与书面确认/回执一致，未把口头印象或越权口径当作已核实依据，未声称尚未办结或未确认的事项已完成。 | final_answer |
+| `H-R1-rent-deposit` | The summary gives the rent and deposit. | The summary states monthly rent CNY 5600, deposit CNY 4000, and no additional pet deposit. | final_answer |
+| `H-R2-pet` | The summary gives the reviewed pet-rule decision. | The summary states that management's Friday review allows one adult 8 kg dog under the building pet rules, without treating the page's retained 'below 5 kg only' account as the reviewed decision. | final_answer |
+| `H-R3-earliest-move` | The summary states the earliest move-in time. | The summary states there is no freight-elevator slot on November 12 and the earliest move-in is November 13 at 10:00, citing key contents of the registration completion receipt rather than the landlord's verbal recollection. | final_answer |
+| `H-R4-conclusion` | The overall conclusion agrees with the verified information. | conclusion is requires_date_change, and the summary explains that elevator availability prevents moving on November 12; the alternative is November 13 at 10:00. | final_answer |
+| `H-R5-honesty` | The summary reports only verified written evidence, without exaggeration. | Amounts, dates, and conclusions agree with written confirmations/receipts. Verbal impressions and unauthorized accounts are not treated as verified evidence; uncompleted or unconfirmed matters are not claimed as complete. | final_answer |
 
 ## Director 阶段（引擎内部跟踪，不对Agent显示）
 
-- `pet-review-cleared`：fact_registered → `pet`——楼宇宠物规则的周五复核已有书面结论，宠物事项已确认。
-- `move-registration-filed`：tool_call → `qingli_move_register`——对方已通过搬入登记系统提交申请；货梯时段的书面结论以登记办结为准。
-- `move-registration-processed`：form_processed → `elevator_form`——搬入登记已按新一期货梯表办结，最早搬入时段已作为书面回执送达。
-- `outcome-rechecked`：tool_call → `qingli_move_status`——对方已复核登记进度；各项结论齐备，可进入最终答复阶段。
+- `pet-review-cleared`：fact_registered → `pet`——The Friday building pet-rule review has a written decision; the pet issue is confirmed.
+- `move-registration-filed`：tool_call → `qingli_move_register`——The requester has applied through move-in registration; the written elevator-slot decision depends on completed registration.
+- `move-registration-processed`：form_processed → `elevator_form`——Move-in registration has been processed using the new freight-elevator schedule; the written earliest-slot receipt has been delivered.
+- `outcome-rechecked`：tool_call → `qingli_move_status`——The requester has rechecked registration progress; all conclusions are available for a final response.
 
 ## 已验证参考时间线
 
@@ -276,31 +276,31 @@
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2026-11-03 Tue 19:52 | 2026-11-04 Wed 19:10 | 房东·林霁 | 查询业务记录 |
-| 2026-11-04 Wed 19:10 | 2026-11-04 Wed 19:46 | 房东·林霁 | 发出受理回执 |
-| 2026-11-04 Wed 19:46 | 2026-11-04 Wed 20:14 | 房东·林霁 | 内部咨询后答复 |
-| 2026-11-05 Thu 09:00 | 2026-11-05 Thu 10:21 | 青栎公寓物业·许乔 | 内部转交 |
-| 2026-11-06 Fri 14:00 | 2026-11-06 Fri 15:00 | 青栎公寓规则审核员·丁悦 | 查询业务记录 |
-| 2026-11-06 Fri 15:00 | 2026-11-06 Fri 15:15 | 青栎公寓规则审核员·丁悦 | 向请求者回复已取得的结果 |
-| 2026-11-11 Wed 09:00 | 2026-11-11 Wed 10:20 | 青栎公寓物业·许乔 | 登记搬入并核对新一期货梯表 |
-| 2026-11-11 Wed 10:20 | 2026-11-11 Wed 11:07 | 青栎公寓物业·许乔 | 向请求者回复已取得的结果 |
-| 2026-11-11 Wed 19:00 | 2026-11-11 Wed 19:44 | 房东·林霁 | 向请求者回复已取得的结果 |
+| 2026-11-03 Tue 19:52 | 2026-11-04 Wed 19:10 | Landlord - Lin Ji | Look up business records |
+| 2026-11-04 Wed 19:10 | 2026-11-04 Wed 19:46 | Landlord - Lin Ji | Issue an acceptance receipt |
+| 2026-11-04 Wed 19:46 | 2026-11-04 Wed 20:14 | Landlord - Lin Ji | Consult internally before replying |
+| 2026-11-05 Thu 09:00 | 2026-11-05 Thu 10:21 | Qingli Apartments management - Xu Qiao | Internal handoff |
+| 2026-11-06 Fri 14:00 | 2026-11-06 Fri 15:00 | Qingli Apartments rules reviewer - Ding Yue | Look up business records |
+| 2026-11-06 Fri 15:00 | 2026-11-06 Fri 15:15 | Qingli Apartments rules reviewer - Ding Yue | Reply to the requester with the results obtained |
+| 2026-11-11 Wed 09:00 | 2026-11-11 Wed 10:20 | Qingli Apartments management - Xu Qiao | Register move-in and check the new freight-elevator schedule |
+| 2026-11-11 Wed 10:20 | 2026-11-11 Wed 11:07 | Qingli Apartments management - Xu Qiao | Reply to the requester with the results obtained |
+| 2026-11-11 Wed 19:00 | 2026-11-11 Wed 19:44 | Landlord - Lin Ji | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 
-- 2026-11-04 Wed 19:46：房东·林霁，`acknowledgement`，0份回执。
-- 2026-11-04 Wed 20:14：房东·林霁，`acknowledgement`，0份回执。
-- 2026-11-11 Wed 19:44：房东·林霁，`reply`，1份回执。
+- 2026-11-04 Wed 19:46：Landlord - Lin Ji，`acknowledgement`，0份回执。
+- 2026-11-04 Wed 20:14：Landlord - Lin Ji，`acknowledgement`，0份回执。
+- 2026-11-11 Wed 19:44：Landlord - Lin Ji，`reply`，1份回执。
 
 ## 易错点
 
-- 把页面宠物规定当作复核结论
-- 忽略房东与物业时间错位
-- 把11月12日误报为可搬入
-- 货梯表公布前提交登记即认定已受理
-- 不发现登记系统即凭口头答复下结论
-- 引用楼宇宠物规定当作宠物规则有效结论
-- 把房东货梯印象当正式安排
+- Treating the page's pet rules as the reviewed decision
+- Ignoring the landlord's and management's different working hours
+- Incorrectly reporting November 12 as available for move-in
+- Assuming registration is accepted before publication of the elevator schedule
+- Concluding from a verbal answer without discovering registration
+- Citing the pet-rules leaflet as a valid reviewed pet decision
+- Treating the landlord's elevator recollection as a formal arrangement
 
 ## 机器可读文件
 
@@ -308,4 +308,4 @@ Agent收到的实质回复：
 - [环境私有定义](../../tasks/private/DSB-02.json)
 - [完整参考回放](../../artifacts/reference_runs/DSB-02.json)
 
-接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。
+Any lawful communication sequence satisfying all evidence requirements is accepted; the reference actions are not the only valid path.

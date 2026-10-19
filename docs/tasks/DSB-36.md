@@ -6,7 +6,7 @@
 
 参考轨迹历时：**0.208333天（5小时）**。结果类别：`resolved`。
 
-跨度设计：短期；official show confirmation plus midday ferry lift outage。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；official show confirmation plus midday ferry lift outage。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -48,7 +48,7 @@ Advisory and coordination only: search listings, verify the current show and ste
 
 [独立角色配置](../../tasks/actors/DSB-36/access_desk.json) · 日历 `halifax_daily` · 时区 `America/Halifax` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：09:00—21:00
 
-接收者约束：你是Harbour Festival access desk·Priya Nair，负责festival accessibility, seated viewing and step-free route records。Confirms seated step-free viewing capacity and the step-free bus route in writing; festival admission is free and prior-year paid ticket listings are stale; access places are reserved through the desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Harbour Festival access desk·Priya Nair, responsible for festival accessibility, seated viewing and step-free route records. Confirms seated step-free viewing capacity and the step-free bus route in writing; festival admission is free and prior-year paid ticket listings are stale; access places are reserved through the desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：access_reserved、bus_fare、home_arrival、route_step_free、seats、show_end、show_start、stage、total_cost
 
@@ -58,10 +58,10 @@ Advisory and coordination only: search listings, verify the current show and ste
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`access_desk.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`access_desk.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
 | check seated viewing capacity and step-free route status<br>`access_desk.main.2.lookup` | 60工作分钟 | 读取本地事实：seats、route_step_free、bus_fare |
-| 签发书面确认<br>`access_desk.main.3.document` | 20工作分钟 | 签发文本证据：seats、route_step_free、bus_fare |
-| 向请求者回复已取得的结果<br>`access_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`access_desk.main.3.document` | 20工作分钟 | 签发文本证据：seats、route_step_free、bus_fare |
+| Reply to the requester with the results obtained<br>`access_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 **流程：Minor accompaniment** (`minor`)
 
@@ -69,9 +69,9 @@ Advisory and coordination only: search listings, verify the current show and ste
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`access_desk.minor.1.acknowledge` | 20工作分钟 | 发出受理回执： |
-| 给出猜测性答复<br>`access_desk.minor.2.suggest` | 30工作分钟 | 给出猜测性答复： |
-| 向请求者回复已取得的结果<br>`access_desk.minor.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`access_desk.minor.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| Offer a speculative answer<br>`access_desk.minor.2.suggest` | 30工作分钟 | 给出猜测性答复： |
+| Reply to the requester with the results obtained<br>`access_desk.minor.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Harbour Festival welfare desk·Tom Okafor (`welfare_desk`)
 
@@ -79,7 +79,7 @@ Advisory and coordination only: search listings, verify the current show and ste
 
 [独立角色配置](../../tasks/actors/DSB-36/welfare_desk.json) · 日历 `halifax_daily` · 时区 `America/Halifax` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：09:00—21:00
 
-接收者约束：你是Harbour Festival welfare desk·Tom Okafor，负责minor-accompaniment confirmations for under-16 attendees。Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Harbour Festival welfare desk·Tom Okafor, responsible for minor-accompaniment confirmations for under-16 attendees. Issues written minor-accompaniment confirmations in response to a written request naming the child and the accompanying adults; verbal statements are not confirmations. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：minor_confirmation
 
@@ -89,10 +89,10 @@ Advisory and coordination only: search listings, verify the current show and ste
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`welfare_desk.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`welfare_desk.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
 | check the under-16 attendance record and issue the written accompaniment confirmation<br>`welfare_desk.main.2.lookup` | 60工作分钟 | 读取本地事实：minor_confirmation |
-| 签发书面确认<br>`welfare_desk.main.3.document` | 20工作分钟 | 签发文本证据：minor_confirmation |
-| 向请求者回复已取得的结果<br>`welfare_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`welfare_desk.main.3.document` | 20工作分钟 | 签发文本证据：minor_confirmation |
+| Reply to the requester with the results obtained<br>`welfare_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -444,14 +444,14 @@ Advisory and coordination only: search listings, verify the current show and ste
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-07-31 Sat 21:57 | 2027-07-31 Sat 22:35 | Harbour Festival access desk·Priya Nair | 发出受理回执 |
-| 2027-07-31 Sat 22:09 | 2027-07-31 Sat 22:35 | Harbour Festival welfare desk·Tom Okafor | 发出受理回执 |
+| 2027-07-31 Sat 21:57 | 2027-07-31 Sat 22:35 | Harbour Festival access desk·Priya Nair | Issue an acceptance receipt |
+| 2027-07-31 Sat 22:09 | 2027-07-31 Sat 22:35 | Harbour Festival welfare desk·Tom Okafor | Issue an acceptance receipt |
 | 2027-07-31 Sat 22:35 | 2027-07-31 Sat 23:48 | Harbour Festival access desk·Priya Nair | check seated viewing capacity and step-free route status |
 | 2027-07-31 Sat 22:35 | 2027-07-31 Sat 23:56 | Harbour Festival welfare desk·Tom Okafor | check the under-16 attendance record and issue the written accompaniment confirmation |
-| 2027-07-31 Sat 23:48 | 2027-08-01 Sun 00:28 | Harbour Festival access desk·Priya Nair | 签发书面确认 |
-| 2027-07-31 Sat 23:56 | 2027-08-01 Sun 00:33 | Harbour Festival welfare desk·Tom Okafor | 签发书面确认 |
-| 2027-08-01 Sun 00:28 | 2027-08-01 Sun 00:43 | Harbour Festival access desk·Priya Nair | 向请求者回复已取得的结果 |
-| 2027-08-01 Sun 00:33 | 2027-08-01 Sun 00:48 | Harbour Festival welfare desk·Tom Okafor | 向请求者回复已取得的结果 |
+| 2027-07-31 Sat 23:48 | 2027-08-01 Sun 00:28 | Harbour Festival access desk·Priya Nair | Issue written confirmation |
+| 2027-07-31 Sat 23:56 | 2027-08-01 Sun 00:33 | Harbour Festival welfare desk·Tom Okafor | Issue written confirmation |
+| 2027-08-01 Sun 00:28 | 2027-08-01 Sun 00:43 | Harbour Festival access desk·Priya Nair | Reply to the requester with the results obtained |
+| 2027-08-01 Sun 00:33 | 2027-08-01 Sun 00:48 | Harbour Festival welfare desk·Tom Okafor | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

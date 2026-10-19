@@ -6,7 +6,7 @@
 
 参考轨迹历时：**0.315972天（7.58小时）**。结果类别：`resolved`。
 
-跨度设计：短期；mid-day owner proof, delayed provider share migration and post-reconciliation audit。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；mid-day owner proof, delayed provider share migration and post-reconciliation audit。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Advisory and coordination only: read the masked inventory, gather attestations b
 
 [独立角色配置](../../tasks/actors/DSB-27/support_desk.json) · 日历 `kolkata_office` · 时区 `Asia/Kolkata` · 工作日：周一、周二、周三、周四、周五 · 时段：09:30—18:00
 
-接收者约束：你是Cloud account support desk·Ravi Kulkarni，负责official recovery, owner proof attestations and reconciliation status。Issues only the fixture's service attestations and receipts; the owner completes authentication personally in the official service, and no secret is ever collected or relayed. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Cloud account support desk·Ravi Kulkarni, responsible for official recovery, owner proof attestations and reconciliation status. Issues only the fixture's service attestations and receipts; the owner completes authentication personally in the official service, and no secret is ever collected or relayed. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：account_recovered、proof_verified
 
@@ -55,10 +55,10 @@ Advisory and coordination only: read the masked inventory, gather attestations b
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`support_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`support_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the recovery receipt and reconciliation status<br>`support_desk.main.2.lookup` | 120工作分钟 | 读取本地事实：account_recovered |
-| 签发书面确认<br>`support_desk.main.3.document` | 30工作分钟 | 签发文本证据：account_recovered |
-| 向请求者回复已取得的结果<br>`support_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`support_desk.main.3.document` | 30工作分钟 | 签发文本证据：account_recovered |
+| Reply to the requester with the results obtained<br>`support_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Sessions and sharing desk·Priya Nair (`access_desk`)
 
@@ -66,7 +66,7 @@ Advisory and coordination only: read the masked inventory, gather attestations b
 
 [独立角色配置](../../tasks/actors/DSB-27/access_desk.json) · 日历 `kolkata_office` · 时区 `Asia/Kolkata` · 工作日：周一、周二、周三、周四、周五 · 时段：09:30—18:00
 
-接收者约束：你是Sessions and sharing desk·Priya Nair，负责session inventory, revocations and share restoration。Attests the preserved trusted state and unchanged unrelated shares; session revocations and share restorations go through the scoped services (session_revoke, share_restore) and need the owner's exact approval. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Sessions and sharing desk·Priya Nair, responsible for session inventory, revocations and share restoration. Attests the preserved trusted state and unchanged unrelated shares; session revocations and share restorations go through the scoped services (session_revoke, share_restore) and need the owner's exact approval. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：contractor_unchanged、partner_share_restored、session_revoked、trusted_preserved
 
@@ -76,10 +76,10 @@ Advisory and coordination only: read the masked inventory, gather attestations b
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`access_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`access_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | verify the trusted sessions and the unrelated shares are unchanged<br>`access_desk.main.2.lookup` | 120工作分钟 | 读取本地事实：trusted_preserved、contractor_unchanged |
-| 签发书面确认<br>`access_desk.main.3.document` | 30工作分钟 | 签发文本证据：trusted_preserved、contractor_unchanged |
-| 向请求者回复已取得的结果<br>`access_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`access_desk.main.3.document` | 30工作分钟 | 签发文本证据：trusted_preserved、contractor_unchanged |
+| Reply to the requester with the results obtained<br>`access_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -293,10 +293,10 @@ Advisory and coordination only: read the masked inventory, gather attestations b
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-01-12 Tue 12:32 | 2027-01-12 Tue 13:20 | Sessions and sharing desk·Priya Nair | 发出受理回执 |
+| 2027-01-12 Tue 12:32 | 2027-01-12 Tue 13:20 | Sessions and sharing desk·Priya Nair | Issue an acceptance receipt |
 | 2027-01-12 Tue 13:20 | 2027-01-12 Tue 15:26 | Sessions and sharing desk·Priya Nair | verify the trusted sessions and the unrelated shares are unchanged |
-| 2027-01-12 Tue 15:26 | 2027-01-12 Tue 16:09 | Sessions and sharing desk·Priya Nair | 签发书面确认 |
-| 2027-01-12 Tue 16:09 | 2027-01-12 Tue 16:24 | Sessions and sharing desk·Priya Nair | 向请求者回复已取得的结果 |
+| 2027-01-12 Tue 15:26 | 2027-01-12 Tue 16:09 | Sessions and sharing desk·Priya Nair | Issue written confirmation |
+| 2027-01-12 Tue 16:09 | 2027-01-12 Tue 16:24 | Sessions and sharing desk·Priya Nair | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

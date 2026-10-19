@@ -47,7 +47,7 @@ Advisory and coordination only: gather the verified documents, obtain the applic
 
 [独立角色配置](../../tasks/actors/DSB-31/shelter_coordinator.json) · 日历 `us_mountain_office` · 时区 `America/Denver` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—17:00
 
-接收者约束：你是Ceylon Street Shelter intake coordinator·Marcus Bell，负责residence verification letters for shelter guests。Issues signed residence letters only in response to a written request naming the guest; unsigned drafts and verbal statements are not letters. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Ceylon Street Shelter intake coordinator·Marcus Bell, responsible for residence verification letters for shelter guests. Issues signed residence letters only in response to a written request naming the guest; unsigned drafts and verbal statements are not letters. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：shelter_residence
 
@@ -57,10 +57,10 @@ Advisory and coordination only: gather the verified documents, obtain the applic
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`shelter_coordinator.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`shelter_coordinator.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the intake record for Rosa Delgado's stay dates and print the signed letter<br>`shelter_coordinator.main.2.lookup` | 240工作分钟 | 读取本地事实：shelter_residence |
-| 签发书面确认<br>`shelter_coordinator.main.3.document` | 30工作分钟 | 签发文本证据：shelter_residence |
-| 向请求者回复已取得的结果<br>`shelter_coordinator.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`shelter_coordinator.main.3.document` | 30工作分钟 | 签发文本证据：shelter_residence |
+| Reply to the requester with the results obtained<br>`shelter_coordinator.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Denver County Relief Office caseworker·Dana Whitfield (`county_clerk`)
 
@@ -68,7 +68,7 @@ Advisory and coordination only: gather the verified documents, obtain the applic
 
 [独立角色配置](../../tasks/actors/DSB-31/county_clerk.json) · 日历 `us_mountain_office` · 时区 `America/Denver` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—17:00
 
-接收者约束：你是Denver County Relief Office caseworker·Dana Whitfield，负责the RELIEF-11822 case file and the appeal portal。Guides reconsideration requests for RELIEF-11822: exactly the current utility bill, the signed shelter letter and the denial letter go to the verified portal; the mailing address stays as recorded, and raw identity documents are never uploaded. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Denver County Relief Office caseworker·Dana Whitfield, responsible for the RELIEF-11822 case file and the appeal portal. Guides reconsideration requests for RELIEF-11822: exactly the current utility bill, the signed shelter letter and the denial letter go to the verified portal; the mailing address stays as recorded, and raw identity documents are never uploaded. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：docs_only_required、mailing_preserved、occupancy_214、submitted_once
 
@@ -78,10 +78,10 @@ Advisory and coordination only: gather the verified documents, obtain the applic
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`county_clerk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`county_clerk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the address-history record for RELIEF-11822<br>`county_clerk.main.2.lookup` | 180工作分钟 | 读取本地事实：occupancy_214 |
-| 签发书面确认<br>`county_clerk.main.3.document` | 30工作分钟 | 签发文本证据：occupancy_214 |
-| 向请求者回复已取得的结果<br>`county_clerk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`county_clerk.main.3.document` | 30工作分钟 | 签发文本证据：occupancy_214 |
+| Reply to the requester with the results obtained<br>`county_clerk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -277,14 +277,14 @@ Advisory and coordination only: gather the verified documents, obtain the applic
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-11-01 Mon 23:32 | 2027-11-02 Tue 00:20 | Ceylon Street Shelter intake coordinator·Marcus Bell | 发出受理回执 |
+| 2027-11-01 Mon 23:32 | 2027-11-02 Tue 00:20 | Ceylon Street Shelter intake coordinator·Marcus Bell | Issue an acceptance receipt |
 | 2027-11-02 Tue 00:20 | 2027-11-02 Tue 04:26 | Ceylon Street Shelter intake coordinator·Marcus Bell | check the intake record for Rosa Delgado's stay dates and print the signed letter |
-| 2027-11-02 Tue 04:26 | 2027-11-02 Tue 05:09 | Ceylon Street Shelter intake coordinator·Marcus Bell | 签发书面确认 |
-| 2027-11-02 Tue 05:09 | 2027-11-02 Tue 05:24 | Ceylon Street Shelter intake coordinator·Marcus Bell | 向请求者回复已取得的结果 |
-| 2027-11-02 Tue 06:00 | 2027-11-02 Tue 06:50 | Denver County Relief Office caseworker·Dana Whitfield | 发出受理回执 |
+| 2027-11-02 Tue 04:26 | 2027-11-02 Tue 05:09 | Ceylon Street Shelter intake coordinator·Marcus Bell | Issue written confirmation |
+| 2027-11-02 Tue 05:09 | 2027-11-02 Tue 05:24 | Ceylon Street Shelter intake coordinator·Marcus Bell | Reply to the requester with the results obtained |
+| 2027-11-02 Tue 06:00 | 2027-11-02 Tue 06:50 | Denver County Relief Office caseworker·Dana Whitfield | Issue an acceptance receipt |
 | 2027-11-02 Tue 06:50 | 2027-11-03 Wed 02:07 | Denver County Relief Office caseworker·Dana Whitfield | check the address-history record for RELIEF-11822 |
-| 2027-11-03 Wed 02:07 | 2027-11-03 Wed 02:51 | Denver County Relief Office caseworker·Dana Whitfield | 签发书面确认 |
-| 2027-11-03 Wed 02:51 | 2027-11-03 Wed 03:06 | Denver County Relief Office caseworker·Dana Whitfield | 向请求者回复已取得的结果 |
+| 2027-11-03 Wed 02:07 | 2027-11-03 Wed 02:51 | Denver County Relief Office caseworker·Dana Whitfield | Issue written confirmation |
+| 2027-11-03 Wed 02:51 | 2027-11-03 Wed 03:06 | Denver County Relief Office caseworker·Dana Whitfield | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

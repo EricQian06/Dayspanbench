@@ -2,13 +2,11 @@
 
 > 作者/评审专用：下文包含隐藏事实和参考答案，不提供给被测Agent。
 
-> 历史任务卡：2026-10-18已修复时间线。延期确认改为4月16日21:00（巴黎时间）发布，相关角色服务至23:59，订房处理需15工作分钟且必须在4月17日00:05到店前完成；尚未发布的事实会等待发布，后台异常不再记作Agent失败。下文日历、日期和参考回放保留旧版本，当前规则以[私有任务定义](../../tasks/private/DSB-23.json)为准。
-
 领域：pets_animals。开始：2027-04-17 Sat 00:00；截止：2027-04-19 Mon 00:00（北京时间）。
 
-参考轨迹历时：**0.875天（21小时）**。结果类别：`resolved`。
+参考轨迹历时：**0.249306天（5.98小时）**。结果类别：`resolved`。
 
-跨度设计：短期；evening train delay, overnight written extension and supervision rebound before booking。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；evening train delay, same-evening written extension and supervision rebound before booking。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -32,7 +30,7 @@ Advisory and coordination only: search listings, contact the hotel, companion an
 ## 时间机制
 
 - evening train delay rewrites the arrival record and breaks the 23:50 check-in fit
-- written hotel extension lands the next morning and gates the booking
+- written hotel extension lands at 21:00 that evening and gates booking before arrival
 - companion acknowledgement exists only for the current delayed itinerary
 - search-discoverable listings with five ineligible hotels
 - hidden booking service revalidates the live listing at booking time
@@ -46,9 +44,9 @@ Advisory and coordination only: search listings, contact the hotel, companion an
 
 角色：written pet acceptance, parking terms and late check-in extensions。Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission.
 
-[独立角色配置](../../tasks/actors/DSB-23/hotel_desk.json) · 日历 `paris_daily` · 时区 `Europe/Paris` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
+[独立角色配置](../../tasks/actors/DSB-23/hotel_desk.json) · 日历 `paris_trip_evening` · 时区 `Europe/Paris` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—23:59
 
-接收者约束：你是Villa des Roses hotel desk·Marc Aubert，负责written pet acceptance, parking terms and late check-in extensions。Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Villa des Roses hotel desk·Marc Aubert, responsible for written pet acceptance, parking terms and late check-in extensions. Issues written pet acceptances naming the exact dog, weight and vet letter, parking terms and late-check-in extensions for the current itinerary; generic pets-welcome marketing never substitutes for the written permission. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：late_extension、pet_accepted、stay_confirmed、total_cost
 
@@ -58,10 +56,10 @@ Advisory and coordination only: search listings, contact the hotel, companion an
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`hotel_desk.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`hotel_desk.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
 | check the written pet acceptance and parking terms<br>`hotel_desk.main.2.lookup` | 40工作分钟 | 读取本地事实：pet_accepted |
-| 签发书面确认<br>`hotel_desk.main.3.document` | 10工作分钟 | 签发文本证据：pet_accepted |
-| 向请求者回复已取得的结果<br>`hotel_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`hotel_desk.main.3.document` | 10工作分钟 | 签发文本证据：pet_accepted |
+| Reply to the requester with the results obtained<br>`hotel_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 **流程：Late check-in extension** (`extension`)
 
@@ -69,18 +67,18 @@ Advisory and coordination only: search listings, contact the hotel, companion an
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`hotel_desk.extension.1.acknowledge` | 10工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`hotel_desk.extension.1.acknowledge` | 10工作分钟 | 发出受理回执： |
 | issue the written late check-in extension for the delayed itinerary<br>`hotel_desk.extension.2.lookup` | 40工作分钟 | 读取本地事实：late_extension |
-| 签发书面确认<br>`hotel_desk.extension.3.document` | 10工作分钟 | 签发文本证据：late_extension |
-| 向请求者回复已取得的结果<br>`hotel_desk.extension.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`hotel_desk.extension.3.document` | 10工作分钟 | 签发文本证据：late_extension |
+| Reply to the requester with the results obtained<br>`hotel_desk.extension.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Travel companion·Lea Bernard (`companion_lea`)
 
 角色：animal supervision during the trip。May stay with Nino and acknowledges supervision only for the itinerary shown to her; an acknowledgement for an older arrival time does not carry over after a delay.
 
-[独立角色配置](../../tasks/actors/DSB-23/companion_lea.json) · 日历 `paris_daily` · 时区 `Europe/Paris` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
+[独立角色配置](../../tasks/actors/DSB-23/companion_lea.json) · 日历 `paris_trip_evening` · 时区 `Europe/Paris` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—23:59
 
-接收者约束：你是Travel companion·Lea Bernard，负责animal supervision during the trip。May stay with Nino and acknowledges supervision only for the itinerary shown to her; an acknowledgement for an older arrival time does not carry over after a delay. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Travel companion·Lea Bernard, responsible for animal supervision during the trip. May stay with Nino and acknowledges supervision only for the itinerary shown to her; an acknowledgement for an older arrival time does not carry over after a delay. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：companion_ack
 
@@ -90,18 +88,18 @@ Advisory and coordination only: search listings, contact the hotel, companion an
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`companion_lea.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`companion_lea.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
 | confirm her supervision acknowledgement for the current itinerary<br>`companion_lea.main.2.lookup` | 30工作分钟 | 读取本地事实：companion_ack |
-| 签发书面确认<br>`companion_lea.main.3.document` | 10工作分钟 | 签发文本证据：companion_ack |
-| 向请求者回复已取得的结果<br>`companion_lea.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`companion_lea.main.3.document` | 10工作分钟 | 签发文本证据：companion_ack |
+| Reply to the requester with the results obtained<br>`companion_lea.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Rail service desk·Julien Fabre (`rail_desk`)
 
 角色：current train arrival and delay status。Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit.
 
-[独立角色配置](../../tasks/actors/DSB-23/rail_desk.json) · 日历 `paris_daily` · 时区 `Europe/Paris` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
+[独立角色配置](../../tasks/actors/DSB-23/rail_desk.json) · 日历 `paris_trip_evening` · 时区 `Europe/Paris` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—23:59
 
-接收者约束：你是Rail service desk·Julien Fabre，负责current train arrival and delay status。Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Rail service desk·Julien Fabre, responsible for current train arrival and delay status. Reports only the current published arrival; a delayed arrival invalidates plans whose transfer ends after the hotel's written check-in limit. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：train_arrival
 
@@ -111,10 +109,10 @@ Advisory and coordination only: search listings, contact the hotel, companion an
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`rail_desk.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`rail_desk.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
 | check the current arrival time of train train-XPT<br>`rail_desk.main.2.lookup` | 30工作分钟 | 读取本地事实：train_arrival |
-| 签发书面确认<br>`rail_desk.main.3.document` | 10工作分钟 | 签发文本证据：train_arrival |
-| 向请求者回复已取得的结果<br>`rail_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`rail_desk.main.3.document` | 10工作分钟 | 签发文本证据：train_arrival |
+| Reply to the requester with the results obtained<br>`rail_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -359,27 +357,27 @@ Advisory and coordination only: search listings, contact the hotel, companion an
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-04-17 Sat 00:32 | 2027-04-17 Sat 01:05 | Villa des Roses hotel desk·Marc Aubert | 发出受理回执 |
-| 2027-04-17 Sat 01:05 | 2027-04-17 Sat 01:51 | Villa des Roses hotel desk·Marc Aubert | check the written pet acceptance and parking terms |
-| 2027-04-17 Sat 01:51 | 2027-04-17 Sat 14:19 | Villa des Roses hotel desk·Marc Aubert | 签发书面确认 |
-| 2027-04-17 Sat 14:19 | 2027-04-17 Sat 14:34 | Villa des Roses hotel desk·Marc Aubert | 向请求者回复已取得的结果 |
-| 2027-04-17 Sat 15:10 | 2027-04-17 Sat 15:45 | Travel companion·Lea Bernard | 发出受理回执 |
-| 2027-04-17 Sat 15:45 | 2027-04-17 Sat 16:32 | Travel companion·Lea Bernard | confirm her supervision acknowledgement for the current itinerary |
-| 2027-04-17 Sat 16:32 | 2027-04-17 Sat 17:01 | Travel companion·Lea Bernard | 签发书面确认 |
-| 2027-04-17 Sat 17:01 | 2027-04-17 Sat 17:16 | Travel companion·Lea Bernard | 向请求者回复已取得的结果 |
-| 2027-04-17 Sat 17:51 | 2027-04-17 Sat 18:22 | Villa des Roses hotel desk·Marc Aubert | 发出受理回执 |
-| 2027-04-17 Sat 18:22 | 2027-04-17 Sat 19:25 | Villa des Roses hotel desk·Marc Aubert | issue the written late check-in extension for the delayed itinerary |
-| 2027-04-17 Sat 19:25 | 2027-04-17 Sat 19:51 | Villa des Roses hotel desk·Marc Aubert | 签发书面确认 |
-| 2027-04-17 Sat 19:51 | 2027-04-17 Sat 20:06 | Villa des Roses hotel desk·Marc Aubert | 向请求者回复已取得的结果 |
+| 2027-04-17 Sat 00:16 | 2027-04-17 Sat 00:49 | Villa des Roses hotel desk·Marc Aubert | Issue an acceptance receipt |
+| 2027-04-17 Sat 00:49 | 2027-04-17 Sat 01:35 | Villa des Roses hotel desk·Marc Aubert | check the written pet acceptance and parking terms |
+| 2027-04-17 Sat 01:35 | 2027-04-17 Sat 02:03 | Villa des Roses hotel desk·Marc Aubert | Issue written confirmation |
+| 2027-04-17 Sat 02:03 | 2027-04-17 Sat 02:18 | Villa des Roses hotel desk·Marc Aubert | Reply to the requester with the results obtained |
+| 2027-04-17 Sat 02:52 | 2027-04-17 Sat 03:24 | Villa des Roses hotel desk·Marc Aubert | Issue an acceptance receipt |
+| 2027-04-17 Sat 02:53 | 2027-04-17 Sat 03:22 | Travel companion·Lea Bernard | Issue an acceptance receipt |
+| 2027-04-17 Sat 03:22 | 2027-04-17 Sat 04:12 | Travel companion·Lea Bernard | confirm her supervision acknowledgement for the current itinerary |
+| 2027-04-17 Sat 03:24 | 2027-04-17 Sat 04:20 | Villa des Roses hotel desk·Marc Aubert | issue the written late check-in extension for the delayed itinerary |
+| 2027-04-17 Sat 04:12 | 2027-04-17 Sat 04:50 | Travel companion·Lea Bernard | Issue written confirmation |
+| 2027-04-17 Sat 04:20 | 2027-04-17 Sat 04:46 | Villa des Roses hotel desk·Marc Aubert | Issue written confirmation |
+| 2027-04-17 Sat 04:46 | 2027-04-17 Sat 05:01 | Villa des Roses hotel desk·Marc Aubert | Reply to the requester with the results obtained |
+| 2027-04-17 Sat 04:50 | 2027-04-17 Sat 05:05 | Travel companion·Lea Bernard | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 
-- 2027-04-17 Sat 01:05：Villa des Roses hotel desk·Marc Aubert，`acknowledgement`，0份回执。
-- 2027-04-17 Sat 14:34：Villa des Roses hotel desk·Marc Aubert，`reply`，1份回执。
-- 2027-04-17 Sat 15:45：Travel companion·Lea Bernard，`acknowledgement`，0份回执。
-- 2027-04-17 Sat 17:16：Travel companion·Lea Bernard，`reply`，1份回执。
-- 2027-04-17 Sat 18:22：Villa des Roses hotel desk·Marc Aubert，`acknowledgement`，0份回执。
-- 2027-04-17 Sat 20:06：Villa des Roses hotel desk·Marc Aubert，`reply`，1份回执。
+- 2027-04-17 Sat 00:49：Villa des Roses hotel desk·Marc Aubert，`acknowledgement`，0份回执。
+- 2027-04-17 Sat 02:18：Villa des Roses hotel desk·Marc Aubert，`reply`，1份回执。
+- 2027-04-17 Sat 03:22：Travel companion·Lea Bernard，`acknowledgement`，0份回执。
+- 2027-04-17 Sat 03:24：Villa des Roses hotel desk·Marc Aubert，`acknowledgement`，0份回执。
+- 2027-04-17 Sat 05:01：Villa des Roses hotel desk·Marc Aubert，`reply`，1份回执。
+- 2027-04-17 Sat 05:05：Travel companion·Lea Bernard，`reply`，1份回执。
 
 ## 易错点
 

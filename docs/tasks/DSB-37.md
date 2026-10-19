@@ -6,7 +6,7 @@
 
 参考轨迹历时：**0.1875天（4.5小时）**。结果类别：`resolved`。
 
-跨度设计：短期；live rail delay plus accompanied-bike evidence window。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；live rail delay plus accompanied-bike evidence window。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Advisory and coordination only: search live inventory, confirm bike policy, and 
 
 [独立角色配置](../../tasks/actors/DSB-37/rail_desk.json) · 日历 `london_daily` · 时区 `Europe/London` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：07:00—21:00
 
-接收者约束：你是Rail recovery desk·Tom Ashby，负责disruption records, bike policy and replacement reservations。Confirms accompanied folded-bike acceptance in writing; live journey inventory and reservations go through the search service and booking desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Rail recovery desk·Tom Ashby, responsible for disruption records, bike policy and replacement reservations. Confirms accompanied folded-bike acceptance in writing; live journey inventory and reservations go through the search service and booking desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：arrival、bike_accompanied、extra_cost、replacement_reserved、return_preserved、transfer_depart
 
@@ -55,10 +55,10 @@ Advisory and coordination only: search live inventory, confirm bike policy, and 
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`rail_desk.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`rail_desk.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
 | check accompanied folded-bike acceptance for the transfer and coach<br>`rail_desk.main.2.lookup` | 20工作分钟 | 读取本地事实：bike_accompanied |
-| 签发书面确认<br>`rail_desk.main.3.document` | 10工作分钟 | 签发文本证据：bike_accompanied |
-| 向请求者回复已取得的结果<br>`rail_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`rail_desk.main.3.document` | 10工作分钟 | 签发文本证据：bike_accompanied |
+| Reply to the requester with the results obtained<br>`rail_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -295,10 +295,10 @@ Advisory and coordination only: search live inventory, confirm bike policy, and 
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-10-07 Thu 22:42 | 2027-10-07 Thu 23:15 | Rail recovery desk·Tom Ashby | 发出受理回执 |
+| 2027-10-07 Thu 22:42 | 2027-10-07 Thu 23:15 | Rail recovery desk·Tom Ashby | Issue an acceptance receipt |
 | 2027-10-07 Thu 23:15 | 2027-10-07 Thu 23:41 | Rail recovery desk·Tom Ashby | check accompanied folded-bike acceptance for the transfer and coach |
-| 2027-10-07 Thu 23:41 | 2027-10-08 Fri 00:09 | Rail recovery desk·Tom Ashby | 签发书面确认 |
-| 2027-10-08 Fri 00:09 | 2027-10-08 Fri 00:24 | Rail recovery desk·Tom Ashby | 向请求者回复已取得的结果 |
+| 2027-10-07 Thu 23:41 | 2027-10-08 Fri 00:09 | Rail recovery desk·Tom Ashby | Issue written confirmation |
+| 2027-10-08 Fri 00:09 | 2027-10-08 Fri 00:24 | Rail recovery desk·Tom Ashby | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

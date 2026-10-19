@@ -45,7 +45,7 @@ Advisory and coordination only: verify the registered-agent address, obtain the 
 
 [独立角色配置](../../tasks/actors/DSB-21/tenant_advocate.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Tenant advocacy office caseworker·Priya Nair，负责registered-agent address verification and the tracked-mail case file。Verifies the current registered-agent correspondence address in writing; after a returned mailing the address must be re-verified before any re-dispatch. Dispatches go through the tenant post desks. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Tenant advocacy office caseworker·Priya Nair, responsible for registered-agent address verification and the tracked-mail case file. Verifies the current registered-agent correspondence address in writing; after a returned mailing the address must be re-verified before any re-dispatch. Dispatches go through the tenant post desks. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：agent_address_v2、attachment_only、delivered、demand_amount、fees_total、first_returned
 
@@ -55,10 +55,10 @@ Advisory and coordination only: verify the registered-agent address, obtain the 
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`tenant_advocate.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`tenant_advocate.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the current registered-agent address on file<br>`tenant_advocate.main.2.lookup` | 240工作分钟 | 读取本地事实：agent_address_v2 |
-| 签发书面确认<br>`tenant_advocate.main.3.document` | 30工作分钟 | 签发文本证据：agent_address_v2 |
-| 向请求者回复已取得的结果<br>`tenant_advocate.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`tenant_advocate.main.3.document` | 30工作分钟 | 签发文本证据：agent_address_v2 |
+| Reply to the requester with the results obtained<br>`tenant_advocate.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -288,10 +288,10 @@ Advisory and coordination only: verify the registered-agent address, obtain the 
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-03-21 Sun 00:02 | 2027-03-21 Sun 00:50 | Tenant advocacy office caseworker·Priya Nair | 发出受理回执 |
+| 2027-03-21 Sun 00:02 | 2027-03-21 Sun 00:50 | Tenant advocacy office caseworker·Priya Nair | Issue an acceptance receipt |
 | 2027-03-21 Sun 00:50 | 2027-03-21 Sun 04:56 | Tenant advocacy office caseworker·Priya Nair | check the current registered-agent address on file |
-| 2027-03-21 Sun 04:56 | 2027-03-21 Sun 05:39 | Tenant advocacy office caseworker·Priya Nair | 签发书面确认 |
-| 2027-03-21 Sun 05:39 | 2027-03-21 Sun 05:54 | Tenant advocacy office caseworker·Priya Nair | 向请求者回复已取得的结果 |
+| 2027-03-21 Sun 04:56 | 2027-03-21 Sun 05:39 | Tenant advocacy office caseworker·Priya Nair | Issue written confirmation |
+| 2027-03-21 Sun 05:39 | 2027-03-21 Sun 05:54 | Tenant advocacy office caseworker·Priya Nair | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

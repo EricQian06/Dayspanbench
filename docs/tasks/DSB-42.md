@@ -6,7 +6,7 @@
 
 参考轨迹历时：**2.14583天（51.5小时）**。结果类别：`resolved`。
 
-跨度设计：短期；recruiter offer confirmation, a mid-morning link rotation and two separate per-employer desks。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；recruiter offer confirmation, a mid-morning link rotation and two separate per-employer desks。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -44,7 +44,7 @@ Contact each recruiter desk separately with a generic prior-commitment message o
 
 [独立角色配置](../../tasks/actors/DSB-42/stripe_recruiter.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Stripe recruiter desk·Jordan Blake，负责Stripe final interview scheduling only。Handles only the Stripe interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Stripe recruiter desk·Jordan Blake, responsible for Stripe final interview scheduling only. Handles only the Stripe interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：stripe_offer、stripe_rescheduled
 
@@ -54,8 +54,8 @@ Contact each recruiter desk separately with a generic prior-commitment message o
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`stripe_recruiter.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 向请求者回复已取得的结果<br>`stripe_recruiter.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`stripe_recruiter.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Reply to the requester with the results obtained<br>`stripe_recruiter.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Shopify recruiter desk·Sam Ortiz (`shopify_recruiter`)
 
@@ -63,7 +63,7 @@ Contact each recruiter desk separately with a generic prior-commitment message o
 
 [独立角色配置](../../tasks/actors/DSB-42/shopify_recruiter.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Shopify recruiter desk·Sam Ortiz，负责Shopify final interview scheduling only。Handles only the Shopify interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Shopify recruiter desk·Sam Ortiz, responsible for Shopify final interview scheduling only. Handles only the Shopify interview and its own slot confirmation; never receives information about any other employer or the candidate's family details. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：shopify_offer、shopify_rescheduled
 
@@ -73,8 +73,8 @@ Contact each recruiter desk separately with a generic prior-commitment message o
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`shopify_recruiter.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 向请求者回复已取得的结果<br>`shopify_recruiter.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`shopify_recruiter.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Reply to the requester with the results obtained<br>`shopify_recruiter.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -227,10 +227,10 @@ Contact each recruiter desk separately with a generic prior-commitment message o
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-09-15 Wed 01:02 | 2027-09-15 Wed 01:50 | Stripe recruiter desk·Jordan Blake | 发出受理回执 |
-| 2027-09-15 Wed 01:50 | 2027-09-15 Wed 02:05 | Stripe recruiter desk·Jordan Blake | 向请求者回复已取得的结果 |
-| 2027-09-15 Wed 02:26 | 2027-09-15 Wed 03:09 | Shopify recruiter desk·Sam Ortiz | 发出受理回执 |
-| 2027-09-15 Wed 03:09 | 2027-09-15 Wed 03:24 | Shopify recruiter desk·Sam Ortiz | 向请求者回复已取得的结果 |
+| 2027-09-15 Wed 01:02 | 2027-09-15 Wed 01:50 | Stripe recruiter desk·Jordan Blake | Issue an acceptance receipt |
+| 2027-09-15 Wed 01:50 | 2027-09-15 Wed 02:05 | Stripe recruiter desk·Jordan Blake | Reply to the requester with the results obtained |
+| 2027-09-15 Wed 02:26 | 2027-09-15 Wed 03:09 | Shopify recruiter desk·Sam Ortiz | Issue an acceptance receipt |
+| 2027-09-15 Wed 03:09 | 2027-09-15 Wed 03:24 | Shopify recruiter desk·Sam Ortiz | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

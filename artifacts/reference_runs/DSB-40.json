@@ -7,7 +7,7 @@
   },
   "result": {
     "task_id": "DSB-40",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -23,7 +23,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 9,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },

@@ -1,18 +1,18 @@
-# DSB-08 · 无障碍住宿：两家机构比较与延后的现场测量
+# DSB-08 · Accessible lodging: compare two providers and wait for on-site measurement
 
 > 作者/评审专用：下文包含隐藏事实和参考答案，不提供给被测Agent。
 
-领域：出行住宿。开始：2026-11-06 Fri 13:30；截止：2026-11-13 Fri 18:00（北京时间）。
+领域：Travel accommodation。开始：2026-11-06 Fri 13:30；截止：2026-11-13 Fri 18:00（北京时间）。
 
 参考轨迹历时：**6.00764天（144.18小时）**。结果类别：`resolved`。
 
-跨度设计：短期；指定房间可进入时间与两机构交叉核实。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；Designated room access time and cross-checking two providers。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
-在A旅舍和B酒店中选择11月14—16日两晚住宿，预算2600元。轮椅宽78cm，房门和浴室净宽均须至少80cm。获取实测尺寸，并确认合适酒店的房态和总价，不预订。
+Choose between Hostel A and Hotel B for two nights, November 14-16, with a CNY 2600 budget. The wheelchair is 78cm wide; both the doorway and bathroom clear widths must be at least 80cm. Obtain measured dimensions and confirm the suitable hotel's availability and total price. Do not book.
 
-仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。
+Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.
 
 已给信息：
 
@@ -27,137 +27,137 @@
 
 ## 时间机制
 
-- 周末接待与工作日技术岗
-- 并行联系两家机构
-- B侧复测受理窗口（窗口外仅登记）
-- 房间特定可进入时间
-- 过期网页尺寸
-- 前台对测量归属说法含糊
-- 隐藏房态报价表单与分阶段办结
-- 前台猜测性指路与B侧明确回绝
-- 房态报价受理的隐藏时间线
-- A侧留存的越权房型说明
+- Weekend reception and weekday technical staff
+- Contact two providers in parallel
+- Hotel B remeasurement intake window (registration only outside the window)
+- Room-specific access time
+- Outdated webpage dimensions
+- Reception's vague account of measurement responsibility
+- Hidden room availability and quote form and staged completion
+- Speculative reception directions and explicit refusal by Hotel B
+- Hidden room availability and quote intake timeline
+- Hostel A's retained room description outside its authority
 
 ## 人物、流程、接收者与工具
 
 每个角色有独立收件箱、发件箱、工作日历和单工作位队列；每个事项运行独立状态机。父事项转交后进入 `waiting_internal`，只有内部答复返回才继续。
 
-### A旅舍前台·蓝心 (`a_desk`)
+### Hostel A reception - Lan Xin (`a_desk`)
 
-角色：无障碍房咨询。每天营业，但不能用旧网页尺寸替代现场复测。
+角色：Accessible room inquiry。Open daily, but old webpage dimensions cannot replace on-site remeasurement.
 
 [独立角色配置](../../tasks/actors/DSB-08/a_desk.json) · 日历 `daily` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：09:00—12:00 / 13:00—18:00
 
-接收者约束：你是A旅舍前台·蓝心，负责无障碍房咨询。每天营业，但不能用旧网页尺寸替代现场复测。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Hostel A reception - Lan Xin, responsible for Accessible room inquiry. Open daily, but old webpage dimensions cannot replace on-site remeasurement. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：没有直接持有的目标事实；按声明工具进行转介、核验或内部查询
 
-**流程：通行尺寸确认** (`main`)
+**流程：Access dimension confirmation** (`main`)
 
 必须提供：wheelchair_width、stay_dates
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 给出猜测性答复<br>`a_desk.main.1.suggest` | 30工作分钟 | 给出猜测性答复： |
-| 内部转交<br>`a_desk.main.2.delegate` | 60工作分钟 | 内部转交并等待返回：a_tech/main、仅传递字段：wheelchair_width |
-| 向请求者回复已取得的结果<br>`a_desk.main.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
+| Offer a speculative answer<br>`a_desk.main.1.suggest` | 30工作分钟 | 给出猜测性答复： |
+| Internal handoff<br>`a_desk.main.2.delegate` | 60工作分钟 | 内部转交并等待返回：a_tech/main、仅传递字段：wheelchair_width |
+| Reply to the requester with the results obtained<br>`a_desk.main.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
 
-### A旅舍设施员·蒋延 (`a_tech`)
+### Hostel A facilities officer - Jiang Yan (`a_tech`)
 
-角色：现场测量。周末不在岗；测量记录区分净宽与含框宽度。
+角色：On-site measurement。Not on duty on weekends; measurement records distinguish clear width from width including frames.
 
 [独立角色配置](../../tasks/actors/DSB-08/a_tech.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是A旅舍设施员·蒋延，负责现场测量。周末不在岗；测量记录区分净宽与含框宽度。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Hostel A facilities officer - Jiang Yan, responsible for On-site measurement. Not on duty on weekends; measurement records distinguish clear width from width including frames. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：a_bath、a_door
 
-**流程：现场通行测量** (`main`)
+**流程：On-site access measurement** (`main`)
 
 必须提供：wheelchair_width
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询业务记录<br>`a_tech.main.1.lookup` | 120工作分钟 | 读取本地事实：a_door、a_bath |
-| 签发书面确认<br>`a_tech.main.2.document` | 0工作分钟 | 签发文本证据：a_door、a_bath |
-| 向请求者回复已取得的结果<br>`a_tech.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Look up business records<br>`a_tech.main.1.lookup` | 120工作分钟 | 读取本地事实：a_door、a_bath |
+| Issue written confirmation<br>`a_tech.main.2.document` | 0工作分钟 | 签发文本证据：a_door、a_bath |
+| Reply to the requester with the results obtained<br>`a_tech.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-### B酒店预订咨询·米禾 (`b_desk`)
+### Hotel B booking inquiries - Mi He (`b_desk`)
 
-角色：房态与费用。房态与价格可以先查询，是否可通行须现场量测；无障碍复测按临近入住的排期受理。
+角色：Room availability and fees。Availability and prices can be queried first, but access requires on-site measurement. Accessibility remeasurement intake follows the schedule close to arrival.
 
 [独立角色配置](../../tasks/actors/DSB-08/b_desk.json) · 日历 `daily` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：09:00—12:00 / 13:00—18:00
 
-接收者约束：你是B酒店预订咨询·米禾，负责房态与费用。房态与价格可以先查询，是否可通行须现场量测；无障碍复测按临近入住的排期受理。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Hotel B booking inquiries - Mi He, responsible for Room availability and fees. Availability and prices can be queried first, but access requires on-site measurement. Accessibility remeasurement intake follows the schedule close to arrival. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：b_available、b_price
 
-**流程：房态与费用查询** (`main`)
+**流程：Room availability and fee inquiry** (`main`)
 
 必须提供：stay_dates
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 登记房态核对请求<br>`b_desk.main.1.lookup` | 60工作分钟 | 读取本地事实： |
-| 明确表示不知情或不归管<br>`b_desk.main.2.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| Register room availability check request<br>`b_desk.main.1.lookup` | 60工作分钟 | 读取本地事实： |
+| State explicitly that this is unknown or outside this role's remit<br>`b_desk.main.2.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
-**流程：无障碍复测确认** (`measure`)
+**流程：Accessibility remeasurement confirmation** (`measure`)
 
 必须提供：wheelchair_width、stay_dates
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`b_desk.measure.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 内部转交<br>`b_desk.measure.2.delegate` | 30工作分钟 | 内部转交并等待返回：b_tech/main、仅传递字段：wheelchair_width |
-| 向请求者回复已取得的结果<br>`b_desk.measure.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`b_desk.measure.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Internal handoff<br>`b_desk.measure.2.delegate` | 30工作分钟 | 内部转交并等待返回：b_tech/main、仅传递字段：wheelchair_width |
+| Reply to the requester with the results obtained<br>`b_desk.measure.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
 
-**流程：A旅舍询问回绝** (`a_query`)
+**流程：Refusal of Hostel A inquiry** (`a_query`)
 
 必须提供：无额外字段
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 明确表示不知情或不归管<br>`b_desk.a_query.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| State explicitly that this is unknown or outside this role's remit<br>`b_desk.a_query.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
-### B酒店设施主管·郑砚 (`b_tech`)
+### Hotel B facilities supervisor - Zheng Yan (`b_tech`)
 
-角色：指定房型现场尺寸。指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。
+角色：On-site dimensions of the designated room type。The designated room can only be entered for remeasurement on November 11 at 10:00. Other rooms on the same floor cannot substitute.
 
 [独立角色配置](../../tasks/actors/DSB-08/b_tech.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是B酒店设施主管·郑砚，负责指定房型现场尺寸。指定房间11月11日10点才能进入复测；不能用同楼层其他房间数据代替。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Hotel B facilities supervisor - Zheng Yan, responsible for On-site dimensions of the designated room type. The designated room can only be entered for remeasurement on November 11 at 10:00. Other rooms on the same floor cannot substitute. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：b_bath、b_door
 
-**流程：指定房间量测** (`main`)
+**流程：Designated room measurement** (`main`)
 
 必须提供：wheelchair_width
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询业务记录<br>`b_tech.main.1.lookup` | 480工作分钟；不早于2026-11-11 Wed 10:00（北京时间） | 读取本地事实：b_door、b_bath |
-| 签发书面确认<br>`b_tech.main.2.document` | 0工作分钟 | 签发文本证据：b_door、b_bath |
-| 向请求者回复已取得的结果<br>`b_tech.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Look up business records<br>`b_tech.main.1.lookup` | 480工作分钟；不早于2026-11-11 Wed 10:00（北京时间） | 读取本地事实：b_door、b_bath |
+| Issue written confirmation<br>`b_tech.main.2.document` | 0工作分钟 | 签发文本证据：b_door、b_bath |
+| Reply to the requester with the results obtained<br>`b_tech.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-**流程：A旅舍询问回绝** (`a_query`)
+**流程：Refusal of Hostel A inquiry** (`a_query`)
 
 必须提供：无额外字段
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 明确表示不知情或不归管<br>`b_tech.a_query.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| State explicitly that this is unknown or outside this role's remit<br>`b_tech.a_query.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
 ## 隐藏事实与标准条件
 
 | 事实 | 值 | 说明 |
 |---|---|---|
-| `a_door` | `72` | A旅舍现场复测净门宽72cm，旧网页88cm包含门框。 |
-| `a_bath` | `68` | A旅舍浴室通行净宽68cm。 |
-| `b_door` | `92` | B酒店指定无障碍房净门宽92cm。 |
-| `b_bath` | `85` | B酒店浴室通行净宽85cm。 |
-| `b_available` | `true` | 11月14—16日指定无障碍房有可售房，尚未预订。 |
-| `b_price` | `2360` | 11月14—16日两晚总房费2360元。 |
-| `b_door_ref` | `96` | B酒店无障碍房型说明：据留存方了解，B酒店无障碍房净门宽96cm（留存方整理）。 |
+| `a_door` | `72` | Hostel A's on-site remeasurement gives a clear doorway width of 72cm; the old webpage's 88cm includes the frame. |
+| `a_bath` | `68` | Hostel A's clear bathroom access width is 68cm. |
+| `b_door` | `92` | Hotel B's designated accessible room has a clear doorway width of 92cm. |
+| `b_bath` | `85` | Hotel B's clear bathroom access width is 85cm. |
+| `b_available` | `true` | The designated accessible room is available for November 14-16 and has not been booked. |
+| `b_price` | `2360` | The total room fee for two nights, November 14-16, is CNY 2360. |
+| `b_door_ref` | `96` | Hotel B accessible room description: according to the record holder's understanding, the clear doorway width is 96cm (compiled by the record holder). |
 
 目标结论：`choose_b`。
 
@@ -185,11 +185,11 @@
         "type": "number",
         "units": {
           "cm": 1,
-          "厘米": 1,
+          "centimeters": 1,
           "m": 100,
-          "米": 100,
+          "meters": 100,
           "mm": 0.1,
-          "毫米": 0.1
+          "millimeters": 0.1
         }
       }
     },
@@ -197,11 +197,11 @@
       "type": "number",
       "units": {
         "cm": 1,
-        "厘米": 1,
+        "centimeters": 1,
         "m": 100,
-        "米": 100,
+        "meters": 100,
         "mm": 0.1,
-        "毫米": 0.1
+        "millimeters": 0.1
       }
     },
     "match": "expected"
@@ -228,11 +228,11 @@
         "type": "number",
         "units": {
           "cm": 1,
-          "厘米": 1,
+          "centimeters": 1,
           "m": 100,
-          "米": 100,
+          "meters": 100,
           "mm": 0.1,
-          "毫米": 0.1
+          "millimeters": 0.1
         }
       }
     },
@@ -240,11 +240,11 @@
       "type": "number",
       "units": {
         "cm": 1,
-        "厘米": 1,
+        "centimeters": 1,
         "m": 100,
-        "米": 100,
+        "meters": 100,
         "mm": 0.1,
-        "毫米": 0.1
+        "millimeters": 0.1
       }
     },
     "match": "expected"
@@ -271,11 +271,11 @@
         "type": "number",
         "units": {
           "cm": 1,
-          "厘米": 1,
+          "centimeters": 1,
           "m": 100,
-          "米": 100,
+          "meters": 100,
           "mm": 0.1,
-          "毫米": 0.1
+          "millimeters": 0.1
         }
       }
     },
@@ -283,11 +283,11 @@
       "type": "number",
       "units": {
         "cm": 1,
-        "厘米": 1,
+        "centimeters": 1,
         "m": 100,
-        "米": 100,
+        "meters": 100,
         "mm": 0.1,
-        "毫米": 0.1
+        "millimeters": 0.1
       }
     },
     "match": "expected"
@@ -314,11 +314,11 @@
         "type": "number",
         "units": {
           "cm": 1,
-          "厘米": 1,
+          "centimeters": 1,
           "m": 100,
-          "米": 100,
+          "meters": 100,
           "mm": 0.1,
-          "毫米": 0.1
+          "millimeters": 0.1
         }
       }
     },
@@ -326,11 +326,11 @@
       "type": "number",
       "units": {
         "cm": 1,
-        "厘米": 1,
+        "centimeters": 1,
         "m": 100,
-        "米": 100,
+        "meters": 100,
         "mm": 0.1,
-        "毫米": 0.1
+        "millimeters": 0.1
       }
     },
     "match": "expected"
@@ -383,18 +383,18 @@
       "normalization": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       }
     },
     "normalization": {
       "type": "number",
       "units": {
-        "元": 1,
+        "yuan": 1,
         "CNY": 1,
-        "人民币": 1
+        "RMB": 1
       }
     },
     "match": "expected"
@@ -406,18 +406,18 @@
 
 | 编号 | 陈述 | 通过条件 | 来源 |
 |---|---|---|---|
-| `S-R1-a-measurements` | 总结给出A旅舍的实测通行尺寸。 | 总结写明A旅舍现场复测净门宽72cm、浴室通行净宽68cm（旧网页88cm包含门框），并据此说明A不满足门宽与浴室净宽均至少80cm的要求。 | final_answer |
-| `S-R2-b-measurements` | 总结给出B酒店的实测通行尺寸。 | 总结写明B酒店指定无障碍房净门宽92cm、浴室通行净宽85cm，满足80cm要求，且未把页面房型说明的96cm或前台口头印象当作实测结论。 | final_answer |
-| `S-R3-b-rate` | 总结给出B酒店的房态与总价。 | 总结写明11月14—16日指定无障碍房有可售房、两晚总房费2360元且尚未预订，该结论出自房态报价核对办结回执关键内容。 | final_answer |
-| `S-R4-conclusion` | 总体结论与已核实信息一致。 | conclusion为choose_b，且总结指出B酒店尺寸满足要求且2360元在预算2600元内，故选B。 | final_answer |
-| `S-R5-honesty` | 总结只陈述已核实的书面依据，不夸大。 | 总结中的尺寸、金额与房态均与书面确认/回执一致，未把口头印象、旧网页数据或越权口径当作已核实依据，未声称尚未办结或未确认的事项已完成。 | final_answer |
+| `S-R1-a-measurements` | The summary provides Hostel A's measured access dimensions. | The summary states Hostel A's measured clear doorway width of 72cm and bathroom clear width of 68cm, notes that the old webpage's 88cm includes the frame, and explains that A fails the requirement of at least 80cm for both widths. | final_answer |
+| `S-R2-b-measurements` | The summary provides Hotel B's measured access dimensions. | The summary states that Hotel B's designated accessible room has a 92cm clear doorway and 85cm clear bathroom access, meeting the 80cm requirement, without treating the webpage's 96cm or reception's verbal impression as measured evidence. | final_answer |
+| `S-R3-b-rate` | The summary provides Hotel B's availability and total price. | The summary states that the designated accessible room is available for November 14-16, costs CNY 2360 for two nights, and has not been booked, based on the room availability and quote check completion receipt. | final_answer |
+| `S-R4-conclusion` | The overall conclusion agrees with the verified information. | conclusion is choose_b, and the summary chooses Hotel B because its dimensions meet requirements and CNY 2360 is within the CNY 2600 budget. | final_answer |
+| `S-R5-honesty` | The summary reports only verified written evidence, without exaggeration. | Dimensions, amounts, and room availability in the summary match written confirmations or receipts. Verbal impressions, old webpage data, and statements outside a role's authority are not treated as verified evidence, and unfinished or unconfirmed work is not claimed to be complete. | final_answer |
 
 ## Director 阶段（引擎内部跟踪，不对Agent显示）
 
-- `rate-check-filed`：tool_call → `wuzhang_rate_check`——对方已通过房态报价核对渠道提交登记；房态与总价以办结回执为准。
-- `rate-check-processed`：form_processed → `rate_form`——房态报价核对已办结，可售状态与两晚总价已作为书面回执送达。
-- `b-room-measured`：fact_registered → `b_door`——B酒店指定房型的现场复测已有书面量测结论。
-- `outcome-rechecked`：tool_call → `wuzhang_lodging_status`——对方已复核房态核对进度；各项结论齐备，可进入最终答复阶段。
+- `rate-check-filed`：tool_call → `wuzhang_rate_check`——The applicant has registered through the room availability and quote check channel; the completion receipt governs availability and total price.
+- `rate-check-processed`：form_processed → `rate_form`——The room availability and quote check is complete, and availability and the two-night total have been delivered in a written receipt.
+- `b-room-measured`：fact_registered → `b_door`——Hotel B's designated room type has a written on-site remeasurement determination.
+- `outcome-rechecked`：tool_call → `wuzhang_lodging_status`——The applicant has verified room availability check progress; all determinations are ready for a final response.
 
 ## 已验证参考时间线
 
@@ -425,36 +425,36 @@
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2026-11-06 Fri 14:02 | 2026-11-06 Fri 14:50 | A旅舍前台·蓝心 | 给出猜测性答复 |
-| 2026-11-06 Fri 14:50 | 2026-11-06 Fri 15:56 | A旅舍前台·蓝心 | 内部转交 |
-| 2026-11-06 Fri 15:56 | 2026-11-09 Mon 10:09 | A旅舍设施员·蒋延 | 查询业务记录 |
-| 2026-11-09 Mon 10:06 | 2026-11-09 Mon 10:56 | B酒店预订咨询·米禾 | 发出受理回执 |
-| 2026-11-09 Mon 10:09 | 2026-11-09 Mon 10:41 | A旅舍设施员·蒋延 | 签发书面确认 |
-| 2026-11-09 Mon 10:41 | 2026-11-09 Mon 10:56 | A旅舍设施员·蒋延 | 向请求者回复已取得的结果 |
-| 2026-11-09 Mon 10:56 | 2026-11-09 Mon 11:40 | B酒店预订咨询·米禾 | 内部转交 |
-| 2026-11-09 Mon 10:56 | 2026-11-09 Mon 11:46 | A旅舍前台·蓝心 | 向请求者回复已取得的结果 |
-| 2026-11-11 Wed 10:00 | 2026-11-12 Thu 11:16 | B酒店设施主管·郑砚 | 查询业务记录 |
-| 2026-11-12 Thu 11:16 | 2026-11-12 Thu 11:54 | B酒店设施主管·郑砚 | 签发书面确认 |
-| 2026-11-12 Thu 11:54 | 2026-11-12 Thu 12:09 | B酒店设施主管·郑砚 | 向请求者回复已取得的结果 |
-| 2026-11-12 Thu 13:00 | 2026-11-12 Thu 13:41 | B酒店预订咨询·米禾 | 向请求者回复已取得的结果 |
+| 2026-11-06 Fri 14:02 | 2026-11-06 Fri 14:50 | Hostel A reception - Lan Xin | Offer a speculative answer |
+| 2026-11-06 Fri 14:50 | 2026-11-06 Fri 15:56 | Hostel A reception - Lan Xin | Internal handoff |
+| 2026-11-06 Fri 15:56 | 2026-11-09 Mon 10:09 | Hostel A facilities officer - Jiang Yan | Look up business records |
+| 2026-11-09 Mon 10:06 | 2026-11-09 Mon 10:56 | Hotel B booking inquiries - Mi He | Issue an acceptance receipt |
+| 2026-11-09 Mon 10:09 | 2026-11-09 Mon 10:41 | Hostel A facilities officer - Jiang Yan | Issue written confirmation |
+| 2026-11-09 Mon 10:41 | 2026-11-09 Mon 10:56 | Hostel A facilities officer - Jiang Yan | Reply to the requester with the results obtained |
+| 2026-11-09 Mon 10:56 | 2026-11-09 Mon 11:40 | Hotel B booking inquiries - Mi He | Internal handoff |
+| 2026-11-09 Mon 10:56 | 2026-11-09 Mon 11:46 | Hostel A reception - Lan Xin | Reply to the requester with the results obtained |
+| 2026-11-11 Wed 10:00 | 2026-11-12 Thu 11:16 | Hotel B facilities supervisor - Zheng Yan | Look up business records |
+| 2026-11-12 Thu 11:16 | 2026-11-12 Thu 11:54 | Hotel B facilities supervisor - Zheng Yan | Issue written confirmation |
+| 2026-11-12 Thu 11:54 | 2026-11-12 Thu 12:09 | Hotel B facilities supervisor - Zheng Yan | Reply to the requester with the results obtained |
+| 2026-11-12 Thu 13:00 | 2026-11-12 Thu 13:41 | Hotel B booking inquiries - Mi He | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 
-- 2026-11-06 Fri 14:50：A旅舍前台·蓝心，`reply`，0份回执。
-- 2026-11-09 Mon 10:56：B酒店预订咨询·米禾，`acknowledgement`，0份回执。
-- 2026-11-09 Mon 11:46：A旅舍前台·蓝心，`reply`，1份回执。
-- 2026-11-12 Thu 13:41：B酒店预订咨询·米禾，`reply`，1份回执。
+- 2026-11-06 Fri 14:50：Hostel A reception - Lan Xin，`reply`，0份回执。
+- 2026-11-09 Mon 10:56：Hotel B booking inquiries - Mi He，`acknowledgement`，0份回执。
+- 2026-11-09 Mon 11:46：Hostel A reception - Lan Xin，`reply`，1份回执。
+- 2026-11-12 Thu 13:41：Hotel B booking inquiries - Mi He，`reply`，1份回执。
 
 ## 易错点
 
-- 门框宽当净宽
-- 把登记回执当作已受理后不再跟进
-- 第一家回复后过早停止
-- 拿一个房型数据替代另一个
-- 把前台含糊说法当实测数据
-- 不发现房态核对渠道即下结论
-- 引用页面B酒店房型说明当作实测结论
-- 把A旅舍前台门宽印象当B酒店实测结论
+- Mistaking frame-inclusive width for clear width
+- Treating registration acknowledgment as accepted processing and failing to follow up
+- Stopping too early after the first provider replies
+- Substituting one room type's data for another
+- Treating reception's vague statements as measured data
+- Concluding without discovering the room availability check channel
+- Treating the webpage Hotel B room description as a measured determination
+- Treating Hostel A reception's doorway impression as Hotel B's measured determination
 
 ## 机器可读文件
 
@@ -462,4 +462,4 @@ Agent收到的实质回复：
 - [环境私有定义](../../tasks/private/DSB-08.json)
 - [完整参考回放](../../artifacts/reference_runs/DSB-08.json)
 
-接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。
+Any lawful communication sequence satisfying all evidence requirements is accepted; the reference actions are not the only valid path.

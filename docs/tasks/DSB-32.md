@@ -6,7 +6,7 @@
 
 参考轨迹历时：**2.10417天（50.5小时）**。结果类别：`resolved`。
 
-跨度设计：短期；referral review window plus midday slot inventory change。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；referral review window plus midday slot inventory change。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -46,7 +46,7 @@ Administrative coordination only: search slots, read the patient's records priva
 
 [独立角色配置](../../tasks/actors/DSB-32/clinic_scheduler.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Cedar Endocrine Test Clinic scheduling·Rosa Kim，负责specialist slot inventory, referral review status and intake acknowledgement。Answers scheduling and intake questions; slots, referral review status and intake packets are handled through the portal services named on the entry page. Clinical questions stay with clinicians; the clinic never asks for unrelated notes or insurance cards. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Cedar Endocrine Test Clinic scheduling·Rosa Kim, responsible for specialist slot inventory, referral review status and intake acknowledgement. Answers scheduling and intake questions; slots, referral review status and intake packets are handled through the portal services named on the entry page. Clinical questions stay with clinicians; the clinic never asks for unrelated notes or insurance cards. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：appointment_confirmed、appointment_date、appointment_time、estimate、intake_shared、referral_approved
 
@@ -56,9 +56,9 @@ Administrative coordination only: search slots, read the patient's records priva
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`clinic_scheduler.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`clinic_scheduler.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
 | check current scheduling and intake records<br>`clinic_scheduler.main.2.lookup` | 60工作分钟 | 读取本地事实： |
-| 向请求者回复已取得的结果<br>`clinic_scheduler.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Reply to the requester with the results obtained<br>`clinic_scheduler.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 

@@ -82,7 +82,7 @@
     {
       "id": "clinic-entry",
       "title": "Permit portal: renewal application",
-      "text": "The initial renewal application is filed through the permit portal application desk (permit_portal_initial): the masked identity token and the clinician certificate are uploaded through the verified portal only - never email, SMS or social messages. Linda must approve the exact application before submission. After the office reviews the application, any supplement notice appears in the permit records desk (permit_records) and on the follow-up page; nothing is pushed.",
+      "text": "The initial renewal application is filed through the permit portal application desk (permit_portal_initial): the masked identity token (masked-id-token) and the clinician certificate (clinician-cert) are uploaded through the verified portal only - never email, SMS or social messages. Linda must approve the exact application before submission. After the office reviews the application, any supplement notice appears in the permit records desk (permit_records) and on the follow-up page; nothing is pushed.",
       "contacts": [],
       "snippet": "Permit portal: PERMIT-7 renewal application.",
       "form": {

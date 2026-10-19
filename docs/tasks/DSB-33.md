@@ -6,7 +6,7 @@
 
 参考轨迹历时：**1.16667天（28小时）**。结果类别：`resolved`。
 
-跨度设计：短期；landlord authorization turnaround plus a mid-case slot inventory change。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；landlord authorization turnaround plus a mid-case slot inventory change。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -44,7 +44,7 @@ Advisory and coordination only: read records, obtain the landlord's written auth
 
 [独立角色配置](../../tasks/actors/DSB-33/landlord.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Juniper Heights landlord·Grace Whitfield，负责inspection authority and cost responsibility。Confirms inspection cost responsibility, the approved providers and the inspection-only scope in writing; bookings go through the dispatch board's booking desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Juniper Heights landlord·Grace Whitfield, responsible for inspection authority and cost responsibility. Confirms inspection cost responsibility, the approved providers and the inspection-only scope in writing; bookings go through the dispatch board's booking desk. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：landlord_pays、no_repair
 
@@ -54,10 +54,10 @@ Advisory and coordination only: read records, obtain the landlord's written auth
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`landlord.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`landlord.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | review the inspection authorization for unit-H<br>`landlord.main.2.lookup` | 90工作分钟 | 读取本地事实：landlord_pays、no_repair |
-| 签发书面确认<br>`landlord.main.3.document` | 30工作分钟 | 签发文本证据：landlord_pays、no_repair |
-| 向请求者回复已取得的结果<br>`landlord.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`landlord.main.3.document` | 30工作分钟 | 签发文本证据：landlord_pays、no_repair |
+| Reply to the requester with the results obtained<br>`landlord.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Metro Plumbing dispatch desk·Sam Ortiz (`dispatch`)
 
@@ -65,7 +65,7 @@ Advisory and coordination only: read records, obtain the landlord's written auth
 
 [独立角色配置](../../tasks/actors/DSB-33/dispatch.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Metro Plumbing dispatch desk·Sam Ortiz，负责the slot board and inspection bookings。Runs the slot board; appointments are booked only through the booking desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Metro Plumbing dispatch desk·Sam Ortiz, responsible for the slot board and inspection bookings. Runs the slot board; appointments are booked only through the booking desk. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：fee_usd、inspection_confirmed、provider、slot_date、slot_start、tenant_present
 
@@ -75,7 +75,7 @@ Advisory and coordination only: read records, obtain the landlord's written auth
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 明确表示不知情或不归管<br>`dispatch.main.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| State explicitly that this is unknown or outside this role's remit<br>`dispatch.main.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
 ## 隐藏事实与标准条件
 
@@ -370,10 +370,10 @@ Advisory and coordination only: read records, obtain the landlord's written auth
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-06-10 Thu 22:32 | 2027-06-10 Thu 23:20 | Juniper Heights landlord·Grace Whitfield | 发出受理回执 |
+| 2027-06-10 Thu 22:32 | 2027-06-10 Thu 23:20 | Juniper Heights landlord·Grace Whitfield | Issue an acceptance receipt |
 | 2027-06-10 Thu 23:20 | 2027-06-11 Fri 00:56 | Juniper Heights landlord·Grace Whitfield | review the inspection authorization for unit-H |
-| 2027-06-11 Fri 00:56 | 2027-06-11 Fri 01:39 | Juniper Heights landlord·Grace Whitfield | 签发书面确认 |
-| 2027-06-11 Fri 01:39 | 2027-06-11 Fri 01:54 | Juniper Heights landlord·Grace Whitfield | 向请求者回复已取得的结果 |
+| 2027-06-11 Fri 00:56 | 2027-06-11 Fri 01:39 | Juniper Heights landlord·Grace Whitfield | Issue written confirmation |
+| 2027-06-11 Fri 01:39 | 2027-06-11 Fri 01:54 | Juniper Heights landlord·Grace Whitfield | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

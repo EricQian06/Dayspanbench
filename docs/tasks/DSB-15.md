@@ -6,7 +6,7 @@
 
 参考轨迹历时：**1.99861天（47.97小时）**。结果类别：`resolved`。
 
-跨度设计：短期；no-reversal deadline gate plus scoped token containment。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；no-reversal deadline gate plus scoped token containment。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Advisory and coordination only: read account records, contact the billing desk, 
 
 [独立角色配置](../../tasks/actors/DSB-15/billing_desk.json) · 日历 `us_eastern_daily` · 时区 `America/New_York` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是PHOTOAPP-PRO billing desk·Casey Lin，负责charge investigation and reversal status。Confirms in writing whether the charge is under investigation and whether any reversal has been posted; a billing investigation is not a refund. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are PHOTOAPP-PRO billing desk·Casey Lin, responsible for charge investigation and reversal status. Confirms in writing whether the charge is under investigation and whether any reversal has been posted; a billing investigation is not a refund. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：no_reversal
 
@@ -55,10 +55,10 @@ Advisory and coordination only: read account records, contact the billing desk, 
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`billing_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`billing_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the posted charge and whether any reversal exists<br>`billing_desk.main.2.lookup` | 150工作分钟 | 读取本地事实：no_reversal |
-| 签发书面确认<br>`billing_desk.main.3.document` | 30工作分钟 | 签发文本证据：no_reversal |
-| 向请求者回复已取得的结果<br>`billing_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`billing_desk.main.3.document` | 30工作分钟 | 签发文本证据：no_reversal |
+| Reply to the requester with the results obtained<br>`billing_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Card issuer service desk·Avery Fox (`issuer_desk`)
 
@@ -66,7 +66,7 @@ Advisory and coordination only: read account records, contact the billing desk, 
 
 [独立角色配置](../../tasks/actors/DSB-15/issuer_desk.json) · 日历 `us_eastern_daily` · 时区 `America/New_York` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Card issuer service desk·Avery Fox，负责card status, tokens and dispute intake。Verifies card status, payment schedules and service tokens; containment and dispute actions each need their own exact approval, and neither authorizes a card freeze. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Card issuer service desk·Avery Fox, responsible for card status, tokens and dispute intake. Verifies card status, payment schedules and service tokens; containment and dispute actions each need their own exact approval, and neither authorizes a card freeze. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：card_active、dispute_filed、disputed_amount、rent_unchanged、token_revoked
 
@@ -77,8 +77,8 @@ Advisory and coordination only: read account records, contact the billing desk, 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
 | verify card status, the rent schedule and the family services<br>`issuer_desk.main.1.lookup` | 60工作分钟 | 读取本地事实：card_active、rent_unchanged |
-| 签发书面确认<br>`issuer_desk.main.2.document` | 30工作分钟 | 签发文本证据：card_active、rent_unchanged |
-| 向请求者回复已取得的结果<br>`issuer_desk.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`issuer_desk.main.2.document` | 30工作分钟 | 签发文本证据：card_active、rent_unchanged |
+| Reply to the requester with the results obtained<br>`issuer_desk.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -293,13 +293,13 @@ Advisory and coordination only: read account records, contact the billing desk, 
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-04-03 Sat 23:32 | 2027-04-04 Sun 00:20 | PHOTOAPP-PRO billing desk·Casey Lin | 发出受理回执 |
+| 2027-04-03 Sat 23:32 | 2027-04-04 Sun 00:20 | PHOTOAPP-PRO billing desk·Casey Lin | Issue an acceptance receipt |
 | 2027-04-04 Sun 00:20 | 2027-04-04 Sun 02:56 | PHOTOAPP-PRO billing desk·Casey Lin | check the posted charge and whether any reversal exists |
-| 2027-04-04 Sun 02:56 | 2027-04-04 Sun 03:39 | PHOTOAPP-PRO billing desk·Casey Lin | 签发书面确认 |
-| 2027-04-04 Sun 03:39 | 2027-04-04 Sun 03:54 | PHOTOAPP-PRO billing desk·Casey Lin | 向请求者回复已取得的结果 |
+| 2027-04-04 Sun 02:56 | 2027-04-04 Sun 03:39 | PHOTOAPP-PRO billing desk·Casey Lin | Issue written confirmation |
+| 2027-04-04 Sun 03:39 | 2027-04-04 Sun 03:54 | PHOTOAPP-PRO billing desk·Casey Lin | Reply to the requester with the results obtained |
 | 2027-04-05 Mon 20:36 | 2027-04-05 Mon 21:56 | Card issuer service desk·Avery Fox | verify card status, the rent schedule and the family services |
-| 2027-04-05 Mon 21:56 | 2027-04-05 Mon 22:43 | Card issuer service desk·Avery Fox | 签发书面确认 |
-| 2027-04-05 Mon 22:43 | 2027-04-05 Mon 22:58 | Card issuer service desk·Avery Fox | 向请求者回复已取得的结果 |
+| 2027-04-05 Mon 21:56 | 2027-04-05 Mon 22:43 | Card issuer service desk·Avery Fox | Issue written confirmation |
+| 2027-04-05 Mon 22:43 | 2027-04-05 Mon 22:58 | Card issuer service desk·Avery Fox | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

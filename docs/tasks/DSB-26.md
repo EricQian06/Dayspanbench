@@ -6,7 +6,7 @@
 
 参考轨迹历时：**2.32639天（55.83小时）**。结果类别：`resolved`。
 
-跨度设计：短期；overnight vetting review, deadline-morning withdrawal and a care-gated travel booking。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；overnight vetting review, deadline-morning withdrawal and a care-gated travel booking。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Advisory and coordination only: search options, request vetting and staffing out
 
 [独立角色配置](../../tasks/actors/DSB-26/care_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Vetted care coordination desk·Nadia Ochoa，负责caregiver vetting, staffing reviews and care reservations。Runs vetting and the final staffing review, and reserves named caregivers only under the parent's individual approval; a withdrawn caregiver's bookings and approvals are cancelled and a replacement must be reapproved before travel is booked. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Vetted care coordination desk·Nadia Ochoa, responsible for caregiver vetting, staffing reviews and care reservations. Runs vetting and the final staffing review, and reserves named caregivers only under the parent's individual approval; a withdrawn caregiver's bookings and approvals are cancelled and a replacement must be reapproved before travel is booked. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：care_a_withdrawn、care_reserved、caregivers_vetted、staffing_final
 
@@ -55,10 +55,10 @@ Advisory and coordination only: search options, request vetting and staffing out
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`care_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`care_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | complete the vetting review for the requested caregivers<br>`care_desk.main.2.lookup` | 780工作分钟 | 读取本地事实：caregivers_vetted |
-| 签发书面确认<br>`care_desk.main.3.document` | 30工作分钟 | 签发文本证据：caregivers_vetted |
-| 向请求者回复已取得的结果<br>`care_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`care_desk.main.3.document` | 30工作分钟 | 签发文本证据：caregivers_vetted |
+| Reply to the requester with the results obtained<br>`care_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 **流程：Staffing review status** (`staffing`)
 
@@ -66,10 +66,10 @@ Advisory and coordination only: search options, request vetting and staffing out
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`care_desk.staffing.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`care_desk.staffing.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the final staffing review outcome and any withdrawal<br>`care_desk.staffing.2.lookup` | 600工作分钟 | 读取本地事实：staffing_final、care_a_withdrawn |
-| 签发书面确认<br>`care_desk.staffing.3.document` | 30工作分钟 | 签发文本证据：staffing_final、care_a_withdrawn |
-| 向请求者回复已取得的结果<br>`care_desk.staffing.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`care_desk.staffing.3.document` | 30工作分钟 | 签发文本证据：staffing_final、care_a_withdrawn |
+| Reply to the requester with the results obtained<br>`care_desk.staffing.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Conference travel desk·Owen Pratt (`travel_desk`)
 
@@ -77,7 +77,7 @@ Advisory and coordination only: search options, request vetting and staffing out
 
 [独立角色配置](../../tasks/actors/DSB-26/travel_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Conference travel desk·Owen Pratt，负责trip offers, quotes and travel bookings。Quotes the trip offers and books travel only against an active, approved linked care reservation after the final staffing review; no payment is taken. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Conference travel desk·Owen Pratt, responsible for trip offers, quotes and travel bookings. Quotes the trip offers and books travel only against an active, approved linked care reservation after the final staffing review; no payment is taken. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：total_cost、trip_confirmed
 
@@ -88,7 +88,7 @@ Advisory and coordination only: search options, request vetting and staffing out
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
 | check the current trip offers<br>`travel_desk.main.1.lookup` | 60工作分钟 | 读取本地事实： |
-| 向请求者回复已取得的结果<br>`travel_desk.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Reply to the requester with the results obtained<br>`travel_desk.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -303,14 +303,14 @@ Advisory and coordination only: search options, request vetting and staffing out
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-09-01 Wed 22:32 | 2027-09-01 Wed 23:20 | Vetted care coordination desk·Nadia Ochoa | 发出受理回执 |
+| 2027-09-01 Wed 22:32 | 2027-09-01 Wed 23:20 | Vetted care coordination desk·Nadia Ochoa | Issue an acceptance receipt |
 | 2027-09-01 Wed 23:20 | 2027-09-03 Fri 00:26 | Vetted care coordination desk·Nadia Ochoa | complete the vetting review for the requested caregivers |
-| 2027-09-03 Fri 00:26 | 2027-09-03 Fri 01:09 | Vetted care coordination desk·Nadia Ochoa | 签发书面确认 |
-| 2027-09-03 Fri 01:09 | 2027-09-03 Fri 01:24 | Vetted care coordination desk·Nadia Ochoa | 向请求者回复已取得的结果 |
-| 2027-09-03 Fri 02:00 | 2027-09-03 Fri 02:50 | Vetted care coordination desk·Nadia Ochoa | 发出受理回执 |
+| 2027-09-03 Fri 00:26 | 2027-09-03 Fri 01:09 | Vetted care coordination desk·Nadia Ochoa | Issue written confirmation |
+| 2027-09-03 Fri 01:09 | 2027-09-03 Fri 01:24 | Vetted care coordination desk·Nadia Ochoa | Reply to the requester with the results obtained |
+| 2027-09-03 Fri 02:00 | 2027-09-03 Fri 02:50 | Vetted care coordination desk·Nadia Ochoa | Issue an acceptance receipt |
 | 2027-09-03 Fri 02:50 | 2027-09-04 Sat 01:07 | Vetted care coordination desk·Nadia Ochoa | check the final staffing review outcome and any withdrawal |
-| 2027-09-04 Sat 01:07 | 2027-09-04 Sat 01:51 | Vetted care coordination desk·Nadia Ochoa | 签发书面确认 |
-| 2027-09-04 Sat 01:51 | 2027-09-04 Sat 02:06 | Vetted care coordination desk·Nadia Ochoa | 向请求者回复已取得的结果 |
+| 2027-09-04 Sat 01:07 | 2027-09-04 Sat 01:51 | Vetted care coordination desk·Nadia Ochoa | Issue written confirmation |
+| 2027-09-04 Sat 01:51 | 2027-09-04 Sat 02:06 | Vetted care coordination desk·Nadia Ochoa | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

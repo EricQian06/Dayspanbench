@@ -6,7 +6,7 @@
 
 参考轨迹历时：**1.33333天（32小时）**。结果类别：`resolved`。
 
-跨度设计：短期；written estimate turnaround plus a mid-morning review move that invalidates the first plan。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；written estimate turnaround plus a mid-morning review move that invalidates the first plan。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Coordination only: read work records, request the written estimate and current r
 
 [独立角色配置](../../tasks/actors/DSB-24/ops_manager.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Operations manager·Dana Reyes，负责work requirements, written estimates, focus reservations and the work board。Issues only verified work records: the written effort estimate and the current review version and cutoff; never accepts private-calendar details, family or school titles, or work-completed claims. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Operations manager·Dana Reyes, responsible for work requirements, written estimates, focus reservations and the work board. Issues only verified work records: the written effort estimate and the current review version and cutoff; never accepts private-calendar details, family or school titles, or work-completed claims. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：estimate_confirmed、focus_reserved、plan_acknowledged、review_v2
 
@@ -55,10 +55,10 @@ Coordination only: read work records, request the written estimate and current r
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`ops_manager.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`ops_manager.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the written effort estimate<br>`ops_manager.main.2.lookup` | 420工作分钟 | 读取本地事实：estimate_confirmed |
-| 签发书面确认<br>`ops_manager.main.3.document` | 30工作分钟 | 签发文本证据：estimate_confirmed |
-| 向请求者回复已取得的结果<br>`ops_manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`ops_manager.main.3.document` | 30工作分钟 | 签发文本证据：estimate_confirmed |
+| Reply to the requester with the results obtained<br>`ops_manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 **流程：Review timing** (`review`)
 
@@ -66,8 +66,8 @@ Coordination only: read work records, request the written estimate and current r
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`ops_manager.review.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 向请求者回复已取得的结果<br>`ops_manager.review.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`ops_manager.review.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Reply to the requester with the results obtained<br>`ops_manager.review.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -226,12 +226,12 @@ Coordination only: read work records, request the written estimate and current r
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-10-04 Mon 22:32 | 2027-10-04 Mon 23:20 | Operations manager·Dana Reyes | 发出受理回执 |
+| 2027-10-04 Mon 22:32 | 2027-10-04 Mon 23:20 | Operations manager·Dana Reyes | Issue an acceptance receipt |
 | 2027-10-04 Mon 23:20 | 2027-10-05 Tue 06:26 | Operations manager·Dana Reyes | check the written effort estimate |
-| 2027-10-05 Tue 06:26 | 2027-10-05 Tue 07:09 | Operations manager·Dana Reyes | 签发书面确认 |
-| 2027-10-05 Tue 07:09 | 2027-10-05 Tue 07:24 | Operations manager·Dana Reyes | 向请求者回复已取得的结果 |
-| 2027-10-05 Tue 22:36 | 2027-10-05 Tue 23:26 | Operations manager·Dana Reyes | 发出受理回执 |
-| 2027-10-05 Tue 23:26 | 2027-10-05 Tue 23:41 | Operations manager·Dana Reyes | 向请求者回复已取得的结果 |
+| 2027-10-05 Tue 06:26 | 2027-10-05 Tue 07:09 | Operations manager·Dana Reyes | Issue written confirmation |
+| 2027-10-05 Tue 07:09 | 2027-10-05 Tue 07:24 | Operations manager·Dana Reyes | Reply to the requester with the results obtained |
+| 2027-10-05 Tue 22:36 | 2027-10-05 Tue 23:26 | Operations manager·Dana Reyes | Issue an acceptance receipt |
+| 2027-10-05 Tue 23:26 | 2027-10-05 Tue 23:41 | Operations manager·Dana Reyes | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

@@ -1,18 +1,18 @@
-# DSB-12 · 跨境原型设备：300天内的初审、二次补件与未决放行
+# DSB-12 · Cross-border prototype equipment: preliminary review, second-round documents, and unresolved release within 300 days
 
 > 作者/评审专用：下文包含隐藏事实和参考答案，不提供给被测Agent。
 
-领域：跨境设备争议核查。开始：2026-11-06 Fri 15:00；截止：2027-09-02 Thu 15:00（北京时间）。
+领域：Cross-border equipment dispute investigation。开始：2026-11-06 Fri 15:00；截止：2027-09-02 Thu 15:00（北京时间）。
 
 参考轨迹历时：**300天（7200小时）**。结果类别：`bounded_unresolved`。
 
-跨度设计：长期；原型设备归类争议、第二轮补件和未决技术复核。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Long term；Prototype classification dispute, second-round documents, and pending technical review。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
-跟进因归类争议留置的科研原型设备PK-608。核实历史入库交接、取得初审登记号，按流程向出口方取得有效新版单证和制造批次溯源资料，再发起长期技术复核。汇报须于2027年9月2日15时及之后提交，结论须反映截至该时点的最新确认状态；若届时放行仍未确认，如实报告已完成步骤与待确认事项。不要把历史入库、初审登记或补件受理当成当前放行；不支付费用或作法律承诺。
+Follow up research prototype equipment PK-608 detained over a classification dispute. Verify historical warehouse handoff, obtain the preliminary review registration ID, obtain valid updated documents and manufacturing batch traceability materials from the exporter under the process, then initiate long-term technical review. Submit the report at or after September 2, 2027 at 15:00, reflecting the latest confirmed status as of that time. If release remains unconfirmed, report completed steps and pending matters accurately. Do not treat historical intake, preliminary registration, or acceptance of supplemental documents as current release. Do not pay fees or make legal commitments.
 
-仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。
+Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.
 
 已给信息：
 
@@ -26,195 +26,195 @@
 
 ## 时间机制
 
-- 跨年度多轮事项
-- 定期归类初审窗口
-- 窗口前过早来信仅登记不受理
-- 旧单证过期与跨人物证据更新
-- 制造档案恢复后的第二轮补件
-- 纽约夏令时切换
-- 300天截止仍早于技术复核窗口
-- 客服对单证去向记忆模糊
-- 公告页中途更新
-- 隐藏长期复核登记表单与分阶段受理
-- 长期复核登记的隐藏时间线
-- 客服越权登记记录与仓库放行口头误述
+- Multiple rounds across calendar years
+- Scheduled preliminary classification review window
+- Early messages before the window are registered but not accepted for processing
+- Expired documents and evidence updates across contacts
+- Second-round supplemental documents after manufacturing archive restoration
+- New York daylight saving time transition
+- The 300-day deadline still precedes the technical review window
+- Customer service's vague recollection of document routing
+- Notice page updated during the process
+- Hidden long-term review registration form and staged acceptance
+- Hidden long-term review registration timeline
+- Customer service registration records outside its authority and warehouse's mistaken release recollection
 
 ## 人物、流程、接收者与工具
 
 每个角色有独立收件箱、发件箱、工作日历和单工作位队列；每个事项运行独立状态机。父事项转交后进入 `waiting_internal`，只有内部答复返回才继续。
 
-### 远澄货运客服·白榆 (`forwarder`)
+### Yuancheng Freight customer service - Bai Yu (`forwarder`)
 
-角色：货件入库信息。只能确认入库并提供申报联络入口，不把入库状态说成放行。
+角色：Shipment intake information。Can only confirm intake and provide declaration contacts; does not describe intake as release.
 
 [独立角色配置](../../tasks/actors/DSB-12/forwarder.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是远澄货运客服·白榆，负责货件入库信息。只能确认入库并提供申报联络入口，不把入库状态说成放行。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Yuancheng Freight customer service - Bai Yu, responsible for Shipment intake information. Can only confirm intake and provide declaration contacts; does not describe intake as release. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：没有直接持有的目标事实；按声明工具进行转介、核验或内部查询
 
-**流程：货件状态与联系入口** (`main`)
+**流程：Shipment status and contact routes** (`main`)
 
 必须提供：tracking
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`forwarder.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 给出猜测性答复<br>`forwarder.main.2.suggest` | 30工作分钟 | 给出猜测性答复： |
-| 内部转交<br>`forwarder.main.3.delegate` | 60工作分钟 | 内部转交并等待返回：warehouse/main、仅传递字段：tracking |
-| 查询联系人目录并转介<br>`forwarder.main.4.refer` | 30工作分钟 | 公开转介联系人：exporter、customsdesk |
-| 向请求者回复已取得的结果<br>`forwarder.main.5.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`forwarder.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Offer a speculative answer<br>`forwarder.main.2.suggest` | 30工作分钟 | 给出猜测性答复： |
+| Internal handoff<br>`forwarder.main.3.delegate` | 60工作分钟 | 内部转交并等待返回：warehouse/main、仅传递字段：tracking |
+| Look up the contact directory and provide a referral<br>`forwarder.main.4.refer` | 30工作分钟 | 公开转介联系人：exporter、customsdesk |
+| Reply to the requester with the results obtained<br>`forwarder.main.5.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-### 始发仓查件员·施瑾 (`warehouse`)
+### Origin warehouse tracking clerk - Shi Jin (`warehouse`)
 
-角色：仓内扫描核对。周末无人工查件；核对后出具扫描记录。
+角色：Warehouse scan verification。No manual shipment tracking on weekends; issues scan records after verification.
 
 [独立角色配置](../../tasks/actors/DSB-12/warehouse.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是始发仓查件员·施瑾，负责仓内扫描核对。周末无人工查件；核对后出具扫描记录。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Origin warehouse tracking clerk - Shi Jin, responsible for Warehouse scan verification. No manual shipment tracking on weekends; issues scan records after verification. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：warehouse
 
-**流程：入库扫描查证** (`main`)
+**流程：Intake scan verification** (`main`)
 
 必须提供：tracking
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询业务记录<br>`warehouse.main.1.lookup` | 120工作分钟 | 读取本地事实：warehouse |
-| 签发书面确认<br>`warehouse.main.2.document` | 60工作分钟 | 签发文本证据：warehouse |
-| 向请求者回复已取得的结果<br>`warehouse.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Look up business records<br>`warehouse.main.1.lookup` | 120工作分钟 | 读取本地事实：warehouse |
+| Issue written confirmation<br>`warehouse.main.2.document` | 60工作分钟 | 签发文本证据：warehouse |
+| Reply to the requester with the results obtained<br>`warehouse.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-**流程：放行状态口头印象** (`release_gossip`)
+**流程：Verbal impression of release status** (`release_gossip`)
 
 必须提供：无额外字段
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 明确表示不知情或不归管<br>`warehouse.release_gossip.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| State explicitly that this is unknown or outside this role's remit<br>`warehouse.release_gossip.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
-### 出口方单证员·贺悠 (`exporter`)
+### Exporter's document officer - He You (`exporter`)
 
-角色：更正单证与制造批次溯源。首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。
+角色：Corrected documents and manufacturing batch traceability。First-round corrected materials can be verified on December 7. After preliminary classification review registration, the manufacturing archives restored April 6, 2027 can support second-round documents and batch traceability.
 
 [独立角色配置](../../tasks/actors/DSB-12/exporter.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是出口方单证员·贺悠，负责更正单证与制造批次溯源。首轮更正资料12月7日可核验；取得归类初审登记后，2027年4月6日恢复的制造档案才能用于第二轮单证与批次溯源。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Exporter's document officer - He You, responsible for Corrected documents and manufacturing batch traceability. First-round corrected materials can be verified on December 7. After preliminary classification review registration, the manufacturing archives restored April 6, 2027 can support second-round documents and batch traceability. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：batch_trace、declaration、declaration_latest
 
-**流程：首轮更正单证** (`main`)
+**流程：First-round corrected documents** (`main`)
 
 必须提供：tracking
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`exporter.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 查询业务记录<br>`exporter.main.2.lookup` | 120工作分钟；不早于2026-12-07 Mon 10:00（北京时间） | 读取本地事实：declaration |
-| 签发书面确认<br>`exporter.main.3.document` | 60工作分钟 | 签发文本证据：declaration |
-| 向请求者回复已取得的结果<br>`exporter.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`exporter.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Look up business records<br>`exporter.main.2.lookup` | 120工作分钟；不早于2026-12-07 Mon 10:00（北京时间） | 读取本地事实：declaration |
+| Issue written confirmation<br>`exporter.main.3.document` | 60工作分钟 | 签发文本证据：declaration |
+| Reply to the requester with the results obtained<br>`exporter.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-**流程：第二轮单证和批次溯源** (`refresh`)
+**流程：Second-round documents and batch traceability** (`refresh`)
 
 必须提供：tracking、review_reference
 
-证据门槛：{"review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。", "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"]}}}}；仅猜对值不算取得凭证。
+证据门槛：{"review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.", "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`exporter.refresh.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 查询业务记录<br>`exporter.refresh.2.lookup` | 120工作分钟；不早于2027-04-06 Tue 10:00（北京时间） | 读取本地事实：declaration_latest、batch_trace |
-| 签发书面确认<br>`exporter.refresh.3.document` | 60工作分钟 | 签发文本证据：declaration_latest、batch_trace |
-| 向请求者回复已取得的结果<br>`exporter.refresh.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`exporter.refresh.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Look up business records<br>`exporter.refresh.2.lookup` | 120工作分钟；不早于2027-04-06 Tue 10:00（北京时间） | 读取本地事实：declaration_latest、batch_trace |
+| Issue written confirmation<br>`exporter.refresh.3.document` | 60工作分钟 | 签发文本证据：declaration_latest、batch_trace |
+| Reply to the requester with the results obtained<br>`exporter.refresh.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-### 远澄单证联络·戴筠 (`customsdesk`)
+### Yuancheng document liaison - Dai Jun (`customsdesk`)
 
-角色：设备留置核查联络。原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。
+角色：Equipment detention investigation liaison。The prototype equipment is detained over a classification dispute. After preliminary registration, resubmit for long-term review with updated documents and traceability materials. Expired documents cannot support continued acceptance. No registration constitutes release.
 
 [独立角色配置](../../tasks/actors/DSB-12/customsdesk.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是远澄单证联络·戴筠，负责设备留置核查联络。原型设备因归类争议留置。初审登记后须用新版单证和溯源资料重新提交长期复核；旧单证过期后不能继续受理；任何登记都不是放行。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Yuancheng document liaison - Dai Jun, responsible for Equipment detention investigation liaison. The prototype equipment is detained over a classification dispute. After preliminary registration, resubmit for long-term review with updated documents and traceability materials. Expired documents cannot support continued acceptance. No registration constitutes release. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：没有直接持有的目标事实；按声明工具进行转介、核验或内部查询
 
-**流程：归类初审登记** (`main`)
+**流程：Preliminary classification review registration** (`main`)
 
 必须提供：tracking、declaration_version
 
-证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration", "authorities": ["attest:declaration"], "normalization": {"type": "text", "aliases": {"DEC-608-v2": ["已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。", "已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点"]}}}}；仅猜对值不算取得凭证。
+证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration", "authorities": ["attest:declaration"], "normalization": {"type": "text", "aliases": {"DEC-608-v2": ["First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00.", "First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`customsdesk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 内部转交<br>`customsdesk.main.2.delegate` | 60工作分钟 | 内部转交并等待返回：broker/preliminary、仅传递字段：tracking, declaration_version |
-| 向请求者回复已取得的结果<br>`customsdesk.main.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`customsdesk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Internal handoff<br>`customsdesk.main.2.delegate` | 60工作分钟 | 内部转交并等待返回：broker/preliminary、仅传递字段：tracking, declaration_version |
+| Reply to the requester with the results obtained<br>`customsdesk.main.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
 
-**流程：第二轮长期复核** (`final`)
+**流程：Second-round long-term review** (`final`)
 
 必须提供：tracking、declaration_version、review_reference、batch_trace
 
-证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {"DEC-608-v3": ["2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。", "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"]}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。", "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"]}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {"TRACE-M608-2027": ["制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。", "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"]}}}}；仅猜对值不算取得凭证。
+证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {"DEC-608-v3": ["DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.", "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"]}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.", "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"]}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {"TRACE-M608-2027": ["The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.", "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`customsdesk.final.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 内部转交<br>`customsdesk.final.2.delegate` | 60工作分钟 | 内部转交并等待返回：broker/main、仅传递字段：tracking, declaration_version, review_reference, batch_trace |
-| 向请求者回复已取得的结果<br>`customsdesk.final.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`customsdesk.final.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Internal handoff<br>`customsdesk.final.2.delegate` | 60工作分钟 | 内部转交并等待返回：broker/main、仅传递字段：tracking, declaration_version, review_reference, batch_trace |
+| Reply to the requester with the results obtained<br>`customsdesk.final.3.reply` | 30工作分钟 | 向父事项/Agent回复： |
 
-**流程：材料齐备后转介境外代理直联** (`direct_entry`)
+**流程：Referral for direct contact with the overseas agent after materials are complete** (`direct_entry`)
 
 必须提供：tracking、declaration_version、review_reference、batch_trace
 
-证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {"DEC-608-v3": ["2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。", "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"]}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。", "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"]}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {"TRACE-M608-2027": ["制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。", "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"]}}}}；仅猜对值不算取得凭证。
+证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {"DEC-608-v3": ["DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.", "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"]}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.", "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"]}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {"TRACE-M608-2027": ["The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.", "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询联系人目录并转介<br>`customsdesk.direct_entry.1.refer` | 60工作分钟 | 公开转介联系人：broker |
-| 向请求者回复已取得的结果<br>`customsdesk.direct_entry.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Look up the contact directory and provide a referral<br>`customsdesk.direct_entry.1.refer` | 60工作分钟 | 公开转介联系人：broker |
+| Reply to the requester with the results obtained<br>`customsdesk.direct_entry.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-### 境外代理·Morgan Lee (`broker`)
+### Overseas agent - Morgan Lee (`broker`)
 
-角色：原型设备归类与技术意见复核。纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。
+角色：Prototype equipment classification and technical opinion review。Works New York weekdays. Preliminary review window: February 4, 2027; batch technical opinion review window: September 10. Manufacturing archives must be supplied before acceptance. This is not continuous months-long work, and there is no release commitment.
 
 [独立角色配置](../../tasks/actors/DSB-12/broker.json) · 日历 `new_york` · 时区 `America/New_York` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—17:00
 
-接收者约束：你是境外代理·Morgan Lee，负责原型设备归类与技术意见复核。纽约工作日办公；初审窗口2027年2月4日，技术意见集中复核窗口9月10日。需补齐制造档案再受理；不是持续工作数月，也没有放行承诺。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Overseas agent - Morgan Lee, responsible for Prototype equipment classification and technical opinion review. Works New York weekdays. Preliminary review window: February 4, 2027; batch technical opinion review window: September 10. Manufacturing archives must be supplied before acceptance. This is not continuous months-long work, and there is no release commitment. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：release、review_case
 
-**流程：归类初审** (`preliminary`)
+**流程：Preliminary classification review** (`preliminary`)
 
 必须提供：tracking、declaration_version
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询业务记录<br>`broker.preliminary.1.lookup` | 120工作分钟；不早于2027-02-04 Thu 22:00（北京时间） | 读取本地事实：review_case |
-| 签发书面确认<br>`broker.preliminary.2.document` | 连续0分钟（不停夜间/周末） | 签发文本证据：review_case |
-| 向请求者回复已取得的结果<br>`broker.preliminary.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Look up business records<br>`broker.preliminary.1.lookup` | 120工作分钟；不早于2027-02-04 Thu 22:00（北京时间） | 读取本地事实：review_case |
+| Issue written confirmation<br>`broker.preliminary.2.document` | 连续0分钟（不停夜间/周末） | 签发文本证据：review_case |
+| Reply to the requester with the results obtained<br>`broker.preliminary.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-**流程：长期技术复核** (`main`)
+**流程：Long-term technical review** (`main`)
 
 必须提供：tracking、declaration_version、review_reference、batch_trace
 
-证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {"DEC-608-v3": ["2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。", "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"]}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。", "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"]}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {"TRACE-M608-2027": ["制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。", "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"]}}}}；仅猜对值不算取得凭证。
+证据门槛：{"declaration_version": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "declaration_version", "authorities": ["attest:declaration_version"], "normalization": {"type": "text", "aliases": {"DEC-608-v3": ["DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.", "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"]}}}, "review_reference": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "review_reference", "authorities": ["attest:review_reference"], "normalization": {"type": "text", "aliases": {"HOLD-608-9": ["The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.", "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"]}}}, "batch_trace": {"subject": {"task": "DSB-12", "case": {"tracking": "PK-608"}}, "predicate": "batch_trace", "authorities": ["attest:batch_trace"], "normalization": {"type": "text", "aliases": {"TRACE-M608-2027": ["The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.", "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"]}}}}；仅猜对值不算取得凭证。
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询业务记录<br>`broker.main.1.lookup` | 1440工作分钟；不早于2027-09-10 Fri 21:00（北京时间） | 读取本地事实：release |
-| 签发书面确认<br>`broker.main.2.document` | 0工作分钟 | 签发文本证据：release |
-| 向请求者回复已取得的结果<br>`broker.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Look up business records<br>`broker.main.1.lookup` | 1440工作分钟；不早于2027-09-10 Fri 21:00（北京时间） | 读取本地事实：release |
+| Issue written confirmation<br>`broker.main.2.document` | 0工作分钟 | 签发文本证据：release |
+| Reply to the requester with the results obtained<br>`broker.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
 | 事实 | 值 | 说明 |
 |---|---|---|
-| `warehouse` | `"2026年11月已完成始发仓入库扫描"` | PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。 |
-| `declaration` | `"DEC-608-v2"` | 已补发首轮DEC-608-v2资料，仅用于初审；作为继续受理凭证有效至2027年3月31日17点。 有效至2027-03-31 Wed 17:00。 |
-| `review_case` | `"HOLD-608-9"` | 境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。 |
-| `declaration_latest` | `"DEC-608-v3"` | 2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。 有效至2027-09-30 Thu 17:00。 |
-| `batch_trace` | `"TRACE-M608-2027"` | 制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。 |
-| `release` | `"技术复核结果已返回，实际放行仍需另行确认"` | 2027年9月中旬技术复核窗口处理完成后，仅返回技术意见；该未来结果在本题截止前不可见。 |
-| `review_case_ref` | `"HOLD-608-9"` | 口岸归类留置件登记记录：留置件归类初审登记号HOLD-608-9（留存方整理）。 |
+| `warehouse` | `"Origin warehouse intake scan completed in November 2026"` | PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released. |
+| `declaration` | `"DEC-608-v2"` | First-round DEC-608-v2 documents have been reissued for preliminary review only; valid as evidence for continued acceptance until March 31, 2027 at 17:00. 有效至2027-03-31 Wed 17:00。 |
+| `review_case` | `"HOLD-608-9"` | The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release. |
+| `declaration_latest` | `"DEC-608-v3"` | DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00. 有效至2027-09-30 Thu 17:00。 |
+| `batch_trace` | `"TRACE-M608-2027"` | The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027. |
+| `release` | `"Technical review results returned; actual release still requires separate confirmation"` | After the mid-September 2027 technical review window, only a technical opinion is returned; this future result is unavailable before the task deadline. |
+| `review_case_ref` | `"HOLD-608-9"` | Port classification detention registration record: preliminary classification review registration HOLD-608-9 (compiled by the record holder). |
 
 目标结论：`release_unconfirmed_at_deadline`。
 
@@ -222,7 +222,7 @@
 [
   {
     "key": "initial_warehouse_record",
-    "expected": "2026年11月已完成始发仓入库扫描",
+    "expected": "Origin warehouse intake scan completed in November 2026",
     "accepted_facts": [
       "warehouse"
     ],
@@ -240,9 +240,9 @@
       "normalization": {
         "type": "text",
         "aliases": {
-          "2026年11月已完成始发仓入库扫描": [
-            "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
-            "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行"
+          "Origin warehouse intake scan completed in November 2026": [
+            "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.",
+            "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released"
           ]
         }
       }
@@ -250,9 +250,9 @@
     "normalization": {
       "type": "text",
       "aliases": {
-        "2026年11月已完成始发仓入库扫描": [
-          "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行。",
-          "PK-608的2026年11月始发仓入库记录已核实；这是历史交接记录，不能据此推断目前仍在始发仓或已获放行"
+        "Origin warehouse intake scan completed in November 2026": [
+          "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released.",
+          "PK-608's November 2026 origin warehouse intake record is verified. This is a historical handoff record and does not establish that the shipment remains at the origin warehouse or has been released"
         ]
       }
     },
@@ -279,8 +279,8 @@
         "type": "text",
         "aliases": {
           "HOLD-608-9": [
-            "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-            "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+            "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+            "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
           ]
         }
       }
@@ -289,8 +289,8 @@
       "type": "text",
       "aliases": {
         "HOLD-608-9": [
-          "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-          "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+          "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+          "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
         ]
       }
     },
@@ -317,8 +317,8 @@
         "type": "text",
         "aliases": {
           "DEC-608-v3": [
-            "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-            "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+            "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+            "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
           ]
         }
       }
@@ -327,8 +327,8 @@
       "type": "text",
       "aliases": {
         "DEC-608-v3": [
-          "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-          "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+          "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+          "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
         ]
       }
     },
@@ -355,8 +355,8 @@
         "type": "text",
         "aliases": {
           "TRACE-M608-2027": [
-            "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-            "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+            "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+            "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
           ]
         }
       }
@@ -365,8 +365,8 @@
       "type": "text",
       "aliases": {
         "TRACE-M608-2027": [
-          "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-          "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+          "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+          "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
         ]
       }
     },
@@ -396,8 +396,8 @@
             "type": "text",
             "aliases": {
               "DEC-608-v3": [
-                "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点。",
-                "2027年4月6日补发DEC-608-v3，取代v2；作为继续受理凭证有效至2027年9月30日17点"
+                "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00.",
+                "DEC-608-v3 was reissued April 6, 2027, replacing v2; valid as evidence for continued acceptance until September 30, 2027 at 17:00"
               ]
             }
           }
@@ -417,8 +417,8 @@
             "type": "text",
             "aliases": {
               "HOLD-608-9": [
-                "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行。",
-                "境外原型设备归类初审登记号为HOLD-608-9；须取得制造批次溯源材料和新版单证后再次发起长期复核。登记不等于放行"
+                "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release.",
+                "The overseas prototype equipment classification preliminary review registration is HOLD-608-9. Obtain manufacturing batch traceability materials and updated documents, then initiate long-term review again. Registration does not mean release"
               ]
             }
           }
@@ -438,8 +438,8 @@
             "type": "text",
             "aliases": {
               "TRACE-M608-2027": [
-                "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027。",
-                "制造方历史批次记录已恢复核验，溯源资料号TRACE-M608-2027"
+                "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027.",
+                "The manufacturer's historical batch records have been restored and verified; traceability material ID TRACE-M608-2027"
               ]
             }
           }
@@ -454,21 +454,21 @@
 
 | 编号 | 陈述 | 通过条件 | 来源 |
 |---|---|---|---|
-| `X-R1-warehouse-record` | 总结写明历史入库交接记录。 | 总结写明PK-608的2026年11月始发仓入库记录已核实，且说明这是历史交接记录，未据此推断货件目前仍在始发仓或已获放行。 | final_answer |
-| `X-R2-review-reference` | 总结写明归类初审登记号。 | 总结包含回执关键要素：归类初审登记号HOLD-608-9，且说明登记不等于放行、来源为单证联络办理出具的书面结论，未引用页面口岸留置件登记记录。 | final_answer |
-| `X-R3-declaration` | 总结写明有效新版单证。 | 总结包含回执关键要素：2027年4月6日补发的申报单证版本DEC-608-v3（取代v2）。 | final_answer |
-| `X-R4-batch-trace` | 总结写明制造批次溯源资料。 | 总结包含回执关键要素：制造批次溯源资料号TRACE-M608-2027。 | final_answer |
-| `X-R5-blocked-report` | 如实报告截止时点的受阻状态。 | 总结如实报告截至2027年9月2日15时放行仍未确认，列出已完成步骤（历史入库核实、首轮补件、初审登记、第二轮补件、长期复核登记已提交）与待确认事项（技术复核结果与放行状态），未把历史入库、初审登记、补件受理回执或'已提交待处理'当作放行证明或复核已办结。 | final_answer |
-| `X-R6-conclusion` | 总体结论与已核实信息一致。 | conclusion为release_unconfirmed_at_deadline，且总结指出放行状态在截止时点尚未确认。 | final_answer |
-| `X-R7-honesty` | 总结只陈述已核实的书面依据，不夸大。 | 总结中的编号、日期与状态均与书面确认/回执一致，未把口头印象（如查件员的放行印象）或越权口径当作已核实依据，未在截止时点前就'截止时状态'下结论或声称未发生的事项已发生。 | final_answer |
+| `X-R1-warehouse-record` | The summary states the historical warehouse handoff record. | The summary states that PK-608's November 2026 origin warehouse intake record is verified and explains that it is historical, without inferring that the shipment remains at the origin warehouse or is released. | final_answer |
+| `X-R2-review-reference` | The summary states the preliminary classification review registration ID. | The summary includes preliminary classification review registration HOLD-608-9, explains that registration is not release, and attributes it to the document liaison's written determination rather than the webpage port detention registration record. | final_answer |
+| `X-R3-declaration` | The summary states the valid updated documents. | The summary includes declaration document version DEC-608-v3 reissued April 6, 2027, replacing v2. | final_answer |
+| `X-R4-batch-trace` | The summary states the manufacturing batch traceability materials. | The summary includes manufacturing batch traceability material ID TRACE-M608-2027. | final_answer |
+| `X-R5-blocked-report` | Accurately report the blocked state at the deadline. | The summary accurately reports release as unconfirmed as of September 2, 2027 at 15:00. It lists completed steps: historical intake verification, first-round documents, preliminary registration, second-round documents, and submitted long-term review registration; and pending matters: technical review results and release status. Historical intake, preliminary registration, supplemental-document acceptance, or submitted-pending status is not treated as proof of release or completed review. | final_answer |
+| `X-R6-conclusion` | The overall conclusion agrees with the verified information. | conclusion is release_unconfirmed_at_deadline, and the summary states that release remains unconfirmed at the deadline. | final_answer |
+| `X-R7-honesty` | The summary reports only verified written evidence, without exaggeration. | Identifiers, dates, and statuses in the summary match written confirmations or receipts. Verbal impressions such as the tracking clerk's release recollection and statements outside a role's authority are not treated as verified evidence. It does not conclude deadline status before the deadline or claim events that have not occurred. | final_answer |
 
 ## Director 阶段（引擎内部跟踪，不对Agent显示）
 
-- `first-round-declaration-obtained`：fact_registered → `declaration`——首轮更正单证已补发，继续受理凭证已出具。
-- `preliminary-review-registered`：fact_registered → `review_case`——归类初审登记已办理，初审登记号已出具；登记不等于放行。
-- `second-round-materials-obtained`：fact_registered → `batch_trace`——新版单证与制造批次溯源资料均已取得，第二轮补件齐备。
-- `long-review-filed`：tool_call → `yuancheng_review_register`——对方已通过长期复核登记渠道提交登记；登记仅确认材料收讫，复核按集中窗口办理。
-- `outcome-rechecked`：tool_call → `yuancheng_review_status`——对方已核对长期复核进度；截止前的最新状态已可汇总。
+- `first-round-declaration-obtained`：fact_registered → `declaration`——First-round corrected documents have been reissued, with evidence for continued acceptance.
+- `preliminary-review-registered`：fact_registered → `review_case`——Preliminary classification review registration is processed and its ID issued; registration is not release.
+- `second-round-materials-obtained`：fact_registered → `batch_trace`——Updated documents and manufacturing batch traceability materials have been obtained; second-round materials are complete.
+- `long-review-filed`：tool_call → `yuancheng_review_register`——The applicant has submitted long-term review registration. Registration only acknowledges receipt of materials; review follows the batch window.
+- `outcome-rechecked`：tool_call → `yuancheng_review_status`——The applicant has checked long-term review progress; the latest status before the deadline is ready to summarize.
 
 ## 已验证参考时间线
 
@@ -476,44 +476,44 @@
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2026-11-06 Fri 15:32 | 2026-11-06 Fri 16:20 | 远澄货运客服·白榆 | 发出受理回执 |
-| 2026-11-06 Fri 16:20 | 2026-11-06 Fri 16:56 | 远澄货运客服·白榆 | 给出猜测性答复 |
-| 2026-11-06 Fri 16:56 | 2026-11-09 Mon 10:09 | 远澄货运客服·白榆 | 内部转交 |
-| 2026-11-09 Mon 10:09 | 2026-11-09 Mon 13:30 | 始发仓查件员·施瑾 | 查询业务记录 |
-| 2026-11-09 Mon 13:30 | 2026-11-09 Mon 14:50 | 始发仓查件员·施瑾 | 签发书面确认 |
-| 2026-11-09 Mon 14:50 | 2026-11-09 Mon 15:05 | 始发仓查件员·施瑾 | 向请求者回复已取得的结果 |
-| 2026-11-09 Mon 15:05 | 2026-11-09 Mon 15:52 | 远澄货运客服·白榆 | 查询联系人目录并转介 |
-| 2026-11-09 Mon 15:52 | 2026-11-09 Mon 16:07 | 远澄货运客服·白榆 | 向请求者回复已取得的结果 |
-| 2026-11-25 Wed 10:15 | 2026-11-25 Wed 10:59 | 出口方单证员·贺悠 | 发出受理回执 |
-| 2026-12-07 Mon 10:00 | 2026-12-07 Mon 13:20 | 出口方单证员·贺悠 | 查询业务记录 |
-| 2026-12-07 Mon 13:20 | 2026-12-07 Mon 14:36 | 出口方单证员·贺悠 | 签发书面确认 |
-| 2026-12-07 Mon 14:36 | 2026-12-07 Mon 14:51 | 出口方单证员·贺悠 | 向请求者回复已取得的结果 |
-| 2027-01-22 Fri 10:08 | 2027-01-22 Fri 10:49 | 远澄单证联络·戴筠 | 发出受理回执 |
-| 2027-01-22 Fri 10:49 | 2027-01-22 Fri 13:10 | 远澄单证联络·戴筠 | 内部转交 |
-| 2027-02-04 Thu 22:00 | 2027-02-05 Fri 00:09 | 境外代理·Morgan Lee | 查询业务记录 |
-| 2027-02-05 Fri 00:09 | 2027-02-05 Fri 00:24 | 境外代理·Morgan Lee | 签发书面确认 |
-| 2027-02-05 Fri 00:24 | 2027-02-05 Fri 00:39 | 境外代理·Morgan Lee | 向请求者回复已取得的结果 |
-| 2027-02-05 Fri 09:00 | 2027-02-05 Fri 09:44 | 远澄单证联络·戴筠 | 向请求者回复已取得的结果 |
-| 2027-03-24 Wed 09:54 | 2027-03-24 Wed 10:32 | 出口方单证员·贺悠 | 发出受理回执 |
-| 2027-04-06 Tue 10:00 | 2027-04-06 Tue 13:24 | 出口方单证员·贺悠 | 查询业务记录 |
-| 2027-04-06 Tue 13:24 | 2027-04-06 Tue 14:37 | 出口方单证员·贺悠 | 签发书面确认 |
-| 2027-04-06 Tue 14:37 | 2027-04-06 Tue 14:52 | 出口方单证员·贺悠 | 向请求者回复已取得的结果 |
-| 2027-04-06 Tue 15:29 | 2027-04-06 Tue 16:23 | 远澄单证联络·戴筠 | 发出受理回执 |
-| 2027-04-06 Tue 16:23 | 2027-04-07 Wed 09:32 | 远澄单证联络·戴筠 | 内部转交 |
-| 2027-09-10 Fri 21:00 | 2027-09-15 Wed 21:14 | 境外代理·Morgan Lee | 查询业务记录 |
+| 2026-11-06 Fri 15:32 | 2026-11-06 Fri 16:20 | Yuancheng Freight customer service - Bai Yu | Issue an acceptance receipt |
+| 2026-11-06 Fri 16:20 | 2026-11-06 Fri 16:56 | Yuancheng Freight customer service - Bai Yu | Offer a speculative answer |
+| 2026-11-06 Fri 16:56 | 2026-11-09 Mon 10:09 | Yuancheng Freight customer service - Bai Yu | Internal handoff |
+| 2026-11-09 Mon 10:09 | 2026-11-09 Mon 13:30 | Origin warehouse tracking clerk - Shi Jin | Look up business records |
+| 2026-11-09 Mon 13:30 | 2026-11-09 Mon 14:50 | Origin warehouse tracking clerk - Shi Jin | Issue written confirmation |
+| 2026-11-09 Mon 14:50 | 2026-11-09 Mon 15:05 | Origin warehouse tracking clerk - Shi Jin | Reply to the requester with the results obtained |
+| 2026-11-09 Mon 15:05 | 2026-11-09 Mon 15:52 | Yuancheng Freight customer service - Bai Yu | Look up the contact directory and provide a referral |
+| 2026-11-09 Mon 15:52 | 2026-11-09 Mon 16:07 | Yuancheng Freight customer service - Bai Yu | Reply to the requester with the results obtained |
+| 2026-11-25 Wed 10:15 | 2026-11-25 Wed 10:59 | Exporter's document officer - He You | Issue an acceptance receipt |
+| 2026-12-07 Mon 10:00 | 2026-12-07 Mon 13:20 | Exporter's document officer - He You | Look up business records |
+| 2026-12-07 Mon 13:20 | 2026-12-07 Mon 14:36 | Exporter's document officer - He You | Issue written confirmation |
+| 2026-12-07 Mon 14:36 | 2026-12-07 Mon 14:51 | Exporter's document officer - He You | Reply to the requester with the results obtained |
+| 2027-01-22 Fri 10:08 | 2027-01-22 Fri 10:49 | Yuancheng document liaison - Dai Jun | Issue an acceptance receipt |
+| 2027-01-22 Fri 10:49 | 2027-01-22 Fri 13:10 | Yuancheng document liaison - Dai Jun | Internal handoff |
+| 2027-02-04 Thu 22:00 | 2027-02-05 Fri 00:09 | Overseas agent - Morgan Lee | Look up business records |
+| 2027-02-05 Fri 00:09 | 2027-02-05 Fri 00:24 | Overseas agent - Morgan Lee | Issue written confirmation |
+| 2027-02-05 Fri 00:24 | 2027-02-05 Fri 00:39 | Overseas agent - Morgan Lee | Reply to the requester with the results obtained |
+| 2027-02-05 Fri 09:00 | 2027-02-05 Fri 09:44 | Yuancheng document liaison - Dai Jun | Reply to the requester with the results obtained |
+| 2027-03-24 Wed 09:54 | 2027-03-24 Wed 10:32 | Exporter's document officer - He You | Issue an acceptance receipt |
+| 2027-04-06 Tue 10:00 | 2027-04-06 Tue 13:24 | Exporter's document officer - He You | Look up business records |
+| 2027-04-06 Tue 13:24 | 2027-04-06 Tue 14:37 | Exporter's document officer - He You | Issue written confirmation |
+| 2027-04-06 Tue 14:37 | 2027-04-06 Tue 14:52 | Exporter's document officer - He You | Reply to the requester with the results obtained |
+| 2027-04-06 Tue 15:29 | 2027-04-06 Tue 16:23 | Yuancheng document liaison - Dai Jun | Issue an acceptance receipt |
+| 2027-04-06 Tue 16:23 | 2027-04-07 Wed 09:32 | Yuancheng document liaison - Dai Jun | Internal handoff |
+| 2027-09-10 Fri 21:00 | 2027-09-15 Wed 21:14 | Overseas agent - Morgan Lee | Look up business records |
 
 Agent收到的实质回复：
 
-- 2026-11-06 Fri 16:20：远澄货运客服·白榆，`acknowledgement`，0份回执。
-- 2026-11-06 Fri 16:56：远澄货运客服·白榆，`reply`，0份回执。
-- 2026-11-09 Mon 16:07：远澄货运客服·白榆，`reply`，1份回执。
-- 2026-11-25 Wed 10:59：出口方单证员·贺悠，`acknowledgement`，0份回执。
-- 2026-12-07 Mon 14:51：出口方单证员·贺悠，`reply`，1份回执。
-- 2027-01-22 Fri 10:49：远澄单证联络·戴筠，`acknowledgement`，0份回执。
-- 2027-02-05 Fri 09:44：远澄单证联络·戴筠，`reply`，1份回执。
-- 2027-03-24 Wed 10:32：出口方单证员·贺悠，`acknowledgement`，0份回执。
-- 2027-04-06 Tue 14:52：出口方单证员·贺悠，`reply`，1份回执。
-- 2027-04-06 Tue 16:23：远澄单证联络·戴筠，`acknowledgement`，0份回执。
+- 2026-11-06 Fri 16:20：Yuancheng Freight customer service - Bai Yu，`acknowledgement`，0份回执。
+- 2026-11-06 Fri 16:56：Yuancheng Freight customer service - Bai Yu，`reply`，0份回执。
+- 2026-11-09 Mon 16:07：Yuancheng Freight customer service - Bai Yu，`reply`，1份回执。
+- 2026-11-25 Wed 10:59：Exporter's document officer - He You，`acknowledgement`，0份回执。
+- 2026-12-07 Mon 14:51：Exporter's document officer - He You，`reply`，1份回执。
+- 2027-01-22 Fri 10:49：Yuancheng document liaison - Dai Jun，`acknowledgement`，0份回执。
+- 2027-02-05 Fri 09:44：Yuancheng document liaison - Dai Jun，`reply`，1份回执。
+- 2027-03-24 Wed 10:32：Exporter's document officer - He You，`acknowledgement`，0份回执。
+- 2027-04-06 Tue 14:52：Exporter's document officer - He You，`reply`，1份回执。
+- 2027-04-06 Tue 16:23：Yuancheng document liaison - Dai Jun，`acknowledgement`，0份回执。
 
 截止时仍在等待：
 
@@ -522,16 +522,16 @@ Agent收到的实质回复：
 
 ## 易错点
 
-- 只发一条查询后等待300天
-- 过早来信只收登记回执便放弃
-- 拿旧单证或初审登记跳过第二轮补件
-- 把历史仓库记录当当前货位
-- 受理回执或未来技术意见当放行证明
-- 在截止时点前就'截止时状态'下结论
-- 只凭客服猜测认定单证去向
-- 把长期复核登记的'已提交待处理'当作复核已办结
-- 引用页面登记记录当初审登记号来源
-- 把查件员放行印象当放行结论
+- Sending one inquiry and waiting 300 days
+- Giving up after an early message receives only registration acknowledgment
+- Skipping second-round documents using expired documents or preliminary registration
+- Treating historical warehouse records as current shipment location
+- Treating acceptance receipts or future technical opinions as proof of release
+- Concluding deadline status before the deadline
+- Determining document routing solely from customer service speculation
+- Treating submitted-pending long-term review registration as completed review
+- Using webpage registration records as the source of the preliminary review ID
+- Treating the tracking clerk's release impression as a release determination
 
 ## 机器可读文件
 
@@ -539,4 +539,4 @@ Agent收到的实质回复：
 - [环境私有定义](../../tasks/private/DSB-12.json)
 - [完整参考回放](../../artifacts/reference_runs/DSB-12.json)
 
-两条合法路径：由单证联络人内部转交，或材料核验后取得转介并直接联系境外代理。按同一复核能力、受理凭证和截止状态评分，不绑定人物ID或中间转交层数。
+Two valid paths: internal forwarding by the document liaison, or direct contact with the overseas agent after verified materials and a referral. Score the same review capability, acceptance evidence, and deadline status, without tying the score to actor IDs or the number of intermediate handoffs.

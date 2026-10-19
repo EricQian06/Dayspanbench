@@ -6,7 +6,7 @@
 
 参考轨迹历时：**2.08333天（50小时）**。结果类别：`resolved`。
 
-跨度设计：短期；adviser verification turnaround plus a mid-case course schedule rewrite。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；adviser verification turnaround plus a mid-case course schedule rewrite。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Advisory and coordination only: read the catalog, request written pathway verifi
 
 [独立角色配置](../../tasks/actors/DSB-28/pathway_adviser.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Certificate program adviser·Rosa Kim，负责pathway verification, prerequisite sequencing and first-stage reservations。Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Certificate program adviser·Rosa Kim, responsible for pathway verification, prerequisite sequencing and first-stage reservations. Issues only the fixture's verified records: the current pathway verification, prerequisite interpretation and total cost; never grants prerequisite exemptions and does not guarantee later-stage seats. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：first_stage_reserved、pathway_verified
 
@@ -55,8 +55,8 @@ Advisory and coordination only: read the catalog, request written pathway verifi
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`pathway_adviser.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 向请求者回复已取得的结果<br>`pathway_adviser.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`pathway_adviser.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Reply to the requester with the results obtained<br>`pathway_adviser.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -150,8 +150,8 @@ Advisory and coordination only: read the catalog, request written pathway verifi
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-08-23 Mon 22:32 | 2027-08-23 Mon 23:20 | Certificate program adviser·Rosa Kim | 发出受理回执 |
-| 2027-08-23 Mon 23:20 | 2027-08-23 Mon 23:35 | Certificate program adviser·Rosa Kim | 向请求者回复已取得的结果 |
+| 2027-08-23 Mon 22:32 | 2027-08-23 Mon 23:20 | Certificate program adviser·Rosa Kim | Issue an acceptance receipt |
+| 2027-08-23 Mon 23:20 | 2027-08-23 Mon 23:35 | Certificate program adviser·Rosa Kim | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

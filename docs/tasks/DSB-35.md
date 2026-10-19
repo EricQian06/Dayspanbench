@@ -45,7 +45,7 @@ Advisory and coordination only: read the case file, verify the correspondence re
 
 [独立角色配置](../../tasks/actors/DSB-35/clinic_coordinator.json) · 日历 `us_central_office` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—17:00
 
-接收者约束：你是Tenant Support Test Clinic caseworker·Jordan Reyes，负责correspondence-address verification and the tenant case file。Verifies the lease-designated correspondence recipient and the authorized clinic return address in writing; website listings and drafts are not verification. Dispatch goes through the clinic dispatch desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Tenant Support Test Clinic caseworker·Jordan Reyes, responsible for correspondence-address verification and the tenant case file. Verifies the lease-designated correspondence recipient and the authorized clinic return address in writing; website listings and drafts are not verification. Dispatch goes through the clinic dispatch desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：attachment_only、clinic_return、demand_amount、dispatch_fee、dispatched、move_out、registered_office、tracking
 
@@ -55,10 +55,10 @@ Advisory and coordination only: read the case file, verify the correspondence re
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`clinic_coordinator.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`clinic_coordinator.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the lease-designated correspondence recipient and the authorized return address<br>`clinic_coordinator.main.2.lookup` | 180工作分钟 | 读取本地事实：registered_office、clinic_return |
-| 签发书面确认<br>`clinic_coordinator.main.3.document` | 30工作分钟 | 签发文本证据：registered_office、clinic_return |
-| 向请求者回复已取得的结果<br>`clinic_coordinator.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`clinic_coordinator.main.3.document` | 30工作分钟 | 签发文本证据：registered_office、clinic_return |
+| Reply to the requester with the results obtained<br>`clinic_coordinator.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -299,10 +299,10 @@ Advisory and coordination only: read the case file, verify the correspondence re
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-03-19 Fri 01:02 | 2027-03-19 Fri 01:50 | Tenant Support Test Clinic caseworker·Jordan Reyes | 发出受理回执 |
+| 2027-03-19 Fri 01:02 | 2027-03-19 Fri 01:50 | Tenant Support Test Clinic caseworker·Jordan Reyes | Issue an acceptance receipt |
 | 2027-03-19 Fri 01:50 | 2027-03-19 Fri 04:56 | Tenant Support Test Clinic caseworker·Jordan Reyes | check the lease-designated correspondence recipient and the authorized return address |
-| 2027-03-19 Fri 04:56 | 2027-03-19 Fri 05:39 | Tenant Support Test Clinic caseworker·Jordan Reyes | 签发书面确认 |
-| 2027-03-19 Fri 05:39 | 2027-03-19 Fri 05:54 | Tenant Support Test Clinic caseworker·Jordan Reyes | 向请求者回复已取得的结果 |
+| 2027-03-19 Fri 04:56 | 2027-03-19 Fri 05:39 | Tenant Support Test Clinic caseworker·Jordan Reyes | Issue written confirmation |
+| 2027-03-19 Fri 05:39 | 2027-03-19 Fri 05:54 | Tenant Support Test Clinic caseworker·Jordan Reyes | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

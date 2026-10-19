@@ -6,7 +6,7 @@
 
 参考轨迹历时：**3.1875天（76.5小时）**。结果类别：`resolved`。
 
-跨度设计：中短期；CEO request arrival, a weekend gap and the Monday checkpoint revision gating the applied plan。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short to medium term；CEO request arrival, a weekend gap and the Monday checkpoint revision gating the applied plan。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -44,7 +44,7 @@ Read and draft freely, but apply only an exactly approved plan to the private ca
 
 [独立角色配置](../../tasks/actors/DSB-39/review_coordinator.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Review coordinator·Priya Shah，负责confirmed meeting times, the weekly calendar service and the request inbox。Publishes only the review's confirmed time and runs the calendar and inbox services; sees redacted free/busy only, never family details, and never sends replies or accepts meetings on the user's behalf. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Review coordinator·Priya Shah, responsible for confirmed meeting times, the weekly calendar service and the request inbox. Publishes only the review's confirmed time and runs the calendar and inbox services; sees redacted free/busy only, never family details, and never sends replies or accepts meetings on the user's behalf. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：focus_applied、reply_drafted、review_final
 
@@ -54,8 +54,8 @@ Read and draft freely, but apply only an exactly approved plan to the private ca
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`review_coordinator.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 向请求者回复已取得的结果<br>`review_coordinator.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`review_coordinator.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Reply to the requester with the results obtained<br>`review_coordinator.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -180,8 +180,8 @@ Read and draft freely, but apply only an exactly approved plan to the private ca
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-05-11 Tue 00:02 | 2027-05-11 Tue 00:50 | Review coordinator·Priya Shah | 发出受理回执 |
-| 2027-05-11 Tue 00:50 | 2027-05-11 Tue 01:05 | Review coordinator·Priya Shah | 向请求者回复已取得的结果 |
+| 2027-05-11 Tue 00:02 | 2027-05-11 Tue 00:50 | Review coordinator·Priya Shah | Issue an acceptance receipt |
+| 2027-05-11 Tue 00:50 | 2027-05-11 Tue 01:05 | Review coordinator·Priya Shah | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

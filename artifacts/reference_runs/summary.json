@@ -1,7 +1,7 @@
 [
   {
     "task_id": "DSB-01",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -17,7 +17,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 3,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -49,7 +48,7 @@
   },
   {
     "task_id": "DSB-02",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -65,7 +64,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -97,7 +95,7 @@
   },
   {
     "task_id": "DSB-03",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -113,7 +111,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 3,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -145,7 +142,7 @@
   },
   {
     "task_id": "DSB-04",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -161,7 +158,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 6,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -193,7 +189,7 @@
   },
   {
     "task_id": "DSB-05",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -209,7 +205,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -241,7 +236,7 @@
   },
   {
     "task_id": "DSB-06",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -257,7 +252,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -289,7 +283,7 @@
   },
   {
     "task_id": "DSB-07",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -305,7 +299,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 2,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -337,7 +330,7 @@
   },
   {
     "task_id": "DSB-08",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -353,7 +346,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -385,7 +377,7 @@
   },
   {
     "task_id": "DSB-09",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -401,7 +393,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 4,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -433,7 +424,7 @@
   },
   {
     "task_id": "DSB-10",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -449,7 +440,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -481,7 +471,7 @@
   },
   {
     "task_id": "DSB-11",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -497,7 +487,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 3,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -529,7 +518,7 @@
   },
   {
     "task_id": "DSB-12",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -545,7 +534,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 4,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -577,7 +565,7 @@
   },
   {
     "task_id": "DSB-13",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -593,7 +581,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 4,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -625,7 +612,7 @@
   },
   {
     "task_id": "DSB-14",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -641,7 +628,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -673,7 +659,7 @@
   },
   {
     "task_id": "DSB-15",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -689,7 +675,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 1,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -721,7 +706,7 @@
   },
   {
     "task_id": "DSB-16",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -737,7 +722,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 0,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -769,7 +753,7 @@
   },
   {
     "task_id": "DSB-17",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -785,7 +769,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -817,7 +800,7 @@
   },
   {
     "task_id": "DSB-18",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -833,7 +816,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 3,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -865,7 +847,7 @@
   },
   {
     "task_id": "DSB-19",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -881,7 +863,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 6,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -913,7 +894,7 @@
   },
   {
     "task_id": "DSB-20",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -929,7 +910,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 2,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -961,7 +941,7 @@
   },
   {
     "task_id": "DSB-21",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -977,7 +957,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 4,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1009,7 +988,7 @@
   },
   {
     "task_id": "DSB-22",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1025,7 +1004,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 10,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1057,7 +1035,7 @@
   },
   {
     "task_id": "DSB-23",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1073,7 +1051,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1105,7 +1082,7 @@
   },
   {
     "task_id": "DSB-24",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1121,7 +1098,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 0,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1153,7 +1129,7 @@
   },
   {
     "task_id": "DSB-25",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1169,7 +1145,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1201,7 +1176,7 @@
   },
   {
     "task_id": "DSB-26",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1217,7 +1192,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 1,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1249,7 +1223,7 @@
   },
   {
     "task_id": "DSB-27",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1265,7 +1239,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 0,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1297,7 +1270,7 @@
   },
   {
     "task_id": "DSB-28",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1313,7 +1286,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 0,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1345,7 +1317,7 @@
   },
   {
     "task_id": "DSB-29",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1361,7 +1333,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 0,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1393,7 +1364,7 @@
   },
   {
     "task_id": "DSB-30",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1409,7 +1380,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 3,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1441,7 +1411,7 @@
   },
   {
     "task_id": "DSB-31",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1457,7 +1427,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 6,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1489,7 +1458,7 @@
   },
   {
     "task_id": "DSB-32",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1505,7 +1474,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 6,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1537,7 +1505,7 @@
   },
   {
     "task_id": "DSB-33",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1553,7 +1521,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 6,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1585,7 +1552,7 @@
   },
   {
     "task_id": "DSB-34",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1601,7 +1568,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 3,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1633,7 +1599,7 @@
   },
   {
     "task_id": "DSB-35",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1649,7 +1615,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1681,7 +1646,7 @@
   },
   {
     "task_id": "DSB-36",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1697,7 +1662,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 7,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1729,7 +1693,7 @@
   },
   {
     "task_id": "DSB-37",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1745,7 +1709,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 5,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1777,7 +1740,7 @@
   },
   {
     "task_id": "DSB-38",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1793,7 +1756,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 0,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1825,7 +1787,7 @@
   },
   {
     "task_id": "DSB-39",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1841,7 +1803,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 0,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1873,7 +1834,7 @@
   },
   {
     "task_id": "DSB-40",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1889,7 +1850,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 9,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1921,7 +1881,7 @@
   },
   {
     "task_id": "DSB-41",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1937,7 +1897,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 3,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },
@@ -1969,7 +1928,7 @@
   },
   {
     "task_id": "DSB-42",
-    "scoring_version": "0.5.1",
+    "scoring_version": "0.6.0",
     "scored_by": "awaiting_judge",
     "answer_schema_valid": true,
     "schema_errors": [],
@@ -1985,7 +1944,6 @@
       "forms_all_accepted": true,
       "summary_anchor_tokens": 0,
       "summary_anchor_missing": [],
-      "summary_anchors_ok": true,
       "pending_process_satisfied": true,
       "pending_deadline_reached": true
     },

@@ -6,7 +6,7 @@
 
 参考轨迹历时：**1.33333天（32小时）**。结果类别：`resolved`。
 
-跨度设计：短期；mid-week delivery-time rewrite invalidating helper coverage plus mail verification turnaround。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；mid-week delivery-time rewrite invalidating helper coverage plus mail verification turnaround。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 
 [独立角色配置](../../tasks/actors/DSB-17/kitchen.json) · 日历 `us_eastern_daily` · 时区 `America/New_York` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Home Meal Kitchen supervisor·Sam Reyes，负责exact-menu allergen controls, delivery windows and meal orders。Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Home Meal Kitchen supervisor·Sam Reyes, responsible for exact-menu allergen controls, delivery windows and meal orders. Confirms written exact-menu controls as provider reports; current menus, delivery windows and prices come from the meal search service (menu_search) and can be revised without notice; orders go through the order desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：controls、delivery_time、fish_free、meal_ordered、total_cost
 
@@ -55,10 +55,10 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`kitchen.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`kitchen.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the exact-menu sesame cross-contact controls and child meal preparation<br>`kitchen.main.2.lookup` | 180工作分钟 | 读取本地事实：controls、fish_free |
-| 签发书面确认<br>`kitchen.main.3.document` | 30工作分钟 | 签发文本证据：controls、fish_free |
-| 向请求者回复已取得的结果<br>`kitchen.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`kitchen.main.3.document` | 30工作分钟 | 签发文本证据：controls、fish_free |
+| Reply to the requester with the results obtained<br>`kitchen.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 **流程：Delivery and order status** (`status`)
 
@@ -67,7 +67,7 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
 | check the current delivery windows and published menus<br>`kitchen.status.1.lookup` | 60工作分钟 | 读取本地事实： |
-| 向请求者回复已取得的结果<br>`kitchen.status.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Reply to the requester with the results obtained<br>`kitchen.status.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Family helper·Ana Ruiz (`ana`)
 
@@ -75,7 +75,7 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 
 [独立角色配置](../../tasks/actors/DSB-17/ana.json) · 日历 `us_eastern_daily` · 时区 `America/New_York` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Family helper·Ana Ruiz，负责authorized midday helper, 12:00-13:00 only。Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Family helper·Ana Ruiz, responsible for authorized midday helper, 12:00-13:00 only. Authorized for wheelchair assistance, child supervision and meal handoff only within 12:00-13:00; cannot extend past 13:00 and does not speak for other helpers. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：ana_window
 
@@ -85,10 +85,10 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`ana.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`ana.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
 | check her authorized coverage window<br>`ana.main.2.lookup` | 60工作分钟 | 读取本地事实：ana_window |
-| 签发书面确认<br>`ana.main.3.document` | 20工作分钟 | 签发文本证据：ana_window |
-| 向请求者回复已取得的结果<br>`ana.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`ana.main.3.document` | 20工作分钟 | 签发文本证据：ana_window |
+| Reply to the requester with the results obtained<br>`ana.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Family helper·Marta Vela (`marta`)
 
@@ -96,7 +96,7 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 
 [独立角色配置](../../tasks/actors/DSB-17/marta.json) · 日历 `us_eastern_daily` · 时区 `America/New_York` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Family helper·Marta Vela，负责authorized afternoon helper, 13:00-15:00。Authorized for wheelchair assistance, child supervision and meal handoff within 13:00-15:00; acknowledges coverage only for meal windows fully inside her authorized hours. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Family helper·Marta Vela, responsible for authorized afternoon helper, 13:00-15:00. Authorized for wheelchair assistance, child supervision and meal handoff within 13:00-15:00; acknowledges coverage only for meal windows fully inside her authorized hours. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：helper_ack、marta_window
 
@@ -106,10 +106,10 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`marta.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`marta.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
 | check her authorized coverage window against the requested meal window<br>`marta.main.2.lookup` | 90工作分钟 | 读取本地事实：marta_window、helper_ack |
-| 签发书面确认<br>`marta.main.3.document` | 20工作分钟 | 签发文本证据：marta_window、helper_ack |
-| 向请求者回复已取得的结果<br>`marta.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`marta.main.3.document` | 20工作分钟 | 签发文本证据：marta_window、helper_ack |
+| Reply to the requester with the results obtained<br>`marta.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -378,14 +378,14 @@ Advisory and coordination only: search menus, contact the kitchen and helpers, g
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-07-09 Fri 21:32 | 2027-07-09 Fri 22:20 | Home Meal Kitchen supervisor·Sam Reyes | 发出受理回执 |
+| 2027-07-09 Fri 21:32 | 2027-07-09 Fri 22:20 | Home Meal Kitchen supervisor·Sam Reyes | Issue an acceptance receipt |
 | 2027-07-09 Fri 22:20 | 2027-07-10 Sat 01:26 | Home Meal Kitchen supervisor·Sam Reyes | check the exact-menu sesame cross-contact controls and child meal preparation |
-| 2027-07-10 Sat 01:26 | 2027-07-10 Sat 02:09 | Home Meal Kitchen supervisor·Sam Reyes | 签发书面确认 |
-| 2027-07-10 Sat 02:09 | 2027-07-10 Sat 02:24 | Home Meal Kitchen supervisor·Sam Reyes | 向请求者回复已取得的结果 |
-| 2027-07-10 Sat 22:36 | 2027-07-10 Sat 23:16 | Family helper·Marta Vela | 发出受理回执 |
+| 2027-07-10 Sat 01:26 | 2027-07-10 Sat 02:09 | Home Meal Kitchen supervisor·Sam Reyes | Issue written confirmation |
+| 2027-07-10 Sat 02:09 | 2027-07-10 Sat 02:24 | Home Meal Kitchen supervisor·Sam Reyes | Reply to the requester with the results obtained |
+| 2027-07-10 Sat 22:36 | 2027-07-10 Sat 23:16 | Family helper·Marta Vela | Issue an acceptance receipt |
 | 2027-07-10 Sat 23:16 | 2027-07-11 Sun 01:03 | Family helper·Marta Vela | check her authorized coverage window against the requested meal window |
-| 2027-07-11 Sun 01:03 | 2027-07-11 Sun 01:37 | Family helper·Marta Vela | 签发书面确认 |
-| 2027-07-11 Sun 01:37 | 2027-07-11 Sun 01:52 | Family helper·Marta Vela | 向请求者回复已取得的结果 |
+| 2027-07-11 Sun 01:03 | 2027-07-11 Sun 01:37 | Family helper·Marta Vela | Issue written confirmation |
+| 2027-07-11 Sun 01:37 | 2027-07-11 Sun 01:52 | Family helper·Marta Vela | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

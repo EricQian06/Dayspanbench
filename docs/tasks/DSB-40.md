@@ -6,7 +6,7 @@
 
 参考轨迹历时：**1.375天（33小时）**。结果类别：`resolved`。
 
-跨度设计：短期；mid-episode delivery-slot rewrite plus approval window。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；mid-episode delivery-slot rewrite plus approval window。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -51,7 +51,7 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 [独立角色配置](../../tasks/actors/DSB-40/fulfillment_agent.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Test Appliance Cooperative delivery specialist·Morgan Hale，负责measured dimensions, access verification and delivery slots。Confirms measured installation fit, the unpack-at-door route and recycling in writing; verified dimensions do not guarantee the current delivery slot still meets the deadline. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Test Appliance Cooperative delivery specialist·Morgan Hale, responsible for measured dimensions, access verification and delivery slots. Confirms measured installation fit, the unpack-at-door route and recycling in writing; verified dimensions do not guarantee the current delivery slot still meets the deadline. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：fit_verified、recycling_confirmed
 
@@ -61,10 +61,10 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`fulfillment_agent.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`fulfillment_agent.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the measured opening, doorway route, unpack-at-door procedure and recycling<br>`fulfillment_agent.main.2.lookup` | 120工作分钟 | 读取本地事实：fit_verified、recycling_confirmed |
-| 签发书面确认<br>`fulfillment_agent.main.3.document` | 30工作分钟 | 签发文本证据：fit_verified、recycling_confirmed |
-| 向请求者回复已取得的结果<br>`fulfillment_agent.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`fulfillment_agent.main.3.document` | 30工作分钟 | 签发文本证据：fit_verified、recycling_confirmed |
+| Reply to the requester with the results obtained<br>`fulfillment_agent.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Test Appliance Cooperative inventory desk·Riley Carter (`store_operations`)
 
@@ -72,7 +72,7 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 [独立角色配置](../../tasks/actors/DSB-40/store_operations.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Test Appliance Cooperative inventory desk·Riley Carter，负责listings, delivery slots and orders。Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. Building access and elevator bookings are not store records. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Test Appliance Cooperative inventory desk·Riley Carter, responsible for listings, delivery slots and orders. Quotes current all-in totals and delivery slots; uncommitted delivery routes can change without notice, so slots are revalidated at order time. Building access and elevator bookings are not store records. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：delivery_window、order_total、ordered_sku、payment_terms
 
@@ -82,11 +82,11 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`store_operations.slot.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 给出猜测性答复<br>`store_operations.slot.2.suggest` | 30工作分钟 | 给出猜测性答复： |
+| Issue an acceptance receipt<br>`store_operations.slot.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Offer a speculative answer<br>`store_operations.slot.2.suggest` | 30工作分钟 | 给出猜测性答复： |
 | check the current listing, all-in total and delivery slot<br>`store_operations.slot.3.lookup` | 60工作分钟 | 读取本地事实：order_total、delivery_window |
-| 签发书面确认<br>`store_operations.slot.4.document` | 30工作分钟 | 签发文本证据：order_total、delivery_window |
-| 向请求者回复已取得的结果<br>`store_operations.slot.5.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`store_operations.slot.4.document` | 30工作分钟 | 签发文本证据：order_total、delivery_window |
+| Reply to the requester with the results obtained<br>`store_operations.slot.5.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Example Court building manager·Jolene Fischer (`building_manager`)
 
@@ -94,7 +94,7 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 [独立角色配置](../../tasks/actors/DSB-40/building_manager.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Example Court building manager·Jolene Fischer，负责service-elevator bookings and freight access for 18 Example Court。Books the building's service elevator for appliance deliveries in writing; the store does not manage building access, and delivery crews cannot enter without a confirmed booking. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Example Court building manager·Jolene Fischer, responsible for service-elevator bookings and freight access for 18 Example Court. Books the building's service elevator for appliance deliveries in writing; the store does not manage building access, and delivery crews cannot enter without a confirmed booking. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：elevator_reserved
 
@@ -104,10 +104,10 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`building_manager.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`building_manager.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the service-elevator schedule and book the delivery slot<br>`building_manager.main.2.lookup` | 90工作分钟 | 读取本地事实：elevator_reserved |
-| 签发书面确认<br>`building_manager.main.3.document` | 30工作分钟 | 签发文本证据：elevator_reserved |
-| 向请求者回复已取得的结果<br>`building_manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`building_manager.main.3.document` | 30工作分钟 | 签发文本证据：elevator_reserved |
+| Reply to the requester with the results obtained<br>`building_manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -120,7 +120,7 @@ Advisory and coordination only: search listings, contact the store, gather writt
 | `fit_verified` | `true` | The delivery specialist confirms in writing (fit-S206) that COOL-16-B's minimum opening (32.5 x 69 x 34 in) fits the measured 33 x 70 x 35 in opening, with a verified unpack-at-door procedure giving a 32 in route through the 33 in doorway. |
 | `recycling_confirmed` | `true` | Old-appliance recycling at the ground-floor address is included in the confirmed delivery service. |
 | `elevator_reserved` | `"2027-06-09 09:30-10:00"` | The building manager confirms in writing (lift booking L-0906) that the service elevator at 18 Example Court is reserved for the fridge delivery on 2027-06-09 09:30-10:00, ahead of the confirmed delivery interval. |
-| `total_ref` | `1099.0` | Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling (留存方整理). |
+| `total_ref` | `1099.0` | Neighborhood price comparison sheet, June 2027: COOL-16-B all-in 1099.00 USD with discounted delivery and waived recycling (compiled by the record holder). |
 
 目标结论：`order_confirmed`。
 
@@ -411,14 +411,14 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-06-08 Tue 23:03 | 2027-06-08 Tue 23:39 | Example Court building manager·Jolene Fischer | 发出受理回执 |
-| 2027-06-08 Tue 23:14 | 2027-06-08 Tue 23:57 | Test Appliance Cooperative delivery specialist·Morgan Hale | 发出受理回执 |
+| 2027-06-08 Tue 23:03 | 2027-06-08 Tue 23:39 | Example Court building manager·Jolene Fischer | Issue an acceptance receipt |
+| 2027-06-08 Tue 23:14 | 2027-06-08 Tue 23:57 | Test Appliance Cooperative delivery specialist·Morgan Hale | Issue an acceptance receipt |
 | 2027-06-08 Tue 23:39 | 2027-06-09 Wed 01:30 | Example Court building manager·Jolene Fischer | check the service-elevator schedule and book the delivery slot |
 | 2027-06-08 Tue 23:57 | 2027-06-09 Wed 02:17 | Test Appliance Cooperative delivery specialist·Morgan Hale | check the measured opening, doorway route, unpack-at-door procedure and recycling |
-| 2027-06-09 Wed 01:30 | 2027-06-09 Wed 02:17 | Example Court building manager·Jolene Fischer | 签发书面确认 |
-| 2027-06-09 Wed 02:17 | 2027-06-09 Wed 03:01 | Test Appliance Cooperative delivery specialist·Morgan Hale | 签发书面确认 |
-| 2027-06-09 Wed 02:17 | 2027-06-09 Wed 02:32 | Example Court building manager·Jolene Fischer | 向请求者回复已取得的结果 |
-| 2027-06-09 Wed 03:01 | 2027-06-09 Wed 03:16 | Test Appliance Cooperative delivery specialist·Morgan Hale | 向请求者回复已取得的结果 |
+| 2027-06-09 Wed 01:30 | 2027-06-09 Wed 02:17 | Example Court building manager·Jolene Fischer | Issue written confirmation |
+| 2027-06-09 Wed 02:17 | 2027-06-09 Wed 03:01 | Test Appliance Cooperative delivery specialist·Morgan Hale | Issue written confirmation |
+| 2027-06-09 Wed 02:17 | 2027-06-09 Wed 02:32 | Example Court building manager·Jolene Fischer | Reply to the requester with the results obtained |
+| 2027-06-09 Wed 03:01 | 2027-06-09 Wed 03:16 | Test Appliance Cooperative delivery specialist·Morgan Hale | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

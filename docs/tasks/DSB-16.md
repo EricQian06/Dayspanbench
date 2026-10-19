@@ -2,8 +2,6 @@
 
 > 作者/评审专用：下文包含隐藏事实和参考答案，不提供给被测Agent。
 
-> 2026-10-18更新：角色关于课程完成情况的答复随实际报名、作品评估状态更新；未办结报名者不能仅凭时间到达取得已评估作品。当前规则以[私有任务定义](../../tasks/private/DSB-16.json)为准，下文参考回放保留历史版本。
-
 领域：education_career。开始：2027-02-01 Mon 23:00；截止：2027-02-13 Sat 07:00（北京时间）。
 
 参考轨迹历时：**9.33333天（224小时）**。结果类别：`resolved`。
@@ -47,7 +45,7 @@ Advisory and coordination only: read records, ask before course enrollment and a
 
 [独立角色配置](../../tasks/actors/DSB-16/course_assessor.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Course provider and assessor·Dr. Ada Vaughn，负责course records, role briefs, assessed artifacts and the application desk。Issues only the fixture's verified records and service acknowledgements: current course listings, the recruiter-confirmed role brief, and assessed artifact records that appear only after the enrolled course actually completes; never accepts agent-authored assessment claims. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Course provider and assessor·Dr. Ada Vaughn, responsible for course records, role briefs, assessed artifacts and the application desk. Issues only the fixture's verified records and service acknowledgements: current course listings, the recruiter-confirmed role brief, and assessed artifact records that appear only after the enrolled course actually completes; never accepts agent-authored assessment claims. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：application_received、artifacts_assessed、enrolled、role_v2
 
@@ -57,8 +55,8 @@ Advisory and coordination only: read records, ask before course enrollment and a
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`course_assessor.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 向请求者回复已取得的结果<br>`course_assessor.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`course_assessor.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Reply to the requester with the results obtained<br>`course_assessor.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -212,8 +210,8 @@ Advisory and coordination only: read records, ask before course enrollment and a
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-02-01 Mon 23:32 | 2027-02-02 Tue 00:20 | Course provider and assessor·Dr. Ada Vaughn | 发出受理回执 |
-| 2027-02-02 Tue 00:20 | 2027-02-02 Tue 00:35 | Course provider and assessor·Dr. Ada Vaughn | 向请求者回复已取得的结果 |
+| 2027-02-01 Mon 23:32 | 2027-02-02 Tue 00:20 | Course provider and assessor·Dr. Ada Vaughn | Issue an acceptance receipt |
+| 2027-02-02 Tue 00:20 | 2027-02-02 Tue 00:35 | Course provider and assessor·Dr. Ada Vaughn | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

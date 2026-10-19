@@ -2,13 +2,11 @@
 
 > 作者/评审专用：下文包含隐藏事实和参考答案，不提供给被测Agent。
 
-> 2026-10-18更新：对话合并相关话题并读取实际订位状态；参考策略已补齐11:00之后的具体方案审批询问。下文参考回放为历史版本，当前规则以[私有任务定义](../../tasks/private/DSB-13.json)为准。
-
 领域：food_dining。开始：2027-07-09 Fri 21:00；截止：2027-07-12 Mon 00:00（北京时间）。
 
 参考轨迹历时：**1.20833天（29小时）**。结果类别：`resolved`。
 
-跨度设计：短期；mid-episode offer rewrite plus organizer approval window。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；mid-episode offer rewrite plus organizer approval window。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -48,7 +46,7 @@ Advisory and coordination only: search listings, contact restaurants, gather wri
 
 [独立角色配置](../../tasks/actors/DSB-13/garden_manager.json) · 日历 `us_eastern_daily` · 时区 `America/New_York` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Garden Ramp Bistro manager·Alex Chen，负责provider verification, exact menu quotes and reservations。Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Garden Ramp Bistro manager·Alex Chen, responsible for provider verification, exact menu quotes and reservations. Confirms the actual entrance, selected dishes, preparation controls, table time and price in writing; table offers can change without notice; reservations go through the reservation desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：access、address、controls、fish_free、reserved、table_time、total_cost
 
@@ -58,10 +56,10 @@ Advisory and coordination only: search listings, contact restaurants, gather wri
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`garden_manager.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`garden_manager.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the room-to-table route and kitchen controls<br>`garden_manager.main.2.lookup` | 180工作分钟 | 读取本地事实：access、controls、fish_free |
-| 签发书面确认<br>`garden_manager.main.3.document` | 30工作分钟 | 签发文本证据：access、controls、fish_free |
-| 向请求者回复已取得的结果<br>`garden_manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`garden_manager.main.3.document` | 30工作分钟 | 签发文本证据：access、controls、fish_free |
+| Reply to the requester with the results obtained<br>`garden_manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 **流程：Current table offer** (`offer`)
 
@@ -70,7 +68,7 @@ Advisory and coordination only: search listings, contact restaurants, gather wri
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
 | check the current published table offer<br>`garden_manager.offer.1.lookup` | 60工作分钟 | 读取本地事实： |
-| 向请求者回复已取得的结果<br>`garden_manager.offer.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Reply to the requester with the results obtained<br>`garden_manager.offer.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Harbor Family Table manager·Robin Diaz (`harbor_manager`)
 
@@ -78,7 +76,7 @@ Advisory and coordination only: search listings, contact restaurants, gather wri
 
 [独立角色配置](../../tasks/actors/DSB-13/harbor_manager.json) · 日历 `us_eastern_daily` · 时区 `America/New_York` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Harbor Family Table manager·Robin Diaz，负责confirmed alternative restaurant status。Only confirms the r106 menu and reservation terms; access and allergen evidence already verified (verify-F106). 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Harbor Family Table manager·Robin Diaz, responsible for confirmed alternative restaurant status. Only confirms the r106 menu and reservation terms; access and allergen evidence already verified (verify-F106). Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：harbor_address、harbor_time、harbor_total、harbor_verified
 
@@ -88,9 +86,9 @@ Advisory and coordination only: search listings, contact restaurants, gather wri
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询业务记录<br>`harbor_manager.main.1.lookup` | 60工作分钟 | 读取本地事实：harbor_address、harbor_time、harbor_total、harbor_verified |
-| 签发书面确认<br>`harbor_manager.main.2.document` | 30工作分钟 | 签发文本证据：harbor_address、harbor_time、harbor_total、harbor_verified |
-| 向请求者回复已取得的结果<br>`harbor_manager.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Look up business records<br>`harbor_manager.main.1.lookup` | 60工作分钟 | 读取本地事实：harbor_address、harbor_time、harbor_total、harbor_verified |
+| Issue written confirmation<br>`harbor_manager.main.2.document` | 30工作分钟 | 签发文本证据：harbor_address、harbor_time、harbor_total、harbor_verified |
+| Reply to the requester with the results obtained<br>`harbor_manager.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -361,10 +359,10 @@ Advisory and coordination only: search listings, contact restaurants, gather wri
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-07-09 Fri 21:32 | 2027-07-09 Fri 22:20 | Garden Ramp Bistro manager·Alex Chen | 发出受理回执 |
+| 2027-07-09 Fri 21:32 | 2027-07-09 Fri 22:20 | Garden Ramp Bistro manager·Alex Chen | Issue an acceptance receipt |
 | 2027-07-09 Fri 22:20 | 2027-07-10 Sat 01:26 | Garden Ramp Bistro manager·Alex Chen | check the room-to-table route and kitchen controls |
-| 2027-07-10 Sat 01:26 | 2027-07-10 Sat 02:09 | Garden Ramp Bistro manager·Alex Chen | 签发书面确认 |
-| 2027-07-10 Sat 02:09 | 2027-07-10 Sat 02:24 | Garden Ramp Bistro manager·Alex Chen | 向请求者回复已取得的结果 |
+| 2027-07-10 Sat 01:26 | 2027-07-10 Sat 02:09 | Garden Ramp Bistro manager·Alex Chen | Issue written confirmation |
+| 2027-07-10 Sat 02:09 | 2027-07-10 Sat 02:24 | Garden Ramp Bistro manager·Alex Chen | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

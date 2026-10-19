@@ -6,7 +6,7 @@
 
 参考轨迹历时：**4.14444天（99.47小时）**。结果类别：`resolved`。
 
-跨度设计：中短期；merchant finding turnaround plus statement correction。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short to medium term；merchant finding turnaround plus statement correction。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Advisory and coordination only: read masked records, contact the hotel billing d
 
 [独立角色配置](../../tasks/actors/DSB-30/hotel_billing.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Harbor Test Hotel billing·Priya Noland，负责stay receipts and duplicate-charge investigation。Confirms in writing which posted reference belongs to the stay and whether any reversal was posted; equal amounts alone do not identify the duplicate. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Harbor Test Hotel billing·Priya Noland, responsible for stay receipts and duplicate-charge investigation. Confirms in writing which posted reference belongs to the stay and whether any reversal was posted; equal amounts alone do not identify the duplicate. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：duplicate_amount、duplicate_transaction、reversal_posted
 
@@ -55,10 +55,10 @@ Advisory and coordination only: read masked records, contact the hotel billing d
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`hotel_billing.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`hotel_billing.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | reconcile the stay receipt with the posted transaction references<br>`hotel_billing.main.2.lookup` | 120工作分钟 | 读取本地事实：duplicate_transaction、duplicate_amount、reversal_posted |
-| 签发书面确认<br>`hotel_billing.main.3.document` | 30工作分钟 | 签发文本证据：duplicate_transaction、duplicate_amount、reversal_posted |
-| 向请求者回复已取得的结果<br>`hotel_billing.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`hotel_billing.main.3.document` | 30工作分钟 | 签发文本证据：duplicate_transaction、duplicate_amount、reversal_posted |
+| Reply to the requester with the results obtained<br>`hotel_billing.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Card issuer service desk·Jordan Blake (`issuer_desk`)
 
@@ -66,7 +66,7 @@ Advisory and coordination only: read masked records, contact the hotel billing d
 
 [独立角色配置](../../tasks/actors/DSB-30/issuer_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Card issuer service desk·Jordan Blake，负责masked statements, autopay records and dispute intake。Reads masked account records and accepts disputes for review without promising an outcome; filing changes neither this account's required payment nor its scheduled autopay. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Card issuer service desk·Jordan Blake, responsible for masked statements, autopay records and dispute intake. Reads masked account records and accepts disputes for review without promising an outcome; filing changes neither this account's required payment nor its scheduled autopay. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：autopay_covers、dispute_filed、required_payment
 
@@ -77,8 +77,8 @@ Advisory and coordination only: read masked records, contact the hotel billing d
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
 | compare the final required payment with the scheduled autopay<br>`issuer_desk.main.1.lookup` | 60工作分钟 | 读取本地事实：required_payment、autopay_covers |
-| 签发书面确认<br>`issuer_desk.main.2.document` | 30工作分钟 | 签发文本证据：required_payment、autopay_covers |
-| 向请求者回复已取得的结果<br>`issuer_desk.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`issuer_desk.main.2.document` | 30工作分钟 | 签发文本证据：required_payment、autopay_covers |
+| Reply to the requester with the results obtained<br>`issuer_desk.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -306,13 +306,13 @@ Advisory and coordination only: read masked records, contact the hotel billing d
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-07-13 Tue 00:14 | 2027-07-13 Tue 01:02 | Harbor Test Hotel billing·Priya Noland | 发出受理回执 |
+| 2027-07-13 Tue 00:14 | 2027-07-13 Tue 01:02 | Harbor Test Hotel billing·Priya Noland | Issue an acceptance receipt |
 | 2027-07-13 Tue 01:02 | 2027-07-13 Tue 03:08 | Harbor Test Hotel billing·Priya Noland | reconcile the stay receipt with the posted transaction references |
-| 2027-07-13 Tue 03:08 | 2027-07-13 Tue 03:51 | Harbor Test Hotel billing·Priya Noland | 签发书面确认 |
-| 2027-07-13 Tue 03:51 | 2027-07-13 Tue 04:06 | Harbor Test Hotel billing·Priya Noland | 向请求者回复已取得的结果 |
+| 2027-07-13 Tue 03:08 | 2027-07-13 Tue 03:51 | Harbor Test Hotel billing·Priya Noland | Issue written confirmation |
+| 2027-07-13 Tue 03:51 | 2027-07-13 Tue 04:06 | Harbor Test Hotel billing·Priya Noland | Reply to the requester with the results obtained |
 | 2027-07-14 Wed 23:06 | 2027-07-15 Thu 00:26 | Card issuer service desk·Jordan Blake | compare the final required payment with the scheduled autopay |
-| 2027-07-15 Thu 00:26 | 2027-07-15 Thu 01:13 | Card issuer service desk·Jordan Blake | 签发书面确认 |
-| 2027-07-15 Thu 01:13 | 2027-07-15 Thu 01:28 | Card issuer service desk·Jordan Blake | 向请求者回复已取得的结果 |
+| 2027-07-15 Thu 00:26 | 2027-07-15 Thu 01:13 | Card issuer service desk·Jordan Blake | Issue written confirmation |
+| 2027-07-15 Thu 01:13 | 2027-07-15 Thu 01:28 | Card issuer service desk·Jordan Blake | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

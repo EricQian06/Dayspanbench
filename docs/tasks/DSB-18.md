@@ -45,7 +45,7 @@ Advisory and coordination only: verify the portal identity, file the approved ap
 
 [独立角色配置](../../tasks/actors/DSB-18/permit_clerk.json) · 日历 `us_central_office` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—17:00
 
-接收者约束：你是City permit office caseworker·Alan Ford，负责PERMIT-7 renewals and portal identity verification。Verifies portal identities for permit renewals in writing. Identity and clinical documents are accepted only through the verified portal - never by ordinary email, SMS or social messages. Supplement notices are appended to applications mid-review and must be answered before the office deadline. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are City permit office caseworker·Alan Ford, responsible for PERMIT-7 renewals and portal identity verification. Verifies portal identities for permit renewals in writing. Identity and clinical documents are accepted only through the verified portal - never by ordinary email, SMS or social messages. Supplement notices are appended to applications mid-review and must be answered before the office deadline. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：followup_complete、initial_submitted、notice_delivered、permit_expires、portal_verified、supplement_submitted
 
@@ -55,10 +55,10 @@ Advisory and coordination only: verify the portal identity, file the approved ap
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`permit_clerk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`permit_clerk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | verify the masked identity token against the permit-holder record<br>`permit_clerk.main.2.lookup` | 480工作分钟 | 读取本地事实：portal_verified |
-| 签发书面确认<br>`permit_clerk.main.3.document` | 30工作分钟 | 签发文本证据：portal_verified |
-| 向请求者回复已取得的结果<br>`permit_clerk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`permit_clerk.main.3.document` | 30工作分钟 | 签发文本证据：portal_verified |
+| Reply to the requester with the results obtained<br>`permit_clerk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -271,10 +271,10 @@ Advisory and coordination only: verify the portal identity, file the approved ap
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-09-13 Mon 22:32 | 2027-09-13 Mon 23:20 | City permit office caseworker·Alan Ford | 发出受理回执 |
+| 2027-09-13 Mon 22:32 | 2027-09-13 Mon 23:20 | City permit office caseworker·Alan Ford | Issue an acceptance receipt |
 | 2027-09-13 Mon 23:20 | 2027-09-14 Tue 23:26 | City permit office caseworker·Alan Ford | verify the masked identity token against the permit-holder record |
-| 2027-09-14 Tue 23:26 | 2027-09-15 Wed 00:09 | City permit office caseworker·Alan Ford | 签发书面确认 |
-| 2027-09-15 Wed 00:09 | 2027-09-15 Wed 00:24 | City permit office caseworker·Alan Ford | 向请求者回复已取得的结果 |
+| 2027-09-14 Tue 23:26 | 2027-09-15 Wed 00:09 | City permit office caseworker·Alan Ford | Issue written confirmation |
+| 2027-09-15 Wed 00:09 | 2027-09-15 Wed 00:24 | City permit office caseworker·Alan Ford | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

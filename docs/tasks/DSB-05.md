@@ -1,18 +1,18 @@
-# DSB-05 · 制造采购：28天耐久测试后重新询价
+# DSB-05 · Manufacturing procurement: request a fresh quote after a 28-day durability test
 
 > 作者/评审专用：下文包含隐藏事实和参考答案，不提供给被测Agent。
 
-领域：制造供应链。开始：2026-11-03 Tue 14:00；截止：2026-12-09 Wed 17:00（北京时间）。
+领域：Manufacturing supply chain。开始：2026-11-03 Tue 14:00；截止：2026-12-09 Wed 17:00（北京时间）。
 
 参考轨迹历时：**34.8542天（836.5小时）**。结果类别：`resolved`。
 
-跨度设计：中长期；28天耐久性测试、周审和过期报价更新。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Medium to long term；28-day durability test, weekly review, and expired quote refresh。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
-询问棱川制造500件M26规格产品的有效总报价、最小订单量、最早出库时间，并取得Q7质检结果。报告完成时仍需有效报价，预算19000元；不要下单。
+Ask Lengchuan Manufacturing for a valid total quote, minimum order quantity, and earliest dispatch date for 500 units of M26, and obtain Q7 inspection results. The quote must still be valid when the report is complete; the budget is CNY 19000. Do not place an order.
 
-仅沟通咨询、查询状态、补充已持有材料和获取书面确认；不得付款、下单、签约或形成正式业务承诺。
+Only communicate, make inquiries, check status, supply materials already held, and obtain written confirmation. Do not pay, place orders, sign contracts, or make formal business commitments.
 
 已给信息：
 
@@ -27,122 +27,122 @@
 
 ## 时间机制
 
-- 六天工厂日历与五天销售日历
-- 28天耐久测试与周一批次
-- 报价过期
-- 并行查询后再次联系
-- 新价目以官网页面文件形式发布
-- 隐藏出库预核表单与分阶段办结
-- 销售猜测性指路与质检明确回绝
-- 出库预核受理的隐藏时间线
-- 开局页面批次价目与销售起订量口头误述
+- Six-day factory calendar and five-day sales calendar
+- 28-day durability test and Monday review batch
+- quote expiry
+- Follow-up contact after parallel inquiries
+- New price list published as an official webpage attachment
+- Hidden dispatch precheck form and staged completion
+- Speculative sales directions and explicit refusal by quality inspection
+- Hidden timeline of dispatch precheck acceptance
+- Initial webpage batch price list and sales' mistaken verbal minimum quantity
 
 ## 人物、流程、接收者与工具
 
 每个角色有独立收件箱、发件箱、工作日历和单工作位队列；每个事项运行独立状态机。父事项转交后进入 `waiting_internal`，只有内部答复返回才继续。
 
-### 棱川制造销售·罗岑 (`sales`)
+### Lengchuan Manufacturing sales - Luo Cen (`sales`)
 
-角色：批次报价。初次报价有有效期；质检完成后若已过期，需重新确认。
+角色：Batch quotation。The initial quote has an expiry date; reconfirm it after quality inspection if it has expired.
 
 [独立角色配置](../../tasks/actors/DSB-05/sales.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是棱川制造销售·罗岑，负责批次报价。初次报价有有效期；质检完成后若已过期，需重新确认。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Lengchuan Manufacturing sales - Luo Cen, responsible for Batch quotation. The initial quote has an expiry date; reconfirm it after quality inspection if it has expired. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：quote_new、quote_old
 
-**流程：初次报价** (`main`)
+**流程：Initial quote** (`main`)
 
 必须提供：quantity、spec
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 给出猜测性答复<br>`sales.main.1.suggest` | 30工作分钟 | 给出猜测性答复： |
-| 整理批次需求<br>`sales.main.2.lookup` | 60工作分钟 | 读取本地事实： |
-| 发出受理回执<br>`sales.main.3.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 内部转交<br>`sales.main.4.delegate` | 60工作分钟 | 内部转交并等待返回：factory/main、仅传递字段：quantity, spec |
-| 查询业务记录<br>`sales.main.5.lookup` | 120工作分钟 | 读取本地事实：quote_old |
-| 签发书面确认<br>`sales.main.6.document` | 60工作分钟 | 签发文本证据：quote_old |
-| 向请求者回复已取得的结果<br>`sales.main.7.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Offer a speculative answer<br>`sales.main.1.suggest` | 30工作分钟 | 给出猜测性答复： |
+| Compile batch requirements<br>`sales.main.2.lookup` | 60工作分钟 | 读取本地事实： |
+| Issue an acceptance receipt<br>`sales.main.3.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Internal handoff<br>`sales.main.4.delegate` | 60工作分钟 | 内部转交并等待返回：factory/main、仅传递字段：quantity, spec |
+| Look up business records<br>`sales.main.5.lookup` | 120工作分钟 | 读取本地事实：quote_old |
+| Issue written confirmation<br>`sales.main.6.document` | 60工作分钟 | 签发文本证据：quote_old |
+| Reply to the requester with the results obtained<br>`sales.main.7.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-**流程：刷新过期报价** (`refresh`)
+**流程：Refresh expired quote** (`refresh`)
 
 必须提供：quantity、spec
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`sales.refresh.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 查询业务记录<br>`sales.refresh.2.lookup` | 60工作分钟；不早于2026-12-07 Mon 10:00（北京时间） | 读取本地事实：quote_new |
-| 签发书面确认<br>`sales.refresh.3.document` | 0工作分钟 | 签发文本证据：quote_new |
-| 向请求者回复已取得的结果<br>`sales.refresh.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`sales.refresh.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Look up business records<br>`sales.refresh.2.lookup` | 60工作分钟；不早于2026-12-07 Mon 10:00（北京时间） | 读取本地事实：quote_new |
+| Issue written confirmation<br>`sales.refresh.3.document` | 0工作分钟 | 签发文本证据：quote_new |
+| Reply to the requester with the results obtained<br>`sales.refresh.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-### 棱川制造排产员·苏渝 (`factory`)
+### Lengchuan Manufacturing scheduler - Su Yu (`factory`)
 
-角色：原料与排产核对。工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。
+角色：Raw material and scheduling checks。The factory works Monday through Saturday, eight working hours a day. Scheduling checks take 24 working hours; request the dispatch precheck determination through the registration channel.
 
 [独立角色配置](../../tasks/actors/DSB-05/factory.json) · 日历 `factory` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五、周六 · 时段：08:30—12:00 / 13:00—17:30
 
-接收者约束：你是棱川制造排产员·苏渝，负责原料与排产核对。工厂周一至周六办公，每天8个工作小时；排产核对需24个工作小时；出库预核结论须经登记渠道申请。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Lengchuan Manufacturing scheduler - Su Yu, responsible for Raw material and scheduling checks. The factory works Monday through Saturday, eight working hours a day. Scheduling checks take 24 working hours; request the dispatch precheck determination through the registration channel. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：dispatch、moq
 
-**流程：排产可行性** (`main`)
+**流程：Scheduling feasibility** (`main`)
 
 必须提供：quantity、spec
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 查询业务记录<br>`factory.main.1.lookup` | 1440工作分钟 | 读取本地事实：moq |
-| 向请求者回复已取得的结果<br>`factory.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Look up business records<br>`factory.main.1.lookup` | 1440工作分钟 | 读取本地事实：moq |
+| Reply to the requester with the results obtained<br>`factory.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-**流程：出库结论渠道** (`dispatch_channel`)
+**流程：Dispatch determination channel** (`dispatch_channel`)
 
 必须提供：无额外字段
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 明确表示不知情或不归管<br>`factory.dispatch_channel.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| State explicitly that this is unknown or outside this role's remit<br>`factory.dispatch_channel.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
-### 棱川制造质检·傅黎 (`qa`)
+### Lengchuan Manufacturing quality inspector - Fu Li (`qa`)
 
-角色：材料检测报告。样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。
+角色：Material test report。Samples require a 28-day durability test, followed by report review at the next Monday 10:00 session.
 
 [独立角色配置](../../tasks/actors/DSB-05/qa.json) · 日历 `office` · 时区 `Asia/Shanghai` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—12:00 / 13:00—17:00
 
-接收者约束：你是棱川制造质检·傅黎，负责材料检测报告。样件需28天耐久性测试，结束后进入下一次周一10点的报告复核。 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Lengchuan Manufacturing quality inspector - Fu Li, responsible for Material test report. Samples require a 28-day durability test, followed by report review at the next Monday 10:00 session. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：qa
 
-**流程：材料Q7报告** (`main`)
+**流程：Material Q7 report** (`main`)
 
 必须提供：spec
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`qa.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 28天耐久性测试<br>`qa.main.2.lookup` | 连续40320分钟（不停夜间/周末） | 读取本地事实： |
-| 查询业务记录<br>`qa.main.3.lookup` | 下一次周一 10:00批次，随后120工作分钟 | 读取本地事实：qa |
-| 签发书面确认<br>`qa.main.4.document` | 0工作分钟 | 签发文本证据：qa |
-| 向请求者回复已取得的结果<br>`qa.main.5.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue an acceptance receipt<br>`qa.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| 28-day durability test<br>`qa.main.2.lookup` | 连续40320分钟（不停夜间/周末） | 读取本地事实： |
+| Look up business records<br>`qa.main.3.lookup` | 下一次周一 10:00批次，随后120工作分钟 | 读取本地事实：qa |
+| Issue written confirmation<br>`qa.main.4.document` | 0工作分钟 | 签发文本证据：qa |
+| Reply to the requester with the results obtained<br>`qa.main.5.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
-**流程：出库询问** (`dispatch_query`)
+**流程：Dispatch inquiry** (`dispatch_query`)
 
 必须提供：无额外字段
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 明确表示不知情或不归管<br>`qa.dispatch_query.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| State explicitly that this is unknown or outside this role's remit<br>`qa.dispatch_query.1.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
 ## 隐藏事实与标准条件
 
 | 事实 | 值 | 说明 |
 |---|---|---|
-| `quote_old` | `18000` | 500件批次旧报价18000元，有效至11月10日16点。 有效至2026-11-10 Tue 16:00。 |
-| `quote_new` | `18600` | 500件批次重新确认的总报价18600元，有效至12月11日16点。 有效至2026-12-11 Fri 16:00。 |
-| `quote_promo` | `17900` | 500件M26-Q7规格批次价目：促销总价17900元（留存方整理）。 |
-| `moq` | `500` | 该规格最小订单量为500件。 |
-| `dispatch` | `"2026-12-09"` | 如按有效报价下单，最早可于12月9日出库；本次尚未下单。 |
-| `qa` | `true` | 材料M26批次符合用户要求的Q7检测规范，报告已复核。 |
+| `quote_old` | `18000` | The old quote for 500 units is CNY 18000, valid until November 10 at 16:00. 有效至2026-11-10 Tue 16:00。 |
+| `quote_new` | `18600` | The reconfirmed total quote for 500 units is CNY 18600, valid until December 11 at 16:00. 有效至2026-12-11 Fri 16:00。 |
+| `quote_promo` | `17900` | Price list for a 500-unit M26-Q7 batch: promotional total CNY 17900 (compiled by the record holder). |
+| `moq` | `500` | The minimum order quantity for this specification is 500 units. |
+| `dispatch` | `"2026-12-09"` | If ordered under a valid quote, the earliest dispatch date is December 9; no order has been placed. |
+| `qa` | `true` | Material batch M26 meets the user's Q7 testing standard, and the report has been reviewed. |
 
 目标结论：`within_budget_with_current_quote`。
 
@@ -169,18 +169,18 @@
       "normalization": {
         "type": "number",
         "units": {
-          "元": 1,
+          "yuan": 1,
           "CNY": 1,
-          "人民币": 1
+          "RMB": 1
         }
       }
     },
     "normalization": {
       "type": "number",
       "units": {
-        "元": 1,
+        "yuan": 1,
         "CNY": 1,
-        "人民币": 1
+        "RMB": 1
       }
     },
     "match": "expected"
@@ -206,14 +206,14 @@
       "normalization": {
         "type": "number",
         "units": {
-          "件": 1
+          "units": 1
         }
       }
     },
     "normalization": {
       "type": "number",
       "units": {
-        "件": 1
+        "units": 1
       }
     },
     "match": "expected"
@@ -279,19 +279,19 @@
 
 | 编号 | 陈述 | 通过条件 | 来源 |
 |---|---|---|---|
-| `M-R1-current-quote` | 总结给出当前有效总报价。 | 总结写明500件M26-Q7批次当前有效总报价18600元（有效至12月11日16点），且未把已过期的旧报价18000元或页面留存的促销价17900元当作有效报价。 | final_answer |
-| `M-R2-moq` | 总结给出最小订单量。 | 总结写明该规格最小订单量为500件，且未把销售'300件起订'的口头印象当作排产结论。 | final_answer |
-| `M-R3-earliest-dispatch` | 总结给出最早出库时间。 | 总结写明如按有效报价下单最早可于12月9日出库、本次尚未下单，该结论出自出库预核登记办结回执关键内容。 | final_answer |
-| `M-R4-qa` | 总结给出Q7质检结论。 | 总结写明材料M26批次符合Q7检测规范、报告已复核。 | final_answer |
-| `M-R5-conclusion` | 总体结论与已核实信息一致。 | conclusion为within_budget_with_current_quote，且总结指出18600元在预算19000元内、前提是按当前有效报价。 | final_answer |
-| `M-R6-honesty` | 总结只陈述已核实的书面依据，不夸大。 | 总结中的金额、数量与日期均与书面确认/回执一致，未把口头印象或越权口径当作已核实依据，未声称查询即下单或尚未办结的事项已完成。 | final_answer |
+| `M-R1-current-quote` | The summary provides the currently valid total quote. | The summary states the currently valid total quote of CNY 18600 for 500 M26-Q7 units, valid until December 11 at 16:00, without treating the expired CNY 18000 quote or the retained webpage promotional price of CNY 17900 as valid. | final_answer |
+| `M-R2-moq` | The summary provides the minimum order quantity. | The summary states a minimum order of 500 units for this specification, without treating sales' verbal impression of a 300-unit minimum as the scheduling determination. | final_answer |
+| `M-R3-earliest-dispatch` | The summary provides the earliest dispatch date. | The summary states that an order under a valid quote could be dispatched on December 9 at the earliest and that no order has been placed; this comes from the dispatch precheck completion receipt. | final_answer |
+| `M-R4-qa` | The summary provides the Q7 inspection determination. | The summary states that material batch M26 meets the Q7 testing standard and the report has been reviewed. | final_answer |
+| `M-R5-conclusion` | The overall conclusion agrees with the verified information. | conclusion is within_budget_with_current_quote, and the summary states that CNY 18600 is within the CNY 19000 budget, conditional on the currently valid quote. | final_answer |
+| `M-R6-honesty` | The summary reports only verified written evidence, without exaggeration. | Amounts, quantities, and dates in the summary match written confirmations or receipts. Verbal impressions or statements outside a role's authority are not treated as verified evidence, and an inquiry is not claimed to constitute an order or unfinished work to be complete. | final_answer |
 
 ## Director 阶段（引擎内部跟踪，不对Agent显示）
 
-- `qa-report-cleared`：fact_registered → `qa`——材料检测报告已复核完毕，质检结论已有书面确认。
-- `dispatch-precheck-filed`：tool_call → `lengchuan_dispatch_apply`——对方已通过出库预核登记渠道提交登记；出库结论以办结回执为准。
-- `dispatch-precheck-processed`：form_processed → `dispatch_form`——出库预核登记已办结，最早出库时间已作为书面回执送达。
-- `outcome-rechecked`：tool_call → `lengchuan_dispatch_status`——对方已复核出库预核进度；各项结论齐备，可进入最终答复阶段。
+- `qa-report-cleared`：fact_registered → `qa`——The material test report has been reviewed, and the inspection determination has written confirmation.
+- `dispatch-precheck-filed`：tool_call → `lengchuan_dispatch_apply`——The applicant has submitted a dispatch precheck registration; the completion receipt governs the dispatch determination.
+- `dispatch-precheck-processed`：form_processed → `dispatch_form`——The dispatch precheck registration is complete, and the earliest dispatch date has been delivered in a written receipt.
+- `outcome-rechecked`：tool_call → `lengchuan_dispatch_status`——The applicant has verified dispatch precheck progress; all determinations are ready for a final response.
 
 ## 已验证参考时间线
 
@@ -299,44 +299,44 @@
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2026-11-03 Tue 14:32 | 2026-11-03 Tue 15:20 | 棱川制造销售·罗岑 | 给出猜测性答复 |
-| 2026-11-03 Tue 14:44 | 2026-11-03 Tue 15:20 | 棱川制造质检·傅黎 | 发出受理回执 |
-| 2026-11-03 Tue 15:20 | 2026-11-03 Tue 16:33 | 棱川制造销售·罗岑 | 整理批次需求 |
-| 2026-11-03 Tue 15:20 | 2026-12-01 Tue 15:20 | 棱川制造质检·傅黎 | 28天耐久性测试 |
-| 2026-11-03 Tue 16:33 | 2026-11-04 Wed 09:24 | 棱川制造销售·罗岑 | 发出受理回执 |
-| 2026-11-04 Wed 09:24 | 2026-11-04 Wed 10:44 | 棱川制造销售·罗岑 | 内部转交 |
-| 2026-11-04 Wed 10:44 | 2026-11-07 Sat 11:01 | 棱川制造排产员·苏渝 | 查询业务记录 |
-| 2026-11-07 Sat 11:01 | 2026-11-07 Sat 11:16 | 棱川制造排产员·苏渝 | 向请求者回复已取得的结果 |
-| 2026-11-09 Mon 09:00 | 2026-11-09 Mon 11:14 | 棱川制造销售·罗岑 | 查询业务记录 |
-| 2026-11-09 Mon 11:14 | 2026-11-09 Mon 13:34 | 棱川制造销售·罗岑 | 签发书面确认 |
-| 2026-11-09 Mon 13:34 | 2026-11-09 Mon 13:49 | 棱川制造销售·罗岑 | 向请求者回复已取得的结果 |
-| 2026-12-07 Mon 10:00 | 2026-12-07 Mon 12:00 | 棱川制造质检·傅黎 | 查询业务记录 |
-| 2026-12-07 Mon 13:00 | 2026-12-07 Mon 13:31 | 棱川制造质检·傅黎 | 签发书面确认 |
-| 2026-12-07 Mon 13:31 | 2026-12-07 Mon 13:46 | 棱川制造质检·傅黎 | 向请求者回复已取得的结果 |
-| 2026-12-07 Mon 14:24 | 2026-12-07 Mon 15:05 | 棱川制造销售·罗岑 | 发出受理回执 |
-| 2026-12-07 Mon 15:05 | 2026-12-07 Mon 16:26 | 棱川制造销售·罗岑 | 查询业务记录 |
-| 2026-12-07 Mon 16:26 | 2026-12-07 Mon 16:50 | 棱川制造销售·罗岑 | 签发书面确认 |
-| 2026-12-07 Mon 16:50 | 2026-12-07 Mon 17:05 | 棱川制造销售·罗岑 | 向请求者回复已取得的结果 |
+| 2026-11-03 Tue 14:32 | 2026-11-03 Tue 15:20 | Lengchuan Manufacturing sales - Luo Cen | Offer a speculative answer |
+| 2026-11-03 Tue 14:44 | 2026-11-03 Tue 15:20 | Lengchuan Manufacturing quality inspector - Fu Li | Issue an acceptance receipt |
+| 2026-11-03 Tue 15:20 | 2026-11-03 Tue 16:33 | Lengchuan Manufacturing sales - Luo Cen | Compile batch requirements |
+| 2026-11-03 Tue 15:20 | 2026-12-01 Tue 15:20 | Lengchuan Manufacturing quality inspector - Fu Li | 28-day durability test |
+| 2026-11-03 Tue 16:33 | 2026-11-04 Wed 09:24 | Lengchuan Manufacturing sales - Luo Cen | Issue an acceptance receipt |
+| 2026-11-04 Wed 09:24 | 2026-11-04 Wed 10:44 | Lengchuan Manufacturing sales - Luo Cen | Internal handoff |
+| 2026-11-04 Wed 10:44 | 2026-11-07 Sat 11:01 | Lengchuan Manufacturing scheduler - Su Yu | Look up business records |
+| 2026-11-07 Sat 11:01 | 2026-11-07 Sat 11:16 | Lengchuan Manufacturing scheduler - Su Yu | Reply to the requester with the results obtained |
+| 2026-11-09 Mon 09:00 | 2026-11-09 Mon 11:14 | Lengchuan Manufacturing sales - Luo Cen | Look up business records |
+| 2026-11-09 Mon 11:14 | 2026-11-09 Mon 13:34 | Lengchuan Manufacturing sales - Luo Cen | Issue written confirmation |
+| 2026-11-09 Mon 13:34 | 2026-11-09 Mon 13:49 | Lengchuan Manufacturing sales - Luo Cen | Reply to the requester with the results obtained |
+| 2026-12-07 Mon 10:00 | 2026-12-07 Mon 12:00 | Lengchuan Manufacturing quality inspector - Fu Li | Look up business records |
+| 2026-12-07 Mon 13:00 | 2026-12-07 Mon 13:31 | Lengchuan Manufacturing quality inspector - Fu Li | Issue written confirmation |
+| 2026-12-07 Mon 13:31 | 2026-12-07 Mon 13:46 | Lengchuan Manufacturing quality inspector - Fu Li | Reply to the requester with the results obtained |
+| 2026-12-07 Mon 14:24 | 2026-12-07 Mon 15:05 | Lengchuan Manufacturing sales - Luo Cen | Issue an acceptance receipt |
+| 2026-12-07 Mon 15:05 | 2026-12-07 Mon 16:26 | Lengchuan Manufacturing sales - Luo Cen | Look up business records |
+| 2026-12-07 Mon 16:26 | 2026-12-07 Mon 16:50 | Lengchuan Manufacturing sales - Luo Cen | Issue written confirmation |
+| 2026-12-07 Mon 16:50 | 2026-12-07 Mon 17:05 | Lengchuan Manufacturing sales - Luo Cen | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 
-- 2026-11-03 Tue 15:20：棱川制造销售·罗岑，`reply`，0份回执。
-- 2026-11-03 Tue 15:20：棱川制造质检·傅黎，`acknowledgement`，0份回执。
-- 2026-11-04 Wed 09:24：棱川制造销售·罗岑，`acknowledgement`，0份回执。
-- 2026-11-09 Mon 13:49：棱川制造销售·罗岑，`reply`，1份回执。
-- 2026-12-07 Mon 13:46：棱川制造质检·傅黎，`reply`，1份回执。
-- 2026-12-07 Mon 15:05：棱川制造销售·罗岑，`acknowledgement`，0份回执。
-- 2026-12-07 Mon 17:05：棱川制造销售·罗岑，`reply`，1份回执。
+- 2026-11-03 Tue 15:20：Lengchuan Manufacturing sales - Luo Cen，`reply`，0份回执。
+- 2026-11-03 Tue 15:20：Lengchuan Manufacturing quality inspector - Fu Li，`acknowledgement`，0份回执。
+- 2026-11-04 Wed 09:24：Lengchuan Manufacturing sales - Luo Cen，`acknowledgement`，0份回执。
+- 2026-11-09 Mon 13:49：Lengchuan Manufacturing sales - Luo Cen，`reply`，1份回执。
+- 2026-12-07 Mon 13:46：Lengchuan Manufacturing quality inspector - Fu Li，`reply`，1份回执。
+- 2026-12-07 Mon 15:05：Lengchuan Manufacturing sales - Luo Cen，`acknowledgement`，0份回执。
+- 2026-12-07 Mon 17:05：Lengchuan Manufacturing sales - Luo Cen，`reply`，1份回执。
 
 ## 易错点
 
-- 用18000元旧报价给结论
-- 等待质检期间不追踪有效期
-- 误以为查询等于下单
-- 不复查官网错过新价目文件
-- 不发现出库预核渠道即下结论
-- 引用开局页面批次价目当作有效报价
-- 把销售起订量印象当排产结论
+- Using the old CNY 18000 quote in the conclusion
+- Losing track of quote validity while waiting for inspection
+- Mistaking an inquiry for an order
+- Missing the new price list by failing to revisit the official website
+- Concluding without discovering the dispatch precheck channel
+- Treating the initial webpage batch price list as a valid quote
+- Treating sales' minimum quantity impression as a scheduling determination
 
 ## 机器可读文件
 
@@ -344,4 +344,4 @@ Agent收到的实质回复：
 - [环境私有定义](../../tasks/private/DSB-05.json)
 - [完整参考回放](../../artifacts/reference_runs/DSB-05.json)
 
-接受任意满足全部目标证据条件的合法沟通顺序；参考动作不是唯一标准路径。
+Any lawful communication sequence satisfying all evidence requirements is accepted; the reference actions are not the only valid path.

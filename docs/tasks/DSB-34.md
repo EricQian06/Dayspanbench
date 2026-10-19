@@ -45,7 +45,7 @@ Advisory and coordination only: verify records, request the written rider correc
 
 [独立角色配置](../../tasks/actors/DSB-34/manager.json) · 日历 `us_eastern_daily` · 时区 `America/New_York` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Hudson Court property manager·Alma Fischer，负责lease verification, rider corrections and the renewal signature service。Confirms the current lease and heater inspection in writing; rider corrections, signing requests and registration go only through the desks on the entry and FAQ pages, never by mail. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Hudson Court property manager·Alma Fischer, responsible for lease verification, rider corrections and the renewal signature service. Confirms the current lease and heater inspection in writing; rider corrections, signing requests and registration go only through the desks on the entry and FAQ pages, never by mail. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：address_unchanged、credit_amount、current_rent、first_month_due、heater_fault、registered、renewal_rent、repair_duty_preserved、tenant_signed
 
@@ -55,10 +55,10 @@ Advisory and coordination only: verify records, request the written rider correc
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`manager.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`manager.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the current lease terms and the heater inspection finding<br>`manager.main.2.lookup` | 120工作分钟 | 读取本地事实：current_rent、heater_fault |
-| 签发书面确认<br>`manager.main.3.document` | 30工作分钟 | 签发文本证据：current_rent、heater_fault |
-| 向请求者回复已取得的结果<br>`manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`manager.main.3.document` | 30工作分钟 | 签发文本证据：current_rent、heater_fault |
+| Reply to the requester with the results obtained<br>`manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -307,10 +307,10 @@ Advisory and coordination only: verify records, request the written rider correc
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-09-08 Wed 21:32 | 2027-09-08 Wed 22:20 | Hudson Court property manager·Alma Fischer | 发出受理回执 |
+| 2027-09-08 Wed 21:32 | 2027-09-08 Wed 22:20 | Hudson Court property manager·Alma Fischer | Issue an acceptance receipt |
 | 2027-09-08 Wed 22:20 | 2027-09-09 Thu 00:26 | Hudson Court property manager·Alma Fischer | check the current lease terms and the heater inspection finding |
-| 2027-09-09 Thu 00:26 | 2027-09-09 Thu 01:09 | Hudson Court property manager·Alma Fischer | 签发书面确认 |
-| 2027-09-09 Thu 01:09 | 2027-09-09 Thu 01:24 | Hudson Court property manager·Alma Fischer | 向请求者回复已取得的结果 |
+| 2027-09-09 Thu 00:26 | 2027-09-09 Thu 01:09 | Hudson Court property manager·Alma Fischer | Issue written confirmation |
+| 2027-09-09 Thu 01:09 | 2027-09-09 Thu 01:24 | Hudson Court property manager·Alma Fischer | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

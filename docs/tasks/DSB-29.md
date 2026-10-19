@@ -6,7 +6,7 @@
 
 参考轨迹历时：**1.14583天（27.5小时）**。结果类别：`resolved`。
 
-跨度设计：短期；clinician plan release, access revocation and fixed-time caregiver acknowledgements across days。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；clinician plan release, access revocation and fixed-time caregiver acknowledgements across days。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -44,7 +44,7 @@ Coordination only: read the roster, request current clinician instructions, revo
 
 [独立角色配置](../../tasks/actors/DSB-29/clinician.json) · 日历 `us_pacific_office` · 时区 `America/Los_Angeles` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—17:00
 
-接收者约束：你是Care clinician·Dr. Lena Park，负责clinical plan versions and scoped instruction packets。Releases only the clinician-confirmed plan and its scoped instruction packets exactly as issued; never interprets doses and does not accept agent-authored clinical content. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Care clinician·Dr. Lena Park, responsible for clinical plan versions and scoped instruction packets. Releases only the clinician-confirmed plan and its scoped instruction packets exactly as issued; never interprets doses and does not accept agent-authored clinical content. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：plan_v2
 
@@ -54,10 +54,10 @@ Coordination only: read the roster, request current clinician instructions, revo
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`clinician.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`clinician.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the current confirmed clinical plan and its scoped packets<br>`clinician.main.2.lookup` | 120工作分钟 | 读取本地事实：plan_v2 |
-| 签发书面确认<br>`clinician.main.3.document` | 30工作分钟 | 签发文本证据：plan_v2 |
-| 向请求者回复已取得的结果<br>`clinician.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`clinician.main.3.document` | 30工作分钟 | 签发文本证据：plan_v2 |
+| Reply to the requester with the results obtained<br>`clinician.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Care coordination desk·Noa Field (`care_desk`)
 
@@ -65,7 +65,7 @@ Coordination only: read the roster, request current clinician instructions, revo
 
 [独立角色配置](../../tasks/actors/DSB-29/care_desk.json) · 日历 `us_pacific_office` · 时区 `America/Los_Angeles` · 工作日：周一、周二、周三、周四、周五 · 时段：09:00—17:00
 
-接收者约束：你是Care coordination desk·Noa Field，负责caregiver roster, access shares and handoff dispatch。Keeps the caregiver roster, access shares and standing services; share revocations go through the access service (revoke_share) and scoped handoffs through the handoff service (handoff_send); the driver never receives clinical material. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Care coordination desk·Noa Field, responsible for caregiver roster, access shares and handoff dispatch. Keeps the caregiver roster, access shares and standing services; share revocations go through the access service (revoke_share) and scoped handoffs through the handoff service (handoff_send); the driver never receives clinical material. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：coverage_accepted、driver_logistics_only、old_share_revoked、other_evenings
 
@@ -75,10 +75,10 @@ Coordination only: read the roster, request current clinician instructions, revo
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`care_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`care_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the standing evening service and roster<br>`care_desk.main.2.lookup` | 60工作分钟 | 读取本地事实：other_evenings |
-| 签发书面确认<br>`care_desk.main.3.document` | 30工作分钟 | 签发文本证据：other_evenings |
-| 向请求者回复已取得的结果<br>`care_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`care_desk.main.3.document` | 30工作分钟 | 签发文本证据：other_evenings |
+| Reply to the requester with the results obtained<br>`care_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -261,14 +261,14 @@ Coordination only: read the roster, request current clinician instructions, revo
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-09-17 Fri 00:32 | 2027-09-17 Fri 01:20 | Care coordination desk·Noa Field | 发出受理回执 |
+| 2027-09-17 Fri 00:32 | 2027-09-17 Fri 01:20 | Care coordination desk·Noa Field | Issue an acceptance receipt |
 | 2027-09-17 Fri 01:20 | 2027-09-17 Fri 02:26 | Care coordination desk·Noa Field | check the standing evening service and roster |
-| 2027-09-17 Fri 02:26 | 2027-09-17 Fri 03:09 | Care coordination desk·Noa Field | 签发书面确认 |
-| 2027-09-17 Fri 03:09 | 2027-09-17 Fri 03:24 | Care coordination desk·Noa Field | 向请求者回复已取得的结果 |
-| 2027-09-17 Fri 04:00 | 2027-09-17 Fri 04:50 | Care clinician·Dr. Lena Park | 发出受理回执 |
+| 2027-09-17 Fri 02:26 | 2027-09-17 Fri 03:09 | Care coordination desk·Noa Field | Issue written confirmation |
+| 2027-09-17 Fri 03:09 | 2027-09-17 Fri 03:24 | Care coordination desk·Noa Field | Reply to the requester with the results obtained |
+| 2027-09-17 Fri 04:00 | 2027-09-17 Fri 04:50 | Care clinician·Dr. Lena Park | Issue an acceptance receipt |
 | 2027-09-17 Fri 04:50 | 2027-09-17 Fri 07:07 | Care clinician·Dr. Lena Park | check the current confirmed clinical plan and its scoped packets |
-| 2027-09-17 Fri 07:07 | 2027-09-17 Fri 07:51 | Care clinician·Dr. Lena Park | 签发书面确认 |
-| 2027-09-17 Fri 07:51 | 2027-09-17 Fri 08:06 | Care clinician·Dr. Lena Park | 向请求者回复已取得的结果 |
+| 2027-09-17 Fri 07:07 | 2027-09-17 Fri 07:51 | Care clinician·Dr. Lena Park | Issue written confirmation |
+| 2027-09-17 Fri 07:51 | 2027-09-17 Fri 08:06 | Care clinician·Dr. Lena Park | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

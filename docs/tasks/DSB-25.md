@@ -6,7 +6,7 @@
 
 参考轨迹历时：**1.25天（30小时）**。结果类别：`resolved`。
 
-跨度设计：短期；mid-episode promo expiry plus installment approval gate。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；mid-episode promo expiry plus installment approval gate。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -47,7 +47,7 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 [独立角色配置](../../tasks/actors/DSB-25/fulfillment_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Test Appliance Cooperative fulfillment desk·Sam Rivers，负责measured fit, doorway route and delivery verification。Confirms measured installation fit, unpack-at-door handling, recycling and the current delivery date in writing; financing and orders go through the order desk. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Test Appliance Cooperative fulfillment desk·Sam Rivers, responsible for measured fit, doorway route and delivery verification. Confirms measured installation fit, unpack-at-door handling, recycling and the current delivery date in writing; financing and orders go through the order desk. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：delivery_date、fit_verified、recycling_confirmed
 
@@ -57,10 +57,10 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`fulfillment_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`fulfillment_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the installation opening, doorway route, unpack-at-door procedure and recycling<br>`fulfillment_desk.main.2.lookup` | 180工作分钟 | 读取本地事实：fit_verified、recycling_confirmed、delivery_date |
-| 签发书面确认<br>`fulfillment_desk.main.3.document` | 30工作分钟 | 签发文本证据：fit_verified、recycling_confirmed、delivery_date |
-| 向请求者回复已取得的结果<br>`fulfillment_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`fulfillment_desk.main.3.document` | 30工作分钟 | 签发文本证据：fit_verified、recycling_confirmed、delivery_date |
+| Reply to the requester with the results obtained<br>`fulfillment_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Test Appliance Cooperative order desk·Dana Fields (`store_desk`)
 
@@ -68,7 +68,7 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 [独立角色配置](../../tasks/actors/DSB-25/store_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Test Appliance Cooperative order desk·Dana Fields，负责merchandise offers, financing terms and orders。Quotes current financed totals and installment schedules; promo terms can expire and be replaced with fee-bearing versions, so quotes are revalidated at order time. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Test Appliance Cooperative order desk·Dana Fields, responsible for merchandise offers, financing terms and orders. Quotes current financed totals and installment schedules; promo terms can expire and be replaced with fee-bearing versions, so quotes are revalidated at order time. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：delivery_date、installment_amount、order_total、ordered_sku
 
@@ -79,8 +79,8 @@ Advisory and coordination only: search listings, contact the store, gather writt
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
 | check the current financed total and installment schedule<br>`store_desk.quote.1.lookup` | 60工作分钟 | 读取本地事实：order_total、installment_amount |
-| 签发书面确认<br>`store_desk.quote.2.document` | 30工作分钟 | 签发文本证据：order_total、installment_amount |
-| 向请求者回复已取得的结果<br>`store_desk.quote.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`store_desk.quote.2.document` | 30工作分钟 | 签发文本证据：order_total、installment_amount |
+| Reply to the requester with the results obtained<br>`store_desk.quote.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -320,10 +320,10 @@ Advisory and coordination only: search listings, contact the store, gather writt
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-06-07 Mon 22:32 | 2027-06-07 Mon 23:20 | Test Appliance Cooperative fulfillment desk·Sam Rivers | 发出受理回执 |
+| 2027-06-07 Mon 22:32 | 2027-06-07 Mon 23:20 | Test Appliance Cooperative fulfillment desk·Sam Rivers | Issue an acceptance receipt |
 | 2027-06-07 Mon 23:20 | 2027-06-08 Tue 02:26 | Test Appliance Cooperative fulfillment desk·Sam Rivers | check the installation opening, doorway route, unpack-at-door procedure and recycling |
-| 2027-06-08 Tue 02:26 | 2027-06-08 Tue 03:09 | Test Appliance Cooperative fulfillment desk·Sam Rivers | 签发书面确认 |
-| 2027-06-08 Tue 03:09 | 2027-06-08 Tue 03:24 | Test Appliance Cooperative fulfillment desk·Sam Rivers | 向请求者回复已取得的结果 |
+| 2027-06-08 Tue 02:26 | 2027-06-08 Tue 03:09 | Test Appliance Cooperative fulfillment desk·Sam Rivers | Issue written confirmation |
+| 2027-06-08 Tue 03:09 | 2027-06-08 Tue 03:24 | Test Appliance Cooperative fulfillment desk·Sam Rivers | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

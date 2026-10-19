@@ -6,7 +6,7 @@
 
 参考轨迹历时：**0.791667天（19小时）**。结果类别：`resolved`。
 
-跨度设计：短期；mid-evening return-route cancellation plus transport-before-shows gate。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；mid-evening return-route cancellation plus transport-before-shows gate。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Advisory and coordination only: search listings, verify official timing, and cre
 
 [独立角色配置](../../tasks/actors/DSB-22/evening_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Riverside Evening Services desk·Sam Okafor，负责cinema, jazz venue and booked-shuttle operator records。Confirms official film start and end times in writing; programme listings can lag; tickets and the transport bundle go through the desks named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Riverside Evening Services desk·Sam Okafor, responsible for cinema, jazz venue and booked-shuttle operator records. Confirms official film start and end times in writing; programme listings can lag; tickets and the transport bundle go through the desks named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：film_end、film_reserved、film_start、home_arrival、jazz_reserved、jazz_start、return_depart、total_cost、transport_fare、transport_reserved
 
@@ -55,10 +55,10 @@ Advisory and coordination only: search listings, verify official timing, and cre
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`evening_desk.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`evening_desk.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
 | check the official film record for start, duration and end<br>`evening_desk.main.2.lookup` | 90工作分钟 | 读取本地事实：film_start、film_end |
-| 签发书面确认<br>`evening_desk.main.3.document` | 20工作分钟 | 签发文本证据：film_start、film_end |
-| 向请求者回复已取得的结果<br>`evening_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`evening_desk.main.3.document` | 20工作分钟 | 签发文本证据：film_start、film_end |
+| Reply to the requester with the results obtained<br>`evening_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -422,10 +422,10 @@ Advisory and coordination only: search listings, verify official timing, and cre
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-10-02 Sat 04:32 | 2027-10-02 Sat 05:10 | Riverside Evening Services desk·Sam Okafor | 发出受理回执 |
+| 2027-10-02 Sat 04:32 | 2027-10-02 Sat 05:10 | Riverside Evening Services desk·Sam Okafor | Issue an acceptance receipt |
 | 2027-10-02 Sat 05:10 | 2027-10-02 Sat 06:46 | Riverside Evening Services desk·Sam Okafor | check the official film record for start, duration and end |
-| 2027-10-02 Sat 06:46 | 2027-10-02 Sat 07:19 | Riverside Evening Services desk·Sam Okafor | 签发书面确认 |
-| 2027-10-02 Sat 07:19 | 2027-10-02 Sat 07:34 | Riverside Evening Services desk·Sam Okafor | 向请求者回复已取得的结果 |
+| 2027-10-02 Sat 06:46 | 2027-10-02 Sat 07:19 | Riverside Evening Services desk·Sam Okafor | Issue written confirmation |
+| 2027-10-02 Sat 07:19 | 2027-10-02 Sat 07:34 | Riverside Evening Services desk·Sam Okafor | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

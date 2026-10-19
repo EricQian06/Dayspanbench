@@ -6,7 +6,7 @@
 
 参考轨迹历时：**1.19444天（28.67小时）**。结果类别：`resolved`。
 
-跨度设计：短期；fleet verification rewrite plus clinic release gating the return leg。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short term；fleet verification rewrite plus clinic release gating the return leg。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -45,7 +45,7 @@ Advisory and coordination only: search inventories, verify fleet capacity, and b
 
 [独立角色配置](../../tasks/actors/DSB-19/dispatch_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Access Ride dispatch·Dana Whitfield，负责lift-equipped vehicle fleet, securement verification and ride bookings。Confirms live lift, securement and companion capacity in writing; vehicle inventory changes without notice; bookings go through the desks named on the entry page. Only pickup and access needs are shared - never a diagnosis. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Access Ride dispatch·Dana Whitfield, responsible for lift-equipped vehicle fleet, securement verification and ride bookings. Confirms live lift, securement and companion capacity in writing; vehicle inventory changes without notice; bookings go through the desks named on the entry page. Only pickup and access needs are shared - never a diagnosis. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：lift_verified、outbound_arrival、outbound_booked、return_booked、return_pickup、total_fare
 
@@ -55,10 +55,10 @@ Advisory and coordination only: search inventories, verify fleet capacity, and b
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`dispatch_desk.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`dispatch_desk.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
 | check live lift, securement and companion-seat verification<br>`dispatch_desk.main.2.lookup` | 60工作分钟 | 读取本地事实：lift_verified |
-| 签发书面确认<br>`dispatch_desk.main.3.document` | 20工作分钟 | 签发文本证据：lift_verified |
-| 向请求者回复已取得的结果<br>`dispatch_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`dispatch_desk.main.3.document` | 20工作分钟 | 签发文本证据：lift_verified |
+| Reply to the requester with the results obtained<br>`dispatch_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Cedar Rehabilitation Clinic coordinator·Marcus Lee (`clinic_coordinator`)
 
@@ -66,7 +66,7 @@ Advisory and coordination only: search inventories, verify fleet capacity, and b
 
 [独立角色配置](../../tasks/actors/DSB-19/clinic_coordinator.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Cedar Rehabilitation Clinic coordinator·Marcus Lee，负责appointment logistics and release records。Confirms appointment times and logistics only; the visit ends only when the clinic records an actual release, and clinical questions stay with clinicians. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Cedar Rehabilitation Clinic coordinator·Marcus Lee, responsible for appointment logistics and release records. Confirms appointment times and logistics only; the visit ends only when the clinic records an actual release, and clinical questions stay with clinicians. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：appointment_time、clinic_release
 
@@ -76,10 +76,10 @@ Advisory and coordination only: search inventories, verify fleet capacity, and b
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`clinic_coordinator.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`clinic_coordinator.main.1.acknowledge` | 20工作分钟 | 发出受理回执： |
 | check the appointment record<br>`clinic_coordinator.main.2.lookup` | 40工作分钟 | 读取本地事实：appointment_time |
-| 签发书面确认<br>`clinic_coordinator.main.3.document` | 20工作分钟 | 签发文本证据：appointment_time |
-| 向请求者回复已取得的结果<br>`clinic_coordinator.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`clinic_coordinator.main.3.document` | 20工作分钟 | 签发文本证据：appointment_time |
+| Reply to the requester with the results obtained<br>`clinic_coordinator.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 
@@ -360,10 +360,10 @@ Advisory and coordination only: search inventories, verify fleet capacity, and b
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-09-02 Thu 21:32 | 2027-09-02 Thu 22:10 | Access Ride dispatch·Dana Whitfield | 发出受理回执 |
+| 2027-09-02 Thu 21:32 | 2027-09-02 Thu 22:10 | Access Ride dispatch·Dana Whitfield | Issue an acceptance receipt |
 | 2027-09-02 Thu 22:10 | 2027-09-02 Thu 23:16 | Access Ride dispatch·Dana Whitfield | check live lift, securement and companion-seat verification |
-| 2027-09-02 Thu 23:16 | 2027-09-02 Thu 23:49 | Access Ride dispatch·Dana Whitfield | 签发书面确认 |
-| 2027-09-02 Thu 23:49 | 2027-09-03 Fri 00:04 | Access Ride dispatch·Dana Whitfield | 向请求者回复已取得的结果 |
+| 2027-09-02 Thu 23:16 | 2027-09-02 Thu 23:49 | Access Ride dispatch·Dana Whitfield | Issue written confirmation |
+| 2027-09-02 Thu 23:49 | 2027-09-03 Fri 00:04 | Access Ride dispatch·Dana Whitfield | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

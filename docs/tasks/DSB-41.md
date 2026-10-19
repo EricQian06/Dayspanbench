@@ -6,7 +6,7 @@
 
 参考轨迹历时：**13.25天（318小时）**。结果类别：`resolved`。
 
-跨度设计：中短期；mid-window flight cancellation and hotel rate change plus a lapsing hold and a late approval gate。这是作者参考路径的历时，非最短可行耗时。
+跨度设计：Short to medium term；mid-window flight cancellation and hotel rate change plus a lapsing hold and a late approval gate。这是作者参考路径的历时，非最短可行耗时。
 
 ## 用户任务
 
@@ -47,7 +47,7 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 [独立角色配置](../../tasks/actors/DSB-41/lakefront_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Lakefront Suites Seattle accessibility desk·Dana Rowe，负责hotel accessibility verification, exact-room records and hold terms。Confirms exact-room accessibility and hold terms in writing; rates can change without notice; bookings go through the hotel booking desk named on the entry page. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Lakefront Suites Seattle accessibility desk·Dana Rowe, responsible for hotel accessibility verification, exact-room records and hold terms. Confirms exact-room accessibility and hold terms in writing; rates can change without notice; bookings go through the hotel booking desk named on the entry page. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：hotel_301_accessible、hotel_accessible、hotel_booked、hotel_hold_until、hotel_total
 
@@ -57,10 +57,10 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`lakefront_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`lakefront_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the exact accessible suite record and hold terms<br>`lakefront_desk.main.2.lookup` | 1440工作分钟 | 读取本地事实：hotel_301_accessible、hotel_hold_until |
-| 签发书面确认<br>`lakefront_desk.main.3.document` | 30工作分钟 | 签发文本证据：hotel_301_accessible、hotel_hold_until |
-| 向请求者回复已取得的结果<br>`lakefront_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`lakefront_desk.main.3.document` | 30工作分钟 | 签发文本证据：hotel_301_accessible、hotel_hold_until |
+| Reply to the requester with the results obtained<br>`lakefront_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 **流程：Current rates and cancellation terms** (`rates`)
 
@@ -69,8 +69,8 @@ Advisory and coordination only: search listings, compare options, contact provid
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
 | check the provider-confirmed family suite record<br>`lakefront_desk.rates.1.lookup` | 120工作分钟 | 读取本地事实：hotel_accessible |
-| 签发书面确认<br>`lakefront_desk.rates.2.document` | 30工作分钟 | 签发文本证据：hotel_accessible |
-| 向请求者回复已取得的结果<br>`lakefront_desk.rates.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`lakefront_desk.rates.2.document` | 30工作分钟 | 签发文本证据：hotel_accessible |
+| Reply to the requester with the results obtained<br>`lakefront_desk.rates.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Skybridge Air inventory desk·Marcus Vaughn (`skybridge_desk`)
 
@@ -78,7 +78,7 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 [独立角色配置](../../tasks/actors/DSB-41/skybridge_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Skybridge Air inventory desk·Marcus Vaughn，负责flight inventory and booking records。Never quotes inventory by mail; the portal search service and the booking desk are the only flight channels. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Skybridge Air inventory desk·Marcus Vaughn, responsible for flight inventory and booking records. Never quotes inventory by mail; the portal search service and the booking desk are the only flight channels. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：flight_booked、flight_total
 
@@ -88,8 +88,8 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`skybridge_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 明确表示不知情或不归管<br>`skybridge_desk.main.2.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| Issue an acceptance receipt<br>`skybridge_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| State explicitly that this is unknown or outside this role's remit<br>`skybridge_desk.main.2.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
 ### SafePlate Directory verification desk·Priya Nair (`safeplate_desk`)
 
@@ -97,7 +97,7 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 [独立角色配置](../../tasks/actors/DSB-41/safeplate_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是SafePlate Directory verification desk·Priya Nair，负责restaurant allergen verification records。Confirms recorded cross-contact protocols in writing; a vegetarian label or an old menu is not a current verification. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are SafePlate Directory verification desk·Priya Nair, responsible for restaurant allergen verification records. Confirms recorded cross-contact protocols in writing; a vegetarian label or an old menu is not a current verification. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：dining_501_safe、dining_505_safe
 
@@ -107,10 +107,10 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`safeplate_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`safeplate_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
 | check the recorded shellfish cross-contact confirmations<br>`safeplate_desk.main.2.lookup` | 120工作分钟 | 读取本地事实：dining_501_safe、dining_505_safe |
-| 签发书面确认<br>`safeplate_desk.main.3.document` | 30工作分钟 | 签发文本证据：dining_501_safe、dining_505_safe |
-| 向请求者回复已取得的结果<br>`safeplate_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`safeplate_desk.main.3.document` | 30工作分钟 | 签发文本证据：dining_501_safe、dining_505_safe |
+| Reply to the requester with the results obtained<br>`safeplate_desk.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### CityStep Access route desk·Tomas Iglesias (`citystep_desk`)
 
@@ -118,7 +118,7 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 [独立角色配置](../../tasks/actors/DSB-41/citystep_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是CityStep Access route desk·Tomas Iglesias，负责route accessibility verification records。Confirms current step-free routes in writing; stale or unverifiable routes are reported as such. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are CityStep Access route desk·Tomas Iglesias, responsible for route accessibility verification records. Confirms current step-free routes in writing; stale or unverifiable routes are reported as such. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：route_401_ok、route_406_ok
 
@@ -129,8 +129,8 @@ Advisory and coordination only: search listings, compare options, contact provid
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
 | check the current verified step-free routes<br>`citystep_desk.main.1.lookup` | 90工作分钟 | 读取本地事实：route_401_ok、route_406_ok |
-| 签发书面确认<br>`citystep_desk.main.2.document` | 30工作分钟 | 签发文本证据：route_401_ok、route_406_ok |
-| 向请求者回复已取得的结果<br>`citystep_desk.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`citystep_desk.main.2.document` | 30工作分钟 | 签发文本证据：route_401_ok、route_406_ok |
+| Reply to the requester with the results obtained<br>`citystep_desk.main.3.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Family Trip Desk plan desk·Rhea Sutton (`trip_desk`)
 
@@ -138,7 +138,7 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 [独立角色配置](../../tasks/actors/DSB-41/trip_desk.json) · 日历 `us_central_daily` · 时区 `America/Chicago` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：08:00—20:00
 
-接收者约束：你是Family Trip Desk plan desk·Rhea Sutton，负责final plan recording。Only records plans the traveller has approved; never invents or revises plan contents. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Family Trip Desk plan desk·Rhea Sutton, responsible for final plan recording. Only records plans the traveller has approved; never invents or revises plan contents. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：budget_total、itinerary_paced、plan_approved
 
@@ -148,8 +148,8 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`trip_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
-| 明确表示不知情或不归管<br>`trip_desk.main.2.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
+| Issue an acceptance receipt<br>`trip_desk.main.1.acknowledge` | 30工作分钟 | 发出受理回执： |
+| State explicitly that this is unknown or outside this role's remit<br>`trip_desk.main.2.deny` | 连续0分钟（不停夜间/周末） | 明确表示不知情/不归管（关闭事项）： |
 
 ## 隐藏事实与标准条件
 
@@ -490,10 +490,10 @@ Advisory and coordination only: search listings, compare options, contact provid
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2027-05-01 Sat 22:32 | 2027-05-01 Sat 23:20 | Lakefront Suites Seattle accessibility desk·Dana Rowe | 发出受理回执 |
+| 2027-05-01 Sat 22:32 | 2027-05-01 Sat 23:20 | Lakefront Suites Seattle accessibility desk·Dana Rowe | Issue an acceptance receipt |
 | 2027-05-01 Sat 23:20 | 2027-05-03 Mon 23:26 | Lakefront Suites Seattle accessibility desk·Dana Rowe | check the exact accessible suite record and hold terms |
-| 2027-05-03 Mon 23:26 | 2027-05-04 Tue 00:09 | Lakefront Suites Seattle accessibility desk·Dana Rowe | 签发书面确认 |
-| 2027-05-04 Tue 00:09 | 2027-05-04 Tue 00:24 | Lakefront Suites Seattle accessibility desk·Dana Rowe | 向请求者回复已取得的结果 |
+| 2027-05-03 Mon 23:26 | 2027-05-04 Tue 00:09 | Lakefront Suites Seattle accessibility desk·Dana Rowe | Issue written confirmation |
+| 2027-05-04 Tue 00:09 | 2027-05-04 Tue 00:24 | Lakefront Suites Seattle accessibility desk·Dana Rowe | Reply to the requester with the results obtained |
 
 Agent收到的实质回复：
 

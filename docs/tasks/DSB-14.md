@@ -45,7 +45,7 @@ Advisory and coordination only: halt the wrong run, send the approved targeted r
 
 [独立角色配置](../../tasks/actors/DSB-14/crew_foreman.json) · 日历 `always` · 时区 `UTC` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：00:00—23:59
 
-接收者约束：你是Water isolation crew foreman·Sam Ortega，负责on-the-ground valve isolation lists。Confirms valve isolation lists from the field; the 2019 GIS layer is stale and only the crew's confirmed list counts. The crew is on site around the clock during shutdown week. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Water isolation crew foreman·Sam Ortega, responsible for on-the-ground valve isolation lists. Confirms valve isolation lists from the field; the 2019 GIS layer is stale and only the crew's confirmed list counts. The crew is on site around the clock during shutdown week. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：affected_list、bilingual_1400
 
@@ -55,10 +55,10 @@ Advisory and coordination only: halt the wrong run, send the approved targeted r
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`crew_foreman.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`crew_foreman.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
 | radio the isolation crew for the confirmed building list<br>`crew_foreman.main.2.lookup` | 5工作分钟 | 读取本地事实：affected_list、bilingual_1400 |
-| 签发书面确认<br>`crew_foreman.main.3.document` | 5工作分钟 | 签发文本证据：affected_list、bilingual_1400 |
-| 向请求者回复已取得的结果<br>`crew_foreman.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`crew_foreman.main.3.document` | 5工作分钟 | 签发文本证据：affected_list、bilingual_1400 |
+| Reply to the requester with the results obtained<br>`crew_foreman.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ### Print yard operations manager·Dana Cole (`print_manager`)
 
@@ -66,7 +66,7 @@ Advisory and coordination only: halt the wrong run, send the approved targeted r
 
 [独立角色配置](../../tasks/actors/DSB-14/print_manager.json) · 日历 `always` · 时区 `UTC` · 工作日：周一、周二、周三、周四、周五、周六、周日 · 时段：00:00—23:59
 
-接收者约束：你是Print yard operations manager·Dana Cole，负责print runs JOB441/JOB442, halts and manifest changes。Runs the door-hanger print yard: halts and manifest changes go through the desks on the yard and correction pages; the 06:00 run is the last truck before the weekend crew change. 仅路由自己声明的工作流；材料不足先澄清；不能编造事实、跳过队列或代替其他岗位承诺。
+接收者约束：You are Print yard operations manager·Dana Cole, responsible for print runs JOB441/JOB442, halts and manifest changes. Runs the door-hanger print yard: halts and manifest changes go through the desks on the yard and correction pages; the 06:00 run is the last truck before the weekend crew change. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：halted_before_dispatch、replacement_dispatched、retracted_b1501u
 
@@ -76,10 +76,10 @@ Advisory and coordination only: halt the wrong run, send the approved targeted r
 
 | 步骤/工具 | 等待规则 | 可见结果或内部动作 |
 |---|---|---|
-| 发出受理回执<br>`print_manager.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
+| Issue an acceptance receipt<br>`print_manager.main.1.acknowledge` | 10工作分钟 | 发出受理回执： |
 | check the run log for JOB441 and JOB442<br>`print_manager.main.2.lookup` | 5工作分钟 | 读取本地事实：halted_before_dispatch、replacement_dispatched |
-| 签发书面确认<br>`print_manager.main.3.document` | 5工作分钟 | 签发文本证据：halted_before_dispatch、replacement_dispatched |
-| 向请求者回复已取得的结果<br>`print_manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
+| Issue written confirmation<br>`print_manager.main.3.document` | 5工作分钟 | 签发文本证据：halted_before_dispatch、replacement_dispatched |
+| Reply to the requester with the results obtained<br>`print_manager.main.4.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
 
 ## 隐藏事实与标准条件
 

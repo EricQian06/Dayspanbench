@@ -44,6 +44,7 @@ Final answer
 - submit_answer takes answer={"conclusion":"<conclusion label>","summary":"<natural-language summary>"}. Choose a public conclusion_options key or its public label. Summarize the complete outcome in your own words.
 - Include all obtained key details: identifiers such as acceptance, ticket, order, and booking numbers; quantities; amounts; dates; times; and units. Base statements on received receipts and written replies. Do not cite internal evidence IDs.
 - Accurately state unconfirmed or unfinished matters as unconfirmed; do not invent. Faithfully report explicit authoritative negative determinations such as "there is no X". Failure to obtain an affirmative answer does not require inventing one.
+- An application/order/selection already submitted through the correct channel per the required process is treated as accomplished even if it is still being processed ("pending") when the deadline arrives: answer with the corresponding success label and state plainly in the summary that it was submitted and remained pending at the deadline with no written confirmation yet. The unconfirmed label is only for matters never successfully submitted, or whose acceptance could not be verified at all — not for submissions still being processed.
 - Do not submit speculation or real-world knowledge beyond scenario evidence.
 - The main process will not decide facts or generate your final answer. submit_answer is allowed once, with no trial scoring.
 
