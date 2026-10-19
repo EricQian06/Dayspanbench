@@ -31,13 +31,13 @@ PUBLIC_TOOLS = ("observe", "recall_task", "web_search", "visit_page",
 # they are sometimes useful and sometimes pure decoys, and the agent must decide
 # from the tool descriptions and its own probing which ones carry information.
 EXTRA_TOOLS = ("query_case_status", "fetch_document", "check_schedule",
-               "lookup_directory", "request_callback", "leave_note")
+               "lookup_directory", "request_callback", "leave_note", "consult_user")
 
 # Per-task hidden tools (task["hidden_tools"]) are NOT part of public["tools"]:
 # their names surface only inside authored NPC replies or page text, and the
 # agent must call discover_tools(name) to learn their usage and unlock them.
 # An unlocked tool's behavior is fully parameterized by its authored params.
-HIDDEN_TOOL_KINDS = ("form", "status", "record", "catalog", "select", "dialogue")
+HIDDEN_TOOL_KINDS = ("form", "status", "record", "catalog", "select", "dialogue", "group")
 
 
 @dataclass(frozen=True)

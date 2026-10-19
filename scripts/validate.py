@@ -28,7 +28,8 @@ for path in paths:
     failures.extend(f"{path.stem}: {error}" for error in errors)
 # 12 handwritten DSB tasks + one module per ported LATCH case; the count grows
 # automatically as case modules land in scripts/latch_cases/.
-EXPECTED_TASKS = 12 + len(list((ROOT / "scripts" / "latch_cases").glob("*.py")))
+EXPECTED_TASKS = 12 + len(list((ROOT / "scripts" / "latch_cases").glob("*.py"))) \
+    + len(list((ROOT / "scripts" / "club_cases").glob("*.py")))
 if len(paths) != EXPECTED_TASKS:
     failures.append(f"Expected exactly {EXPECTED_TASKS} handwritten tasks")
 if failures:

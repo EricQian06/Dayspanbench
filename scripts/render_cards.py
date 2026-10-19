@@ -63,7 +63,7 @@ def render():
                 lines += ["| 步骤/工具 | 等待规则 | 可见结果或内部动作 |", "|---|---|---|"]
                 for step in workflow["steps"]:
                     tool = actor["tools"][step["tool"]]
-                    action = {"lookup": "读取本地事实", "document": "签发文本证据", "refer": "公开转介联系人", "delegate": "内部转交并等待返回", "consult": "先告知转办再内部咨询", "suggest": "给出猜测性答复", "deny": "明确表示不知情/不归管（关闭事项）", "acknowledge": "发出受理回执", "reply": "向父事项/Agent回复"}[tool["kind"]]
+                    action = {"lookup": "读取本地事实", "document": "签发文本证据", "refer": "公开转介联系人", "delegate": "内部转交并等待返回", "consult": "先告知转办再内部咨询", "suggest": "给出猜测性答复", "deny": "明确表示不知情/不归管（关闭事项）", "acknowledge": "发出受理回执", "reply": "向父事项/Agent回复", "extract": "LLM提取字段后按结构化分支回复"}[tool["kind"]]
                     details = tool.get("facts", tool.get("contacts", []))
                     if tool["kind"] in {"delegate", "consult"}:
                         details = [tool["target"] + "/" + tool["workflow"], "仅传递字段：" + ", ".join(tool["forward_fields"])]
@@ -101,7 +101,9 @@ def render():
                 lines.append(f"| {local(event['start_at'])} | {local(event['due_at'])} | {name} | {phase} |")
         lines += ["", "Agent收到的实质回复：", ""]
         for message in run["agent_messages"]:
-            lines.append(f"- {local(message['at'])}：{by_email[message['from']]['name']}，`{message['status']}`，{len(message.get('receipts') or [])}份回执。")
+            sender = by_email.get(message["from"])
+            name = sender["name"] if sender else message["from"]
+            lines.append(f"- {local(message['at'])}：{name}，`{message['status']}`，{len(message.get('receipts') or [])}份回执。")
         if run["pending_cases"]:
             lines += ["", "截止时仍在等待：", ""]
             lines += [f"- {c['actor']} / {c['id']}：`{c['state']}`。" for c in run["pending_cases"]]

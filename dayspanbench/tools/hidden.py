@@ -282,6 +282,91 @@ def _hidden_dialogue(ctx, name, spec, kwargs):
     return {"speaker": params.get("persona", "the user"), "answer": answer, "at": stamp(env.now)}
 
 
+def _hidden_group(ctx, name, spec, kwargs):
+    """A chat group in the messaging app: preview (name, member count, join
+    state), a join request (instant or admin review, with hidden capacity
+    windows that can make joining impossible for a while), and — once
+    joined — reading the message timeline, pinned announcements and the
+    member list. Member counts grow on an authored schedule; the capacity
+    windows and approval times are private."""
+    env = ctx._env
+    params = spec["params"]
+    if set(kwargs) - {"reason", "query"}:
+        raise ValueError("hidden group tool takes no arguments (preview), "
+                         '{"reason": text} (join request), or {"query": text} (read)')
+    state = env.group_states.setdefault(name, {"joined": False, "pending": None, "read": 0})
+    if kwargs.get("reason") is not None:
+        if not isinstance(kwargs["reason"], str) or not kwargs["reason"].strip():
+            raise ValueError("reason must be a non-empty string")
+        if state["joined"] or state["pending"]:
+            raise ValueError("A join request already exists or you are already a member")
+        join = params.get("join", {})
+        # Hidden capacity schedule: authored windows decide whether joining
+        # is possible at all right now; the agent only sees the failure.
+        for window in join.get("windows", []):
+            if parse(window["from"]) <= env.now < parse(window["until"]):
+                if window["state"] != "open":
+                    env.record("agent_group_join", group=name, state=window["state"])
+                    return {"status": window["state"], "group": params["group_name"],
+                            "member_count": _group_count(env, params, name),
+                            "text": window.get("text") or
+                                    "The group is not accepting new members right now; try again later."}
+        if join.get("reason_required") and len(kwargs["reason"].strip()) < 5:
+            return {"status": "rejected", "group": params["group_name"],
+                    "text": "The join request needs a short reason for the admins to review."}
+        if join.get("mode") == "review":
+            state["pending"] = stamp(env.now)
+            approved_at = parse(join["approval_at"])
+            env.enqueue(max(env.now, approved_at), "group_approved", name)
+            env.record("agent_group_join", group=name, state="pending")
+            return {"status": "pending", "group": params["group_name"],
+                    "member_count": _group_count(env, params, name),
+                    "text": "Join request submitted with your reason; an admin will review it. "
+                            "You are not a member until the request is approved."}
+        state["joined"] = True
+        env.record("agent_group_join", group=name, state="joined")
+        return {"status": "joined", "group": params["group_name"],
+                "member_count": _group_count(env, params, name),
+                "text": "You joined the group; the timeline, pinned announcement and member list are readable now."}
+    if kwargs.get("query") is not None:
+        if not isinstance(kwargs["query"], str):
+            raise ValueError("query must be a string")
+        if not state["joined"]:
+            raise PermissionError("Only group members can read the timeline; join first")
+        needle = kwargs["query"].strip().casefold()
+        result = {"group": params["group_name"], "member_count": _group_count(env, params, name),
+                  "now": stamp(env.now), "messages": [], "announcements": [], "members": []}
+        for message in params.get("messages", []):
+            if parse(message["at"]) <= env.now:
+                result["messages"].append({"speaker": message["speaker"],
+                                           "text": message["text"], "at": message["at"]})
+        for pinned in params.get("announcements", []):
+            result["announcements"].append({"title": pinned["title"], "text": pinned["text"],
+                                            "at": pinned.get("at", params.get("created_at", "1970-01-01T00:00:00+00:00"))})
+        if not needle or "member" in needle or "list" in needle:
+            for member in params.get("members", [])[:10]:
+                result["members"].append({"name": member["name"], "handle": member["handle"],
+                                          "note": member.get("note", "")})
+        env.record("agent_group_read", group=name, query=kwargs["query"],
+                   messages=len(result["messages"]))
+        return result
+    # No arguments: the group preview, as the invite link shows it.
+    env.record("agent_group_preview", group=name)
+    return {"group": params["group_name"], "member_count": _group_count(env, params, name),
+            "joined": state["joined"], "pending": bool(state["pending"]),
+            "now": stamp(env.now),
+            "text": "Group preview. Join with a short reason to request membership."}
+
+
+def _group_count(env, params, name):
+    """The member count right now: authored growth schedule, stepwise."""
+    count = params.get("initial_members", 20)
+    for step in params.get("growth", []):
+        if parse(step["at"]) <= env.now:
+            count = step["count"]
+    return count
+
+
 KIND_HANDLERS = {
     "form": _hidden_form,
     "status": _hidden_status,
@@ -289,4 +374,5 @@ KIND_HANDLERS = {
     "catalog": _hidden_catalog,
     "select": _hidden_select,
     "dialogue": _hidden_dialogue,
+    "group": _hidden_group,
 }

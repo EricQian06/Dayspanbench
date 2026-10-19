@@ -1972,5 +1972,52 @@
       "mechanism": "recruiter offer confirmation, a mid-morning link rotation and two separate per-employer desks",
       "distribution": "manually stratified approximately logarithmic"
     }
+  },
+  {
+    "task_id": "DSB-43",
+    "scoring_version": "0.6.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 214.07,
+    "calendar_days": 8.919444,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2026-09-20T10:04:00+00:00",
+    "title": "Club recruitment: two app groups, staggered surveys, one interview clash",
+    "actors": 4,
+    "deadline": "2026-09-23T18:00:00+08:00",
+    "horizon_design": {
+      "reference_days": 11,
+      "stratum": "Medium term",
+      "mechanism": "two in-app recruitment groups with staggered surveys and interview announcements, and one cross-day interview clash",
+      "distribution": "manually stratified approximately logarithmic"
+    }
   }
 ]

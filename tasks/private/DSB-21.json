@@ -385,6 +385,24 @@
           "18:00"
         ]
       ]
+    },
+    "campus_evening": {
+      "timezone": "Asia/Shanghai",
+      "weekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "hours": [
+        [
+          "18:00",
+          "23:00"
+        ]
+      ]
     }
   },
   "reply_delay": [

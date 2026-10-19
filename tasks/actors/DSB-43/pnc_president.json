@@ -1,0 +1,189 @@
+{
+  "private": true,
+  "task_id": "DSB-43",
+  "actor": {
+    "id": "pnc_president",
+    "name": "Piano Club - Wu Kexin",
+    "role": "President; interview assignments and changes",
+    "description": "Assigns the per-person interview slots and is the only one who can change them; may propose the Wednesday slot.",
+    "calendar": "campus_evening",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "wukexin@bench.example"
+    },
+    "knowledge": [
+      "pnc_confirmed_original",
+      "pnc_survey_recorded",
+      "pnc_wednesday_booked"
+    ],
+    "tools": {
+      "pnc_president.main.1.extract": {
+        "kind": "extract",
+        "extract": {
+          "keep_original": {
+            "type": "boolean"
+          },
+          "wednesday_free": {
+            "type": "boolean"
+          }
+        },
+        "branches": [
+          {
+            "when": {
+              "keep_original": true
+            },
+            "text": "Confirmed: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. (If that evening ever becomes difficult, I could also see you Wednesday, 2026-09-23, 20:00-20:10 - but only if you ask.)",
+            "facts": [
+              "pnc_confirmed_original"
+            ]
+          },
+          {
+            "when": {
+              "wednesday_free": true
+            },
+            "text": "Perfect: I have moved your interview to Wednesday, 2026-09-23, 20:00-20:10, Music Building A201. See you then.",
+            "facts": [
+              "pnc_wednesday_booked"
+            ]
+          },
+          {
+            "when": {
+              "keep_original": false,
+              "wednesday_free": false
+            },
+            "text": "Then let us keep it simple: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201.",
+            "facts": [
+              "pnc_confirmed_original"
+            ]
+          }
+        ],
+        "fallback": {
+          "text": "Your assigned slot is Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. I could also offer Wednesday, 2026-09-23, 20:00-20:10 instead - are you free then, or shall I keep your original time? Tell me plainly."
+        }
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Piano interview scheduling",
+        "aliases": [
+          "interview",
+          "reschedule",
+          "schedule",
+          "time",
+          "conflict",
+          "slot",
+          "piano",
+          "keep",
+          "confirm",
+          "evening"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "Read the request and answer on its substance",
+            "tool": "pnc_president.main.1.extract",
+            "delay": {
+              "mode": "business",
+              "minutes": 30
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "You are Piano Club - Wu Kexin, responsible for President; interview assignments and changes. Assigns the per-person interview slots and is the only one who can change them; may propose the Wednesday slot. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
+    },
+    "evidence_authorities": [
+      "attest:piano_interview_kept",
+      "attest:piano_survey_recorded",
+      "attest:pnc_wednesday_booked"
+    ]
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "18:00",
+        "23:00"
+      ]
+    ]
+  },
+  "local_facts": {
+    "pnc_confirmed_original": {
+      "value": true,
+      "text": "The Piano Club interview stays at its original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201; the offered Wednesday 2026-09-23 20:00-20:10 slot was declined.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-43",
+          "case": {
+            "full_name": "Alex Chen",
+            "student_id": "2026011347"
+          }
+        },
+        "predicate": "piano_interview_kept"
+      }
+    },
+    "pnc_survey_recorded": {
+      "value": true,
+      "text": "The Piano Club questionnaire recorded Alex Chen's answers: both offered days work, six years of playing, department preference Performance.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-43",
+          "case": {
+            "full_name": "Alex Chen",
+            "student_id": "2026011347"
+          }
+        },
+        "predicate": "piano_survey_recorded"
+      }
+    },
+    "pnc_wednesday_booked": {
+      "value": true,
+      "text": "The Piano Club interview was moved to Wednesday, 2026-09-23, 20:00-20:10, Music Building A201 — an evening Alex cannot attend.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-43",
+          "case": {
+            "full_name": "Alex Chen",
+            "student_id": "2026011347"
+          }
+        },
+        "predicate": "pnc_wednesday_booked"
+      }
+    }
+  },
+  "start_at": "2026-09-11T20:00:00+08:00",
+  "deadline_at": "2026-09-23T18:00:00+08:00"
+}

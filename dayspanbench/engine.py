@@ -49,6 +49,13 @@ You may use prior_dialogue for phrasing, but do not invent forgetfulness or refu
 When matched_topic is false, canonical_fact is a guiding default reply: explain in persona that there is nothing further to add, and optionally invite a different question.
 Output only schema-compliant JSON, without explanation or reasoning."""
 
+# v0.5 club cases: understanding delegated to the model, judgment on the
+# structured result. The engine never keyword-matches agent prose.
+EXTRACT_PROMPT = """You are an environment recipient interpreting one Agent message in a benchmark environment.
+Extract only the requested fields from the message (and, where it genuinely helps resolve an ellipsis like "any day is fine", the immediately preceding exchange in history). Each field states its type: boolean, string, or an enum of allowed values.
+A boolean is true only when the message explicitly conveys it; absence, hedging, or an unrelated remark is false, never guessed. A string field is the message's own wording (dates as written); use null when the message does not say. An enum value must be one of the allowed values or null.
+Extract what the message says, not what would be convenient. Do not infer unstated constraints. Output only schema-compliant JSON with exactly the requested keys, without explanation or reasoning."""
+
 
 @dataclass
 class ActorState:
@@ -152,6 +159,19 @@ class Environment:
         self.selections = {}
         # Inbox read high-water mark: everything above it counts as unread.
         self.inbox_read = 0
+        # The assisted user (task["interactor"], private): voice of consult_user
+        # and the consent gate in front of externally effective agent
+        # actions. Attached separately like the recipients so rule-based
+        # replay can run without a client.
+        # Hidden kind="group" tools: per-group membership state (preview,
+        # join requests, read position). Approval is an event, never instant.
+        self.group_states = {}
+        self.interactor = None
+
+    def attach_interactor(self, interactor):
+        if interactor is not None and not hasattr(interactor, "consent"):
+            raise ValueError("An interactor needs consent/answer/reply_at")
+        self.interactor = interactor
 
     @classmethod
     def load(cls, path, **kwargs):
@@ -278,6 +298,65 @@ class Environment:
         history.append({"question": question, "answer": canonical,
                         "at": stamp(self.now)})
         return canonical
+
+    def extract_fields(self, case, tool):
+        """Extract authored fields from the agent's prose for an extract step.
+
+        Structured values already on the case (reference policy or forwarded
+        workflow fields) are authoritative. Remaining fields come from one
+        LLM pass over the correspondence; on failure or with no client they
+        fall back to the type's neutral value (False / None), so authored
+        fallback branches match deterministically. Absence is never a
+        keyword guess: the agent's exact wording decides nothing by itself.
+        """
+        spec = tool["extract"]
+        extracted = {k: case["fields"][k] for k in spec if k in case["fields"]}
+        missing = [k for k in spec if k not in extracted]
+        if missing and self.dialogue_client is not None:
+            actor = self.actors[case["actor"]]
+            view = {"message": case["correspondence"][-1] if case["correspondence"] else "",
+                    "history": deepcopy(actor.history[-12:]),
+                    "instructions": actor.spec.get("description", ""),
+                    "fields": {k: spec[k] for k in missing},
+                    "now": stamp(self.now)}
+            schema = {"type": "object", "additionalProperties": False,
+                      "properties": {k: self._extract_schema(spec[k]) for k in missing},
+                      "required": list(missing)}
+            try:
+                result = self.dialogue_client.complete(
+                    purpose="extract", actor_id=case["actor"], system=EXTRACT_PROMPT,
+                    view=view, schema=schema)
+            except SimulatorError:
+                self.record("extract_fallback", case_id=case["id"],
+                            reason="LLM extraction failed; neutral defaults used")
+                result = None
+            if isinstance(result, dict):
+                for k in missing:
+                    v = self._extract_valid(spec[k], result.get(k))
+                    if v is not None:
+                        extracted[k] = v
+        for k in missing:
+            if k not in extracted:
+                extracted[k] = False if spec[k].get("type") == "boolean" else None
+        return extracted
+
+    @staticmethod
+    def _extract_schema(field):
+        if field.get("type") == "boolean":
+            return {"type": "boolean"}
+        values = field.get("values")
+        if values:
+            return {"type": "string", "enum": values}
+        return {"type": ["string", "null"]}
+
+    @staticmethod
+    def _extract_valid(field, value):
+        if field.get("type") == "boolean":
+            return value if isinstance(value, bool) else None
+        values = field.get("values")
+        if values:
+            return value if value in values else None
+        return value if isinstance(value, str) and value.strip() else None
 
     def contact(self, actor_id):
         actor = self.actors[actor_id].spec
@@ -780,6 +859,47 @@ class Environment:
                 self.transition(linked, "working")
                 self.execute_tool(linked, tool_id)
             return "done"
+        elif tool["kind"] == "extract":
+            # v0.5 club cases: the recipient first *understands* the letter.
+            # An LLM pass extracts authored fields from the agent's prose;
+            # branch matching then runs over the structured result, never
+            # over keywords. Explicit structured fields (the reference
+            # policy, or fields forwarded by a workflow step) are
+            # authoritative and skip that extraction.
+            extracted = self.extract_fields(case, tool)
+            self.record("agent_extract", case_id=case["id"], tool=tool_id, fields=extracted)
+            branch = None
+            for candidate in tool["branches"]:
+                if all(extracted.get(k) == v for k, v in candidate.get("when", {}).items()):
+                    branch = candidate
+                    break
+            if branch is None:
+                branch = tool["fallback"]
+            for fact_id in branch.get("facts", []):
+                self.register_fact(fact_id, case["actor"])
+                if fact_id not in case["facts"]:
+                    case["facts"].append(fact_id)
+            case["contacts"].extend(branch.get("contacts", []))
+            self.transition(case, "replied")
+            if case.get("parent"):
+                parent = self.cases[case["parent"]]
+                parent["facts"].extend(case["facts"])
+                parent["contacts"].extend(case["contacts"])
+                self.record("handoff_return", case_id=case["id"], parent=parent["id"])
+                parent["step"] += 1
+                self.schedule_step(parent)
+            else:
+                text = branch["text"]
+                receipt = None
+                if case["facts"]:
+                    receipt = self.issue_receipt(
+                        f"{case['workflow'].get('label', case['workflow']['id'])}Written verification receipt",
+                        case["facts"], case["actor"], reregister=False)
+                self.emit(case, f"Hello, I am {actor.spec['name']}. {text}",
+                          list(dict.fromkeys(case["contacts"])),
+                          receipts=None if case.get("origin") == "phone" else
+                          ([receipt] if receipt else None))
+            return "done"
         else:
             raise ValueError("Unknown recipient tool")
         return "continue"
@@ -824,6 +944,22 @@ class Environment:
                 selection["result_text"] = selection["params"].get("expire_text") or \
                     "The selected option was held but not confirmed before it expired; the hold has lapsed and nothing was booked."
                 self.record("selection_expired", tool=case_id)
+            return
+        if kind == "group_approved":
+            # A reviewed join request finally lands: membership is granted and
+            # a short system notice enters the agent's inbox.
+            spec = self.hidden_tools.get(case_id)
+            state = self.group_states.get(case_id)
+            if spec is None or state is None or state["joined"]:
+                return
+            state["joined"], state["pending"] = True, None
+            self.record("group_join_approved", group=case_id)
+            self.messages.append({"id": f"MSG-{len(self.messages)+1:04d}", "at": stamp(self.now),
+                                  "from": spec["params"].get("system_from", "messaging-app"),
+                                  "case_id": None, "status": "reply", "channel": "chat",
+                                  "text": f"Your join request for {spec['params']['group_name']} was approved. "
+                                          "The timeline, pinned announcement and member list are readable now.",
+                                  "receipts": []})
             return
         case = self.cases[case_id]
         if case["state"] in {"failed", "replied"}:
@@ -929,9 +1065,30 @@ class AgentTools:
             if name not in env.unlocked_tools:
                 raise PermissionError(f"Tool {name} is not available in this task")
             def hidden_call(**kwargs):
+                spec = env.hidden_tools[name]
+                refusal = self._consent("hidden_" + spec["kind"],
+                                        {"tool": name, "args": deepcopy(kwargs)})
+                if refusal is not None:
+                    return refusal
                 return hidden_tool_impl.call_hidden_tool(self, name, **kwargs)
             return hidden_call
         raise AttributeError(name)
+
+    def _consent(self, action, detail):
+        """Consent gate: when this task's assisted user must approve an
+        externally effective action, ask before executing. Approval lets the
+        call proceed; a refusal is a normal return value (the user's words),
+        never an exception, so the agent can adapt its plan."""
+        env = self.__dict__["_env"]
+        if env.interactor is None:
+            return None
+        outcome = env.interactor.consent(action, detail, env.now)
+        env.record("agent_action_consent", action=action, detail=detail,
+                   approve=outcome["approve"])
+        if outcome["approve"]:
+            return None
+        return {"status": "refused", "by": "user", "action": action,
+                "text": outcome["say"] or "The user declined this action."}
 
     # Common tools (every task) -- implementations in tools/common.py.
     def recall_task(self):
@@ -950,9 +1107,16 @@ class AgentTools:
         return TOOL_REGISTRY["visit_page"].handler(self, url)
 
     def send_email(self, recipient, text, fields=None, case_id=None):
+        refusal = self._consent("send_email",
+                                {"recipient": recipient, "text": text, "fields": fields})
+        if refusal is not None:
+            return refusal
         return TOOL_REGISTRY["send_email"].handler(self, recipient, text, fields, case_id)
 
     def call(self, recipient, text, fields=None):
+        refusal = self._consent("call", {"recipient": recipient, "text": text})
+        if refusal is not None:
+            return refusal
         return TOOL_REGISTRY["call"].handler(self, recipient, text, fields)
 
     def read_inbox(self, after=0):
@@ -982,3 +1146,6 @@ class AgentTools:
 
     def leave_note(self, contact, text):
         return TOOL_REGISTRY["leave_note"].handler(self, contact, text)
+
+    def consult_user(self, question):
+        return TOOL_REGISTRY["consult_user"].handler(self, question)

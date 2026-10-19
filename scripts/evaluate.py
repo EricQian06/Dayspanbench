@@ -46,7 +46,7 @@ def main(argv=None):
     parser.add_argument("--seed", type=int, default=0, help="Seed for agent-side email handling-latency jitter; recorded in the manifest")
     parser.add_argument("--history-limit", type=int, default=24)
     parser.add_argument("--workers", type=int, default=3)
-    parser.add_argument("--tasks", nargs="+", choices=[f"DSB-{n:02}" for n in range(1, 43)])
+    parser.add_argument("--tasks", nargs="+", choices=[f"DSB-{n:02}" for n in range(1, 44)])
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--check-only", action="store_true", help="Check agent chat, simulator routing, missing fields and reply planning; no scored episode")
     args = parser.parse_args(argv)

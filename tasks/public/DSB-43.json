@@ -1,0 +1,169 @@
+{
+  "id": "DSB-43",
+  "title": "Club recruitment: two app groups, staggered surveys, one interview clash",
+  "brief": "You are assisting Alex Chen, a first-year undergraduate at Lanxi University who visited tonight's campus festival and wants to join both the Badminton Club and the Piano Club. Two QR codes were scanned at the booths; each opens the club's recruitment group in the messaging app. Join both groups, fill each club's recruitment questionnaire with Alex's own answers (ask Alex through consult_user - do not guess), and follow the group announcements. Interview assignments are posted in the groups on September 17 and 19. If the assigned interview times clash with each other or with Alex's commitments, sort it out with the right officers so Alex can join both clubs.",
+  "user_fields": {
+    "full_name": "Alex Chen",
+    "student_id": "2026011347"
+  },
+  "initial_contacts": [],
+  "pages": [
+    {
+      "id": "festival-intro",
+      "title": "Lanxi University campus festival - club roundup",
+      "text": "Tonight's campus festival (Friday, September 11) filled the central lawn with club booths. Two of them drew long queues all evening: the Lanxi Badminton Club, founded in 1998, whose channel article lists its four departments (Referee, Publicity, Events, Competition); and the Lanxi Piano Club, with its Performance, Publicity and Outreach departments. Both booths handed out QR codes that open the club's recruitment group in the messaging app - the links are t.me/+BwcRecruit2026LXU (badminton) and t.me/+PnoRecruit2026SJT (piano). Recruiters said memberships, surveys and interview invitations all run through those groups, not through the booths.",
+      "contacts": [],
+      "snippet": "Campus festival roundup: the Badminton Club and Piano Club recruitment groups, their QR invite links and departments.",
+      "url": "https://lanxifest.bench/intro"
+    },
+    {
+      "id": "bwc-channel",
+      "title": "Lanxi Badminton Club channel - 2026 recruitment",
+      "text": "The Lanxi Badminton Club, founded in 1998, recruits new members through September 18. Four departments take freshmen: Referee (rules and match officiating), Publicity (posters and the club account), Events (tournaments and scheduling - this department also runs the interview timetable), and Competition (team training and the university league). This post was written by club president Lin Zhiyuan. Everything runs through the recruitment group in the messaging app: join with the invite link t.me/+BwcRecruit2026LXU (in the app service bwc_group; the web page cannot join for you). The recruitment survey opens September 14 and closes September 16; interview assignments are posted in the group on September 17.",
+      "contacts": [],
+      "snippet": "Badminton Club recruitment: departments, the app group invite link, survey and interview dates.",
+      "url": "https://lanxifest.bench/channel"
+    },
+    {
+      "id": "pnc-home",
+      "title": "Lanxi Piano Club - join us",
+      "text": "The Lanxi Piano Club welcomes players of every level. Three departments take new members: Performance (recitals and the annual concert), Publicity (concert media and the notice board), and Outreach (joint events with other universities). Recruitment questions can go to our Events head Chen Mo; the per-person interview assignments are decided by club president Wu Kexin and posted in the recruitment group (t.me/+PnoRecruit2026SJT, in the app service pnc_group) on September 19. The new-member questionnaire opens September 15 and closes September 17; it asks your playing experience and which interview day suits you.",
+      "contacts": [],
+      "snippet": "Piano Club homepage: departments, the app group invite link, questionnaire and interview dates.",
+      "url": "https://lanxifest.bench/home"
+    },
+    {
+      "id": "bwc-survey",
+      "title": "Badminton Club recruitment survey",
+      "text": "The Badminton Club recruitment survey for the 2026 intake, open September 14-16. Submit through the form service bwc_survey named in the group's pinned post. The availability you record is what the Events head uses to schedule your one-hour group interview; answer with your real evenings.",
+      "contacts": [],
+      "snippet": "Badminton Club recruitment survey: availability across September 21-25 evenings and department choice.",
+      "form": {
+        "id": "bwc_survey_form",
+        "title": "Badminton Club recruitment survey",
+        "fields": [
+          {
+            "name": "full_name",
+            "label": "Full name",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "student_id",
+            "label": "Student ID",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "available_days",
+            "label": "Available evenings (2026-09-21 through 2026-09-25; slash-join the dates you can make)",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "department_choice",
+            "label": "Department choice (Referee / Publicity / Events / Competition)",
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "Check every field, then submit through the form service (bwc_survey) named in the pinned post."
+      },
+      "url": "https://lanxifest.bench/survey/bwc"
+    },
+    {
+      "id": "pnc-survey",
+      "title": "Piano Club new-member questionnaire",
+      "text": "The Piano Club questionnaire for new members, open September 15-17. Submit through the form service pnc_survey named in the group message. It records your playing experience and the interview day that suits you; assignments are posted in the group on September 19.",
+      "contacts": [],
+      "snippet": "Piano Club questionnaire: playing experience, preferred interview day and department choice.",
+      "form": {
+        "id": "pnc_survey_form",
+        "title": "Piano Club questionnaire",
+        "fields": [
+          {
+            "name": "full_name",
+            "label": "Full name",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "student_id",
+            "label": "Student ID",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "playing_years",
+            "label": "Years of piano playing",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "preferred_day",
+            "label": "Which interview day works (2026-09-21 / 2026-09-22 / both)",
+            "required": true,
+            "hidden": false
+          },
+          {
+            "name": "department_choice",
+            "label": "Department choice (Performance / Publicity / Outreach)",
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "submit_instructions": "Check every field, then submit through the form service (pnc_survey) named in the group message."
+      },
+      "url": "https://lanxifest.bench/survey/pnc"
+    }
+  ],
+  "message_budget": 16,
+  "tools": [
+    "observe",
+    "recall_task",
+    "web_search",
+    "visit_page",
+    "send_email",
+    "call",
+    "read_inbox",
+    "wait_until",
+    "discover_tools",
+    "submit_answer",
+    "consult_user",
+    "lookup_directory",
+    "request_callback"
+  ],
+  "authorization": "Only join the two recruitment groups in the messaging app, submit the two surveys with Alex's own answers, read the group announcements, and write to the club officers about interview times. Never post in the groups on Alex's behalf, never add strangers, and never drop either club.",
+  "answer_keys": [
+    "badminton_survey_recorded",
+    "piano_survey_recorded",
+    "badminton_interview_moved",
+    "piano_interview_kept"
+  ],
+  "value_normalization": {
+    "badminton_survey_recorded": {
+      "type": "boolean"
+    },
+    "piano_survey_recorded": {
+      "type": "boolean"
+    },
+    "badminton_interview_moved": {
+      "type": "boolean"
+    },
+    "piano_interview_kept": {
+      "type": "boolean"
+    }
+  },
+  "conclusion_options": {
+    "resolved": "Both memberships on track: surveys filed and the interview clash resolved",
+    "partially_resolved": "One of the two clubs still has a problem",
+    "unresolved": "The clash remains or a membership is lost",
+    "unconfirmed": "Insufficient information"
+  },
+  "answer_format": {
+    "conclusion": "Choose one key from conclusion_options",
+    "summary": "A natural-language summary stating the conclusion and its basis accurately, including key elements of receipts obtained during the process, such as identifiers, quantities, amounts, dates, and units. answer_keys lists information the summary should cover; separate itemized answers are not required. Do not fabricate, exaggerate, or cite evidence identifiers absent from the receipts."
+  },
+  "start_at": "2026-09-11T20:00:00+08:00",
+  "deadline_at": "2026-09-23T18:00:00+08:00"
+}

@@ -1,0 +1,113 @@
+{
+  "private": true,
+  "task_id": "DSB-43",
+  "actor": {
+    "id": "bwc_president",
+    "name": "Badminton Club - Lin Zhiyuan",
+    "role": "Club president; recruitment referrals only",
+    "description": "Public face of the club; interview scheduling belongs to the Events head, who is named in the referral.",
+    "calendar": "campus_evening",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "linzhiyuan@bench.example"
+    },
+    "knowledge": [],
+    "tools": {
+      "bwc_president.main.1.refer": {
+        "kind": "refer",
+        "contacts": [
+          "bwc_events_head"
+        ]
+      },
+      "bwc_president.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Badminton recruitment referrals",
+        "aliases": [
+          "badminton",
+          "join",
+          "recruit",
+          "club",
+          "interview",
+          "reschedule",
+          "schedule",
+          "time",
+          "conflict",
+          "slot",
+          "group"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "Look up the contact directory and provide a referral",
+            "tool": "bwc_president.main.1.refer",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "Reply to the requester with the results obtained",
+            "tool": "bwc_president.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "You are Badminton Club - Lin Zhiyuan, responsible for Club president; recruitment referrals only. Public face of the club; interview scheduling belongs to the Events head, who is named in the referral. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
+    },
+    "evidence_authorities": []
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "18:00",
+        "23:00"
+      ]
+    ]
+  },
+  "local_facts": {},
+  "start_at": "2026-09-11T20:00:00+08:00",
+  "deadline_at": "2026-09-23T18:00:00+08:00"
+}

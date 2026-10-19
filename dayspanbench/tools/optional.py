@@ -168,3 +168,28 @@ def leave_note(ctx, contact, text):
     env.record("agent_leave_note", contact=contact, text=text)
     return {"status": "recorded", "at": stamp(env.now),
             "text": 'Note recorded. Notes are not formal submissions and receive no separate reply.'}
+
+
+@tool_register("consult_user", "optional")
+def consult_user(ctx, question):
+    """Ask the assisted user one question. The user is a real person with
+    their own schedule: replies arrive after a delay, and the virtual clock
+    advances to the reply, so asking at the wrong hour can cost many hours.
+    The user answers only what they know; they do not act for the agent."""
+    _check_optional(ctx, "consult_user")
+    env = ctx._env
+    if env.interactor is None:
+        raise PermissionError("This task has no assisted user to ask")
+    if not isinstance(question, str) or not question.strip():
+        raise ValueError("question must be a non-empty string")
+    env.record("agent_ask_user", question=question)
+    # The reply is drawn from the authored delay rules; the clock advances to
+    # it, exactly like waiting for an email would.
+    reply_at = env.interactor.reply_at(env.now)
+    env.advance(reply_at)
+    outcome = env.interactor.answer(question, env.now)
+    env.messages.append({"id": f"MSG-{len(env.messages)+1:04d}", "at": stamp(env.now),
+                         "from": "user", "case_id": None, "status": "reply",
+                         "channel": "chat", "text": outcome["answer"], "receipts": []})
+    env.record("user_reply", question=question, answer=outcome["answer"])
+    return outcome

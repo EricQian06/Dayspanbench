@@ -1,0 +1,556 @@
+{
+  "notice": "Privileged authoring witness; not an LLM benchmark result.",
+  "task_id": "DSB-43",
+  "answer": {
+    "conclusion": "resolved",
+    "summary": "The Badminton Club recruitment survey recorded Alex Chen's availability: Monday 2026-09-21, Tuesday 2026-09-22, Thursday 2026-09-24, Friday 2026-09-25 (not Wednesday 2026-09-23), with department preference Competition.\nThe Piano Club questionnaire recorded Alex Chen's answers: both offered days work, six years of playing, department preference Performance.\nThe Piano Club interview stays at its original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201; the offered Wednesday 2026-09-23 20:00-20:10 slot was declined.\nThe Badminton Club interview was moved to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot), after Alex reported being unavailable on Wednesday 2026-09-23.\nYour application has been accepted and completed.\nThe Badminton Club recruitment survey recorded Alex Chen's availability: Monday 2026-09-21, Tuesday 2026-09-22, Thursday 2026-09-24, Friday 2026-09-25 (not Wednesday 2026-09-23), with department preference Competition.\nForm bwc_survey_form completion receipt key details: {\"bwc_survey_recorded\": true, \"full_name\": \"Alex Chen\", \"student_id\": \"2026011347\", \"available_days\": \"2026-09-21/2026-09-22/2026-09-24/2026-09-25\", \"department_choice\": \"Competition\"}\nYour application has been accepted and completed.\nThe Piano Club questionnaire recorded Alex Chen's answers: both offered days work, six years of playing, department preference Performance.\nForm pnc_survey_form completion receipt key details: {\"pnc_survey_recorded\": true, \"full_name\": \"Alex Chen\", \"student_id\": \"2026011347\", \"playing_years\": \"6\", \"preferred_day\": \"both\", \"department_choice\": \"Performance\"}\nPiano interview schedulingWritten verification receipt key details: {\"pnc_confirmed_original\": true}\nBadminton interview schedulingWritten verification receipt key details: {\"bwc_rescheduled_monday\": true}"
+  },
+  "result": {
+    "task_id": "DSB-43",
+    "scoring_version": "0.6.0",
+    "scored_by": "awaiting_judge",
+    "answer_schema_valid": true,
+    "schema_errors": [],
+    "deterministic_checks": {
+      "conclusion_label_legal": true,
+      "conclusion_correct": true,
+      "answer_schema_valid": true,
+      "form_outcomes": {
+        "processed": 2,
+        "accepted": 2,
+        "expired_holds": 0
+      },
+      "forms_all_accepted": true,
+      "summary_anchor_tokens": 0,
+      "summary_anchor_missing": [],
+      "pending_process_satisfied": true,
+      "pending_deadline_reached": true
+    },
+    "deterministic_anchors_ok": true,
+    "subparts_passed": 0,
+    "subparts_total": 6,
+    "pending_criteria": 0,
+    "complete": true,
+    "information_sufficient": true,
+    "resolved_success": true,
+    "bounded_handling_success": false,
+    "required_fact_coverage": 1.0,
+    "conclusion_correct": true,
+    "completion_class": "resolved",
+    "calendar_hours": 214.07,
+    "calendar_days": 8.919444,
+    "agent_messages": 2,
+    "contacted_actors": 2,
+    "as_of": "2026-09-20T10:04:00+00:00"
+  },
+  "agent_messages": [
+    {
+      "id": "MSG-0001",
+      "at": "2026-09-12T04:00:00+00:00",
+      "from": "messaging-app",
+      "case_id": null,
+      "status": "reply",
+      "channel": "chat",
+      "text": "Your join request for PNC Recruit 2026 was approved. The timeline, pinned announcement and member list are readable now.",
+      "receipts": []
+    },
+    {
+      "id": "MSG-0002",
+      "at": "2026-09-12T05:38:00+00:00",
+      "from": "user",
+      "case_id": null,
+      "status": "reply",
+      "channel": "chat",
+      "text": "For badminton: Monday 2026-09-21, Tuesday 2026-09-22, Thursday 2026-09-24 and Friday 2026-09-25 evenings all work - but not Wednesday 2026-09-23, I have something on Wednesdays. Put me down for the Competition department. For piano: both listed days work, I've played six years, and I'd like the Performance department.",
+      "receipts": []
+    },
+    {
+      "id": "MSG-0003",
+      "at": "2026-09-19T12:28:00+00:00",
+      "from": "user",
+      "case_id": null,
+      "status": "reply",
+      "channel": "chat",
+      "text": "Wednesdays are bad - I have a standing rehearsal every Wednesday evening that I can't skip. Any other weekday evening is fine.",
+      "receipts": []
+    },
+    {
+      "id": "MSG-0004",
+      "at": "2026-09-19T14:00:00+00:00",
+      "from": "wukexin@bench.example",
+      "case_id": "CASE-0001",
+      "status": "reply",
+      "channel": "email",
+      "text": "Hello, I am Piano Club - Wu Kexin. Confirmed: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. (If that evening ever becomes difficult, I could also see you Wednesday, 2026-09-23, 20:00-20:10 - but only if you ask.)",
+      "receipts": [
+        {
+          "receipt_no": "R-0003",
+          "title": "Piano interview schedulingWritten verification receipt",
+          "text": "The Piano Club interview stays at its original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201; the offered Wednesday 2026-09-23 20:00-20:10 slot was declined.",
+          "fields": {
+            "pnc_confirmed_original": true
+          },
+          "issuer": "pnc_president",
+          "issued_at": "2026-09-19T14:00:00+00:00"
+        }
+      ]
+    },
+    {
+      "id": "MSG-0005",
+      "at": "2026-09-20T10:04:00+00:00",
+      "from": "zhouyanan@bench.example",
+      "case_id": "CASE-0002",
+      "status": "reply",
+      "channel": "email",
+      "text": "Hello, I am Badminton Club - Zhou Yanan. Understood - Wednesdays are out for you. I have moved your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing else changes; bring your student card.",
+      "receipts": [
+        {
+          "receipt_no": "R-0004",
+          "title": "Badminton interview schedulingWritten verification receipt",
+          "text": "The Badminton Club interview was moved to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot), after Alex reported being unavailable on Wednesday 2026-09-23.",
+          "fields": {
+            "bwc_rescheduled_monday": true
+          },
+          "issuer": "bwc_events_head",
+          "issued_at": "2026-09-20T10:04:00+00:00"
+        }
+      ]
+    }
+  ],
+  "private_audit": [
+    {
+      "at": "2026-09-11T12:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "bwc_group",
+      "found": true,
+      "tool_kind": "group"
+    },
+    {
+      "at": "2026-09-11T12:00:00+00:00",
+      "kind": "agent_action_consent",
+      "action": "hidden_group",
+      "detail": {
+        "tool": "bwc_group",
+        "args": {
+          "reason": "First-year student Alex Chen wants to join the Badminton Club."
+        }
+      },
+      "approve": true
+    },
+    {
+      "at": "2026-09-11T12:00:00+00:00",
+      "kind": "agent_group_join",
+      "group": "bwc_group",
+      "state": "joined"
+    },
+    {
+      "at": "2026-09-11T12:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "pnc_group",
+      "found": true,
+      "tool_kind": "group"
+    },
+    {
+      "at": "2026-09-11T12:00:00+00:00",
+      "kind": "agent_action_consent",
+      "action": "hidden_group",
+      "detail": {
+        "tool": "pnc_group",
+        "args": {
+          "reason": "First-year student Alex Chen wants to join the Piano Club."
+        }
+      },
+      "approve": true
+    },
+    {
+      "at": "2026-09-11T12:00:00+00:00",
+      "kind": "agent_group_join",
+      "group": "pnc_group",
+      "state": "pending"
+    },
+    {
+      "at": "2026-09-12T04:00:00+00:00",
+      "kind": "group_join_approved",
+      "group": "pnc_group"
+    },
+    {
+      "at": "2026-09-12T04:30:00+00:00",
+      "kind": "agent_action_consent",
+      "action": "hidden_group",
+      "detail": {
+        "tool": "pnc_group",
+        "args": {
+          "query": "welcome messages"
+        }
+      },
+      "approve": true
+    },
+    {
+      "at": "2026-09-12T04:30:00+00:00",
+      "kind": "agent_group_read",
+      "group": "pnc_group",
+      "query": "welcome messages",
+      "messages": 1
+    },
+    {
+      "at": "2026-09-12T04:30:00+00:00",
+      "kind": "agent_ask_user",
+      "question": "What are your answers for the two club recruitment surveys, including department choices?"
+    },
+    {
+      "at": "2026-09-12T05:38:00+00:00",
+      "kind": "user_reply",
+      "question": "What are your answers for the two club recruitment surveys, including department choices?",
+      "answer": "For badminton: Monday 2026-09-21, Tuesday 2026-09-22, Thursday 2026-09-24 and Friday 2026-09-25 evenings all work - but not Wednesday 2026-09-23, I have something on Wednesdays. Put me down for the Competition department. For piano: both listed days work, I've played six years, and I'd like the Performance department."
+    },
+    {
+      "at": "2026-09-14T02:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "bwc_survey",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2026-09-14T02:00:00+00:00",
+      "kind": "agent_action_consent",
+      "action": "hidden_form",
+      "detail": {
+        "tool": "bwc_survey",
+        "args": {
+          "fields": {
+            "full_name": "Alex Chen",
+            "student_id": "2026011347",
+            "available_days": "2026-09-21/2026-09-22/2026-09-24/2026-09-25",
+            "department_choice": "Competition"
+          }
+        }
+      },
+      "approve": true
+    },
+    {
+      "at": "2026-09-14T02:00:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "bwc_survey",
+      "form": "bwc_survey_form",
+      "accepted": true
+    },
+    {
+      "at": "2026-09-14T10:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bwc_survey_recorded",
+      "issuer": "bwc_events_head"
+    },
+    {
+      "at": "2026-09-14T10:00:00+00:00",
+      "kind": "form_processed",
+      "form": "bwc_survey_form",
+      "accepted": true,
+      "result": "Your application has been accepted and completed."
+    },
+    {
+      "at": "2026-09-15T02:00:00+00:00",
+      "kind": "agent_discover_tools",
+      "name": "pnc_survey",
+      "found": true,
+      "tool_kind": "form"
+    },
+    {
+      "at": "2026-09-15T02:00:00+00:00",
+      "kind": "agent_action_consent",
+      "action": "hidden_form",
+      "detail": {
+        "tool": "pnc_survey",
+        "args": {
+          "fields": {
+            "full_name": "Alex Chen",
+            "student_id": "2026011347",
+            "playing_years": "6",
+            "preferred_day": "both",
+            "department_choice": "Performance"
+          }
+        }
+      },
+      "approve": true
+    },
+    {
+      "at": "2026-09-15T02:00:00+00:00",
+      "kind": "agent_form_submitted",
+      "tool": "pnc_survey",
+      "form": "pnc_survey_form",
+      "accepted": true
+    },
+    {
+      "at": "2026-09-15T10:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "pnc_survey_recorded",
+      "issuer": "pnc_president"
+    },
+    {
+      "at": "2026-09-15T10:00:00+00:00",
+      "kind": "form_processed",
+      "form": "pnc_survey_form",
+      "accepted": true,
+      "result": "Your application has been accepted and completed."
+    },
+    {
+      "at": "2026-09-17T11:00:00+00:00",
+      "kind": "agent_action_consent",
+      "action": "hidden_group",
+      "detail": {
+        "tool": "bwc_group",
+        "args": {
+          "query": "interview schedule"
+        }
+      },
+      "approve": true
+    },
+    {
+      "at": "2026-09-17T11:00:00+00:00",
+      "kind": "agent_group_read",
+      "group": "bwc_group",
+      "query": "interview schedule",
+      "messages": 3
+    },
+    {
+      "at": "2026-09-19T11:00:00+00:00",
+      "kind": "agent_action_consent",
+      "action": "hidden_group",
+      "detail": {
+        "tool": "pnc_group",
+        "args": {
+          "query": "interview assignment"
+        }
+      },
+      "approve": true
+    },
+    {
+      "at": "2026-09-19T11:00:00+00:00",
+      "kind": "agent_group_read",
+      "group": "pnc_group",
+      "query": "interview assignment",
+      "messages": 3
+    },
+    {
+      "at": "2026-09-19T11:00:00+00:00",
+      "kind": "agent_ask_user",
+      "question": "Both interviews landed on Tuesday evening and they clash. Are you free on Wednesday evening, September 23, instead?"
+    },
+    {
+      "at": "2026-09-19T12:28:00+00:00",
+      "kind": "user_reply",
+      "question": "Both interviews landed on Tuesday evening and they clash. Are you free on Wednesday evening, September 23, instead?",
+      "answer": "Wednesdays are bad - I have a standing rehearsal every Wednesday evening that I can't skip. Any other weekday evening is fine."
+    },
+    {
+      "at": "2026-09-19T12:28:00+00:00",
+      "kind": "agent_lookup_directory",
+      "query": "Zhou Yanan",
+      "matches": [
+        "bwc_events_head"
+      ]
+    },
+    {
+      "at": "2026-09-19T12:28:00+00:00",
+      "kind": "agent_lookup_directory",
+      "query": "Wu Kexin",
+      "matches": [
+        "pnc_president"
+      ]
+    },
+    {
+      "at": "2026-09-19T12:28:00+00:00",
+      "kind": "agent_action_consent",
+      "action": "send_email",
+      "detail": {
+        "recipient": "wukexin@bench.example",
+        "text": "About the Piano Club interview: please keep my original time on Tuesday 2026-09-22; I am not free on Wednesday 2026-09-23.",
+        "fields": {
+          "keep_original": true
+        }
+      },
+      "approve": true
+    },
+    {
+      "at": "2026-09-19T12:28:00+00:00",
+      "kind": "agent_send",
+      "recipient": "wukexin@bench.example",
+      "text": "About the Piano Club interview: please keep my original time on Tuesday 2026-09-22; I am not free on Wednesday 2026-09-23.",
+      "fields": {
+        "keep_original": true
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2026-09-19T12:28:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0001",
+      "actor": "pnc_president",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2026-09-19T13:12:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "pnc_president",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2026-09-19T13:12:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0001",
+      "actor": "pnc_president",
+      "step": "main_1",
+      "start_at": "2026-09-19T13:12:00+00:00",
+      "due_at": "2026-09-19T14:00:00+00:00",
+      "tool": "pnc_president.main.1.extract"
+    },
+    {
+      "at": "2026-09-19T13:12:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "pnc_president",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-09-19T14:00:00+00:00",
+      "kind": "tool_call",
+      "actor": "pnc_president",
+      "case_id": "CASE-0001",
+      "tool": "pnc_president.main.1.extract",
+      "tool_kind": "extract"
+    },
+    {
+      "at": "2026-09-19T14:00:00+00:00",
+      "kind": "agent_extract",
+      "case_id": "CASE-0001",
+      "tool": "pnc_president.main.1.extract",
+      "fields": {
+        "keep_original": true,
+        "wednesday_free": false
+      }
+    },
+    {
+      "at": "2026-09-19T14:00:00+00:00",
+      "kind": "fact_registered",
+      "fact": "pnc_confirmed_original",
+      "issuer": "pnc_president"
+    },
+    {
+      "at": "2026-09-19T14:00:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0001",
+      "actor": "pnc_president",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2026-09-19T14:00:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0004",
+      "case_id": "CASE-0001",
+      "status": "reply"
+    },
+    {
+      "at": "2026-09-19T14:00:00+00:00",
+      "kind": "agent_action_consent",
+      "action": "send_email",
+      "detail": {
+        "recipient": "zhouyanan@bench.example",
+        "text": "My badminton interview on Tuesday evening clashes with another commitment. I am unavailable on Wednesday 2026-09-23; please move my interview to another evening.",
+        "fields": {
+          "wants_move": true,
+          "wednesday_unavailable": true
+        }
+      },
+      "approve": true
+    },
+    {
+      "at": "2026-09-19T14:00:00+00:00",
+      "kind": "agent_send",
+      "recipient": "zhouyanan@bench.example",
+      "text": "My badminton interview on Tuesday evening clashes with another commitment. I am unavailable on Wednesday 2026-09-23; please move my interview to another evening.",
+      "fields": {
+        "wants_move": true,
+        "wednesday_unavailable": true
+      },
+      "channel": "email"
+    },
+    {
+      "at": "2026-09-19T14:00:00+00:00",
+      "kind": "case_created",
+      "case_id": "CASE-0002",
+      "actor": "bwc_events_head",
+      "parent": null,
+      "origin": "agent"
+    },
+    {
+      "at": "2026-09-19T14:21:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "bwc_events_head",
+      "old": "new",
+      "new": "queued"
+    },
+    {
+      "at": "2026-09-19T14:21:00+00:00",
+      "kind": "scheduled",
+      "case_id": "CASE-0002",
+      "actor": "bwc_events_head",
+      "step": "main_1",
+      "start_at": "2026-09-19T14:21:00+00:00",
+      "due_at": "2026-09-20T10:04:00+00:00",
+      "tool": "bwc_events_head.main.1.extract"
+    },
+    {
+      "at": "2026-09-19T14:21:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "bwc_events_head",
+      "old": "queued",
+      "new": "working"
+    },
+    {
+      "at": "2026-09-20T10:04:00+00:00",
+      "kind": "tool_call",
+      "actor": "bwc_events_head",
+      "case_id": "CASE-0002",
+      "tool": "bwc_events_head.main.1.extract",
+      "tool_kind": "extract"
+    },
+    {
+      "at": "2026-09-20T10:04:00+00:00",
+      "kind": "agent_extract",
+      "case_id": "CASE-0002",
+      "tool": "bwc_events_head.main.1.extract",
+      "fields": {
+        "wants_move": true,
+        "wednesday_unavailable": true
+      }
+    },
+    {
+      "at": "2026-09-20T10:04:00+00:00",
+      "kind": "fact_registered",
+      "fact": "bwc_rescheduled_monday",
+      "issuer": "bwc_events_head"
+    },
+    {
+      "at": "2026-09-20T10:04:00+00:00",
+      "kind": "transition",
+      "case_id": "CASE-0002",
+      "actor": "bwc_events_head",
+      "old": "working",
+      "new": "replied"
+    },
+    {
+      "at": "2026-09-20T10:04:00+00:00",
+      "kind": "delivery",
+      "message_id": "MSG-0005",
+      "case_id": "CASE-0002",
+      "status": "reply"
+    }
+  ],
+  "pending_cases": []
+}

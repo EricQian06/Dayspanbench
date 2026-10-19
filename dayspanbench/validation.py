@@ -132,10 +132,33 @@ def validate_task(task):
                     check(bool(tool.get("text")), f"{wid}: deny reply without text")
                 elif tool["kind"] == "acknowledge":
                     pass  # mid-workflow acceptance receipt; no extra structure
+                elif tool["kind"] == "extract":
+                    # v0.5 club cases: LLM extraction of authored fields,
+                    # then branch matching on the structured result.
+                    check(isinstance(tool.get("extract"), dict) and tool["extract"],
+                          f"{wid}: extract tool without field spec")
+                    for key, field in tool["extract"].items():
+                        check(field.get("type") in {"boolean", "string", "enum"},
+                              f"{wid}: extract field {key} without a known type")
+                        if field.get("type") == "enum":
+                            check(bool(field.get("values")), f"{wid}: enum field {key} without values")
+                    check(isinstance(tool.get("branches"), list) and tool["branches"],
+                          f"{wid}: extract tool without branches")
+                    for branch in tool["branches"]:
+                        check(bool(branch.get("when")) and bool(branch.get("text")),
+                              f"{wid}: extract branch needs when-conditions and text")
+                        check(set(branch["when"]) <= set(tool["extract"]),
+                              f"{wid}: branch condition on unextracted field")
+                        check(set(branch.get("facts", [])) <= set(task["facts"]),
+                              f"{wid}: extract branch cites unknown fact")
+                        check(set(branch.get("contacts", [])) <= set(actors),
+                              f"{wid}: extract branch cites unknown contact")
+                    check(bool(tool.get("fallback") and tool["fallback"].get("text")),
+                          f"{wid}: extract tool without fallback branch")
                 else:
                     check(tool["kind"] == "reply", f"{wid}: unsupported tool")
-            check(actor["tools"][workflow["steps"][-1]["tool"]]["kind"] in {"reply", "deny"},
-                  f"{wid}: workflow must terminate in reply or deny")
+            check(actor["tools"][workflow["steps"][-1]["tool"]]["kind"] in {"reply", "deny", "extract"},
+                  f"{wid}: workflow must terminate in reply, deny, or extract")
     for spec in task["calendars"].values():
         Calendar(spec).next_open(parse(task["start_at"]))
     check(set(task["public"]["initial_contacts"]) <= set(actors), "Unknown initial contact")
@@ -380,6 +403,43 @@ def validate_task(task):
                     check(bool(variant.get("when")) and bool(variant.get("answer")),
                           f"{where}: conditional dialogue requires when and answer")
                     check_condition(variant.get("when", {}), where)
+        elif tool["kind"] == "group":
+            check(bool(params.get("group_name")), f"{where}: group tool without a name")
+            join = params.get("join", {})
+            for index, window in enumerate(join.get("windows", [])):
+                wwhere = f"{where}: join.windows[{index}]"
+                check(bool(window.get("from")) and bool(window.get("until")),
+                      f"{wwhere}: missing from or until")
+                check(parse(window["from"]) < parse(window["until"]),
+                      f"{wwhere}: window ends before it starts")
+                for edge in ("from", "until"):
+                    if window.get(edge):
+                        check(parse(task["start_at"]) <= parse(window[edge]) < parse(task["deadline_at"]),
+                              f"{wwhere}: window edge outside the episode window")
+                check(window.get("state") in {"open", "full", "invite_only"},
+                      f"{wwhere}: unknown window state")
+            if join.get("mode") == "review":
+                check(bool(join.get("approval_at")), f"{where}: review-mode group without approval_at")
+            if join.get("approval_at"):
+                check(parse(task["start_at"]) <= parse(join["approval_at"]) < parse(task["deadline_at"]),
+                      f"{where}: approval_at outside the episode window")
+            for index, step in enumerate(params.get("growth", [])):
+                gwhere = f"{where}: growth[{index}]"
+                check(bool(step.get("at")) and isinstance(step.get("count"), int),
+                      f"{gwhere}: needs at and integer count")
+                check(parse(task["start_at"]) <= parse(step["at"]) < parse(task["deadline_at"]),
+                      f"{gwhere}: outside the episode window")
+            for index, message in enumerate(params.get("messages", [])):
+                mwhere = f"{where}: messages[{index}]"
+                check(bool(message.get("at")) and bool(message.get("speaker"))
+                      and bool(message.get("text")), f"{mwhere}: incomplete timeline message")
+                check(parse(task["start_at"]) <= parse(message["at"]) < parse(task["deadline_at"]),
+                      f"{mwhere}: outside the episode window")
+            for index, member in enumerate(params.get("members", [])):
+                check(bool(member.get("name")) and bool(member.get("handle")),
+                      f"{where}: members[{index}] without name or handle")
+            check(not (params.get("messages") and not params.get("members")),
+                  f"{where}: group with timeline but without members")
         else:  # record
             records = params.get("records", [])
             check(bool(records), f"{where}: record tool without records")

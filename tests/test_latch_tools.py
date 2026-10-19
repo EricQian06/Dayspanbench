@@ -45,7 +45,7 @@ def catalog_task():
              "result_text": "The table has been reserved.",
              "reject_text": "That option is no longer available.",
              "facts": ["slot"], "issuer": "operations"}},
-        {"name": "ask_user", "usage":
+        {"name": "meal_dialogue", "usage":
             "Ask the family member you are assisting a question. Argument: question (string).",
          "kind": "dialogue", "params": {
              "persona": "the user",
@@ -64,7 +64,7 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(validate_task(self.task), [])
         self.env = Environment(self.task)
         self.api = self.env.tools()
-        for name in ("garden_menu_search", "garden_reserve_table", "ask_user"):
+        for name in ("garden_menu_search", "garden_reserve_table", "meal_dialogue"):
             self.api.discover_tools(name)
 
     def test_search_mention_surfaces_then_hides(self):
@@ -120,11 +120,11 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(outcome["status"], "expired")
 
     def test_dialogue_matches_rules_and_default(self):
-        answer = self.api.ask_user(question="What is your budget for the meal?")
+        answer = self.api.meal_dialogue(question="What is your budget for the meal?")
         self.assertIn("280", answer["answer"])
-        answer = self.api.ask_user(question="Any allergies I should know about?")
+        answer = self.api.meal_dialogue(question="Any allergies I should know about?")
         self.assertIn("sesame", answer["answer"])
-        answer = self.api.ask_user(question="What color tablecloth?")
+        answer = self.api.meal_dialogue(question="What color tablecloth?")
         self.assertEqual(answer["answer"], "I have nothing to add.")
 
 

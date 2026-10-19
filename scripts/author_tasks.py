@@ -168,6 +168,18 @@ def reply(delay=None):
     return {"kind": "reply", "delay": delay or elapsed(0), "label": "Reply to the requester with the results obtained"}
 
 
+def extract_step(fields, branches, fallback, delay=None, label="Read the request and answer on its substance"):
+    """v0.5 club cases: the recipient first understands the letter. An LLM
+    pass extracts the authored fields from the agent's prose; the first
+    branch whose when-conditions all match decides the reply, with no
+    branch matched falling back to the authored fallback. fields maps
+    field names to {"type": "boolean"|"string"|"enum", "values": [...]};
+    branches carry {"when": {field: value, ...}, "text": ..., "facts": [...],
+    "contacts": [...]}. No keyword matching anywhere."""
+    return {"kind": "extract", "extract": fields, "branches": branches, "fallback": fallback,
+            "delay": delay or elapsed(0), "label": label}
+
+
 def acknowledge(delay, label="Issue an acceptance receipt"):
     return {"kind": "acknowledge", "delay": delay, "label": label}
 
@@ -294,6 +306,16 @@ def page_url(task_id, page):
         suffix = "entry"
     elif page["id"].endswith("-faq"):
         suffix = "faq"
+    elif page["id"].endswith("-channel"):
+        # Club cases: a club's channel/article page.
+        suffix = "channel"
+    elif page["id"].endswith("-home"):
+        # Club cases: a club's homepage.
+        suffix = "home"
+    elif page["id"].endswith("-survey"):
+        # Club cases: per-club recruitment survey pages; the prefix keeps the
+        # two surveys on distinct URLs.
+        suffix = "survey/" + page["id"].rsplit("-", 1)[0]
     else:
         suffix = "contact"
     return f"https://{PAGE_SITES[task_id]}.bench/{suffix}"
@@ -1537,6 +1559,8 @@ def write_tasks(task_ids=None):
     }
     horizon_design.update(LATCH_HORIZON_DESIGN)
     conclusion_options.update(LATCH_CONCLUSION_OPTIONS)
+    horizon_design.update(CLUB_HORIZON_DESIGN)
+    conclusion_options.update(CLUB_CONCLUSION_OPTIONS)
     for scope in ("private", "public"):
         (ROOT / "tasks" / scope).mkdir(parents=True, exist_ok=True)
     for original in TASKS:
@@ -1591,6 +1615,28 @@ def merge_latch():
 
 
 merge_latch()
+
+
+# v0.5 club cases (assisted-user, group-messaging, LLM-extract): authored in
+# club_tasks.py with the same helpers, one module per case under
+# scripts/club_cases/, appended after the LATCH merge so exports, validation,
+# replay and card rendering treat them identically.
+CLUB_HORIZON_DESIGN = {}
+CLUB_CONCLUSION_OPTIONS = {}
+
+
+def merge_club():
+    global CLUB_HORIZON_DESIGN, CLUB_CONCLUSION_OPTIONS
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import club_tasks
+    club_tasks.build(globals())
+    TASKS.extend(club_tasks.CLUB_TASKS)
+    PAGE_SITES.update(club_tasks.CLUB_PAGE_SITES)
+    CLUB_HORIZON_DESIGN = club_tasks.CLUB_HORIZON_DESIGN
+    CLUB_CONCLUSION_OPTIONS = club_tasks.CLUB_CONCLUSION_OPTIONS
+
+
+merge_club()
 
 
 if __name__ == "__main__":

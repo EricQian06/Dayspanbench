@@ -4,6 +4,7 @@ from copy import deepcopy
 import json
 
 from .engine import Environment
+from .interactor import UserInteractor
 
 
 def _resolve_fact_values(value, env):
@@ -25,6 +26,11 @@ def _resolve_fact_values(value, env):
 
 def run_reference(task, *, recipient=None):
     env = Environment(task, recipient)
+    # Club cases: an authored assisted user answers consult_user questions and
+    # gates sensitive actions. No client here — the deterministic policy
+    # table decides consent, so replay stays API-free.
+    if task.get("interactor"):
+        env.attach_interactor(UserInteractor(task["interactor"], seed=env.rng.randint(0, 1 << 30)))
     api = env.tools()
     labels = {}
     for action in task["reference_actions"]:

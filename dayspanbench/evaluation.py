@@ -223,6 +223,11 @@ def run_episode(task, agent, tool_specs, run_dir, *, simulator_client=None, judg
                                       validation_retries=simulator_validation_retries)
                   for a in task["actors"]} if simulator_client else None
     env = Environment(task, recipients, seed=seed)
+    # Club cases: the assisted user shares the simulator's StructuredClient,
+    # so consent and persona answers run over the same configured model.
+    if task.get("interactor"):
+        from .interactor import UserInteractor
+        env.attach_interactor(UserInteractor(task["interactor"], client=simulator_client, seed=seed))
     api, trace = env.tools(), []
     # The tool surface differs per task: only specs this task declares are
     # shown to the evaluated model (observe() reports the same list at runtime).

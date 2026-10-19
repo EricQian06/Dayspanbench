@@ -32,7 +32,7 @@ ALLOWED = set(PUBLIC_TOOLS) | set(EXTRA_TOOLS)
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("--task", required=True, choices=[f"DSB-{n:02d}" for n in range(1, 43)])
+    parser.add_argument("--task", required=True, choices=[f"DSB-{n:02d}" for n in range(1, 44)])
     parser.add_argument("--simulator", choices=["rule", "llm"], default="rule")
     parser.add_argument("--simulator-model", default=os.getenv("DSB_SIMULATOR_MODEL"))
     parser.add_argument("--simulator-base-url", default=os.getenv("DSB_SIMULATOR_BASE_URL", "https://az.gptplus5.com/v1"))
@@ -69,6 +69,12 @@ def main(argv=None):
         except ValueError as error:
             parser.error(str(error))
     env = Environment(task, recipients)
+    # Club cases: the assisted user shares the simulator's StructuredClient
+    # when one is configured; under the rule simulator the deterministic
+    # policy table decides consent.
+    if task.get("interactor"):
+        from dayspanbench.interactor import UserInteractor
+        env.attach_interactor(UserInteractor(task["interactor"], client=client))
     api = env.tools()
     manifest = {"task_id": args.task, "task_set_version": task["task_set_version"], "scoring_version": "0.5.0",
                 "task_sha256": hashlib.sha256(task_path.read_bytes()).hexdigest(),

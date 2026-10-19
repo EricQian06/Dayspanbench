@@ -1,0 +1,113 @@
+{
+  "private": true,
+  "task_id": "DSB-43",
+  "actor": {
+    "id": "pnc_events_head",
+    "name": "Piano Club - Chen Mo",
+    "role": "Events; recruitment referrals only",
+    "description": "Answers general recruitment questions; interview assignments and any changes belong to the president, who is named in the referral.",
+    "calendar": "campus_evening",
+    "channels": [
+      "email"
+    ],
+    "contact_details": {
+      "email": "chenmo@bench.example"
+    },
+    "knowledge": [],
+    "tools": {
+      "pnc_events_head.main.1.refer": {
+        "kind": "refer",
+        "contacts": [
+          "pnc_president"
+        ]
+      },
+      "pnc_events_head.main.2.reply": {
+        "kind": "reply"
+      }
+    },
+    "workflows": [
+      {
+        "id": "main",
+        "label": "Piano recruitment referrals",
+        "aliases": [
+          "piano",
+          "join",
+          "recruit",
+          "club",
+          "interview",
+          "reschedule",
+          "schedule",
+          "time",
+          "conflict",
+          "slot",
+          "group"
+        ],
+        "required_fields": [],
+        "steps": [
+          {
+            "id": "main_1",
+            "label": "Look up the contact directory and provide a referral",
+            "tool": "pnc_events_head.main.1.refer",
+            "delay": {
+              "mode": "business",
+              "minutes": 20
+            }
+          },
+          {
+            "id": "main_2",
+            "label": "Reply to the requester with the results obtained",
+            "tool": "pnc_events_head.main.2.reply",
+            "delay": {
+              "mode": "elapsed",
+              "minutes": 0
+            }
+          }
+        ],
+        "evidence_fields": {}
+      }
+    ],
+    "process_engine": {
+      "case_scope": "one state machine per request",
+      "queue": "FIFO",
+      "workers": 1,
+      "states": [
+        "new",
+        "needs_information",
+        "queued",
+        "working",
+        "waiting_internal",
+        "replied",
+        "failed"
+      ],
+      "followup_policy": "acknowledge_without_resetting_queue",
+      "parent_waits_for_child": true
+    },
+    "recipient": {
+      "rule_adapter": "dayspanbench.recipient.RuleRecipient",
+      "llm_adapter": "dayspanbench.simulator.LLMSimulator",
+      "instructions": "You are Piano Club - Chen Mo, responsible for Events; recruitment referrals only. Answers general recruitment questions; interview assignments and any changes belong to the president, who is named in the referral. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles."
+    },
+    "evidence_authorities": []
+  },
+  "calendar": {
+    "timezone": "Asia/Shanghai",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "hours": [
+      [
+        "18:00",
+        "23:00"
+      ]
+    ]
+  },
+  "local_facts": {},
+  "start_at": "2026-09-11T20:00:00+08:00",
+  "deadline_at": "2026-09-23T18:00:00+08:00"
+}
