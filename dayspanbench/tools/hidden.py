@@ -33,6 +33,10 @@ def _hidden_form(ctx, name, spec, kwargs):
         raise ValueError("hidden form tool takes a single object argument: fields")
     params = spec["params"]
     form_id = params["form"]
+    if params.get("available_from") and env.now < parse(params["available_from"]):
+        raise ValueError("This form service is not open yet. The form starts accepting submissions at the announced opening time.")
+    if params.get("available_until") and env.now >= parse(params["available_until"]):
+        raise ValueError("This form service is closed; submissions are no longer accepted. The form closed at the announced closing time.")
     _, form = env.forms[form_id]
     submission = env.form_submissions.get(form_id)
     if submission and submission["status"] in {"pending", "processed"}:

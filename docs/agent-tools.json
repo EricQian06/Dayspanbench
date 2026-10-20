@@ -269,6 +269,22 @@
     }
   },
   {
+    "name": "consult_user",
+    "description": "Optional tool enabled only in some tasks; check observe(). Required question is a plain-language question for the assisted user you represent. The user answers in persona after some delay; answers are the user's own words and are the authoritative source for their wishes, availability and preferences. Use it whenever the task needs the user's personal answers; guessing on their behalf is not acceptable.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "question"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
     "name": "submit_answer",
     "description": "Submit the final answer and score it once; the episode then closes, with no trial scoring. Required answer is an object with conclusion and summary. Choose conclusion from public conclusion_options keys or their public labels. summary states the complete task result in your own words, covering all obtained key identifiers (acceptance, ticket, order, or booking numbers), quantities, amounts, dates, times, and units. Base it on actual receipts and written replies, without citing internal evidence IDs. Accurately state unconfirmed or unfinished matters; do not fabricate. Example: {\"tool\":\"submit_answer\",\"arguments\":{\"answer\":{\"conclusion\":\"suitable\",\"summary\":\"Written confirmation gives a total venue fee of CNY 10500, including ...\"}}}.",
     "parameters": {

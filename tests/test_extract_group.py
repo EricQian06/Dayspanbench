@@ -141,6 +141,42 @@ class GroupToolTests(unittest.TestCase):
         self.assertEqual([m["handle"] for m in result["members"]], ["@lin", "@zhou"])
 
 
+class FormWindowTests(unittest.TestCase):
+    def setUp(self):
+        self.task = group_task()
+        # A form service with an open window 12:00-15:00 on Nov 6.
+        self.task["hidden_tools"].append({
+            "name": "club_survey", "usage":
+                'Submit the survey. Argument: {"fields": {...}}.',
+            "kind": "form", "params": {
+                "form": next(p["form"]["id"] for p in self.task["public"]["pages"] if p.get("form")),
+                "available_from": "2026-11-06T12:00:00+08:00",
+                "available_until": "2026-11-06T15:00:00+08:00",
+                "expect": {}}})
+        self.assertEqual(validate_task(self.task), [])
+        self.env = Environment(self.task)
+        self.api = self.env.tools()
+        self.api.discover_tools("club_survey")
+
+    def _fields(self):
+        form = next(p["form"] for p in self.task["public"]["pages"] if p.get("form"))
+        return {f["name"]: "x" for f in form["fields"]}
+
+    def test_rejected_before_opening(self):
+        with self.assertRaises(ValueError):
+            self.api.club_survey(fields=self._fields())
+
+    def test_accepted_inside_window(self):
+        self.env.advance("2026-11-06T13:00:00+08:00")
+        outcome = self.api.club_survey(fields=self._fields())
+        self.assertEqual(outcome["status"], "submitted")
+
+    def test_rejected_after_closing(self):
+        self.env.advance("2026-11-06T15:00:00+08:00")
+        with self.assertRaises(ValueError):
+            self.api.club_survey(fields=self._fields())
+
+
 class ExtractTests(unittest.TestCase):
     def setUp(self):
         self.task = officer_task()

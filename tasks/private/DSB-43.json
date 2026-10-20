@@ -651,6 +651,8 @@
           "department_choice": "Competition"
         },
         "process_at": "2026-09-14T18:00:00+08:00",
+        "available_from": "2026-09-14T00:00:00+08:00",
+        "available_until": "2026-09-17T00:00:00+08:00",
         "facts": [
           "bwc_survey_recorded"
         ],
@@ -671,6 +673,8 @@
           "department_choice": "Performance"
         },
         "process_at": "2026-09-15T18:00:00+08:00",
+        "available_from": "2026-09-15T00:00:00+08:00",
+        "available_until": "2026-09-18T00:00:00+08:00",
         "facts": [
           "pnc_survey_recorded"
         ],

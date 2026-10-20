@@ -308,6 +308,13 @@ def validate_task(task):
             else:
                 check(isinstance(params.get("process_delay", 60), int) and params.get("process_delay", 60) >= 0,
                       f"{where}: process_delay must be non-negative business minutes")
+            for window_key in ("available_from", "available_until"):
+                if params.get(window_key):
+                    check(parse(task["start_at"]) <= parse(params[window_key]) < parse(task["deadline_at"]),
+                          f"{where}: {window_key} outside the episode window")
+            if params.get("available_from") and params.get("available_until"):
+                check(parse(params["available_from"]) < parse(params["available_until"]),
+                      f"{where}: available_from must be before available_until")
             check(params.get("calendar", "office") in task["calendars"], f"{where}: unknown processing calendar")
             if params.get("facts"):
                 check(set(params["facts"]) <= set(facts), f"{where}: unknown evidence fact")
