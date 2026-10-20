@@ -78,16 +78,17 @@ agent 与环境、NPC 与环境由此形成闭环。
         "title": "Move the badminton interview slot",
         "kind": "service",                    // service | inquiry(自环) | revoke(撤销对话) | environment
         "activation": {"delay_minutes": 30, "within": "campus_evening"},   // 激活时机
-        "requires": [                          // 证据槽 + 前置节点 id 混列，全部满足才点亮
+        "requires": [                          // 证据槽 + 前置节点 id 混列（已确认），全部满足才点亮
           "bwc_assignment_posted",             // 前置节点（边即证据）
-          {"key": "wants_move", "type": "boolean", "volatile": true},
-          {"key": "wednesday_unavailable", "type": "boolean", "volatile": true}
+          {"key": "slot_change_requested", "type": "boolean", "volatile": true},
+          {"key": "wednesday_unavailable", "type": "boolean", "volatile": true,
+           "require": "filled"}                // 拥有该线索即可：明确"可以"或"不行"都算证据
         ],
         "branches": [                           // 互斥出边，引擎按结构化证据评估（kind=service）
-          {"when": {"wants_move": true, "wednesday_unavailable": true},
+          {"when": {"slot_change_requested": true, "wednesday_unavailable": true},
            "register_facts": ["bwc_rescheduled_monday"],
            "reply": "…moved to Monday 2026-09-21 19:30-20:30…"},
-          {"when": {"wants_move": true, "wednesday_unavailable": false},
+          {"when": {"slot_change_requested": true, "wednesday_unavailable": false},
            "register_facts": ["bwc_wednesday_booked"], "reply": "…moved to Wednesday…"}
         ],
         "default_branch": {"reply": "…tell me plainly which evenings work…"},  // 证据不足时的询问
@@ -109,6 +110,22 @@ agent 与环境、NPC 与环境由此形成闭环。
 
 要点：
 - `volatile` 证据 = 自环清空对象；非 volatile 证据（如姓名、学号）持久保留在节点上。
+
+### 2.1 证据槽是三态的：未提供 / 已提供(value)
+
+"槽里有没有东西"和"东西的值"是两个独立维度。布尔型证据槽有三种状态：
+`unfilled`（agent 尚未提及）／`filled(true)`／`filled(false)`——**"agent 明确说周三不行"与
+"agent 明确说周三可以"都是有值的证据**，都推进节点，只是分支走向不同。
+
+对应地，`requires` 与 `branches.when` 里每个证据键的满足方式有两种声明：
+
+- `{"key": "wednesday_unavailable", "require": "filled"}` —— 拥有该线索即可，值（true/false）不重要；
+  "有值"本身就是要收集的证据。
+- `{"key": "wants_move", "require": true}` —— 已提供且值为 true（等价 `require: {"value": true}`）；
+  `false` 同理。`require` 缺省 = `filled`。
+
+LLM 解析的职责因此也明确为两步：先判断这条消息**是否提供了**某槽的线索（没提 = 不动，
+不是填 false），再给出规范值。防编造语义（缺 ≠ false）由此在 schema 层固定。
 - `kind=inquiry` 自环节点：点亮即回复并清空 volatile 证据，指回自身。
 - `kind=environment`：证据来自事件回填，不经 LLM。
 - 现有 `steps` + `extract` 的功能由 `branches` + 结构化证据取代，`kind=extract` 的隐藏工具族随
@@ -172,10 +189,13 @@ reference/validate/replay 全程零 LLM 调用，哈希可复现（沿用工具�
 - **环境节点**：`bwc_survey_processed`（form 处理完成回填，供证 `bwc_survey_recorded`）、
   `bwc_assignment_posted`（09-17 群公告发布事件）、`pnc_assignment_posted`（09-19）。
 - **service 分支节点**：`bwc_move_slot`（owner=bwc_events_head；requires = 前置 assignment_posted +
-  `wants_move` + `wednesday_unavailable`；branches = rescheduled_monday / wednesday_booked 互斥，
-  原 extract_step 的分支表原样翻译）、`pnc_keep_slot`（keep_original / wednesday_free 三分支）。
+  `slot_change_requested`（agent 明确要求挪时间，原 extract 字段 `wants_move` 改名）+
+  `wednesday_unavailable`（require= "filled"：明确说"周三不行"或"周三可以"都算收集到该线索）；
+  branches = rescheduled_monday / wednesday_booked 互斥，原 extract_step 的分支表原样翻译）、
+  `pnc_keep_slot`（keep_original / wednesday_free 三分支）。
 - **自环收集节点**（体现"一封信给不全、多封凑齐"）：badminton 排期询问节点可拆为
-  `wants_move` 与 `wednesday_unavailable` 两个证据槽分多封信累积，集齐才点亮。
+  `slot_change_requested` 与 `wednesday_unavailable` 两个证据槽分多封信累积，集齐才点亮；
+  例如第一封只说"想挪时间"、第二封才补上"周三晚上不行"。
 - interactor（consult_user）与 group 工具不动，作为图的输入侧通道。
 
 验收：replay 逐节点审计比对原 facts 结果不变；judge_criteria 六条不改；`stages` 映射到节点。
@@ -186,7 +206,8 @@ reference/validate/replay 全程零 LLM 调用，哈希可复现（沿用工具�
 2. 图 schema + GraphRuntime 落地（新模块 `dayspanbench/graph.py`，engine 改为委托）。
 3. DSB-43 改写 + `test_extract_group.py` 等测试迁移；replay/validate 全绿。
 4. 用户审查试点 → 意见迭代 → 再铺开到其余 42 个任务。
-5. 迁移期新旧引擎不并存：切换即全量（43 任务在同版本内完成迁移，避免双路径维护）。
+5. 新旧引擎不并存（已确认）：切换即全量，43 个任务在同版本内完成迁移，不保留旧 case 状态机的
+   双路径。
 
 ## 7. 风险与开放问题
 
