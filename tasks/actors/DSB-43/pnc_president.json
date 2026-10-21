@@ -18,83 +18,8 @@
       "pnc_survey_recorded",
       "pnc_wednesday_booked"
     ],
-    "tools": {
-      "pnc_president.main.1.extract": {
-        "kind": "extract",
-        "extract": {
-          "keep_original": {
-            "type": "boolean"
-          },
-          "wednesday_free": {
-            "type": "boolean"
-          }
-        },
-        "branches": [
-          {
-            "when": {
-              "keep_original": true
-            },
-            "text": "Confirmed: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. (If that evening ever becomes difficult, I could also see you Wednesday, 2026-09-23, 20:00-20:10 - but only if you ask.)",
-            "facts": [
-              "pnc_confirmed_original"
-            ]
-          },
-          {
-            "when": {
-              "wednesday_free": true
-            },
-            "text": "Perfect: I have moved your interview to Wednesday, 2026-09-23, 20:00-20:10, Music Building A201. See you then.",
-            "facts": [
-              "pnc_wednesday_booked"
-            ]
-          },
-          {
-            "when": {
-              "keep_original": false,
-              "wednesday_free": false
-            },
-            "text": "Then let us keep it simple: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201.",
-            "facts": [
-              "pnc_confirmed_original"
-            ]
-          }
-        ],
-        "fallback": {
-          "text": "Your assigned slot is Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. I could also offer Wednesday, 2026-09-23, 20:00-20:10 instead - are you free then, or shall I keep your original time? Tell me plainly."
-        }
-      }
-    },
-    "workflows": [
-      {
-        "id": "main",
-        "label": "Piano interview scheduling",
-        "aliases": [
-          "interview",
-          "reschedule",
-          "schedule",
-          "time",
-          "conflict",
-          "slot",
-          "piano",
-          "keep",
-          "confirm",
-          "evening"
-        ],
-        "required_fields": [],
-        "steps": [
-          {
-            "id": "main_1",
-            "label": "Read the request and answer on its substance",
-            "tool": "pnc_president.main.1.extract",
-            "delay": {
-              "mode": "business",
-              "minutes": 30
-            }
-          }
-        ],
-        "evidence_fields": {}
-      }
-    ],
+    "tools": {},
+    "workflows": [],
     "process_engine": {
       "case_scope": "one state machine per request",
       "queue": "FIFO",

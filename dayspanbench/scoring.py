@@ -284,8 +284,14 @@ def evaluate(env, answer):
     deadline_ok = (not pending_goals) or env.now >= env.deadline
 
     covered, fact_goal_count = _fact_goals_covered(env, task)
+    # Graph-mode tasks: the goal's accepted facts are registered by the graph
+    # itself when the right node fires, so a fact that never registered means
+    # the agent never walked that path — completion without it is impossible
+    # regardless of what the judge (or the agent's summary) claims. Legacy
+    # tasks keep the informational-only alias (multiple acceptable paths).
+    goal_facts_ok = (covered == fact_goal_count) if task.get("graph") and fact_goal_count else True
     anchors_ok = schema_valid and conclusion_correct and forms_ok \
-        and pending_ok and deadline_ok
+        and pending_ok and deadline_ok and goal_facts_ok
     criteria = task.get("judge_criteria") or []
 
     deterministic_checks = {
@@ -298,6 +304,7 @@ def evaluate(env, answer):
         "summary_anchor_missing": missing,
         "pending_process_satisfied": pending_ok,
         "pending_deadline_reached": deadline_ok,
+        "goal_facts_established": goal_facts_ok,
     }
     return {
         "task_id": task["id"],

@@ -50,4 +50,4 @@
 | [DSB-40](tasks/DSB-40.md) | Fridge replacement: verified access and a changed delivery slot | 3 | 1.375天 / 33小时 | Short term | 2027-06-09 Wed 07:00 | resolved |
 | [DSB-41](tasks/DSB-41.md) | Five-person Chicago-Seattle family trip: recovered inventory and exact approval | 5 | 13.25天 / 318小时 | Short to medium term | 2027-05-15 Sat 04:00 | resolved |
 | [DSB-42](tasks/DSB-42.md) | Interview rescheduling: two separate recruiters, rotated link, no cross-employer disclosure | 2 | 2.14583天 / 51.5小时 | Short term | 2027-09-16 Thu 01:30 | resolved |
-| [DSB-43](tasks/DSB-43.md) | Club recruitment: two app groups, staggered surveys, one interview clash | 4 | 8.91944天 / 214.07小时 | Medium term | 2026-09-20 Sun 18:04 | resolved |
+| [DSB-43](tasks/DSB-43.md) | Club recruitment: two app groups, staggered surveys, one interview clash | 4 | 8.11458天 / 194.75小时 | Medium term | 2026-09-19 Sat 22:45 | resolved |

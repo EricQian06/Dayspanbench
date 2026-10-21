@@ -587,7 +587,7 @@
         "members": [
           {
             "name": "Wu Kexin",
-            "handle": "@wu_kexin",
+            "handle": "@wu_knc",
             "note": "President - interview assignments"
           },
           {
@@ -653,9 +653,7 @@
         "process_at": "2026-09-14T18:00:00+08:00",
         "available_from": "2026-09-14T00:00:00+08:00",
         "available_until": "2026-09-17T00:00:00+08:00",
-        "facts": [
-          "bwc_survey_recorded"
-        ],
+        "graph_node": "bwc_survey_processed",
         "issuer": "bwc_events_head"
       }
     },
@@ -675,9 +673,7 @@
         "process_at": "2026-09-15T18:00:00+08:00",
         "available_from": "2026-09-15T00:00:00+08:00",
         "available_until": "2026-09-18T00:00:00+08:00",
-        "facts": [
-          "pnc_survey_recorded"
-        ],
+        "graph_node": "pnc_survey_processed",
         "issuer": "pnc_president"
       }
     }
@@ -709,9 +705,9 @@
     },
     {
       "id": "C43-piano-resolution",
-      "statement": "The piano interview kept its original slot and the Wednesday offer was declined.",
-      "pass_if": "The final answer reports the piano interview stays Tuesday, 2026-09-22, 20:00-21:10, Music Building A201, and that the Wednesday 20:00-20:10 offer was not accepted.",
-      "source": "final_answer"
+      "statement": "The piano interview kept its original slot with the president's written confirmation, and the Wednesday offer was declined or never accepted.",
+      "pass_if": "The trace shows the agent wrote to piano club president Wu Kexin about the interview slot, and the final answer reports the piano interview stays Tuesday, 2026-09-22, 20:00-21:10, Music Building A201, citing the president's written confirmation (receipt), with the Wednesday 2026-09-23 20:00-20:10 offer not accepted.",
+      "source": "trace"
     },
     {
       "id": "C43-departments-conveyed",
@@ -729,8 +725,8 @@
     },
     {
       "id": "surveys-filed",
-      "kind": "form_processed",
-      "target": "bwc_survey_form",
+      "kind": "node_completed",
+      "target": "bwc_survey_processed",
       "hint": "The surveys open September 14/15 and take the user's own answers."
     },
     {
@@ -755,14 +751,14 @@
     },
     {
       "id": "badminton-moved",
-      "kind": "fact_registered",
-      "target": "bwc_rescheduled_monday",
+      "kind": "node_completed",
+      "target": "bwc_move_slot",
       "hint": "The Events head moves the one-hour slot cross-day once the Wednesday constraint is stated."
     },
     {
       "id": "piano-kept",
-      "kind": "fact_registered",
-      "target": "pnc_confirmed_original",
+      "kind": "node_completed",
+      "target": "pnc_keep_slot",
       "hint": "The piano president confirms the original Tuesday slot when the agent keeps it."
     }
   ],
@@ -847,7 +843,7 @@
         "snippet": "Piano Club questionnaire: playing experience, preferred interview day and department choice.",
         "form": {
           "id": "pnc_survey_form",
-          "title": "Piano Club questionnaire",
+          "title": "Piano Club new-member questionnaire",
           "fields": [
             {
               "name": "full_name",
@@ -1033,58 +1029,8 @@
         "email": "linzhiyuan@bench.example"
       },
       "knowledge": [],
-      "tools": {
-        "bwc_president.main.1.refer": {
-          "kind": "refer",
-          "contacts": [
-            "bwc_events_head"
-          ]
-        },
-        "bwc_president.main.2.reply": {
-          "kind": "reply"
-        }
-      },
-      "workflows": [
-        {
-          "id": "main",
-          "label": "Badminton recruitment referrals",
-          "aliases": [
-            "badminton",
-            "join",
-            "recruit",
-            "club",
-            "interview",
-            "reschedule",
-            "schedule",
-            "time",
-            "conflict",
-            "slot",
-            "group"
-          ],
-          "required_fields": [],
-          "steps": [
-            {
-              "id": "main_1",
-              "label": "Look up the contact directory and provide a referral",
-              "tool": "bwc_president.main.1.refer",
-              "delay": {
-                "mode": "business",
-                "minutes": 20
-              }
-            },
-            {
-              "id": "main_2",
-              "label": "Reply to the requester with the results obtained",
-              "tool": "bwc_president.main.2.reply",
-              "delay": {
-                "mode": "elapsed",
-                "minutes": 0
-              }
-            }
-          ],
-          "evidence_fields": {}
-        }
-      ],
+      "tools": {},
+      "workflows": [],
       "process_engine": {
         "case_scope": "one state machine per request",
         "queue": "FIFO",
@@ -1125,74 +1071,8 @@
         "bwc_survey_recorded",
         "bwc_wednesday_booked"
       ],
-      "tools": {
-        "bwc_events_head.main.1.extract": {
-          "kind": "extract",
-          "extract": {
-            "wants_move": {
-              "type": "boolean"
-            },
-            "wednesday_unavailable": {
-              "type": "boolean"
-            }
-          },
-          "branches": [
-            {
-              "when": {
-                "wants_move": true,
-                "wednesday_unavailable": true
-              },
-              "text": "Understood - Wednesdays are out for you. I have moved your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing else changes; bring your student card.",
-              "facts": [
-                "bwc_rescheduled_monday"
-              ]
-            },
-            {
-              "when": {
-                "wants_move": true,
-                "wednesday_unavailable": false
-              },
-              "text": "Then Wednesday works nicely: your interview is moved to Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). See you there.",
-              "facts": [
-                "bwc_wednesday_booked"
-              ]
-            }
-          ],
-          "fallback": {
-            "text": "Happy to help with the interview time. Tell me plainly which evenings you can make it - and whether Wednesday, 2026-09-23 works for you - and I will move you to a fitting slot."
-          }
-        }
-      },
-      "workflows": [
-        {
-          "id": "main",
-          "label": "Badminton interview scheduling",
-          "aliases": [
-            "interview",
-            "reschedule",
-            "schedule",
-            "time",
-            "conflict",
-            "slot",
-            "move",
-            "badminton",
-            "evening"
-          ],
-          "required_fields": [],
-          "steps": [
-            {
-              "id": "main_1",
-              "label": "Read the request and answer on its substance",
-              "tool": "bwc_events_head.main.1.extract",
-              "delay": {
-                "mode": "business",
-                "minutes": 30
-              }
-            }
-          ],
-          "evidence_fields": {}
-        }
-      ],
+      "tools": {},
+      "workflows": [],
       "process_engine": {
         "case_scope": "one state machine per request",
         "queue": "FIFO",
@@ -1233,58 +1113,8 @@
         "email": "chenmo@bench.example"
       },
       "knowledge": [],
-      "tools": {
-        "pnc_events_head.main.1.refer": {
-          "kind": "refer",
-          "contacts": [
-            "pnc_president"
-          ]
-        },
-        "pnc_events_head.main.2.reply": {
-          "kind": "reply"
-        }
-      },
-      "workflows": [
-        {
-          "id": "main",
-          "label": "Piano recruitment referrals",
-          "aliases": [
-            "piano",
-            "join",
-            "recruit",
-            "club",
-            "interview",
-            "reschedule",
-            "schedule",
-            "time",
-            "conflict",
-            "slot",
-            "group"
-          ],
-          "required_fields": [],
-          "steps": [
-            {
-              "id": "main_1",
-              "label": "Look up the contact directory and provide a referral",
-              "tool": "pnc_events_head.main.1.refer",
-              "delay": {
-                "mode": "business",
-                "minutes": 20
-              }
-            },
-            {
-              "id": "main_2",
-              "label": "Reply to the requester with the results obtained",
-              "tool": "pnc_events_head.main.2.reply",
-              "delay": {
-                "mode": "elapsed",
-                "minutes": 0
-              }
-            }
-          ],
-          "evidence_fields": {}
-        }
-      ],
+      "tools": {},
+      "workflows": [],
       "process_engine": {
         "case_scope": "one state machine per request",
         "queue": "FIFO",
@@ -1325,83 +1155,8 @@
         "pnc_survey_recorded",
         "pnc_wednesday_booked"
       ],
-      "tools": {
-        "pnc_president.main.1.extract": {
-          "kind": "extract",
-          "extract": {
-            "keep_original": {
-              "type": "boolean"
-            },
-            "wednesday_free": {
-              "type": "boolean"
-            }
-          },
-          "branches": [
-            {
-              "when": {
-                "keep_original": true
-              },
-              "text": "Confirmed: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. (If that evening ever becomes difficult, I could also see you Wednesday, 2026-09-23, 20:00-20:10 - but only if you ask.)",
-              "facts": [
-                "pnc_confirmed_original"
-              ]
-            },
-            {
-              "when": {
-                "wednesday_free": true
-              },
-              "text": "Perfect: I have moved your interview to Wednesday, 2026-09-23, 20:00-20:10, Music Building A201. See you then.",
-              "facts": [
-                "pnc_wednesday_booked"
-              ]
-            },
-            {
-              "when": {
-                "keep_original": false,
-                "wednesday_free": false
-              },
-              "text": "Then let us keep it simple: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201.",
-              "facts": [
-                "pnc_confirmed_original"
-              ]
-            }
-          ],
-          "fallback": {
-            "text": "Your assigned slot is Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. I could also offer Wednesday, 2026-09-23, 20:00-20:10 instead - are you free then, or shall I keep your original time? Tell me plainly."
-          }
-        }
-      },
-      "workflows": [
-        {
-          "id": "main",
-          "label": "Piano interview scheduling",
-          "aliases": [
-            "interview",
-            "reschedule",
-            "schedule",
-            "time",
-            "conflict",
-            "slot",
-            "piano",
-            "keep",
-            "confirm",
-            "evening"
-          ],
-          "required_fields": [],
-          "steps": [
-            {
-              "id": "main_1",
-              "label": "Read the request and answer on its substance",
-              "tool": "pnc_president.main.1.extract",
-              "delay": {
-                "mode": "business",
-                "minutes": 30
-              }
-            }
-          ],
-          "evidence_fields": {}
-        }
-      ],
+      "tools": {},
+      "workflows": [],
       "process_engine": {
         "case_scope": "one state machine per request",
         "queue": "FIFO",
@@ -1696,7 +1451,8 @@
       "text": "About the Piano Club interview: please keep my original time on Tuesday 2026-09-22; I am not free on Wednesday 2026-09-23.",
       "label": "pnc",
       "fields": {
-        "keep_original": true
+        "keep_original": true,
+        "wednesday_free": false
       }
     },
     {
@@ -1709,7 +1465,7 @@
       "text": "My badminton interview on Tuesday evening clashes with another commitment. I am unavailable on Wednesday 2026-09-23; please move my interview to another evening.",
       "label": "bwc",
       "fields": {
-        "wants_move": true,
+        "slot_change_requested": true,
         "wednesday_unavailable": true
       }
     },
@@ -1720,6 +1476,300 @@
   ],
   "reference_is_privileged": true,
   "alternate_paths": "Any lawful order of group joins, survey submissions, reads and officer mail is accepted if every goal's evidence conditions hold; either club may be sorted out first, and the clash may be resolved by moving the badminton interview to any evening the user is actually free - the reference's Monday slot is one valid outcome, not the only one.",
+  "graph": {
+    "nodes": [
+      {
+        "id": "bwc_referral",
+        "owner": "bwc_president",
+        "kind": "inquiry",
+        "title": "Badminton recruitment referral",
+        "activation": {
+          "delay_minutes": 20,
+          "calendar": "campus_evening"
+        },
+        "requires": [
+          {
+            "key": "user_inquired",
+            "type": "boolean",
+            "volatile": true,
+            "require": true,
+            "description": "True when the letter asks this club a recruitment question.",
+            "question": "what would you like to know about our recruitment?"
+          }
+        ],
+        "branches": [
+          {
+            "label": "answer",
+            "when": {
+              "user_inquired": true
+            },
+            "reply": "Happy to point you onward: interview scheduling and rescheduling belong to our Events head, Zhou Yanan - write to him about slots. Best of luck joining!",
+            "effects": [
+              {
+                "kind": "share_contacts",
+                "contacts": [
+                  "bwc_events_head"
+                ]
+              }
+            ]
+          }
+        ],
+        "on_completed_reply": "The Badminton recruitment referral matter has already been answered."
+      },
+      {
+        "id": "pnc_referral",
+        "owner": "pnc_events_head",
+        "kind": "inquiry",
+        "title": "Piano recruitment referral",
+        "activation": {
+          "delay_minutes": 20,
+          "calendar": "campus_evening"
+        },
+        "requires": [
+          {
+            "key": "user_inquired",
+            "type": "boolean",
+            "volatile": true,
+            "require": true,
+            "description": "True when the letter asks this club a recruitment question.",
+            "question": "what would you like to know about our recruitment?"
+          }
+        ],
+        "branches": [
+          {
+            "label": "answer",
+            "when": {
+              "user_inquired": true
+            },
+            "reply": "General recruitment questions are mine, but interview assignments and any changes belong to club president Wu Kexin - write to her and she will sort you out.",
+            "effects": [
+              {
+                "kind": "share_contacts",
+                "contacts": [
+                  "pnc_president"
+                ]
+              }
+            ]
+          }
+        ],
+        "on_completed_reply": "The Piano recruitment referral matter has already been answered."
+      },
+      {
+        "id": "bwc_survey_processed",
+        "owner": "environment",
+        "kind": "environment",
+        "title": "bwc_survey_form processed",
+        "event": {
+          "kind": "form_processed",
+          "form": "bwc_survey_form"
+        },
+        "effects": [
+          {
+            "kind": "register_facts",
+            "facts": [
+              "bwc_survey_recorded"
+            ],
+            "issuer": "bwc_events_head"
+          }
+        ]
+      },
+      {
+        "id": "pnc_survey_processed",
+        "owner": "environment",
+        "kind": "environment",
+        "title": "pnc_survey_form processed",
+        "event": {
+          "kind": "form_processed",
+          "form": "pnc_survey_form"
+        },
+        "effects": [
+          {
+            "kind": "register_facts",
+            "facts": [
+              "pnc_survey_recorded"
+            ],
+            "issuer": "pnc_president"
+          }
+        ]
+      },
+      {
+        "id": "bwc_assignment_posted",
+        "owner": "environment",
+        "kind": "environment",
+        "title": "Interview assignment posted",
+        "event": {
+          "kind": "scheduled",
+          "at": "2026-09-17T18:00:00+08:00"
+        },
+        "effects": []
+      },
+      {
+        "id": "pnc_assignment_posted",
+        "owner": "environment",
+        "kind": "environment",
+        "title": "Interview assignment posted",
+        "event": {
+          "kind": "scheduled",
+          "at": "2026-09-19T18:00:00+08:00"
+        },
+        "effects": []
+      },
+      {
+        "id": "bwc_move_slot",
+        "owner": "bwc_events_head",
+        "kind": "service",
+        "title": "Move the badminton interview slot",
+        "activation": {
+          "delay_minutes": 30,
+          "calendar": "campus_evening"
+        },
+        "requires": [
+          "bwc_assignment_posted",
+          {
+            "key": "slot_change_requested",
+            "type": "boolean",
+            "volatile": true,
+            "description": "True when the letter explicitly asks to change or reschedule the assigned interview time; false when it declines a change.",
+            "question": "are you asking me to change your assigned interview time, or to keep it?"
+          },
+          {
+            "key": "wednesday_unavailable",
+            "type": "boolean",
+            "volatile": true,
+            "require": "filled",
+            "description": "True when the letter states the applicant cannot attend on Wednesday 2026-09-23; false when it states Wednesday works. Must only be set when the letter explicitly addresses Wednesday.",
+            "question": "does Wednesday, 2026-09-23 work for you? "
+          }
+        ],
+        "branches": [
+          {
+            "label": "move_off_wednesday",
+            "when": {
+              "slot_change_requested": true,
+              "wednesday_unavailable": true
+            },
+            "reply": "Understood - Wednesdays are out for you. I have moved your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing else changes; bring your student card.",
+            "effects": [
+              {
+                "kind": "register_facts",
+                "facts": [
+                  "bwc_rescheduled_monday"
+                ]
+              }
+            ]
+          },
+          {
+            "label": "book_wednesday",
+            "when": {
+              "slot_change_requested": true,
+              "wednesday_unavailable": false
+            },
+            "reply": "Then Wednesday works nicely: your interview is moved to Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). See you there.",
+            "effects": [
+              {
+                "kind": "register_facts",
+                "facts": [
+                  "bwc_wednesday_booked"
+                ]
+              }
+            ]
+          },
+          {
+            "label": "no_change",
+            "when": {
+              "slot_change_requested": false
+            },
+            "reply": "Understood - you are not asking for a change. Your interview stays as assigned; write again if an evening stops working."
+          }
+        ],
+        "on_completed_reply": "Your interview slot has already been moved; the confirmation stands."
+      },
+      {
+        "id": "pnc_keep_slot",
+        "owner": "pnc_president",
+        "kind": "service",
+        "title": "Confirm or move the piano interview slot",
+        "activation": {
+          "delay_minutes": 30,
+          "calendar": "campus_evening"
+        },
+        "requires": [
+          "pnc_assignment_posted",
+          {
+            "key": "keep_original",
+            "type": "boolean",
+            "volatile": true,
+            "require": "filled",
+            "description": "True when the letter asks to keep the original assigned interview slot; false when it asks to change it.",
+            "question": "do you want to keep your originally assigned slot, or change it?"
+          },
+          {
+            "key": "wednesday_free",
+            "type": "boolean",
+            "volatile": true,
+            "require": "filled",
+            "description": "True when the letter states the applicant is free on Wednesday 2026-09-23; false when it states Wednesday does not work. Must only be set when the letter explicitly addresses Wednesday.",
+            "question": "are you free on Wednesday, 2026-09-23, in case I offer that evening instead?"
+          }
+        ],
+        "branches": [
+          {
+            "label": "keep_original",
+            "when": {
+              "keep_original": true
+            },
+            "reply": "Confirmed: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. (If that evening ever becomes difficult, I could also see you Wednesday, 2026-09-23, 20:00-20:10 - but only if you ask.)",
+            "effects": [
+              {
+                "kind": "register_facts",
+                "facts": [
+                  "pnc_confirmed_original"
+                ]
+              }
+            ]
+          },
+          {
+            "label": "move_wednesday",
+            "when": {
+              "wednesday_free": true
+            },
+            "reply": "Perfect: I have moved your interview to Wednesday, 2026-09-23, 20:00-20:10, Music Building A201. See you then.",
+            "effects": [
+              {
+                "kind": "register_facts",
+                "facts": [
+                  "pnc_wednesday_booked"
+                ]
+              }
+            ]
+          },
+          {
+            "label": "default_keep",
+            "when": {
+              "keep_original": false,
+              "wednesday_free": false
+            },
+            "reply": "Then let us keep it simple: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201.",
+            "effects": [
+              {
+                "kind": "register_facts",
+                "facts": [
+                  "pnc_confirmed_original"
+                ]
+              }
+            ]
+          }
+        ],
+        "on_completed_reply": "Your interview assignment is settled; write again only if your evenings change."
+      }
+    ],
+    "peak_hours": [
+      [
+        "19:00",
+        "21:00"
+      ]
+    ]
+  },
   "interactor": {
     "persona": "Alex Chen, a first-year undergraduate at Lanxi University; friendly, enthusiastic about clubs, and a bit scatterbrained about dates.",
     "speaker": "Alex Chen",

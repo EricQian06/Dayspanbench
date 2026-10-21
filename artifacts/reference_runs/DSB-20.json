@@ -24,7 +24,8 @@
       "summary_anchor_tokens": 2,
       "summary_anchor_missing": [],
       "pending_process_satisfied": true,
-      "pending_deadline_reached": true
+      "pending_deadline_reached": true,
+      "goal_facts_established": true
     },
     "deterministic_anchors_ok": true,
     "subparts_passed": 0,

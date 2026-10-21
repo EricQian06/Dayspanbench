@@ -54,8 +54,17 @@ def run_reference(task, *, recipient=None):
             result = api.send_email(mailbox, action["text"], fields, labels.get(action.get("followup")))
             if "case_id" not in result:
                 raise AssertionError(f"Reference message not understood: {action}: {result}")
-            labels[action["label"]] = result["case_id"]
+            # Graph mode returns a letter id; keep the target actor too, since
+            # waiting means "until this person's graph activity drains", not a
+            # case state machine.
+            labels[action["label"]] = (result["case_id"], action["to"]) if env.graph is not None \
+                else result["case_id"]
         elif action["op"] == "wait_for":
+            if env.graph is not None:
+                actor_id = labels[action["label"]][1]
+                while env.graph_actor_pending(actor_id) and env.now < env.deadline:
+                    api.wait_until(task["deadline_at"])
+                continue
             case_id = labels[action["label"]]
             case = env.cases[case_id]
             while case["state"] not in {"failed", "replied"} and env.now < env.deadline:

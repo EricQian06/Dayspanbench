@@ -14,58 +14,8 @@
       "email": "linzhiyuan@bench.example"
     },
     "knowledge": [],
-    "tools": {
-      "bwc_president.main.1.refer": {
-        "kind": "refer",
-        "contacts": [
-          "bwc_events_head"
-        ]
-      },
-      "bwc_president.main.2.reply": {
-        "kind": "reply"
-      }
-    },
-    "workflows": [
-      {
-        "id": "main",
-        "label": "Badminton recruitment referrals",
-        "aliases": [
-          "badminton",
-          "join",
-          "recruit",
-          "club",
-          "interview",
-          "reschedule",
-          "schedule",
-          "time",
-          "conflict",
-          "slot",
-          "group"
-        ],
-        "required_fields": [],
-        "steps": [
-          {
-            "id": "main_1",
-            "label": "Look up the contact directory and provide a referral",
-            "tool": "bwc_president.main.1.refer",
-            "delay": {
-              "mode": "business",
-              "minutes": 20
-            }
-          },
-          {
-            "id": "main_2",
-            "label": "Reply to the requester with the results obtained",
-            "tool": "bwc_president.main.2.reply",
-            "delay": {
-              "mode": "elapsed",
-              "minutes": 0
-            }
-          }
-        ],
-        "evidence_fields": {}
-      }
-    ],
+    "tools": {},
+    "workflows": [],
     "process_engine": {
       "case_scope": "one state machine per request",
       "queue": "FIFO",

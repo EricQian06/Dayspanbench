@@ -177,6 +177,12 @@ def send_email(ctx, recipient, text, fields=None, case_id=None):
         raise ValueError("Message budget exhausted")
     env.agent_sends += 1
     env.record("agent_send", recipient=recipient, text=text, fields=fields or {}, channel="email")
+    if env.graph is not None:
+        # v0.6 graph mode: sending is transport only. The letter is parked on
+        # the recipient's queue and interpreted at their next activation, so
+        # no semantic parsing (and no parse failure) happens at send time.
+        letter_id = env.graph_deliver(actor_id, text, fields, channel="email")
+        return {"case_id": letter_id, "status": "received", "at": stamp(env.now)}
     existing = env.cases[case_id] if case_id else None
     if existing and (existing["actor"] != actor_id or existing["parent"]):
         raise PermissionError("Case is not this agent's conversation")
@@ -239,12 +245,11 @@ def send_email(ctx, recipient, text, fields=None, case_id=None):
 
 @tool_register("call", "common")
 def call(ctx, recipient, text, fields=None):
-    """Synchronous phone call: only answered inside the recipient's work hours.
-
-    Quick interactions complete during the call; longer workflows continue
-    asynchronously and the written reply later reaches the inbox without
-    receipt attachments, since spoken answers issue no documents.
-    """
+    """Live customer-service chat (graph-mode tasks) / phone call (legacy
+    tasks). The graph-mode session is answered inside the recipient's work
+    hours: a short 0-3 minute wait normally, up to 30 minutes in queue during
+    peak windows. Ten idle minutes cancel the session, and a still-queued
+    message then loses its place and waits again from scratch."""
     env = ctx._env
     if not isinstance(text, str) or (fields is not None and not isinstance(fields, dict)):
         raise ValueError("text must be a string and fields must be an object")
@@ -255,7 +260,7 @@ def call(ctx, recipient, text, fields=None):
             "Contact has not been discovered; recipient must be the contact's id "
             "from the contact card, not a name, email address, or phone number")
     actor = env.actors[recipient]
-    if "phone" not in actor.spec["contact_details"]:
+    if env.graph is None and "phone" not in actor.spec["contact_details"]:
         raise ValueError("Contact has no phone number")
     if env.agent_sends >= env.task["public"]["message_budget"]:
         raise ValueError("Message budget exhausted")
@@ -263,7 +268,12 @@ def call(ctx, recipient, text, fields=None):
     env.record("agent_call", recipient=recipient, text=text, fields=fields or {})
     if not actor.calendar.is_open(env.now):
         return {"status": "no_answer", "recipient": recipient, "at": stamp(env.now),
-                "text": "No answer: outside the contact's phone hours."}
+                "text": "No answer: outside the contact's service hours."}
+    if env.graph is not None:
+        letter_id = env.graph_chat_call(recipient, text, fields)
+        return {"case_id": letter_id, "status": "queued", "recipient": recipient,
+                "at": stamp(env.now),
+                "text": "Connected to the live service queue; the reply arrives shortly."}
     view = {"actor_id": recipient, "name": actor.spec["name"], "role": actor.spec["role"],
             "instructions": actor.spec["recipient"]["instructions"], "message": '[Phone] ' + text,
             "fields": deepcopy(fields or {}), "now": stamp(env.now), "history": deepcopy(actor.history),

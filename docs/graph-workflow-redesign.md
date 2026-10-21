@@ -91,11 +91,12 @@ agent 与环境、NPC 与环境由此形成闭环。
           {"when": {"slot_change_requested": true, "wednesday_unavailable": false},
            "register_facts": ["bwc_wednesday_booked"], "reply": "…moved to Wednesday…"}
         ],
-        "default_branch": {"reply": "…tell me plainly which evenings work…"},  // 证据不足时的询问
+        // （已删除 default_branch：分支必须覆盖证据的**全部**可达方向——
+        //   三态布尔槽 2×2 全枚举、enum 全枚举；验证器强制全覆盖检查，
+        //   string 槽不允许出现在分支条件里。运行时无分支可走 = author 错误。）
         "effects": [                           // 点亮时引擎确定性派生（可多个并发）
-          {"kind": "register_facts", "facts": [...]},
-          {"kind": "submit_form", "form": "bwc_survey_form", "at": "..."},
-          {"kind": "notify_group", "group": "bwc_group", "message": "...", "at": "..."},
+          {"kind": "register_facts", "facts": [...], "issuer": "..."},   // issuer 缺省=节点 owner
+          {"kind": "share_contacts", "contacts": [...]},
           {"kind": "schedule_event", "at": "...", "target_node": "..."}
         ],
         "on_completed_reply": "…already submitted…"   // 完成态应答
@@ -139,7 +140,11 @@ LLM 解析的职责因此也明确为两步：先判断这条消息**是否提�
 `send_email` 退化为传输层：校验地址/预算/发现 → 落 NPC 收件箱 → 返回
 `{"status": "received"}`。**不做任何语义解析**；投递失败只可能来自传输层（黑洞地址），永不来自
 LLM。理解发生在**激活时**：NPC 的 activation 事件（工作时段 + authored 延迟）到期时，把该 NPC
-积压的全部来信（含群、电话）作为一批交给 LLM 解析，产出证据标记。
+积压的全部来信（含群、客服会话）作为一批交给 LLM 解析，产出证据标记。
+
+**实时客服取代电话**（用户确认）：图模式下 `call` 是实时客服会话，不再要求电话号码——工作时段内
+0–3 分钟接入；author 在图级 `peak_hours`（如 `["19:00","21:00"]`）标注高峰窗口，排队最长 30 分钟；
+**10 分钟无交互取消会话**，已投递未读的消息失去排队位、重新排队（新的等待时长，不会被丢弃）。
 
 解析失败（SimulatorError）按现行语义：记 environment failure、集无效——但因为它发生在激活事件里
 而非发送时刻，语义上就是"NPC 读信失败"，与投递无关。
@@ -213,7 +218,7 @@ reference/validate/replay 全程零 LLM 调用，哈希可复现（沿用工具�
 
 - **author 成本**：图比 workflow 冗长，需在 author_tasks/club_cases 层做紧凑 helper 压缩。
 - **LLM 归属判定质量**：节点多时"这封信属于哪个节点"的错误归属会污染证据；缓解 = 归属输出
-  必须含节点 id + 证据键（结构化、可校验），且解读失败走 default_branch 询问而非猜测。
+  必须含节点 id + 证据键（结构化、可校验），解读失败按 SimulatorError 处理（环境错，不判 agent 失败）。
 - **激活粒度与消息预算**：批处理激活可能改变 agent 的最优节奏（等回复 vs 连发），需要试点观察
   是否影响任务难度校准。
 - `serve.py` / `docs/agent-tools.json` 对 agent 的对外协议不变（仍是九个公共工具），agent 侧无感。

@@ -18,74 +18,8 @@
       "bwc_survey_recorded",
       "bwc_wednesday_booked"
     ],
-    "tools": {
-      "bwc_events_head.main.1.extract": {
-        "kind": "extract",
-        "extract": {
-          "wants_move": {
-            "type": "boolean"
-          },
-          "wednesday_unavailable": {
-            "type": "boolean"
-          }
-        },
-        "branches": [
-          {
-            "when": {
-              "wants_move": true,
-              "wednesday_unavailable": true
-            },
-            "text": "Understood - Wednesdays are out for you. I have moved your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing else changes; bring your student card.",
-            "facts": [
-              "bwc_rescheduled_monday"
-            ]
-          },
-          {
-            "when": {
-              "wants_move": true,
-              "wednesday_unavailable": false
-            },
-            "text": "Then Wednesday works nicely: your interview is moved to Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). See you there.",
-            "facts": [
-              "bwc_wednesday_booked"
-            ]
-          }
-        ],
-        "fallback": {
-          "text": "Happy to help with the interview time. Tell me plainly which evenings you can make it - and whether Wednesday, 2026-09-23 works for you - and I will move you to a fitting slot."
-        }
-      }
-    },
-    "workflows": [
-      {
-        "id": "main",
-        "label": "Badminton interview scheduling",
-        "aliases": [
-          "interview",
-          "reschedule",
-          "schedule",
-          "time",
-          "conflict",
-          "slot",
-          "move",
-          "badminton",
-          "evening"
-        ],
-        "required_fields": [],
-        "steps": [
-          {
-            "id": "main_1",
-            "label": "Read the request and answer on its substance",
-            "tool": "bwc_events_head.main.1.extract",
-            "delay": {
-              "mode": "business",
-              "minutes": 30
-            }
-          }
-        ],
-        "evidence_fields": {}
-      }
-    ],
+    "tools": {},
+    "workflows": [],
     "process_engine": {
       "case_scope": "one state machine per request",
       "queue": "FIFO",

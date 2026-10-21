@@ -159,6 +159,36 @@ class JudgeTests(unittest.TestCase):
         self.assertEqual(review["status"], "graded")
         self.assertTrue(review["criteria"][0]["passed"])
 
+    def test_fabricated_world_claim_flips_to_failed(self):
+        # ep-007 regression: a judge passing a trace criterion by inventing
+        # "the trace shows the agent wrote to X" — no such letter exists, so
+        # the quote is unfindable in the graded material and the verdict must
+        # not survive retries.
+        verdict = {"criteria": [{"criterion_id": "R6", "passed": True,
+                                 "evidence": [{"source": "trace", "pointer": "letter 3",
+                                               "quote_or_value": "I confirm the interview stays on Tuesday evening."}],
+                                 "reason": "The trace shows the agent wrote to the president."}]}
+        judge = LLMJudge(_client(verdict), validation_retries=1)
+        review = judge.judge(self.task, self.env, {"conclusion": "ok"})
+        self.assertEqual(review["status"], "graded")
+        self.assertFalse(review["criteria"][0]["passed"])
+        self.assertTrue(review["criteria"][0]["evidence_unverified"])
+
+    def test_verbatim_trace_quote_survives_grounding(self):
+        # The agent actually sent the letter: the quote exists verbatim in
+        # the graded material, so the verdict passes grounding untouched.
+        self.env.record("agent_send", recipient="president@bench.example",
+                        text="Please confirm the interview stays on Tuesday evening.")
+        verdict = {"criteria": [{"criterion_id": "R6", "passed": True,
+                                 "evidence": [{"source": "trace", "pointer": "letter 1",
+                                               "quote_or_value": "confirm the interview stays on Tuesday evening."}],
+                                 "reason": "The agent wrote to the president and the reply confirms."}]}
+        judge = LLMJudge(_client(verdict), validation_retries=1)
+        review = judge.judge(self.task, self.env, {"conclusion": "ok"})
+        self.assertEqual(review["status"], "graded")
+        self.assertTrue(review["criteria"][0]["passed"])
+        self.assertFalse(review["criteria"][0]["evidence_unverified"])
+
     def test_malformed_verdict_retries_then_pending(self):
         verdict = {"criteria": [{"criterion_id": "OTHER", "passed": True, "evidence": [], "reason": "x"}]}
         judge = LLMJudge(_client(verdict), validation_retries=1)
@@ -175,9 +205,12 @@ class JudgeTests(unittest.TestCase):
     def test_provider_quirk_keys_are_normalized_not_pending(self):
         # deepseek-v4-flash style output: "verdicts"/"pass", no evidence array
         # but inline citations in "reason". Key spelling must not turn a
-        # gradeable episode into a pending one.
+        # gradeable episode into a pending one. The synthesized evidence is
+        # grounded when the reason's quote is findable in the material.
+        self.env.record("agent_send", recipient="club@bench.example",
+                        text="The reservation is made for Tuesday evening.")
         verdict = {"verdicts": [{"criterion_id": "R6", "pass": True,
-                                 "reason": "final_answer.summary states the reservation; receipt R-0001 confirms."}]}
+                                 "reason": "The reservation is made for Tuesday evening."}]}
         judge = LLMJudge(_client(verdict))
         review = judge.judge(self.task, self.env, {"conclusion": "ok"})
         self.assertEqual(review["status"], "graded")
@@ -185,14 +218,29 @@ class JudgeTests(unittest.TestCase):
         self.assertTrue(review["criteria"][0]["evidence_synthesized"])
         self.assertEqual(review["criteria"][0]["evidence"][0]["pointer"], "judge.reason")
 
+
+    def test_criterion_key_alias_is_normalized_not_pending(self):
+        # gptplus5/deepseek quirk observed in ep-009: verdicts use "criterion"
+        # instead of "criterion_id". Key spelling must not pend the episode.
+        verdict = {"verdicts": [{"criterion": "R6", "pass": True,
+                                 "reason": "The reservation is made for Tuesday evening."}]}
+        self.env.record("agent_send", recipient="club@bench.example",
+                        text="The reservation is made for Tuesday evening.")
+        judge = LLMJudge(_client(verdict))
+        review = judge.judge(self.task, self.env, {"conclusion": "ok"})
+        self.assertEqual(review["status"], "graded")
+        self.assertTrue(review["criteria"][0]["passed"])
+
     def test_evidence_source_aliases_are_normalized_not_pending(self):
         # Models on lenient gateways invent source names ("receipts",
         # "established_facts"); aliases must coerce them instead of failing
-        # strict validation and marking the episode judge_pending.
+        # strict validation and marking the episode judge_pending. The
+        # citation mixes a loose final-answer quote (exempt from grounding)
+        # with a short value.
         verdict = {"criteria": [{"criterion_id": "R6", "passed": True,
                                  "evidence": [
                                      {"source": "receipts", "pointer": "R-0001",
-                                      "quote_or_value": "reservation confirmed"},
+                                      "quote_or_value": "ok"},
                                      {"source": "Established_Facts", "pointer": "goals",
                                       "quote_or_value": "reserved"}],
                                  "reason": "Cited from receipt and facts."}]}

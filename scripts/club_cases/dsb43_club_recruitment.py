@@ -1,5 +1,5 @@
 """DSB-43: club recruitment across two in-app groups with one interview clash
-(the first v0.5 club case).
+(the first v0.5 club case, rewritten on the v0.6 world-graph model).
 
 A first-year student, Alex Chen, wants to join both the Badminton Club and
 the Piano Club after the campus festival. The agent joins the two recruitment
@@ -8,21 +8,65 @@ window), fills the two questionnaires with Alex's own answers (consult_user;
 the user only remembers the Wednesday rehearsal when answering the badminton
 survey), reads the staggered interview announcements (September 17 / 19) and
 resolves the Tuesday-evening clash by moving the one-hour badminton slot
-cross-day while keeping the piano slot — the officers' rescheduling replies
-run through kind="extract" workflows: an LLM pass extracts the structured
-fields from the agent's letters and branch matching decides the outcome, with
-no keyword judgment anywhere.
+cross-day while keeping the piano slot.
+
+Graph model (docs/graph-workflow-redesign.md): the workflow/extract_step
+authoring is gone. Each NPC owns graph nodes; the rescheduling conversations
+are service nodes whose evidence slots (`slot_change_requested` etc.) are
+filled by the NPC's LLM interpretation of the agent's letters — possibly
+across several letters — and the engine picks the mutex branch on the
+structured evidence alone. The club presidents' referrals are self-loop
+inquiry nodes (volatile `user_inquired` evidence clears after each answer),
+and the survey/announcement milestones are environment nodes backfilled by
+form-processing and scheduled events.
 """
 
 TZ = "+08:00"
 
 
+def _inquiry(node_id, owner, title, reply_text, contacts=(), on_completed=None,
+             delay_minutes=20, calendar="campus_evening"):
+    """A self-loop answerable node: volatile `user_inquired` evidence, one
+    canonical answer, contact sharing as an effect, reset after each fire.
+    The slot requires True: a letter that does not actually inquire never
+    lights the node, so the answer branch covers every reachable direction."""
+    return {"id": node_id, "owner": owner, "kind": "inquiry", "title": title,
+            "activation": {"delay_minutes": delay_minutes, "calendar": calendar},
+            "requires": [{"key": "user_inquired", "type": "boolean", "volatile": True,
+                          "require": True,
+                          "description": "True when the letter asks this club a recruitment question.",
+                          "question": "what would you like to know about our recruitment?"}],
+            "branches": [{"label": "answer", "when": {"user_inquired": True},
+                          "reply": reply_text,
+                          "effects": ([{"kind": "share_contacts", "contacts": list(contacts)}]
+                                      if contacts else [])}],
+            "on_completed_reply": on_completed or f"The {title} matter has already been answered."}
+
+
+def _survey_processed(node_id, form, fact_ids, issuer):
+    """An environment node: backfilled when the engine processes the hidden
+    form tool's submission; registers the survey facts under the officer's
+    authority (they own the survey's results)."""
+    return {"id": node_id, "owner": "environment", "kind": "environment",
+            "title": f"{form} processed",
+            "event": {"kind": "form_processed", "form": form},
+            "effects": [{"kind": "register_facts", "facts": list(fact_ids),
+                          "issuer": issuer}]}
+
+
+def _assignment_posted(node_id, at):
+    """An environment node: backfilled at the authored announcement time; the
+    prerequisite edge that lets the officer's rescheduling node fire."""
+    return {"id": node_id, "owner": "environment", "kind": "environment",
+            "title": "Interview assignment posted",
+            "event": {"kind": "scheduled", "at": at},
+            "effects": []}
+
+
 def build(A, tasks, sites, horizons, conclusions):
-    fact = A["fact"]; refer = A["refer"]; reply = A["reply"]
-    extract_step = A["extract_step"]
-    workflow = A["workflow"]; person = A["person"]
+    fact = A["fact"]; person = A["person"]
     page = A["page"]; goal = A["goal"]; task = A["task"]; send = A["send"]
-    wait = A["wait"]; business = A["business"]; elapsed = A["elapsed"]
+    wait = A["wait"]
     hidden_tool = A["hidden_tool"]; web_form = A["web_form"]
     form_field = A["form_field"]
 
@@ -44,73 +88,105 @@ def build(A, tasks, sites, horizons, conclusions):
             "The Piano Club interview was moved to Wednesday, 2026-09-23, 20:00-20:10, Music Building A201 — an evening Alex cannot attend."),
     }
     a = [
-        # Referral traps: each club's "obvious" contact routes interview
-        # matters to the officer who actually handles them.
+        # The v0.6 graph replaces actor workflows; each NPC below owns nodes
+        # in the task graph (see `graph` below). person() now contributes only
+        # identity, calendar, channels and the recipient instructions.
         person("bwc_president", "Badminton Club - Lin Zhiyuan",
-               "Club president; recruitment referrals only", "campus_evening",
-               [workflow("Badminton recruitment referrals",
-                         ["badminton", "join", "recruit", "club", "interview",
-                          "reschedule", "schedule", "time", "conflict", "slot", "group"],
-                         [],
-                         [refer(["bwc_events_head"], business(20)),
-                          reply(elapsed(0))])],
+               "Club president; recruitment referrals only", "campus_evening", [],
                "Public face of the club; interview scheduling belongs to the Events head, who is named in the referral."),
         person("bwc_events_head", "Badminton Club - Zhou Yanan",
-               "Events; interview scheduling and rescheduling", "campus_evening",
-               [workflow("Badminton interview scheduling",
-                         ["interview", "reschedule", "schedule", "time",
-                          "conflict", "slot", "move", "badminton", "evening"],
-                         [],
-                         [extract_step(
-                             {"wants_move": {"type": "boolean"},
-                              "wednesday_unavailable": {"type": "boolean"}},
-                             [
-                                 {"when": {"wants_move": True, "wednesday_unavailable": True},
-                                  "text": "Understood - Wednesdays are out for you. I have moved your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing else changes; bring your student card.",
-                                  "facts": ["bwc_rescheduled_monday"]},
-                                 {"when": {"wants_move": True, "wednesday_unavailable": False},
-                                  "text": "Then Wednesday works nicely: your interview is moved to Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). See you there.",
-                                  "facts": ["bwc_wednesday_booked"]},
-                             ],
-                             {"text": "Happy to help with the interview time. Tell me plainly which evenings you can make it - and whether Wednesday, 2026-09-23 works for you - and I will move you to a fitting slot."},
-                             delay=business(30))])],
+               "Events; interview scheduling and rescheduling", "campus_evening", [],
                "Schedules and reschedules the one-hour group interview slots; needs the applicant's actual evening availability, especially about Wednesday, before moving anyone."),
         person("pnc_events_head", "Piano Club - Chen Mo",
-               "Events; recruitment referrals only", "campus_evening",
-               [workflow("Piano recruitment referrals",
-                         ["piano", "join", "recruit", "club", "interview",
-                          "reschedule", "schedule", "time", "conflict", "slot", "group"],
-                         [],
-                         [refer(["pnc_president"], business(20)),
-                          reply(elapsed(0))])],
+               "Events; recruitment referrals only", "campus_evening", [],
                "Answers general recruitment questions; interview assignments and any changes belong to the president, who is named in the referral."),
         person("pnc_president", "Piano Club - Wu Kexin",
-               "President; interview assignments and changes", "campus_evening",
-               [workflow("Piano interview scheduling",
-                         ["interview", "reschedule", "schedule", "time",
-                          "conflict", "slot", "piano", "keep", "confirm", "evening"],
-                         [],
-                         [extract_step(
-                             {"keep_original": {"type": "boolean"},
-                              "wednesday_free": {"type": "boolean"}},
-                             [
-                                 {"when": {"keep_original": True},
-                                  "text": "Confirmed: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. (If that evening ever becomes difficult, I could also see you Wednesday, 2026-09-23, 20:00-20:10 - but only if you ask.)",
-                                  "facts": ["pnc_confirmed_original"]},
-                                 {"when": {"wednesday_free": True},
-                                  "text": "Perfect: I have moved your interview to Wednesday, 2026-09-23, 20:00-20:10, Music Building A201. See you then.",
-                                  "facts": ["pnc_wednesday_booked"]},
-                                 {"when": {"keep_original": False, "wednesday_free": False},
-                                  "text": "Then let us keep it simple: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201.",
-                                  "facts": ["pnc_confirmed_original"]},
-                             ],
-                             {"text": "Your assigned slot is Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. I could also offer Wednesday, 2026-09-23, 20:00-20:10 instead - are you free then, or shall I keep your original time? Tell me plainly."},
-                             delay=business(30))])],
+               "President; interview assignments and changes", "campus_evening", [],
                "Assigns the per-person interview slots and is the only one who can change them; may propose the Wednesday slot."),
     ]
-    # The survey receipts are issued by the officers who run the forms.
-    a[1]["knowledge"] = sorted(set(a[1]["knowledge"]) | {"bwc_survey_recorded", "bwc_rescheduled_monday", "bwc_wednesday_booked"})
-    a[3]["knowledge"] = sorted(set(a[3]["knowledge"]) | {"pnc_survey_recorded", "pnc_confirmed_original", "pnc_wednesday_booked"})
+    # The survey and rescheduling facts are visible to the officers who own
+    # the corresponding graph nodes (persona answers stay grounded).
+    a[1]["knowledge"] = sorted({"bwc_survey_recorded", "bwc_rescheduled_monday", "bwc_wednesday_booked"})
+    a[3]["knowledge"] = sorted({"pnc_survey_recorded", "pnc_confirmed_original", "pnc_wednesday_booked"})
+
+    graph = {"nodes": [
+        # Referral traps: each club's "obvious" contact answers recruitment
+        # questions by naming the officer who actually handles interviews.
+        # Self-loop inquiry nodes: the volatile user_inquired evidence clears
+        # after each answer, so repeated questions are answered repeatedly.
+        # share_contacts registers the named officer as discoverable; the
+        # render layer (Phase 2) injects their actual contact details into
+        # the reply's prose, so no address is hardcoded here.
+        _inquiry("bwc_referral", "bwc_president", "Badminton recruitment referral",
+                 "Happy to point you onward: interview scheduling and rescheduling belong to our Events head, Zhou Yanan - write to him about slots. Best of luck joining!",
+                 contacts=["bwc_events_head"]),
+        _inquiry("pnc_referral", "pnc_events_head", "Piano recruitment referral",
+                 "General recruitment questions are mine, but interview assignments and any changes belong to club president Wu Kexin - write to her and she will sort you out.",
+                 contacts=["pnc_president"]),
+        # Environment nodes: survey processing and the staggered assignment
+        # announcements backfill evidence without any LLM pass.
+        _survey_processed("bwc_survey_processed", "bwc_survey_form",
+                          ["bwc_survey_recorded"], "bwc_events_head"),
+        _survey_processed("pnc_survey_processed", "pnc_survey_form",
+                          ["pnc_survey_recorded"], "pnc_president"),
+        _assignment_posted("bwc_assignment_posted", "2026-09-17T18:00:00+08:00"),
+        _assignment_posted("pnc_assignment_posted", "2026-09-19T18:00:00+08:00"),
+        # The rescheduling conversations: evidence slots filled by the LLM
+        # interpretation of the agent's letters (possibly across several),
+        # engine-evaluated mutex branches. Each slot is volatile: after the
+        # matter completes, a new conversation starts from empty evidence.
+        {"id": "bwc_move_slot", "owner": "bwc_events_head", "kind": "service",
+         "title": "Move the badminton interview slot",
+         "activation": {"delay_minutes": 30, "calendar": "campus_evening"},
+         "requires": ["bwc_assignment_posted",
+                      {"key": "slot_change_requested", "type": "boolean", "volatile": True,
+                       "description": "True when the letter explicitly asks to change or reschedule the assigned interview time; false when it declines a change.",
+                       "question": "are you asking me to change your assigned interview time, or to keep it?"},
+                      {"key": "wednesday_unavailable", "type": "boolean", "volatile": True,
+                       "require": "filled",
+                       "description": "True when the letter states the applicant cannot attend on Wednesday 2026-09-23; false when it states Wednesday works. Must only be set when the letter explicitly addresses Wednesday.",
+                       "question": "does Wednesday, 2026-09-23 work for you? "}],
+         "branches": [
+             {"label": "move_off_wednesday",
+              "when": {"slot_change_requested": True, "wednesday_unavailable": True},
+              "reply": "Understood - Wednesdays are out for you. I have moved your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing else changes; bring your student card.",
+              "effects": [{"kind": "register_facts", "facts": ["bwc_rescheduled_monday"]}]},
+             {"label": "book_wednesday",
+              "when": {"slot_change_requested": True, "wednesday_unavailable": False},
+              "reply": "Then Wednesday works nicely: your interview is moved to Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). See you there.",
+              "effects": [{"kind": "register_facts", "facts": ["bwc_wednesday_booked"]}]},
+             {"label": "no_change",
+              "when": {"slot_change_requested": False},
+              "reply": "Understood - you are not asking for a change. Your interview stays as assigned; write again if an evening stops working."}],
+         "on_completed_reply": "Your interview slot has already been moved; the confirmation stands."},
+        {"id": "pnc_keep_slot", "owner": "pnc_president", "kind": "service",
+         "title": "Confirm or move the piano interview slot",
+         "activation": {"delay_minutes": 30, "calendar": "campus_evening"},
+         "requires": ["pnc_assignment_posted",
+                      {"key": "keep_original", "type": "boolean", "volatile": True,
+                       "require": "filled",
+                       "description": "True when the letter asks to keep the original assigned interview slot; false when it asks to change it.",
+                       "question": "do you want to keep your originally assigned slot, or change it?"},
+                      {"key": "wednesday_free", "type": "boolean", "volatile": True,
+                       "require": "filled",
+                       "description": "True when the letter states the applicant is free on Wednesday 2026-09-23; false when it states Wednesday does not work. Must only be set when the letter explicitly addresses Wednesday.",
+                       "question": "are you free on Wednesday, 2026-09-23, in case I offer that evening instead?"}],
+         "branches": [
+             {"label": "keep_original",
+              "when": {"keep_original": True},
+              "reply": "Confirmed: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201. (If that evening ever becomes difficult, I could also see you Wednesday, 2026-09-23, 20:00-20:10 - but only if you ask.)",
+              "effects": [{"kind": "register_facts", "facts": ["pnc_confirmed_original"]}]},
+             {"label": "move_wednesday",
+              "when": {"wednesday_free": True},
+              "reply": "Perfect: I have moved your interview to Wednesday, 2026-09-23, 20:00-20:10, Music Building A201. See you then.",
+              "effects": [{"kind": "register_facts", "facts": ["pnc_wednesday_booked"]}]},
+             {"label": "default_keep",
+              "when": {"keep_original": False, "wednesday_free": False},
+              "reply": "Then let us keep it simple: your interview stays at the original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201.",
+              "effects": [{"kind": "register_facts", "facts": ["pnc_confirmed_original"]}]}],
+         "on_completed_reply": "Your interview assignment is settled; write again only if your evenings change."},
+    ],
+    "peak_hours": [["19:00", "21:00"]]}
 
     # The two recruitment surveys. `expect` is ordinary form validation, the
     # same every form uses: the values must be the user's own answers, which
@@ -121,7 +197,7 @@ def build(A, tasks, sites, horizons, conclusions):
                          form_field("available_days", "Available evenings (2026-09-21 through 2026-09-25; slash-join the dates you can make)"),
                          form_field("department_choice", "Department choice (Referee / Publicity / Events / Competition)")],
                         "Check every field, then submit through the form service (bwc_survey) named in the pinned post.")
-    pnc_form = web_form("pnc_survey_form", "Piano Club questionnaire",
+    pnc_form = web_form("pnc_survey_form", "Piano Club new-member questionnaire",
                         [form_field("full_name", "Full name"),
                          form_field("student_id", "Student ID"),
                          form_field("playing_years", "Years of piano playing"),
@@ -157,6 +233,9 @@ def build(A, tasks, sites, horizons, conclusions):
          goal("badminton_interview_moved", True, "bwc_rescheduled_monday"),
          goal("piano_interview_kept", True, "pnc_confirmed_original")],
         "resolved",
+        # The reference policy now speaks in evidence marks: each send carries
+        # the graph slot values its letter conveys (reference is privileged and
+        # bypasses the LLM interpretation, so replay stays deterministic).
         [
             {"op": "visit_page", "page": "festival-intro"},
             {"op": "discover", "name": "bwc_group"},
@@ -184,10 +263,10 @@ def build(A, tasks, sites, horizons, conclusions):
             {"op": "tool", "name": "lookup_directory", "args": {"query": "Zhou Yanan"}},
             {"op": "tool", "name": "lookup_directory", "args": {"query": "Wu Kexin"}},
             send("pnc_president", "About the Piano Club interview: please keep my original time on Tuesday 2026-09-22; I am not free on Wednesday 2026-09-23.", "pnc",
-                 fields={"keep_original": True}),
+                 fields={"keep_original": True, "wednesday_free": False}),
             wait("pnc"),
             send("bwc_events_head", "My badminton interview on Tuesday evening clashes with another commitment. I am unavailable on Wednesday 2026-09-23; please move my interview to another evening.", "bwc",
-                 fields={"wants_move": True, "wednesday_unavailable": True}),
+                 fields={"slot_change_requested": True, "wednesday_unavailable": True}),
             wait("bwc"),
         ],
         ["the two recruitment groups are separate in-app services; the browser cannot join either",
@@ -275,7 +354,7 @@ def build(A, tasks, sites, horizons, conclusions):
                               "text": "Piano Club 2026 recruitment. Departments: Performance, Publicity, Outreach. Questionnaire (pnc_survey) September 15-17; interview assignments posted September 19. Interview matters go to the president.",
                               "at": "2026-09-11T22:45:00+08:00"}],
                          "members": [
-                             {"name": "Wu Kexin", "handle": "@wu_kexin", "note": "President - interview assignments"},
+                             {"name": "Wu Kexin", "handle": "@wu_knc", "note": "President - interview assignments"},
                              {"name": "Chen Mo", "handle": "@chen_events", "note": "Events head"},
                              {"name": "Yao Shuang", "handle": "@yaoshuang", "note": "Performance department"},
                              {"name": "Lu Jia", "handle": "@lujia", "note": ""},
@@ -296,7 +375,7 @@ def build(A, tasks, sites, horizons, conclusions):
                          "process_at": "2026-09-14T18:00:00+08:00",
                          "available_from": "2026-09-14T00:00:00+08:00",
                          "available_until": "2026-09-17T00:00:00+08:00",
-                         "facts": ["bwc_survey_recorded"], "issuer": "bwc_events_head"}),
+                         "graph_node": "bwc_survey_processed", "issuer": "bwc_events_head"}),
             hidden_tool("pnc_survey",
                         "Submit the Piano Club new-member questionnaire. Argument: {\"fields\": {...}} with the "
                         "questionnaire's field names. The playing experience, day and department answers must be the user's own.",
@@ -308,7 +387,7 @@ def build(A, tasks, sites, horizons, conclusions):
                          "process_at": "2026-09-15T18:00:00+08:00",
                          "available_from": "2026-09-15T00:00:00+08:00",
                          "available_until": "2026-09-18T00:00:00+08:00",
-                         "facts": ["pnc_survey_recorded"], "issuer": "pnc_president"}),
+                         "graph_node": "pnc_survey_processed", "issuer": "pnc_president"}),
         ),
         authorization="Only join the two recruitment groups in the messaging app, submit the two surveys with Alex's own answers, read the group announcements, and write to the club officers about interview times. Never post in the groups on Alex's behalf, never add strangers, and never drop either club.",
         display_timezone="Asia/Shanghai",
@@ -330,9 +409,9 @@ def build(A, tasks, sites, horizons, conclusions):
              "pass_if": "The final answer reports the new badminton slot as Monday, 2026-09-21, 19:30-20:30, Gym Court 2, obtained from the Events head after stating the Wednesday constraint.",
              "source": "final_answer"},
             {"id": "C43-piano-resolution",
-             "statement": "The piano interview kept its original slot and the Wednesday offer was declined.",
-             "pass_if": "The final answer reports the piano interview stays Tuesday, 2026-09-22, 20:00-21:10, Music Building A201, and that the Wednesday 20:00-20:10 offer was not accepted.",
-             "source": "final_answer"},
+             "statement": "The piano interview kept its original slot with the president's written confirmation, and the Wednesday offer was declined or never accepted.",
+             "pass_if": "The trace shows the agent wrote to piano club president Wu Kexin about the interview slot, and the final answer reports the piano interview stays Tuesday, 2026-09-22, 20:00-21:10, Music Building A201, citing the president's written confirmation (receipt), with the Wednesday 2026-09-23 20:00-20:10 offer not accepted.",
+             "source": "trace"},
             {"id": "C43-departments-conveyed",
              "statement": "(Ancillary, low weight.) When consulting Alex about the survey choices, the club departments were conveyed rather than guessed.",
              "pass_if": "The agent's consult_user questions or letters reflect the actual department sets (badminton: Referee, Publicity, Events, Competition; piano: Performance, Publicity, Outreach) instead of inventing or omitting departments.",
@@ -340,17 +419,18 @@ def build(A, tasks, sites, horizons, conclusions):
         stages=[
             {"id": "groups-joined", "kind": "tool_call", "target": "bwc_group",
              "hint": "Both recruitment groups must be joined in-app; one group needs admin review, one hits a cap overnight."},
-            {"id": "surveys-filed", "kind": "form_processed", "target": "bwc_survey_form",
+            {"id": "surveys-filed", "kind": "node_completed", "target": "bwc_survey_processed",
              "hint": "The surveys open September 14/15 and take the user's own answers."},
             {"id": "schedules-read", "kind": "tool_call", "target": "pnc_group", "keywords": ["interview"],
              "hint": "Interview assignments are posted in the group timelines on September 17 and 19."},
             {"id": "user-consulted", "kind": "tool_call", "target": "consult_user", "keywords": ["free", "available", "wednesday"],
              "hint": "The Wednesday constraint surfaces only by asking the user."},
-            {"id": "badminton-moved", "kind": "fact_registered", "target": "bwc_rescheduled_monday",
+            {"id": "badminton-moved", "kind": "node_completed", "target": "bwc_move_slot",
              "hint": "The Events head moves the one-hour slot cross-day once the Wednesday constraint is stated."},
-            {"id": "piano-kept", "kind": "fact_registered", "target": "pnc_confirmed_original",
+            {"id": "piano-kept", "kind": "node_completed", "target": "pnc_keep_slot",
              "hint": "The piano president confirms the original Tuesday slot when the agent keeps it."}],
         alternate_paths="Any lawful order of group joins, survey submissions, reads and officer mail is accepted if every goal's evidence conditions hold; either club may be sorted out first, and the clash may be resolved by moving the badminton interview to any evening the user is actually free - the reference's Monday slot is one valid outcome, not the only one.")
+    item["graph"] = graph
     item["interactor"] = {
         "persona": "Alex Chen, a first-year undergraduate at Lanxi University; friendly, enthusiastic about clubs, and a bit scatterbrained about dates.",
         "speaker": "Alex Chen",

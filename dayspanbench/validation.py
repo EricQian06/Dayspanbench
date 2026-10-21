@@ -4,7 +4,79 @@ import re
 
 from .calendar import Calendar, parse
 from .engine import TRANSITIONS, PUBLIC_TOOLS, EXTRA_TOOLS, HIDDEN_TOOL_KINDS
+from .graph import GraphRuntime, GraphSpecError
 from .scoring import equivalent
+
+
+def _validate_graph(task, actors):
+    """Referential checks for the v0.6 world graph beyond GraphRuntime's own
+    spec validation: owners must exist, effects must cite real facts/contacts/
+    nodes, and the graph must never leak into the public export."""
+    errors = []
+
+    def check(condition, message):
+        if not condition:
+            errors.append(message)
+
+    try:
+        runtime = GraphRuntime(task["graph"])
+    except GraphSpecError as error:
+        return [f"graph: {error}"]
+    check("graph" not in task["public"], "The world graph must stay private")
+    # Real-time customer service: authored peak windows, clock times.
+    for index, window in enumerate(task["graph"].get("peak_hours", [])):
+        check(isinstance(window, list) and len(window) == 2
+              and all(re.fullmatch(r"\d{2}:\d{2}", edge) for edge in window)
+              and window[0] < window[1],
+              f"graph peak_hours[{index}] must be two ascending HH:MM clock times")
+    node_ids = set(runtime.nodes)
+    for node in runtime.nodes.values():
+        where = f"graph node {node.id}"
+        check(node.owner in actors or node.owner == "environment",
+              f"{where}: unknown owner {node.owner}")
+        check(bool(node.title), f"{where}: missing title")
+        for slot in node.slots.values():
+            check(bool(slot.description), f"{where}: slot {slot.key} needs a description "
+                  "(the interpretation LLM reads it to parse agent prose)")
+            if node.kind != "environment":
+                check(bool(slot.question), f"{where}: slot {slot.key} needs a question "
+                      "(the NPC's proactive follow-up when the slot is still missing)")
+        if slot.valid_until:
+            check(parse(task["start_at"]) < parse(slot.valid_until),
+                  f"{where}: slot {slot.key} expires before the episode starts")
+        if node.kind == "inquiry":
+            check(all(slot.volatile for slot in node.slots.values()),
+                  f"{where}: an inquiry self-loop must clear all its slots (volatile)")
+        if node.kind == "environment":
+            check(bool(node.event), f"{where}: environment node without an event")
+        for branch in node.branches:
+            check(bool(branch.get("reply")), f"{where}: a branch without reply text")
+        effect_sets = [node.effects] + [b.get("effects", []) for b in node.branches]
+        for effects in effect_sets:
+            for effect in effects:
+                kind = effect.get("kind")
+                if kind == "register_facts":
+                    check(set(effect.get("facts", [])) <= set(task["facts"]),
+                          f"{where}: register_facts cites unknown fact")
+                    issuer = effect.get("issuer", node.owner)
+                    if issuer != "environment":
+                        check(issuer in actors, f"{where}: register_facts with unknown issuer")
+                        if issuer in actors:
+                            check(set(effect.get("facts", [])) <= set(actors[issuer]["knowledge"]),
+                                  f"{where}: register_facts outside issuer knowledge")
+                elif kind == "share_contacts":
+                    check(set(effect.get("contacts", [])) <= set(actors),
+                          f"{where}: share_contacts cites unknown contact")
+                elif kind == "schedule_event":
+                    target = effect.get("target_node")
+                    check(target in node_ids, f"{where}: schedule_event targets unknown node")
+                    check(bool(effect.get("at")), f"{where}: schedule_event without a time")
+                    if effect.get("at"):
+                        check(parse(task["start_at"]) <= parse(effect["at"]) < parse(task["deadline_at"]),
+                              f"{where}: schedule_event outside the episode window")
+                else:
+                    check(False, f"{where}: unknown graph effect kind {kind}")
+    return errors
 
 # The agent protocol (AGENT_PROMPT in dayspanbench/evaluation.py and
 # docs/environment-contract.md) requires dates in messages to use the canonical
@@ -33,6 +105,11 @@ def validate_task(task):
           "Deadline shorter than designed reference horizon")
     actors = {a["id"]: a for a in task["actors"]}
     check(len(actors) == len(task["actors"]), "Duplicate actor IDs")
+    if task.get("graph") is not None:
+        errors.extend(_validate_graph(task, actors))
+        node_ids = {n["id"] for n in task["graph"].get("nodes", [])}
+    else:
+        node_ids = set()
     facts = task["facts"]
     hidden = {t["name"]: t for t in task.get("hidden_tools", [])}
 
@@ -275,11 +352,14 @@ def validate_task(task):
         check(set(stage) <= {"id", "kind", "target", "hint", "keywords"},
               f"{swhere}: unsupported field")
         check(bool(stage.get("id")), f"{swhere}: missing id")
-        check(stage.get("kind") in {"tool_call", "form_processed", "selection_processed", "fact_registered"},
+        check(stage.get("kind") in {"tool_call", "form_processed", "selection_processed", "fact_registered", "node_completed"},
               f"{swhere}: unknown stage kind")
         check(bool(stage.get("target")), f"{swhere}: missing target")
         if stage.get("kind") == "form_processed":
             check(stage.get("target") in form_ids, f"{swhere}: form_processed target must be a form id")
+        if stage.get("kind") == "node_completed":
+            check(task.get("graph") is not None and stage.get("target") in node_ids,
+                  f"{swhere}: node_completed target must be a graph node id")
         if stage.get("keywords"):
             check(isinstance(stage["keywords"], list)
                   and all(isinstance(k, str) and k.strip() for k in stage["keywords"]),
@@ -471,7 +551,8 @@ def validate_task(task):
     for goal in task["goals"]:
         if goal.get("status") == "unconfirmed":
             condition = goal["pending_condition"]
-            check(any(condition["capability"] in w.get("capabilities", []) for a in actors.values() for w in a["workflows"]), "No workflow offers required capability")
+            check(task.get("graph") is not None
+                  or any(condition["capability"] in w.get("capabilities", []) for a in actors.values() for w in a["workflows"]), "No workflow offers required capability")
             for req in condition.get("required_evidence", []):
                 check_requirement(req)
         else:

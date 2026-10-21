@@ -16,6 +16,7 @@ from pathlib import Path
 from .calendar import Calendar, parse, stamp
 from .comprehension import understood_evidence
 from .director import DirectorState
+from .graph import GraphRuntime
 from .recipient import RuleRecipient
 from .scoring import evaluate as evaluate_outcome
 from .llm import SimulatorError, key_tokens, missing_key_tokens
@@ -55,6 +56,14 @@ EXTRACT_PROMPT = """You are an environment recipient interpreting one Agent mess
 Extract only the requested fields from the message (and, where it genuinely helps resolve an ellipsis like "any day is fine", the immediately preceding exchange in history). Each field states its type: boolean, string, or an enum of allowed values.
 A boolean is true only when the message explicitly conveys it; absence, hedging, or an unrelated remark is false, never guessed. A string field is the message's own wording (dates as written); use null when the message does not say. An enum value must be one of the allowed values or null.
 Extract what the message says, not what would be convenient. Do not infer unstated constraints. Output only schema-compliant JSON with exactly the requested keys, without explanation or reasoning."""
+
+# v0.6 world graph: the NPC's LLM reads its own nodes and decides which of
+# them the agent's letters speak to, and what evidence they provide. The
+# engine marks the structured result on the graph and lights nodes itself.
+INTERPRET_PROMPT = """You are an environment recipient interpreting the Agent's letters in a benchmark environment.
+Decide which of your graph nodes each letter speaks to, and what evidence it provides. nodes lists the matters you handle; each node's slots are the evidence it collects, with type and description. A boolean slot is true only when a letter explicitly conveys it and false only when a letter explicitly conveys its negation; absence, hedging, or an unrelated remark is never evidence - omit the slot entirely rather than guessing. String slots take the letter's own wording.
+Only the letters' own statements count; do not infer from what would be convenient, and do not invent values.
+Output only schema-compliant JSON in the exact shape {"marks": {"<node_id>": {"<slot_key>": value}}}: marks nests one object per node you are marking, keyed by that node's id, containing only that node's slot keys. A letter that speaks to no node yields marks: {}. Output only schema-compliant JSON, without explanation or reasoning."""
 
 
 @dataclass
@@ -166,6 +175,23 @@ class Environment:
         # Hidden kind="group" tools: per-group membership state (preview,
         # join requests, read position). Approval is an event, never instant.
         self.group_states = {}
+        # v0.6 world graph (graph-mode tasks): evidence-driven nodes replace
+        # the actor workflow/case machinery. Letters are transport-only at
+        # send time; interpretation happens at the activation event, when the
+        # recipient reads the accumulated batch during work hours.
+        self.graph = GraphRuntime(task["graph"]) if task.get("graph") else None
+        self.graph_letters = {}
+        self.letter_serial = 0
+        # Real-time customer service: authored peak windows (graph-level
+        # "peak_hours") and the per-actor session generation for idle cancels.
+        self.graph_peak = (task.get("graph") or {}).get("peak_hours") or []
+        self.graph_chat_epochs = {}
+        if self.graph is not None:
+            for node in self.graph.nodes.values():
+                event_spec = node.event or {}
+                if node.kind == "environment" and event_spec.get("kind") == "scheduled" \
+                        and event_spec.get("at"):
+                    self.enqueue(parse(event_spec["at"]), "graph_env", node.id)
         self.interactor = None
 
     def attach_interactor(self, interactor):
@@ -496,6 +522,11 @@ class Environment:
                 self.record("page_updated", page=update["page"], url=page["url"], cause="form")
         self.record("form_processed", form=form_id, accepted=submission["accepted"],
                     result=submission["result_text"])
+        # v0.6 graph mode: a processed form backfills the linked environment
+        # node, which lights it and runs its authored effects.
+        if submission["accepted"] and params.get("graph_node") and self.graph is not None:
+            if params["graph_node"] in self.graph.nodes:
+                self.graph_environment_event(params["graph_node"])
 
     def apply_catalog_update(self, payload):
         """Swap catalog inventory at an authored virtual time (stale quotes,
@@ -722,6 +753,318 @@ class Environment:
         if texts:
             text = (text + "\n" if text else "") + "\n".join(texts)
         return self.director.issue_receipt(title, text, fields, issuer_id, stamp(self.now))
+
+    # ------------------------------------------------------- v0.6 world graph
+
+    def graph_deliver(self, actor_id, text, fields, channel="email", activate_at=None):
+        """Transport only: park the letter and schedule the recipient's
+        activation (the read happens during work hours, like admission).
+        No semantic parsing happens here - understanding is the activation
+        event's job, so delivery can never fail on a parse error."""
+        actor = self.actors[actor_id]
+        self.letter_serial += 1
+        letter = {"id": f"LTR-{self.letter_serial:04d}", "text": text,
+                  "fields": deepcopy(fields or {}), "channel": channel,
+                  "at": stamp(self.now)}
+        self.graph_letters.setdefault(actor_id, []).append(letter)
+        actor.history.append({"role": "agent", "text": text,
+                              "fields": deepcopy(fields or {}), "letter": letter["id"],
+                              "at": stamp(self.now)})
+        self.record("letter_delivered", actor=actor_id, letter=letter["id"], channel=channel)
+        when = activate_at if activate_at is not None else self.admission_at(actor)
+        self.enqueue(when, "graph_activate", actor_id)
+        return letter["id"]
+
+    # Real-time customer service (graph mode replaces the phone channel):
+    # answered during work hours with a short 0-3 minute wait, a long queue
+    # (up to 30 minutes) during authored peak windows, and a session that
+    # cancels after 10 idle minutes - cancelling re-queues any still-unread
+    # message from scratch, so the queue place is lost.
+    CHAT_REPLY_MINUTES = (0, 3)
+    CHAT_PEAK_MINUTES = (5, 30)
+    CHAT_IDLE_MINUTES = 10
+
+    def _in_peak(self, actor):
+        """Whether the current moment falls in an authored peak window
+        (graph["peak_hours"], clock times in the actor's calendar timezone)."""
+        local = self.now.astimezone(actor.calendar.zone) if hasattr(actor.calendar, "zone") \
+            else self.now
+        text = local.strftime("%H:%M")
+        return any(window[0] <= text < window[1]
+                   for window in (self.graph_peak or []))
+
+    def graph_chat_call(self, actor_id, text, fields):
+        """Open (or continue) a live customer-service session: the reply
+        activation is scheduled after the current queue wait, and an idle
+        timeout guards the session."""
+        actor = self.actors[actor_id]
+        low, high = self.CHAT_PEAK_MINUTES if self._in_peak(actor) else self.CHAT_REPLY_MINUTES
+        delay = self.rng.uniform(low, high)
+        at = self.now + timedelta(minutes=delay)
+        letter_id = self.graph_deliver(actor_id, text, fields,
+                                       channel="chat", activate_at=at)
+        self.graph_chat_epochs[actor_id] = self.graph_chat_epochs.get(actor_id, 0) + 1
+        self.enqueue(self.now + timedelta(minutes=self.CHAT_IDLE_MINUTES),
+                     "graph_session_timeout", (actor_id, self.graph_chat_epochs[actor_id]))
+        self.record("chat_session", actor=actor_id, letter=letter_id,
+                    queue_minutes=round(delay, 1), peak=self._in_peak(actor))
+        return letter_id
+
+    def graph_session_timeout(self, payload):
+        """Ten idle minutes: the session cancels. A still-queued unread
+        message loses its place and re-queues from scratch (a fresh wait)."""
+        actor_id, epoch = payload
+        if self.graph_chat_epochs.get(actor_id) != epoch:
+            return  # a newer interaction opened a new session
+        if not self.graph_letters.get(actor_id):
+            return
+        actor = self.actors[actor_id]
+        # Drop the pending fast activation and queue a fresh wait.
+        remaining = [(at, seq, kind, target)
+                     for at, seq, kind, target in self.events
+                     if not (kind == "graph_activate" and target == actor_id and at > self.now)]
+        heapq.heapify(remaining)
+        self.events = remaining
+        low, high = self.CHAT_PEAK_MINUTES if self._in_peak(actor) else self.CHAT_REPLY_MINUTES
+        delay = self.rng.uniform(low, high)
+        self.enqueue(self.now + timedelta(minutes=delay), "graph_activate", actor_id)
+        self.record("chat_session_cancelled", actor=actor_id,
+                    requeued_minutes=round(delay, 1))
+
+    def graph_actor_pending(self, actor_id):
+        """Whether letters or node firings for one actor are still queued
+        (the reference policy's wait condition in graph mode)."""
+        if self.graph_letters.get(actor_id):
+            return True
+        for _, _, kind, target in self.events:
+            if kind == "graph_activate" and target == actor_id:
+                return True
+            if kind == "graph_fire":
+                node = self.graph.nodes.get(target)
+                if node is not None and node.owner == actor_id:
+                    return True
+        return False
+
+    def _graph_slot_nodes(self, actor_id, key):
+        """The actor's nodes that collect this evidence key."""
+        return [n for n in self.graph.nodes_owned_by(actor_id) if key in n.slots]
+
+    def _graph_mark(self, node, marks, source, *, strict):
+        """Apply one evidence batch. Structured fields (reference policy or
+        agent-supplied) are advisory: an invalid value skips the batch as an
+        audit record; an LLM interpretation producing invalid evidence is an
+        environment failure instead."""
+        try:
+            return self.graph.mark(node.id, marks, source=source, at=stamp(self.now))
+        except ValueError as error:
+            if strict:
+                raise SimulatorError(
+                    f"Graph interpretation rejected on {node.id}: {error}") from None
+            self.record("graph_mark_rejected", node=node.id, error=str(error))
+            return None
+
+    def graph_activate(self, actor_id):
+        """The recipient reads the accumulated letter batch: one LLM
+        interpretation (plus any structured fields carried along) marks
+        evidence on the graph; newly complete nodes get their firing
+        scheduled with the node's authored activation delay."""
+        actor = self.actors[actor_id]
+        letters = self.graph_letters.pop(actor_id, [])
+        if not letters:
+            return
+        self.record("graph_activation", actor=actor_id,
+                    letters=[l["id"] for l in letters])
+        source = ",".join(l["id"] for l in letters)
+        touched = set()
+        # Structured fields travel verbatim (the privileged reference policy
+        # supplies evidence this way; agents may attach fields too).
+        merged = {}
+        for letter in letters:
+            for key, value in (letter.get("fields") or {}).items():
+                merged.setdefault(key, value)
+        for key, value in merged.items():
+            for node in self._graph_slot_nodes(actor_id, key):
+                if self._graph_mark(node, {key: value}, source, strict=False) is not None:
+                    touched.add(node.id)
+        if self.dialogue_client is not None:
+            for node_id, node_marks in self._graph_interpret(actor, letters).items():
+                node = self.graph.nodes.get(node_id)
+                if node is None or node.owner != actor_id or not isinstance(node_marks, dict):
+                    raise SimulatorError(f"Graph interpretation named an unusable node {node_id}")
+                # An empty marks object is legal: the letter speaks to this
+                # node but adds no new evidence (a restated request).
+                if node_marks:
+                    self._graph_mark(node, node_marks, source, strict=True)
+                touched.add(node_id)
+        for node_id in sorted(touched):
+            node = self.graph.nodes[node_id]
+            if node.state == "completed" or self.graph.is_ready(node, self.now):
+                self.enqueue(self._graph_fire_at(actor, node, self.now), "graph_fire", node_id)
+            elif node.state == "collecting":
+                # Design point 3: an incomplete node the agent wrote to gets a
+                # proactive follow-up about its missing/expired evidence or
+                # unmet prerequisites - never silence. Only nodes this batch
+                # actually touched are asked about.
+                self._graph_ask_missing(actor, node)
+
+    def _graph_ask_missing(self, actor, node):
+        """The NPC's proactive question for a touched but incomplete node."""
+        status = self.graph.requirements_status(node, self.now)
+        if status["satisfied"]:
+            return  # ready by now (a parallel letter completed it)
+        parts = [f"Thank you for your letter about the {node.title} matter."]
+        asks = [node.slots[key].question or node.slots[key].key
+                for key in status["missing_evidence"] + status["expired_evidence"]]
+        if asks:
+            parts.append("To proceed, tell me plainly: " + " ".join(asks))
+        if status["waiting_for_nodes"]:
+            titles = ", ".join(self.graph.nodes[p].title for p in status["waiting_for_nodes"])
+            parts.append(f"I cannot act on it yet: the {titles} has not happened.")
+        self._graph_emit(node, actor, " ".join(parts), [])
+
+    def _graph_interpret(self, actor, letters):
+        """One LLM pass over the batch: which owned nodes do these letters
+        speak to, and what evidence do they provide. The schema enumerates
+        every owned node and slot with its value type, so the model has no
+        freedom to invent structure; the result is still revalidated by the
+        runtime and invalid evidence is a SimulatorError."""
+        actor_nodes = self.graph.nodes_owned_by(actor.spec["id"])
+        view = {"actor_id": actor.spec["id"], "name": actor.spec["name"],
+                "role": actor.spec["role"],
+                "instructions": actor.spec["recipient"]["instructions"],
+                "now": stamp(self.now),
+                "letters": [{"id": l["id"], "text": l["text"],
+                             "fields": deepcopy(l["fields"])} for l in letters],
+                "nodes": [{"id": n.id, "title": n.title, "kind": n.kind, "state": n.state,
+                           "slots": [{"key": s.key, "type": s.kind,
+                                      "description": s.description}
+                                     for s in n.slots.values()]}
+                          for n in actor_nodes],
+                "history": deepcopy(actor.history[-12:])}
+        node_schemas = {}
+        for node in actor_nodes:
+            slots = {}
+            for slot in node.slots.values():
+                if slot.kind == "boolean":
+                    slots[slot.key] = {"type": "boolean"}
+                elif slot.kind == "enum":
+                    slots[slot.key] = {"type": "string", "enum": list(slot.values)}
+                else:
+                    slots[slot.key] = {"type": "string"}
+            node_schemas[node.id] = {"type": "object", "additionalProperties": False,
+                                     "properties": slots}
+        schema = {"type": "object", "additionalProperties": False,
+                  "properties": {"marks": {"type": "object", "additionalProperties": False,
+                                           "properties": node_schemas}},
+                  "required": ["marks"]}
+        result = self.dialogue_client.complete(purpose="interpret", actor_id=actor.spec["id"],
+                                                system=INTERPRET_PROMPT, view=view, schema=schema)
+        marks = result.get("marks") if isinstance(result, dict) else None
+        if not isinstance(marks, dict) and isinstance(result, dict) and result \
+                and all(key in node_schemas for key in result):
+            # Some models flatten the marks object to the top level; the
+            # enumerated schema makes that shape unambiguous to unwrap.
+            marks = result
+        if not isinstance(marks, dict):
+            raise SimulatorError("Graph interpretation returned no marks object")
+        return marks
+
+    def _graph_fire_at(self, actor, node, now):
+        """The node's authored activation delay, in business minutes of the
+        node's calendar (the officer's processing time before replying)."""
+        delay = int((node.activation or {}).get("delay_minutes", 0))
+        calendar_name = (node.activation or {}).get("calendar") or actor.spec["calendar"]
+        if delay <= 0 or calendar_name not in self.task["calendars"]:
+            return now
+        return Calendar(self.task["calendars"][calendar_name]).add_business(now, delay)
+
+    def graph_environment_event(self, node_id):
+        """An environment node's backfill event fired: complete it and run
+        its effects. Environment nodes have no actor reply - their channels
+        (forms, group posts) speak for themselves."""
+        fire = self.graph.env_backfill(node_id, at=stamp(self.now))
+        if fire is None:
+            return
+        self._graph_run_effects(self.graph.nodes[node_id], fire["effects"])
+        self.graph.fired(node_id, at=stamp(self.now))
+        self.record("node_completed", node=node_id)
+
+    def _graph_run_effects(self, node, effects):
+        """Execute one fire's effects deterministically. register_facts
+        establishes facts (environment nodes name the issuer explicitly);
+        share_contacts makes the named officers discoverable; schedule_event
+        queues another environment node's backfill."""
+        contacts = []
+        for effect in effects:
+            kind = effect.get("kind")
+            if kind == "register_facts":
+                issuer_id = effect.get("issuer") or node.owner
+                for fid in effect.get("facts", []):
+                    self.register_fact(fid, issuer_id)
+            elif kind == "share_contacts":
+                contacts.extend(effect.get("contacts", []))
+                self.known_contacts.update(effect.get("contacts", []))
+            elif kind == "schedule_event":
+                self.enqueue(parse(effect["at"]), "graph_env", effect["target_node"])
+            else:
+                raise ValueError(f"Unknown graph effect kind {kind}")
+        return contacts
+
+    def graph_fire(self, node_id):
+        """Light one node: pick the branch on the structured evidence, run
+        the effects, and deliver the reply (receipt attached when the branch
+        established facts, matching the extract-branch behavior)."""
+        node = self.graph.nodes[node_id]
+        fire = self.graph.fire(node_id, at=stamp(self.now), source="engine")
+        status = fire["status"]
+        actor = self.actors.get(node.owner)
+        if status == "already_completed":
+            if actor is not None:
+                self._graph_emit(node, actor, fire["reply"], [])
+            return
+        contacts = self._graph_run_effects(node, fire["effects"])
+        receipts = []
+        fact_ids = [f for e in fire["effects"] if e.get("kind") == "register_facts"
+                    for f in e.get("facts", [])]
+        if fact_ids and node.owner != "environment":
+            receipts.append(self.issue_receipt(f"{node.title} written verification receipt",
+                                               fact_ids, node.owner, reregister=False))
+        if actor is not None:
+            reply = fire["reply"] or self.graph.completed_reply(node_id)
+            if receipts:
+                reply += (f" A completion receipt is attached (receipt number "
+                          f"{receipts[0]['receipt_no']}); include its key identifiers, quantities, "
+                          "and dates in the final summary.")
+            self._graph_emit(node, actor, reply, contacts, receipts=receipts)
+        self.graph.fired(node_id, at=stamp(self.now))
+        self.record("node_completed", node=node_id)
+
+    def _graph_emit(self, node, actor, text, contacts, receipts=None):
+        """Deliver one graph reply letter: the recipient's LLM adapter may
+        rephrase the canonical text (key tokens preserved); contact cards are
+        spoken of in prose and registered as discoverable, like emit()."""
+        receipts = receipts or []
+        contacts = list(dict.fromkeys(contacts))
+        if hasattr(actor.recipient, "render"):
+            view = {"actor_id": actor.spec["id"], "name": actor.spec["name"],
+                    "role": actor.spec["role"], "persona": actor.spec.get("persona"),
+                    "now": stamp(self.now), "case_id": None, "case_state": "replied",
+                    "status": "reply", "canonical_text": text,
+                    "history": deepcopy(actor.history),
+                    "stage_hint": self.director.snapshot()["hint"],
+                    "contacts": [self.contact(cid) for cid in contacts],
+                    "receipts": deepcopy(receipts)}
+            text = self.recipient_call(actor, "render", view)
+        self.known_contacts.update(contacts)
+        message = {"id": f"MSG-{len(self.messages)+1:04d}", "at": stamp(self.now),
+                   "from": actor.spec["contact_details"]["email"], "case_id": None,
+                   "status": "reply", "channel": "email", "text": text,
+                   "receipts": deepcopy(receipts)}
+        self.messages.append(message)
+        actor.outbox.append(message["id"])
+        actor.history.append({"role": "recipient", "text": text, "node": node.id,
+                              "at": stamp(self.now)})
+        self.record("delivery", message_id=message["id"], node=node.id, status="reply")
 
     def _catalog_entry(self, catalog_name, entry_id):
         """The current inventory row for an id, or None if it is gone."""
@@ -960,6 +1303,19 @@ class Environment:
                                   "text": f"Your join request for {spec['params']['group_name']} was approved. "
                                           "The timeline, pinned announcement and member list are readable now.",
                                   "receipts": []})
+            return
+        # v0.6 graph events: the payload is an actor/node id, not a case id.
+        if kind == "graph_env":
+            self.graph_environment_event(case_id)
+            return
+        if kind == "graph_activate":
+            self.graph_activate(case_id)
+            return
+        if kind == "graph_fire":
+            self.graph_fire(case_id)
+            return
+        if kind == "graph_session_timeout":
+            self.graph_session_timeout(case_id)
             return
         case = self.cases[case_id]
         if case["state"] in {"failed", "replied"}:

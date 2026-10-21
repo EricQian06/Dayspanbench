@@ -79,7 +79,7 @@
       "snippet": "Piano Club questionnaire: playing experience, preferred interview day and department choice.",
       "form": {
         "id": "pnc_survey_form",
-        "title": "Piano Club questionnaire",
+        "title": "Piano Club new-member questionnaire",
         "fields": [
           {
             "name": "full_name",

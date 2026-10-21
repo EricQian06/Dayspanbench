@@ -34,6 +34,7 @@ STAGE_KINDS = {
     "form_processed": [("form_processed", "form")],
     "selection_processed": [("selection_processed", "tool")],
     "fact_registered": [("fact_registered", "fact")],
+    "node_completed": [("node_completed", "node")],
 }
 
 

@@ -16,10 +16,53 @@ sys.path.insert(0, str(ROOT))
 
 from dayspanbench.engine import Environment  # noqa: E402
 from dayspanbench.evaluation import summarize, render_report, write_json  # noqa: E402
+from dayspanbench.interactor import UserInteractor  # noqa: E402
 from dayspanbench.llm import LLMConfig, StructuredClient  # noqa: E402
 from dayspanbench.judge import LLMJudge  # noqa: E402
 from dayspanbench.scoring import score_with_judge  # noqa: E402
 from dayspanbench.simulator import LLMSimulator  # noqa: E402
+
+
+class RecordedSimulator:
+    """Feeds recorded simulator responses, in order."""
+
+    def __init__(self, rows):
+        self.rows, self.calls = rows, []
+
+    def complete(self, *, purpose, actor_id, system, view, schema):
+        row = self.rows[len(self.calls)]
+        self.calls.append(row)
+        return deepcopy(row["response"])
+
+
+def replay_episode(directory, task, manifest):
+    """Rebuild the post-episode Environment by replaying the recorded tool
+    actions against the recorded simulator/interactor responses. The judge
+    view must contain the real trace, letters, receipts and established
+    facts — a fresh Environment would hand it empty material and every
+    citation-grounding check would misfire."""
+    from json import loads
+    rows = [loads(x) for x in (directory / "simulator_calls.jsonl").read_text(encoding="utf-8").splitlines()]
+    recorded = RecordedSimulator(rows)
+    recipients = None if manifest["simulator_mode"] == "rule" else {
+        a["id"]: LLMSimulator(recorded, a["id"], history_limit=manifest["history_limit"],
+                              validation_retries=manifest.get("simulator_validation_retries", 0))
+        for a in task["actors"]}
+    env = Environment(task, recipients)
+    if task.get("interactor"):
+        env.attach_interactor(UserInteractor(task["interactor"], client=recorded,
+                                             seed=manifest.get("seed", 0)))
+    api = env.tools()
+    for line in (directory / "rpc_trace.jsonl").read_text(encoding="utf-8").splitlines():
+        row = loads(line)
+        action = row["request"]
+        if action is None:
+            continue
+        try:
+            getattr(api, action["tool"])(**action["arguments"])
+        except (ValueError, KeyError, TypeError, PermissionError, StopIteration):
+            pass  # the original run recorded the error response; state matches
+    return env
 
 
 class RecordedJudgeClient:
@@ -114,7 +157,7 @@ def main():
             continue
         client = LiveFallbackClient(judge_rows, live_client) if live_client else RecordedJudgeClient(judge_rows)
         judge = LLMJudge(client, validation_retries=manifest.get("judge_validation_retries", 1))
-        env = Environment(task)
+        env = replay_episode(d, task, manifest)
         try:
             review = judge.judge(task, env, answer)
         except Exception as exc:  # noqa: BLE001

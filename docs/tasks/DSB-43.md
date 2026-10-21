@@ -4,7 +4,7 @@
 
 领域：campus_life。开始：2026-09-11 Fri 20:00；截止：2026-09-23 Wed 18:00（北京时间）。
 
-参考轨迹历时：**8.91944天（214.07小时）**。结果类别：`resolved`。
+参考轨迹历时：**8.11458天（194.75小时）**。结果类别：`resolved`。
 
 跨度设计：Medium term；two in-app recruitment groups with staggered surveys and interview announcements, and one cross-day interview clash。这是作者参考路径的历时，非最短可行耗时。
 
@@ -50,15 +50,6 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 
 本地知识：没有直接持有的目标事实；按声明工具进行转介、核验或内部查询
 
-**流程：Badminton recruitment referrals** (`main`)
-
-必须提供：无额外字段
-
-| 步骤/工具 | 等待规则 | 可见结果或内部动作 |
-|---|---|---|
-| Look up the contact directory and provide a referral<br>`bwc_president.main.1.refer` | 20工作分钟 | 公开转介联系人：bwc_events_head |
-| Reply to the requester with the results obtained<br>`bwc_president.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
-
 ### Badminton Club - Zhou Yanan (`bwc_events_head`)
 
 角色：Events; interview scheduling and rescheduling。Schedules and reschedules the one-hour group interview slots; needs the applicant's actual evening availability, especially about Wednesday, before moving anyone.
@@ -68,14 +59,6 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 接收者约束：You are Badminton Club - Zhou Yanan, responsible for Events; interview scheduling and rescheduling. Schedules and reschedules the one-hour group interview slots; needs the applicant's actual evening availability, especially about Wednesday, before moving anyone. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：bwc_rescheduled_monday、bwc_survey_recorded、bwc_wednesday_booked
-
-**流程：Badminton interview scheduling** (`main`)
-
-必须提供：无额外字段
-
-| 步骤/工具 | 等待规则 | 可见结果或内部动作 |
-|---|---|---|
-| Read the request and answer on its substance<br>`bwc_events_head.main.1.extract` | 30工作分钟 | LLM提取字段后按结构化分支回复： |
 
 ### Piano Club - Chen Mo (`pnc_events_head`)
 
@@ -87,15 +70,6 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 
 本地知识：没有直接持有的目标事实；按声明工具进行转介、核验或内部查询
 
-**流程：Piano recruitment referrals** (`main`)
-
-必须提供：无额外字段
-
-| 步骤/工具 | 等待规则 | 可见结果或内部动作 |
-|---|---|---|
-| Look up the contact directory and provide a referral<br>`pnc_events_head.main.1.refer` | 20工作分钟 | 公开转介联系人：pnc_president |
-| Reply to the requester with the results obtained<br>`pnc_events_head.main.2.reply` | 连续0分钟（不停夜间/周末） | 向父事项/Agent回复： |
-
 ### Piano Club - Wu Kexin (`pnc_president`)
 
 角色：President; interview assignments and changes。Assigns the per-person interview slots and is the only one who can change them; may propose the Wednesday slot.
@@ -105,14 +79,6 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 接收者约束：You are Piano Club - Wu Kexin, responsible for President; interview assignments and changes. Assigns the per-person interview slots and is the only one who can change them; may propose the Wednesday slot. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
 本地知识：pnc_confirmed_original、pnc_survey_recorded、pnc_wednesday_booked
-
-**流程：Piano interview scheduling** (`main`)
-
-必须提供：无额外字段
-
-| 步骤/工具 | 等待规则 | 可见结果或内部动作 |
-|---|---|---|
-| Read the request and answer on its substance<br>`pnc_president.main.1.extract` | 30工作分钟 | LLM提取字段后按结构化分支回复： |
 
 ## 隐藏事实与标准条件
 
@@ -248,17 +214,17 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 | `C43-surveys-filed` | Both recruitment surveys were submitted with the user's own answers. | The trace or final answer shows the badminton survey filed with all weekday evenings except Wednesday 2026-09-23 and department Competition, and the piano questionnaire filed with both days, six years of playing, department Performance. | trace |
 | `C43-wednesday-handled` | The user's Wednesday-evening unavailability was discovered and respected in both rescheduling conversations. | The agent asked the user (or learned from the survey answers) that Wednesday 2026-09-23 evenings do not work, conveyed this to the badminton Events head, and did not accept the piano president's Wednesday offer. | trace |
 | `C43-badminton-resolution` | The badminton interview was moved off Tuesday to a workable evening. | The final answer reports the new badminton slot as Monday, 2026-09-21, 19:30-20:30, Gym Court 2, obtained from the Events head after stating the Wednesday constraint. | final_answer |
-| `C43-piano-resolution` | The piano interview kept its original slot and the Wednesday offer was declined. | The final answer reports the piano interview stays Tuesday, 2026-09-22, 20:00-21:10, Music Building A201, and that the Wednesday 20:00-20:10 offer was not accepted. | final_answer |
+| `C43-piano-resolution` | The piano interview kept its original slot with the president's written confirmation, and the Wednesday offer was declined or never accepted. | The trace shows the agent wrote to piano club president Wu Kexin about the interview slot, and the final answer reports the piano interview stays Tuesday, 2026-09-22, 20:00-21:10, Music Building A201, citing the president's written confirmation (receipt), with the Wednesday 2026-09-23 20:00-20:10 offer not accepted. | trace |
 | `C43-departments-conveyed` | (Ancillary, low weight.) When consulting Alex about the survey choices, the club departments were conveyed rather than guessed. | The agent's consult_user questions or letters reflect the actual department sets (badminton: Referee, Publicity, Events, Competition; piano: Performance, Publicity, Outreach) instead of inventing or omitting departments. | trace |
 
 ## Director 阶段（引擎内部跟踪，不对Agent显示）
 
 - `groups-joined`：tool_call → `bwc_group`——Both recruitment groups must be joined in-app; one group needs admin review, one hits a cap overnight.
-- `surveys-filed`：form_processed → `bwc_survey_form`——The surveys open September 14/15 and take the user's own answers.
+- `surveys-filed`：node_completed → `bwc_survey_processed`——The surveys open September 14/15 and take the user's own answers.
 - `schedules-read`：tool_call → `pnc_group`（关键词：interview）——Interview assignments are posted in the group timelines on September 17 and 19.
 - `user-consulted`：tool_call → `consult_user`（关键词：free、available、wednesday）——The Wednesday constraint surfaces only by asking the user.
-- `badminton-moved`：fact_registered → `bwc_rescheduled_monday`——The Events head moves the one-hour slot cross-day once the Wednesday constraint is stated.
-- `piano-kept`：fact_registered → `pnc_confirmed_original`——The piano president confirms the original Tuesday slot when the agent keeps it.
+- `badminton-moved`：node_completed → `bwc_move_slot`——The Events head moves the one-hour slot cross-day once the Wednesday constraint is stated.
+- `piano-kept`：node_completed → `pnc_keep_slot`——The piano president confirms the original Tuesday slot when the agent keeps it.
 
 ## 已验证参考时间线
 
@@ -266,16 +232,14 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 
 | 开始 | 完成/预计完成 | 人物 | 阶段 |
 |---|---|---|---|
-| 2026-09-19 Sat 21:12 | 2026-09-19 Sat 22:00 | Piano Club - Wu Kexin | Read the request and answer on its substance |
-| 2026-09-19 Sat 22:21 | 2026-09-20 Sun 18:04 | Badminton Club - Zhou Yanan | Read the request and answer on its substance |
 
 Agent收到的实质回复：
 
 - 2026-09-12 Sat 12:00：messaging-app，`reply`，0份回执。
 - 2026-09-12 Sat 13:38：user，`reply`，0份回执。
 - 2026-09-19 Sat 20:28：user，`reply`，0份回执。
-- 2026-09-19 Sat 22:00：Piano Club - Wu Kexin，`reply`，1份回执。
-- 2026-09-20 Sun 18:04：Badminton Club - Zhou Yanan，`reply`，1份回执。
+- 2026-09-19 Sat 21:42：Piano Club - Wu Kexin，`reply`，1份回执。
+- 2026-09-19 Sat 22:45：Badminton Club - Zhou Yanan，`reply`，1份回执。
 
 ## 易错点
 

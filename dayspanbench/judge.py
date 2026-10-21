@@ -86,6 +86,13 @@ Rules:
 - Cite evidence for every verdict: source (tool_result | trace | final_state | final_answer), a pointer (e.g.
   "final_answer.summary", "receipt R-0003", or "letter 3"), and a short verbatim quote or the exact value. No
   verdict without at least one citation; do not invent pointers.
+- The final answer is the agent's own claim, never proof that the agent did something. When a criterion requires
+  the agent to have contacted someone, submitted something, or obtained a written confirmation, that action counts
+  only if it actually appears in the trace summary, the agent letters, or the receipts/established facts. If the
+  summary asserts a confirmation but no matching receipt/fact was issued and no matching letter was sent, the
+  criterion FAILS — absence of the recorded action or artifact is failure, whatever the summary says.
+- Every quote must be copied verbatim from the provided material. If you cannot find text to quote for a claim,
+  the claim is unsupported.
 - Judge exactly the listed criterion ids, one verdict each. Do not add, drop or rename criteria.
 - Keep "reason" to one short evidence-based sentence.
 - Output only JSON matching the schema. No explanation outside the JSON."""
@@ -169,20 +176,100 @@ class LLMJudge:
         self.client = client
         self.validation_retries = validation_retries
 
+    # -- citation grounding ---------------------------------------------
+    # A judge model can pass a criterion by citing actions or artifacts that
+    # never happened (observed on trace-based criteria: "the trace shows the
+    # agent wrote to X" when no such letter exists). Every passed verdict
+    # must carry at least one citation whose quote is actually findable in
+    # the graded material; otherwise the verdict is a fabrication and the
+    # deterministic layer flips it to failed after one retry.
+
+    @staticmethod
+    def _squash(text):
+        return " ".join(text.lower().split())
+
+    @classmethod
+    def _corpus(cls, view):
+        # Everything the judge was shown except the criteria statements
+        # themselves: quoting the criterion's own pass_if text back is not
+        # evidence, it is the claim restated.
+        graded = {k: v for k, v in view.items() if k not in ("criteria", "validation_feedback")}
+        return cls._squash(json.dumps(graded, ensure_ascii=False, sort_keys=True))
+
+    @classmethod
+    def _quote_found(cls, quote, corpus):
+        if not isinstance(quote, str):
+            quote = json.dumps(quote, ensure_ascii=False)
+        q = cls._squash(quote.strip().strip('"“”'))
+        # Short values (booleans, ids, numbers) are treated as found: the
+        # threat model is fabricated sentences, not terse values.
+        return len(q) < 8 or q in corpus
+
+    @classmethod
+    def _ungrounded_ids(cls, verdicts, corpus):
+        # World claims only: citations about what the agent did (trace), what
+        # the environment issued (receipt/final_state), or evidence the judge
+        # synthesized from its own reason. A verdict that cites the agent's
+        # final answer (final_answer/tool_result) is judged on that answer's
+        # content and may reference it loosely — quoting one's own grading
+        # material loosely is benign; inventing world events is not.
+        def world_claim(e):
+            # judge.reason evidence is the verdict's own paraphrase restated
+            # (provider quirk: no evidence array); it is not a quote of the
+            # material and cannot be verbatim-verified. Fabrication along
+            # that path is caught by the deterministic anchors instead.
+            return e.get("source") in ("trace", "receipt", "final_state")
+
+        out = []
+        for v in verdicts:
+            if not v.get("passed") or not v.get("evidence"):
+                continue
+            if not all(world_claim(e) for e in v["evidence"]):
+                continue
+            if not any(cls._quote_found(e.get("quote_or_value"), corpus) for e in v["evidence"]):
+                out.append(v["criterion_id"])
+        return out
+
+    def _grounding_feedback(self, verdicts, corpus):
+        bad = self._ungrounded_ids(verdicts, corpus)
+        if not bad:
+            return None
+        return ("These passed verdicts cite no quote that exists in the provided material: "
+                f"{', '.join(bad)}. Re-grade them against the material only, quoting verbatim "
+                "from the final answer, receipts, established facts, trace or agent letters. "
+                "If the cited action or artifact is absent from the material, the criterion FAILS.")
+
     def _validated(self, view, criteria_ids):
         current = deepcopy(view)
+        corpus = self._corpus(view)
         feedback = None
         for _ in range(self.validation_retries + 1):
             if feedback:
                 current["validation_feedback"] = feedback
             result = self.client.complete(purpose="judge", actor_id=view["task_id"],
                                           system=JUDGE_PROMPT, view=current, schema=JUDGE_SCHEMA)
-            feedback = self._check(self._normalize(result), criteria_ids)
-            if feedback is None:
+            normalized = self._normalize(result)
+            structural = self._check(normalized, criteria_ids)
+            grounding = None if structural else \
+                self._grounding_feedback(normalized.get("criteria") or [], corpus)
+            if structural is None and grounding is None:
                 return result
+            feedback = structural or grounding
             if self.client.calls:
                 self.client.calls[-1]["validation_error"] = feedback
-        raise ValueError(feedback)
+        if structural is not None:
+            # Malformed beyond retries: infrastructure-shaped, grade pending.
+            raise ValueError(structural)
+        # Grounding still failing after retries is the model's fabrication,
+        # not an infrastructure fault: flip the ungrounded passes to failed
+        # instead of dropping the episode to pending.
+        for verdict in normalized.get("criteria") or []:
+            if verdict.get("passed") and verdict["criterion_id"] in self._ungrounded_ids(
+                    normalized["criteria"], corpus):
+                verdict["passed"] = False
+                verdict["reason"] = f"Judge citation not found in graded material: {verdict.get('reason', '')}"
+                verdict["evidence_unverified"] = True
+        return {"criteria": normalized["criteria"]}
 
     @staticmethod
     def _normalize(result):
@@ -208,6 +295,8 @@ class LLMJudge:
             v = dict(verdict)
             if "passed" not in v and "pass" in v:
                 v["passed"] = v.pop("pass")
+            if "criterion_id" not in v and "criterion" in v:
+                v["criterion_id"] = v.pop("criterion")
             if isinstance(v.get("evidence"), list):
                 v["evidence"] = [_normalize_evidence(e) for e in v["evidence"]]
             if not isinstance(v.get("evidence"), list) or not v["evidence"]:
@@ -262,4 +351,5 @@ class LLMJudge:
                               "passed": by_id[c["id"]]["passed"],
                               "evidence": by_id[c["id"]]["evidence"],
                               "evidence_synthesized": by_id[c["id"]].get("evidence_synthesized", False),
+                              "evidence_unverified": by_id[c["id"]].get("evidence_unverified", False),
                               "reason": by_id[c["id"]]["reason"]} for c in criteria]}
