@@ -4,7 +4,7 @@
 
 领域：campus_life。开始：2026-09-11 Fri 20:00；截止：2026-09-23 Wed 18:00（北京时间）。
 
-参考轨迹历时：**8.11458天（194.75小时）**。结果类别：`resolved`。
+参考轨迹历时：**9.02361天（216.57小时）**。结果类别：`resolved`。
 
 跨度设计：Medium term；two in-app recruitment groups with staggered surveys and interview announcements, and one cross-day interview clash。这是作者参考路径的历时，非最短可行耗时。
 
@@ -34,6 +34,7 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 - interview assignments are posted in the group timelines on September 17 and 19, not before
 - the two assigned interviews clash on Tuesday, September 22 evening (19:40-20:40 and 20:00-21:10)
 - badminton interviews are one-hour group slots, so rescheduling is cross-day
+- a badminton rescheduling needs the applicant's confirmation (date and weekday) and then a successful swap with the students of the target evening - the Monday students cannot trade evenings, so Monday always falls through
 - the user's Wednesday-evening constraint surfaces only by asking (and was only volunteered on the badminton survey)
 
 ## 人物、流程、接收者与工具
@@ -58,7 +59,7 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 
 接收者约束：You are Badminton Club - Zhou Yanan, responsible for Events; interview scheduling and rescheduling. Schedules and reschedules the one-hour group interview slots; needs the applicant's actual evening availability, especially about Wednesday, before moving anyone. Route only declared workflows; ask for clarification when materials are missing. Do not invent facts, skip queues, or make commitments for other roles.
 
-本地知识：bwc_rescheduled_monday、bwc_survey_recorded、bwc_wednesday_booked
+本地知识：bwc_rescheduled_friday、bwc_rescheduled_thursday、bwc_survey_recorded、bwc_wednesday_booked
 
 ### Piano Club - Chen Mo (`pnc_events_head`)
 
@@ -86,7 +87,8 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 |---|---|---|
 | `bwc_survey_recorded` | `true` | The Badminton Club recruitment survey recorded Alex Chen's availability: Monday 2026-09-21, Tuesday 2026-09-22, Thursday 2026-09-24, Friday 2026-09-25 (not Wednesday 2026-09-23), with department preference Competition. |
 | `pnc_survey_recorded` | `true` | The Piano Club questionnaire recorded Alex Chen's answers: both offered days work, six years of playing, department preference Performance. |
-| `bwc_rescheduled_monday` | `true` | The Badminton Club interview was moved to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot), after Alex reported being unavailable on Wednesday 2026-09-23. |
+| `bwc_rescheduled_thursday` | `true` | The Badminton Club interview was moved to Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot): Alex confirmed Thursday after the Monday 2026-09-21 swap fell through (none of the Monday students could trade evenings) and Wednesday 2026-09-23 was ruled out by Alex's own constraint. |
+| `bwc_rescheduled_friday` | `true` | The Badminton Club interview was moved to Friday, 2026-09-25, 19:30-20:30, Gym Court 2 (one-hour group slot): Alex confirmed Friday after the Monday 2026-09-21 swap fell through (none of the Monday students could trade evenings) and Wednesday 2026-09-23 was ruled out by Alex's own constraint. |
 | `pnc_confirmed_original` | `true` | The Piano Club interview stays at its original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201; the offered Wednesday 2026-09-23 20:00-20:10 slot was declined. |
 | `bwc_wednesday_booked` | `true` | The Badminton Club interview was booked for Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 — an evening Alex cannot attend. |
 | `pnc_wednesday_booked` | `true` | The Piano Club interview was moved to Wednesday, 2026-09-23, 20:00-20:10, Music Building A201 — an evening Alex cannot attend. |
@@ -153,7 +155,8 @@ Only join the two recruitment groups in the messaging app, submit the two survey
     "key": "badminton_interview_moved",
     "expected": true,
     "accepted_facts": [
-      "bwc_rescheduled_monday"
+      "bwc_rescheduled_thursday",
+      "bwc_rescheduled_friday"
     ],
     "evidence_requirement": {
       "subject": {
@@ -213,7 +216,7 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 | `C43-conflict-detected` | The final summary reports that the two assigned interviews clash on Tuesday, 2026-09-22 evening. | The final answer states the badminton slot (19:40-20:40) and the piano slot (20:00-21:10) both fall on Tuesday, 2026-09-22 and overlap. | final_answer |
 | `C43-surveys-filed` | Both recruitment surveys were submitted with the user's own answers. | The trace or final answer shows the badminton survey filed with all weekday evenings except Wednesday 2026-09-23 and department Competition, and the piano questionnaire filed with both days, six years of playing, department Performance. | trace |
 | `C43-wednesday-handled` | The user's Wednesday-evening unavailability was discovered and respected in both rescheduling conversations. | The agent asked the user (or learned from the survey answers) that Wednesday 2026-09-23 evenings do not work, conveyed this to the badminton Events head, and did not accept the piano president's Wednesday offer. | trace |
-| `C43-badminton-resolution` | The badminton interview was moved off Tuesday to a workable evening. | The final answer reports the new badminton slot as Monday, 2026-09-21, 19:30-20:30, Gym Court 2, obtained from the Events head after stating the Wednesday constraint. | final_answer |
+| `C43-badminton-resolution` | The badminton interview was moved off Tuesday to a workable evening through the swap-check flow. | The final answer reports the new badminton slot as Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (or Friday, 2026-09-25, 19:30-20:30), locked in after the agent's confirmation and the Events head's check with that day's students, and reports that the Monday 2026-09-21 offer fell through because no Monday student could trade evenings. | final_answer |
 | `C43-piano-resolution` | The piano interview kept its original slot with the president's written confirmation, and the Wednesday offer was declined or never accepted. | The trace shows the agent wrote to piano club president Wu Kexin about the interview slot, and the final answer reports the piano interview stays Tuesday, 2026-09-22, 20:00-21:10, Music Building A201, citing the president's written confirmation (receipt), with the Wednesday 2026-09-23 20:00-20:10 offer not accepted. | trace |
 | `C43-departments-conveyed` | (Ancillary, low weight.) When consulting Alex about the survey choices, the club departments were conveyed rather than guessed. | The agent's consult_user questions or letters reflect the actual department sets (badminton: Referee, Publicity, Events, Competition; piano: Performance, Publicity, Outreach) instead of inventing or omitting departments. | trace |
 
@@ -223,7 +226,7 @@ Only join the two recruitment groups in the messaging app, submit the two survey
 - `surveys-filed`：node_completed → `bwc_survey_processed`——The surveys open September 14/15 and take the user's own answers.
 - `schedules-read`：tool_call → `pnc_group`（关键词：interview）——Interview assignments are posted in the group timelines on September 17 and 19.
 - `user-consulted`：tool_call → `consult_user`（关键词：free、available、wednesday）——The Wednesday constraint surfaces only by asking the user.
-- `badminton-moved`：node_completed → `bwc_move_slot`——The Events head moves the one-hour slot cross-day once the Wednesday constraint is stated.
+- `badminton-moved`：node_completed → `bwc_swap_check`——The Events head proposes an evening, the agent confirms it, and the move only settles after the students of that day accept the swap - Monday's students never do.
 - `piano-kept`：node_completed → `pnc_keep_slot`——The piano president confirms the original Tuesday slot when the agent keeps it.
 
 ## 已验证参考时间线
@@ -239,7 +242,11 @@ Agent收到的实质回复：
 - 2026-09-12 Sat 13:38：user，`reply`，0份回执。
 - 2026-09-19 Sat 20:28：user，`reply`，0份回执。
 - 2026-09-19 Sat 21:42：Piano Club - Wu Kexin，`reply`，1份回执。
-- 2026-09-19 Sat 22:45：Badminton Club - Zhou Yanan，`reply`，1份回执。
+- 2026-09-19 Sat 22:45：Badminton Club - Zhou Yanan，`reply`，0份回执。
+- 2026-09-20 Sun 18:36：Badminton Club - Zhou Yanan，`reply`，0份回执。
+- 2026-09-20 Sun 19:06：Badminton Club - Zhou Yanan，`reply`，0份回执。
+- 2026-09-20 Sun 20:04：Badminton Club - Zhou Yanan，`reply`，0份回执。
+- 2026-09-20 Sun 20:34：Badminton Club - Zhou Yanan，`reply`，1份回执。
 
 ## 易错点
 
@@ -249,6 +256,8 @@ Agent收到的实质回复：
 - not noticing the Tuesday clash between 20:00 and 20:40
 - emailing the presidents first instead of the officers who own interview scheduling
 - telling the badminton Events head the user is free Wednesday (the rehearsal evening)
+- treating the Events head's proposed evening as final without confirming it, or confirming a proposed evening without checking its date and weekday
+- reporting the confirmed Monday slot as final before the Events head's swap check comes back (Monday always falls through)
 - accepting the piano president's Wednesday 20:00-20:10 offer instead of keeping Tuesday
 - dropping one club instead of rescheduling
 

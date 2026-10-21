@@ -10,6 +10,10 @@ import json
 from pathlib import Path
 import unittest
 
+import sys
+from pathlib import Path as _P
+sys.path.insert(0, str(_P(__file__).resolve().parents[1]))
+
 from dayspanbench.engine import Environment
 from dayspanbench.reference import run_reference
 from dayspanbench.simulator import LLMSimulator
@@ -71,7 +75,7 @@ class GraphEngineTest(unittest.TestCase):
         # The two conversations landed on their authored branches: badminton
         # moved off Wednesday, piano kept the original slot.
         facts = self.env.director.facts
-        self.assertIn("bwc_rescheduled_monday", facts)
+        self.assertIn("bwc_rescheduled_thursday", facts)
         self.assertIn("pnc_confirmed_original", facts)
         self.assertNotIn("bwc_wednesday_booked", facts)
         self.assertNotIn("pnc_wednesday_booked", facts)
@@ -90,7 +94,7 @@ class GraphEngineTest(unittest.TestCase):
         # the environment nodes (surveys, announcements) never do.
         receipt_nodes = set().union(*(set(r.get("fields") or {}) for r in self.env.director.receipts))
         self.assertEqual(receipt_nodes,
-                         {"bwc_rescheduled_monday", "pnc_confirmed_original"})
+                         {"bwc_rescheduled_thursday", "pnc_confirmed_original"})
 
     def test_repeated_request_answers_from_completion(self):
         # One-shot semantics: after completion a fresh letter is answered from
@@ -106,7 +110,7 @@ class GraphEngineTest(unittest.TestCase):
         mailboxes = env.graph_letters  # transport-only send never parses
         self.assertEqual(mailboxes, {})
         reply = env.graph.completed_reply("bwc_move_slot")
-        self.assertIn("already been moved", reply)
+        self.assertIn("once you confirm", reply)
 
 
 class LiveChatTests(unittest.TestCase):
@@ -203,36 +207,120 @@ class InterpretShapeTests(unittest.TestCase):
         env, _ = self.run_move_slot({"marks": {"bwc_move_slot": {
             "slot_change_requested": True, "wednesday_unavailable": True}}})
         self.assertEqual(env.graph.nodes["bwc_move_slot"].state, "completed")
-        self.assertIn("bwc_rescheduled_monday", env.director.facts)
+        # The proposal fired, but nothing is locked before the confirmation.
+        self.assertNotIn("bwc_rescheduled_monday", env.director.facts)
 
     def test_flattened_marks_are_unwrapped(self):
         # The exact failure shape from ep-001: no "marks" wrapper.
         env, _ = self.run_move_slot({"bwc_move_slot": {
             "slot_change_requested": True, "wednesday_unavailable": True}})
         self.assertEqual(env.graph.nodes["bwc_move_slot"].state, "completed")
-        self.assertIn("bwc_rescheduled_monday", env.director.facts)
+        self.assertNotIn("bwc_rescheduled_monday", env.director.facts)
 
-    def test_empty_marks_are_a_legal_no_op(self):
-        # The ep-005 failure shape: the letter restates an already-marked
-        # request, so the interpretation is an empty marks object for a real
-        # node. That is "no new evidence", never an environment error.
-        env, _ = self.run_move_slot({"marks": {"bwc_move_slot": {}}})
-        node = env.graph.nodes["bwc_move_slot"]
-        self.assertEqual(node.state, "collecting")
-        self.assertFalse(node.slots["slot_change_requested"].filled)
+    def deliver(self, env, stub, day, text, interpret=None, fields=None):
+        # One agent letter carries evidence for both the confirmation node
+        # and the swap-check node (structured fields; the stub's canned
+        # interpret response can be swapped per letter). Pass fields={} to
+        # force the evidence through the interpret response alone. Each
+        # delivery consumes two fresh evenings: the letter is read, then the
+        # confirm node fires (+30) and the swap node fires (+60) after it.
+        if interpret is not None:
+            stub.interpret_response = interpret
+        if fields is None:
+            fields = {"slot_under_discussion": day, "slot_confirmed": True,
+                      "swap_day": day, "swap_confirmed": True}
+        env.graph_deliver("bwc_events_head", text, fields)
+        first = 12 + 2 * getattr(self, "_deliveries", 0)
+        self._deliveries = getattr(self, "_deliveries", 0) + 1
+        env.advance(f"2026-09-{first}T23:00:00+08:00")     # confirm fires (+30)
+        env.advance(f"2026-09-{first + 1}T23:00:00+08:00")  # swap fires (+60)
 
-    def test_incomplete_node_gets_a_proactive_question(self):
-        # Design point 3: the agent writes to a node whose evidence is
-        # incomplete - the NPC asks about the missing slot instead of
-        # staying silent (the ep-005 dead end).
-        env, _ = self.run_move_slot({"marks": {"bwc_move_slot": {
-            "slot_change_requested": True}}})
-        node = env.graph.nodes["bwc_move_slot"]
-        self.assertEqual(node.state, "collecting")
-        replies = [m for m in env.messages
+    def test_monday_fails_the_swap_and_thursday_settles(self):
+        # The full designed path: Monday confirmed -> students decline ->
+        # Thursday proposed with the explanation -> confirmed -> swap
+        # accepted -> terminal, facts registered, negotiation closed.
+        env, stub = self.run_move_slot({"marks": {"bwc_move_slot": {
+            "slot_change_requested": True, "wednesday_unavailable": True}}})
+        self.assertNotIn("bwc_rescheduled_thursday", env.director.facts)
+        self.deliver(env, stub, "monday",
+                     "Yes - Monday, 2026-09-21, 19:30-20:30 works. Please check with the students.",
+                     interpret={"marks": {}})
+        # Monday fell through: nothing locked, the conversation re-opened.
+        self.assertNotIn("bwc_rescheduled_thursday", env.director.facts)
+        self.assertNotIn("bwc_wednesday_booked", env.director.facts)
+        self.assertEqual(env.graph.nodes["bwc_swap_check"].state, "collecting")
+        replies = [m["text"] for m in env.messages
                    if m["from"] == "zhouyanan@bench.example"]
-        self.assertTrue(replies)
-        self.assertIn("Wednesday, 2026-09-23", replies[-1]["text"])
+        self.assertTrue(any("Monday is off the table" in t for t in replies))
+        self.assertTrue(any("Thursday, 2026-09-24" in t for t in replies))
+        self.deliver(env, stub, "thursday",
+                     "Understood about Monday. Yes - Thursday, 2026-09-24 works. Please lock it in.",
+                     interpret={"marks": {}})
+        self.assertIn("bwc_rescheduled_thursday", env.director.facts)
+        self.assertNotIn("bwc_wednesday_booked", env.director.facts)
+        # Terminal: the swap node settled, the confirmation node was closed.
+        self.assertEqual(env.graph.nodes["bwc_swap_check"].state, "completed")
+        self.assertEqual(env.graph.nodes["bwc_slot_confirm"].state, "completed")
+
+    def test_wednesday_confirmation_settles_the_trap(self):
+        # The initial Wednesday proposal (first letter never stated the
+        # constraint) confirmed blindly -> the Wednesday students accept ->
+        # the trap fact registers terminally.
+        env, stub = self.run_move_slot({"marks": {"bwc_move_slot": {
+            "slot_change_requested": True, "wednesday_unavailable": False}}})
+        self.deliver(env, stub, "wednesday",
+                     "Yes - Wednesday, 2026-09-23, 19:30-20:30 works. Please lock it in.",
+                     interpret={"marks": {}})
+        self.assertIn("bwc_wednesday_booked", env.director.facts)
+        self.assertNotIn("bwc_rescheduled_thursday", env.director.facts)
+        self.assertEqual(env.graph.nodes["bwc_swap_check"].state, "completed")
+
+    def test_confirm_only_mark_still_fires_the_swap_check(self):
+        # The ep-009 mitigation: the interpretation LLM marks only the
+        # confirmation node. The authored derive rule fills the swap-check,
+        # so the student check still runs and the terminal fact registers.
+        env, stub = self.run_move_slot({"marks": {"bwc_move_slot": {
+            "slot_change_requested": True, "wednesday_unavailable": True}}})
+        self.deliver(env, stub, "thursday",
+                     "Yes - Thursday, 2026-09-24, 19:30-20:30 works. Please check with the students.",
+                     interpret={"marks": {"bwc_slot_confirm": {
+                         "slot_under_discussion": "thursday", "slot_confirmed": True}}},
+                     fields={})
+        self.assertIn("bwc_rescheduled_thursday", env.director.facts)
+        self.assertEqual(env.graph.nodes["bwc_swap_check"].state, "completed")
+
+    def test_swap_only_mark_still_confirms_the_negotiation(self):
+        # The mirror direction: only the swap-check node is marked, yet the
+        # confirmation node is derived and both fire.
+        env, stub = self.run_move_slot({"marks": {"bwc_move_slot": {
+            "slot_change_requested": True, "wednesday_unavailable": True}}})
+        self.deliver(env, stub, "thursday",
+                     "Yes - Thursday, 2026-09-24, 19:30-20:30 works. Please lock it in.",
+                     interpret={"marks": {"bwc_swap_check": {
+                         "swap_day": "thursday", "swap_confirmed": True}}},
+                     fields={})
+        self.assertIn("bwc_rescheduled_thursday", env.director.facts)
+        self.assertEqual(env.graph.nodes["bwc_slot_confirm"].state, "completed")
+
+    def test_post_terminal_change_request_gets_the_apology(self):
+        # After a settled swap, a further change request is answered from
+        # the authored apology - never a new proposal.
+        env, stub = self.run_move_slot({"marks": {"bwc_move_slot": {
+            "slot_change_requested": True, "wednesday_unavailable": True}}})
+        self.deliver(env, stub, "monday",
+                     "Yes - Monday, 2026-09-21, 19:30-20:30 works. Please check with the students.",
+                     interpret={"marks": {}})
+        self.deliver(env, stub, "thursday",
+                     "Understood about Monday. Yes - Thursday, 2026-09-24 works. Please lock it in.",
+                     interpret={"marks": {}})
+        env.graph_deliver("bwc_events_head",
+                          "Actually, could you move my interview to Friday instead?",
+                          {"slot_under_discussion": "thursday", "slot_confirmed": False})
+        env.advance(f"2026-09-{14 + 2 * self._deliveries}T23:00:00+08:00")
+        replies = [m["text"] for m in env.messages
+                   if m["from"] == "zhouyanan@bench.example"]
+        self.assertTrue(any("cannot be changed anymore" in t for t in replies[-2:]))
+        self.assertNotIn("bwc_rescheduled_friday", env.director.facts)
 
 
 if __name__ == "__main__":

@@ -699,8 +699,8 @@
     },
     {
       "id": "C43-badminton-resolution",
-      "statement": "The badminton interview was moved off Tuesday to a workable evening.",
-      "pass_if": "The final answer reports the new badminton slot as Monday, 2026-09-21, 19:30-20:30, Gym Court 2, obtained from the Events head after stating the Wednesday constraint.",
+      "statement": "The badminton interview was moved off Tuesday to a workable evening through the swap-check flow.",
+      "pass_if": "The final answer reports the new badminton slot as Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (or Friday, 2026-09-25, 19:30-20:30), locked in after the agent's confirmation and the Events head's check with that day's students, and reports that the Monday 2026-09-21 offer fell through because no Monday student could trade evenings.",
       "source": "final_answer"
     },
     {
@@ -752,8 +752,8 @@
     {
       "id": "badminton-moved",
       "kind": "node_completed",
-      "target": "bwc_move_slot",
-      "hint": "The Events head moves the one-hour slot cross-day once the Wednesday constraint is stated."
+      "target": "bwc_swap_check",
+      "hint": "The Events head proposes an evening, the agent confirms it, and the move only settles after the students of that day accept the swap - Monday's students never do."
     },
     {
       "id": "piano-kept",
@@ -958,9 +958,23 @@
         "predicate": "piano_survey_recorded"
       }
     },
-    "bwc_rescheduled_monday": {
+    "bwc_rescheduled_thursday": {
       "value": true,
-      "text": "The Badminton Club interview was moved to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot), after Alex reported being unavailable on Wednesday 2026-09-23.",
+      "text": "The Badminton Club interview was moved to Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot): Alex confirmed Thursday after the Monday 2026-09-21 swap fell through (none of the Monday students could trade evenings) and Wednesday 2026-09-23 was ruled out by Alex's own constraint.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-43",
+          "case": {
+            "full_name": "Alex Chen",
+            "student_id": "2026011347"
+          }
+        },
+        "predicate": "badminton_interview_moved"
+      }
+    },
+    "bwc_rescheduled_friday": {
+      "value": true,
+      "text": "The Badminton Club interview was moved to Friday, 2026-09-25, 19:30-20:30, Gym Court 2 (one-hour group slot): Alex confirmed Friday after the Monday 2026-09-21 swap fell through (none of the Monday students could trade evenings) and Wednesday 2026-09-23 was ruled out by Alex's own constraint.",
       "attributes": {
         "subject": {
           "task": "DSB-43",
@@ -1067,7 +1081,8 @@
         "email": "zhouyanan@bench.example"
       },
       "knowledge": [
-        "bwc_rescheduled_monday",
+        "bwc_rescheduled_friday",
+        "bwc_rescheduled_thursday",
         "bwc_survey_recorded",
         "bwc_wednesday_booked"
       ],
@@ -1244,7 +1259,8 @@
       "key": "badminton_interview_moved",
       "expected": true,
       "accepted_facts": [
-        "bwc_rescheduled_monday"
+        "bwc_rescheduled_thursday",
+        "bwc_rescheduled_friday"
       ],
       "evidence_requirement": {
         "subject": {
@@ -1304,6 +1320,7 @@
     "interview assignments are posted in the group timelines on September 17 and 19, not before",
     "the two assigned interviews clash on Tuesday, September 22 evening (19:40-20:40 and 20:00-21:10)",
     "badminton interviews are one-hour group slots, so rescheduling is cross-day",
+    "a badminton rescheduling needs the applicant's confirmation (date and weekday) and then a successful swap with the students of the target evening - the Monday students cannot trade evenings, so Monday always falls through",
     "the user's Wednesday-evening constraint surfaces only by asking (and was only volunteered on the badminton survey)"
   ],
   "failure_modes": [
@@ -1313,6 +1330,8 @@
     "not noticing the Tuesday clash between 20:00 and 20:40",
     "emailing the presidents first instead of the officers who own interview scheduling",
     "telling the badminton Events head the user is free Wednesday (the rehearsal evening)",
+    "treating the Events head's proposed evening as final without confirming it, or confirming a proposed evening without checking its date and weekday",
+    "reporting the confirmed Monday slot as final before the Events head's swap check comes back (Monday always falls through)",
     "accepting the piano president's Wednesday 20:00-20:10 offer instead of keeping Tuesday",
     "dropping one club instead of rescheduling"
   ],
@@ -1467,6 +1486,38 @@
       "fields": {
         "slot_change_requested": true,
         "wednesday_unavailable": true
+      }
+    },
+    {
+      "op": "wait_for",
+      "label": "bwc"
+    },
+    {
+      "op": "send",
+      "to": "bwc_events_head",
+      "text": "Yes - Monday, 2026-09-21, 19:30-20:30 works for me. Please go ahead and check with the students.",
+      "label": "bwc",
+      "fields": {
+        "slot_under_discussion": "monday",
+        "slot_confirmed": true,
+        "swap_day": "monday",
+        "swap_confirmed": true
+      }
+    },
+    {
+      "op": "wait_for",
+      "label": "bwc"
+    },
+    {
+      "op": "send",
+      "to": "bwc_events_head",
+      "text": "Understood about Monday, and thank you for checking. Yes - Thursday, 2026-09-24, 19:30-20:30 works for me. Please lock the interview in.",
+      "label": "bwc",
+      "fields": {
+        "slot_under_discussion": "thursday",
+        "slot_confirmed": true,
+        "swap_day": "thursday",
+        "swap_confirmed": true
       }
     },
     {
@@ -1648,15 +1699,7 @@
               "slot_change_requested": true,
               "wednesday_unavailable": true
             },
-            "reply": "Understood - Wednesdays are out for you. I have moved your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing else changes; bring your student card.",
-            "effects": [
-              {
-                "kind": "register_facts",
-                "facts": [
-                  "bwc_rescheduled_monday"
-                ]
-              }
-            ]
+            "reply": "Understood - Wednesdays are out for you. I can move your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing is final yet: does that Monday evening work for you? Reply to confirm and I will take it to the students scheduled that evening."
           },
           {
             "label": "book_wednesday",
@@ -1664,15 +1707,7 @@
               "slot_change_requested": true,
               "wednesday_unavailable": false
             },
-            "reply": "Then Wednesday works nicely: your interview is moved to Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). See you there.",
-            "effects": [
-              {
-                "kind": "register_facts",
-                "facts": [
-                  "bwc_wednesday_booked"
-                ]
-              }
-            ]
+            "reply": "Then Wednesday works nicely: I can move your interview to Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing is final yet: does that Wednesday evening work for you? Reply to confirm and I will take it to the students scheduled that evening."
           },
           {
             "label": "no_change",
@@ -1682,7 +1717,262 @@
             "reply": "Understood - you are not asking for a change. Your interview stays as assigned; write again if an evening stops working."
           }
         ],
-        "on_completed_reply": "Your interview slot has already been moved; the confirmation stands."
+        "on_completed_reply": "We already have an evening on the table for you - tell me plainly whether it works (or ask for another one), and I will take it to the students once you confirm."
+      },
+      {
+        "id": "bwc_slot_confirm",
+        "owner": "bwc_events_head",
+        "kind": "inquiry",
+        "title": "Confirm the badminton interview slot",
+        "activation": {
+          "delay_minutes": 30,
+          "calendar": "campus_evening"
+        },
+        "requires": [
+          "bwc_move_slot",
+          {
+            "key": "slot_under_discussion",
+            "type": "enum",
+            "values": [
+              "monday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ],
+            "volatile": true,
+            "description": "Which proposed evening the exchange is currently about: monday = Monday 2026-09-21, wednesday = Wednesday 2026-09-23, thursday = Thursday 2026-09-24, friday = Friday 2026-09-25 - the four evenings the group timetable runs this recruitment (all 19:30-20:30, Gym Court 2).",
+            "question": "which evening is on the table - Monday 2026-09-21, Wednesday 2026-09-23, Thursday 2026-09-24 or Friday 2026-09-25?"
+          },
+          {
+            "key": "slot_confirmed",
+            "type": "boolean",
+            "volatile": true,
+            "require": "filled",
+            "description": "True when the letter explicitly confirms the evening currently on the table works; false when the letter rejects it or asks for a different evening.",
+            "question": "does the evening we are discussing work for you, or do you need a different one?"
+          }
+        ],
+        "branches": [
+          {
+            "label": "confirm_monday",
+            "when": {
+              "slot_confirmed": true,
+              "slot_under_discussion": {
+                "value": "monday"
+              }
+            },
+            "reply": "Thank you - Monday, 2026-09-21, 19:30-20:30, Gym Court 2, confirmed for now. A move only becomes final when one of the students scheduled that Monday evening trades places with you, so let me check with them; you will hear from me shortly."
+          },
+          {
+            "label": "confirm_wednesday",
+            "when": {
+              "slot_confirmed": true,
+              "slot_under_discussion": {
+                "value": "wednesday"
+              }
+            },
+            "reply": "Thank you - Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2, confirmed for now. A move only becomes final when one of the students scheduled that Wednesday evening trades places with you, so let me check with them; you will hear from me shortly."
+          },
+          {
+            "label": "confirm_thursday",
+            "when": {
+              "slot_confirmed": true,
+              "slot_under_discussion": {
+                "value": "thursday"
+              }
+            },
+            "reply": "Thank you - Thursday, 2026-09-24, 19:30-20:30, Gym Court 2, confirmed for now. A move only becomes final when one of the students scheduled that Thursday evening trades places with you, so let me check with them; you will hear from me shortly."
+          },
+          {
+            "label": "confirm_friday",
+            "when": {
+              "slot_confirmed": true,
+              "slot_under_discussion": {
+                "value": "friday"
+              }
+            },
+            "reply": "Thank you - Friday, 2026-09-25, 19:30-20:30, Gym Court 2, confirmed for now. A move only becomes final when one of the students scheduled that Friday evening trades places with you, so let me check with them; you will hear from me shortly."
+          },
+          {
+            "label": "switch_from_monday",
+            "when": {
+              "slot_confirmed": false,
+              "slot_under_discussion": {
+                "value": "monday"
+              }
+            },
+            "reply": "Monday does not work for you? Then let us put another evening on the table: Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Thursday evening work for you? Reply to confirm and I will take it to the students."
+          },
+          {
+            "label": "switch_from_wednesday",
+            "when": {
+              "slot_confirmed": false,
+              "slot_under_discussion": {
+                "value": "wednesday"
+              }
+            },
+            "reply": "Wednesday does not work for you? The next evening I can offer is Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Monday evening work for you? Reply to confirm and I will take it to the students."
+          },
+          {
+            "label": "switch_from_thursday",
+            "when": {
+              "slot_confirmed": false,
+              "slot_under_discussion": {
+                "value": "thursday"
+              }
+            },
+            "reply": "Thursday does not work for you? The other evening still open is Friday, 2026-09-25, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Friday evening work for you? Reply to confirm and I will take it to the students."
+          },
+          {
+            "label": "switch_from_friday",
+            "when": {
+              "slot_confirmed": false,
+              "slot_under_discussion": {
+                "value": "friday"
+              }
+            },
+            "reply": "Friday does not work for you? The other evening still open is Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Thursday evening work for you? Reply to confirm and I will take it to the students."
+          }
+        ],
+        "derive": [
+          {
+            "when": {
+              "slot_confirmed": true
+            },
+            "marks": {
+              "bwc_swap_check": {
+                "swap_day": "=slot_under_discussion",
+                "swap_confirmed": true
+              }
+            }
+          }
+        ],
+        "on_completed_reply": "I am sorry - the interview evening is settled with the other students now; it cannot be changed anymore."
+      },
+      {
+        "id": "bwc_swap_check",
+        "owner": "bwc_events_head",
+        "kind": "inquiry",
+        "title": "Check the swap with the students of that evening",
+        "activation": {
+          "delay_minutes": 60,
+          "calendar": "campus_evening"
+        },
+        "requires": [
+          "bwc_move_slot",
+          {
+            "key": "swap_day",
+            "type": "enum",
+            "values": [
+              "monday",
+              "wednesday",
+              "thursday",
+              "friday"
+            ],
+            "volatile": true,
+            "description": "The evening the applicant has just confirmed for the interview move: monday = Monday 2026-09-21, wednesday = Wednesday 2026-09-23, thursday = Thursday 2026-09-24, friday = Friday 2026-09-25 (all 19:30-20:30, Gym Court 2). Mark this node only when the letter confirms one of these offered evenings.",
+            "question": "which offered evening are you confirming - Monday 2026-09-21, Wednesday 2026-09-23, Thursday 2026-09-24 or Friday 2026-09-25?"
+          },
+          {
+            "key": "swap_confirmed",
+            "type": "boolean",
+            "volatile": true,
+            "require": true,
+            "description": "True when the letter explicitly confirms the offered evening; false when the letter rejects it or asks about a different evening.",
+            "question": "are you confirming the offered evening, or asking about a different one?"
+          }
+        ],
+        "branches": [
+          {
+            "label": "monday_students_decline",
+            "when": {
+              "swap_day": {
+                "value": "monday"
+              }
+            },
+            "reply": "I have bad news about Monday, 2026-09-21: I spoke with every student scheduled that Monday evening, and none of them can trade evenings - they each listed Monday as their only workable evening, and the Monday court block is shared with the varsity squad, so Monday cannot take an extra group. Monday is off the table. The next evening I can offer is Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Thursday evening work for you? Reply to confirm and I will check with the Thursday students."
+          },
+          {
+            "label": "wednesday_swap_accepted",
+            "when": {
+              "swap_day": {
+                "value": "wednesday"
+              }
+            },
+            "reply": "Good news: a student from the Wednesday group agreed to trade evenings. Confirmed and locked: your interview is Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). The slot is now fixed with the students and cannot be changed anymore. See you there.",
+            "terminal": true,
+            "effects": [
+              {
+                "kind": "register_facts",
+                "facts": [
+                  "bwc_wednesday_booked"
+                ]
+              },
+              {
+                "kind": "complete_node",
+                "target_node": "bwc_slot_confirm"
+              }
+            ]
+          },
+          {
+            "label": "thursday_swap_accepted",
+            "when": {
+              "swap_day": {
+                "value": "thursday"
+              }
+            },
+            "reply": "Good news: a student from the Thursday group agreed to trade evenings. Confirmed and locked: your interview is Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot). The slot is now fixed with the students and cannot be changed anymore. Bring your student card.",
+            "terminal": true,
+            "effects": [
+              {
+                "kind": "register_facts",
+                "facts": [
+                  "bwc_rescheduled_thursday"
+                ]
+              },
+              {
+                "kind": "complete_node",
+                "target_node": "bwc_slot_confirm"
+              }
+            ]
+          },
+          {
+            "label": "friday_swap_accepted",
+            "when": {
+              "swap_day": {
+                "value": "friday"
+              }
+            },
+            "reply": "Good news: a student from the Friday group agreed to trade evenings. Confirmed and locked: your interview is Friday, 2026-09-25, 19:30-20:30, Gym Court 2 (one-hour group slot). The slot is now fixed with the students and cannot be changed anymore. See you then.",
+            "terminal": true,
+            "effects": [
+              {
+                "kind": "register_facts",
+                "facts": [
+                  "bwc_rescheduled_friday"
+                ]
+              },
+              {
+                "kind": "complete_node",
+                "target_node": "bwc_slot_confirm"
+              }
+            ]
+          }
+        ],
+        "derive": [
+          {
+            "when": {
+              "swap_confirmed": true
+            },
+            "marks": {
+              "bwc_slot_confirm": {
+                "slot_under_discussion": "=swap_day",
+                "slot_confirmed": true
+              }
+            }
+          }
+        ],
+        "on_completed_reply": "I am sorry - your interview evening was settled with the other students and cannot be changed anymore."
       },
       {
         "id": "pnc_keep_slot",

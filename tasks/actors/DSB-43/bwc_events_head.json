@@ -14,7 +14,8 @@
       "email": "zhouyanan@bench.example"
     },
     "knowledge": [
-      "bwc_rescheduled_monday",
+      "bwc_rescheduled_friday",
+      "bwc_rescheduled_thursday",
       "bwc_survey_recorded",
       "bwc_wednesday_booked"
     ],
@@ -66,9 +67,23 @@
     ]
   },
   "local_facts": {
-    "bwc_rescheduled_monday": {
+    "bwc_rescheduled_friday": {
       "value": true,
-      "text": "The Badminton Club interview was moved to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot), after Alex reported being unavailable on Wednesday 2026-09-23.",
+      "text": "The Badminton Club interview was moved to Friday, 2026-09-25, 19:30-20:30, Gym Court 2 (one-hour group slot): Alex confirmed Friday after the Monday 2026-09-21 swap fell through (none of the Monday students could trade evenings) and Wednesday 2026-09-23 was ruled out by Alex's own constraint.",
+      "attributes": {
+        "subject": {
+          "task": "DSB-43",
+          "case": {
+            "full_name": "Alex Chen",
+            "student_id": "2026011347"
+          }
+        },
+        "predicate": "badminton_interview_moved"
+      }
+    },
+    "bwc_rescheduled_thursday": {
+      "value": true,
+      "text": "The Badminton Club interview was moved to Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot): Alex confirmed Thursday after the Monday 2026-09-21 swap fell through (none of the Monday students could trade evenings) and Wednesday 2026-09-23 was ruled out by Alex's own constraint.",
       "attributes": {
         "subject": {
           "task": "DSB-43",

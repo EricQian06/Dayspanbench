@@ -124,10 +124,12 @@ class GraphNode:
     """Runtime state of one node: collecting -> ready -> firing -> completed.
 
     ``kind`` drives the terminal semantics: "inquiry" nodes are self-loops
-    (their volatile slots clear after each fire, so they can trigger again);
-    "service" and "environment" nodes stay completed (a completed node answers
-    repeats from its authored on_completed_reply and never fires twice);
-    "revoke" nodes are the conversation-flavored amend mechanism (pilot TODO).
+    (their volatile slots clear after each fire, so they can trigger again —
+    unless the fired branch declares ``terminal: True``, which settles the
+    node into its completed state instead of resetting it); "service" and
+    "environment" nodes stay completed (a completed node answers repeats
+    from its authored on_completed_reply and never fires twice); "revoke"
+    nodes are the conversation-flavored amend mechanism (pilot TODO).
     """
 
     def __init__(self, spec):
@@ -140,6 +142,11 @@ class GraphNode:
         self.activation = spec.get("activation", {})
         self.event = spec.get("event")  # environment nodes: what backfills them
         self.branches = [deepcopy(b) for b in spec.get("branches", [])]
+        # Authored derivation rules: evidence on this node that implies
+        # evidence on companion nodes (e.g. confirming an evening also
+        # fills the swap-check node), so one LLM mark never strands its
+        # partner unfilled. Evaluated by the engine after each mark batch.
+        self.derive = [deepcopy(r) for r in spec.get("derive", [])]
         if spec.get("default_branch"):
             # Removed by design: branches must cover every future direction
             # of the evidence (validated exhaustively below), so an authored
@@ -157,6 +164,14 @@ class GraphNode:
         self.state = "collecting"
         self.fire_count = 0
         self.last_fired_at = None
+        for branch in self.branches:
+            if branch.get("terminal") and self.kind != "inquiry":
+                raise GraphSpecError(
+                    f"Node {self.id}: only an inquiry self-loop may declare a "
+                    "terminal branch (other kinds complete on every fire anyway)")
+        # Set by fire() and consumed by fired(): whether the chosen branch
+        # settles this inquiry instead of resetting it for another round.
+        self._pending_terminal = False
 
     @property
     def satisfied(self):
@@ -298,6 +313,41 @@ class GraphRuntime:
                                "source": source, "at": at})
         return MarkReport(node.id, changed)
 
+    def derived_marks(self, node_id):
+        """Marks this node's fresh evidence implies on companion nodes.
+
+        Evaluates the authored ``derive`` rules against the node's *current*
+        slot values: a rule fires when every ``when`` condition is met, and
+        contributes its ``marks`` to the target nodes. Values of the form
+        ``"=<slot_key>"`` reference this node's own slots; a rule whose
+        reference is unfilled is skipped whole (it will be re-evaluated when
+        the referenced slot arrives, since any mark on this node re-runs
+        derivation). Returns ``{target_node_id: {slot_key: value}}``.
+        """
+        node = self._node(node_id)
+        out = {}
+        for rule in node.derive:
+            if not all(_condition_met(node.slots[key], cond)
+                       for key, cond in rule.get("when", {}).items()):
+                continue
+            resolved = {}
+            skip = False
+            for target, marks in rule.get("marks", {}).items():
+                for key, value in marks.items():
+                    if isinstance(value, str) and value.startswith("="):
+                        ref = node.slots.get(value[1:])
+                        if ref is None or not ref.filled:
+                            skip = True
+                            break
+                        value = ref.value
+                    resolved.setdefault(target, {})[key] = value
+                if skip:
+                    break
+            if not skip:
+                for target, marks in resolved.items():
+                    out.setdefault(target, {}).update(marks)
+        return out
+
     def env_backfill(self, node_id, *, at=None, source="environment"):
         """Complete an environment node: its event fired and supplies evidence.
 
@@ -377,6 +427,7 @@ class GraphRuntime:
                     f"No branch of {node.id} matches its completed evidence; "
                     "the branch table does not cover all directions")
         node.state = "firing"
+        node._pending_terminal = bool(branch and branch.get("terminal"))
         self.audit.append({"kind": "node_lit", "node": node.id, "branch":
                            branch.get("label") if branch else None, "at": at, "source": source})
         reply = branch.get("reply", node.on_completed_reply) if branch else node.on_completed_reply
@@ -393,18 +444,38 @@ class GraphRuntime:
         """The engine executed the fire's effects: settle the node.
 
         Inquiry nodes reset to collecting with volatile evidence cleared (the
-        self-loop); everything else stays completed."""
+        self-loop) — unless the fired branch declared ``terminal``, in which
+        case the node settles into its completed state (a concluded
+        conversation: repeats are answered from on_completed_reply)."""
         node = self._node(node_id)
         if node.state != "firing":
             raise ValueError(f"Node {node_id} is not firing")
         node.state = "completed"
         node.fire_count += 1
         node.last_fired_at = at
-        if node.kind == "inquiry":
+        if node.kind == "inquiry" and not node._pending_terminal:
             node.state = "collecting"
             node.clear_volatile(at)
+        node._pending_terminal = False
         self.audit.append({"kind": "node_completed", "node": node.id,
                            "fire_count": node.fire_count, "at": at})
+
+    def force_complete(self, node_id, *, at=None):
+        """Force a collecting node into its completed state: the engine-side
+        ``complete_node`` effect, how one node's terminal fire closes another
+        node's conversation (e.g. a settled swap closes the negotiation loop).
+        A completed node needs nothing; a firing node is mid-fire by
+        construction and cannot be closed underneath its own effects."""
+        node = self._node(node_id)
+        if node.state == "completed":
+            return False
+        if node.state == "firing":
+            raise ValueError(f"Node {node_id} is firing; it cannot be force-completed")
+        node.state = "completed"
+        node._pending_terminal = False
+        self.audit.append({"kind": "node_completed", "node": node.id,
+                           "forced": True, "at": at})
+        return True
 
     def completed_reply(self, node_id):
         """The canonical answer for a repeat request on a completed node."""

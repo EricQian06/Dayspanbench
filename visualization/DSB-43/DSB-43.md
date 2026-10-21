@@ -1,106 +1,178 @@
-# DSB-43 可视化 — Club recruitment: two app groups, staggered surveys, one interview clash
+# DSB-43 可视化:Club recruitment — two app groups, staggered surveys, one interview clash
 
-- 任务源码：`scripts/club_cases/dsb43_club_recruitment.py`（club_cases 管线，v0.5 范式）
-- Agent 轨迹：`artifacts/evaluation_runs/1024-043-rerun2/DSB-43`（deepseek-v4-flash，45 步，action_errors 1 次）
-- 最终结果：**judge 6/6 subparts，deterministic_anchors_ok = True，complete = True，conclusion = resolved**
-- 时区说明：虚拟时钟为 UTC；任务 `display_timezone` 为 Asia/Shanghai（UTC+8），下文时刻均已换算为北京时间
+- **任务源码**: [scripts/club_cases/dsb43_club_recruitment.py](../../scripts/club_cases/dsb43_club_recruitment.py)
+- **轨迹 run**: `artifacts/evaluation_runs/1025-043-paratera-deepseek/DSB-43`
+- **Agent 模型**: DeepSeek-V4-Flash-0731 (paratera),52 步 / 0 action errors / 虚拟时长 9.0 天
+- **时区**: 轨迹时刻为 UTC,任务展示时区 Asia/Shanghai(文中时刻已标注,UTC+8 换算后)
+- **最终结果**: ✘ **未通过** — judge 6/6 subparts 全过,但 `deterministic_anchors_ok=false`(4 个 fact goals 只注册了 3 个:`pnc_confirmed_original` 从未注册)。conclusion=`resolved` 判定正确。
+- **虚拟时间窗口**: 2026-09-11 20:00 → 09-23 18:00 (Asia/Shanghai)
 
 ---
 
-## 一、任务推进流程（作者设计路径）
+## 一、任务推进流程(作者设计路径)
 
 ```mermaid
 flowchart TD
-    S(["开始 9.11 周五 20:00<br/>游园祭当晚开局"]) --> W1["web_search → festival 页<br/>拿到两个 t.me 群链接"]
-    W1 --> J1["discover bwc_group → 即时入群<br/>读置顶公告：bwc_survey 9.14 开"]
-    W1 --> J2["discover pnc_group → 审核 12h<br/>9.12 12:00 group_approved"]
-    J2 -.->|9.13 20:00–9.14 09:00<br/>满员窗口·非致命| J2B["入群被拒 full<br/>等 9.14 早重试"]
-    J2B -.-> J2
+    START(["开始 09-11 20:00<br/>周五校园节,扫码进两社团群"]):::startNode
 
-    subgraph ASK["问用户（consult_user，必做）"]
-        A1["Alex 的本人答案：<br/>羽协可 9.21/22/24/25（排除周三 9.23）·Competition<br/>钢协两天都行 · 6 年琴龄 · Performance"]
+    subgraph SG1["信息收集 / 进群阶段 (09-11 晚)"]
+        WEB["web_search / visit_page<br/>找到两社团主页与调查页"] --> BWC_JOIN["bwc_group join<br/>✔ 即时入群"]
+        WEB --> PNC_JOIN["pnc_group join<br/>⏳ 需管理员审核"]
+        PNC_JOIN -.->|"错过容量窗口<br/>(09-13 20:00 ~ 09-14 09:00 满员)"| PNC_LOSE["钢琴群永远进不去<br/>pnc_survey 无法提交"]:::failNode
+        PNC_JOIN -->|审核通过| PNC_OK["入群成功<br/>⏳ 群成员上限前通过即可"]
     end
-    J1 --> A1
-    A1 --> F1["9.14 开表后提交 bwc_survey<br/>窗口 9.14–9.17"]
-    A1 --> F2["9.15 开表后提交 pnc_survey<br/>窗口 9.15–9.18<br/>错值会被退回重交（限窗口内）"]
-    F1 -.->|字段不符| F1R["退回 → 窗口内改对重交"]
-    F2 -.->|字段不符| F2R["退回 → 窗口内改对重交"]
-    F1 --> R1["9.14 18:00 处理完成<br/>R-receipt + fact bwc_survey_recorded"]
-    F2 --> R2["9.15 18:00 处理完成<br/>R-receipt + fact pnc_survey_recorded"]
 
-    R1 --> T1["9.17 18:00 群时间线：<br/>羽协面试 Group 3 · 周二 19:40–20:40"]
-    R2 --> T2["9.19 18:00 群时间线：<br/>钢协面试 · 周二 20:00–21:10"]
-    T1 --> C{"两时段均落 9.22 周二<br/>19:40–20:40 ∩ 20:00–21:10 冲突？"}
-    C -- 是 --> D1["找对人：Events head 周亚楠<br/>（群成员表/directory）<br/>⚠ 会长林志远只做转介"]
-    C -- 是 --> D2["找对人：钢协会长吴可信<br/>（管面试改动）<br/>⚠ Events head 陈默只做转介"]
-    D1 --> E1["邮件需同时传达：<br/>要改期 + 周三 9.23 不可用<br/>（LLM extract 两字段全真才走正确分支）"]
-    D2 --> E2["邮件传达保留原时段 + 周三不可用<br/>（keep_original=true, wednesday_free=false）"]
+    START --> SG1
 
-    E1 -.->|"漏说周三（Trap A）"| X1["分支：改到周三 19:30–20:30<br/>fact bwc_wednesday_booked ✘<br/>→ follow-up 开新 case 补救"]
-    E2 -.->|"接受周三提议（Trap B）"| X2["分支：改到周三 20:00–20:10<br/>fact pnc_wednesday_booked ✘"]
-    X1 --> E1B["follow-up 补上周三限制<br/>extract 全真 → fact bwc_rescheduled_monday<br/>周一 9.21 19:30–20:30 Gym Court 2"]
-    E1 -->|正确| E1B
-    E2 -->|正确| G2["fact pnc_confirmed_original<br/>保留周二 20:00–21:10"]
+    subgraph SG2["调查表阶段 (窗口不同)"]
+        CONSULT["consult_user 询问 Alex<br/>可用晚:09-21/22/24/25<br/>周三 09-23 排练不可用<br/>羽毛球→竞赛部 / 钢琴→演奏部"]
+        BWC_FORM["bwc_survey<br/>窗口 09-14 ~ 09-16"]
+        PNC_FORM["pnc_survey<br/>窗口 09-15 ~ 09-17"]
+        CONSULT --> BWC_FORM & PNC_FORM
+    end
+    SG1 --> SG2
 
-    E1B --> FIN(["提交答案：resolved<br/>summary 须含冲突、两表答案、<br/>排除 9.23、周一新时段、钢琴保留原时段"])
-    G2 --> FIN
-    style S fill:#cfe8ff
-    style FIN fill:#c8f7c5
-    style X1 fill:#ffd6d6
-    style X2 fill:#ffd6d6
-    style J2B fill:#fff3c4
+    BWC_FORM -.->|"猜答案不问用户<br/>表单 expect 拒绝"| FORM_FAIL["form 被拒"]:::failNode
+
+    subgraph SG3["面试安排公布 (时间点强制)"]
+        BWC_POST["09-17 后读 bwc_group timeline<br/>羽毛球面试:周二 09-22 19:40-20:40<br/>Gym Court 2(一小时团体场)"]
+        PNC_POST["09-19 后读 pnc_group timeline<br/>钢琴面试:周二 09-22 20:00-21:10<br/>Music Building A201"]
+    end
+    SG2 --> SG3
+
+    CLASH{"发现冲突?<br/>周二晚两场重叠<br/>20:00-20:40"}:::decision
+    SG3 --> CLASH
+    CLASH -.->|"未察觉重叠"| MISS["保留原场次<br/>面试仍冲突"]:::failNode
+
+    subgraph SG4["解决冲突 (关键路径)"]
+        DIR1["lookup_directory<br/>→ Zhou Yanan (bwc_events_head)<br/>⚠ 勿找社长 Lin Zhiyuan"]
+        EMAIL_BWC["邮件 Zhou Yanan<br/>要求改期 + 声明周三不可用"]
+        BWC_MOVE["bwc_move_slot 节点<br/>提议周一 09-21 19:30-20:30"]
+        CONFIRM["agent 确认某晚<br/>(bwc_slot_confirm 节点)"]
+        SWAP{"bwc_swap_check:<br/>该晚学生是否换场?"}:::decision
+        BWC_MOVE --> CONFIRM --> SWAP
+        EMAIL_BWC --> BWC_MOVE
+        SWAP -.->|"周一固定失败<br/>(周一学生均不能换)"| BWC_MOVE
+        SWAP -->|"周三/周四/周五<br/>换场成功"| BWC_DONE["✔ 注册 fact:<br/>bwc_rescheduled_wednesday<br/>/ _thursday / _friday<br/>带书面回执,终态锁定"]
+    end
+
+    subgraph SG5["钢琴侧确认 (易遗漏!)"]
+        DIR2["lookup_directory<br/>→ Wu Kexin (pnc_president)"]
+        EMAIL_PNC["邮件 Wu Kexin<br/>明确表态保留原周二场次"]
+        PNC_KEEP["pnc_keep_slot 节点<br/>keep_original=true →<br/>✔ 注册 pnc_confirmed_original<br/>回执确认周二 20:00-21:10"]
+        EMAIL_PNC --> PNC_KEEP
+    end
+
+    CLASH -->|"改羽毛球场次<br/>(跨日,团体场)"| SG4
+    CLASH -->|"钢琴保留原场次"| SG5
+
+    SUBMIT(["submit_answer<br/>conclusion=resolved<br/>summary 覆盖:两表提交+冲突解决+<br/>新羽毛球时段+钢琴保留原时段"]):::goalNode
+    BWC_DONE --> SUBMIT
+    PNC_KEEP --> SUBMIT
+    MISS --> SUBMIT2(["submit_answer<br/>conclusion ≠ resolved"]):::failNode
+
+    classDef startNode fill:#cfe8ff,stroke:#5b9bd5,color:#000
+    classDef failNode fill:#ffcccc,stroke:#cc0000,color:#000
+    classDef goalNode fill:#c6efce,stroke:#006100,color:#000
+    classDef decision fill:#fff2cc,stroke:#bf9000,color:#000
 ```
 
-设计要点：一周三小时群是独立 app 服务（浏览器不能入群）；问卷时间窗 9.14–9.17 / 9.15–9.18 在表单工具层强制执行；extract 受助人分支只匹配 LLM 提取的结构化字段，绝无关键词判定。
+**要点**:
+- 羽毛球改期链:`bwc_move_slot` → `bwc_slot_confirm` → `bwc_swap_check`,任一晚的确认单封邮件即可同时驱动两个节点(engine 的 derive 机制);换场成功分支为 terminal,锁定后只能收到 authored 道歉信。
+- 周三 09-23 是用户排练日(failure mode:向 Events head 声称周三可用 → 被安排到不可去的场次)。
+- 钢琴侧无需改期,但**必须**给社长发信表态,`pnc_confirmed_original` 才会注册 —— 不发信,面试"事实上"保留但 goal 不成立。
 
-## 二、Agent 实际路线（1024-043-rerun2，45 步）
-
-与第一节同款样式，✔ 成功绿底 / ⚠ 卡点黄底 / ✘ 失误红底，步号为 rpc_trace 步号：
+## 二、Agent 实际路线(同一布局对照)
 
 ```mermaid
 flowchart TD
-    S(["步1-2 observe / recall_task<br/>9.11 20:00"]) --> W1["✔ 步3-8 web_search + 5 页浏览<br/>festival 页拿双群链接<br/>9.11 20:0x"]
-    W1 --> J1["✔ 步9,11 bwc_group 即时入群<br/>步13 读置顶：survey 9.14 开"]
-    W1 --> J2["✔ 步10,12 pnc_group 提交申请 pending<br/>9.12 12:00 自动批准（audit）"]
-    J1 --> A1["✔ 步14 consult_user 一次问全 4 项<br/>user_reply 9.11 22:54：<br/>排除 9.23 周三 · Competition · 6年 · both · Performance"]
-    A1 --> F1["✔ 步17,19,22 等 9.14 08:00 开表<br/>bwc_survey 一次通过<br/>9.14 18:00 R-0001 + bwc_survey_recorded"]
-    A1 --> F2["✔ 步23,24 等 9.15 08:05<br/>pnc_survey 一次通过<br/>9.15 18:00 R + pnc_survey_recorded"]
-    F1 --> T1["✔ 步28-32 等 9.17 群时间线<br/>羽协 Group 3 · 周二 19:40–20:40"]
-    F2 --> T2["✔ 步35,36 等 9.19 18:00 后读 pnc 群<br/>钢协 · 周二 20:00–21:10"]
-    T1 --> C{"步 33-34 冲突识别 ✔<br/>查成员表 + directory 找周亚楠"}
-    C -- 冲突 --> E1["✘ 步38 首封邮件给周亚楠（CASE-0001）<br/>只说要改期，漏说周三限制<br/>extract {wants_move:T, wednesday_unavailable:F}<br/>→ Trap A 触发：R-0003 改到周三 19:30–20:30<br/>fact bwc_wednesday_booked"]
-    C -- 冲突 --> E2["✔ 步39,42 查 directory 找吴可信<br/>邮件表达保留原时段（CASE-0003）<br/>extract {keep_original:T, wednesday_free:F}<br/>9.19 20:26 回信确认周二 20:00–21:10<br/>fact pnc_confirmed_original"]
-    E1 --> E1B["✔ 步40 读到回信发现周三档<br/>步41 follow-up 开新 case（CASE-0002）补周三限制<br/>extract 全真 → 9.19 20:17 回信<br/>周一 9.21 19:30–20:30 Gym Court 2<br/>fact bwc_rescheduled_monday"]
-    E1B --> FIN(["✔ 步45 submit_answer<br/>conclusion resolved · 6/6"])
-    E2 --> FIN
-    style S fill:#cfe8ff
-    style FIN fill:#c8f7c5
-    style E1 fill:#ffd6d6
-    style E1B fill:#c8f7c5
-    style E2 fill:#c8f7c5
+    START(["步1 observe<br/>09-11 20:00 (UTC 12:00)"]):::startNode
+
+    subgraph SG1["信息收集 / 进群 (步2-16) ✔"]
+        WEB["步2-7 web_search+visit_page×5<br/>两社团主页/调查页 ✔"]
+        BWC_JOIN["步10 bwc_group join<br/>✔ 即时入群"]
+        PNC_JOIN["步11 pnc_group join<br/>✔ 09-12 12:00 审核通过<br/>(赶在容量窗口前)"]
+        WEB --> BWC_JOIN & PNC_JOIN
+        STEP16["步16 pnc_group query pinned<br/>09-12 12:00 看到欢迎帖"]
+        PNC_JOIN --> STEP16
+    end
+    START --> SG1
+
+    subgraph SG2["调查表 (步14-22) ✔"]
+        CONSULT["步14 consult_user<br/>✔ 正确获得 Alex 可用晚/部门<br/>周三 09-23 排练排除"]
+        BWC_FORM["步20 bwc_survey 提交<br/>09-14 00:00 ✔ 接受"]
+        PNC_FORM["步22 pnc_survey 提交<br/>09-15 00:00 ✔ 接受<br/>(步21等到窗口开放)"]
+        CONSULT --> BWC_FORM & PNC_FORM
+    end
+    SG1 --> SG2
+
+    subgraph SG3["读公告 (步25-35) ✔"]
+        WAIT18_19["步18/19/25/27/29 wait_until 循环<br/>⏳ 等待 09-17 公布"]
+        BWC_POST["步30 bwc_group query all<br/>09-17 22:00 ✔ 看到羽毛球面试<br/>周二 19:40-20:40"]
+        PNC_POST["步34 pnc_group query all<br/>09-19 20:00 ✔ 看到钢琴面试<br/>周二 20:00-21:10"]
+        DIR2["步35 lookup_directory Wu Kexin<br/>✔ 查到钢琴社长联系方式"]
+    end
+    SG2 --> SG3
+
+    CLASH{"步35 前后察觉冲突<br/>✔ 重叠 20:00-20:40"}:::decision
+    SG3 --> CLASH
+
+    subgraph SG4["羽毛球改期 (步36-50) ✔"]
+        DIR1["步32 lookup_directory<br/>✔ 直找 Events head Zhou Yanan"]
+        EMAIL_BWC["步36 邮件:改期+周三不可用<br/>→ 提议周一"]
+        R38["步38 拒周一?否——声明周一可用<br/>→ 周一换场检查"]
+        SWAPFAIL["步44 周一学生换场失败<br/>→ 提议周四"]
+        R45["步45 确认周四 09-24 19:30-20:30"]
+        SWAP["步49 ✔ 周四换场成功锁定<br/>注册 bwc_rescheduled_thursday<br/>回执确认(终态)"]
+        EMAIL_BWC --> R38 --> SWAPFAIL --> R45 --> SWAP
+    end
+    CLASH --> SG4
+
+    subgraph SG5["钢琴侧确认 ✘ — 完全缺失"]
+        NOTHING["步34/51 仅 pnc_group query all<br/>看群消息,未发任何邮件<br/>给 Wu Kexin"]
+        NOFACT["✘ pnc_confirmed_original<br/>从未注册<br/>goal_facts_established=false"]:::failNode
+        NOTHING --> NOFACT
+    end
+    CLASH -.->|"⚠ 查了社长联系方式(步35)<br/>却从未使用"| SG5
+
+    SUBMIT(["步52 submit_answer<br/>conclusion=resolved ✔<br/>summary 写'钢琴按原场次进行'"]):::goalNode
+    SWAP --> SUBMIT
+    NOFACT -.->|"judge 被 summary 说服 6/6,<br/>graph fact 门控拦截"| FINAL(["✘ complete=false<br/>resolved_success=false"]):::failNode
+
+    classDef startNode fill:#cfe8ff,stroke:#5b9bd5,color:#000
+    classDef failNode fill:#ffcccc,stroke:#cc0000,color:#000
+    classDef goalNode fill:#c6efce,stroke:#006100,color:#000
+    classDef decision fill:#fff2cc,stroke:#bf9000,color:#000
 ```
 
-- **action_errors：1 次**（步 37，非法 JSON，下一个动作步 38 正常恢复）
-- 群容量满员窗口（9.13 20:00–9.14 09:00）本 run 未被踩中（agent 9.11 已入群）
-- 与上一轮（1024-043-deepseek 修复版）相比：本轮 agent 在 9.15 当天即正确提交钢协问卷，未触发退回路径；但 Trap A 真实触发并经 follow-up 恢复，验证了陷阱分支 + follow-up 新 case 二次 extract 的完整链路
+- ✔ 绿:进群、问用户、两表提交、读两组公告、找对 Events head、改期全链走通(含周一失败→周四成功的迂回)。
+- ⚠ 黄:wait_until 循环 5 次(步18/19/25/27/29)属正常等窗口;真正的卡点是步35 查到钢琴社长联系方式后**没有任何后续动作**。
+- ✘ 红:钢琴侧确认链完全缺失 → `pnc_confirmed_original` 未注册 → deterministic anchors 拦截。
+- action_errors:0;52 步全部为合法调用。
 
 ## 三、设计路径 vs Agent 实际对照
 
-| 环节 | 参考策略（reference） | Agent 实际 | 结果 |
+| 环节 | 参考策略 (reference) | Agent 实际 | 结果 |
 |---|---|---|---|
-| 入口信息 | festival 页拿双群链接 | 步 3–8 同路径 | ✓ |
-| 入群 | bwc 即时 / pnc 审核 12h | 步 9–12，9.12 12:00 批准 | ✓ |
-| 问用户 | consult_user 两次（问卷前 + 冲突后） | 步 14 一次问全，冲突后未再问（已有答案，可接受） | ✓ |
-| bwc 问卷 | 9.14 开表提交，排除周三 | 步 22 一次通过，R-0001 | ✓ |
-| pnc 问卷 | 9.15 开表提交 both/6 年/Performance | 步 24 一次通过（上轮曾退回重交，本轮无） | ✓ |
-| 排班读取 | 9.17 / 9.19 后读群时间线 | 步 28–32 / 35–36 | ✓ |
-| 找对人 | 周亚楠（改期）/ 吴可信（确认）；避开会长转介 | 群成员表 + directory，未踩转介陷阱 | ✓ |
-| 羽协改期邮件 | 一次传达 wants_move + 周三限制 | 步 38 漏周三 → Trap A（R-0003 周三档）；步 41 follow-up 补救 | ⚠→✓ |
-| 钢协确认 | 保留原时段、拒绝周三提议 | 步 42 一次到位，pnc_confirmed_original | ✓ |
-| 提交答案 | resolved + 完整 summary | 步 45，judge 6/6 | ✓ |
+| 找到两社团入口 | web_search → 官网/频道页 → 群工具 | 同路径,步2-9 discover_tools×4 | ✓ |
+| 进羽毛球群 | bwc_group join(即时) | 步10,即时成功 | ✓ |
+| 进钢琴群 | pnc_group join,须赶在 09-13/14 容量窗口前通过审核 | 步11 提交,09-12 通过 | ✓ |
+| 获取用户真实答案 | consult_user(可用晚/部门/周三限制) | 步14 一次性问全 | ✓ |
+| 提交两份调查表 | 各自窗口内提交,字段为用户自己的答案 | 步20(09-14)、步22(09-15),均接受 | ✓ |
+| 读到两场面试安排 | 09-17 后读 bwc timeline;09-19 后读 pnc timeline | 步30(09-17)、步34(09-19) | ✓ |
+| 察觉周二晚冲突 | 对照 19:40-20:40 与 20:00-21:10 重叠 | 察觉并在 summary 说明 | ✓ |
+| 联系羽毛球 Events head | lookup_directory → Zhou Yanan(非社长) | 步32 直找 Zhou Yanan | ✓ |
+| 声明周三不可用 + 请求改期 | 首信含两项,防被排到排练日 | 步36 首信即声明周三不可用 | ✓ |
+| 确认提议晚 + 学生换场 | 确认→swap 检查;周一固定失败则转下一晚 | 步38 确认周一→失败(步44)→步45 确认周四→步49 锁定 | ✓ |
+| **给钢琴社长发信表态** | **邮件 Wu Kexin:保留原场次 → 注册 pnc_confirmed_original** | **只查了联系方式(步35),从未发信** | ✗ |
+| 提交答案 | conclusion=resolved,summary 覆盖全部四 goal | conclusion ✔,summary 内容与事实相符(除钢琴侧未经确认) | △ |
 
-失败链（本 run 唯一失误）：首封羽协邮件漏传达周三限制 → extract 走陷阱分支 → `bwc_wednesday_booked`（周三 19:30–20:30 面试）→ agent 读回信发现与排练冲突 → follow-up 开新 case 补充限制 → 二次 extract 命中正确分支 → `bwc_rescheduled_monday`。**失误被 follow-up 路由机制兜住，未影响最终判定。**
+**失败链**:步35 查到 Wu Kexin 联系方式 → 误以为"钢琴无需动作,保持原样即可" → 从未触发 `pnc_keep_slot` 节点 → `pnc_confirmed_original` 未注册 → `goal_facts_established=false` → `deterministic_anchors_ok=false` → **complete=false**。judge 层 6/6 全过(被 summary 中"钢琴面试按原安排进行"的说法说服),是 v0.6 graph fact 门控把"summary 说得对但路径没走"拦下的典型案例。
 
 ## 四、合法替代路径
 
-摘自 `alternate_paths`：任意合法顺序的入群、问卷提交、时间线读取与负责人邮件均被接受，只要每个 goal 的证据条件成立；两个俱乐部可任意先后处理；冲突也可以通过把羽协面试改到用户实际有空的其他晚上解决——参考策略的周一时段只是其中一个合法结果，不是唯一解。
+来自任务 `alternate_paths`:
+
+> 任意合法顺序的进群、提交调查、读公告与负责人邮件均被接受,只要每个 goal 的证据条件成立;两个社团可任意先后处理;羽毛球面试可改到用户实际空闲的**任一**晚上 —— 参考策略的周一场次只是一种合法结果,不是唯一解(本 run 中 agent 走的周四路径同样合法)。
+
+另从 `judge_criteria`/graph 结构:钢琴侧的三个分支(keep original / move Wednesday / default keep)中前两个均注册合法 fact,但 `move Wednesday` 会与用户排练约束冲突(且用户需在信中声明周三可用才触发,如实声明则不会走到);`pnc_wednesday_booked` 不是 `piano_interview_kept` goal 的接受 fact。

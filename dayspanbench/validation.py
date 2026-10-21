@@ -74,8 +74,30 @@ def _validate_graph(task, actors):
                     if effect.get("at"):
                         check(parse(task["start_at"]) <= parse(effect["at"]) < parse(task["deadline_at"]),
                               f"{where}: schedule_event outside the episode window")
+                elif kind == "complete_node":
+                    check(effect.get("target_node") in node_ids,
+                          f"{where}: complete_node targets unknown node")
+                    check(effect.get("target_node") != node.id,
+                          f"{where}: complete_node targeting itself (use a terminal branch instead)")
                 else:
                     check(False, f"{where}: unknown graph effect kind {kind}")
+        for rule in node.derive:
+            where_rule = f"{where}: derive rule"
+            check(set(rule.get("when", {})) <= set(node.slots),
+                  f"{where_rule} conditions a slot the node does not have")
+            for target, marks in rule.get("marks", {}).items():
+                check(target in node_ids, f"{where_rule} targets unknown node {target}")
+                if target not in node_ids:
+                    continue
+                target_node = runtime.nodes[target]
+                check(target_node.owner == node.owner,
+                      f"{where_rule} targets {target} of a different owner")
+                check(set(marks) <= set(target_node.slots),
+                      f"{where_rule} marks a slot {target} does not have")
+                for value in marks.values():
+                    if isinstance(value, str) and value.startswith("="):
+                        check(value[1:] in node.slots,
+                              f"{where_rule} references unknown slot {value[1:]}")
     return errors
 
 # The agent protocol (AGENT_PROMPT in dayspanbench/evaluation.py and

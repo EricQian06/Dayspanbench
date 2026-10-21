@@ -11,6 +11,10 @@ amend-by-overwrite.
 from copy import deepcopy
 import unittest
 
+import sys
+from pathlib import Path as _P
+sys.path.insert(0, str(_P(__file__).resolve().parents[1]))
+
 from dayspanbench.calendar import parse
 from dayspanbench.graph import GraphRuntime, GraphSpecError
 
@@ -204,6 +208,133 @@ class OneShotTests(unittest.TestCase):
         self.assertEqual(repeat["reply"], "Your interview has already been moved.")
         self.assertEqual(runtime.completed_reply("bwc_move_slot"),
                          "Your interview has already been moved.")
+
+
+class TerminalBranchTests(unittest.TestCase):
+    """An inquiry branch may declare terminal: True - the node settles into
+    its completed state instead of resetting, so the conversation ends and
+    repeats are answered from on_completed_reply."""
+
+    def graph(self):
+        return GraphRuntime({"nodes": [
+            {"id": "offer", "owner": "npc", "kind": "inquiry",
+             "requires": [{"key": "choice", "type": "enum",
+                           "values": ["a", "b"], "volatile": True, "require": "filled"}],
+             "branches": [
+                 {"label": "settle_a", "when": {"choice": {"value": "a"}},
+                  "reply": "settled on a", "terminal": True},
+                 {"label": "re_offer_b", "when": {"choice": {"value": "b"}},
+                  "reply": "still open on b"}],
+             "on_completed_reply": "sorry, it is settled"},
+            {"id": "closer", "owner": "npc", "kind": "service",
+             "requires": [{"key": "go", "type": "boolean", "volatile": True, "require": True}],
+             "branches": [{"label": "go", "when": {"go": True}, "reply": "closing",
+                           "effects": [{"kind": "complete_node", "target_node": "offer"}]}]},
+        ]})
+
+    def test_non_terminal_branch_resets_for_another_round(self):
+        runtime = self.graph()
+        runtime.mark("offer", {"choice": "b"}, source="MSG-1")
+        self.assertEqual(runtime.fire("offer")["status"], "fired")
+        runtime.fired("offer")
+        self.assertEqual(runtime.nodes["offer"].state, "collecting")  # non-terminal reset
+
+    def test_terminal_branch_settles_and_answers_repeats(self):
+        runtime = self.graph()
+        runtime.mark("offer", {"choice": "a"}, source="MSG-2")
+        fire = runtime.fire("offer")
+        self.assertEqual(fire["status"], "fired")
+        runtime.fired("offer")
+        self.assertEqual(runtime.nodes["offer"].state, "completed")
+        repeat = runtime.fire("offer")
+        self.assertEqual(repeat["status"], "already_completed")
+        self.assertEqual(repeat["reply"], "sorry, it is settled")
+
+    def test_force_complete_closes_a_collecting_node(self):
+        runtime = self.graph()
+        self.assertTrue(runtime.force_complete("offer", at=None))
+        self.assertEqual(runtime.nodes["offer"].state, "completed")
+        self.assertFalse(runtime.force_complete("offer", at=None))  # idempotent
+
+    def test_force_complete_from_firing_is_rejected(self):
+        runtime = self.graph()
+        runtime.mark("offer", {"choice": "a"}, source="MSG-1")
+        runtime.fire("offer")  # now firing; effects are engine-side
+        with self.assertRaises(ValueError):
+            runtime.force_complete("offer")
+
+    def test_terminal_branch_on_non_inquiry_rejected(self):
+        with self.assertRaises(GraphSpecError):
+            GraphRuntime({"nodes": [
+                {"id": "svc", "owner": "npc", "kind": "service",
+                 "requires": [{"key": "go", "type": "boolean", "volatile": True, "require": True}],
+                 "branches": [{"label": "go", "when": {"go": True}, "reply": "x",
+                               "terminal": True}]}]})
+
+
+class DeriveTests(unittest.TestCase):
+    """Authored derive rules: evidence on one node implies evidence on a
+    companion node, so an interpretation that marks only one side of a bound
+    pair still fills both (the ep-009 class of single-mark failures)."""
+
+    def graph(self):
+        return GraphRuntime({"nodes": [
+            {"id": "confirm", "owner": "npc", "kind": "inquiry",
+             "requires": [{"key": "day", "type": "enum", "values": ["a", "b"], "volatile": True},
+                         {"key": "ok", "type": "boolean", "volatile": True, "require": "filled"}],
+             "branches": [
+                 {"label": "yes", "when": {"ok": True}, "reply": "checking"},
+                 {"label": "no", "when": {"ok": False}, "reply": "another?"}],
+             "derive": [{"when": {"ok": True},
+                         "marks": {"check": {"which": "=day", "go": True}}}]},
+            {"id": "check", "owner": "npc", "kind": "inquiry",
+             "requires": [{"key": "which", "type": "enum", "values": ["a", "b"], "volatile": True},
+                         {"key": "go", "type": "boolean", "volatile": True, "require": True}],
+             "branches": [{"label": "run", "when": {"go": True}, "reply": "ran"}],
+             "derive": [{"when": {"go": True},
+                         "marks": {"confirm": {"day": "=which", "ok": True}}}]},
+        ]})
+
+    def test_confirmation_derives_the_companion_marks(self):
+        runtime = self.graph()
+        marks = runtime.mark("confirm", {"day": "a", "ok": True}, source="MSG-1")
+        self.assertEqual(marks.newly_ready, ["confirm"])
+        derived = runtime.derived_marks("confirm")
+        self.assertEqual(derived, {"check": {"which": "a", "go": True}})
+        # The engine applies them; the swap side becomes ready too.
+        runtime.mark("check", derived["check"], source="derive")
+        self.assertTrue(runtime.is_ready(runtime.nodes["check"]))
+
+    def test_rejection_derives_nothing(self):
+        runtime = self.graph()
+        runtime.mark("confirm", {"day": "a", "ok": False}, source="MSG-1")
+        self.assertEqual(runtime.derived_marks("confirm"), {})
+
+    def test_unfilled_reference_waits_for_its_slot(self):
+        # ok arrives but day has not: the rule cannot resolve "=day" yet, and
+        # re-runs once the referenced slot lands.
+        runtime = self.graph()
+        runtime.mark("confirm", {"ok": True}, source="MSG-1")
+        self.assertEqual(runtime.derived_marks("confirm"), {})
+        runtime.mark("confirm", {"day": "b"}, source="MSG-2")
+        self.assertEqual(runtime.derived_marks("confirm"),
+                         {"check": {"which": "b", "go": True}})
+
+    def test_mirror_derivation_is_idempotent(self):
+        # The reverse rule re-derives the confirmation, but same-value marks
+        # are no-ops, so a bound pair settles instead of oscillating.
+        runtime = self.graph()
+        runtime.mark("check", {"which": "a", "go": True}, source="MSG-1")
+        derived = runtime.derived_marks("check")
+        self.assertEqual(derived, {"confirm": {"day": "a", "ok": True}})
+        self.assertEqual(runtime.mark("confirm", derived["confirm"],
+                                      source="derive").newly_ready, ["confirm"])
+        # Re-deriving both directions changes nothing: restated values are
+        # not new evidence.
+        self.assertEqual(runtime.derived_marks("confirm"),
+                         {"check": {"which": "a", "go": True}})
+        self.assertEqual(runtime.mark("check", {"which": "a", "go": True},
+                                      source="derive").newly_ready, [])
 
 
 class EnvironmentTests(unittest.TestCase):

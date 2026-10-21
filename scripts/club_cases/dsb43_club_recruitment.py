@@ -12,10 +12,13 @@ cross-day while keeping the piano slot.
 
 Graph model (docs/graph-workflow-redesign.md): the workflow/extract_step
 authoring is gone. Each NPC owns graph nodes; the rescheduling conversations
-are service nodes whose evidence slots (`slot_change_requested` etc.) are
-filled by the NPC's LLM interpretation of the agent's letters — possibly
-across several letters — and the engine picks the mutex branch on the
-structured evidence alone. The club presidents' referrals are self-loop
+are evidence-driven: the badminton side is a three-stage flow (a service
+node that proposes an evening, a self-loop confirmation node negotiating
+with the agent, and a swap-check node where the Events head asks the target
+day's students — Monday always fails there and loops back into the
+confirmation conversation with the next evening, a successful swap settles
+terminally and closes the negotiation), while the piano
+side is a single service node. The club presidents' referrals are self-loop
 inquiry nodes (volatile `user_inquired` evidence clears after each answer),
 and the survey/announcement milestones are environment nodes backfilled by
 form-processing and scheduled events.
@@ -75,8 +78,10 @@ def build(A, tasks, sites, horizons, conclusions):
             "The Badminton Club recruitment survey recorded Alex Chen's availability: Monday 2026-09-21, Tuesday 2026-09-22, Thursday 2026-09-24, Friday 2026-09-25 (not Wednesday 2026-09-23), with department preference Competition."),
         "pnc_survey_recorded": fact(True,
             "The Piano Club questionnaire recorded Alex Chen's answers: both offered days work, six years of playing, department preference Performance."),
-        "bwc_rescheduled_monday": fact(True,
-            "The Badminton Club interview was moved to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot), after Alex reported being unavailable on Wednesday 2026-09-23."),
+        "bwc_rescheduled_thursday": fact(True,
+            "The Badminton Club interview was moved to Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot): Alex confirmed Thursday after the Monday 2026-09-21 swap fell through (none of the Monday students could trade evenings) and Wednesday 2026-09-23 was ruled out by Alex's own constraint."),
+        "bwc_rescheduled_friday": fact(True,
+            "The Badminton Club interview was moved to Friday, 2026-09-25, 19:30-20:30, Gym Court 2 (one-hour group slot): Alex confirmed Friday after the Monday 2026-09-21 swap fell through (none of the Monday students could trade evenings) and Wednesday 2026-09-23 was ruled out by Alex's own constraint."),
         "pnc_confirmed_original": fact(True,
             "The Piano Club interview stays at its original slot, Tuesday, 2026-09-22, 20:00-21:10, Music Building A201; the offered Wednesday 2026-09-23 20:00-20:10 slot was declined."),
         # Wrong-branch outcomes: real environment results the agent can still
@@ -106,7 +111,8 @@ def build(A, tasks, sites, horizons, conclusions):
     ]
     # The survey and rescheduling facts are visible to the officers who own
     # the corresponding graph nodes (persona answers stay grounded).
-    a[1]["knowledge"] = sorted({"bwc_survey_recorded", "bwc_rescheduled_monday", "bwc_wednesday_booked"})
+    a[1]["knowledge"] = sorted({"bwc_survey_recorded", "bwc_rescheduled_thursday",
+                              "bwc_rescheduled_friday", "bwc_wednesday_booked"})
     a[3]["knowledge"] = sorted({"pnc_survey_recorded", "pnc_confirmed_original", "pnc_wednesday_booked"})
 
     graph = {"nodes": [
@@ -135,6 +141,20 @@ def build(A, tasks, sites, horizons, conclusions):
         # interpretation of the agent's letters (possibly across several),
         # engine-evaluated mutex branches. Each slot is volatile: after the
         # matter completes, a new conversation starts from empty evidence.
+        # Badminton is a three-stage flow. bwc_move_slot only PROPOSES an
+        # evening (date and weekday named, nothing registered). The
+        # self-loop bwc_slot_confirm negotiates with the agent: a rejection
+        # switches the proposal (the node loops to itself with fresh
+        # evidence); a confirmation hands the evening to bwc_swap_check,
+        # where the Events head asks the students of that day whether one
+        # of them will trade evenings. Monday always fails there (none of
+        # the Monday students can trade) - the node loops back into the
+        # confirmation conversation proposing the next evening with the
+        # explanation. A successful swap settles terminally (terminal
+        # branch: the node completes instead of resetting, closes the
+        # confirmation node via the complete_node effect, and registers
+        # the receipt-bearing fact); any later change request is answered
+        # from the authored apology.
         {"id": "bwc_move_slot", "owner": "bwc_events_head", "kind": "service",
          "title": "Move the badminton interview slot",
          "activation": {"delay_minutes": 30, "calendar": "campus_evening"},
@@ -149,16 +169,101 @@ def build(A, tasks, sites, horizons, conclusions):
          "branches": [
              {"label": "move_off_wednesday",
               "when": {"slot_change_requested": True, "wednesday_unavailable": True},
-              "reply": "Understood - Wednesdays are out for you. I have moved your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing else changes; bring your student card.",
-              "effects": [{"kind": "register_facts", "facts": ["bwc_rescheduled_monday"]}]},
+              "reply": "Understood - Wednesdays are out for you. I can move your interview to Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing is final yet: does that Monday evening work for you? Reply to confirm and I will take it to the students scheduled that evening."},
              {"label": "book_wednesday",
               "when": {"slot_change_requested": True, "wednesday_unavailable": False},
-              "reply": "Then Wednesday works nicely: your interview is moved to Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). See you there.",
-              "effects": [{"kind": "register_facts", "facts": ["bwc_wednesday_booked"]}]},
+              "reply": "Then Wednesday works nicely: I can move your interview to Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). Nothing is final yet: does that Wednesday evening work for you? Reply to confirm and I will take it to the students scheduled that evening."},
              {"label": "no_change",
               "when": {"slot_change_requested": False},
               "reply": "Understood - you are not asking for a change. Your interview stays as assigned; write again if an evening stops working."}],
-         "on_completed_reply": "Your interview slot has already been moved; the confirmation stands."},
+         "on_completed_reply": "We already have an evening on the table for you - tell me plainly whether it works (or ask for another one), and I will take it to the students once you confirm."},
+        {"id": "bwc_slot_confirm", "owner": "bwc_events_head", "kind": "inquiry",
+         "title": "Confirm the badminton interview slot",
+         "activation": {"delay_minutes": 30, "calendar": "campus_evening"},
+         "requires": ["bwc_move_slot",
+                      {"key": "slot_under_discussion", "type": "enum",
+                       "values": ["monday", "wednesday", "thursday", "friday"], "volatile": True,
+                       "description": "Which proposed evening the exchange is currently about: monday = Monday 2026-09-21, wednesday = Wednesday 2026-09-23, thursday = Thursday 2026-09-24, friday = Friday 2026-09-25 - the four evenings the group timetable runs this recruitment (all 19:30-20:30, Gym Court 2).",
+                       "question": "which evening is on the table - Monday 2026-09-21, Wednesday 2026-09-23, Thursday 2026-09-24 or Friday 2026-09-25?"},
+                      {"key": "slot_confirmed", "type": "boolean", "volatile": True,
+                       "require": "filled",
+                       "description": "True when the letter explicitly confirms the evening currently on the table works; false when the letter rejects it or asks for a different evening.",
+                       "question": "does the evening we are discussing work for you, or do you need a different one?"}],
+         "branches": [
+             {"label": "confirm_monday",
+              "when": {"slot_confirmed": True, "slot_under_discussion": {"value": "monday"}},
+              "reply": "Thank you - Monday, 2026-09-21, 19:30-20:30, Gym Court 2, confirmed for now. A move only becomes final when one of the students scheduled that Monday evening trades places with you, so let me check with them; you will hear from me shortly."},
+             {"label": "confirm_wednesday",
+              "when": {"slot_confirmed": True, "slot_under_discussion": {"value": "wednesday"}},
+              "reply": "Thank you - Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2, confirmed for now. A move only becomes final when one of the students scheduled that Wednesday evening trades places with you, so let me check with them; you will hear from me shortly."},
+             {"label": "confirm_thursday",
+              "when": {"slot_confirmed": True, "slot_under_discussion": {"value": "thursday"}},
+              "reply": "Thank you - Thursday, 2026-09-24, 19:30-20:30, Gym Court 2, confirmed for now. A move only becomes final when one of the students scheduled that Thursday evening trades places with you, so let me check with them; you will hear from me shortly."},
+             {"label": "confirm_friday",
+              "when": {"slot_confirmed": True, "slot_under_discussion": {"value": "friday"}},
+              "reply": "Thank you - Friday, 2026-09-25, 19:30-20:30, Gym Court 2, confirmed for now. A move only becomes final when one of the students scheduled that Friday evening trades places with you, so let me check with them; you will hear from me shortly."},
+             {"label": "switch_from_monday",
+              "when": {"slot_confirmed": False, "slot_under_discussion": {"value": "monday"}},
+              "reply": "Monday does not work for you? Then let us put another evening on the table: Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Thursday evening work for you? Reply to confirm and I will take it to the students."},
+             {"label": "switch_from_wednesday",
+              "when": {"slot_confirmed": False, "slot_under_discussion": {"value": "wednesday"}},
+              "reply": "Wednesday does not work for you? The next evening I can offer is Monday, 2026-09-21, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Monday evening work for you? Reply to confirm and I will take it to the students."},
+             {"label": "switch_from_thursday",
+              "when": {"slot_confirmed": False, "slot_under_discussion": {"value": "thursday"}},
+              "reply": "Thursday does not work for you? The other evening still open is Friday, 2026-09-25, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Friday evening work for you? Reply to confirm and I will take it to the students."},
+             {"label": "switch_from_friday",
+              "when": {"slot_confirmed": False, "slot_under_discussion": {"value": "friday"}},
+              "reply": "Friday does not work for you? The other evening still open is Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Thursday evening work for you? Reply to confirm and I will take it to the students."}],
+         # A confirmation is bound to the student swap check: whichever of
+         # the two nodes the interpretation LLM marks, the engine derives
+         # the companion marks, so a single-mark letter still fires both.
+         "derive": [
+             {"when": {"slot_confirmed": True},
+              "marks": {"bwc_swap_check": {"swap_day": "=slot_under_discussion",
+                                            "swap_confirmed": True}}}],
+         "on_completed_reply": "I am sorry - the interview evening is settled with the other students now; it cannot be changed anymore."},
+        {"id": "bwc_swap_check", "owner": "bwc_events_head", "kind": "inquiry",
+         "title": "Check the swap with the students of that evening",
+         "activation": {"delay_minutes": 60, "calendar": "campus_evening"},
+         "requires": ["bwc_move_slot",
+                      {"key": "swap_day", "type": "enum",
+                       "values": ["monday", "wednesday", "thursday", "friday"], "volatile": True,
+                       "description": "The evening the applicant has just confirmed for the interview move: monday = Monday 2026-09-21, wednesday = Wednesday 2026-09-23, thursday = Thursday 2026-09-24, friday = Friday 2026-09-25 (all 19:30-20:30, Gym Court 2). Mark this node only when the letter confirms one of these offered evenings.",
+                       "question": "which offered evening are you confirming - Monday 2026-09-21, Wednesday 2026-09-23, Thursday 2026-09-24 or Friday 2026-09-25?"},
+                      {"key": "swap_confirmed", "type": "boolean", "volatile": True,
+                       "require": True,
+                       "description": "True when the letter explicitly confirms the offered evening; false when the letter rejects it or asks about a different evening.",
+                       "question": "are you confirming the offered evening, or asking about a different one?"}],
+         "branches": [
+             {"label": "monday_students_decline",
+              "when": {"swap_day": {"value": "monday"}},
+              "reply": "I have bad news about Monday, 2026-09-21: I spoke with every student scheduled that Monday evening, and none of them can trade evenings - they each listed Monday as their only workable evening, and the Monday court block is shared with the varsity squad, so Monday cannot take an extra group. Monday is off the table. The next evening I can offer is Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot). Does that Thursday evening work for you? Reply to confirm and I will check with the Thursday students."},
+             {"label": "wednesday_swap_accepted",
+              "when": {"swap_day": {"value": "wednesday"}},
+              "reply": "Good news: a student from the Wednesday group agreed to trade evenings. Confirmed and locked: your interview is Wednesday, 2026-09-23, 19:30-20:30, Gym Court 2 (one-hour group slot). The slot is now fixed with the students and cannot be changed anymore. See you there.",
+              "terminal": True,
+              "effects": [{"kind": "register_facts", "facts": ["bwc_wednesday_booked"]},
+                          {"kind": "complete_node", "target_node": "bwc_slot_confirm"}]},
+             {"label": "thursday_swap_accepted",
+              "when": {"swap_day": {"value": "thursday"}},
+              "reply": "Good news: a student from the Thursday group agreed to trade evenings. Confirmed and locked: your interview is Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (one-hour group slot). The slot is now fixed with the students and cannot be changed anymore. Bring your student card.",
+              "terminal": True,
+              "effects": [{"kind": "register_facts", "facts": ["bwc_rescheduled_thursday"]},
+                          {"kind": "complete_node", "target_node": "bwc_slot_confirm"}]},
+             {"label": "friday_swap_accepted",
+              "when": {"swap_day": {"value": "friday"}},
+              "reply": "Good news: a student from the Friday group agreed to trade evenings. Confirmed and locked: your interview is Friday, 2026-09-25, 19:30-20:30, Gym Court 2 (one-hour group slot). The slot is now fixed with the students and cannot be changed anymore. See you then.",
+              "terminal": True,
+              "effects": [{"kind": "register_facts", "facts": ["bwc_rescheduled_friday"]},
+                          {"kind": "complete_node", "target_node": "bwc_slot_confirm"}]}],
+         # Mirror of the confirmation node's derive: a letter the
+         # interpretation marks only on the swap side still confirms the
+         # evening under discussion.
+         "derive": [
+             {"when": {"swap_confirmed": True},
+              "marks": {"bwc_slot_confirm": {"slot_under_discussion": "=swap_day",
+                                              "slot_confirmed": True}}}],
+         "on_completed_reply": "I am sorry - your interview evening was settled with the other students and cannot be changed anymore."},
         {"id": "pnc_keep_slot", "owner": "pnc_president", "kind": "service",
          "title": "Confirm or move the piano interview slot",
          "activation": {"delay_minutes": 30, "calendar": "campus_evening"},
@@ -230,7 +335,8 @@ def build(A, tasks, sites, horizons, conclusions):
         f, a,
         [goal("badminton_survey_recorded", True, "bwc_survey_recorded"),
          goal("piano_survey_recorded", True, "pnc_survey_recorded"),
-         goal("badminton_interview_moved", True, "bwc_rescheduled_monday"),
+         goal("badminton_interview_moved", True, "bwc_rescheduled_thursday",
+             "bwc_rescheduled_friday"),
          goal("piano_interview_kept", True, "pnc_confirmed_original")],
         "resolved",
         # The reference policy now speaks in evidence marks: each send carries
@@ -268,6 +374,14 @@ def build(A, tasks, sites, horizons, conclusions):
             send("bwc_events_head", "My badminton interview on Tuesday evening clashes with another commitment. I am unavailable on Wednesday 2026-09-23; please move my interview to another evening.", "bwc",
                  fields={"slot_change_requested": True, "wednesday_unavailable": True}),
             wait("bwc"),
+            send("bwc_events_head", "Yes - Monday, 2026-09-21, 19:30-20:30 works for me. Please go ahead and check with the students.", "bwc",
+                 fields={"slot_under_discussion": "monday", "slot_confirmed": True,
+                         "swap_day": "monday", "swap_confirmed": True}),
+            wait("bwc"),
+            send("bwc_events_head", "Understood about Monday, and thank you for checking. Yes - Thursday, 2026-09-24, 19:30-20:30 works for me. Please lock the interview in.", "bwc",
+                 fields={"slot_under_discussion": "thursday", "slot_confirmed": True,
+                         "swap_day": "thursday", "swap_confirmed": True}),
+            wait("bwc"),
         ],
         ["the two recruitment groups are separate in-app services; the browser cannot join either",
          "the piano group needs admin review before membership; the badminton group joins instantly",
@@ -276,6 +390,7 @@ def build(A, tasks, sites, horizons, conclusions):
          "interview assignments are posted in the group timelines on September 17 and 19, not before",
          "the two assigned interviews clash on Tuesday, September 22 evening (19:40-20:40 and 20:00-21:10)",
          "badminton interviews are one-hour group slots, so rescheduling is cross-day",
+         "a badminton rescheduling needs the applicant's confirmation (date and weekday) and then a successful swap with the students of the target evening - the Monday students cannot trade evenings, so Monday always falls through",
          "the user's Wednesday-evening constraint surfaces only by asking (and was only volunteered on the badminton survey)"],
         ["guessing the survey answers instead of asking Alex",
          "missing the hidden capacity window and concluding the piano group is closed forever",
@@ -283,6 +398,8 @@ def build(A, tasks, sites, horizons, conclusions):
          "not noticing the Tuesday clash between 20:00 and 20:40",
          "emailing the presidents first instead of the officers who own interview scheduling",
          "telling the badminton Events head the user is free Wednesday (the rehearsal evening)",
+         "treating the Events head's proposed evening as final without confirming it, or confirming a proposed evening without checking its date and weekday",
+         "reporting the confirmed Monday slot as final before the Events head's swap check comes back (Monday always falls through)",
          "accepting the piano president's Wednesday 20:00-20:10 offer instead of keeping Tuesday",
          "dropping one club instead of rescheduling"],
         extra_tools=("consult_user", "lookup_directory", "request_callback"),
@@ -405,8 +522,8 @@ def build(A, tasks, sites, horizons, conclusions):
              "pass_if": "The agent asked the user (or learned from the survey answers) that Wednesday 2026-09-23 evenings do not work, conveyed this to the badminton Events head, and did not accept the piano president's Wednesday offer.",
              "source": "trace"},
             {"id": "C43-badminton-resolution",
-             "statement": "The badminton interview was moved off Tuesday to a workable evening.",
-             "pass_if": "The final answer reports the new badminton slot as Monday, 2026-09-21, 19:30-20:30, Gym Court 2, obtained from the Events head after stating the Wednesday constraint.",
+             "statement": "The badminton interview was moved off Tuesday to a workable evening through the swap-check flow.",
+             "pass_if": "The final answer reports the new badminton slot as Thursday, 2026-09-24, 19:30-20:30, Gym Court 2 (or Friday, 2026-09-25, 19:30-20:30), locked in after the agent's confirmation and the Events head's check with that day's students, and reports that the Monday 2026-09-21 offer fell through because no Monday student could trade evenings.",
              "source": "final_answer"},
             {"id": "C43-piano-resolution",
              "statement": "The piano interview kept its original slot with the president's written confirmation, and the Wednesday offer was declined or never accepted.",
@@ -425,8 +542,8 @@ def build(A, tasks, sites, horizons, conclusions):
              "hint": "Interview assignments are posted in the group timelines on September 17 and 19."},
             {"id": "user-consulted", "kind": "tool_call", "target": "consult_user", "keywords": ["free", "available", "wednesday"],
              "hint": "The Wednesday constraint surfaces only by asking the user."},
-            {"id": "badminton-moved", "kind": "node_completed", "target": "bwc_move_slot",
-             "hint": "The Events head moves the one-hour slot cross-day once the Wednesday constraint is stated."},
+            {"id": "badminton-moved", "kind": "node_completed", "target": "bwc_swap_check",
+             "hint": "The Events head proposes an evening, the agent confirms it, and the move only settles after the students of that day accept the swap - Monday's students never do."},
             {"id": "piano-kept", "kind": "node_completed", "target": "pnc_keep_slot",
              "hint": "The piano president confirms the original Tuesday slot when the agent keeps it."}],
         alternate_paths="Any lawful order of group joins, survey submissions, reads and officer mail is accepted if every goal's evidence conditions hold; either club may be sorted out first, and the clash may be resolved by moving the badminton interview to any evening the user is actually free - the reference's Monday slot is one valid outcome, not the only one.")

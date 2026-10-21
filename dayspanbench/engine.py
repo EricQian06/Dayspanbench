@@ -863,6 +863,32 @@ class Environment:
             self.record("graph_mark_rejected", node=node.id, error=str(error))
             return None
 
+    def _graph_derive(self, touched, source):
+        """Authored derivation rules: evidence on a touched node implies
+        evidence on companion nodes (e.g. confirming an evening also fills
+        the swap-check), so one LLM mark never strands its partner unfilled.
+        Derived marks propagate until nothing changes (bounded, same-value
+        marks are no-ops); a loop that never settles is an authoring bug."""
+        touched = set(touched)
+        frontier = list(touched)
+        budget = 4 * len(self.graph.nodes) + 8
+        while frontier:
+            node_id = frontier.pop(0)
+            derived = self.graph.derived_marks(node_id)
+            for target_id, marks in sorted(derived.items()):
+                node = self.graph.nodes[target_id]
+                if node.state != "collecting":
+                    continue  # completed/firing companions answer from replies
+                report = self._graph_mark(node, marks, f"derive:{node_id}:{source}", strict=True)
+                if report is not None and target_id not in touched:
+                    touched.add(target_id)
+                    frontier.append(target_id)
+            budget -= 1
+            if budget < 0:
+                raise SimulatorError(
+                    "Graph derivation did not settle; check derive rules for a cycle")
+        return touched
+
     def graph_activate(self, actor_id):
         """The recipient reads the accumulated letter batch: one LLM
         interpretation (plus any structured fields carried along) marks
@@ -896,6 +922,7 @@ class Environment:
                 if node_marks:
                     self._graph_mark(node, node_marks, source, strict=True)
                 touched.add(node_id)
+        touched = self._graph_derive(touched, source)
         for node_id in sorted(touched):
             node = self.graph.nodes[node_id]
             if node.state == "completed" or self.graph.is_ready(node, self.now):
@@ -1006,6 +1033,10 @@ class Environment:
                 self.known_contacts.update(effect.get("contacts", []))
             elif kind == "schedule_event":
                 self.enqueue(parse(effect["at"]), "graph_env", effect["target_node"])
+            elif kind == "complete_node":
+                # One node's terminal fire closes another node's conversation
+                # (e.g. the settled swap closes the negotiation self-loop).
+                self.graph.force_complete(effect["target_node"], at=stamp(self.now))
             else:
                 raise ValueError(f"Unknown graph effect kind {kind}")
         return contacts

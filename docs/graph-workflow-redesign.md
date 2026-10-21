@@ -196,8 +196,26 @@ reference/validate/replay 全程零 LLM 调用，哈希可复现（沿用工具�
 - **service 分支节点**：`bwc_move_slot`（owner=bwc_events_head；requires = 前置 assignment_posted +
   `slot_change_requested`（agent 明确要求挪时间，原 extract 字段 `wants_move` 改名）+
   `wednesday_unavailable`（require= "filled"：明确说"周三不行"或"周三可以"都算收集到该线索）；
-  branches = rescheduled_monday / wednesday_booked 互斥，原 extract_step 的分支表原样翻译）、
+  branches 只**提议**一个晚间（日期+星期，不注册任何 fact），完成即解锁确认节点）、
   `pnc_keep_slot`（keep_original / wednesday_free 三分支）。
+- **三段式改期（v3 修订，DSB-43 羽协侧）**：`bwc_move_slot`（提议）→ `bwc_slot_confirm`（inquiry 自环，
+  与 agent 确认/换日协商：拒绝 → 自环改提另一晚；确认 → 交予联系节点）→ `bwc_swap_check`（inquiry 自环，
+  部长与目标日同学确认换位：**周一必失败**——回信说明原因（周一同学均无法换晚+场地与校队共用）、
+  提议排除后的下一个日期（周四），节点自环回到协商；周三/四/五换位成功 →
+  **`terminal: true` 分支**：注册 fact、出回执、回复声明"已与同学固定不可再改"，
+  并以 **`complete_node` 效果**强制关闭协商节点）。终态后任何来信由两节点各自的
+  on_completed_reply 道歉应答。引擎新原语：分支级 `terminal`（仅限 inquiry 节点，点亮后不
+  自环复位而进入完成态）与 `complete_node` 效果（把另一节点置为完成态；作用于 collecting 节点）。
+  "已排除日期"没有运行时集合：由分支表结构保证（周一失败后所有提议只出自周三/四/五，
+  换日分支从不回头再提周一），排除原因写进回信文本。
+- **`derive` 派生标记（通用原语，防 interpret 单标失败）**：interpret LLM 一封信常需标注
+  多个节点（如确认信要同时标 confirm 与 swap）。节点可声明 `derive` 规则：
+  `{"when": {槽: 条件}, "marks": {目标节点: {槽: 值或 "=本节点槽引用"}}}`。引擎在每批标记
+  落盘后求值被触达节点的规则，把派生标记应用到仍处于 collecting 的目标节点并迭代到不动点
+  （同值标记是无操作，天然收敛；有界防环）。DSB-43 中 confirm↔swap 双向绑定：任一侧被
+  标记，另一侧必然被填充并点亮——ep-009 类"只标一个节点导致流程卡死"被结构性消除。
+  校验规则（validation.py）：when 条件只引用本节点槽；marks 目标必须存在且同 owner；
+  `"=槽"` 引用必须是本节点已声明的槽。
 - **自环收集节点**（体现"一封信给不全、多封凑齐"）：badminton 排期询问节点可拆为
   `slot_change_requested` 与 `wednesday_unavailable` 两个证据槽分多封信累积，集齐才点亮；
   例如第一封只说"想挪时间"、第二封才补上"周三晚上不行"。
